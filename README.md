@@ -1,2 +1,2 @@
-# happy-gardenpi-app
+# Happy GardenPI app
 Source code of Happy GardenPI
