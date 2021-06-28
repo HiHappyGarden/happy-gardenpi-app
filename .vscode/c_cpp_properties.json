@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/src/**",
+                "/home/antoniosalsi/raspberrypi/rootfs/usr/include/**",
+                "/home/antoniosalsi/raspberrypi/rootfs/usr/local/include/**"
+            ],
+            "defines": [],
+            "compilerPath": "/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-gcc-8.3.0",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "linux-gcc-arm",
+            "configurationProvider": "ms-vscode.cmake-tools "
+        }
+    ],
+    "version": 4
+}
