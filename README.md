@@ -4,8 +4,12 @@ Source code of Happy GardenPI, simple project for the construction of an automat
 ## Setup
 For build the project you must do this:
 
-1. (Installing operating system images)[https://www.raspberrypi.org/documentation/installation/installing-images/]
-2. Install WiringPi
+### 1. Install packages needed
+```
+apt install libmosquittopp-dev
+```
+
+### 2. Install WiringPi
 ```
 sudo apt update
 sudo apt install cmake git
@@ -34,7 +38,7 @@ Raspberry Pi Details:
   * This Raspberry Pi supports user-level GPIO access.
 ```
 
-3. Install on own Ubuntu (21.04) system the raspberry pi toolchain
+### 3. Install on own Ubuntu (21.04) system the raspberry pi toolchain
 
 form [https://stackoverflow.com/questions/19162072/how-to-install-the-raspberry-pi-cross-compiler-on-my-linux-host-machine](https://stackoverflow.com/questions/19162072/how-to-install-the-raspberry-pi-cross-compiler-on-my-linux-host-machine).
 (Thank to [Stefan Profanter](https://stackoverflow.com/users/869402/stefan-profanter))
@@ -101,6 +105,24 @@ export PATH=/opt/cross-pi-gcc/bin:$PATH
 export RASPBERRY_VERSION=1  
 mkdir build
 cd build
-cmake -DCROSS_COMPILE=ON -DCMAKE_TOOLCHAIN_FILE=$HOME/raspberrypi/toolchain-rpi.cmake ..
+cmake -DCMAKE_TOOLCHAIN_FILE=$HOME/raspberrypi/toolchain-rpi.cmake ..
 make
+```
+### 4. Create a build script
+Create a facility script build.sh for building project and sync data to tasberrypi like this:
+```
+#!/bin/bash
+
+export RASPBIAN_ROOTFS=$HOME/raspberrypi/rootfs
+export PATH=/opt/cross-pi-gcc/bin:$PATH
+export RASPBERRY_VERSION=1  
+cd build
+cmake -DCMAKE_TOOLCHAIN_FILE=$HOME/raspberrypi/toolchain-rpi.cmake ..
+make
+
+/usr/bin/rsync -azP ..  pi@192.168.1.PI:/path_of_project/happy-gardenpi-app
+```
+then add execution permission to file
+```
+chmod u+x build.sh
 ```
