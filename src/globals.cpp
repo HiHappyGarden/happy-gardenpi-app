@@ -22,17 +22,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include <cstdlib>
-#include <iostream>
-#include <mosquittopp.h>
-#include <date.h>
-
 #include "globals.hpp"
-#include "controllers/mqttclient.hpp"
 
-int main(int argc, char *argv[])
+#include <wiringPi.h>
+#include <mosquittopp.h>
+
+namespace hgardenpi
 {
-    hgardenpi::initialize();
+    inline namespace v1
+    {
+        void initialize()
+        {
+            //initialize WiringPI
+            wiringPiSetupGpio();
 
-    return EXIT_SUCCESS;
+            //initialize mosquittopp
+            mosqpp::lib_init();
+        }
+    }
 }

@@ -1,15 +1,19 @@
 # Happy GardenPI app
+
 Source code of Happy GardenPI, simple project for the construction of an automated watering can managed by a Pasrperry PI Zero
 
 ## Setup
+
 For build the project you must do this:
 
 ### 1. Install packages needed
+
 ```
-apt install libmosquittopp-dev
+apt install libmosquittopp-dev libcurl4-openssl-dev libssl-dev
 ```
 
 ### 2. Install WiringPi
+
 ```
 sudo apt update
 sudo apt install cmake git
@@ -17,6 +21,7 @@ git clone https://github.com/WiringPi/WiringPi.git
 cd WiringPi/
 ./build
 ```
+
 check if the configuration is ready
 
 ```
@@ -93,7 +98,7 @@ rsync -vR --progress -rl --delete-after --safe-links pi@192.168.1.PI:/{lib,usr,o
 where 192.168.1.PI is replaced by the IP of your Raspberry Pi.
 
 - Use CMake to compile your project
-To tell CMake to take your own toolchain, you need to have a toolchain file which initializes the compiler settings.
+  To tell CMake to take your own toolchain, you need to have a toolchain file which initializes the compiler settings.
 
 Get this toolchain file from here: [https://github.com/Pro/raspi-toolchain/blob/master/Toolchain-rpi.cmake](https://github.com/Pro/raspi-toolchain/blob/master/Toolchain-rpi.cmake).
 
@@ -102,27 +107,32 @@ Now you should be able to compile your cmake programs simply by adding this extr
 ```
 export RASPBIAN_ROOTFS=$HOME/raspberrypi/rootfs
 export PATH=/opt/cross-pi-gcc/bin:$PATH
-export RASPBERRY_VERSION=1  
+export RASPBERRY_VERSION=1
 mkdir build
 cd build
 cmake -DCMAKE_TOOLCHAIN_FILE=$HOME/raspberrypi/toolchain-rpi.cmake ..
 make
 ```
+
 ### 4. Create a build script
+
 Create a facility script build.sh for building project and sync data to tasberrypi like this:
+
 ```
 #!/bin/bash
 
 export RASPBIAN_ROOTFS=$HOME/raspberrypi/rootfs
 export PATH=/opt/cross-pi-gcc/bin:$PATH
-export RASPBERRY_VERSION=1  
+export RASPBERRY_VERSION=1
 cd build
 cmake -DCMAKE_TOOLCHAIN_FILE=$HOME/raspberrypi/toolchain-rpi.cmake ..
 make
 
 /usr/bin/rsync -azP ..  pi@192.168.1.PI:/path_of_project/happy-gardenpi-app
 ```
+
 then add execution permission to file
+
 ```
 chmod u+x build.sh
 ```
