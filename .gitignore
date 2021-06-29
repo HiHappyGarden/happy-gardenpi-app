@@ -10,5 +10,6 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 builds
+build
 build.sh
 src/config.h
