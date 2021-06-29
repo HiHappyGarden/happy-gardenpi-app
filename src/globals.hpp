@@ -22,12 +22,28 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include "commons.hpp"
+#pragma once
+
+#include "utilities/singleton.hpp"
 
 namespace hgardenpi
 {
     inline namespace v1
     {
+
+        /**
+         * @brief Singleton where are put global variable
+         */
+        class Globals final : public Singleton<Globals>
+        {
+            friend void initialize();
+        };
+
+        /**
+         * @brief before all call this functiuon fo inilialize the project
+         * 
+         */
+        void initialize();
 
     }
 }

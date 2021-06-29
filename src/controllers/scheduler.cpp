@@ -22,17 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include <cstdlib>
-#include <iostream>
-#include <mosquittopp.h>
-#include <date.h>
+#include "scheduler.hpp"
 
-#include "globals.hpp"
-#include "controllers/mqttclient.hpp"
-
-int main(int argc, char *argv[])
-{
-    hgardenpi::initialize();
-
-    return EXIT_SUCCESS;
-}
+using hgardenpi::v1::Scheduler;
