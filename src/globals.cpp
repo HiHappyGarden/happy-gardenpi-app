@@ -28,6 +28,8 @@ SOFTWARE.
 #include <mosquittopp.h>
 
 #include "services/lockservice.hpp"
+#include "services/logservice.hpp"
+#include "config.h"
 
 namespace hgardenpi
 {
@@ -36,12 +38,20 @@ namespace hgardenpi
         using std::make_unique;
 
         Globals::Globals() noexcept
+        try
         {
             lockService = make_unique<LockService>();
+        }
+        catch (const std::bad_alloc &e)
+        {
+            lockServicePassThrough = true;
+            LogService::getInstance()->write(LOG_ERR, e.what());
         }
 
         void initialize()
         {
+
+            LogService::getInstance()->write(LOG_INFO, "version: %s", HGARDENPI_VER);
 
             //check if already run an instance of Happy GardenPI
 

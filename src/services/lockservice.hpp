@@ -22,28 +22,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include <cstdlib>
-#include <iostream>
-#include <mosquittopp.h>
-#include <date.h>
-#include "services/logservice.hpp"
-#include "services/deviceservice.hpp"
+#pragma once
 
-#include "globals.hpp"
-#include "clients/mqttclient.hpp"
+#include "../utilities/object.hpp"
 
-int main(int argc, char *argv[])
+namespace hgardenpi
 {
-    try
+    inline namespace v1
     {
-        hgardenpi::initialize();
+        using std::string;
 
-        hgardenpi::LogService::getInstance()->write(LOG_INFO, "End");
-    }
-    catch (...)
-    {
-        return EXIT_FAILURE;
-    }
+        /**
+         * @brief PIDCheck if exist another instance of Happy GardenPI
+         * 
+         */
+        class LockService final : public Object
+        {
 
-    return EXIT_SUCCESS;
+        public:
+            inline LockService() noexcept {}
+            HGARDENPI_NO_COPY_NO_MOVE(LockService)
+
+            /**
+             * @brief Return the name of object
+             * 
+             * @return std::string name of object
+             */
+            inline string toString() noexcept override
+            {
+                return typeid(*this).name();
+            }
+        };
+
+    }
 }

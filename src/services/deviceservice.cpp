@@ -22,28 +22,41 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include <cstdlib>
+#include "deviceservice.hpp"
+
 #include <iostream>
-#include <mosquittopp.h>
-#include <date.h>
-#include "services/logservice.hpp"
-#include "services/deviceservice.hpp"
+#include <fstream>
+using namespace std;
 
-#include "globals.hpp"
-#include "clients/mqttclient.hpp"
-
-int main(int argc, char *argv[])
+namespace hgardenpi
 {
-    try
+    inline namespace v1
     {
-        hgardenpi::initialize();
 
-        hgardenpi::LogService::getInstance()->write(LOG_INFO, "End");
-    }
-    catch (...)
-    {
-        return EXIT_FAILURE;
-    }
+        float getCPUTemperature()
+        {
+            string val;
+            ifstream file("/sys/class/thermal/thermal_zone0/temp");
+            file >> val;
+            file.close();
+            return stof(val) / 1000.0;
+        }
 
-    return EXIT_SUCCESS;
+        DeviceInfo::Ptr getDeviceInfo()
+        {
+            auto device = unique_ptr<DeviceInfo>(new (nothrow) DeviceInfo{"", "", "", ""});
+            ifstream file("/proc/cpuinfo");
+            string line;
+            while (getline(file, line))
+            {
+                if (line.find("") != std::string::npos)
+                {
+                    std::cout << "found!" << '\n';
+                }
+            }
+            file.close();
+            return device;
+        }
+
+    }
 }

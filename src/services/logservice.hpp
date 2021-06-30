@@ -24,46 +24,54 @@ SOFTWARE.
 
 #pragma once
 
-#include <memory>
+#include <syslog.h>
+#include <mutex>
 
-#include "utilities/singleton.hpp"
-#include "services/deviceservice.hpp"
+#include "../utilities/singleton.hpp"
 
 namespace hgardenpi
 {
     inline namespace v1
     {
-        using std::unique_ptr;
 
-        class LockService;
-
-        /**
-         * @brief Singleton where are put global variable
-         */
-        class Globals final : public Singleton<Globals>
-        {
-            bool lockServicePassThrough = false;
-            unique_ptr<LockService> lockService;
-
-            friend void initialize();
-
-            DeviceInfo::Ptr deviceInfo;
-
-        public:
-            Globals() noexcept;
-            HGARDENPI_NO_COPY_NO_MOVE(Globals)
-
-            const DeviceInfo::Ptr &getDeviceInfo() const noexcept
-            {
-                return deviceInfo;
-            }
-        };
+        using std::mutex;
+        using std::string;
 
         /**
-         * @brief before all call this functiuon fo inilialize the project
+         * @brief LogService singleton permit to write log into syslog
          * 
          */
-        void initialize();
+        class LogService final : public Singleton<LogService>
+        {
+            mutable mutex m;
+
+        public:
+            LogService() noexcept;
+            inline ~LogService() noexcept
+            {
+                closelog();
+            }
+            HGARDENPI_NO_COPY_NO_MOVE(LogService)
+
+            /**
+             * @brief Write log on system 
+             * 
+             * @param level of log
+             * @param msg message to write
+             * @param ...
+             */
+            void write(uint8_t level, const char *msg, ...) const noexcept;
+
+            /**
+             * @brief Return the name of object
+             * 
+             * @return std::string name of object
+             */
+            inline string toString() noexcept override
+            {
+                return typeid(*this).name();
+            }
+        };
 
     }
 }
