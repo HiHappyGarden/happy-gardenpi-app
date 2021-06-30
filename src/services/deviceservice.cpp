@@ -33,6 +33,9 @@ namespace hgardenpi
     inline namespace v1
     {
 
+        extern inline bool stringConatin(const string &, const string &) noexcept;
+        extern inline bool stringConatin(const string &, const string &&) noexcept;
+
         float getCPUTemperature()
         {
             string val;
@@ -49,9 +52,17 @@ namespace hgardenpi
             string line;
             while (getline(file, line))
             {
-                if (line.find("") != std::string::npos)
+                if (stringConatin(line, "Hardware"))
                 {
-                    std::cout << "found!" << '\n';
+                                }
+                if (stringConatin(line, "Revision"))
+                {
+                }
+                if (stringConatin(line, "Serial"))
+                {
+                }
+                if (stringConatin(line, "Model"))
+                {
                 }
             }
             file.close();

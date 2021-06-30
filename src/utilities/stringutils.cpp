@@ -23,3 +23,63 @@ SOFTWARE.
 */
 
 #include "stringutils.hpp"
+
+#include <iomanip>
+using namespace std;
+
+namespace hgardenpi
+{
+    inline namespace v1
+    {
+
+        string stringLeft() noexcept
+        {
+        }
+
+        bool replace(string &str, string &&from, string &&to) noexcept
+        {
+            size_t startPos = str.find(from);
+            if (startPos == string::npos)
+                return false;
+            str.replace(startPos, from.length(), to);
+            return true;
+        }
+
+        void replaceAll(string &str, string &&from, string &&to) noexcept
+        {
+            if (from.empty())
+                return;
+            size_t startPos = 0;
+            while ((startPos = str.find(from, startPos)) != string::npos)
+            {
+                str.replace(startPos, from.length(), to);
+                startPos += to.length(); // In case 'to' contains 'from', like replacing 'x' with 'yx'
+            }
+        }
+
+        string bytesToString(const uint8_t *key, size_t size) noexcept
+        {
+            if (!key)
+            {
+                return "";
+            }
+            ostringstream convert;
+            for (int a = 0; a < size; a++)
+            {
+                convert << key[a];
+            }
+            return convert.str();
+        }
+
+        string hexToString(const uint8_t *bytes, size_t size, bool upperCase) noexcept
+        {
+            ostringstream ret;
+            for (int i = 0; i < size; i++)
+            {
+                ret << hex << setfill('0') << setw(2) << (upperCase ? uppercase : nouppercase) << (int)bytes[i];
+            }
+            return ret.str();
+        }
+
+    }
+}
