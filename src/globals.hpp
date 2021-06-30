@@ -24,19 +24,30 @@ SOFTWARE.
 
 #pragma once
 
+#include <memory>
+
 #include "utilities/singleton.hpp"
 
 namespace hgardenpi
 {
     inline namespace v1
     {
+        using std::unique_ptr;
+
+        class LockService;
 
         /**
          * @brief Singleton where are put global variable
          */
         class Globals final : public Singleton<Globals>
         {
+            unique_ptr<LockService> lockService;
+
             friend void initialize();
+
+        public:
+            Globals() noexcept;
+            HGARDENPI_NO_COPY_NO_MOVE(Globals)
         };
 
         /**

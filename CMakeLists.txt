@@ -14,12 +14,12 @@ link_directories("${RASPBIAN_ROOTFS}/usr/lib")
 
 
 add_executable(hgardenpi
-    src/controllers/mqttclient.cpp
-    src/controllers/mqttclient.hpp
-    src/controllers/pidcheck.cpp
-    src/controllers/pidcheck.hpp
-    src/controllers/scheduler.cpp
-    src/controllers/scheduler.hpp
+    src/clients/mqttclient.cpp
+    src/clients/mqttclient.hpp
+    src/services/lockservice.cpp
+    src/services/lockservice.hpp
+    src/services/scheduler.cpp
+    src/services/scheduler.hpp
     src/utilities/object.hpp
     src/utilities/singleton.hpp
     src/constants.cpp

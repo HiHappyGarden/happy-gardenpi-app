@@ -26,11 +26,12 @@ SOFTWARE.
 
 #include <string>
 
+#include "../constants.hpp"
+
 namespace hgardenpi
 {
     inline namespace v1
     {
-        using namespace std;
 
         /**
          * @brief Generic class ttat all functionals objects must extend
@@ -40,10 +41,7 @@ namespace hgardenpi
         {
         public:
             Object() = default;
-            Object(Object &) = delete;
-            Object &operator=(const Object &) = delete;
-            Object(Object &&) = delete;
-            Object &operator=(Object &&) = delete;
+            HGARDENPI_NO_COPY_NO_MOVE(Object)
 
             /**
              * @brief Virtual method that return data of object in srteing format
