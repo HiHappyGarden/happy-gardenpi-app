@@ -9,7 +9,7 @@ For build the project you must do this:
 ### 1. Install packages needed
 
 ```
-sudo apt install libmosquittopp-dev libcurl4-openssl-dev libssl-dev
+sudo apt install libmosquittopp-dev
 ```
 
 ### 2. Install WiringPi
