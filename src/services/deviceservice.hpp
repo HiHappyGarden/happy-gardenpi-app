@@ -22,28 +22,41 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include <cstdlib>
-#include <iostream>
-#include <mosquittopp.h>
-#include <date.h>
-#include "services/logservice.hpp"
-#include "services/deviceservice.hpp"
+#pragma once
 
-#include "globals.hpp"
-#include "clients/mqttclient.hpp"
+#include <string>
+#include <memory>
 
-int main(int argc, char *argv[])
+namespace hgardenpi
 {
-    try
+    inline namespace v1
     {
-        hgardenpi::initialize();
+        using std::string;
+        using std::unique_ptr;
 
-        hgardenpi::LogService::getInstance()->write(LOG_INFO, "End");
-    }
-    catch (...)
-    {
-        return EXIT_FAILURE;
-    }
+        struct DeviceInfo
+        {
 
-    return EXIT_SUCCESS;
+            typedef unique_ptr<DeviceInfo> Ptr;
+
+            string hardhare;
+            string revision;
+            string serial;
+            string model;
+        };
+
+        /**
+         * @brief Get CPU temperature
+         * @exception throw exception when temp is not available
+         * @return return degrees temperature
+         */
+        float getCPUTemperature();
+
+        /**
+         * @brief Get Raspberry PI info
+         * @exception throw exception when temp is not available
+         * @return return Raspberry PI info
+         */
+        DeviceInfo::Ptr getDeviceInfo();
+    }
 }

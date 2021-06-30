@@ -22,28 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include <cstdlib>
-#include <iostream>
-#include <mosquittopp.h>
-#include <date.h>
-#include "services/logservice.hpp"
-#include "services/deviceservice.hpp"
+#include "mqttclient.hpp"
 
-#include "globals.hpp"
-#include "clients/mqttclient.hpp"
+using hgardenpi::MQTTClient;
 
-int main(int argc, char *argv[])
+MQTTClient::MQTTClient(const string &id, const string &host, uint16_t port)
 {
-    try
-    {
-        hgardenpi::initialize();
-
-        hgardenpi::LogService::getInstance()->write(LOG_INFO, "End");
-    }
-    catch (...)
-    {
-        return EXIT_FAILURE;
-    }
-
-    return EXIT_SUCCESS;
+    connect(host.c_str(), port, KEEP_ALIVE);
 }

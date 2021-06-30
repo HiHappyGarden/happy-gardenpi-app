@@ -22,28 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include <cstdlib>
-#include <iostream>
-#include <mosquittopp.h>
-#include <date.h>
-#include "services/logservice.hpp"
-#include "services/deviceservice.hpp"
+#include "scheduler.hpp"
 
-#include "globals.hpp"
-#include "clients/mqttclient.hpp"
-
-int main(int argc, char *argv[])
-{
-    try
-    {
-        hgardenpi::initialize();
-
-        hgardenpi::LogService::getInstance()->write(LOG_INFO, "End");
-    }
-    catch (...)
-    {
-        return EXIT_FAILURE;
-    }
-
-    return EXIT_SUCCESS;
-}
+using hgardenpi::v1::Scheduler;

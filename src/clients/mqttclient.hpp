@@ -24,46 +24,52 @@ SOFTWARE.
 
 #pragma once
 
+#include <mosquittopp.h>
+#include <string>
 #include <memory>
 
-#include "utilities/singleton.hpp"
-#include "services/deviceservice.hpp"
+#include "../constants.hpp"
 
 namespace hgardenpi
 {
     inline namespace v1
     {
-        using std::unique_ptr;
 
-        class LockService;
+        using mosqpp::mosquittopp;
+        using std::move;
+        using std::string;
 
         /**
-         * @brief Singleton where are put global variable
+         * @brief MQTT Client for connect to mosquitto
          */
-        class Globals final : public Singleton<Globals>
+        class MQTTClient final : public mosquittopp
         {
-            bool lockServicePassThrough = false;
-            unique_ptr<LockService> lockService;
 
-            friend void initialize();
-
-            DeviceInfo::Ptr deviceInfo;
+            static inline const constexpr uint16_t KEEP_ALIVE = 60;
+            static inline const constexpr uint16_t PORT = 60;
 
         public:
-            Globals() noexcept;
-            HGARDENPI_NO_COPY_NO_MOVE(Globals)
+            HGARDENPI_NO_COPY_NO_MOVE(MQTTClient)
 
-            const DeviceInfo::Ptr &getDeviceInfo() const noexcept
+            /**
+             * @brief Construct a new MQTTClient object
+             * 
+             * @param id client name 
+             * @param host server host
+             * @param port server port
+             */
+            MQTTClient(const string &id, const string &host, uint16_t port = MQTTClient::PORT);
+
+            /**
+             * @brief Construct a new MQTTClient object
+             * 
+             * @param id client name 
+             * @param host server host
+             * @param port server port
+             */
+            inline MQTTClient(const string &&id, const string &&host, uint16_t port = MQTTClient::PORT) : MQTTClient(id, host, port)
             {
-                return deviceInfo;
             }
         };
-
-        /**
-         * @brief before all call this functiuon fo inilialize the project
-         * 
-         */
-        void initialize();
-
     }
 }

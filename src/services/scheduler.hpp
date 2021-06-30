@@ -22,28 +22,45 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include <cstdlib>
-#include <iostream>
-#include <mosquittopp.h>
-#include <date.h>
-#include "services/logservice.hpp"
-#include "services/deviceservice.hpp"
+#pragma once
 
-#include "globals.hpp"
-#include "clients/mqttclient.hpp"
+#include <mutex>
+#include <functional>
 
-int main(int argc, char *argv[])
+#include "../utilities/singleton.hpp"
+#include "../constants.hpp"
+
+namespace hgardenpi
 {
-    try
+    inline namespace v1
     {
-        hgardenpi::initialize();
+        using std::mutex;
+        using std::string;
 
-        hgardenpi::LogService::getInstance()->write(LOG_INFO, "End");
-    }
-    catch (...)
-    {
-        return EXIT_FAILURE;
-    }
+        /**
+         * @brief Scheduler for scheduing acrion, inside of this run a loop every one second
+         * 
+         */
+        class Scheduler final : public Singleton<Scheduler>
+        {
 
-    return EXIT_SUCCESS;
+            bool start = false;
+
+            mutable mutex m;
+
+        public:
+            HGARDENPI_NO_COPY_NO_MOVE(Scheduler)
+
+            /**
+             * @brief Return the name of object
+             * 
+             * @return std::string name of object
+             */
+            inline string toString() noexcept override
+            {
+                return typeid(*this).name();
+            }
+        };
+
+    }
 }

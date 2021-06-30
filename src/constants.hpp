@@ -26,6 +26,7 @@ SOFTWARE.
 
 #include <cstdint>
 
+//generic no copy no move constructor
 #define HGARDENPI_NO_COPY_NO_MOVE(clazz)      \
     clazz(clazz &) = delete;                  \
     clazz &operator=(const clazz &) = delete; \
@@ -36,7 +37,10 @@ namespace hgardenpi
 {
     inline namespace v1
     {
-
+        /**
+         * @brief Enum for manage times
+         * 
+         */
         enum class Time : uint16_t
         {
             SECOND = 1'000

@@ -1,3 +1,4 @@
+
 /*
 MIT License
 
@@ -22,28 +23,38 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include <cstdlib>
-#include <iostream>
-#include <mosquittopp.h>
-#include <date.h>
-#include "services/logservice.hpp"
-#include "services/deviceservice.hpp"
+#include "logservice.hpp"
+using namespace std;
 
-#include "globals.hpp"
-#include "clients/mqttclient.hpp"
+#include <cstdarg>
+#include <string.h>
 
-int main(int argc, char *argv[])
+#include "../config.h"
+
+using namespace hgardenpi;
+
+LogService::LogService() noexcept
 {
-    try
-    {
-        hgardenpi::initialize();
+    openlog(HGARDENPI_NAME, LOG_PID, LOG_USER);
+    syslog(LOG_INFO, "Start");
+}
 
-        hgardenpi::LogService::getInstance()->write(LOG_INFO, "End");
-    }
-    catch (...)
+void LogService::write(uint8_t level, const char *msg, ...) const noexcept
+{
+    static const constexpr int MAX_STRING_LEN = 1024;
+    lock_guard<mutex> lg(m);
+
+    va_list ap;
+    va_start(ap, msg);
+
+    char *buffer = new (nothrow) char[MAX_STRING_LEN];
+    memset(&buffer[0], 0, sizeof(buffer));
+    if (buffer)
     {
-        return EXIT_FAILURE;
+        vsnprintf(buffer, MAX_STRING_LEN, msg, ap);
+        syslog(level, buffer);
+        free(buffer);
     }
 
-    return EXIT_SUCCESS;
+    va_end(ap);
 }
