@@ -34,5 +34,7 @@ int main(int argc, char *argv[])
 {
     hgardenpi::initialize();
 
+    std::cout << "ciao" << std::endl;
+
     return EXIT_SUCCESS;
 }

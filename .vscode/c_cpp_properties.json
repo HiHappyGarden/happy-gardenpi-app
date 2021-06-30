@@ -4,6 +4,7 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/src/**",
+                "${workspaceFolder}/3thparty/include/**",
                 "/home/antoniosalsi/raspberrypi/rootfs/usr/include/**",
                 "/home/antoniosalsi/raspberrypi/rootfs/usr/local/include/**"
             ],
