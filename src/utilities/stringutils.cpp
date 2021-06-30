@@ -31,12 +31,12 @@ namespace hgardenpi
 {
     inline namespace v1
     {
-
         string stringLeft() noexcept
         {
+            return "";
         }
 
-        bool replace(string &str, string &&from, string &&to) noexcept
+        bool stringReplace(string &str, string &&from, string &&to) noexcept
         {
             size_t startPos = str.find(from);
             if (startPos == string::npos)
@@ -45,7 +45,7 @@ namespace hgardenpi
             return true;
         }
 
-        void replaceAll(string &str, string &&from, string &&to) noexcept
+        void stringReplaceAll(string &str, string &&from, string &&to) noexcept
         {
             if (from.empty())
                 return;
@@ -57,7 +57,7 @@ namespace hgardenpi
             }
         }
 
-        string bytesToString(const uint8_t *key, size_t size) noexcept
+        string stringBytesToString(const uint8_t *key, size_t size) noexcept
         {
             if (!key)
             {
@@ -71,7 +71,7 @@ namespace hgardenpi
             return convert.str();
         }
 
-        string hexToString(const uint8_t *bytes, size_t size, bool upperCase) noexcept
+        string stringHexToString(const uint8_t *bytes, size_t size, bool upperCase) noexcept
         {
             ostringstream ret;
             for (int i = 0; i < size; i++)

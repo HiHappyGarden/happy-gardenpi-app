@@ -13,7 +13,7 @@
             "target": "passy-raspberrypi:3000",
             "remote": true,
             "printCalls": true,
-            "cwd": "${workspaceRoot}",
+            "cwd": "${workspaceRoot}/build/",
             "valuesFormatting": "parseText"
         }
     ]

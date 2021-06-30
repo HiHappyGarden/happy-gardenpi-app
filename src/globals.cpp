@@ -50,8 +50,15 @@ namespace hgardenpi
 
         void initialize()
         {
-
+            //initializde log
             LogService::getInstance()->write(LOG_INFO, "version: %s", HGARDENPI_VER);
+
+            Globals::getInstance()->deviceInfo = getDeviceInfo();
+
+            LogService::getInstance()->write(LOG_INFO, "hardware: %s", Globals::getInstance()->deviceInfo->hardhare.c_str());
+            LogService::getInstance()->write(LOG_INFO, "revision: %s", Globals::getInstance()->deviceInfo->revision.c_str());
+            LogService::getInstance()->write(LOG_INFO, "serial: %s", Globals::getInstance()->deviceInfo->serial.c_str());
+            LogService::getInstance()->write(LOG_INFO, "model: %s", Globals::getInstance()->deviceInfo->model.c_str());
 
             //check if already run an instance of Happy GardenPI
 

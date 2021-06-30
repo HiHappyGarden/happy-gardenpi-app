@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     {
         hgardenpi::initialize();
 
-        hgardenpi::LogService::getInstance()->write(LOG_INFO, "End");
+        hgardenpi::LogService::getInstance()->write(LOG_INFO, "end");
     }
     catch (...)
     {

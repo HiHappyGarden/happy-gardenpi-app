@@ -28,14 +28,12 @@ SOFTWARE.
 #include <fstream>
 using namespace std;
 
+#include "../utilities/stringutils.hpp"
+
 namespace hgardenpi
 {
     inline namespace v1
     {
-
-        extern inline bool stringConatin(const string &, const string &) noexcept;
-        extern inline bool stringConatin(const string &, const string &&) noexcept;
-
         float getCPUTemperature()
         {
             string val;
@@ -47,22 +45,26 @@ namespace hgardenpi
 
         DeviceInfo::Ptr getDeviceInfo()
         {
-            auto device = unique_ptr<DeviceInfo>(new (nothrow) DeviceInfo{"", "", "", ""});
+            auto device = unique_ptr<DeviceInfo>(new (nothrow) DeviceInfo{"no info", "no info", "no info", "no info"});
             ifstream file("/proc/cpuinfo");
             string line;
             while (getline(file, line))
             {
-                if (stringConatin(line, "Hardware"))
+                if (stringContain(line, "Hardware"))
                 {
-                                }
-                if (stringConatin(line, "Revision"))
-                {
+                    device->hardhare = "1";
                 }
-                if (stringConatin(line, "Serial"))
+                if (stringContain(line, "Revision"))
                 {
+                    device->revision = "2";
                 }
-                if (stringConatin(line, "Model"))
+                if (stringContain(line, "Serial"))
                 {
+                    device->revision = "3";
+                }
+                if (stringContain(line, "Model"))
+                {
+                    device->revision = "4";
                 }
             }
             file.close();
