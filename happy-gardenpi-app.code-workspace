@@ -6,7 +6,9 @@
 	],
 	"settings": {
 		"files.associations": {
-			"*.in": "cpp"
+			"*.in": "cpp",
+			"atomic": "cpp",
+			"cstdint": "cpp"
 		}
 	}
 }

@@ -24,11 +24,7 @@ SOFTWARE.
 
 #pragma once
 
-#include <mutex>
-#include <functional>
-
-#include "../utilities/singleton.hpp"
-#include "../constants.hpp"
+#include "../utilities/object.hpp"
 
 namespace hgardenpi
 {
@@ -37,23 +33,19 @@ namespace hgardenpi
         using namespace std;
 
         /**
-         * @brief Scheduler for scheduing acrion, inside of this run a loop every one second
+         * @brief PIDCheck if exist another instance of Happy GardenPI
          * 
          */
-        class Scheduler final : public Singleton<Scheduler>
+        class PIDCheck final : public Object
         {
 
-            bool start = false;
-
-            mutable mutex m;
-
         public:
-            Scheduler(Scheduler &) = delete;
-            Scheduler &operator=(const Scheduler &) = delete;
-            Scheduler(Scheduler &&) = delete;
-            Scheduler &operator=(Scheduler &&) = delete;
+            PIDCheck(PIDCheck &) = delete;
+            PIDCheck &operator=(const PIDCheck &) = delete;
+            PIDCheck(PIDCheck &&) = delete;
+            PIDCheck &operator=(PIDCheck &&) = delete;
 
-                        /**
+            /**
              * @brief Return the name of object
              * 
              * @return std::string name of object

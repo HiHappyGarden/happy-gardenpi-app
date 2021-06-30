@@ -8,6 +8,14 @@ For build the project you must do this:
 
 ### 1. Install packages needed
 
+On Ubuntu
+
+```
+sudo apt install gdb-multiarch
+```
+
+On Rasperry PI W
+
 ```
 sudo apt install libmosquittopp-dev
 ```
@@ -135,4 +143,16 @@ then add execution permission to file
 
 ```
 chmod u+x build.sh
+```
+
+## Remote DEBUG
+
+In order to follow guide [Cross architecture remote debugging using gdb with Visual Studio Code (vscode) on Linux](https://medium.com/@karel.l.vermeiren/cross-architecture-remote-debugging-using-gdb-with-visual-studio-code-vscode-on-linux-c0572794b4ef)
+
+You can momodify .vscode/launch.json and fix the right path
+
+When you need debug on Rasberry PI W you must execute te follow command form happy-gardenpi-app folder:
+
+```
+gdbserver --multi localhost:3000 build/hgardenpi
 ```
