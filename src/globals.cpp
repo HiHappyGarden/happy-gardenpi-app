@@ -27,12 +27,24 @@ SOFTWARE.
 #include <wiringPi.h>
 #include <mosquittopp.h>
 
+#include "services/lockservice.hpp"
+
 namespace hgardenpi
 {
     inline namespace v1
     {
+        using std::make_unique;
+
+        Globals::Globals() noexcept
+        {
+            lockService = make_unique<LockService>();
+        }
+
         void initialize()
         {
+
+            //check if already run an instance of Happy GardenPI
+
             //initialize WiringPI
             wiringPiSetupGpio();
 

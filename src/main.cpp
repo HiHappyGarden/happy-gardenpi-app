@@ -28,7 +28,7 @@ SOFTWARE.
 #include <date.h>
 
 #include "globals.hpp"
-#include "controllers/mqttclient.hpp"
+#include "clients/mqttclient.hpp"
 
 int main(int argc, char *argv[])
 {
