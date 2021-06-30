@@ -24,11 +24,7 @@ SOFTWARE.
 
 #pragma once
 
-#include <mutex>
-#include <functional>
-
-#include "../utilities/singleton.hpp"
-#include "../constants.hpp"
+#include <string>
 
 namespace hgardenpi
 {
@@ -37,31 +33,24 @@ namespace hgardenpi
         using namespace std;
 
         /**
-         * @brief Scheduler for scheduing acrion, inside of this run a loop every one second
+         * @brief Generic class ttat all functionals objects must extend
          * 
          */
-        class Scheduler final : public Singleton<Scheduler>
+        class Object
         {
-
-            bool start = false;
-
-            mutable mutex m;
-
         public:
-            Scheduler(Scheduler &) = delete;
-            Scheduler &operator=(const Scheduler &) = delete;
-            Scheduler(Scheduler &&) = delete;
-            Scheduler &operator=(Scheduler &&) = delete;
+            Object() = default;
+            Object(Object &) = delete;
+            Object &operator=(const Object &) = delete;
+            Object(Object &&) = delete;
+            Object &operator=(Object &&) = delete;
 
-                        /**
-             * @brief Return the name of object
+            /**
+             * @brief Virtual method that return data of object in srteing format
              * 
-             * @return std::string name of object
+             * @return std::string data of object
              */
-            inline string toString() noexcept override
-            {
-                return typeid(*this).name();
-            }
+            virtual std::string toString() noexcept = 0;
         };
 
     }

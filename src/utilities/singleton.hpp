@@ -27,6 +27,8 @@ SOFTWARE.
 #include <memory>
 #include <mutex>
 
+#include "object.hpp"
+
 namespace hgardenpi
 {
 
@@ -38,7 +40,7 @@ namespace hgardenpi
         using std::unique_ptr;
 
         template <typename T>
-        class Singleton
+        class Singleton : public Object
         {
         protected:
             Singleton<T>() noexcept = default;

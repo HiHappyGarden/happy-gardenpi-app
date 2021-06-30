@@ -24,44 +24,16 @@ SOFTWARE.
 
 #pragma once
 
-#include <mutex>
-#include <functional>
-
-#include "../utilities/singleton.hpp"
-#include "../constants.hpp"
+#include <cstdint>
 
 namespace hgardenpi
 {
     inline namespace v1
     {
-        using namespace std;
 
-        /**
-         * @brief Scheduler for scheduing acrion, inside of this run a loop every one second
-         * 
-         */
-        class Scheduler final : public Singleton<Scheduler>
+        enum class Time : uint16_t
         {
-
-            bool start = false;
-
-            mutable mutex m;
-
-        public:
-            Scheduler(Scheduler &) = delete;
-            Scheduler &operator=(const Scheduler &) = delete;
-            Scheduler(Scheduler &&) = delete;
-            Scheduler &operator=(Scheduler &&) = delete;
-
-                        /**
-             * @brief Return the name of object
-             * 
-             * @return std::string name of object
-             */
-            inline string toString() noexcept override
-            {
-                return typeid(*this).name();
-            }
+            SECOND = 1'000
         };
 
     }
