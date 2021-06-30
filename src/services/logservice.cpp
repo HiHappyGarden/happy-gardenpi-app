@@ -36,7 +36,7 @@ using namespace hgardenpi;
 LogService::LogService() noexcept
 {
     openlog(HGARDENPI_NAME, LOG_PID, LOG_USER);
-    syslog(LOG_INFO, "Start");
+    syslog(LOG_INFO, "start");
 }
 
 void LogService::write(uint8_t level, const char *msg, ...) const noexcept

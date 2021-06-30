@@ -53,6 +53,21 @@ namespace hgardenpi
             Globals() noexcept;
             HGARDENPI_NO_COPY_NO_MOVE(Globals)
 
+            /**
+             * @brief Return the name of object
+             * 
+             * @return std::string name of object
+             */
+            inline string toString() noexcept override
+            {
+                return typeid(*this).name();
+            }
+
+            /**
+             * @brief Get the actual device info
+             * 
+             * @return const DeviceInfo::Ptr& reference
+             */
             const DeviceInfo::Ptr &getDeviceInfo() const noexcept
             {
                 return deviceInfo;
