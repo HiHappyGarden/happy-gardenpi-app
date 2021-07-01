@@ -26,16 +26,20 @@ SOFTWARE.
 
 #include <wiringPi.h>
 #include <mosquittopp.h>
+#include <stdexcept>
+using std::runtime_error;
 
 #include "services/lockservice.hpp"
+using std::make_unique;
+
 #include "services/logservice.hpp"
 #include "config.h"
+#include "constants.hpp"
 
 namespace hgardenpi
 {
     inline namespace v1
     {
-        using std::make_unique;
 
         Globals::Globals() noexcept
         try
@@ -53,12 +57,20 @@ namespace hgardenpi
             //initializde log
             LogService::getInstance()->write(LOG_INFO, "version: %s", HGARDENPI_VER);
 
+            //get device info
             Globals::getInstance()->deviceInfo = getDeviceInfo();
 
+            //print device info to log
             LogService::getInstance()->write(LOG_INFO, "hardware: %s", Globals::getInstance()->deviceInfo->hardhare.c_str());
             LogService::getInstance()->write(LOG_INFO, "revision: %s", Globals::getInstance()->deviceInfo->revision.c_str());
             LogService::getInstance()->write(LOG_INFO, "serial: %s", Globals::getInstance()->deviceInfo->serial.c_str());
             LogService::getInstance()->write(LOG_INFO, "model: %s", Globals::getInstance()->deviceInfo->model.c_str());
+            LogService::getInstance()->write(LOG_INFO, "cpu: %d", Globals::getInstance()->deviceInfo->cpu);
+
+            if (Globals::getInstance()->deviceInfo->hardhare != HW_V1)
+            {
+                throw runtime_error("hardware not supporrted, you need a Raspberry Pi Zero W");
+            }
 
             //check if already run an instance of Happy GardenPI
 

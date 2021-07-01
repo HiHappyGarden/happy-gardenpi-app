@@ -41,26 +41,26 @@ namespace hgardenpi
          * @brief Check if into a string is contains another string
          * 
          * @param str string
-         * @param toFind string to find
+         * @param strToFind string to find
          * @return true if it's contained
          * @return false in otherwise
          */
-        inline bool stringContain(const string &str, const string &toFind) noexcept
+        [[maybe_unused]] inline bool stringContain(const string &str, const string &strToFind) noexcept
         {
-            return str.find(toFind) != string::npos;
+            return str.find(strToFind) != string::npos;
         }
 
         /**
          * @brief Check if into a string is contains another string
          * 
          * @param str string
-         * @param toFind string to find
+         * @param strToFind string to find
          * @return true if it's contained
          * @return false in otherwise
          */
-        inline bool stringContain(const string &str, const string &&toFind) noexcept
+        [[maybe_unused]] inline bool stringContain(const string &str, const string &&strToFind) noexcept
         {
-            return stringContain(str, toFind);
+            return stringContain(str, strToFind);
         }
 
         /**
@@ -72,7 +72,7 @@ namespace hgardenpi
          * @return true if it's replaced
          * @return false if doesn't replaced
          */
-        bool stringReplace(string &str, string &&from, string &&to) noexcept;
+        [[maybe_unused]] bool stringReplace(string &str, string &&from, string &&to) noexcept;
 
         /**
          * @brief Replace a string into another string many time
@@ -81,7 +81,7 @@ namespace hgardenpi
          * @param from token to replace
          * @param to replacing
          */
-        void stringReplaceAll(string &str, string &&from, string &&to) noexcept;
+        [[maybe_unused]] void stringReplaceAll(string &str, string &&from, string &&to) noexcept;
 
         /**
          * @brief Convert string to byte array
@@ -89,7 +89,7 @@ namespace hgardenpi
          * @param str source
          * @return pair<uint8_t *, size_t> array converted
          */
-        inline pair<uint8_t *, size_t> stringToBytes(string str) noexcept
+        [[maybe_unused]] inline pair<uint8_t *, size_t> stringToBytes(string str) noexcept
         {
             return pair<uint8_t *, size_t>{reinterpret_cast<uint8_t *>(&str[0]), str.size()};
         }
@@ -101,7 +101,7 @@ namespace hgardenpi
          * @param size numer of bite to convert
          * @return string convderted
          */
-        string stringBytesToString(const uint8_t *bytes, size_t size) noexcept;
+        [[maybe_unused]] string stringBytesToString(const uint8_t *bytes, size_t size) noexcept;
 
         /**
          * @brief Convert byte array to string
@@ -109,7 +109,7 @@ namespace hgardenpi
          * @param bytes source
          * @return string convderted
          */
-        inline string stringBytesToString(const pair<uint8_t *, size_t> &bytes) noexcept
+        [[maybe_unused]] inline string stringBytesToString(const pair<uint8_t *, size_t> &bytes) noexcept
         {
             return stringBytesToString(bytes.first, bytes.second);
         }
@@ -120,7 +120,7 @@ namespace hgardenpi
          * @param bytes source
          * @return string convderted
          */
-        inline string stringBytesToString(const pair<uint8_t *, size_t> &&bytes) noexcept
+        [[maybe_unused]] inline string stringBytesToString(const pair<uint8_t *, size_t> &&bytes) noexcept
         {
             return stringBytesToString(bytes.first, bytes.second);
         }
@@ -133,7 +133,7 @@ namespace hgardenpi
          * @param upperCase force uppercase
          * @return string convderted
          */
-        string stringHexToString(const uint8_t *bytes, size_t size, bool upperCase = true) noexcept; //
+        [[maybe_unused]] string stringHexToString(const uint8_t *bytes, size_t size, bool upperCase = true) noexcept; //
 
         /**
          * @brief Convert string to lower case
@@ -141,7 +141,7 @@ namespace hgardenpi
          * @param data source 
          * @return const string& self reference string in lower case
          */
-        inline const string &stringToLowerCase(string &data) noexcept
+        [[maybe_unused]] inline const string &stringToLowerCase(string &data) noexcept
         {
             transform(data.begin(), data.end(), data.begin(), ::tolower);
             return data;
@@ -153,10 +153,34 @@ namespace hgardenpi
          * @param data source 
          * @return const string& self reference string in upper case
          */
-        inline const string &stringToUpperCase(string &data) noexcept
+        [[maybe_unused]] inline const string &stringToUpperCase(string &data) noexcept
         {
             transform(data.begin(), data.end(), data.begin(), ::toupper);
             return data;
         }
+
+        /**
+         * @brief Return strin from token index to end or size limit
+         * 
+         * @param src string source
+         * @param token string reference 
+         * @param offset to start
+         * @return string new string
+         */
+        [[maybe_unused]] string stringRight(const string &src, const string &token, size_t offset = 0) noexcept;
+
+        /**
+         * @brief Return strin from token index to end or size limit
+         * 
+         * @param src string source
+         * @param token string reference 
+         * @param offset to start
+         * @return string new string
+         */
+        [[maybe_unused]] inline string stringRight(const string &src, const string &&token, size_t offset = 0) noexcept
+        {
+            return stringRight(src, token, offset);
+        }
+
     }
 }

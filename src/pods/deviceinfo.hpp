@@ -6,14 +6,17 @@
 #include <string>
 #include <memory>
 
-namespace hgardenpi {
+namespace hgardenpi
+{
 
-    inline namespace v1 {
+    inline namespace v1
+    {
 
         using std::string;
         using std::unique_ptr;
 
-        struct DeviceInfo {
+        struct DeviceInfo
+        {
 
             typedef unique_ptr<DeviceInfo> Ptr;
 
@@ -21,6 +24,7 @@ namespace hgardenpi {
             string revision;
             string serial;
             string model;
+            uint cpu;
         };
 
     }

@@ -81,5 +81,25 @@ namespace hgardenpi
             return ret.str();
         }
 
+        string stringRight(const string &src, const string &token, size_t offset) noexcept
+        {
+            string ret;
+            size_t found = src.find(token);
+            if (found != string::npos)
+            {
+                size_t count = 0;
+                ret = &src[found];
+                if (offset > 0 && ret.length() > offset)
+                {
+                    ret = &ret[offset];
+                }
+                else if (offset > 0 && ret.length() <= offset)
+                {
+                    ret = "";
+                }
+            }
+            return ret;
+        }
+
     }
 }

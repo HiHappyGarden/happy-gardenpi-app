@@ -40,8 +40,9 @@ int main(int argc, char *argv[])
 
         hgardenpi::LogService::getInstance()->write(LOG_INFO, "end");
     }
-    catch (...)
+    catch (const std::exception &e)
     {
+        std::cerr << e.what() << std::endl;
         return EXIT_FAILURE;
     }
 
