@@ -24,26 +24,13 @@ SOFTWARE.
 
 #pragma once
 
-#include <string>
-#include <memory>
+#include "../pods/deviceinfo.hpp"
 
 namespace hgardenpi
 {
     inline namespace v1
     {
-        using std::string;
-        using std::unique_ptr;
 
-        struct DeviceInfo
-        {
-
-            typedef unique_ptr<DeviceInfo> Ptr;
-
-            string hardhare;
-            string revision;
-            string serial;
-            string model;
-        };
 
         /**
          * @brief Get CPU temperature
