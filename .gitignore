@@ -13,3 +13,4 @@ builds
 build
 build.sh
 src/config.h
+cmake-*

@@ -9,7 +9,7 @@
             "request": "attach",
             "name": "Attach to gdbserver",
             "gdbpath": "/usr/bin/gdb-multiarch",
-            "executable": "${workspaceFolder}/build/hgardenp",
+            "executable": "${workspaceFolder}/build/hgardenpi",
             "target": "passy-raspberrypi:3000",
             "remote": true,
             "printCalls": true,

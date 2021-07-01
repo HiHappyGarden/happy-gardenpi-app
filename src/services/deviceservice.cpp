@@ -40,7 +40,7 @@ namespace hgardenpi
             ifstream file("/sys/class/thermal/thermal_zone0/temp");
             file >> val;
             file.close();
-            return stof(val) / 1000.0;
+            return stof(val) / 1000.0f;
         }
 
         DeviceInfo::Ptr getDeviceInfo()
@@ -60,11 +60,11 @@ namespace hgardenpi
                 }
                 if (stringContain(line, "Serial"))
                 {
-                    device->revision = "3";
+                    device->serial = "3";
                 }
                 if (stringContain(line, "Model"))
                 {
-                    device->revision = "4";
+                    device->model = "4";
                 }
             }
             file.close();
