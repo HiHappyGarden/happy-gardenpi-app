@@ -26,6 +26,7 @@ SOFTWARE.
 
 #include <iostream>
 #include <fstream>
+#include <thread>
 using namespace std;
 
 #include "../utilities/stringutils.hpp"
@@ -45,26 +46,26 @@ namespace hgardenpi
 
         DeviceInfo::Ptr getDeviceInfo()
         {
-            auto device = unique_ptr<DeviceInfo>(new (nothrow) DeviceInfo{"no info", "no info", "no info", "no info"});
+            auto device = unique_ptr<DeviceInfo>(new (nothrow) DeviceInfo{"no info", "no info", "no info", "no info", cpu : thread::hardware_concurrency()});
             ifstream file("/proc/cpuinfo");
             string line;
             while (getline(file, line))
             {
                 if (stringContain(line, "Hardware"))
                 {
-                    device->hardhare = "1";
+                    device->hardhare = stringRight(line, ":", 2);
                 }
                 if (stringContain(line, "Revision"))
                 {
-                    device->revision = "2";
+                    device->revision = stringRight(line, ":", 2);
                 }
                 if (stringContain(line, "Serial"))
                 {
-                    device->serial = "3";
+                    device->serial = stringRight(line, ":", 2);
                 }
                 if (stringContain(line, "Model"))
                 {
-                    device->model = "4";
+                    device->model = stringRight(line, ":", 2);
                 }
             }
             file.close();

@@ -46,5 +46,8 @@ namespace hgardenpi
             SECOND = 1'000
         };
 
+        //hw needed for Happy GardenPI
+        const constexpr char *HW_V1 = "BCM2835";
+
     }
 }
