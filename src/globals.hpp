@@ -75,10 +75,17 @@ namespace hgardenpi
         };
 
         /**
-         * @brief before all call this functiuon fo inilialize the project
+         * @brief Before all call this functiuon fo inilialize the project
          * 
+         * @exception runtime_error when hardware requisites mismatch
          */
         void initialize();
+
+        /**
+         * @brief Start main look and scheduler
+         * 
+         */
+        void start();
 
     }
 }
