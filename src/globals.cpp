@@ -26,8 +26,11 @@ SOFTWARE.
 
 #include <wiringPi.h>
 #include <mosquittopp.h>
+
 #include <stdexcept>
-using std::runtime_error;
+#include <thread>
+#include <chrono>
+using namespace std;
 
 #include "services/lockservice.hpp"
 using std::make_unique;
@@ -54,7 +57,11 @@ namespace hgardenpi
 
         void initialize()
         {
-            //initializde log
+
+            //check if already run an instance of Happy GardenPI
+            Globals::getInstance()->lockService->lock();
+
+            //print init info on log
             LogService::getInstance()->write(LOG_INFO, "version: %s", HGARDENPI_VER);
 
             //get device info
@@ -74,8 +81,6 @@ namespace hgardenpi
                 throw runtime_error(error);
             }
 
-            //check if already run an instance of Happy GardenPI
-
             //initialize WiringPI
             wiringPiSetupGpio();
 
@@ -85,7 +90,14 @@ namespace hgardenpi
 
         void start()
         {
-            //foo
+
+            while (true)
+            {
+                this_thread::sleep_for(chrono::milliseconds(100));
+            }
+
+            //release
+            Globals::getInstance()->lockService->release();
         }
     }
 }

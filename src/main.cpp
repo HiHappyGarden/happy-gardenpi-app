@@ -36,7 +36,11 @@ int main(int argc, char *argv[])
 {
     try
     {
+        //initialize Happy GardenPI
         hgardenpi::initialize();
+
+        //start loops
+        hgardenpi::start();
 
         hgardenpi::LogService::getInstance()->write(LOG_INFO, "end");
     }

@@ -41,7 +41,7 @@ namespace hgardenpi
          * @brief Enum for manage times
          * 
          */
-        enum class Time : uint16_t
+        enum class Time : int64_t
         {
             SECOND = 1'000
         };

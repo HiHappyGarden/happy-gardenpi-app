@@ -46,6 +46,7 @@ namespace hgardenpi
             unique_ptr<LockService> lockService;
 
             friend void initialize();
+            friend void start();
 
             DeviceInfo::Ptr deviceInfo;
 
