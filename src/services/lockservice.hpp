@@ -24,6 +24,8 @@ SOFTWARE.
 
 #pragma once
 
+#include <stdio.h>
+
 #include "../utilities/object.hpp"
 
 namespace hgardenpi
