@@ -69,7 +69,9 @@ namespace hgardenpi
 
             if (Globals::getInstance()->deviceInfo->hardhare != HW_V1)
             {
-                throw runtime_error("hardware not supporrted, you need a Raspberry Pi Zero W");
+                char error[] = "hardware not supporrted, you need a Raspberry Pi Zero W";
+                LogService::getInstance()->write(LOG_ERR, "cpu: %d", error);
+                throw runtime_error(error);
             }
 
             //check if already run an instance of Happy GardenPI
@@ -79,6 +81,11 @@ namespace hgardenpi
 
             //initialize mosquittopp
             mosqpp::lib_init();
+        }
+
+        void start()
+        {
+            //foo
         }
     }
 }
