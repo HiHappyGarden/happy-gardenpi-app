@@ -33,15 +33,33 @@ namespace hgardenpi
         using std::string;
 
         /**
-         * @brief PIDCheck if exist another instance of Happy GardenPI
+         * @brief LockService check if exist another instance of Happy GardenPI
          * 
          */
         class LockService final : public Object
         {
+            uint fd;
 
         public:
             inline LockService() noexcept {}
             HGARDENPI_NO_COPY_NO_MOVE(LockService)
+
+            /** 
+            * @brief Try to get lock.
+            */
+            void lock();
+
+            /** 
+            * @brief Release the lock obtained with lock().
+            */
+            void release();
+
+            /** 
+            * @brief Check if Happy GardenPI already run
+            * 
+            * @return pid in execution or 0
+            */
+            pid_t check();
 
             /**
              * @brief Return the name of object
