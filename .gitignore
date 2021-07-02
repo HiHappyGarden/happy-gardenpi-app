@@ -14,3 +14,4 @@ build
 build.sh
 src/config.h
 cmake-*
+.DS_Store
