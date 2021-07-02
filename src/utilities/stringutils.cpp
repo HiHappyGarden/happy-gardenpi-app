@@ -31,12 +31,12 @@ namespace hgardenpi
 {
     inline namespace v1
     {
-        string stringLeft() noexcept
+        [[maybe_unused]] string stringLeft() noexcept
         {
             return "";
         }
 
-        bool stringReplace(string &str, string &&from, string &&to) noexcept
+        [[maybe_unused]] bool stringReplace(string &str, string &&from, string &&to) noexcept
         {
             size_t startPos = str.find(from);
             if (startPos == string::npos)
@@ -45,7 +45,7 @@ namespace hgardenpi
             return true;
         }
 
-        void stringReplaceAll(string &str, string &&from, string &&to) noexcept
+        [[maybe_unused]] void stringReplaceAll(string &str, string &&from, string &&to) noexcept
         {
             if (from.empty())
                 return;
@@ -57,7 +57,7 @@ namespace hgardenpi
             }
         }
 
-        string stringBytesToString(const uint8_t *key, size_t size) noexcept
+        [[maybe_unused]] string stringBytesToString(const uint8_t *key, size_t size) noexcept
         {
             if (!key)
             {
@@ -71,7 +71,7 @@ namespace hgardenpi
             return convert.str();
         }
 
-        string stringHexToString(const uint8_t *bytes, size_t size, bool upperCase) noexcept
+        [[maybe_unused]] string stringHexToString(const uint8_t *bytes, size_t size, bool upperCase) noexcept
         {
             ostringstream ret;
             for (int i = 0; i < size; i++)
@@ -81,13 +81,12 @@ namespace hgardenpi
             return ret.str();
         }
 
-        string stringRight(const string &src, const string &token, size_t offset) noexcept
+        [[maybe_unused]] string stringRight(const string &src, const string &token, size_t offset) noexcept
         {
             string ret;
             size_t found = src.find(token);
             if (found != string::npos)
             {
-                size_t count = 0;
                 ret = &src[found];
                 if (offset > 0 && ret.length() > offset)
                 {

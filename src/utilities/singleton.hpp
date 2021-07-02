@@ -39,6 +39,11 @@ namespace hgardenpi
         using std::once_flag;
         using std::unique_ptr;
 
+        /**
+         * @brief Generic singleton class
+         * 
+         * @tparam T class reference for template
+         */
         template <typename T>
         class Singleton : public Object
         {
@@ -55,6 +60,11 @@ namespace hgardenpi
             Singleton<T>(Singleton<T> &&) = delete;
             Singleton<T> &operator=(Singleton<T> &&) = delete;
 
+            /**
+             * @brief Get the Instance object
+             * 
+             * @return T* 
+             */
             static T *getInstance() noexcept
             {
                 call_once(once, []()
@@ -62,6 +72,13 @@ namespace hgardenpi
                 return instance.get();
             }
 
+            /**
+             * @brief Get the Instance object whit aruments
+             * 
+             * @tparam Args 
+             * @param args 
+             * @return T* 
+             */
             template <typename... Args>
             static T *getInstance(Args &&...args) noexcept
             {

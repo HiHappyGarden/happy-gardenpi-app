@@ -72,7 +72,7 @@ namespace hgardenpi
          * @return true if it's replaced
          * @return false if doesn't replaced
          */
-        [[maybe_unused]] bool stringReplace(string &str, string &&from, string &&to) noexcept;
+        [[maybe_unused]] [[maybe_unused]] bool stringReplace(string &str, string &&from, string &&to) noexcept;
 
         /**
          * @brief Replace a string into another string many time
@@ -133,7 +133,7 @@ namespace hgardenpi
          * @param upperCase force uppercase
          * @return string convderted
          */
-        [[maybe_unused]] string stringHexToString(const uint8_t *bytes, size_t size, bool upperCase = true) noexcept; //
+        [[maybe_unused]] [[maybe_unused]] string stringHexToString(const uint8_t *bytes, size_t size, bool upperCase = true) noexcept; //
 
         /**
          * @brief Convert string to lower case
