@@ -32,7 +32,7 @@ SOFTWARE.
 #include <stdexcept>
 using std::runtime_error;
 
-#include "../constants.hpp"
+#include "../config.h"
 
 using hgardenpi::v1::LockService;
 
@@ -40,7 +40,7 @@ static const constexpr inline char LOCK_NAME[] = "/run/hgardenpi.pid";
 
 bool LockService::lock()
 {
-    fd = open(LOCK_FILE, O_CREAT | O_RDWR, 0666);
+    fd = open(HGARDENPI_FILE_LOCK_PATH, O_CREAT | O_RDWR, 0666);
     if (fd == -1)
     {
         throw runtime_error("impossible create lock file");
@@ -62,5 +62,5 @@ void LockService::release() const noexcept
 {
     if (fd < 0)
         return;
-    remove(LOCK_FILE);
+    remove(HGARDENPI_FILE_LOCK_PATH);
 }
