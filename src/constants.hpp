@@ -50,7 +50,5 @@ namespace hgardenpi
         //hw needed for Happy GardenPI
         const constexpr char *HW_V1 = "BCM2835";
 
-        const constexpr char *LOCK_FILE = "/run/hgarden.pid";
-
     }
 }
