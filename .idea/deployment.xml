@@ -2,16 +2,14 @@
 <project version="4">
   <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false">
     <serverData>
-      <paths name="rasperrypi zero remote (57fcb23e-51d1-45df-be07-5d53ee9351f7)">
+      <paths name="passy-raspberrypi (9fc6d440-0c3a-4bc5-9009-e6578c12df94)">
         <serverdata>
           <mappings>
-            <mapping deploy="/tmp/tmp.6vhzEbIJgI" local="$PROJECT_DIR$" />
+            <mapping deploy="/tmp/tmp.tbk2YE0vbx" local="$PROJECT_DIR$" />
           </mappings>
           <excludedPaths>
             <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug" />
-            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-remote" />
-            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-raspebbypi-zero" />
-            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-raspebbypi-zero-remote" />
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-passy-raspberrypi" />
           </excludedPaths>
         </serverdata>
       </paths>
