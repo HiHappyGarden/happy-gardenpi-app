@@ -34,17 +34,35 @@ using namespace std;
 
 using hgardenpi::v1::LockService;
 
-bool LockService::lock()
+bool LockService::lock() noexcept
 {
 
     ifstream lockFileCheck(HGARDENPI_FILE_LOCK_PATH);
-    if ( !lockFileCheck.good())
+    if ( lockFileCheck && !lockFileCheck.good())
     {
         lockFile.open (HGARDENPI_FILE_LOCK_PATH);
         lockFile << std::to_string(getpid());
+        lockFile.flush();
         lockFileCheck.close();
         return false;
     }
+
+    // get length of file:
+    lockFileCheck.seekg (0, ifstream::end);
+    streamoff length = lockFileCheck.tellg();
+    lockFileCheck.seekg (0, ifstream::beg);
+
+    char * buffer = new(nothrow) char [length];
+
+    // read data as a block:
+    lockFileCheck.read (buffer, static_cast<int>(length));
+
+    // convert string to pid_t
+    stringstream ss;
+    ss << buffer;
+    ss >> pidInExecution;
+
+    delete[] buffer;
 
     lockFileCheck.close();
     return true;

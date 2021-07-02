@@ -44,6 +44,8 @@ namespace hgardenpi
         class LockService final : public Object
         {
             ofstream lockFile;
+            pid_t pidInExecution;
+
 
         public:
             inline LockService() noexcept : lockFile(nullptr) {}
@@ -59,12 +61,17 @@ namespace hgardenpi
             * @throw runtime_error when is not possibe create lock file
             * @return true if another instance already run
             */
-            bool lock();
+            bool lock() noexcept;
 
             /** 
             * @brief Release the lock obtained with lock().
             */
             void release() noexcept;
+
+            [[maybe_unused]] inline pid_t getPidInExecution() const noexcept
+            {
+                return pidInExecution;
+            }
 
             /**
              * @brief Return the name of object
