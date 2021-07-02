@@ -27,6 +27,8 @@ SOFTWARE.
 
 #include <unistd.h>
 
+#include <iostream>
+#include <fstream>
 #include <filesystem>
 using namespace std;
 
@@ -37,32 +39,29 @@ using hgardenpi::v1::LockService;
 bool LockService::lock() noexcept
 {
 
-    ifstream lockFileCheck(HGARDENPI_FILE_LOCK_PATH);
+    ifstream lockFileCheck;
+    lockFileCheck.open(HGARDENPI_FILE_LOCK_PATH);
     if ( lockFileCheck && !lockFileCheck.good())
     {
-        lockFile.open (HGARDENPI_FILE_LOCK_PATH);
+        ofstream lockFile(HGARDENPI_FILE_LOCK_PATH);
         lockFile << std::to_string(getpid());
         lockFile.flush();
+        lockFile.close();
         lockFileCheck.close();
         return false;
     }
 
-    // get length of file:
-    lockFileCheck.seekg (0, ifstream::end);
-    streamoff length = lockFileCheck.tellg();
     lockFileCheck.seekg (0, ifstream::beg);
+    string line;
+    while (getline(lockFileCheck, line))
+    {
 
-    char * buffer = new(nothrow) char [length];
+        // convert string to pid
+        stringstream ss;
+        ss << line;
+        ss >> pidInExecution;
 
-    // read data as a block:
-    lockFileCheck.read (buffer, static_cast<int>(length));
-
-    // convert string to pid_t
-    stringstream ss;
-    ss << buffer;
-    ss >> pidInExecution;
-
-    delete[] buffer;
+    }
 
     lockFileCheck.close();
     return true;
@@ -70,9 +69,11 @@ bool LockService::lock() noexcept
 
 void LockService::release() noexcept
 {
-    if (lockFile && lockFile.is_open())
+    ifstream lockFileCheck(HGARDENPI_FILE_LOCK_PATH);
+    if ( lockFileCheck && !lockFileCheck.good())
     {
-        lockFile.close();
+        remove(HGARDENPI_FILE_LOCK_PATH);
     }
-    remove(HGARDENPI_FILE_LOCK_PATH);
+    lockFileCheck.close();
+
 }
