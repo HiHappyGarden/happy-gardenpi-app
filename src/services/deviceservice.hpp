@@ -37,13 +37,13 @@ namespace hgardenpi
          * @exception throw exception when temp is not available
          * @return return degrees temperature
          */
-        float getCPUTemperature();
+        [[maybe_unused]] float getCPUTemperature();
 
         /**
          * @brief Get Raspberry PI info
          * @exception throw exception when temp is not available
          * @return return Raspberry PI info
          */
-        DeviceInfo::Ptr getDeviceInfo();
+        [[maybe_unused]] DeviceInfo::Ptr getDeviceInfo();
     }
 }

@@ -35,7 +35,7 @@ namespace hgardenpi
 {
     inline namespace v1
     {
-        float getCPUTemperature()
+        [[maybe_unused]] float getCPUTemperature()
         {
             string val;
             ifstream file("/sys/class/thermal/thermal_zone0/temp");
@@ -65,7 +65,7 @@ namespace hgardenpi
                 }
                 if (stringContain(line, "Model"))
                 {
-                    device->model = stringRight(line, ":", 2);
+                    device->model = move(stringRight(line, ":", 2));
                 }
             }
             file.close();
