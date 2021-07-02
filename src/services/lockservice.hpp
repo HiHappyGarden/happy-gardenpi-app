@@ -53,6 +53,7 @@ namespace hgardenpi
             /** 
             * @brief Try to get lock.
             * 
+            * @throw runtime_error when is not possibe create lock file
             * @return true if another instance already run
             */
             bool lock();
