@@ -43,10 +43,11 @@ bool LockService::lock()
         lockFile.open (HGARDENPI_FILE_LOCK_PATH);
         lockFile << std::to_string(getpid());
         lockFileCheck.close();
-        return true;
+        return false;
     }
 
-    return false;
+    lockFileCheck.close();
+    return true;
 }
 
 void LockService::release() noexcept
