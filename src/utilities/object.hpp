@@ -48,7 +48,7 @@ namespace hgardenpi
              * 
              * @return std::string data of object
              */
-            virtual std::string toString() noexcept = 0;
+            [[maybe_unused]] virtual std::string toString() noexcept = 0;
         };
 
     }

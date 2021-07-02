@@ -43,11 +43,14 @@ namespace hgardenpi
          */
         enum class Time : int64_t
         {
-            SECOND = 1'000
+            SECOND = 1'000,
+            TICK = 200
         };
 
         //hw needed for Happy GardenPI
         const constexpr char *HW_V1 = "BCM2835";
+
+        const constexpr char *LOCK_FILE = "/run/hgarden.pid";
 
     }
 }

@@ -27,9 +27,7 @@ SOFTWARE.
 #include <wiringPi.h>
 #include <mosquittopp.h>
 
-#include <stdexcept>
 #include <thread>
-#include <chrono>
 using namespace std;
 
 #include "services/lockservice.hpp"
@@ -51,7 +49,6 @@ namespace hgardenpi
         }
         catch (const std::bad_alloc &e)
         {
-            lockServicePassThrough = true;
             LogService::getInstance()->write(LOG_ERR, e.what());
         }
 
@@ -74,6 +71,7 @@ namespace hgardenpi
             LogService::getInstance()->write(LOG_INFO, "model: %s", Globals::getInstance()->deviceInfo->model.c_str());
             LogService::getInstance()->write(LOG_INFO, "cpu: %d", Globals::getInstance()->deviceInfo->cpu);
 
+            //HW check
             if (Globals::getInstance()->deviceInfo->hardhare != HW_V1)
             {
                 char error[] = "hardware not supporrted, you need a Raspberry Pi Zero W";
@@ -88,16 +86,13 @@ namespace hgardenpi
             mosqpp::lib_init();
         }
 
-        void start()
+        [[noreturn]] void start()
         {
 
             while (true)
             {
-                this_thread::sleep_for(chrono::milliseconds(100));
+                this_thread::sleep_for(chrono::milliseconds(static_cast<int64_t>(Time::TICK)));
             }
-
-            //release
-            Globals::getInstance()->lockService->release();
         }
     }
 }

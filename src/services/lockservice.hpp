@@ -40,28 +40,27 @@ namespace hgardenpi
          */
         class LockService final : public Object
         {
-            uint fd;
+            int fd;
 
         public:
-            inline LockService() noexcept {}
+            inline LockService() noexcept : fd(-1) {}
+            inline ~LockService() noexcept
+            {
+                release();
+            }
             HGARDENPI_NO_COPY_NO_MOVE(LockService)
 
             /** 
             * @brief Try to get lock.
+            * 
+            * @return true if another instance already run
             */
-            void lock();
+            bool lock();
 
             /** 
             * @brief Release the lock obtained with lock().
             */
-            void release();
-
-            /** 
-            * @brief Check if Happy GardenPI already run
-            * 
-            * @return pid in execution or 0
-            */
-            pid_t check();
+            void release() const noexcept;
 
             /**
              * @brief Return the name of object
