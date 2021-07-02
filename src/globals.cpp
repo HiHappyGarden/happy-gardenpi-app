@@ -60,7 +60,7 @@ namespace hgardenpi
             {
                 string error("another instance already run pid:");
                 error += to_string(Globals::getInstance()->lockService->getPidInExecution());
-                LogService::getInstance()->write(LOG_ERR, "cpu: %d", error.c_str());
+                LogService::getInstance()->write(LOG_ERR, "%s", error.c_str());
                 throw runtime_error(error);
             }
 
