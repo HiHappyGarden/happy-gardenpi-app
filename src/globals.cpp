@@ -58,8 +58,9 @@ namespace hgardenpi
             //check if already run an instance of Happy GardenPI
             if (Globals::getInstance()->lockService->lock())
             {
-                char error[] = "hardware not supporrted, you need a Raspberry Pi Zero W";
-                LogService::getInstance()->write(LOG_ERR, "cpu: %d", error);
+                string error("another instance already run pid:");
+                error += to_string(Globals::getInstance()->lockService->getPidInExecution());
+                LogService::getInstance()->write(LOG_ERR, "cpu: %d", error.c_str());
                 throw runtime_error(error);
             }
 
@@ -80,7 +81,7 @@ namespace hgardenpi
             if (Globals::getInstance()->deviceInfo->hardhare != HW_V1)
             {
                 char error[] = "hardware not supporrted, you need a Raspberry Pi Zero W";
-                LogService::getInstance()->write(LOG_ERR, "cpu: %d", error);
+                LogService::getInstance()->write(LOG_ERR, "%d", error);
                 throw runtime_error(error);
             }
 
