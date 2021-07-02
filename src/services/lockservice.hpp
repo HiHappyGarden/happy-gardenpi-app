@@ -25,8 +25,6 @@ SOFTWARE.
 #pragma once
 
 #include <cstdio>
-#include <iostream>
-#include <fstream>
 
 #include "../utilities/object.hpp"
 
@@ -34,8 +32,8 @@ namespace hgardenpi
 {
     inline namespace v1
     {
+
         using std::string;
-        using std::ofstream;
 
         /**
          * @brief LockService check if exist another instance of Happy GardenPI
@@ -43,12 +41,11 @@ namespace hgardenpi
          */
         class LockService final : public Object
         {
-            ofstream lockFile;
-            pid_t pidInExecution;
+            pid_t pidInExecution = 0;
 
 
         public:
-            inline LockService() noexcept : lockFile(nullptr) {}
+            LockService() = default;
             inline ~LockService() noexcept
             {
                 release();
@@ -66,9 +63,9 @@ namespace hgardenpi
             /** 
             * @brief Release the lock obtained with lock().
             */
-            void release() noexcept;
+            static void release() noexcept;
 
-            [[maybe_unused]] inline pid_t getPidInExecution() const noexcept
+            [[maybe_unused]] [[nodiscard]] inline pid_t getPidInExecution() const noexcept
             {
                 return pidInExecution;
             }
