@@ -27,7 +27,7 @@ SOFTWARE.
 using namespace std;
 
 #include <cstdarg>
-#include <string.h>
+#include <cstring>
 
 #include "../config.h"
 
@@ -48,11 +48,11 @@ void LogService::write(uint8_t level, const char *msg, ...) const noexcept
     va_start(ap, msg);
 
     char *buffer = new (nothrow) char[MAX_STRING_LEN];
-    memset(&buffer[0], 0, sizeof(buffer));
     if (buffer)
     {
+        memset(&buffer[0], 0, sizeof(buffer));
         vsnprintf(buffer, MAX_STRING_LEN, msg, ap);
-        syslog(level, buffer);
+        syslog(level, "%s", buffer);
         free(buffer);
     }
 

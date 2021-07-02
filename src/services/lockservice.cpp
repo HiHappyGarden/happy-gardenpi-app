@@ -25,27 +25,42 @@ SOFTWARE.
 
 #include "lockservice.hpp"
 
-#include <sys/types.h>
-#include <sys/stat.h>
+#include <unistd.h>
 #include <sys/file.h>
-#include <fcntl.h>
+
+#include <cerrno>
 #include <stdexcept>
 using std::runtime_error;
 
-#include "../config.h"
+#include "../constants.hpp"
 
 using hgardenpi::v1::LockService;
 
 static const constexpr inline char LOCK_NAME[] = "/run/hgardenpi.pid";
 
-void LockService::lock()
+bool LockService::lock()
 {
+    fd = open(LOCK_FILE, O_CREAT | O_RDWR, 0666);
+    if (fd == -1)
+    {
+        throw runtime_error("impossible create lock file");
+    }
+    pid_t pid = getpid();
+
+    write(fd, (const void *)&pid, sizeof(pid));
+
+    int rc = flock(fd, LOCK_EX | LOCK_NB);
+    if (rc)
+    {
+        if (EWOULDBLOCK == errno)
+            return true; // another instance is running
+    }
+    return false;
 }
 
-void LockService::release()
+void LockService::release() const noexcept
 {
-}
-
-pid_t LockService::check()
-{
+    if (fd < 0)
+        return;
+    remove(LOCK_FILE);
 }

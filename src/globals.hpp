@@ -42,10 +42,10 @@ namespace hgardenpi
          */
         class Globals final : public Singleton<Globals>
         {
-            bool lockServicePassThrough = false;
             unique_ptr<LockService> lockService;
 
             friend void initialize();
+
             friend void start();
 
             DeviceInfo::Ptr deviceInfo;
