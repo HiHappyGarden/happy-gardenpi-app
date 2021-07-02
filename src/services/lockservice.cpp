@@ -39,19 +39,16 @@ using hgardenpi::v1::LockService;
 bool LockService::lock() noexcept
 {
 
-    ifstream lockFileCheck;
-    lockFileCheck.open(HGARDENPI_FILE_LOCK_PATH);
-    if ( lockFileCheck && !lockFileCheck.good())
+    ifstream lockFileCheck(HGARDENPI_FILE_LOCK_PATH);
+    if ( !lockFileCheck.good())
     {
         ofstream lockFile(HGARDENPI_FILE_LOCK_PATH);
-        lockFile << std::to_string(getpid());
-        lockFile.flush();
+        lockFile << std::to_string(getpid()) << endl;
         lockFile.close();
         lockFileCheck.close();
         return false;
     }
 
-    lockFileCheck.seekg (0, ifstream::beg);
     string line;
     while (getline(lockFileCheck, line))
     {
@@ -62,6 +59,8 @@ bool LockService::lock() noexcept
         ss >> pidInExecution;
 
     }
+
+    cout << "pid:" << pidInExecution << endl;
 
     lockFileCheck.close();
     return true;
