@@ -35,26 +35,22 @@ namespace hgardenpi
     inline namespace v1
     {
 
-        MQTTClient::MQTTClient(const string &serial, const string &host, const string &user, const string &passwd, uint16_t port, uint16_t keepAlive) : topic("/HappyGardenPI/" + serial)
+        MQTTClient::MQTTClient(const string &serial, const string &host, const string &user, const string &passwd, uint16_t port, uint16_t keepAlive) :
+        topic("/HappyGardenPI/" + serial),
+        user(user),
+        passwd(passwd)
         {
-            int ret;
-
-            ret = connect(host.c_str(), port, keepAlive);
-            if (ret)
-            {
-                HGARDENPI_ERROR_LOG_AMD_THROW(strerror(ret))
-            }
-
-            ret = username_pw_set(user.c_str(), passwd.c_str());
-            if (ret)
-            {
-                HGARDENPI_ERROR_LOG_AMD_THROW(strerror(ret))
-            }
+            connect(host.c_str(), port, keepAlive);
         }
 
         void MQTTClient::on_connect(int rc)
         {
 
+            if (rc)
+            {
+                HGARDENPI_ERROR_LOG_AMD_THROW(strerror(rc))
+            }
+            rc = username_pw_set(user.c_str(), passwd.c_str());
             if (rc)
             {
                 HGARDENPI_ERROR_LOG_AMD_THROW(strerror(rc))

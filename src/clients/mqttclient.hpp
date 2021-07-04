@@ -51,6 +51,8 @@ namespace hgardenpi
             static inline const constexpr uint16_t PORT = 1883;
 
             const string topic;
+            const string &user;
+            const string &passwd;
 
         public:
             using MessageCallback = function<void(const struct mosquitto_message *)>;
