@@ -26,6 +26,7 @@ SOFTWARE.
 #include <iostream>
 #include <mosquittopp.h>
 #include <date.h>
+#include <nlohmann/json.hpp>
 #include "services/logservice.hpp"
 #include "services/deviceservice.hpp"
 

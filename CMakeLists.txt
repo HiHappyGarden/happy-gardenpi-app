@@ -5,6 +5,23 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_C_STANDARD 17)
 set(RASPBIAN_ROOTFS "$ENV{HOME}/raspberrypi/rootfs")
 set(FILE_LOCK_PATH "/tmp/hgardenpi.pid")
+set(MQTT_BROKER_HOST "passy-raspberrypi")
+set(MQTT_BROKER_USER "hgardepi")
+set(MQTT_BROKER_PASSWD "hgardepi")
+
+
+
+include(FetchContent)
+
+FetchContent_Declare(json
+  GIT_REPOSITORY https://github.com/nlohmann/json.git
+  GIT_TAG v3.7.3)
+
+FetchContent_GetProperties(json)
+if(NOT json_POPULATED)
+  FetchContent_Populate(json)
+  add_subdirectory(${json_SOURCE_DIR} ${json_BINARY_DIR} EXCLUDE_FROM_ALL)
+endif()
 
 
 configure_file(config.h.in ../src/config.h)
@@ -43,4 +60,5 @@ target_link_libraries(hgardenpi
                         wiringPiDev
                         pthread
                         mosquittopp
+                        nlohmann_json::nlohmann_json
                         )

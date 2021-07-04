@@ -24,9 +24,64 @@ SOFTWARE.
 
 #include "mqttclient.hpp"
 
-using hgardenpi::MQTTClient;
+#include <cstring>
 
-MQTTClient::MQTTClient(const string &id, const string &host, uint16_t port)
+#include "../services/logservice.hpp"
+
+#include "../constants.hpp"
+
+namespace hgardenpi
 {
-    connect(host.c_str(), port, KEEP_ALIVE);
+    inline namespace v1
+    {
+
+        MQTTClient::MQTTClient(const string &serial, const string &host, const string &user, const string &passwd, uint16_t port, uint16_t keepAlive) : topic("/HappyGardenPI/" + serial)
+        {
+            int ret;
+
+            ret = connect(host.c_str(), port, keepAlive);
+            if (ret)
+            {
+                HGARDENPI_ERROR_LOG_AMD_THROW(strerror(ret))
+            }
+
+            ret = username_pw_set(user.c_str(), passwd.c_str());
+            if (ret)
+            {
+                HGARDENPI_ERROR_LOG_AMD_THROW(strerror(ret))
+            }
+        }
+
+        void MQTTClient::on_connect(int rc)
+        {
+
+            if (rc)
+            {
+                HGARDENPI_ERROR_LOG_AMD_THROW(strerror(rc))
+            }
+            rc = subscribe(nullptr, topic.c_str());
+            if (rc)
+            {
+                HGARDENPI_ERROR_LOG_AMD_THROW(strerror(rc));
+            }
+            LogService::getInstance()
+                ->write(LOG_INFO, "%s %s", "submitted topic", topic.c_str());
+        }
+
+        void MQTTClient::on_message(const struct mosquitto_message *message)
+        {
+            int payloadSize = message->payloadlen + 1;
+            char *buf = new (nothrow) char[payloadSize];
+            if (buf)
+            {
+                memset(buf, 0, payloadSize * sizeof(char));
+                memcpy(buf, message->payload, payloadSize * sizeof(char));
+                cout << "message recieved: "
+                     << buf << endl;
+                delete[] buf;
+            }
+        }
+
+    }
+
 }
