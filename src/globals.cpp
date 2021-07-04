@@ -25,7 +25,6 @@ SOFTWARE.
 #include "globals.hpp"
 
 #include <wiringPi.h>
-#include <mosquittopp.h>
 
 #include <thread>
 using namespace std;
@@ -52,6 +51,11 @@ namespace hgardenpi
             LogService::getInstance()->write(LOG_ERR, e.what());
         }
 
+        Globals::~Globals() noexcept
+        {
+            mosqpp::lib_cleanup();
+        }
+
         void initialize()
         {
 
@@ -60,7 +64,7 @@ namespace hgardenpi
             {
                 string error("another instance already run pid:");
                 error += to_string(Globals::getInstance()->lockService->getPidInExecution());
-                LogService::getInstance()->write(LOG_ERR, "cpu: %d", error.c_str());
+                LogService::getInstance()->write(LOG_ERR, "%d", error.c_str());
                 throw runtime_error(error);
             }
 
@@ -80,16 +84,19 @@ namespace hgardenpi
             //HW check
             if (Globals::getInstance()->deviceInfo->hardhare != HW_V1)
             {
-                char error[] = "hardware not supporrted, you need a Raspberry Pi Zero W";
-                LogService::getInstance()->write(LOG_ERR, "%d", error);
-                throw runtime_error(error);
+                HGARDENPI_ERROR_LOG_AMD_THROW("hardware not supporrted, you need a Raspberry Pi Zero W")
             }
 
             //initialize WiringPI
             wiringPiSetupGpio();
 
             //initialize mosquittopp
-            mosqpp::lib_init();
+            if (mosqpp::lib_init() != MOSQ_ERR_SUCCESS)
+            {
+                HGARDENPI_ERROR_LOG_AMD_THROW("mosqpp::lib_init() not init")
+            }
+
+            Globals::getInstance()->mqttClient = make_shared<MQTTClient>(Globals::getInstance()->deviceInfo->serial, HGARDENPI_MQTT_BROKER_HOST, HGARDENPI_MQTT_BROKER_USER, HGARDENPI_MQTT_BROKER_PASSWD);
         }
 
         [[noreturn]] void start()

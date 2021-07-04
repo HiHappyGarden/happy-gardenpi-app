@@ -25,8 +25,11 @@ SOFTWARE.
 #pragma once
 
 #include <mosquittopp.h>
+
 #include <string>
 #include <memory>
+#include <functional>
+#include <iostream>
 
 #include "../constants.hpp"
 
@@ -36,8 +39,7 @@ namespace hgardenpi
     {
 
         using mosqpp::mosquittopp;
-        using std::move;
-        using std::string;
+        using namespace std;
 
         /**
          * @brief MQTT Client for connect to mosquitto
@@ -46,29 +48,67 @@ namespace hgardenpi
         {
 
             static inline const constexpr uint16_t KEEP_ALIVE = 60;
-            static inline const constexpr uint16_t PORT = 60;
+            static inline const constexpr uint16_t PORT = 1883;
+
+            const string topic;
 
         public:
+            using MessageCallback = function<void(const struct mosquitto_message *)>;
+            typedef shared_ptr<MQTTClient> Ptr;
+
+            /**
+             * @brief Construct a new MQTTClient object
+             * 
+             * @param serial client reference 
+             * @param host address
+             * @param user host
+             * @param passwd host
+             * @param port host
+             * @param keepAlive keep alive connection timeout
+             */
+            MQTTClient(const string &serial, const string &host, const string &user, const string &passwd, uint16_t port = MQTTClient::PORT, uint16_t keepAlive = MQTTClient::KEEP_ALIVE);
+
+            /**
+             * @brief Construct a new MQTTClient object
+             * 
+             * @param serial client reference 
+             * @param host address
+             * @param user host
+             * @param passwd host
+             * @param port host
+             * @param keepAlive keep alive connection timeout
+             */
+            inline MQTTClient(const string &serial, const string &&host, const string &&user, const string &&passwd, uint16_t port = MQTTClient::PORT, uint16_t keepAlive = MQTTClient::KEEP_ALIVE) : MQTTClient(serial, host, user, passwd, port, keepAlive)
+            {
+            }
+
             HGARDENPI_NO_COPY_NO_MOVE(MQTTClient)
 
             /**
-             * @brief Construct a new MQTTClient object
+             * @brief Set the On Message Callback object
              * 
-             * @param id client name 
-             * @param host server host
-             * @param port server port
+             * @param onMessageCallback 
              */
-            MQTTClient(const string &id, const string &host, uint16_t port = MQTTClient::PORT);
-
-            /**
-             * @brief Construct a new MQTTClient object
-             * 
-             * @param id client name 
-             * @param host server host
-             * @param port server port
-             */
-            inline MQTTClient(const string &&id, const string &&host, uint16_t port = MQTTClient::PORT) : MQTTClient(id, host, port)
+            inline void setOnMessageCallback(MessageCallback &&onMessageCallback) noexcept
             {
+                this->onMessageCallback = onMessageCallback;
+            }
+
+        private:
+            MessageCallback onMessageCallback;
+
+            void on_connect(int rc) override;
+
+            void on_message(const struct mosquitto_message *message) override;
+
+            inline void on_subscribe(int mid, int qos_count, const int *granted_qos) override
+            {
+                cout << to_string(mid) << "-" << to_string(qos_count) << endl;
+            }
+
+            inline void on_log(int level, const char *str) override
+            {
+                cout << to_string(level) << "-" << str << endl;
             }
         };
     }

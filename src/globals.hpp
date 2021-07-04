@@ -28,6 +28,7 @@ SOFTWARE.
 
 #include "utilities/singleton.hpp"
 #include "services/deviceservice.hpp"
+#include "clients/mqttclient.hpp"
 
 namespace hgardenpi
 {
@@ -50,8 +51,11 @@ namespace hgardenpi
 
             DeviceInfo::Ptr deviceInfo;
 
+            MQTTClient::Ptr mqttClient;
+
         public:
             Globals() noexcept;
+            ~Globals() noexcept;
             HGARDENPI_NO_COPY_NO_MOVE(Globals)
 
             /**
@@ -69,9 +73,29 @@ namespace hgardenpi
              * 
              * @return const DeviceInfo::Ptr& reference
              */
-            const DeviceInfo::Ptr &getDeviceInfo() const noexcept
+            inline const DeviceInfo *getDeviceInfo() const noexcept
             {
-                return deviceInfo;
+                return deviceInfo.get();
+            }
+
+            /**
+             * @brief Set the Mqtt Client object
+             * 
+             * @param mqttClient 
+             */
+            inline void settMqttClient(const MQTTClient::Ptr &mqttClient) noexcept
+            {
+                this->mqttClient = mqttClient;
+            }
+
+            /**
+             * @brief Get the Mqtt Client object
+             * 
+             * @return const MQTTClient* 
+             */
+            inline const MQTTClient *getMqttClient() const noexcept
+            {
+                return mqttClient.get();
             }
         };
 
