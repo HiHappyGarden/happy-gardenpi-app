@@ -60,8 +60,6 @@ bool LockService::lock() noexcept
 
     }
 
-    cout << "pid:" << pidInExecution << endl;
-
     lockFileCheck.close();
     return true;
 }
