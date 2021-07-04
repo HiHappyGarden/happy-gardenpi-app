@@ -105,12 +105,12 @@ namespace hgardenpi
 
             inline void on_subscribe(int mid, int qos_count, const int *granted_qos) override
             {
-                cout << to_string(mid) << "-" << to_string(qos_count) << endl;
+                cout << "on_subscribe" << to_string(mid) << "-" << to_string(qos_count) << endl;
             }
 
             inline void on_log(int level, const char *str) override
             {
-                cout << to_string(level) << "-" << str << endl;
+                cout << "on_log" << to_string(level) << "-" << str << endl;
             }
         };
     }
