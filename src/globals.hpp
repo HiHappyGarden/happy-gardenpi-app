@@ -43,14 +43,12 @@ namespace hgardenpi
          */
         class Globals final : public Singleton<Globals>
         {
-            unique_ptr<LockService> lockService;
 
             friend void initialize();
-
             friend void start();
 
+            unique_ptr<LockService> lockService;
             DeviceInfo::Ptr deviceInfo;
-
             MQTTClient::Ptr mqttClient;
 
         public:
@@ -79,6 +77,16 @@ namespace hgardenpi
             }
 
             /**
+              * @brief Get the Logk Serice object
+              * 
+              * @return const LockService* 
+              */
+            inline const LockService *getLogkSerice() const noexcept
+            {
+                return lockService.get();
+            }
+
+            /**
              * @brief Set the Mqtt Client object
              * 
              * @param mqttClient 
@@ -97,6 +105,27 @@ namespace hgardenpi
             {
                 return mqttClient.get();
             }
+
+            // /**
+            //  * @brief Set the Run object
+            //  *
+            //  * @param run
+            //  */
+            // inline void setRun(bool run) noexcept
+            // {
+            //     this->run = run;
+            // }
+
+            // /**
+            //  * @brief Get the Run object
+            //  *
+            //  * @return true run loop
+            //  * @return false stop loop
+            //  */
+            // inline bool getRun() const noexcept
+            // {
+            //     return run;
+            // }
         };
 
         /**
