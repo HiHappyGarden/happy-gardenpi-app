@@ -84,15 +84,14 @@ namespace hgardenpi
                                                    //    }
                                                });
 
-                cerr << user << " " << passwd << endl;
                 int rc = mosquitto_username_pw_set(mosq, user.c_str(), passwd.c_str());
                 if (rc != MOSQ_ERR_SUCCESS)
                 {
                     string err("set user and password: ");
                     err.append(mosquitto_strerror(rc));
                     LogService::getInstance()->write(LOG_ERR, "%s", err.c_str());
-                    throw runtime_error(err);
                     cerr << err << endl;
+                    throw runtime_error(err);
                 }
 
                 mosquitto_connect(mosq, host.c_str(), port, keepAlive);
