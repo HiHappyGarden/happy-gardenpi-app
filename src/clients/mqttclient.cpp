@@ -46,17 +46,6 @@ namespace hgardenpi
             ostringstream ss;
             ss << getpid();
 
-            mosquitto_threaded_set(mosq, true);
-            int rc = mosquitto_username_pw_set(mosq, user.c_str(), passwd.c_str());
-            if (rc != MOSQ_ERR_SUCCESS)
-            {
-                string err("set user and password: ");
-                err.append(mosquitto_strerror(rc));
-                LogService::getInstance()->write(LOG_ERR, "%s", err.c_str());
-                throw runtime_error(err);
-                cerr << err << endl;
-            }
-
             /* 
             * new instance client
             */
@@ -94,10 +83,19 @@ namespace hgardenpi
                                                    //        printf("received message for Telemetry topic\n");
                                                    //    }
                                                });
-                if (mosquitto_connect(mosq, host.c_str(), port, keepAlive) != MOSQ_ERR_SUCCESS)
+
+                cerr << user << " " << passwd << endl;
+                int rc = mosquitto_username_pw_set(mosq, user.c_str(), passwd.c_str());
+                if (rc != MOSQ_ERR_SUCCESS)
                 {
-                    HGARDENPI_ERROR_LOG_AMD_THROW("connection fail")
+                    string err("set user and password: ");
+                    err.append(mosquitto_strerror(rc));
+                    LogService::getInstance()->write(LOG_ERR, "%s", err.c_str());
+                    throw runtime_error(err);
+                    cerr << err << endl;
                 }
+
+                mosquitto_connect(mosq, host.c_str(), port, keepAlive);
 
                 LogService::getInstance()->write(LOG_INFO, "%s: %s", "topic", topic.c_str());
                 mosquitto_subscribe(mosq, nullptr, topic.c_str(), 0);
