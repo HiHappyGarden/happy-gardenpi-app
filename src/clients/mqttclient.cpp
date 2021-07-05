@@ -49,7 +49,7 @@ namespace hgardenpi
             /* 
             * new instance client
             */
-            mosq = mosquitto_new(ss.str().c_str(), true, 0);
+            mosq = mosquitto_new(ss.str().c_str(), true, nullptr);
             if (mosq)
             {
                 /* 
@@ -93,6 +93,8 @@ namespace hgardenpi
                     cerr << err << endl;
                     throw runtime_error(err);
                 }
+
+                sleep(5);
 
                 mosquitto_connect(mosq, host.c_str(), port, keepAlive);
 
