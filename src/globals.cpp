@@ -106,7 +106,7 @@ namespace hgardenpi
             //initialize mosquittopp
             if (mosquitto_lib_init() != MOSQ_ERR_SUCCESS)
             {
-                HGARDENPI_ERROR_LOG_AMD_THROW("mosqpp::lib_init() not init")
+                HGARDENPI_ERROR_LOG_AMD_THROW("mosquitto_lib_init() error")
             }
 
             Globals::getInstance()->mqttClient = make_shared<MQTTClient>(Globals::getInstance()->deviceInfo->serial, HGARDENPI_MQTT_BROKER_HOST, HGARDENPI_MQTT_BROKER_USER, HGARDENPI_MQTT_BROKER_PASSWD);

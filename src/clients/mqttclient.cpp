@@ -46,11 +46,21 @@ namespace hgardenpi
             ostringstream ss;
             ss << getpid();
 
+            mosquitto_threaded_set(mosq, true);
+            int rc = mosquitto_username_pw_set(mosq, user.c_str(), passwd.c_str());
+            if (rc != MOSQ_ERR_SUCCESS)
+            {
+                string err("set user and password: ");
+                err.append(mosquitto_strerror(rc));
+                LogService::getInstance()->write(LOG_ERR, "%s", err.c_str());
+                throw runtime_error(err);
+                cerr << err << endl;
+            }
+
             /* 
             * new instance client
             */
             mosq = mosquitto_new(ss.str().c_str(), true, 0);
-
             if (mosq)
             {
                 /* 
@@ -58,7 +68,15 @@ namespace hgardenpi
                 * call when yhe broker send CONNACK
                 */
                 mosquitto_connect_callback_set(mosq, [](mosquitto *mosq, void *obj, int result)
-                                               { cout << to_string(result) << endl; });
+                                               {
+                                                   if (result != MOSQ_ERR_SUCCESS)
+                                                   {
+                                                       string err("connection error: ");
+                                                       err.append(mosquitto_strerror(result));
+                                                       LogService::getInstance()->write(LOG_ERR, "%s", err.c_str());
+                                                       cerr << err << endl;
+                                                   }
+                                               });
 
                 /* 
                 * Subscription callback
@@ -69,16 +87,32 @@ namespace hgardenpi
                                                    bool match = 0;
                                                    printf("received message '%.*s' for topic '%s'\n", message->payloadlen, (char *)message->payload, message->topic);
 
+                                                   //todo
                                                    //    mosquitto_topic_matches_sub(, message->topic, &match);
                                                    //    if (match)
                                                    //    {
                                                    //        printf("received message for Telemetry topic\n");
                                                    //    }
                                                });
-                int rc = mosquitto_connect(mosq, host.c_str(), port, keepAlive);
+                if (mosquitto_connect(mosq, host.c_str(), port, keepAlive) != MOSQ_ERR_SUCCESS)
+                {
+                    HGARDENPI_ERROR_LOG_AMD_THROW("connection fail")
+                }
 
                 LogService::getInstance()->write(LOG_INFO, "%s: %s", "topic", topic.c_str());
                 mosquitto_subscribe(mosq, nullptr, topic.c_str(), 0);
+            }
+            else
+            {
+                HGARDENPI_ERROR_LOG_AMD_THROW("no memory available")
+            }
+        }
+
+        MQTTClient::~MQTTClient() noexcept
+        {
+            if (mosq)
+            {
+                mosquitto_destroy(mosq);
             }
         }
 
@@ -91,7 +125,11 @@ namespace hgardenpi
             {
                 LogService::getInstance()->write(LOG_WARNING, "%s", "connection error! Try to reconnect");
                 sleep(5);
-                mosquitto_reconnect(mosq);
+                rc = mosquitto_reconnect(mosq);
+                if (rc != MOSQ_ERR_SUCCESS)
+                {
+                    HGARDENPI_ERROR_LOG_AMD_THROW("reconnection fail")
+                }
             }
         }
 

@@ -54,7 +54,7 @@ namespace hgardenpi
             const string &user;
             const string &passwd;
 
-            mosquitto *mosq;
+            mosquitto *mosq = nullptr;
             string id;
 
         public:
@@ -87,8 +87,15 @@ namespace hgardenpi
             {
             }
 
+            ~MQTTClient() noexcept;
+
             HGARDENPI_NO_COPY_NO_MOVE(MQTTClient)
 
+            /**
+             * @brief start loop 
+             * 
+             * @param run if the loop is in execution
+             */
             void loop(volatile bool &run);
 
             /**
@@ -102,7 +109,7 @@ namespace hgardenpi
             }
 
         private:
-            MessageCallback onMessageCallback;
+            MessageCallback onMessageCallback = nullptr;
         };
     }
 }
