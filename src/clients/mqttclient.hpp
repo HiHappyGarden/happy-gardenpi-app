@@ -24,8 +24,6 @@ SOFTWARE.
 
 #pragma once
 
-#include <mosquittopp.h>
-
 #include <string>
 #include <memory>
 #include <functional>
@@ -33,18 +31,20 @@ SOFTWARE.
 
 #include "../constants.hpp"
 
+struct mosquitto;
+struct mosquitto_message;
+
 namespace hgardenpi
 {
     inline namespace v1
     {
 
-        using mosqpp::mosquittopp;
         using namespace std;
 
         /**
          * @brief MQTT Client for connect to mosquitto
          */
-        class MQTTClient final : public mosquittopp
+        class MQTTClient final
         {
 
             static inline const constexpr uint16_t KEEP_ALIVE = 60;
@@ -53,6 +53,9 @@ namespace hgardenpi
             const string topic;
             const string &user;
             const string &passwd;
+
+            mosquitto *mosq;
+            string id;
 
         public:
             using MessageCallback = function<void(const struct mosquitto_message *)>;
@@ -86,6 +89,8 @@ namespace hgardenpi
 
             HGARDENPI_NO_COPY_NO_MOVE(MQTTClient)
 
+            void loop(volatile bool &run);
+
             /**
              * @brief Set the On Message Callback object
              * 
@@ -98,20 +103,6 @@ namespace hgardenpi
 
         private:
             MessageCallback onMessageCallback;
-
-            void on_connect(int rc) override;
-
-            void on_message(const struct mosquitto_message *message) override;
-
-            inline void on_subscribe(int mid, int qos_count, const int *granted_qos) override
-            {
-                cout << "on_subscribe" << to_string(mid) << "-" << to_string(qos_count) << endl;
-            }
-
-            inline void on_log(int level, const char *str) override
-            {
-                cout << "on_log" << to_string(level) << "-" << str << endl;
-            }
         };
     }
 }

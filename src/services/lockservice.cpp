@@ -40,7 +40,7 @@ bool LockService::lock() noexcept
 {
 
     ifstream lockFileCheck(HGARDENPI_FILE_LOCK_PATH);
-    if ( !lockFileCheck.good())
+    if (!lockFileCheck.good())
     {
         ofstream lockFile(HGARDENPI_FILE_LOCK_PATH);
         lockFile << std::to_string(getpid()) << endl;
@@ -57,7 +57,6 @@ bool LockService::lock() noexcept
         stringstream ss;
         ss << line;
         ss >> pidInExecution;
-
     }
 
     lockFileCheck.close();
@@ -67,10 +66,9 @@ bool LockService::lock() noexcept
 void LockService::release() noexcept
 {
     ifstream lockFileCheck(HGARDENPI_FILE_LOCK_PATH);
-    if ( lockFileCheck && !lockFileCheck.good())
+    if (lockFileCheck.good())
     {
         remove(HGARDENPI_FILE_LOCK_PATH);
     }
     lockFileCheck.close();
-
 }

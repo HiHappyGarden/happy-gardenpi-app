@@ -24,10 +24,13 @@ SOFTWARE.
 
 #include "mqttclient.hpp"
 
+#include <mosquitto.h>
+#include <unistd.h>
+
 #include <cstring>
+#include <sstream>
 
 #include "../services/logservice.hpp"
-
 #include "../constants.hpp"
 
 namespace hgardenpi
@@ -39,45 +42,56 @@ namespace hgardenpi
                                                                                                                                                         user(user),
                                                                                                                                                         passwd(passwd)
         {
-            connect(host.c_str(), port, keepAlive);
+
+            ostringstream ss;
+            ss << getpid();
+
+            /* 
+            * new instance client
+            */
+            mosq = mosquitto_new(ss.str().c_str(), true, 0);
+
+            if (mosq)
+            {
+                /* 
+                * Connection callback
+                * call when yhe broker send CONNACK
+                */
+                mosquitto_connect_callback_set(mosq, [](mosquitto *mosq, void *obj, int result)
+                                               { cout << to_string(result) << endl; });
+
+                /* 
+                * Subscription callback
+                * call when the message will senf succesfully to broker
+                */
+                mosquitto_message_callback_set(mosq, [](mosquitto *mosq, void *obj, const mosquitto_message *message)
+                                               {
+                                                   bool match = 0;
+                                                   printf("received message '%.*s' for topic '%s'\n", message->payloadlen, (char *)message->payload, message->topic);
+
+                                                   //    mosquitto_topic_matches_sub(, message->topic, &match);
+                                                   //    if (match)
+                                                   //    {
+                                                   //        printf("received message for Telemetry topic\n");
+                                                   //    }
+                                               });
+                int rc = mosquitto_connect(mosq, host.c_str(), port, keepAlive);
+
+                LogService::getInstance()->write(LOG_INFO, "%s: %s", "topic", topic.c_str());
+                mosquitto_subscribe(mosq, nullptr, topic.c_str(), 0);
+            }
         }
 
-        void MQTTClient::on_connect(int rc)
+        void MQTTClient::loop(volatile bool &run)
         {
 
-            cout << "---1: " << endl;
-            if (rc)
-            {
-                HGARDENPI_ERROR_LOG_AMD_THROW(strerror(rc))
-            }
-            cout << "---2: " << endl;
-            rc = username_pw_set(user.c_str(), passwd.c_str());
-            if (rc)
-            {
-                HGARDENPI_ERROR_LOG_AMD_THROW(strerror(rc))
-            }
-            cout << "---3: " << endl;
-            rc = subscribe(nullptr, topic.c_str());
-            if (rc)
-            {
-                HGARDENPI_ERROR_LOG_AMD_THROW(strerror(rc));
-            }
-            cout << "---4: " << endl;
-            LogService::getInstance()
-                ->write(LOG_INFO, "%s %s", "submitted topic", topic.c_str());
-        }
+            int rc = mosquitto_loop(mosq, static_cast<int>(Time::TICK), 1);
 
-        void MQTTClient::on_message(const struct mosquitto_message *message)
-        {
-            int payloadSize = message->payloadlen + 1;
-            char *buf = new (nothrow) char[payloadSize];
-            if (buf)
+            if (run && rc)
             {
-                memset(buf, 0, payloadSize * sizeof(char));
-                memcpy(buf, message->payload, payloadSize * sizeof(char));
-                cout << "message recieved: "
-                     << buf << endl;
-                delete[] buf;
+                LogService::getInstance()->write(LOG_WARNING, "%s", "connection error! Try to reconnect");
+                sleep(5);
+                mosquitto_reconnect(mosq);
             }
         }
 

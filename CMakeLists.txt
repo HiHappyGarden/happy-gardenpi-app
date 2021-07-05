@@ -59,6 +59,6 @@ target_link_libraries(hgardenpi
                         wiringPi
                         wiringPiDev
                         pthread
-                        mosquittopp
+                        mosquitto
                         nlohmann_json::nlohmann_json
                         )

@@ -25,6 +25,8 @@ SOFTWARE.
 #include "globals.hpp"
 
 #include <wiringPi.h>
+#include <mosquitto.h>
+#include <signal.h>
 
 #include <thread>
 using namespace std;
@@ -41,6 +43,15 @@ namespace hgardenpi
     inline namespace v1
     {
 
+        //enable loop
+        static volatile bool run = true;
+
+        //exit signal handler
+        static __sighandler_t handleSignal = [](int)
+        {
+            run = false;
+        };
+
         Globals::Globals() noexcept
         try
         {
@@ -53,7 +64,9 @@ namespace hgardenpi
 
         Globals::~Globals() noexcept
         {
-            mosqpp::lib_cleanup();
+            mosquitto_lib_cleanup();
+            lockService->release();
+            cout << "end" << endl;
         }
 
         void initialize()
@@ -91,7 +104,7 @@ namespace hgardenpi
             wiringPiSetupGpio();
 
             //initialize mosquittopp
-            if (mosqpp::lib_init() != MOSQ_ERR_SUCCESS)
+            if (mosquitto_lib_init() != MOSQ_ERR_SUCCESS)
             {
                 HGARDENPI_ERROR_LOG_AMD_THROW("mosqpp::lib_init() not init")
             }
@@ -99,12 +112,19 @@ namespace hgardenpi
             Globals::getInstance()->mqttClient = make_shared<MQTTClient>(Globals::getInstance()->deviceInfo->serial, HGARDENPI_MQTT_BROKER_HOST, HGARDENPI_MQTT_BROKER_USER, HGARDENPI_MQTT_BROKER_PASSWD);
         }
 
-        [[noreturn]] void start()
+        void start()
         {
 
-            while (true)
+            signal(SIGINT, handleSignal);
+            signal(SIGTERM, handleSignal);
+
+            while (run)
             {
-                this_thread::sleep_for(chrono::milliseconds(static_cast<int64_t>(Time::TICK)));
+                Globals::getInstance()->mqttClient->loop(run);
+                // while (run)
+                // {
+                //     this_thread::sleep_for(chrono::milliseconds(static_cast<int64_t>(Time::TICK)));
+                // }
             }
         }
     }
