@@ -24,14 +24,10 @@ SOFTWARE.
 
 #include <cstdlib>
 #include <iostream>
-#include <mosquittopp.h>
 #include <date.h>
-#include <nlohmann/json.hpp>
 #include "services/logservice.hpp"
-#include "services/deviceservice.hpp"
 
 #include "globals.hpp"
-#include "clients/mqttclient.hpp"
 
 int main(int argc, char *argv[])
 {
