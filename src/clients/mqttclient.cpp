@@ -94,7 +94,8 @@ namespace hgardenpi
                     throw runtime_error(err);
                 }
 
-                sleep(5);
+                int ver = MQTT_PROTOCOL_V311;
+                mosquitto_opts_set(mosq, MOSQ_OPT_PROTOCOL_VERSION, &ver);
 
                 mosquitto_connect(mosq, host.c_str(), port, keepAlive);
 
