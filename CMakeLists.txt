@@ -7,6 +7,7 @@ set(RASPBIAN_ROOTFS "$ENV{HOME}/raspberrypi/rootfs")
 set(FILE_LOCK_PATH "/tmp/hgardenpi.pid")
 set(FILE_CONFIG "./config.json")
 set(MQTT_BROKER_HOST "passy-raspberrypi")
+set(MQTT_BROKER_PORT 1883)
 set(MQTT_BROKER_USER "hgardepi")
 set(MQTT_BROKER_PASSWD "hgardepi")
 
