@@ -28,6 +28,11 @@
 #include <fstream>
 using namespace std;
 
+#include <json.hpp>
+using json = nlohmann::json;
+
+#include "../config.h"
+
 using hgardenpi::v1::ConfigSerivce;
 
 void ConfigSerivce::read()
@@ -45,4 +50,13 @@ void ConfigSerivce::read()
         buf += line;
     }
     config.close();
+
+    auto jsonConfig = json::parse(buf);
+    if (jsonConfig.contains("Broker"))
+    {
+    }
+    else
+    {
+        config->broker.host = HGARDENPI_MQTT_BROKER_HOST;
+    }
 }

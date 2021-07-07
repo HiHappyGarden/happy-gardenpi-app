@@ -23,8 +23,8 @@
 #include <cstdlib>
 #include <iostream>
 #include <date.h>
-#include "services/logservice.hpp"
 
+#include "services/logservice.hpp"
 #include "globals.hpp"
 
 int main(int argc, char *argv[])

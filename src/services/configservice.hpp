@@ -26,12 +26,14 @@
 
 #include "../utilities/object.hpp"
 #include "../constants.hpp"
+#include "../pods/configinfo.hpp"
 
 namespace hgardenpi
 {
     inline namespace v1
     {
 
+        using std::make_shared;
         using std::string;
 
         /**
@@ -43,13 +45,15 @@ namespace hgardenpi
 
             const string configFile;
 
+            Config::Ptr config;
+
         public:
             /**
              * @brief Construct a new Config Serivce object
              * 
              * @param configFile path of config file in json format
              */
-            inline explicit ConfigSerivce(string &&configFile) noexcept : configFile(configFile)
+            inline explicit ConfigSerivce(string &&configFile) noexcept : configFile(configFile), config(make_shared<Config>())
             {
             }
             HGARDENPI_NO_COPY_NO_MOVE(ConfigSerivce)
