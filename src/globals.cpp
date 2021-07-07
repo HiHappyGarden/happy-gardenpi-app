@@ -33,6 +33,7 @@ using namespace std;
 using std::make_unique;
 
 #include "services/logservice.hpp"
+#include "services/configservice.hpp"
 #include "config.h"
 #include "constants.hpp"
 
@@ -97,6 +98,10 @@ namespace hgardenpi
             {
                 HGARDENPI_ERROR_LOG_AMD_THROW("hardware not supporrted, you need a Raspberry Pi Zero W")
             }
+
+            ConfigSerivce config(HGARDENPI_FILE_CONFIG);
+
+            config.read();
 
             //initialize WiringPI
             wiringPiSetupGpio();

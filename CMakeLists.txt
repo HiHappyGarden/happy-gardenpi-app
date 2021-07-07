@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_C_STANDARD 17)
 set(RASPBIAN_ROOTFS "$ENV{HOME}/raspberrypi/rootfs")
 set(FILE_LOCK_PATH "/tmp/hgardenpi.pid")
+set(FILE_CONFIG "./config.json")
 set(MQTT_BROKER_HOST "passy-raspberrypi")
 set(MQTT_BROKER_USER "hgardepi")
 set(MQTT_BROKER_PASSWD "hgardepi")
@@ -36,12 +37,12 @@ add_executable(hgardenpi
     src/clients/mqttclientlocalsub.cpp
     src/clients/mqttclientlocalsub.hpp
     src/interfaces/mqttclient.hpp
+    src/services/configservice.cpp
+    src/services/configservice.hpp
     src/services/deviceservice.cpp
     src/services/deviceservice.hpp
     src/services/lockservice.cpp
     src/services/lockservice.hpp
-    src/services/paramsservices.cpp
-    src/services/paramsservices.hpp
     src/services/logservice.cpp
     src/services/logservice.hpp
     src/services/scheduler.cpp
