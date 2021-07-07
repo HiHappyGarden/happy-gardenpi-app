@@ -33,8 +33,9 @@ link_directories("${RASPBIAN_ROOTFS}/usr/lib")
 
 
 add_executable(hgardenpi
-    src/clients/mqttclient.cpp
-    src/clients/mqttclient.hpp
+    src/clients/mqttclientlocalsub.cpp
+    src/clients/mqttclientlocalsub.hpp
+    src/interfaces/mqttclient.hpp
     src/services/deviceservice.cpp
     src/services/deviceservice.hpp
     src/services/lockservice.cpp

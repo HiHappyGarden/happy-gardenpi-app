@@ -28,7 +28,8 @@ SOFTWARE.
 
 #include "utilities/singleton.hpp"
 #include "services/deviceservice.hpp"
-#include "clients/mqttclient.hpp"
+#include "clients/mqttclientlocalsub.hpp"
+#include "interfaces/mqttclient.hpp"
 
 namespace hgardenpi
 {
