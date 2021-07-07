@@ -41,12 +41,14 @@ namespace hgardenpi
         {
             pid_t pidInExecution = 0;
 
-
         public:
             LockService() = default;
             inline ~LockService() noexcept
             {
-                release();
+                if (pidInExecution == 0)
+                {
+                    release();
+                }
             }
             HGARDENPI_NO_COPY_NO_MOVE(LockService)
 
