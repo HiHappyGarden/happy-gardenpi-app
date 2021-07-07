@@ -109,7 +109,7 @@ namespace hgardenpi
                 HGARDENPI_ERROR_LOG_AMD_THROW("mosquitto_lib_init() error")
             }
 
-            Globals::getInstance()->mqttClient = make_shared<MQTTClient>(Globals::getInstance()->deviceInfo->serial, HGARDENPI_MQTT_BROKER_HOST, HGARDENPI_MQTT_BROKER_USER, HGARDENPI_MQTT_BROKER_PASSWD);
+            //Globals::getInstance()->mqttClient = make_shared<MQTTClientLocalSub>(Globals::getInstance()->deviceInfo->serial, HGARDENPI_MQTT_BROKER_HOST, HGARDENPI_MQTT_BROKER_USER, HGARDENPI_MQTT_BROKER_PASSWD);
         }
 
         void start()
