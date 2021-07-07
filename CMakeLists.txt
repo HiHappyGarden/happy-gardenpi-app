@@ -40,6 +40,8 @@ add_executable(hgardenpi
     src/services/deviceservice.hpp
     src/services/lockservice.cpp
     src/services/lockservice.hpp
+    src/services/paramsservices.cpp
+    src/services/paramsservices.hpp
     src/services/logservice.cpp
     src/services/logservice.hpp
     src/services/scheduler.cpp
