@@ -112,7 +112,7 @@ namespace hgardenpi
                 HGARDENPI_ERROR_LOG_AMD_THROW("mosquitto_lib_init() error")
             }
 
-            //Globals::getInstance()->mqttClient = make_shared<MQTTClientLocalSub>(Globals::getInstance()->deviceInfo->serial, HGARDENPI_MQTT_BROKER_HOST, HGARDENPI_MQTT_BROKER_USER, HGARDENPI_MQTT_BROKER_PASSWD);
+            //Globals::getInstance()->mqttClient = make_shared<MQTTClientLocalSub>(Globals::getInstance()->deviceInfo->serial, HGARDENPI_MQTT_BROKER_HOST, HGARDENPI_MQTT_BROKER_USER, HGARDENPI_MQTT_BROKER_PASSWD, HGARDENPI_MQTT_BROKER_PORT);
         }
 
         void start()
@@ -123,11 +123,12 @@ namespace hgardenpi
 
             while (run)
             {
-                Globals::getInstance()->mqttClient->loop(run);
+                //Globals::getInstance()->mqttClient->loop(run);
                 // while (run)
                 // {
                 //     this_thread::sleep_for(chrono::milliseconds(static_cast<int64_t>(Time::TICK)));
                 // }
+                this_thread::sleep_for(chrono::milliseconds(static_cast<int64_t>(Time::TICK)));
             }
         }
     }
