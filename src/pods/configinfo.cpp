@@ -20,13 +20,28 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <configinfo.hpp>
+#include "configinfo.hpp"
 
 namespace hgardenpi
 {
 
     inline namespace v1
     {
+
+        string ConfigInfo::toString() noexcept
+        {
+            string ret;
+
+            ret = "{\n";
+            ret += " fileLock: " + fileLock + "\n";
+            ret += " broker: {\n";
+            ret += "  host: " + broker.host + "\n";
+            ret += "  port: " + std::to_string(broker.port) + "\n";
+            ret += "  user: " + broker.user + "\n";
+            ret += "  passwd: " + broker.passwd + "\n";
+            ret = "}\n";
+            return ret;
+        }
 
         void operator<<(std::ostream &os, ConfigInfo::Ptr const &ci)
         {

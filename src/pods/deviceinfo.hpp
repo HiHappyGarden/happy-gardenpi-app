@@ -37,7 +37,7 @@ namespace hgardenpi
          * @brief Data container for HW informations
          * 
          */
-        struct DeviceInfo
+        struct DeviceInfo final
         {
 
             typedef unique_ptr<DeviceInfo> Ptr;

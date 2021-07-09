@@ -43,7 +43,7 @@ namespace hgardenpi
          * @brief Data container for HW informations
          * 
          */
-        struct ConfigInfo : public Object
+        struct ConfigInfo final : public Object
         {
 
             typedef shared_ptr<ConfigInfo> Ptr;
@@ -58,20 +58,7 @@ namespace hgardenpi
                 string passwd = HGARDENPI_BROKER_PASSWD;
             } broker;
 
-            string toString() noexcept override
-            {
-                string ret;
-
-                ret = "{\n";
-                ret += " fileLock: " + fileLock + "\n";
-                ret += " broker: {\n";
-                ret += "  host: " + broker.host + "\n";
-                ret += "  port: " + std::to_string(broker.port) + "\n";
-                ret += "  user: " + broker.user + "\n";
-                ret += "  passwd: " + broker.passwd + "\n";
-                ret = "}\n";
-                return ret;
-            }
+            string toString() noexcept override;
         };
 
         void operator<<(std::ostream &, ConfigInfo::Ptr const &);
