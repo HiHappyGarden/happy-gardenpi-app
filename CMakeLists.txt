@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-PROJECT(hgardenpi VERSION "0.10.0" LANGUAGES CXX C)
+PROJECT(hgardenpi VERSION "0.10.1" LANGUAGES CXX C)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_C_STANDARD 17)
 set(RASPBIAN_ROOTFS "$ENV{HOME}/raspberrypi/rootfs")
