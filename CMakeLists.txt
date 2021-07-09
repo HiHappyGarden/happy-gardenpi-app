@@ -38,6 +38,7 @@ add_executable(hgardenpi
     src/clients/mqttclientlocalsub.cpp
     src/clients/mqttclientlocalsub.hpp
     src/interfaces/mqttclient.hpp
+        src/pods/configinfo.cpp
     src/pods/configinfo.hpp
     src/pods/deviceinfo.hpp
     src/services/configservice.cpp
