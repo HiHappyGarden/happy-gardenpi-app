@@ -68,14 +68,15 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classhgardenpi_1_1v1_1_1_m_q_t_t_client-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">hgardenpi::v1::MQTTClient Class Reference<span class="mlabels"><span class="mlabel">final</span></span></div>  </div>
+<div class="title">hgardenpi::v1::MQTTClient Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>MQTT Client for connect to mosquitto.  
+<p>Generic MQTT Client for connect to mosquitto.  
  <a href="classhgardenpi_1_1v1_1_1_m_q_t_t_client.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="mqttclient_8hpp_source.html">mqttclient.hpp</a>&gt;</code></p>
@@ -83,67 +84,46 @@ $(function() {
 Inheritance diagram for hgardenpi::v1::MQTTClient:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classhgardenpi_1_1v1_1_1_m_q_t_t_client.png" alt=""/>
- </div></div>
+  <img src="classhgardenpi_1_1v1_1_1_m_q_t_t_client.png" usemap="#hgardenpi::v1::MQTTClient_map" alt=""/>
+  <map id="hgardenpi::v1::MQTTClient_map" name="hgardenpi::v1::MQTTClient_map">
+<area href="classhgardenpi_1_1v1_1_1_loggable.html" title="Set LogServcice to obj." alt="hgardenpi::v1::Loggable" shape="rect" coords="0,0,215,24"/>
+<area href="classhgardenpi_1_1v1_1_1_m_q_t_t_client_local_sub.html" title="MQTT Client for connect to mosquitto." alt="hgardenpi::v1::MQTTClientLocalSub" shape="rect" coords="0,112,215,136"/>
+  </map>
+</div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a638d4260275a9c4530688e1564491d1d"><td class="memItemLeft" align="right" valign="top"><a id="a638d4260275a9c4530688e1564491d1d"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>Ptr</b> = shared_ptr&lt; <a class="el" href="classhgardenpi_1_1v1_1_1_m_q_t_t_client.html">MQTTClient</a> &gt;</td></tr>
+<tr class="separator:a638d4260275a9c4530688e1564491d1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba54eb450160d14c0c506925e447a74d"><td class="memItemLeft" align="right" valign="top"><a id="aba54eb450160d14c0c506925e447a74d"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>MessageCallback</b> = function&lt; void(uint8_t *)&gt;</td></tr>
+<tr class="separator:aba54eb450160d14c0c506925e447a74d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:acdb322205bac21dabf26e9ecea6b2632"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_m_q_t_t_client.html#acdb322205bac21dabf26e9ecea6b2632">MQTTClient</a> (const string &amp;id, const string &amp;host, uint16_t port=MQTTClient::PORT)</td></tr>
-<tr class="memdesc:acdb322205bac21dabf26e9ecea6b2632"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classhgardenpi_1_1v1_1_1_m_q_t_t_client.html" title="MQTT Client for connect to mosquitto.">MQTTClient</a> object.  <a href="classhgardenpi_1_1v1_1_1_m_q_t_t_client.html#acdb322205bac21dabf26e9ecea6b2632">More...</a><br /></td></tr>
-<tr class="separator:acdb322205bac21dabf26e9ecea6b2632"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04753937e588ec8a223c90998058b0b8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_m_q_t_t_client.html#a04753937e588ec8a223c90998058b0b8">MQTTClient</a> (const string &amp;&amp;id, const string &amp;&amp;host, uint16_t port=MQTTClient::PORT)</td></tr>
-<tr class="memdesc:a04753937e588ec8a223c90998058b0b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classhgardenpi_1_1v1_1_1_m_q_t_t_client.html" title="MQTT Client for connect to mosquitto.">MQTTClient</a> object.  <a href="classhgardenpi_1_1v1_1_1_m_q_t_t_client.html#a04753937e588ec8a223c90998058b0b8">More...</a><br /></td></tr>
-<tr class="separator:a04753937e588ec8a223c90998058b0b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeac5c56a67ca152a19312b6506ee3b2d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_m_q_t_t_client.html#aeac5c56a67ca152a19312b6506ee3b2d">loop</a> (volatile bool &amp;run)=0</td></tr>
+<tr class="memdesc:aeac5c56a67ca152a19312b6506ee3b2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">start loop  <a href="classhgardenpi_1_1v1_1_1_m_q_t_t_client.html#aeac5c56a67ca152a19312b6506ee3b2d">More...</a><br /></td></tr>
+<tr class="separator:aeac5c56a67ca152a19312b6506ee3b2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab987de58d187cd3ef7f1c5e73954267e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_m_q_t_t_client.html#ab987de58d187cd3ef7f1c5e73954267e">setOnMessageCallback</a> (MessageCallback &amp;&amp;onMessageCallback)=0</td></tr>
+<tr class="memdesc:ab987de58d187cd3ef7f1c5e73954267e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the On Message Callback object.  <a href="classhgardenpi_1_1v1_1_1_m_q_t_t_client.html#ab987de58d187cd3ef7f1c5e73954267e">More...</a><br /></td></tr>
+<tr class="separator:ab987de58d187cd3ef7f1c5e73954267e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classhgardenpi_1_1v1_1_1_loggable"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classhgardenpi_1_1v1_1_1_loggable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classhgardenpi_1_1v1_1_1_loggable.html">hgardenpi::v1::Loggable</a></td></tr>
+<tr class="memitem:a795e1f33b2f82947e2597d178a1eae61 inherit pub_methods_classhgardenpi_1_1v1_1_1_loggable"><td class="memItemLeft" align="right" valign="top"><a id="a795e1f33b2f82947e2597d178a1eae61"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setLogService</b> (const <a class="el" href="classhgardenpi_1_1v1_1_1_log_service.html">LogService</a> *) noexcept=0</td></tr>
+<tr class="separator:a795e1f33b2f82947e2597d178a1eae61 inherit pub_methods_classhgardenpi_1_1v1_1_1_loggable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>MQTT Client for connect to mosquitto. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="acdb322205bac21dabf26e9ecea6b2632"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acdb322205bac21dabf26e9ecea6b2632">&#9670;&nbsp;</a></span>MQTTClient() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">hgardenpi::v1::MQTTClient::MQTTClient </td>
-          <td>(</td>
-          <td class="paramtype">const string &amp;&#160;</td>
-          <td class="paramname"><em>id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const string &amp;&#160;</td>
-          <td class="paramname"><em>host</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>port</em> = <code>MQTTClient::PORT</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Construct a new <a class="el" href="classhgardenpi_1_1v1_1_1_m_q_t_t_client.html" title="MQTT Client for connect to mosquitto.">MQTTClient</a> object. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">id</td><td>client name </td></tr>
-    <tr><td class="paramname">host</td><td>server host </td></tr>
-    <tr><td class="paramname">port</td><td>server port </td></tr>
+<div class="textblock"><p>Generic MQTT Client for connect to mosquitto. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>callback type </td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a id="a04753937e588ec8a223c90998058b0b8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a04753937e588ec8a223c90998058b0b8">&#9670;&nbsp;</a></span>MQTTClient() <span class="overload">[2/2]</span></h2>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="aeac5c56a67ca152a19312b6506ee3b2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeac5c56a67ca152a19312b6506ee3b2d">&#9670;&nbsp;</a></span>loop()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -152,45 +132,65 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">hgardenpi::v1::MQTTClient::MQTTClient </td>
+          <td class="memname">virtual void hgardenpi::v1::MQTTClient::loop </td>
           <td>(</td>
-          <td class="paramtype">const string &amp;&amp;&#160;</td>
-          <td class="paramname"><em>id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">volatile bool &amp;&#160;</td>
+          <td class="paramname"><em>run</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const string &amp;&amp;&#160;</td>
-          <td class="paramname"><em>host</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>port</em> = <code>MQTTClient::PORT</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Construct a new <a class="el" href="classhgardenpi_1_1v1_1_1_m_q_t_t_client.html" title="MQTT Client for connect to mosquitto.">MQTTClient</a> object. </p>
+<p>start loop </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">id</td><td>client name </td></tr>
-    <tr><td class="paramname">host</td><td>server host </td></tr>
-    <tr><td class="paramname">port</td><td>server port </td></tr>
+    <tr><td class="paramname">run</td><td>if the loop is in execution </td></tr>
   </table>
   </dd>
 </dl>
+
+<p>Implemented in <a class="el" href="classhgardenpi_1_1v1_1_1_m_q_t_t_client_local_sub.html#ac11c66ee7e640cf84df7534adecdd00d">hgardenpi::v1::MQTTClientLocalSub</a>.</p>
+
+</div>
+</div>
+<a id="ab987de58d187cd3ef7f1c5e73954267e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab987de58d187cd3ef7f1c5e73954267e">&#9670;&nbsp;</a></span>setOnMessageCallback()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void hgardenpi::v1::MQTTClient::setOnMessageCallback </td>
+          <td>(</td>
+          <td class="paramtype">MessageCallback &amp;&amp;&#160;</td>
+          <td class="paramname"><em>onMessageCallback</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the On Message Callback object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">onMessageCallback</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classhgardenpi_1_1v1_1_1_m_q_t_t_client_local_sub.html#a99994b851933eac23e7c2fd3df86c0b8">hgardenpi::v1::MQTTClientLocalSub</a>.</p>
 
 </div>
 </div>
