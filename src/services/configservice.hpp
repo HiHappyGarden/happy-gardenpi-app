@@ -45,7 +45,7 @@ namespace hgardenpi
 
             const string configFile;
 
-            Config::Ptr config;
+            ConfigInfo::Ptr config;
 
         public:
             /**
@@ -53,7 +53,7 @@ namespace hgardenpi
              * 
              * @param configFile path of config file in json format
              */
-            inline explicit ConfigSerivce(string &&configFile) noexcept : configFile(configFile), config(make_shared<Config>())
+            inline explicit ConfigSerivce(string &&configFile) noexcept : configFile(configFile), config(make_shared<ConfigInfo>())
             {
             }
             HGARDENPI_NO_COPY_NO_MOVE(ConfigSerivce)

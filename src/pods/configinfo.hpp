@@ -24,6 +24,8 @@
 #include <string>
 #include <memory>
 
+#include "../config.h"
+
 namespace hgardenpi
 {
 
@@ -40,14 +42,16 @@ namespace hgardenpi
         struct ConfigInfo
         {
 
-            typedef shared_ptr<Config> Ptr;
+            typedef shared_ptr<ConfigInfo> Ptr;
+
+            string fileLock = HGARDENPI_FILE_LOCK_PATH;
 
             struct Broker
             {
-                string host;
-                uint16_t port;
-                string user;
-                string passwd;
+                string host = HGARDENPI_MQTT_BROKER_HOST;
+                uint16_t port = HGARDENPI_MQTT_BROKER_PORT;
+                string user = HGARDENPI_MQTT_BROKER_USER;
+                string passwd = HGARDENPI_MQTT_BROKER_PASSWD;
             } broker;
         };
 
