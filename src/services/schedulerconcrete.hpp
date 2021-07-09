@@ -20,30 +20,45 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <cstdlib>
-#include <iostream>
-#include <date.h>
+#pragma once
 
-#include "services/logservice.hpp"
-#include "globals.hpp"
+#include <mutex>
+#include <functional>
 
-int main(int argc, char *argv[])
+#include "../utilities/singleton.hpp"
+#include "../constants.hpp"
+
+namespace hgardenpi
 {
-    try
+    inline namespace v1
     {
-        //initialize Happy GardenPI
-        hgardenpi::initialize();
+        using std::mutex;
+        using std::string;
 
-        //start loops
-        hgardenpi::start();
+        /**
+         * @brief Scheduler for scheduing acrion, inside of this run a loop every one second
+         * 
+         */
+        class Scheduler final : public Singleton<Scheduler>
+        {
 
-        //hgardenpi::LogService::getInstance()->write(LOG_INFO, "end");
+            bool start = false;
+
+            mutable mutex m;
+
+        public:
+            HGARDENPI_NO_COPY_NO_MOVE(Scheduler)
+
+            /**
+             * @brief Return the name of object
+             * 
+             * @return std::string name of object
+             */
+            inline string toString() noexcept override
+            {
+                return typeid(*this).name();
+            }
+        };
+
     }
-    catch (const std::exception &e)
-    {
-        std::cerr << "error: " << e.what() << std::endl;
-        return EXIT_FAILURE;
-    }
-
-    return EXIT_SUCCESS;
 }

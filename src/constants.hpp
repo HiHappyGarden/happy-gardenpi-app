@@ -31,8 +31,8 @@
     clazz(clazz &&) = delete;                 \
     clazz &operator=(clazz &&) = delete;
 
-#define HGARDENPI_ERROR_LOG_AMD_THROW(msg)                \
-    LogService::getInstance()->write(LOG_ERR, "%d", msg); \
+#define HGARDENPI_ERROR_LOG_AMD_THROW(msg)                    \
+    /*LogService::getInstance()->write(LOG_ERR, "%d", msg);*/ \
     throw runtime_error(msg);
 
 namespace hgardenpi

@@ -20,30 +20,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <cstdlib>
-#include <iostream>
-#include <date.h>
+#pragma once
 
-#include "services/logservice.hpp"
-#include "globals.hpp"
+#include <memory>
 
-int main(int argc, char *argv[])
+namespace hgardenpi
 {
-    try
+
+    inline namespace v1
     {
-        //initialize Happy GardenPI
-        hgardenpi::initialize();
 
-        //start loops
-        hgardenpi::start();
+        /**
+         * @brief Factory for management of peripherals devices
+         * 
+         */
+        class Device
+        {
 
-        //hgardenpi::LogService::getInstance()->write(LOG_INFO, "end");
+            typedef std::unique_ptr<Device> Ptr;
+        };
+
     }
-    catch (const std::exception &e)
-    {
-        std::cerr << "error: " << e.what() << std::endl;
-        return EXIT_FAILURE;
-    }
-
-    return EXIT_SUCCESS;
 }

@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "configservice.hpp"
+#include "configserviceconcrete.hpp"
 
 #include <fstream>
 #include <iostream>
@@ -47,7 +47,7 @@ namespace hgardenpi
     inline namespace v1
     {
 
-        ConfigInfo::Ptr ConfigSerivce::read() noexcept
+        ConfigInfo::Ptr ConfigSerivceConcrete::read() noexcept
         {
             ConfigInfo::Ptr ret = make_shared<ConfigInfo>();
 

@@ -20,7 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-
 #include "mqttclientlocalsub.hpp"
 
 #include <mosquitto.h>
@@ -62,7 +61,7 @@ namespace hgardenpi
                                                    {
                                                        string err("connection error: ");
                                                        err.append(mosquitto_strerror(result));
-                                                       LogService::getInstance()->write(LOG_ERR, "%s", err.c_str());
+                                                       //LogService::getInstance()->write(LOG_ERR, "%s", err.c_str());
                                                        cerr << err << endl;
                                                    }
                                                });
@@ -89,7 +88,7 @@ namespace hgardenpi
                 {
                     string err("set user and password: ");
                     err.append(mosquitto_strerror(rc));
-                    LogService::getInstance()->write(LOG_ERR, "%s", err.c_str());
+                    //LogService::getInstance()->write(LOG_ERR, "%s", err.c_str());
                     cerr << err << endl;
                     throw runtime_error(err);
                 }
@@ -99,7 +98,7 @@ namespace hgardenpi
 
                 mosquitto_connect(mosq, host.c_str(), port, keepAlive);
 
-                LogService::getInstance()->write(LOG_INFO, "%s: %s", "topic", topic.c_str());
+                //LogService::getInstance()->write(LOG_INFO, "%s: %s", "topic", topic.c_str());
                 mosquitto_subscribe(mosq, nullptr, topic.c_str(), 0);
             }
             else
@@ -123,7 +122,7 @@ namespace hgardenpi
 
             if (run && rc)
             {
-                LogService::getInstance()->write(LOG_WARNING, "%s", "connection error! Try to reconnect");
+                //LogService::getInstance()->write(LOG_WARNING, "%s", "connection error! Try to reconnect");
                 sleep(5);
                 rc = mosquitto_reconnect(mosq);
                 if (rc != MOSQ_ERR_SUCCESS)
@@ -132,7 +131,6 @@ namespace hgardenpi
                 }
             }
         }
-
     }
 
 }

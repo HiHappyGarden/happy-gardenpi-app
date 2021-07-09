@@ -22,62 +22,46 @@
 
 #pragma once
 
-#include <cstdio>
-
-#include "../utilities/object.hpp"
+#include <sched.h>
 
 namespace hgardenpi
 {
     inline namespace v1
     {
 
-        using std::string;
-
         /**
          * @brief LockService check if exist another instance of Happy GardenPI
          * 
          */
-        class LockService final : public Object
+        class LockService
         {
+
+        protected:
             pid_t pidInExecution = 0;
 
         public:
-            LockService() = default;
-            inline ~LockService() noexcept
-            {
-                if (pidInExecution == 0)
-                {
-                    release();
-                }
-            }
-            HGARDENPI_NO_COPY_NO_MOVE(LockService)
-
             /** 
             * @brief Try to get lock.
             * 
             * @throw runtime_error when is not possibe create lock file
             * @return true if another instance already run
             */
-            bool lock() noexcept;
+            virtual bool lock() noexcept = 0;
 
             /** 
             * @brief Release the lock obtained with lock().
             */
-            static void release() noexcept;
+            virtual void release() const noexcept = 0;
 
+            /**
+             * @brief Get the Pid In Execution object
+             * 
+             * 
+             * @return pid_t if any other instance already run this valie is greater than 0
+             */
             [[maybe_unused]] [[nodiscard]] inline pid_t getPidInExecution() const noexcept
             {
                 return pidInExecution;
-            }
-
-            /**
-             * @brief Return the name of object
-             * 
-             * @return std::string name of object
-             */
-            inline string toString() noexcept override
-            {
-                return typeid(*this).name();
             }
         };
 

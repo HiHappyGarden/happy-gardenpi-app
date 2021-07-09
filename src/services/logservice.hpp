@@ -22,35 +22,19 @@
 
 #pragma once
 
-#include <syslog.h>
-#include <mutex>
-
-#include "../utilities/singleton.hpp"
-
 namespace hgardenpi
 {
     inline namespace v1
     {
 
-        using std::mutex;
-        using std::string;
-
         /**
-         * @brief LogService singleton permit to write log into syslog
+         * @brief Abstract LogService to write log
          * 
          */
-        class LogService final : public Singleton<LogService>
+        class LogService
         {
-            mutable mutex m;
 
         public:
-            LogService() noexcept;
-            inline ~LogService() noexcept override
-            {
-                closelog();
-            }
-            HGARDENPI_NO_COPY_NO_MOVE(LogService)
-
             /**
              * @brief Write log on system 
              * 
@@ -58,17 +42,7 @@ namespace hgardenpi
              * @param msg message to write
              * @param ...
              */
-            void write(uint8_t level, const char *msg, ...) const noexcept;
-
-            /**
-             * @brief Return the name of object
-             * 
-             * @return std::string name of object
-             */
-            inline string toString() noexcept override
-            {
-                return typeid(*this).name();
-            }
+            virtual void write(uint8_t level, const char *msg, ...) const noexcept = 0;
         };
 
     }

@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "logservice.hpp"
+#include "logserviceconcrete.hpp"
 using namespace std;
 
 #include <cstdarg>
@@ -28,30 +28,36 @@ using namespace std;
 
 #include "../config.h"
 
-using namespace hgardenpi;
-
-LogService::LogService() noexcept
+namespace hgardenpi
 {
-    openlog(HGARDENPI_NAME, LOG_PID, LOG_USER);
-    syslog(LOG_INFO, "start");
-}
-
-void LogService::write(uint8_t level, const char *msg, ...) const noexcept
-{
-    static const constexpr int MAX_STRING_LEN = 1024;
-    lock_guard<mutex> lg(m);
-
-    va_list ap;
-    va_start(ap, msg);
-
-    char *buffer = new (nothrow) char[MAX_STRING_LEN];
-    if (buffer)
+    inline namespace v1
     {
-        memset(&buffer[0], 0, sizeof(buffer));
-        vsnprintf(buffer, MAX_STRING_LEN, msg, ap);
-        syslog(level, "%s", buffer);
-        free(buffer);
-    }
 
-    va_end(ap);
+        LogServiceConcrete::LogServiceConcrete() noexcept
+        {
+            openlog(HGARDENPI_NAME, LOG_PID, LOG_USER);
+            syslog(LOG_INFO, "start");
+        }
+
+        void LogServiceConcrete::write(uint8_t level, const char *msg, ...) const noexcept
+        {
+            static const constexpr int MAX_STRING_LEN = 1024;
+            lock_guard<mutex> lg(m);
+
+            va_list ap;
+            va_start(ap, msg);
+
+            char *buffer = new (nothrow) char[MAX_STRING_LEN];
+            if (buffer)
+            {
+                memset(&buffer[0], 0, sizeof(buffer));
+                vsnprintf(buffer, MAX_STRING_LEN, msg, ap);
+                syslog(level, "%s", buffer);
+                free(buffer);
+            }
+
+            va_end(ap);
+        }
+
+    }
 }

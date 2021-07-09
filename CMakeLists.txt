@@ -35,22 +35,26 @@ link_directories("${RASPBIAN_ROOTFS}/usr/lib")
 
 
 add_executable(hgardenpi
+    src/clients/mqttclient.hpp 
     src/clients/mqttclientlocalsub.cpp
     src/clients/mqttclientlocalsub.hpp
-    src/interfaces/mqttclient.hpp
-        src/pods/configinfo.cpp
+    src/factories/factory.hpp 
+    src/factories/factoryconcrete.cpp
+    src/factories/factoryconcrete.hpp
+    src/pods/configinfo.cpp
     src/pods/configinfo.hpp
     src/pods/deviceinfo.hpp
-    src/services/configservice.cpp
     src/services/configservice.hpp
+    src/services/configserviceconcrete.cpp
+    src/services/configserviceconcrete.hpp
     src/services/deviceservice.cpp
     src/services/deviceservice.hpp
-    src/services/lockservice.cpp
-    src/services/lockservice.hpp
-    src/services/logservice.cpp
-    src/services/logservice.hpp
-    src/services/scheduler.cpp
-    src/services/scheduler.hpp
+    src/services/lockserviceconcrete.cpp
+    src/services/lockserviceconcrete.hpp
+    src/services/logserviceconcrete.cpp
+    src/services/logserviceconcrete.hpp
+    src/services/schedulerconcrete.cpp
+    src/services/schedulerconcrete.hpp
     src/utilities/object.hpp
     src/utilities/singleton.hpp
     src/utilities/stringutils.cpp

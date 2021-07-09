@@ -26,7 +26,7 @@
 #include <iostream>
 
 #include "../constants.hpp"
-#include "../interfaces/mqttclient.hpp"
+#include "mqttclient.hpp"
 
 struct mosquitto;
 struct mosquitto_message;
