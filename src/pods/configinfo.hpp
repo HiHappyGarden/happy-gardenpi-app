@@ -61,9 +61,9 @@ namespace hgardenpi
             string toString() noexcept override;
         };
 
-        void operator<<(std::ostream &, ConfigInfo::Ptr const &);
+        ostream& operator<<(ostream &, ConfigInfo::Ptr const &);
 
-        void operator<<(std::ostream &, ConfigInfo const &);
+        ostream& operator<<(ostream &, ConfigInfo const &);
 
     }
 }

@@ -52,8 +52,6 @@ namespace hgardenpi
 
                 auto &&jsonConfig = json::parse(buf);
 
-                cout << jsonConfig.dump() << endl;
-
                 if (jsonConfig.contains("system") && jsonConfig.is_object())
                 {
                     auto &&systemObj = jsonConfig["system"].object();
@@ -64,8 +62,9 @@ namespace hgardenpi
                 }
             }
 
+            auto z = ret.get();
 
-            cout << ret->toString() << endl;
+            cout << z;
             return ret;
         }
 
