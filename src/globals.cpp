@@ -34,7 +34,6 @@ using std::make_unique;
 
 #include "services/logservice.hpp"
 #include "services/configservice.hpp"
-#include "config.h"
 #include "constants.hpp"
 
 namespace hgardenpi

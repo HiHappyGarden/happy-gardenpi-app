@@ -22,7 +22,6 @@
 
 #include "configservice.hpp"
 
-#include <stdexcept>
 #include <fstream>
 #include <iostream>
 #include <fstream>
@@ -31,33 +30,44 @@ using namespace std;
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
 
-using hgardenpi::v1::ConfigSerivce;
-
-void ConfigSerivce::read()
+namespace hgardenpi
 {
-    ifstream config(configFile);
-    if (!config.is_open())
+    inline namespace v1
     {
-        throw runtime_error("config file not found");
-    }
 
-    string buf;
-    string line;
-    while (getline(config, line))
-    {
-        buf += line;
-    }
-    config.close();
+        ConfigInfo::Ptr ConfigSerivce::read() noexcept
+        {
+            ConfigInfo::Ptr ret = make_shared<ConfigInfo>();
 
-    auto jsonConfig = json::parse(buf);
+            ifstream config(configFile);
+            if (config.is_open())
+            {
+                string buf;
+                string line;
+                while (getline(config, line))
+                {
+                    buf += line;
+                }
+                config.close();
 
-    cout << jsonConfig.dump() << endl;
+                auto &&jsonConfig = json::parse(buf);
 
-    if (jsonConfig.contains("Broker"))
-    {
-    }
-    else
-    {
+                cout << jsonConfig.dump() << endl;
+
+                if (jsonConfig.contains("system") && jsonConfig.is_object())
+                {
+                    auto &&systemObj = jsonConfig["system"].object();
+                    if (systemObj.contains("fileLock") && systemObj.is_string())
+                    {
+                        ret->fileLock = systemObj["fileLock"];
+                    }
+                }
+            }
+
+            cout << ret.get();
+
+            return ret;
+        }
 
     }
 }

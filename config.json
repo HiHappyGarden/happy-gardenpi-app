@@ -3,9 +3,9 @@
     "fileLock": "/tmp/pippo.lock"
   },
   "broker": {
-    "host": "localhost",
-    "port": 1883,
-    "user": "hgardepi",
-    "passwd": "hgardepi"
+    "host": "localhost1",
+    "port": 18831,
+    "user": "hgardepi1",
+    "passwd": "hgardepi1"
   }
 }

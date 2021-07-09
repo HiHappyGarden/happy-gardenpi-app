@@ -21,10 +21,13 @@
 // SOFTWARE.
 
 #pragma once
+
 #include <string>
+#include <ostream>
 #include <memory>
 
 #include "../config.h"
+#include "../utilities/object.hpp"
 
 namespace hgardenpi
 {
@@ -32,6 +35,7 @@ namespace hgardenpi
     inline namespace v1
     {
 
+        using std::ostream;
         using std::shared_ptr;
         using std::string;
 
@@ -39,7 +43,7 @@ namespace hgardenpi
          * @brief Data container for HW informations
          * 
          */
-        struct ConfigInfo
+        struct ConfigInfo : public Object
         {
 
             typedef shared_ptr<ConfigInfo> Ptr;
@@ -48,12 +52,31 @@ namespace hgardenpi
 
             struct Broker
             {
-                string host = HGARDENPI_MQTT_BROKER_HOST;
-                uint16_t port = HGARDENPI_MQTT_BROKER_PORT;
-                string user = HGARDENPI_MQTT_BROKER_USER;
-                string passwd = HGARDENPI_MQTT_BROKER_PASSWD;
+                string host = HGARDENPI_BROKER_HOST;
+                uint16_t port = HGARDENPI_BROKER_PORT;
+                string user = HGARDENPI_BROKER_USER;
+                string passwd = HGARDENPI_BROKER_PASSWD;
             } broker;
+
+            string toString() noexcept override
+            {
+                string ret;
+
+                ret = "{\n";
+                ret += " fileLock: " + fileLock + "\n";
+                ret += " broker: {\n";
+                ret += "  host: " + broker.host + "\n";
+                ret += "  port: " + std::to_string(broker.port) + "\n";
+                ret += "  user: " + broker.user + "\n";
+                ret += "  passwd: " + broker.passwd + "\n";
+                ret = "}\n";
+                return ret;
+            }
         };
+
+        void operator<<(std::ostream &, ConfigInfo::Ptr const &);
+
+        void operator<<(std::ostream &, ConfigInfo const &);
 
     }
 }
