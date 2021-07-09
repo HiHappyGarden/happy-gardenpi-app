@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-PROJECT(hgardenpi VERSION "0.10.1" LANGUAGES CXX C)
+PROJECT(hgardenpi VERSION "0.20.0" LANGUAGES CXX C)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_C_STANDARD 17)
 set(RASPBIAN_ROOTFS "$ENV{HOME}/raspberrypi/rootfs")
@@ -45,6 +45,9 @@ add_executable(hgardenpi
     src/factories/system.hpp 
     src/factories/systemconcrete.cpp
     src/factories/systemconcrete.hpp
+    src/interfaces/loggable.hpp
+    src/interfaces/object.hpp
+    src/interfaces/singleton.hpp
     src/pods/configinfo.cpp
     src/pods/configinfo.hpp
     src/pods/deviceinfo.hpp
@@ -58,8 +61,6 @@ add_executable(hgardenpi
     src/services/logserviceconcrete.hpp
     src/services/schedulerconcrete.cpp
     src/services/schedulerconcrete.hpp
-    src/utilities/object.hpp
-    src/utilities/singleton.hpp
     src/utilities/stringutils.cpp
     src/utilities/stringutils.hpp
     src/constants.cpp

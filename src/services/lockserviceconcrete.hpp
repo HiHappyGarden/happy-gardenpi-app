@@ -25,7 +25,8 @@
 #include <cstdio>
 
 #include "lockservice.hpp"
-#include "../utilities/object.hpp"
+#include "../pods/configinfo.hpp"
+#include "../interfaces/object.hpp"
 
 namespace hgardenpi
 {
@@ -42,8 +43,13 @@ namespace hgardenpi
         {
             pid_t pidInExecution = 0;
 
+            const ConfigInfo::Ptr &configInfo;
+
         public:
-            LockServiceConcrete() = default;
+            inline explicit LockServiceConcrete(const ConfigInfo::Ptr &configInfo) : configInfo(configInfo)
+            {
+            }
+
             inline ~LockServiceConcrete() noexcept
             {
                 if (pidInExecution == 0)

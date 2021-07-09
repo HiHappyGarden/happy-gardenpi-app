@@ -23,6 +23,7 @@
 #include "systemconcrete.hpp"
 using std::move;
 using std::nothrow;
+using std::to_string;
 
 #include <stdexcept>
 using std::runtime_error;
@@ -39,10 +40,25 @@ namespace hgardenpi
             {
                 delete lockService;
             }
+            if (logService)
+            {
+                delete logService;
+            }
         }
 
         void SystemConcrete::initialize()
         {
+
+            getConfigInfo();
+            getDeviceInfo();
+
+            if (lockService->lock())
+            {
+                string error("another instance already run pid:");
+                error += to_string(lockService->getPidInExecution());
+                logService->write(LOG_ERR, "%s", error.c_str());
+                throw runtime_error(error);
+            }
         }
 
         void SystemConcrete::start() {}
@@ -52,17 +68,19 @@ namespace hgardenpi
             ConfigSerivce config(HGARDENPI_FILE_CONFIG);
 
             configInfo = move(config.read());
+
+            return configInfo;
         }
 
         const LockService *SystemConcrete::getLockService() const
         {
             if (!configInfo)
             {
-                throw runtime_error("System non initialized");
+                throw runtime_error("system non initialized");
             }
             if (!lockService)
             {
-                lockService = new (nothrow) LockServiceConcrete;
+                lockService = new (nothrow) LockServiceConcrete(configInfo);
                 if (!lockService)
                 {
                     throw runtime_error("no memory for lockService");
@@ -71,8 +89,21 @@ namespace hgardenpi
             return lockService;
         }
 
-        const LogService &SystemConcrete::getLogService() const
+        const LogService *SystemConcrete::getLogService() const
         {
+            if (!configInfo)
+            {
+                throw runtime_error("system non initialized");
+            }
+            if (!logService)
+            {
+                logService = new (nothrow) LogServiceConcrete;
+                if (!logService)
+                {
+                    throw runtime_error("no memory for lockService");
+                }
+            }
+            return logService;
         }
 
         float SystemConcrete::getCPUTemperature() const

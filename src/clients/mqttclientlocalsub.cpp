@@ -53,7 +53,7 @@ namespace hgardenpi
             {
                 /* 
                 * Connection callback
-                * call when yhe broker send CONNACK
+                * call when the broker send CONNACK
                 */
                 mosquitto_connect_callback_set(mosq, [](mosquitto *mosq, void *obj, int result)
                                                {
@@ -88,7 +88,7 @@ namespace hgardenpi
                 {
                     string err("set user and password: ");
                     err.append(mosquitto_strerror(rc));
-                    //LogService::getInstance()->write(LOG_ERR, "%s", err.c_str());
+                    logService->write(LOG_ERR, "%s", err.c_str());
                     cerr << err << endl;
                     throw runtime_error(err);
                 }
@@ -98,7 +98,7 @@ namespace hgardenpi
 
                 mosquitto_connect(mosq, host.c_str(), port, keepAlive);
 
-                //LogService::getInstance()->write(LOG_INFO, "%s: %s", "topic", topic.c_str());
+                logService->write(LOG_INFO, "%s: %s", "topic", topic.c_str());
                 mosquitto_subscribe(mosq, nullptr, topic.c_str(), 0);
             }
             else
@@ -122,7 +122,7 @@ namespace hgardenpi
 
             if (run && rc)
             {
-                //LogService::getInstance()->write(LOG_WARNING, "%s", "connection error! Try to reconnect");
+                logService->write(LOG_WARNING, "%s", "connection error! Try to reconnect");
                 sleep(5);
                 rc = mosquitto_reconnect(mosq);
                 if (rc != MOSQ_ERR_SUCCESS)

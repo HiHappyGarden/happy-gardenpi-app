@@ -26,7 +26,7 @@
 #include <mutex>
 
 #include "logservice.hpp"
-#include "../utilities/singleton.hpp"
+#include "../interfaces/object.hpp"
 
 namespace hgardenpi
 {
@@ -40,13 +40,13 @@ namespace hgardenpi
          * @brief LogService singleton permit to write log into syslog
          * 
          */
-        class LogServiceConcrete final : public LogService, public Singleton<LogServiceConcrete>
+        class LogServiceConcrete final : public LogService, public Object
         {
             mutable mutex m;
 
         public:
             LogServiceConcrete() noexcept;
-            inline ~LogServiceConcrete() noexcept override
+            inline ~LogServiceConcrete() noexcept
             {
                 closelog();
             }

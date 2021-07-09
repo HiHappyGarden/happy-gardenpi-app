@@ -37,8 +37,28 @@ namespace hgardenpi
             System *system = nullptr;
 
         public:
-            FactoryConcrete() noexcept;
+            FactoryConcrete();
             ~FactoryConcrete() noexcept;
+
+            /**
+             * @brief Get the Device object
+             * 
+             * @return const Device* 
+             */
+            inline const Device *getDevice() const noexcept override
+            {
+                return device;
+            }
+
+            /**
+             * @brief Get the System object
+             * 
+             * @return const System* 
+             */
+            inline const System *getSystem() const noexcept override
+            {
+                return system;
+            }
         };
 
     }

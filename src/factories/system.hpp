@@ -65,14 +65,14 @@ namespace hgardenpi
              * 
              * @return const LockService*
              */
-            virtual const LockService *getLockService() const noexcept = 0;
+            virtual const LockService *getLockService() const = 0;
 
             /**
              * @brief Get the Log Service object
              * 
              * @return const LogService& 
              */
-            virtual const LogService &getLogService() const = 0;
+            virtual const LogService *getLogService() const = 0;
 
             /**
              * @brief Get CPU temperature
