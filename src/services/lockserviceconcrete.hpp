@@ -22,25 +22,60 @@
 
 #pragma once
 
-#include "../pods/configinfo.hpp"
+#include <cstdio>
+
+#include "lockservice.hpp"
+#include "../utilities/object.hpp"
 
 namespace hgardenpi
 {
     inline namespace v1
     {
+
+        using std::string;
+
         /**
-         * @brief Abstract class for configuration reading
+         * @brief LockService check if exist another instance of Happy GardenPI
          * 
          */
-        class ConfigSerivce
+        class LockServiceConcrete final : public Object, public LockService
         {
+            pid_t pidInExecution = 0;
+
         public:
+            LockServiceConcrete() = default;
+            inline ~LockServiceConcrete() noexcept
+            {
+                if (pidInExecution == 0)
+                {
+                    release();
+                }
+            }
+            HGARDENPI_NO_COPY_NO_MOVE(LockServiceConcrete)
+
+            /** 
+            * @brief Try to get lock.
+            * 
+            * @throw runtime_error when is not possibe create lock file
+            * @return true if another instance already run
+            */
+            bool lock() noexcept override;
+
+            /** 
+            * @brief Release the lock obtained with lock().
+            */
+            void release() const noexcept override;
+
             /**
-             * @brief read configuration
+             * @brief Return the name of object
              * 
-             * @throw runtime_error if something is wrong
+             * @return std::string name of object
              */
-            virtual ConfigInfo::Ptr read() noexcept = 0;
+            inline string toString() noexcept override
+            {
+                return typeid(*this).name();
+            }
         };
+
     }
 }

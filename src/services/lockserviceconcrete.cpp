@@ -20,30 +20,52 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <cstdlib>
+#include "lockserviceconcrete.hpp"
+
+#include <unistd.h>
+
 #include <iostream>
-#include <date.h>
+#include <fstream>
+#include <filesystem>
+using namespace std;
 
-#include "services/logservice.hpp"
-#include "globals.hpp"
+#include "../config.h"
 
-int main(int argc, char *argv[])
+using hgardenpi::v1::LockServiceConcrete;
+
+bool LockServiceConcrete::lock() noexcept
 {
-    try
-    {
-        //initialize Happy GardenPI
-        hgardenpi::initialize();
 
-        //start loops
-        hgardenpi::start();
-
-        //hgardenpi::LogService::getInstance()->write(LOG_INFO, "end");
-    }
-    catch (const std::exception &e)
+    ifstream lockFileCheck(HGARDENPI_FILE_LOCK_PATH);
+    if (!lockFileCheck.good())
     {
-        std::cerr << "error: " << e.what() << std::endl;
-        return EXIT_FAILURE;
+        ofstream lockFile(HGARDENPI_FILE_LOCK_PATH);
+        lockFile << std::to_string(getpid()) << endl;
+        lockFile.close();
+        lockFileCheck.close();
+        return false;
     }
 
-    return EXIT_SUCCESS;
+    string line;
+    while (getline(lockFileCheck, line))
+    {
+
+        // convert string to pid
+        stringstream ss;
+        ss << line;
+        ss >> pidInExecution;
+    }
+
+    lockFileCheck.close();
+    return true;
+}
+
+void LockServiceConcrete::release() const noexcept
+{
+    ifstream lockFileCheck(HGARDENPI_FILE_LOCK_PATH);
+    if (lockFileCheck.good())
+    {
+        remove(HGARDENPI_FILE_LOCK_PATH);
+    }
+    lockFileCheck.close();
 }

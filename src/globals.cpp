@@ -25,6 +25,7 @@
 #include <wiringPi.h>
 #include <mosquitto.h>
 #include <signal.h>
+#include <syslog.h>
 
 #include <thread>
 using namespace std;
@@ -53,11 +54,11 @@ namespace hgardenpi
         Globals::Globals() noexcept
         try
         {
-            lockService = make_unique<LockService>();
+            //lockService = make_unique<LockService>();
         }
         catch (const std::bad_alloc &e)
         {
-            LogService::getInstance()->write(LOG_ERR, e.what());
+            //  LogService::getInstance()->write(LOG_ERR, e.what());
         }
 
         Globals::~Globals() noexcept
@@ -70,48 +71,48 @@ namespace hgardenpi
         void initialize()
         {
 
-            //check if already run an instance of Happy GardenPI
-            if (Globals::getInstance()->lockService->lock())
-            {
-                string error("another instance already run pid:");
-                error += to_string(Globals::getInstance()->lockService->getPidInExecution());
-                LogService::getInstance()->write(LOG_ERR, "%s", error.c_str());
-                throw runtime_error(error);
-            }
+            // //check if already run an instance of Happy GardenPI
+            // if (Globals::getInstance()->lockService->lock())
+            // {
+            //     string error("another instance already run pid:");
+            //     error += to_string(Globals::getInstance()->lockService->getPidInExecution());
+            //     LogService::getInstance()->write(LOG_ERR, "%s", error.c_str());
+            //     throw runtime_error(error);
+            // }
 
-            //print init info on log
-            LogService::getInstance()->write(LOG_INFO, "version: %s", HGARDENPI_VER);
+            // //print init info on log
+            // LogService::getInstance()->write(LOG_INFO, "version: %s", HGARDENPI_VER);
 
-            //get device info
-            Globals::getInstance()->deviceInfo = getDeviceInfo();
+            // //get device info
+            // Globals::getInstance()->deviceInfo = getDeviceInfo();
 
-            //print device info to log
-            LogService::getInstance()->write(LOG_INFO, "hardware: %s", Globals::getInstance()->deviceInfo->hardhare.c_str());
-            LogService::getInstance()->write(LOG_INFO, "revision: %s", Globals::getInstance()->deviceInfo->revision.c_str());
-            LogService::getInstance()->write(LOG_INFO, "serial: %s", Globals::getInstance()->deviceInfo->serial.c_str());
-            LogService::getInstance()->write(LOG_INFO, "model: %s", Globals::getInstance()->deviceInfo->model.c_str());
-            LogService::getInstance()->write(LOG_INFO, "cpu: %d", Globals::getInstance()->deviceInfo->cpu);
+            // //print device info to log
+            // LogService::getInstance()->write(LOG_INFO, "hardware: %s", Globals::getInstance()->deviceInfo->hardhare.c_str());
+            // LogService::getInstance()->write(LOG_INFO, "revision: %s", Globals::getInstance()->deviceInfo->revision.c_str());
+            // LogService::getInstance()->write(LOG_INFO, "serial: %s", Globals::getInstance()->deviceInfo->serial.c_str());
+            // LogService::getInstance()->write(LOG_INFO, "model: %s", Globals::getInstance()->deviceInfo->model.c_str());
+            // LogService::getInstance()->write(LOG_INFO, "cpu: %d", Globals::getInstance()->deviceInfo->cpu);
 
-            //HW check
-            if (Globals::getInstance()->deviceInfo->hardhare != HW_V1)
-            {
-                HGARDENPI_ERROR_LOG_AMD_THROW("hardware not supporrted, you need a Raspberry Pi Zero W")
-            }
+            // //HW check
+            // if (Globals::getInstance()->deviceInfo->hardhare != HW_V1)
+            // {
+            //     HGARDENPI_ERROR_LOG_AMD_THROW("hardware not supporrted, you need a Raspberry Pi Zero W")
+            // }
 
-            ConfigSerivce config(HGARDENPI_FILE_CONFIG);
+            // ConfigSerivce config(HGARDENPI_FILE_CONFIG);
 
-            config.read();
+            // config.read();
 
-            //initialize WiringPI
-            wiringPiSetupGpio();
+            // //initialize WiringPI
+            // wiringPiSetupGpio();
 
-            //initialize mosquittopp
-            if (mosquitto_lib_init() != MOSQ_ERR_SUCCESS)
-            {
-                HGARDENPI_ERROR_LOG_AMD_THROW("mosquitto_lib_init() error")
-            }
+            // //initialize mosquittopp
+            // if (mosquitto_lib_init() != MOSQ_ERR_SUCCESS)
+            // {
+            //     HGARDENPI_ERROR_LOG_AMD_THROW("mosquitto_lib_init() error")
+            // }
 
-            //Globals::getInstance()->mqttClient = make_shared<MQTTClientLocalSub>(Globals::getInstance()->deviceInfo->serial, HGARDENPI_MQTT_BROKER_HOST, HGARDENPI_MQTT_BROKER_USER, HGARDENPI_MQTT_BROKER_PASSWD, HGARDENPI_MQTT_BROKER_PORT);
+            // //Globals::getInstance()->mqttClient = make_shared<MQTTClientLocalSub>(Globals::getInstance()->deviceInfo->serial, HGARDENPI_MQTT_BROKER_HOST, HGARDENPI_MQTT_BROKER_USER, HGARDENPI_MQTT_BROKER_PASSWD, HGARDENPI_MQTT_BROKER_PORT);
         }
 
         void start()
@@ -127,7 +128,7 @@ namespace hgardenpi
                 // {
                 //     this_thread::sleep_for(chrono::milliseconds(static_cast<int64_t>(Time::TICK)));
                 // }
-                this_thread::sleep_for(chrono::milliseconds(static_cast<int64_t>(Time::TICK)));
+                // this_thread::sleep_for(chrono::milliseconds(static_cast<int64_t>(Time::TICK)));
             }
         }
     }

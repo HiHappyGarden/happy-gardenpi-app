@@ -22,25 +22,55 @@
 
 #pragma once
 
-#include "../pods/configinfo.hpp"
+#include <syslog.h>
+#include <mutex>
+
+#include "logservice.hpp"
+#include "../utilities/singleton.hpp"
 
 namespace hgardenpi
 {
     inline namespace v1
     {
+
+        using std::mutex;
+        using std::string;
+
         /**
-         * @brief Abstract class for configuration reading
+         * @brief LogService singleton permit to write log into syslog
          * 
          */
-        class ConfigSerivce
+        class LogServiceConcrete final : public LogService, public Singleton<LogServiceConcrete>
         {
+            mutable mutex m;
+
         public:
+            LogServiceConcrete() noexcept;
+            inline ~LogServiceConcrete() noexcept override
+            {
+                closelog();
+            }
+            HGARDENPI_NO_COPY_NO_MOVE(LogServiceConcrete)
+
             /**
-             * @brief read configuration
+             * @brief Write log on system 
              * 
-             * @throw runtime_error if something is wrong
+             * @param level of log
+             * @param msg message to write
+             * @param ...
              */
-            virtual ConfigInfo::Ptr read() noexcept = 0;
+            void write(uint8_t level, const char *msg, ...) const noexcept override;
+
+            /**
+             * @brief Return the name of object
+             * 
+             * @return std::string name of object
+             */
+            inline string toString() noexcept override
+            {
+                return typeid(*this).name();
+            }
         };
+
     }
 }

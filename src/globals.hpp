@@ -20,7 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-
 #pragma once
 
 #include <memory>
@@ -28,7 +27,7 @@
 #include "utilities/singleton.hpp"
 #include "services/deviceservice.hpp"
 #include "clients/mqttclientlocalsub.hpp"
-#include "interfaces/mqttclient.hpp"
+//#include "interfaces/mqttclient.hpp"
 
 namespace hgardenpi
 {

@@ -20,52 +20,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "lockservice.hpp"
+#pragma once
 
-#include <unistd.h>
+#include <memory>
 
-#include <iostream>
-#include <fstream>
-#include <filesystem>
-using namespace std;
-
-#include "../config.h"
-
-using hgardenpi::v1::LockService;
-
-bool LockService::lock() noexcept
+namespace hgardenpi
 {
 
-    ifstream lockFileCheck(HGARDENPI_FILE_LOCK_PATH);
-    if (!lockFileCheck.good())
-    {
-        ofstream lockFile(HGARDENPI_FILE_LOCK_PATH);
-        lockFile << std::to_string(getpid()) << endl;
-        lockFile.close();
-        lockFileCheck.close();
-        return false;
-    }
-
-    string line;
-    while (getline(lockFileCheck, line))
+    inline namespace v1
     {
 
-        // convert string to pid
-        stringstream ss;
-        ss << line;
-        ss >> pidInExecution;
-    }
+        /**
+ * @brief 
+ * 
+ */
+        class System
+        {
+            typedef std::unique_ptr<Device> Ptr;
+        };
 
-    lockFileCheck.close();
-    return true;
-}
-
-void LockService::release() noexcept
-{
-    ifstream lockFileCheck(HGARDENPI_FILE_LOCK_PATH);
-    if (lockFileCheck.good())
-    {
-        remove(HGARDENPI_FILE_LOCK_PATH);
     }
-    lockFileCheck.close();
 }
