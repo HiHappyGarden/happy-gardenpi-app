@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['initialize_4',['initialize',['../classhgardenpi_1_1v1_1_1_globals.html#a25a40b6614565f755233080a384c35f1',1,'hgardenpi::v1::Globals']]]
+  ['factory_5',['Factory',['../classhgardenpi_1_1v1_1_1_factory.html',1,'hgardenpi::Factory'],['../classhgardenpi_1_1v1_1_1_factory.html',1,'hgardenpi::v1::Factory']]],
+  ['factoryconcrete_6',['FactoryConcrete',['../classhgardenpi_1_1v1_1_1_factory_concrete.html',1,'hgardenpi::FactoryConcrete'],['../classhgardenpi_1_1v1_1_1_factory_concrete.html',1,'hgardenpi::v1::FactoryConcrete']]]
 ];

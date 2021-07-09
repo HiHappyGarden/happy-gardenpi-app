@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['object_24',['Object',['../classhgardenpi_1_1v1_1_1_object.html',1,'hgardenpi::Object'],['../classhgardenpi_1_1v1_1_1_object.html',1,'hgardenpi::v1::Object']]]
+  ['globals_50',['Globals',['../classhgardenpi_1_1v1_1_1_globals.html',1,'hgardenpi::Globals'],['../classhgardenpi_1_1v1_1_1_globals.html',1,'hgardenpi::v1::Globals']]]
 ];

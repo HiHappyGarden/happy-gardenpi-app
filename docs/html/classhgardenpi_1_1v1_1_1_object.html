@@ -85,14 +85,16 @@ Inheritance diagram for hgardenpi::v1::Object:</div>
  <div class="center">
   <img src="classhgardenpi_1_1v1_1_1_object.png" usemap="#hgardenpi::v1::Object_map" alt=""/>
   <map id="hgardenpi::v1::Object_map" name="hgardenpi::v1::Object_map">
-<area href="classhgardenpi_1_1v1_1_1_singleton.html" alt="hgardenpi::v1::Singleton&lt; Globals &gt;" shape="rect" coords="0,56,236,80"/>
-<area href="classhgardenpi_1_1v1_1_1_singleton.html" alt="hgardenpi::v1::Singleton&lt; Scheduler &gt;" shape="rect" coords="246,56,482,80"/>
-<area href="classhgardenpi_1_1v1_1_1_singleton.html" alt="hgardenpi::v1::Singleton&lt; LogService &gt;" shape="rect" coords="492,56,728,80"/>
-<area href="classhgardenpi_1_1v1_1_1_lock_service.html" title="LockService check if exist another instance of Happy GardenPI." alt="hgardenpi::v1::LockService" shape="rect" coords="738,56,974,80"/>
-<area href="classhgardenpi_1_1v1_1_1_singleton.html" alt="hgardenpi::v1::Singleton&lt; T &gt;" shape="rect" coords="984,56,1220,80"/>
-<area href="classhgardenpi_1_1v1_1_1_globals.html" title="Singleton where are put global variable." alt="hgardenpi::v1::Globals" shape="rect" coords="0,112,236,136"/>
-<area href="classhgardenpi_1_1v1_1_1_scheduler.html" title="Scheduler for scheduing acrion, inside of this run a loop every one second." alt="hgardenpi::v1::Scheduler" shape="rect" coords="246,112,482,136"/>
-<area href="classhgardenpi_1_1v1_1_1_log_service.html" title="LogService singleton permit to write log into syslog." alt="hgardenpi::v1::LogService" shape="rect" coords="492,112,728,136"/>
+<area href="classhgardenpi_1_1v1_1_1_singleton.html" alt="hgardenpi::v1::Singleton&lt; Globals &gt;" shape="rect" coords="0,56,229,80"/>
+<area href="classhgardenpi_1_1v1_1_1_singleton.html" alt="hgardenpi::v1::Singleton&lt; Scheduler &gt;" shape="rect" coords="358,56,587,80"/>
+<area href="structhgardenpi_1_1v1_1_1_config_info.html" title="Data container for HW informations." alt="hgardenpi::v1::ConfigInfo" shape="rect" coords="597,56,826,80"/>
+<area href="classhgardenpi_1_1v1_1_1_config_serivce.html" title="Class for configuration reading from json file." alt="hgardenpi::v1::ConfigSerivce" shape="rect" coords="836,56,1065,80"/>
+<area href="classhgardenpi_1_1v1_1_1_lock_service_concrete.html" title="LockService check if exist another instance of Happy GardenPI." alt="hgardenpi::v1::LockServiceConcrete" shape="rect" coords="1075,56,1304,80"/>
+<area href="classhgardenpi_1_1v1_1_1_log_service_concrete.html" title="LogService singleton permit to write log into syslog." alt="hgardenpi::v1::LogServiceConcrete" shape="rect" coords="1314,56,1543,80"/>
+<area href="classhgardenpi_1_1v1_1_1_singleton.html" title="Generic singleton class." alt="hgardenpi::v1::Singleton&lt; T &gt;" shape="rect" coords="1553,56,1782,80"/>
+<area href="classhgardenpi_1_1v1_1_1_globals.html" title="Singleton where are put global variable." alt="hgardenpi::v1::Globals" shape="rect" coords="0,112,229,136"/>
+<area href="classhgardenpi_1_1v1_1_1_scheduler.html" title="Scheduler for scheduing acrion, inside of this run a loop every one second." alt="hgardenpi::v1::Scheduler" shape="rect" coords="239,112,468,136"/>
+<area href="classhgardenpi_1_1v1_1_1_scheduler.html" title="Scheduler for scheduing acrion, inside of this run a loop every one second." alt="hgardenpi::v1::Scheduler" shape="rect" coords="478,112,707,136"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -131,12 +133,12 @@ Public Member Functions</h2></td></tr>
 <p>Virtual method that return data of object in srteing format. </p>
 <dl class="section return"><dt>Returns</dt><dd>std::string data of object </dd></dl>
 
-<p>Implemented in <a class="el" href="classhgardenpi_1_1v1_1_1_scheduler.html#a5c16a40935cca7865321f4a8a8d9ce1a">hgardenpi::v1::Scheduler</a>, <a class="el" href="classhgardenpi_1_1v1_1_1_log_service.html#a654ee84e501c3886d7d34018df3f23a3">hgardenpi::v1::LogService</a>, <a class="el" href="classhgardenpi_1_1v1_1_1_lock_service.html#a60b076f8d3d9a61ea42339eb23005799">hgardenpi::v1::LockService</a>, and <a class="el" href="classhgardenpi_1_1v1_1_1_globals.html#a5883385a29ecea89cee7a18dc883b3ef">hgardenpi::v1::Globals</a>.</p>
+<p>Implemented in <a class="el" href="classhgardenpi_1_1v1_1_1_scheduler.html#a5c16a40935cca7865321f4a8a8d9ce1a">hgardenpi::v1::Scheduler</a>, <a class="el" href="classhgardenpi_1_1v1_1_1_scheduler.html#a5c16a40935cca7865321f4a8a8d9ce1a">hgardenpi::v1::Scheduler</a>, <a class="el" href="classhgardenpi_1_1v1_1_1_log_service_concrete.html#ac389247ee1d5c752fbca3ce247b61410">hgardenpi::v1::LogServiceConcrete</a>, <a class="el" href="classhgardenpi_1_1v1_1_1_lock_service_concrete.html#adacf1a618ad6e55ffbabaffa44431a3b">hgardenpi::v1::LockServiceConcrete</a>, <a class="el" href="classhgardenpi_1_1v1_1_1_config_serivce.html#aa538b990610247aab97098a7d65b940e">hgardenpi::v1::ConfigSerivce</a>, <a class="el" href="structhgardenpi_1_1v1_1_1_config_info.html#a6b11d090e3312450c7f14582cfd7a8b6">hgardenpi::v1::ConfigInfo</a>, and <a class="el" href="classhgardenpi_1_1v1_1_1_globals.html#a5883385a29ecea89cee7a18dc883b3ef">hgardenpi::v1::Globals</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>src/utilities/<a class="el" href="object_8hpp_source.html">object.hpp</a></li>
+<li>src/interfaces/<a class="el" href="object_8hpp_source.html">object.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
