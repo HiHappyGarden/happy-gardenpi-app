@@ -39,17 +39,17 @@ namespace hgardenpi
             ret += "  port: " + std::to_string(broker.port) + "\n";
             ret += "  user: " + broker.user + "\n";
             ret += "  passwd: " + broker.passwd + "\n";
-            ret += "}\n";
+            ret += "}";
             return ret;
         }
 
-        ostream& operator<<(std::ostream &os, ConfigInfo::Ptr const &ci)
+        ostream &operator<<(std::ostream &os, ConfigInfo::Ptr const &ci)
         {
             os << const_cast<ConfigInfo::Ptr &>(ci)->toString();
             return os;
         }
 
-        ostream& operator<<(std::ostream &os, ConfigInfo const &ci)
+        ostream &operator<<(std::ostream &os, ConfigInfo const &ci)
         {
             os << const_cast<ConfigInfo &>(ci).toString();
             return os;

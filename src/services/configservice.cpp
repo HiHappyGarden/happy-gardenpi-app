@@ -30,6 +30,18 @@ using namespace std;
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
 
+#define HGARDENPI_READ_STRING(conatiner, field, value)                                                                \
+    if (auto &&containerObj = jsonConfig[conatiner]; containerObj.contains(value) && containerObj[value].is_string()) \
+    {                                                                                                                 \
+        ret->field = containerObj[value].get<string>();                                                               \
+    }
+
+#define HGARDENPI_READ_UINT16(conatiner, field, value)                                                                \
+    if (auto &&containerObj = jsonConfig[conatiner]; containerObj.contains(value) && containerObj[value].is_string()) \
+    {                                                                                                                 \
+        ret->field = containerObj[value].get<uint16_t>();                                                             \
+    }
+
 namespace hgardenpi
 {
     inline namespace v1
@@ -54,17 +66,34 @@ namespace hgardenpi
 
                 if (jsonConfig.contains("system") && jsonConfig.is_object())
                 {
-                    auto &&systemObj = jsonConfig["system"].object();
-                    if (systemObj.contains("fileLock") && systemObj.is_string())
+                    if (auto &&containerObj = jsonConfig["system"]; containerObj.contains("fileLock") && containerObj["fileLock"].is_string())
                     {
-                        ret->fileLock = systemObj["fileLock"];
+                        ret->fileLock = containerObj["fileLock"].get<string>();
+                    }
+                }
+                if (jsonConfig.contains("broker") && jsonConfig.is_object())
+                {
+                    auto &&containerObj = jsonConfig["broker"];
+                    if (containerObj.contains("host") && containerObj["host"].is_string())
+                    {
+                        ret->broker.host = containerObj["host"].get<string>();
+                    }
+                    if (containerObj.contains("port") && containerObj["port"].is_string())
+                    {
+                        ret->broker.port = containerObj["port"].get<int>();
+                    }
+                    if (containerObj.contains("user") && containerObj["user"].is_string())
+                    {
+                        ret->broker.user = containerObj["user"].get<string>();
+                    }
+                    if (containerObj.contains("passwd") && containerObj["passwd"].is_string())
+                    {
+                        ret->broker.passwd = containerObj["passwd"].get<string>();
                     }
                 }
             }
 
-            auto z = ret.get();
-
-            cout << z;
+            cout << ret->toString() << endl;
             return ret;
         }
 
