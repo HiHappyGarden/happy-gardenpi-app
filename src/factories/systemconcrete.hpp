@@ -45,6 +45,7 @@ namespace hgardenpi
             mutable DeviceInfo::Ptr deviceInfo = nullptr;
             mutable ConfigInfo::Ptr configInfo = nullptr;
             mutable LockService *lockService = nullptr;
+            mutable LogService *logService = nullptr;
 
         public:
             ~SystemConcrete();
@@ -74,14 +75,14 @@ namespace hgardenpi
              * 
              * @return const LockService*
              */
-            const LockService *getLockService() const noexcept override;
+            const LockService *getLockService() const override;
 
             /**
              * @brief Get the Log Service object
              * 
              * @return const LogService& 
              */
-            const LogService &getLogService() const override;
+            const LogService *getLogService() const override;
 
             /**
              * @brief Get CPU temperature

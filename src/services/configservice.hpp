@@ -25,7 +25,7 @@
 #include <string>
 
 #include "configservice.hpp"
-#include "../utilities/object.hpp"
+#include "../interfaces/object.hpp"
 #include "../constants.hpp"
 #include "../pods/configinfo.hpp"
 

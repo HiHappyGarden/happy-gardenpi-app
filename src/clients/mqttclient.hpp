@@ -26,6 +26,8 @@
 #include <memory>
 #include <functional>
 
+#include "../interfaces/loggable.hpp"
+
 namespace hgardenpi
 {
     inline namespace v1
@@ -37,7 +39,7 @@ namespace hgardenpi
          * 
          * @tparam T callback type 
          */
-        class MQTTClient
+        class MQTTClient : public Loggable
         {
 
         public:

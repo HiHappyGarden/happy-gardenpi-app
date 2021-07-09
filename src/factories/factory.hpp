@@ -43,14 +43,14 @@ namespace hgardenpi
              * 
              * @return const Device* 
              */
-            virtual const Device *getDevice() = 0;
+            virtual const Device *getDevice() const noexcept = 0;
 
             /**
              * @brief Get the System object
              * 
              * @return const Device* 
              */
-            virtual const Device *getSystem() = 0;
+            virtual const System *getSystem() const noexcept = 0;
         };
 
     }

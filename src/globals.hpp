@@ -24,7 +24,7 @@
 
 #include <memory>
 
-#include "utilities/singleton.hpp"
+#include "interfaces/singleton.hpp"
 #include "services/deviceservice.hpp"
 #include "clients/mqttclientlocalsub.hpp"
 //#include "interfaces/mqttclient.hpp"

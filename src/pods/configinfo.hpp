@@ -27,7 +27,7 @@
 #include <memory>
 
 #include "../config.h"
-#include "../utilities/object.hpp"
+#include "../interfaces/object.hpp"
 
 namespace hgardenpi
 {
@@ -61,9 +61,9 @@ namespace hgardenpi
             string toString() noexcept override;
         };
 
-        ostream& operator<<(ostream &, ConfigInfo::Ptr const &);
+        ostream &operator<<(ostream &, ConfigInfo::Ptr const &);
 
-        ostream& operator<<(ostream &, ConfigInfo const &);
+        ostream &operator<<(ostream &, ConfigInfo const &);
 
     }
 }

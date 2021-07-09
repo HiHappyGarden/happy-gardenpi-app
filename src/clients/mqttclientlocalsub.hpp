@@ -49,6 +49,7 @@ namespace hgardenpi
             const string &user;
             const string &passwd;
 
+            LogService *logService = nullptr;
             mosquitto *mosq = nullptr;
             string id;
 
@@ -100,6 +101,11 @@ namespace hgardenpi
             inline void setOnMessageCallback(MessageCallback &&onMessageCallback) noexcept override
             {
                 this->onMessageCallback = onMessageCallback;
+            }
+
+            inline void setLogService(const LogService *logService) noexcept override
+            {
+                this->logService = const_cast<LogService *>(logService);
             }
 
         private:

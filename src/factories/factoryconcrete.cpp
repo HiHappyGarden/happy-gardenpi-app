@@ -22,16 +22,30 @@
 
 #include "factoryconcrete.hpp"
 
+#include <stdexcept>
+using namespace std;
+
+#include "systemconcrete.hpp"
+
 namespace hgardenpi
 {
 
     inline namespace v1
     {
-        FactoryConcrete::FactoryConcrete() noexcept
+        FactoryConcrete::FactoryConcrete() : system(new (nothrow) SystemConcrete)
         {
+            if (!system)
+            {
+                throw runtime_error("no memory for factoryconcrete");
+            }
         }
+
         FactoryConcrete::~FactoryConcrete() noexcept
         {
+            if (system)
+            {
+                delete system;
+            }
         }
     }
 }

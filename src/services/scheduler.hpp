@@ -25,7 +25,7 @@
 #include <mutex>
 #include <functional>
 
-#include "../utilities/singleton.hpp"
+#include "../interfaces/singleton.hpp"
 #include "../constants.hpp"
 
 namespace hgardenpi
