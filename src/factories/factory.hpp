@@ -38,7 +38,19 @@ namespace hgardenpi
         class Factory
         {
 
-            
+            /**
+             * @brief Get the Device object
+             * 
+             * @return const Device* 
+             */
+            virtual const Device *getDevice() = 0;
+
+            /**
+             * @brief Get the System object
+             * 
+             * @return const Device* 
+             */
+            virtual const Device *getSystem() = 0;
         };
 
     }

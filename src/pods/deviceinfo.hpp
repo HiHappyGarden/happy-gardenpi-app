@@ -30,8 +30,8 @@ namespace hgardenpi
     inline namespace v1
     {
 
+        using std::shared_ptr;
         using std::string;
-        using std::unique_ptr;
 
         /**
          * @brief Data container for HW informations
@@ -40,7 +40,7 @@ namespace hgardenpi
         struct DeviceInfo final
         {
 
-            typedef unique_ptr<DeviceInfo> Ptr;
+            typedef shared_ptr<DeviceInfo> Ptr;
 
             string hardhare;
             string revision;

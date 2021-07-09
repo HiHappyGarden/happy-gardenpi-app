@@ -22,25 +22,57 @@
 
 #pragma once
 
+#include <string>
+
+#include "configservice.hpp"
+#include "../utilities/object.hpp"
+#include "../constants.hpp"
 #include "../pods/configinfo.hpp"
 
 namespace hgardenpi
 {
     inline namespace v1
     {
+
+        using std::make_shared;
+        using std::string;
+
         /**
-         * @brief Abstract class for configuration reading
+         * @brief Class for configuration reading from json file
          * 
          */
-        class ConfigSerivce
+        class ConfigSerivce final : public Object
         {
+
+            const string configFile;
+
         public:
+            /**
+             * @brief Construct a new Config Serivce object
+             * 
+             * @param configFile path of config file in json format
+             */
+            inline explicit ConfigSerivce(string &&configFile) noexcept : configFile(configFile)
+            {
+            }
+            HGARDENPI_NO_COPY_NO_MOVE(ConfigSerivce)
+
             /**
              * @brief read configuration
              * 
              * @throw runtime_error if something is wrong
              */
-            virtual ConfigInfo::Ptr read() noexcept = 0;
+            ConfigInfo::Ptr read() noexcept;
+
+            /**
+             * @brief Return the name of object
+             * 
+             * @return std::string name of object
+             */
+            inline string toString() noexcept override
+            {
+                return typeid(*this).name();
+            }
         };
     }
 }

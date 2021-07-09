@@ -33,7 +33,7 @@ namespace hgardenpi
 {
     inline namespace v1
     {
-        [[maybe_unused]] float getCPUTemperature()
+        float getCPUTemperature()
         {
             string val;
             ifstream file("/sys/class/thermal/thermal_zone0/temp");

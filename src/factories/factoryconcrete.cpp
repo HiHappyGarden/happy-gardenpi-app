@@ -27,6 +27,11 @@ namespace hgardenpi
 
     inline namespace v1
     {
-
+        FactoryConcrete::FactoryConcrete() noexcept
+        {
+        }
+        FactoryConcrete::~FactoryConcrete() noexcept
+        {
+        }
     }
 }
