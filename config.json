@@ -1,4 +1,7 @@
 {
+  "system": {
+    "fileLock": "/tmp/pippo.lock"
+  },
   "broker": {
     "host": "localhost",
     "port": 1883,
