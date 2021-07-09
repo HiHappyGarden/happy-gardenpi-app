@@ -38,15 +38,18 @@ add_executable(hgardenpi
     src/clients/mqttclient.hpp 
     src/clients/mqttclientlocalsub.cpp
     src/clients/mqttclientlocalsub.hpp
+    src/factories/device.hpp 
     src/factories/factory.hpp 
     src/factories/factoryconcrete.cpp
     src/factories/factoryconcrete.hpp
+    src/factories/system.hpp 
+    src/factories/systemconcrete.cpp
+    src/factories/systemconcrete.hpp
     src/pods/configinfo.cpp
     src/pods/configinfo.hpp
     src/pods/deviceinfo.hpp
+    src/services/configservice.cpp
     src/services/configservice.hpp
-    src/services/configserviceconcrete.cpp
-    src/services/configserviceconcrete.hpp
     src/services/deviceservice.cpp
     src/services/deviceservice.hpp
     src/services/lockserviceconcrete.cpp

@@ -32,6 +32,13 @@ namespace hgardenpi
 
         class FactoryConcrete final : public Factory
         {
+
+            Device *device = nullptr;
+            System *system = nullptr;
+
+        public:
+            FactoryConcrete() noexcept;
+            ~FactoryConcrete() noexcept;
         };
 
     }

@@ -22,10 +22,12 @@
 
 #pragma once
 
-#include "../services/configservice.hpp"
-#include "../services/lockservice.hpp"
-#include "../services/logservice.hpp"
+#include "system.hpp"
+
 #include "../services/deviceservice.hpp"
+#include "../services/configservice.hpp"
+#include "../services/lockserviceconcrete.hpp"
+#include "../services/logserviceconcrete.hpp"
 
 namespace hgardenpi
 {
@@ -37,56 +39,63 @@ namespace hgardenpi
          * @brief Factory for management of system services devices
          * 
          */
-        class System
+        class SystemConcrete final : public System
         {
+
+            mutable DeviceInfo::Ptr deviceInfo = nullptr;
+            mutable ConfigInfo::Ptr configInfo = nullptr;
+            mutable LockService *lockService = nullptr;
+
+        public:
+            ~SystemConcrete();
 
             /**
              * @brief Before all call this functiuon fo inilialize the project
              * 
              * @exception runtime_error when hardware requisites mismatch
              */
-            virtual void initialize() = 0;
+            void initialize() override;
 
             /**
              * @brief Start main look and scheduler
              * 
              */
-            virtual void start() = 0;
+            void start() override;
 
             /**
              * @brief Get the Config Info object
              * 
              * @return ConfigInfo::Ptr 
              */
-            virtual ConfigInfo::Ptr getConfigInfo() const noexcept = 0;
+            ConfigInfo::Ptr getConfigInfo() const noexcept override;
 
             /**
              * @brief Get the Lock Service object
              * 
              * @return const LockService*
              */
-            virtual const LockService *getLockService() const noexcept = 0;
+            const LockService *getLockService() const noexcept override;
 
             /**
              * @brief Get the Log Service object
              * 
              * @return const LogService& 
              */
-            virtual const LogService &getLogService() const = 0;
+            const LogService &getLogService() const override;
 
             /**
              * @brief Get CPU temperature
              * @exception throw exception when temp is not available
              * @return return degrees temperature
              */
-            virtual float getCPUTemperature() const = 0;
+            float getCPUTemperature() const override;
 
             /**
              * @brief Get Raspberry PI info
              * @exception throw exception when temp is not available
              * @return return Raspberry PI info
              */
-            virtual DeviceInfo::Ptr getDeviceInfo() const = 0;
+            DeviceInfo::Ptr getDeviceInfo() const override;
         };
 
     }

@@ -22,8 +22,6 @@
 
 #pragma once
 
-#include <memory>
-
 namespace hgardenpi
 {
 
@@ -36,8 +34,6 @@ namespace hgardenpi
          */
         class Device
         {
-
-            typedef std::unique_ptr<Device> Ptr;
         };
 
     }
