@@ -72,8 +72,8 @@ namespace hgardenpi
 
             Globals::getInstance()->factory = new (nothrow) FactoryConcrete;
 
-            System *system = const_cast<System *>(Globals::getInstance()->factory->getSystem());
-            Device *device = const_cast<Device *>(Globals::getInstance()->factory->getDevice());
+            auto system = const_cast<System *>(Globals::getInstance()->factory->getSystem());
+            auto device = const_cast<Device *>(Globals::getInstance()->factory->getDevice());
 
             system->initialize();
 

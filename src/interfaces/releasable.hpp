@@ -34,6 +34,7 @@ namespace hgardenpi
         class Releasable
         {
         public:
+            virtual ~Releasable() = default;
             /**
              * @brief release a resorce
              * 
