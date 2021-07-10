@@ -39,6 +39,7 @@ namespace hgardenpi
         {
 
         public:
+            virtual ~Factory() = default;
             /**
              * @brief Get the Device object
              * 

@@ -39,6 +39,7 @@ namespace hgardenpi
         class Loggable
         {
         public:
+            virtual ~Loggable() = default;
             /**
              * @brief Set the Log Service object
              * 

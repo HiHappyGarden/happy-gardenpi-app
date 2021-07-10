@@ -41,8 +41,11 @@ namespace hgardenpi
         {
 
         public:
+
             using Startable::initialize;
             using Startable::start;
+
+            virtual ~System() = default;
 
             /**
              * @brief Get the Config Info object
@@ -56,14 +59,14 @@ namespace hgardenpi
              * 
              * @return const LockService*
              */
-            virtual const LockService *getLockService() const = 0;
+            virtual const LockService *getLockService() const noexcept = 0;
 
             /**
              * @brief Get the Log Service object
              * 
              * @return const LogService& 
              */
-            virtual const LogService *getLogService() const = 0;
+            virtual const LogService *getLogService() const noexcept = 0;
         };
 
     }

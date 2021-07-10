@@ -41,6 +41,7 @@ namespace hgardenpi
         {
 
         public:
+            virtual ~Device() = default;
             /**
              * @brief Get CPU temperature
              * @exception throw exception when temp is not available
