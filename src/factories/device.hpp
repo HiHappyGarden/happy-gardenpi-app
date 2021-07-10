@@ -22,6 +22,11 @@
 
 #pragma once
 
+#include "../interfaces/loggable.hpp"
+#include "../interfaces/startable.hpp"
+#include "../interfaces/releasable.hpp"
+#include "../pods/deviceinfo.hpp"
+
 namespace hgardenpi
 {
 
@@ -32,8 +37,23 @@ namespace hgardenpi
          * @brief Factory for management of peripherals devices
          * 
          */
-        class Device
+        class Device : public Loggable, public Startable, public Releasable
         {
+
+        public:
+            /**
+             * @brief Get CPU temperature
+             * @exception throw exception when temp is not available
+             * @return return degrees temperature
+             */
+            virtual float getCPUTemperature() const = 0;
+
+            /**
+             * @brief Get Raspberry PI info
+             * @exception throw exception when temp is not available
+             * @return return Raspberry PI info
+             */
+            virtual DeviceInfo::Ptr getInfo() const = 0;
         };
 
     }

@@ -33,12 +33,16 @@ namespace hgardenpi
     {
 
         /**
-         * @brief Set LogServcice to obj
+         * @brief Abstract class for set LogServcice to obj
          * 
          */
         class Loggable
         {
         public:
+            /**
+             * @brief Set the Log Service object
+             * 
+             */
             virtual void setLogService(const LogService *) noexcept = 0;
         };
 

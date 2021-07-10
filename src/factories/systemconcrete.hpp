@@ -24,7 +24,6 @@
 
 #include "system.hpp"
 
-#include "../services/deviceservice.hpp"
 #include "../services/configservice.hpp"
 #include "../services/lockserviceconcrete.hpp"
 #include "../services/logserviceconcrete.hpp"
@@ -39,16 +38,17 @@ namespace hgardenpi
          * @brief Factory for management of system services devices
          * 
          */
-        class SystemConcrete final : public System
+        class SystemConcrete final : public System, public Object
         {
 
-            mutable DeviceInfo::Ptr deviceInfo = nullptr;
             mutable ConfigInfo::Ptr configInfo = nullptr;
             mutable LockService *lockService = nullptr;
             mutable LogService *logService = nullptr;
 
         public:
+            SystemConcrete() = default;
             ~SystemConcrete();
+            HGARDENPI_NO_COPY_NO_MOVE(SystemConcrete)
 
             /**
              * @brief Before all call this functiuon fo inilialize the project
@@ -68,7 +68,10 @@ namespace hgardenpi
              * 
              * @return ConfigInfo::Ptr 
              */
-            ConfigInfo::Ptr getConfigInfo() const noexcept override;
+            inline ConfigInfo::Ptr getConfigInfo() const noexcept override
+            {
+                return configInfo;
+            }
 
             /**
              * @brief Get the Lock Service object
@@ -85,18 +88,14 @@ namespace hgardenpi
             const LogService *getLogService() const override;
 
             /**
-             * @brief Get CPU temperature
-             * @exception throw exception when temp is not available
-             * @return return degrees temperature
+             * @brief Return the name of object
+             * 
+             * @return std::string name of object
              */
-            float getCPUTemperature() const override;
-
-            /**
-             * @brief Get Raspberry PI info
-             * @exception throw exception when temp is not available
-             * @return return Raspberry PI info
-             */
-            DeviceInfo::Ptr getDeviceInfo() const override;
+            inline string toString() noexcept override
+            {
+                return typeid(*this).name();
+            }
         };
 
     }

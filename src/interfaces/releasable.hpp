@@ -22,35 +22,24 @@
 
 #pragma once
 
-#include <cstdint>
-
-//generic no copy no move constructor
-#define HGARDENPI_NO_COPY_NO_MOVE(clazz)      \
-    clazz(clazz &) = delete;                  \
-    clazz &operator=(const clazz &) = delete; \
-    clazz(clazz &&) = delete;                 \
-    clazz &operator=(clazz &&) = delete;
-
-#define HGARDENPI_ERROR_LOG_AMD_THROW(msg) \
-    logService->write(LOG_ERR, "%d", msg); \
-    throw runtime_error(msg);
-
 namespace hgardenpi
 {
     inline namespace v1
     {
+
         /**
-         * @brief Enum for manage times
+         * @brief Generic class for release a resorce
          * 
          */
-        enum class Time : int64_t
+        class Releasable
         {
-            SECOND = 1'000,
-            TICK = 200
+        public:
+            /**
+             * @brief release a resorce
+             * 
+             */
+            virtual void release() noexcept = 0;
         };
-
-        //hw needed for Happy GardenPI
-        const constexpr char *HW_V1 = "BCM2835";
 
     }
 }

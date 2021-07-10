@@ -22,35 +22,33 @@
 
 #pragma once
 
-#include <cstdint>
-
-//generic no copy no move constructor
-#define HGARDENPI_NO_COPY_NO_MOVE(clazz)      \
-    clazz(clazz &) = delete;                  \
-    clazz &operator=(const clazz &) = delete; \
-    clazz(clazz &&) = delete;                 \
-    clazz &operator=(clazz &&) = delete;
-
-#define HGARDENPI_ERROR_LOG_AMD_THROW(msg) \
-    logService->write(LOG_ERR, "%d", msg); \
-    throw runtime_error(msg);
-
 namespace hgardenpi
 {
+
     inline namespace v1
     {
+
         /**
-         * @brief Enum for manage times
+         * @brief Abstract class for objet able to start somethink
          * 
          */
-        enum class Time : int64_t
+        class Startable
         {
-            SECOND = 1'000,
-            TICK = 200
-        };
+        public:
+            /**
+             * @brief Before all call this functiuon fo inilialize the project
+             * 
+             * @exception runtime_error when hardware requisites mismatch
+             */
+            virtual void initialize() = 0;
 
-        //hw needed for Happy GardenPI
-        const constexpr char *HW_V1 = "BCM2835";
+            /**
+             * @brief Start main look and scheduler
+             * 
+             * @exception runtime_error when hardware requisites mismatch
+             */
+            virtual void start() = 0;
+        };
 
     }
 }
