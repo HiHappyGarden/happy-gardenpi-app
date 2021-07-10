@@ -37,6 +37,9 @@ namespace hgardenpi
         {
 
         public:
+
+            virtual ~LogService() = default;
+
             /**
              * @brief Write log on system 
              * 

@@ -47,6 +47,7 @@ namespace hgardenpi
             mutable mutex m;
 
         public:
+            virtual ~Scheduler() = default;
             HGARDENPI_NO_COPY_NO_MOVE(Scheduler)
 
             /**

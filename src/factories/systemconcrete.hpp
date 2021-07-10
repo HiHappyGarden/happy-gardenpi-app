@@ -78,14 +78,20 @@ namespace hgardenpi
              * 
              * @return const LockService*
              */
-            const LockService *getLockService() const override;
+            inline const LockService *getLockService() const noexcept override
+            {
+                return lockService;
+            }
 
             /**
              * @brief Get the Log Service object
              * 
              * @return const LogService& 
              */
-            const LogService *getLogService() const override;
+            inline const LogService *getLogService() const noexcept override
+            {
+                return logService;
+            }
 
             /**
              * @brief Return the name of object

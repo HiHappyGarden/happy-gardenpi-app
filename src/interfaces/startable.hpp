@@ -35,6 +35,7 @@ namespace hgardenpi
         class Startable
         {
         public:
+            virtual ~Startable() = default;
             /**
              * @brief Before all call this functiuon fo inilialize the project
              * 

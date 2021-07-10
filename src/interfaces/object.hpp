@@ -39,6 +39,7 @@ namespace hgardenpi
         {
         public:
             Object() = default;
+            virtual ~Object() = default;
             HGARDENPI_NO_COPY_NO_MOVE(Object)
 
             /**
