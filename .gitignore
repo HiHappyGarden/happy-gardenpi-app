@@ -11,7 +11,6 @@ CTestTestfile.cmake
 _deps
 builds
 build
-build.sh
 src/config.h
 cmake-*
 .DS_Store
