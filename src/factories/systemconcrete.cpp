@@ -52,8 +52,24 @@ namespace hgardenpi
             //load configuration
             ConfigSerivce config(HGARDENPI_FILE_CONFIG);
             configInfo = move(config.read());
+            if (!configInfo)
+            {
+                throw runtime_error("system non initialized");
+            }
 
-            //check if already run an instance of Happy GardenPI
+            logService = new (nothrow) LogServiceConcrete;
+            if (!logService)
+            {
+                throw runtime_error("no memory for lockService");
+            }
+
+            //initialize lock service
+            lockService = new (nothrow) LockServiceConcrete(configInfo);
+            if (!lockService)
+            {
+                throw runtime_error("no memory for lockService");
+            }
+                //check if already run an instance of Happy GardenPI
             if (lockService->lock())
             {
                 string error("another instance already run pid:");
@@ -67,40 +83,6 @@ namespace hgardenpi
         }
 
         void SystemConcrete::start() {}
-
-        const LockService *SystemConcrete::getLockService() const
-        {
-            if (!configInfo)
-            {
-                throw runtime_error("system non initialized");
-            }
-            if (!lockService)
-            {
-                lockService = new (nothrow) LockServiceConcrete(configInfo);
-                if (!lockService)
-                {
-                    throw runtime_error("no memory for lockService");
-                }
-            }
-            return lockService;
-        }
-
-        const LogService *SystemConcrete::getLogService() const
-        {
-            if (!configInfo)
-            {
-                throw runtime_error("system non initialized");
-            }
-            if (!logService)
-            {
-                logService = new (nothrow) LogServiceConcrete;
-                if (!logService)
-                {
-                    throw runtime_error("no memory for lockService");
-                }
-            }
-            return logService;
-        }
 
     }
 }

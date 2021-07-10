@@ -40,6 +40,8 @@ namespace hgardenpi
             pid_t pidInExecution = 0;
 
         public:
+            virtual ~LockService() = default;
+
             /** 
             * @brief Try to get lock.
             * 

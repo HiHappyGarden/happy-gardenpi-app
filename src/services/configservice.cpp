@@ -92,8 +92,6 @@ namespace hgardenpi
                     }
                 }
             }
-
-            cout << ret->toString() << endl;
             return ret;
         }
 
