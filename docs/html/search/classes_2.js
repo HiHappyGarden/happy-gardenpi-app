@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['lockservice_21',['LockService',['../classhgardenpi_1_1v1_1_1_lock_service.html',1,'hgardenpi::LockService'],['../classhgardenpi_1_1v1_1_1_lock_service.html',1,'hgardenpi::v1::LockService']]],
-  ['logservice_22',['LogService',['../classhgardenpi_1_1v1_1_1_log_service.html',1,'hgardenpi::LogService'],['../classhgardenpi_1_1v1_1_1_log_service.html',1,'hgardenpi::v1::LogService']]]
+  ['device_46',['Device',['../classhgardenpi_1_1v1_1_1_device.html',1,'hgardenpi::Device'],['../classhgardenpi_1_1v1_1_1_device.html',1,'hgardenpi::v1::Device']]],
+  ['deviceinfo_47',['DeviceInfo',['../structhgardenpi_1_1v1_1_1_device_info.html',1,'hgardenpi::DeviceInfo'],['../structhgardenpi_1_1v1_1_1_device_info.html',1,'hgardenpi::v1::DeviceInfo']]]
 ];
