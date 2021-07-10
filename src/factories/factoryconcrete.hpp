@@ -23,6 +23,7 @@
 #pragma once
 
 #include "factory.hpp"
+#include "../interfaces/object.hpp"
 
 namespace hgardenpi
 {
@@ -30,7 +31,7 @@ namespace hgardenpi
     inline namespace v1
     {
 
-        class FactoryConcrete final : public Factory
+        class FactoryConcrete final : public Factory, public Object
         {
 
             Device *device = nullptr;
@@ -58,6 +59,16 @@ namespace hgardenpi
             inline const System *getSystem() const noexcept override
             {
                 return system;
+            }
+
+            /**
+             * @brief Return the name of object
+             * 
+             * @return std::string name of object
+             */
+            inline string toString() noexcept override
+            {
+                return typeid(*this).name();
             }
         };
 

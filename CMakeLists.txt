@@ -39,6 +39,8 @@ add_executable(hgardenpi
     src/clients/mqttclientlocalsub.cpp
     src/clients/mqttclientlocalsub.hpp
     src/factories/device.hpp 
+    src/factories/deviceconcrete.cpp 
+    src/factories/deviceconcrete.hpp
     src/factories/factory.hpp 
     src/factories/factoryconcrete.cpp
     src/factories/factoryconcrete.hpp
@@ -47,7 +49,9 @@ add_executable(hgardenpi
     src/factories/systemconcrete.hpp
     src/interfaces/loggable.hpp
     src/interfaces/object.hpp
+    src/interfaces/releasable.hpp
     src/interfaces/singleton.hpp
+    src/interfaces/startable.hpp
     src/pods/configinfo.cpp
     src/pods/configinfo.hpp
     src/pods/deviceinfo.hpp
@@ -55,10 +59,13 @@ add_executable(hgardenpi
     src/services/configservice.hpp
     src/services/deviceservice.cpp
     src/services/deviceservice.hpp
+    src/services/lockservice.hpp
     src/services/lockserviceconcrete.cpp
     src/services/lockserviceconcrete.hpp
+    src/services/logservice.hpp
     src/services/logserviceconcrete.cpp
     src/services/logserviceconcrete.hpp
+    src/services/scheduler.hpp
     src/services/schedulerconcrete.cpp
     src/services/schedulerconcrete.hpp
     src/utilities/stringutils.cpp
@@ -68,7 +75,6 @@ add_executable(hgardenpi
     src/globals.cpp
     src/globals.hpp
     src/main.cpp
-    src/pods/deviceinfo.hpp
         )
 
 target_link_libraries(hgardenpi

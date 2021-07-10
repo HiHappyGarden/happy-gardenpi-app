@@ -22,6 +22,8 @@
 
 #pragma once
 
+#include <cstdint>
+
 namespace hgardenpi
 {
     inline namespace v1

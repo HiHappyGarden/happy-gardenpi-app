@@ -38,6 +38,7 @@ namespace hgardenpi
         class Factory
         {
 
+        public:
             /**
              * @brief Get the Device object
              * 

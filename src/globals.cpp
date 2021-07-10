@@ -63,13 +63,23 @@ namespace hgardenpi
 
         Globals::~Globals() noexcept
         {
-            mosquitto_lib_cleanup();
-            lockService->release();
-            cout << "end" << endl;
+
+            //lockService->release();
         }
 
         void initialize()
         {
+
+            Globals::getInstance()->factory = new (nothrow) FactoryConcrete;
+
+            System *system = const_cast<System *>(Globals::getInstance()->factory->getSystem());
+            Device *device = const_cast<Device *>(Globals::getInstance()->factory->getDevice());
+
+            system->initialize();
+
+            device->setLogService(system->getLogService());
+
+            device->initialize();
 
             // //check if already run an instance of Happy GardenPI
             // if (Globals::getInstance()->lockService->lock())

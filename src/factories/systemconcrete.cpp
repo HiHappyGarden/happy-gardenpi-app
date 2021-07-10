@@ -49,9 +49,11 @@ namespace hgardenpi
         void SystemConcrete::initialize()
         {
 
-            getConfigInfo();
-            getDeviceInfo();
+            //load configuration
+            ConfigSerivce config(HGARDENPI_FILE_CONFIG);
+            configInfo = move(config.read());
 
+            //check if already run an instance of Happy GardenPI
             if (lockService->lock())
             {
                 string error("another instance already run pid:");
@@ -59,18 +61,12 @@ namespace hgardenpi
                 logService->write(LOG_ERR, "%s", error.c_str());
                 throw runtime_error(error);
             }
+
+            //write sw vertionb in log
+            logService->write(LOG_INFO, "version: %s", HGARDENPI_VER);
         }
 
         void SystemConcrete::start() {}
-
-        ConfigInfo::Ptr SystemConcrete::getConfigInfo() const noexcept
-        {
-            ConfigSerivce config(HGARDENPI_FILE_CONFIG);
-
-            configInfo = move(config.read());
-
-            return configInfo;
-        }
 
         const LockService *SystemConcrete::getLockService() const
         {
@@ -104,20 +100,6 @@ namespace hgardenpi
                 }
             }
             return logService;
-        }
-
-        float SystemConcrete::getCPUTemperature() const
-        {
-            return ::hgardenpi::v1::getCPUTemperature();
-        }
-
-        DeviceInfo::Ptr SystemConcrete::getDeviceInfo() const
-        {
-            if (!deviceInfo)
-            {
-                deviceInfo = ::hgardenpi::v1::getDeviceInfo();
-            }
-            return deviceInfo;
         }
 
     }

@@ -22,38 +22,60 @@
 
 #pragma once
 
-#include <memory>
-
-#include "interfaces/singleton.hpp"
-#include "factories/factory.hpp"
-#include "factories/factoryconcrete.hpp"
-
-#include "clients/mqttclientlocalsub.hpp"
-//#include "interfaces/mqttclient.hpp"
+#include "../interfaces/object.hpp"
+#include "device.hpp"
 
 namespace hgardenpi
 {
+
     inline namespace v1
     {
-        using std::unique_ptr;
 
         /**
-         * @brief Singleton where are put global variable
+         * @brief Factory for management of peripherals devices
+         * 
          */
-        class Globals final : public Singleton<Globals>
+        class DeviceConcrete : public Device, public Object
         {
-
-            friend void initialize();
-            friend void start();
-
-            Factory *factory = nullptr;
-
-            MQTTClient::Ptr mqttClient;
+            mutable DeviceInfo::Ptr deviceInfo = nullptr;
+            LogService *logService;
 
         public:
-            Globals() noexcept;
-            ~Globals() noexcept;
-            HGARDENPI_NO_COPY_NO_MOVE(Globals)
+            DeviceConcrete() = default;
+            HGARDENPI_NO_COPY_NO_MOVE(DeviceConcrete)
+
+            /**
+             * @brief Before all call this functiuon fo inilialize the project
+             * 
+             * @exception runtime_error when hardware requisites mismatch
+             */
+            void initialize() override;
+
+            /**
+             * @brief Start main look and scheduler
+             * 
+             */
+            void start() override;
+
+            /**
+             * @brief release a resorce
+             * 
+             */
+            void release() noexcept override;
+
+            /**
+             * @brief Get CPU temperature
+             * @exception throw exception when temp is not available
+             * @return return degrees temperature
+             */
+            float getCPUTemperature() const override;
+
+            /**
+             * @brief Get Raspberry PI info
+             * @exception throw exception when temp is not available
+             * @return return Raspberry PI info
+             */
+            DeviceInfo::Ptr getInfo() const override;
 
             /**
              * @brief Return the name of object
@@ -66,38 +88,14 @@ namespace hgardenpi
             }
 
             /**
-             * @brief Set the Mqtt Client object
+             * @brief Set the Log Service object
              * 
-             * @param mqttClient 
              */
-            inline void settMqttClient(const MQTTClient::Ptr &mqttClient) noexcept
+            inline void setLogService(const LogService *) noexcept override
             {
-                this->mqttClient = mqttClient;
-            }
-
-            /**
-             * @brief Get the Mqtt Client object
-             * 
-             * @return const MQTTClient* 
-             */
-            inline const MQTTClient *getMqttClient() const noexcept
-            {
-                return mqttClient.get();
+                this->logService = const_cast<LogService *>(logService);
             }
         };
-
-        /**
-         * @brief Before all call this functiuon fo inilialize the project
-         * 
-         * @exception runtime_error when hardware requisites mismatch
-         */
-        void initialize();
-
-        /**
-         * @brief Start main look and scheduler
-         * 
-         */
-        void start();
 
     }
 }

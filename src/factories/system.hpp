@@ -25,7 +25,7 @@
 #include "../services/configservice.hpp"
 #include "../services/lockservice.hpp"
 #include "../services/logservice.hpp"
-#include "../services/deviceservice.hpp"
+#include "../interfaces/startable.hpp"
 
 namespace hgardenpi
 {
@@ -37,21 +37,12 @@ namespace hgardenpi
          * @brief Factory for management of system services devices
          * 
          */
-        class System
+        class System : public Startable
         {
 
-            /**
-             * @brief Before all call this functiuon fo inilialize the project
-             * 
-             * @exception runtime_error when hardware requisites mismatch
-             */
-            virtual void initialize() = 0;
-
-            /**
-             * @brief Start main look and scheduler
-             * 
-             */
-            virtual void start() = 0;
+        public:
+            using Startable::initialize;
+            using Startable::start;
 
             /**
              * @brief Get the Config Info object
@@ -73,20 +64,6 @@ namespace hgardenpi
              * @return const LogService& 
              */
             virtual const LogService *getLogService() const = 0;
-
-            /**
-             * @brief Get CPU temperature
-             * @exception throw exception when temp is not available
-             * @return return degrees temperature
-             */
-            virtual float getCPUTemperature() const = 0;
-
-            /**
-             * @brief Get Raspberry PI info
-             * @exception throw exception when temp is not available
-             * @return return Raspberry PI info
-             */
-            virtual DeviceInfo::Ptr getDeviceInfo() const = 0;
         };
 
     }
