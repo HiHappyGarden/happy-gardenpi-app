@@ -69,9 +69,10 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classhgardenpi_1_1v1_1_1_lock_service-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">hgardenpi::v1::LockService Class Reference<span class="mlabels"><span class="mlabel">final</span></span></div>  </div>
+<div class="title">hgardenpi::v1::LockService Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -85,52 +86,34 @@ Inheritance diagram for hgardenpi::v1::LockService:</div>
  <div class="center">
   <img src="classhgardenpi_1_1v1_1_1_lock_service.png" usemap="#hgardenpi::v1::LockService_map" alt=""/>
   <map id="hgardenpi::v1::LockService_map" name="hgardenpi::v1::LockService_map">
-<area href="classhgardenpi_1_1v1_1_1_object.html" title="Generic class ttat all functionals objects must extend." alt="hgardenpi::v1::Object" shape="rect" coords="0,0,166,24"/>
+<area href="classhgardenpi_1_1v1_1_1_lock_service_concrete.html" title="LockService check if exist another instance of Happy GardenPI." alt="hgardenpi::v1::LockServiceConcrete" shape="rect" coords="0,56,218,80"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aa25b67f2ff33a0674d0db7574a2ca8f7"><td class="memItemLeft" align="right" valign="top"><a id="aa25b67f2ff33a0674d0db7574a2ca8f7"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_lock_service.html#aa25b67f2ff33a0674d0db7574a2ca8f7">lock</a> ()</td></tr>
-<tr class="memdesc:aa25b67f2ff33a0674d0db7574a2ca8f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Try to get lock. <br /></td></tr>
-<tr class="separator:aa25b67f2ff33a0674d0db7574a2ca8f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d31292e447346bae5bf7320439ffbd9"><td class="memItemLeft" align="right" valign="top"><a id="a6d31292e447346bae5bf7320439ffbd9"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_lock_service.html#a6d31292e447346bae5bf7320439ffbd9">release</a> ()</td></tr>
-<tr class="memdesc:a6d31292e447346bae5bf7320439ffbd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release the lock obtained with <a class="el" href="classhgardenpi_1_1v1_1_1_lock_service.html#aa25b67f2ff33a0674d0db7574a2ca8f7" title="Try to get lock.">lock()</a>. <br /></td></tr>
-<tr class="separator:a6d31292e447346bae5bf7320439ffbd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af6004a8db5503e86863556ed9ce348d6"><td class="memItemLeft" align="right" valign="top">pid_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_lock_service.html#af6004a8db5503e86863556ed9ce348d6">check</a> ()</td></tr>
-<tr class="memdesc:af6004a8db5503e86863556ed9ce348d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if Happy GardenPI already run.  <a href="classhgardenpi_1_1v1_1_1_lock_service.html#af6004a8db5503e86863556ed9ce348d6">More...</a><br /></td></tr>
-<tr class="separator:af6004a8db5503e86863556ed9ce348d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60b076f8d3d9a61ea42339eb23005799"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_lock_service.html#a60b076f8d3d9a61ea42339eb23005799">toString</a> () noexcept override</td></tr>
-<tr class="memdesc:a60b076f8d3d9a61ea42339eb23005799"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the name of object.  <a href="classhgardenpi_1_1v1_1_1_lock_service.html#a60b076f8d3d9a61ea42339eb23005799">More...</a><br /></td></tr>
-<tr class="separator:a60b076f8d3d9a61ea42339eb23005799"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87c4bb7a6518b389cc4b3ebe840902b7"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_lock_service.html#a87c4bb7a6518b389cc4b3ebe840902b7">lock</a> () noexcept=0</td></tr>
+<tr class="memdesc:a87c4bb7a6518b389cc4b3ebe840902b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Try to get lock.  <a href="classhgardenpi_1_1v1_1_1_lock_service.html#a87c4bb7a6518b389cc4b3ebe840902b7">More...</a><br /></td></tr>
+<tr class="separator:a87c4bb7a6518b389cc4b3ebe840902b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa504f68ddaaaad601636cd89eedf6d4f"><td class="memItemLeft" align="right" valign="top"><a id="aa504f68ddaaaad601636cd89eedf6d4f"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_lock_service.html#aa504f68ddaaaad601636cd89eedf6d4f">release</a> () const noexcept=0</td></tr>
+<tr class="memdesc:aa504f68ddaaaad601636cd89eedf6d4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release the lock obtained with <a class="el" href="classhgardenpi_1_1v1_1_1_lock_service.html#a87c4bb7a6518b389cc4b3ebe840902b7" title="Try to get lock.">lock()</a>. <br /></td></tr>
+<tr class="separator:aa504f68ddaaaad601636cd89eedf6d4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abad733d87beb93da5930158867ac2f69"><td class="memItemLeft" align="right" valign="top">pid_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_lock_service.html#abad733d87beb93da5930158867ac2f69">getPidInExecution</a> () const noexcept</td></tr>
+<tr class="memdesc:abad733d87beb93da5930158867ac2f69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Pid In Execution object.  <a href="classhgardenpi_1_1v1_1_1_lock_service.html#abad733d87beb93da5930158867ac2f69">More...</a><br /></td></tr>
+<tr class="separator:abad733d87beb93da5930158867ac2f69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:ac9916e6a39120304fa3a0faafee95662"><td class="memItemLeft" align="right" valign="top"><a id="ac9916e6a39120304fa3a0faafee95662"></a>
+pid_t&#160;</td><td class="memItemRight" valign="bottom"><b>pidInExecution</b> = 0</td></tr>
+<tr class="separator:ac9916e6a39120304fa3a0faafee95662"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classhgardenpi_1_1v1_1_1_lock_service.html" title="LockService check if exist another instance of Happy GardenPI.">LockService</a> check if exist another instance of Happy GardenPI. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="af6004a8db5503e86863556ed9ce348d6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af6004a8db5503e86863556ed9ce348d6">&#9670;&nbsp;</a></span>check()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">pid_t LockService::check </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Check if Happy GardenPI already run. </p>
-<dl class="section return"><dt>Returns</dt><dd>pid in execution or 0 </dd></dl>
-
-</div>
-</div>
-<a id="a60b076f8d3d9a61ea42339eb23005799"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a60b076f8d3d9a61ea42339eb23005799">&#9670;&nbsp;</a></span>toString()</h2>
+<a id="abad733d87beb93da5930158867ac2f69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abad733d87beb93da5930158867ac2f69">&#9670;&nbsp;</a></span>getPidInExecution()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -139,7 +122,35 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">string hgardenpi::v1::LockService::toString </td>
+          <td class="memname">pid_t hgardenpi::v1::LockService::getPidInExecution </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Pid In Execution object. </p>
+<dl class="section return"><dt>Returns</dt><dd>pid_t if any other instance already run this valie is greater than 0 </dd></dl>
+
+</div>
+</div>
+<a id="a87c4bb7a6518b389cc4b3ebe840902b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87c4bb7a6518b389cc4b3ebe840902b7">&#9670;&nbsp;</a></span>lock()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool hgardenpi::v1::LockService::lock </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -147,21 +158,26 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">pure virtual</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Return the name of object. </p>
-<dl class="section return"><dt>Returns</dt><dd>std::string name of object </dd></dl>
+<p>Try to get lock. </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">runtime_error</td><td>when is not possibe create lock file </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if another instance already run </dd></dl>
 
-<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_object.html#ae4e2a30bbac895dbb9efb643ad8e5600">hgardenpi::v1::Object</a>.</p>
+<p>Implemented in <a class="el" href="classhgardenpi_1_1v1_1_1_lock_service_concrete.html#a679f1cd4e5bc9a0c6d71adafb215285c">hgardenpi::v1::LockServiceConcrete</a>.</p>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following files:<ul>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/services/<a class="el" href="lockservice_8hpp_source.html">lockservice.hpp</a></li>
-<li>src/services/lockservice.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
