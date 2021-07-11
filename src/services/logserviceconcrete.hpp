@@ -46,7 +46,7 @@ namespace hgardenpi
 
         public:
             LogServiceConcrete() noexcept;
-            inline ~LogServiceConcrete() noexcept
+            inline ~LogServiceConcrete() noexcept override
             {
                 closelog();
             }

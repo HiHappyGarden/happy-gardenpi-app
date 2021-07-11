@@ -35,7 +35,7 @@ namespace hgardenpi
     inline namespace v1
     {
 
-        ConfigInfo::Ptr ConfigSerivce::read() noexcept
+        ConfigInfo::Ptr ConfigService::read() noexcept
         {
             ConfigInfo::Ptr ret = make_shared<ConfigInfo>();
 

@@ -39,7 +39,7 @@ namespace hgardenpi
 
         public:
             FactoryConcrete();
-            ~FactoryConcrete() noexcept;
+            ~FactoryConcrete() noexcept override;
 
             /**
              * @brief Get the Device object

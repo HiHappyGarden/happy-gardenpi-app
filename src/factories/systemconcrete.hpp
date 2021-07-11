@@ -47,7 +47,7 @@ namespace hgardenpi
 
         public:
             SystemConcrete() = default;
-            ~SystemConcrete();
+            ~SystemConcrete() override;
             HGARDENPI_NO_COPY_NO_MOVE(SystemConcrete)
 
             /**
