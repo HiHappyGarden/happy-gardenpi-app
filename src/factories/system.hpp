@@ -26,6 +26,7 @@
 #include "../services/lockservice.hpp"
 #include "../services/logservice.hpp"
 #include "../interfaces/startable.hpp"
+#include "../interfaces/releasable.hpp"
 
 namespace hgardenpi
 {
@@ -37,11 +38,10 @@ namespace hgardenpi
          * @brief Factory for management of system services devices
          * 
          */
-        class System : public Startable
+        class System : public Startable, public Releasable
         {
 
         public:
-
             using Startable::initialize;
             using Startable::start;
 
