@@ -8,7 +8,33 @@
             <mapping deploy="/tmp/tmp.tbk2YE0vbx" local="$PROJECT_DIR$" />
           </mappings>
           <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-passy-ubuntu-cross" />
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-passy-ubuntu" />
             <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug" />
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-passy-raspberrypi" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+      <paths name="passy-ubuntu (b3a6bdf8-d2a2-4b71-bb82-ad61635a4b22)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/tmp.YDUifpaQ9z" local="$PROJECT_DIR$" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-passy-ubuntu-cross" />
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-passy-ubuntu" />
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-passy-raspberrypi" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+      <paths name="passy-ubuntu cross (5a6e1886-8216-4319-85ed-f043745a5727)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/tmp.VWlvgwbhw1" local="$PROJECT_DIR$" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-passy-ubuntu-cross" />
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-passy-ubuntu" />
             <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-passy-raspberrypi" />
           </excludedPaths>
         </serverdata>

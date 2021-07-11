@@ -30,18 +30,6 @@ using namespace std;
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
 
-#define HGARDENPI_READ_STRING(conatiner, field, value)                                                                \
-    if (auto &&containerObj = jsonConfig[conatiner]; containerObj.contains(value) && containerObj[value].is_string()) \
-    {                                                                                                                 \
-        ret->field = containerObj[value].get<string>();                                                               \
-    }
-
-#define HGARDENPI_READ_UINT16(conatiner, field, value)                                                                \
-    if (auto &&containerObj = jsonConfig[conatiner]; containerObj.contains(value) && containerObj[value].is_string()) \
-    {                                                                                                                 \
-        ret->field = containerObj[value].get<uint16_t>();                                                             \
-    }
-
 namespace hgardenpi
 {
     inline namespace v1
