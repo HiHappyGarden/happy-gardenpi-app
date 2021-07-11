@@ -43,8 +43,6 @@ namespace hgardenpi
     inline namespace v1
     {
 
-
-
         //enable loop
         static volatile bool run = true;
 
@@ -72,7 +70,6 @@ namespace hgardenpi
 
         void initialize()
         {
-
             Globals::getInstance()->factory = new (nothrow) FactoryConcrete;
 
             auto system = const_cast<System *>(Globals::getInstance()->factory->getSystem());
