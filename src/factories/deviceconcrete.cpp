@@ -22,9 +22,7 @@
 
 #include "deviceconcrete.hpp"
 
-#if HGARDENPI_GPIO_EMULATE == 1
 #include <wiringPi.h>
-#endif
 
 #include <stdexcept>
 using std::runtime_error;
@@ -59,10 +57,9 @@ namespace hgardenpi
             {
                 HGARDENPI_ERROR_LOG_AMD_THROW("hardware not supporrted, you need a Raspberry Pi Zero W")
             }
-#if HGARDENPI_GPIO_EMULATE == 1
+
             //initialize WiringPI
             wiringPiSetupGpio();
-#endif
         }
 
         /**

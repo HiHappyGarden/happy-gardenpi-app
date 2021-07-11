@@ -20,10 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "globals.hpp"
-#if HGARDENPI_GPIO_EMULATE == 1
+#include "engine.hpp"
+
 #include <wiringPi.h>
-#endif
 #include <mosquitto.h>
 #include <csignal>
 #include <syslog.h>
@@ -52,28 +51,18 @@ namespace hgardenpi
             run = false;
         };
 
-        Globals::Globals() noexcept
-        try
+        Engine::~Engine() noexcept
         {
-            //lockService = make_unique<LockService>();
-        }
-        catch (const std::bad_alloc &e)
-        {
-            //  LogService::getInstance()->write(LOG_ERR, e.what());
-        }
-
-        Globals::~Globals() noexcept
-        {
-
-            //lockService->release();
+            factory->getSystem()->getLockService()->release();
+            delete factory;
         }
 
         void initialize()
         {
-            Globals::getInstance()->factory = new (nothrow) FactoryConcrete;
+            Engine::getInstance()->factory = new (nothrow) FactoryConcrete;
 
-            auto system = const_cast<System *>(Globals::getInstance()->factory->getSystem());
-            auto device = const_cast<Device *>(Globals::getInstance()->factory->getDevice());
+            auto system = const_cast<System *>(Engine::getInstance()->factory->getSystem());
+            auto device = const_cast<Device *>(Engine::getInstance()->factory->getDevice());
 
             system->initialize();
 

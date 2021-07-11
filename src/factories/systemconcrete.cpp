@@ -48,18 +48,15 @@ namespace hgardenpi
 
         void SystemConcrete::initialize()
         {
-            printf("1\n");
             //load configuration
             ConfigSerivce config(HGARDENPI_FILE_CONFIG);
             configInfo = move(config.read());
 
-            printf("2\n");
             if (!configInfo)
             {
                 throw runtime_error("system non initialized");
             }
 
-            printf("3\n");
             //initialize log service
             logService = new (nothrow) LogServiceConcrete;
             if (!logService)
@@ -67,7 +64,6 @@ namespace hgardenpi
                 throw runtime_error("no memory for lockService");
             }
 
-            printf("4\n");
             //initialize lock service
             lockService = new (nothrow) LockServiceConcrete(configInfo);
             if (!lockService)
@@ -75,7 +71,6 @@ namespace hgardenpi
                 throw runtime_error("no memory for lockService");
             }
 
-            printf("5\n");
             //check if already run an instance of Happy GardenPI
             if (lockService->lock())
             {
