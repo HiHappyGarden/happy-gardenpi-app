@@ -50,7 +50,7 @@ namespace hgardenpi
             {
             }
 
-            inline ~LockServiceConcrete() noexcept
+            inline ~LockServiceConcrete() noexcept override
             {
                 if (pidInExecution == 0)
                 {

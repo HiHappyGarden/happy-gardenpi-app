@@ -49,13 +49,15 @@ namespace hgardenpi
         void SystemConcrete::initialize()
         {
             //load configuration
-            ConfigSerivce config(HGARDENPI_FILE_CONFIG);
+            ConfigService config(HGARDENPI_FILE_CONFIG);
             configInfo = move(config.read());
 
             if (!configInfo)
             {
                 throw runtime_error("system non initialized");
             }
+
+            printf("---%s", configInfo->toString().c_str());
 
             //initialize log service
             logService = new (nothrow) LogServiceConcrete;

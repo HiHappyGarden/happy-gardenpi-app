@@ -60,7 +60,10 @@ namespace hgardenpi
         void initialize()
         {
             Engine::getInstance()->factory = new (nothrow) FactoryConcrete;
-
+            if (!Engine::getInstance()->factory) {
+                throw runtime_error("no memory for Engine::getInstance()->factory");
+            }
+            
             auto system = const_cast<System *>(Engine::getInstance()->factory->getSystem());
             auto device = const_cast<Device *>(Engine::getInstance()->factory->getDevice());
 
@@ -98,7 +101,7 @@ namespace hgardenpi
             //     HGARDENPI_ERROR_LOG_AMD_THROW("hardware not supporrted, you need a Raspberry Pi Zero W")
             // }
 
-            // ConfigSerivce config(HGARDENPI_FILE_CONFIG);
+            // ConfigService config(HGARDENPI_FILE_CONFIG);
 
             // config.read();
 

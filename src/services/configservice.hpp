@@ -41,7 +41,7 @@ namespace hgardenpi
          * @brief Class for configuration reading from json file
          * 
          */
-        class ConfigSerivce final : public Object
+        class ConfigService final : public Object
         {
 
             const string configFile;
@@ -52,10 +52,10 @@ namespace hgardenpi
              * 
              * @param configFile path of config file in json format
              */
-            inline explicit ConfigSerivce(string &&configFile) noexcept : configFile(configFile)
+            inline explicit ConfigService(string &&configFile) noexcept : configFile(configFile)
             {
             }
-            HGARDENPI_NO_COPY_NO_MOVE(ConfigSerivce)
+            HGARDENPI_NO_COPY_NO_MOVE(ConfigService)
 
             /**
              * @brief read configuration

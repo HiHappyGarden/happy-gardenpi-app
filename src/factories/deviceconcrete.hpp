@@ -38,7 +38,7 @@ namespace hgardenpi
         class DeviceConcrete : public Device, public Object
         {
             mutable DeviceInfo::Ptr deviceInfo = nullptr;
-            LogService *logService;
+            LogService *logService = nullptr;
 
         public:
             DeviceConcrete() = default;
@@ -91,7 +91,7 @@ namespace hgardenpi
              * @brief Set the Log Service object
              * 
              */
-            inline void setLogService(const LogService *) noexcept override
+            inline void setLogService(const LogService *logService) noexcept override
             {
                 this->logService = const_cast<LogService *>(logService);
             }

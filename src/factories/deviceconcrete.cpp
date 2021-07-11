@@ -22,10 +22,10 @@
 
 #include "deviceconcrete.hpp"
 
-#include <wiringPi.h>
-
 #include <stdexcept>
 using std::runtime_error;
+
+#include <wiringPi.h>
 
 #include "../services/deviceservice.hpp"
 
@@ -55,7 +55,7 @@ namespace hgardenpi
             //HW check
             if (deviceInfo->hardhare != HW_V1)
             {
-                HGARDENPI_ERROR_LOG_AMD_THROW("hardware not supporrted, you need a Raspberry Pi Zero W")
+                HGARDENPI_ERROR_LOG_AMD_THROW("hardware not supported, you need a Raspberry Pi Zero W")
             }
 
             //initialize WiringPI
