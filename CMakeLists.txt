@@ -71,8 +71,8 @@ add_executable(hgardenpi
     src/utilities/stringutils.hpp
     src/constants.cpp
     src/constants.hpp
-    src/globals.cpp
-    src/globals.hpp
+    src/engine.cpp
+    src/engine.hpp
     src/main.cpp
         )
 

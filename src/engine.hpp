@@ -40,7 +40,7 @@ namespace hgardenpi
         /**
          * @brief Singleton where are put global variable
          */
-        class Globals final : public Singleton<Globals>
+        class Engine final : public Singleton<Engine>
         {
 
             friend void initialize();
@@ -51,9 +51,9 @@ namespace hgardenpi
             MQTTClient::Ptr mqttClient;
 
         public:
-            Globals() noexcept;
-            ~Globals() noexcept;
-            HGARDENPI_NO_COPY_NO_MOVE(Globals)
+            Engine() = default;
+            ~Engine() noexcept;
+            HGARDENPI_NO_COPY_NO_MOVE(Engine)
 
             /**
              * @brief Return the name of object
