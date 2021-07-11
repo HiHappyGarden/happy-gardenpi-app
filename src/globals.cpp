@@ -21,10 +21,11 @@
 // SOFTWARE.
 
 #include "globals.hpp"
-
+#if HGARDENPI_GPIO_EMULATE == 1
 #include <wiringPi.h>
+#endif
 #include <mosquitto.h>
-#include <signal.h>
+#include <csignal>
 #include <syslog.h>
 
 #include <thread>
@@ -41,6 +42,8 @@ namespace hgardenpi
 {
     inline namespace v1
     {
+
+
 
         //enable loop
         static volatile bool run = true;
