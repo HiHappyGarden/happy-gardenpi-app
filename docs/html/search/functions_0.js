@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['configserivce_65',['ConfigSerivce',['../classhgardenpi_1_1v1_1_1_config_serivce.html#aef421d9bf650e3d4bd8a95513cff8765',1,'hgardenpi::v1::ConfigSerivce']]]
+  ['configservice_83',['ConfigService',['../classhgardenpi_1_1v1_1_1_config_service.html#a079566cbfb30a7171fe3eb6afef550f1',1,'hgardenpi::v1::ConfigService']]]
 ];

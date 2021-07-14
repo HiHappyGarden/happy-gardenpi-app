@@ -68,6 +68,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classhgardenpi_1_1v1_1_1_factory-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">hgardenpi::v1::Factory Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -87,9 +88,80 @@ Inheritance diagram for hgardenpi::v1::Factory:</div>
 <area href="classhgardenpi_1_1v1_1_1_factory_concrete.html" alt="hgardenpi::v1::FactoryConcrete" shape="rect" coords="0,56,191,80"/>
   </map>
 </div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:af2be63c8b9e90aaabc514f649b086a47"><td class="memItemLeft" align="right" valign="top">virtual const <a class="el" href="classhgardenpi_1_1v1_1_1_device.html">Device</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_factory.html#af2be63c8b9e90aaabc514f649b086a47">getDevice</a> () const noexcept=0</td></tr>
+<tr class="memdesc:af2be63c8b9e90aaabc514f649b086a47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classhgardenpi_1_1v1_1_1_device.html" title="Factory for management of peripherals devices.">Device</a> object.  <a href="classhgardenpi_1_1v1_1_1_factory.html#af2be63c8b9e90aaabc514f649b086a47">More...</a><br /></td></tr>
+<tr class="separator:af2be63c8b9e90aaabc514f649b086a47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0751b001172a7e06e0fd5ba333a83b11"><td class="memItemLeft" align="right" valign="top">virtual const <a class="el" href="classhgardenpi_1_1v1_1_1_system.html">System</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_factory.html#a0751b001172a7e06e0fd5ba333a83b11">getSystem</a> () const noexcept=0</td></tr>
+<tr class="memdesc:a0751b001172a7e06e0fd5ba333a83b11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classhgardenpi_1_1v1_1_1_system.html" title="Factory for management of system services devices.">System</a> object.  <a href="classhgardenpi_1_1v1_1_1_factory.html#a0751b001172a7e06e0fd5ba333a83b11">More...</a><br /></td></tr>
+<tr class="separator:a0751b001172a7e06e0fd5ba333a83b11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstract factory for build system. </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="af2be63c8b9e90aaabc514f649b086a47"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2be63c8b9e90aaabc514f649b086a47">&#9670;&nbsp;</a></span>getDevice()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual const <a class="el" href="classhgardenpi_1_1v1_1_1_device.html">Device</a>* hgardenpi::v1::Factory::getDevice </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the <a class="el" href="classhgardenpi_1_1v1_1_1_device.html" title="Factory for management of peripherals devices.">Device</a> object. </p>
+<dl class="section return"><dt>Returns</dt><dd>const Device* </dd></dl>
+
+<p>Implemented in <a class="el" href="classhgardenpi_1_1v1_1_1_factory_concrete.html#a81ab7981fe4169262da6a1042bc780ee">hgardenpi::v1::FactoryConcrete</a>.</p>
+
+</div>
+</div>
+<a id="a0751b001172a7e06e0fd5ba333a83b11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0751b001172a7e06e0fd5ba333a83b11">&#9670;&nbsp;</a></span>getSystem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual const <a class="el" href="classhgardenpi_1_1v1_1_1_system.html">System</a>* hgardenpi::v1::Factory::getSystem </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the <a class="el" href="classhgardenpi_1_1v1_1_1_system.html" title="Factory for management of system services devices.">System</a> object. </p>
+<dl class="section return"><dt>Returns</dt><dd>const Device* </dd></dl>
+
+<p>Implemented in <a class="el" href="classhgardenpi_1_1v1_1_1_factory_concrete.html#a741c31aada95d22c8ff58451dd1bb763">hgardenpi::v1::FactoryConcrete</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/factories/<a class="el" href="factory_8hpp_source.html">factory.hpp</a></li>
 </ul>
 </div><!-- contents -->

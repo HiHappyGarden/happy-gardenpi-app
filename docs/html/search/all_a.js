@@ -1,12 +1,7 @@
 var searchData=
 [
-  ['scheduler_32',['Scheduler',['../classhgardenpi_1_1v1_1_1_scheduler.html',1,'hgardenpi::Scheduler'],['../classhgardenpi_1_1v1_1_1_scheduler.html',1,'hgardenpi::v1::Scheduler']]],
-  ['setonmessagecallback_33',['setOnMessageCallback',['../classhgardenpi_1_1v1_1_1_m_q_t_t_client.html#ab987de58d187cd3ef7f1c5e73954267e',1,'hgardenpi::v1::MQTTClient::setOnMessageCallback()'],['../classhgardenpi_1_1v1_1_1_m_q_t_t_client_local_sub.html#a99994b851933eac23e7c2fd3df86c0b8',1,'hgardenpi::v1::MQTTClientLocalSub::setOnMessageCallback()']]],
-  ['settmqttclient_34',['settMqttClient',['../classhgardenpi_1_1v1_1_1_globals.html#abf1ce6c5b816450d8ff6e3de87646c95',1,'hgardenpi::v1::Globals']]],
-  ['singleton_35',['Singleton',['../classhgardenpi_1_1v1_1_1_singleton.html',1,'hgardenpi::Singleton&lt; T &gt;'],['../classhgardenpi_1_1v1_1_1_singleton.html',1,'hgardenpi::v1::Singleton&lt; T &gt;']]],
-  ['singleton_3c_20globals_20_3e_36',['Singleton&lt; Globals &gt;',['../classhgardenpi_1_1v1_1_1_singleton.html',1,'hgardenpi::v1']]],
-  ['singleton_3c_20scheduler_20_3e_37',['Singleton&lt; Scheduler &gt;',['../classhgardenpi_1_1v1_1_1_singleton.html',1,'hgardenpi::v1']]],
-  ['start_38',['start',['../classhgardenpi_1_1v1_1_1_system_concrete.html#a3f3d1600bf364387c37fd7291bdaf7c0',1,'hgardenpi::v1::SystemConcrete::start()'],['../classhgardenpi_1_1v1_1_1_globals.html#a60de64d75454385b23995437f1d72669',1,'hgardenpi::v1::Globals::start()']]],
-  ['system_39',['System',['../classhgardenpi_1_1v1_1_1_system.html',1,'hgardenpi::System'],['../classhgardenpi_1_1v1_1_1_system.html',1,'hgardenpi::v1::System']]],
-  ['systemconcrete_40',['SystemConcrete',['../classhgardenpi_1_1v1_1_1_system_concrete.html',1,'hgardenpi::SystemConcrete'],['../classhgardenpi_1_1v1_1_1_system_concrete.html',1,'hgardenpi::v1::SystemConcrete']]]
+  ['read_32',['read',['../classhgardenpi_1_1v1_1_1_config_service.html#a22a262c011ea82cee40de171e05c6003',1,'hgardenpi::v1::ConfigService']]],
+  ['releasable_33',['Releasable',['../classhgardenpi_1_1v1_1_1_releasable.html',1,'hgardenpi::Releasable'],['../classhgardenpi_1_1v1_1_1_releasable.html',1,'hgardenpi::v1::Releasable']]],
+  ['release_34',['release',['../classhgardenpi_1_1v1_1_1_device_concrete.html#a134b437a659bb71b8b66d0fecdaecae8',1,'hgardenpi::v1::DeviceConcrete::release()'],['../classhgardenpi_1_1v1_1_1_system_concrete.html#a3fa94fef5d1c2ffae51a8c3bde32a989',1,'hgardenpi::v1::SystemConcrete::release()'],['../classhgardenpi_1_1v1_1_1_releasable.html#adf4764bd6153f48d0cffac89db943b48',1,'hgardenpi::v1::Releasable::release()'],['../classhgardenpi_1_1v1_1_1_lock_service.html#aa504f68ddaaaad601636cd89eedf6d4f',1,'hgardenpi::v1::LockService::release()'],['../classhgardenpi_1_1v1_1_1_lock_service_concrete.html#a81c00ed6eacbcd8d7e8ac939e10683a7',1,'hgardenpi::v1::LockServiceConcrete::release()']]],
+  ['resultset_35',['ResultSet',['../classhgardenpi_1_1v1_1_1_result_set.html',1,'hgardenpi::ResultSet'],['../classhgardenpi_1_1v1_1_1_result_set.html',1,'hgardenpi::v1::ResultSet']]]
 ];

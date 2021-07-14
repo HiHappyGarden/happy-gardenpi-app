@@ -98,37 +98,43 @@ $(function() {
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &quot;../services/configservice.hpp&quot;</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &quot;../services/lockservice.hpp&quot;</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &quot;../services/logservice.hpp&quot;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &quot;../services/deviceservice.hpp&quot;</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">namespace </span>hgardenpi</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;{</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">inline</span> <span class="keyword">namespace </span>v1</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    {</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_system.html">   40</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classhgardenpi_1_1v1_1_1_system.html">System</a></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        {</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> initialize() = 0;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &quot;../interfaces/startable.hpp&quot;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &quot;../interfaces/releasable.hpp&quot;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">namespace </span>hgardenpi</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;{</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keyword">inline</span> <span class="keyword">namespace </span>v1</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_system.html">   41</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classhgardenpi_1_1v1_1_1_system.html">System</a> : <span class="keyword">public</span> <a class="code" href="classhgardenpi_1_1v1_1_1_startable.html">Startable</a>, <span class="keyword">public</span> <a class="code" href="classhgardenpi_1_1v1_1_1_releasable.html">Releasable</a></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        {</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <span class="keyword">using</span> <a class="code" href="classhgardenpi_1_1v1_1_1_startable.html#a30998dad1893ee9e09e99fe04033562f">Startable::initialize</a>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            <span class="keyword">using</span> <a class="code" href="classhgardenpi_1_1v1_1_1_startable.html#ab9bb5fa4d0b9b64443addc076bd96d88">Startable::start</a>;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <span class="keyword">virtual</span> ~<a class="code" href="classhgardenpi_1_1v1_1_1_system.html">System</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> start() = 0;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keyword">virtual</span> ConfigInfo::Ptr getConfigInfo() <span class="keyword">const</span> noexcept = 0;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="classhgardenpi_1_1v1_1_1_lock_service.html">LockService</a> *getLockService() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="classhgardenpi_1_1v1_1_1_log_service.html">LogService</a> *getLogService() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">float</span> getCPUTemperature() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            <span class="keyword">virtual</span> DeviceInfo::Ptr getDeviceInfo() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        };</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    }</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;}</div>
-<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_lock_service_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_lock_service.html">hgardenpi::LockService</a></div><div class="ttdoc">LockService check if exist another instance of Happy GardenPI.</div><div class="ttdef"><b>Definition:</b> lockservice.hpp:37</div></div>
-<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_log_service_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_log_service.html">hgardenpi::LogService</a></div><div class="ttdoc">Abstract LogService to write log.</div><div class="ttdef"><b>Definition:</b> logservice.hpp:35</div></div>
-<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_system_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_system.html">hgardenpi::System</a></div><div class="ttdoc">Factory for management of system services devices.</div><div class="ttdef"><b>Definition:</b> system.hpp:41</div></div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_system.html#af6f82015aafab1ca6b22363e7ba254f1">   55</a></span>&#160;            <span class="keyword">virtual</span> ConfigInfo::Ptr <a class="code" href="classhgardenpi_1_1v1_1_1_system.html#af6f82015aafab1ca6b22363e7ba254f1">getConfigInfo</a>() const noexcept = 0;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_system.html#ac21afa5a14547fd679b99798cd47a090">   62</a></span>&#160;            virtual const <a class="code" href="classhgardenpi_1_1v1_1_1_lock_service.html">LockService</a> *<a class="code" href="classhgardenpi_1_1v1_1_1_system.html#ac21afa5a14547fd679b99798cd47a090">getLockService</a>() const noexcept = 0;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_system.html#a9234db14f28f14207c6ccee998d89f00">   69</a></span>&#160;            virtual const <a class="code" href="classhgardenpi_1_1v1_1_1_log_service.html">LogService</a> *<a class="code" href="classhgardenpi_1_1v1_1_1_system.html#a9234db14f28f14207c6ccee998d89f00">getLogService</a>() const noexcept = 0;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        };</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;}</div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_lock_service_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_lock_service.html">hgardenpi::v1::LockService</a></div><div class="ttdoc">LockService check if exist another instance of Happy GardenPI.</div><div class="ttdef"><b>Definition:</b> lockservice.hpp:37</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_log_service_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_log_service.html">hgardenpi::v1::LogService</a></div><div class="ttdoc">Abstract LogService to write log.</div><div class="ttdef"><b>Definition:</b> logservice.hpp:37</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_releasable_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_releasable.html">hgardenpi::Releasable</a></div><div class="ttdoc">Generic class for release a resorce.</div><div class="ttdef"><b>Definition:</b> releasable.hpp:35</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_startable_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_startable.html">hgardenpi::Startable</a></div><div class="ttdoc">Abstract class for objet able to start somethink.</div><div class="ttdef"><b>Definition:</b> startable.hpp:36</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_startable_html_a30998dad1893ee9e09e99fe04033562f"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_startable.html#a30998dad1893ee9e09e99fe04033562f">hgardenpi::v1::Startable::initialize</a></div><div class="ttdeci">virtual void initialize()=0</div><div class="ttdoc">Before all call this functiuon fo inilialize the project.</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_startable_html_ab9bb5fa4d0b9b64443addc076bd96d88"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_startable.html#ab9bb5fa4d0b9b64443addc076bd96d88">hgardenpi::v1::Startable::start</a></div><div class="ttdeci">virtual void start()=0</div><div class="ttdoc">Start main look and scheduler.</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_system_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_system.html">hgardenpi::System</a></div><div class="ttdoc">Factory for management of system services devices.</div><div class="ttdef"><b>Definition:</b> system.hpp:42</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_system_html_a9234db14f28f14207c6ccee998d89f00"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_system.html#a9234db14f28f14207c6ccee998d89f00">hgardenpi::v1::System::getLogService</a></div><div class="ttdeci">virtual const LogService * getLogService() const noexcept=0</div><div class="ttdoc">Get the Log Service object.</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_system_html_ac21afa5a14547fd679b99798cd47a090"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_system.html#ac21afa5a14547fd679b99798cd47a090">hgardenpi::v1::System::getLockService</a></div><div class="ttdeci">virtual const LockService * getLockService() const noexcept=0</div><div class="ttdoc">Get the Lock Service object.</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_system_html_af6f82015aafab1ca6b22363e7ba254f1"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_system.html#af6f82015aafab1ca6b22363e7ba254f1">hgardenpi::v1::System::getConfigInfo</a></div><div class="ttdeci">virtual ConfigInfo::Ptr getConfigInfo() const noexcept=0</div><div class="ttdoc">Get the Config Info object.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

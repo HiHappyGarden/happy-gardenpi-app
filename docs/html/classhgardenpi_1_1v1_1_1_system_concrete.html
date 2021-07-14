@@ -85,7 +85,10 @@ Inheritance diagram for hgardenpi::v1::SystemConcrete:</div>
  <div class="center">
   <img src="classhgardenpi_1_1v1_1_1_system_concrete.png" usemap="#hgardenpi::v1::SystemConcrete_map" alt=""/>
   <map id="hgardenpi::v1::SystemConcrete_map" name="hgardenpi::v1::SystemConcrete_map">
-<area href="classhgardenpi_1_1v1_1_1_system.html" title="Factory for management of system services devices." alt="hgardenpi::v1::System" shape="rect" coords="0,0,187,24"/>
+<area href="classhgardenpi_1_1v1_1_1_system.html" title="Factory for management of system services devices." alt="hgardenpi::v1::System" shape="rect" coords="98,56,285,80"/>
+<area href="classhgardenpi_1_1v1_1_1_object.html" title="Generic class ttat all functionals objects must extend." alt="hgardenpi::v1::Object" shape="rect" coords="295,56,482,80"/>
+<area href="classhgardenpi_1_1v1_1_1_startable.html" title="Abstract class for objet able to start somethink." alt="hgardenpi::v1::Startable" shape="rect" coords="0,0,187,24"/>
+<area href="classhgardenpi_1_1v1_1_1_releasable.html" title="Generic class for release a resorce." alt="hgardenpi::v1::Releasable" shape="rect" coords="197,0,384,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -98,21 +101,29 @@ Public Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_system_concrete.html#a3f3d1600bf364387c37fd7291bdaf7c0">start</a> () override</td></tr>
 <tr class="memdesc:a3f3d1600bf364387c37fd7291bdaf7c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start main look and scheduler. <br /></td></tr>
 <tr class="separator:a3f3d1600bf364387c37fd7291bdaf7c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fa94fef5d1c2ffae51a8c3bde32a989"><td class="memItemLeft" align="right" valign="top"><a id="a3fa94fef5d1c2ffae51a8c3bde32a989"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_system_concrete.html#a3fa94fef5d1c2ffae51a8c3bde32a989">release</a> () noexcept override</td></tr>
+<tr class="memdesc:a3fa94fef5d1c2ffae51a8c3bde32a989"><td class="mdescLeft">&#160;</td><td class="mdescRight">release a resorce <br /></td></tr>
+<tr class="separator:a3fa94fef5d1c2ffae51a8c3bde32a989"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a069a7270a33e9632b0d5e2dbf6b3f619"><td class="memItemLeft" align="right" valign="top">ConfigInfo::Ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_system_concrete.html#a069a7270a33e9632b0d5e2dbf6b3f619">getConfigInfo</a> () const noexcept override</td></tr>
 <tr class="memdesc:a069a7270a33e9632b0d5e2dbf6b3f619"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Config Info object.  <a href="classhgardenpi_1_1v1_1_1_system_concrete.html#a069a7270a33e9632b0d5e2dbf6b3f619">More...</a><br /></td></tr>
 <tr class="separator:a069a7270a33e9632b0d5e2dbf6b3f619"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb10b0c2065ae44cf06aa6dbae85296b"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classhgardenpi_1_1v1_1_1_lock_service.html">LockService</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_system_concrete.html#afb10b0c2065ae44cf06aa6dbae85296b">getLockService</a> () const override</td></tr>
-<tr class="memdesc:afb10b0c2065ae44cf06aa6dbae85296b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Lock Service object.  <a href="classhgardenpi_1_1v1_1_1_system_concrete.html#afb10b0c2065ae44cf06aa6dbae85296b">More...</a><br /></td></tr>
-<tr class="separator:afb10b0c2065ae44cf06aa6dbae85296b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab30953705887897da27f38a8efa1a159"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classhgardenpi_1_1v1_1_1_log_service.html">LogService</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_system_concrete.html#ab30953705887897da27f38a8efa1a159">getLogService</a> () const override</td></tr>
-<tr class="memdesc:ab30953705887897da27f38a8efa1a159"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Log Service object.  <a href="classhgardenpi_1_1v1_1_1_system_concrete.html#ab30953705887897da27f38a8efa1a159">More...</a><br /></td></tr>
-<tr class="separator:ab30953705887897da27f38a8efa1a159"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a038b38e6a1d0e21cde49636bcbcf47c1"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_system_concrete.html#a038b38e6a1d0e21cde49636bcbcf47c1">getCPUTemperature</a> () const override</td></tr>
-<tr class="memdesc:a038b38e6a1d0e21cde49636bcbcf47c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get CPU temperature.  <a href="classhgardenpi_1_1v1_1_1_system_concrete.html#a038b38e6a1d0e21cde49636bcbcf47c1">More...</a><br /></td></tr>
-<tr class="separator:a038b38e6a1d0e21cde49636bcbcf47c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e568f5cf3229e1c3accaa054f496120"><td class="memItemLeft" align="right" valign="top">DeviceInfo::Ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_system_concrete.html#a2e568f5cf3229e1c3accaa054f496120">getDeviceInfo</a> () const override</td></tr>
-<tr class="memdesc:a2e568f5cf3229e1c3accaa054f496120"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Raspberry PI info.  <a href="classhgardenpi_1_1v1_1_1_system_concrete.html#a2e568f5cf3229e1c3accaa054f496120">More...</a><br /></td></tr>
-<tr class="separator:a2e568f5cf3229e1c3accaa054f496120"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37c7dfa777a5e3ca786a209fb076697a"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classhgardenpi_1_1v1_1_1_lock_service.html">LockService</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_system_concrete.html#a37c7dfa777a5e3ca786a209fb076697a">getLockService</a> () const noexcept override</td></tr>
+<tr class="memdesc:a37c7dfa777a5e3ca786a209fb076697a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Lock Service object.  <a href="classhgardenpi_1_1v1_1_1_system_concrete.html#a37c7dfa777a5e3ca786a209fb076697a">More...</a><br /></td></tr>
+<tr class="separator:a37c7dfa777a5e3ca786a209fb076697a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32e7c39245d68fa3e0e71dc85169cd17"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classhgardenpi_1_1v1_1_1_log_service.html">LogService</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_system_concrete.html#a32e7c39245d68fa3e0e71dc85169cd17">getLogService</a> () const noexcept override</td></tr>
+<tr class="memdesc:a32e7c39245d68fa3e0e71dc85169cd17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Log Service object.  <a href="classhgardenpi_1_1v1_1_1_system_concrete.html#a32e7c39245d68fa3e0e71dc85169cd17">More...</a><br /></td></tr>
+<tr class="separator:a32e7c39245d68fa3e0e71dc85169cd17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25e2a7ece6a9c45bfed89041642099ed"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_system_concrete.html#a25e2a7ece6a9c45bfed89041642099ed">toString</a> () noexcept override</td></tr>
+<tr class="memdesc:a25e2a7ece6a9c45bfed89041642099ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the name of object.  <a href="classhgardenpi_1_1v1_1_1_system_concrete.html#a25e2a7ece6a9c45bfed89041642099ed">More...</a><br /></td></tr>
+<tr class="separator:a25e2a7ece6a9c45bfed89041642099ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classhgardenpi_1_1v1_1_1_system"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classhgardenpi_1_1v1_1_1_system')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classhgardenpi_1_1v1_1_1_system.html">hgardenpi::v1::System</a></td></tr>
+<tr class="memitem:a30998dad1893ee9e09e99fe04033562f inherit pub_methods_classhgardenpi_1_1v1_1_1_system"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_system.html#a30998dad1893ee9e09e99fe04033562f">initialize</a> ()=0</td></tr>
+<tr class="memdesc:a30998dad1893ee9e09e99fe04033562f inherit pub_methods_classhgardenpi_1_1v1_1_1_system"><td class="mdescLeft">&#160;</td><td class="mdescRight">Before all call this functiuon fo inilialize the project.  <a href="classhgardenpi_1_1v1_1_1_system.html#a30998dad1893ee9e09e99fe04033562f">More...</a><br /></td></tr>
+<tr class="separator:a30998dad1893ee9e09e99fe04033562f inherit pub_methods_classhgardenpi_1_1v1_1_1_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9bb5fa4d0b9b64443addc076bd96d88 inherit pub_methods_classhgardenpi_1_1v1_1_1_system"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_system.html#ab9bb5fa4d0b9b64443addc076bd96d88">start</a> ()=0</td></tr>
+<tr class="memdesc:ab9bb5fa4d0b9b64443addc076bd96d88 inherit pub_methods_classhgardenpi_1_1v1_1_1_system"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start main look and scheduler.  <a href="classhgardenpi_1_1v1_1_1_system.html#ab9bb5fa4d0b9b64443addc076bd96d88">More...</a><br /></td></tr>
+<tr class="separator:ab9bb5fa4d0b9b64443addc076bd96d88 inherit pub_methods_classhgardenpi_1_1v1_1_1_system"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classhgardenpi_1_1v1_1_1_factory.html" title="Abstract factory for build system.">Factory</a> for management of system services devices. </p>
@@ -135,7 +146,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -143,12 +154,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Get the Config Info object. </p>
 <dl class="section return"><dt>Returns</dt><dd>ConfigInfo::Ptr </dd></dl>
 
-<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_system.html">hgardenpi::v1::System</a>.</p>
+<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_system.html#af6f82015aafab1ca6b22363e7ba254f1">hgardenpi::v1::System</a>.</p>
 
 </div>
 </div>
-<a id="a038b38e6a1d0e21cde49636bcbcf47c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a038b38e6a1d0e21cde49636bcbcf47c1">&#9670;&nbsp;</a></span>getCPUTemperature()</h2>
+<a id="a37c7dfa777a5e3ca786a209fb076697a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37c7dfa777a5e3ca786a209fb076697a">&#9670;&nbsp;</a></span>getLockService()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -157,7 +168,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">float hgardenpi::v1::SystemConcrete::getCPUTemperature </td>
+          <td class="memname">const <a class="el" href="classhgardenpi_1_1v1_1_1_lock_service.html">LockService</a>* hgardenpi::v1::SystemConcrete::getLockService </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -165,79 +176,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Get CPU temperature. </p>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">throw</td><td>exception when temp is not available </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>return degrees temperature </dd></dl>
-
-<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_system.html">hgardenpi::v1::System</a>.</p>
-
-</div>
-</div>
-<a id="a2e568f5cf3229e1c3accaa054f496120"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2e568f5cf3229e1c3accaa054f496120">&#9670;&nbsp;</a></span>getDeviceInfo()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">DeviceInfo::Ptr hgardenpi::v1::SystemConcrete::getDeviceInfo </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Get Raspberry PI info. </p>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">throw</td><td>exception when temp is not available </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>return Raspberry PI info </dd></dl>
-
-<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_system.html">hgardenpi::v1::System</a>.</p>
-
-</div>
-</div>
-<a id="afb10b0c2065ae44cf06aa6dbae85296b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afb10b0c2065ae44cf06aa6dbae85296b">&#9670;&nbsp;</a></span>getLockService()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="classhgardenpi_1_1v1_1_1_lock_service.html">LockService</a> * hgardenpi::v1::SystemConcrete::getLockService </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -245,12 +184,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Get the Lock Service object. </p>
 <dl class="section return"><dt>Returns</dt><dd>const LockService* </dd></dl>
 
-<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_system.html">hgardenpi::v1::System</a>.</p>
+<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_system.html#ac21afa5a14547fd679b99798cd47a090">hgardenpi::v1::System</a>.</p>
 
 </div>
 </div>
-<a id="ab30953705887897da27f38a8efa1a159"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab30953705887897da27f38a8efa1a159">&#9670;&nbsp;</a></span>getLogService()</h2>
+<a id="a32e7c39245d68fa3e0e71dc85169cd17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32e7c39245d68fa3e0e71dc85169cd17">&#9670;&nbsp;</a></span>getLogService()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -259,7 +198,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classhgardenpi_1_1v1_1_1_log_service.html">LogService</a> * hgardenpi::v1::SystemConcrete::getLogService </td>
+          <td class="memname">const <a class="el" href="classhgardenpi_1_1v1_1_1_log_service.html">LogService</a>* hgardenpi::v1::SystemConcrete::getLogService </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -267,7 +206,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -275,7 +214,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Get the Log Service object. </p>
 <dl class="section return"><dt>Returns</dt><dd>const <a class="el" href="classhgardenpi_1_1v1_1_1_log_service.html" title="Abstract LogService to write log.">LogService</a>&amp; </dd></dl>
 
-<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_system.html">hgardenpi::v1::System</a>.</p>
+<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_system.html#a9234db14f28f14207c6ccee998d89f00">hgardenpi::v1::System</a>.</p>
 
 </div>
 </div>
@@ -310,7 +249,37 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_system.html">hgardenpi::v1::System</a>.</p>
+<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_startable.html#a30998dad1893ee9e09e99fe04033562f">hgardenpi::v1::Startable</a>.</p>
+
+</div>
+</div>
+<a id="a25e2a7ece6a9c45bfed89041642099ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25e2a7ece6a9c45bfed89041642099ed">&#9670;&nbsp;</a></span>toString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">string hgardenpi::v1::SystemConcrete::toString </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the name of object. </p>
+<dl class="section return"><dt>Returns</dt><dd>std::string name of object </dd></dl>
+
+<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_object.html#ae4e2a30bbac895dbb9efb643ad8e5600">hgardenpi::v1::Object</a>.</p>
 
 </div>
 </div>
