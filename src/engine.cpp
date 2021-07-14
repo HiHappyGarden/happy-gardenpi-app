@@ -53,7 +53,6 @@ namespace hgardenpi
 
         Engine::~Engine() noexcept
         {
-            factory->getSystem()->getLockService()->release();
             delete factory;
         }
 

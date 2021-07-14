@@ -36,8 +36,10 @@ namespace hgardenpi
 
         SystemConcrete::~SystemConcrete()
         {
+
             if (lockService)
             {
+                release();
                 delete lockService;
             }
             if (logService)
@@ -56,8 +58,6 @@ namespace hgardenpi
             {
                 throw runtime_error("system non initialized");
             }
-
-            printf("---%s", configInfo->toString().c_str());
 
             //initialize log service
             logService = new (nothrow) LogServiceConcrete;
@@ -82,12 +82,16 @@ namespace hgardenpi
                 throw runtime_error(error);
             }
 
-            printf("6\n");
             //write sw vertionb in log
             logService->write(LOG_INFO, "version: %s", HGARDENPI_VER);
         }
 
         void SystemConcrete::start() {}
+
+        void SystemConcrete::release() noexcept
+        {
+            lockService->release();
+        }
 
     }
 }

@@ -64,6 +64,12 @@ namespace hgardenpi
             void start() override;
 
             /**
+             * @brief release a resorce
+             * 
+             */
+            void release() noexcept override;
+
+            /**
              * @brief Get the Config Info object
              * 
              * @return ConfigInfo::Ptr 
