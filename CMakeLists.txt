@@ -34,9 +34,17 @@ link_directories("${RASPBIAN_ROOTFS}/usr/local/lib")
 link_directories("${RASPBIAN_ROOTFS}/usr/lib")
 
 add_executable(hgardenpi
-    src/clients/mqttclient.hpp 
-    src/clients/mqttclientlocalsub.cpp
-    src/clients/mqttclientlocalsub.hpp
+    src/clients/database.h
+    src/clients/databasefactory.cpp
+    src/clients/databasefactory.hpp
+        src/clients/mqttclientmosquitto.cpp
+        src/clients/mqttclientmosquitto.hpp
+    src/clients/mqttclient.hpp
+    src/clients/resultset.hpp
+    src/clients/sqlite3database.cpp
+    src/clients/sqlite3database.hpp
+    src/clients/sqlite3resultset.cpp
+    src/clients/sqlite3resultset.hpp
     src/factories/device.hpp 
     src/factories/deviceconcrete.cpp 
     src/factories/deviceconcrete.hpp
@@ -69,6 +77,10 @@ add_executable(hgardenpi
     src/services/schedulerconcrete.hpp
     src/utilities/stringutils.cpp
     src/utilities/stringutils.hpp
+    src/utilities/variant.cpp
+    src/utilities/variant.hpp
+    src/utilities/types.cpp
+    src/utilities/types.hpp
     src/constants.cpp
     src/constants.hpp
     src/engine.cpp
@@ -81,5 +93,6 @@ target_link_libraries(hgardenpi
                         wiringPiDev
                         pthread
                         mosquitto
+                        sqlite3
                         nlohmann_json::nlohmann_json
                         )
