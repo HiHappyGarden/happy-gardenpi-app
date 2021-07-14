@@ -63,7 +63,7 @@ namespace hgardenpi
             if (!Engine::getInstance()->factory) {
                 throw runtime_error("no memory for Engine::getInstance()->factory");
             }
-            
+
             auto system = const_cast<System *>(Engine::getInstance()->factory->getSystem());
             auto device = const_cast<Device *>(Engine::getInstance()->factory->getDevice());
 
