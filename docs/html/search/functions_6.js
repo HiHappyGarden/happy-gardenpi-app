@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['setonmessagecallback_83',['setOnMessageCallback',['../classhgardenpi_1_1v1_1_1_m_q_t_t_client.html#ab987de58d187cd3ef7f1c5e73954267e',1,'hgardenpi::v1::MQTTClient::setOnMessageCallback()'],['../classhgardenpi_1_1v1_1_1_m_q_t_t_client_local_sub.html#a99994b851933eac23e7c2fd3df86c0b8',1,'hgardenpi::v1::MQTTClientLocalSub::setOnMessageCallback()']]],
-  ['settmqttclient_84',['settMqttClient',['../classhgardenpi_1_1v1_1_1_globals.html#abf1ce6c5b816450d8ff6e3de87646c95',1,'hgardenpi::v1::Globals']]],
-  ['start_85',['start',['../classhgardenpi_1_1v1_1_1_system_concrete.html#a3f3d1600bf364387c37fd7291bdaf7c0',1,'hgardenpi::v1::SystemConcrete']]]
+  ['setlogservice_100',['setLogService',['../classhgardenpi_1_1v1_1_1_m_q_t_t_client_mosquitto.html#ac9cc66ef2c262472c13bbc24ca5cf5aa',1,'hgardenpi::v1::MQTTClientMosquitto::setLogService()'],['../classhgardenpi_1_1v1_1_1_device_concrete.html#a39a61012698b9171f80f1c642a492dbd',1,'hgardenpi::v1::DeviceConcrete::setLogService()'],['../classhgardenpi_1_1v1_1_1_loggable.html#a795e1f33b2f82947e2597d178a1eae61',1,'hgardenpi::v1::Loggable::setLogService()']]],
+  ['setonmessagecallback_101',['setOnMessageCallback',['../classhgardenpi_1_1v1_1_1_m_q_t_t_client.html#ab987de58d187cd3ef7f1c5e73954267e',1,'hgardenpi::v1::MQTTClient::setOnMessageCallback()'],['../classhgardenpi_1_1v1_1_1_m_q_t_t_client_mosquitto.html#aca39c46d4a11f98afaa7338f18b236e8',1,'hgardenpi::v1::MQTTClientMosquitto::setOnMessageCallback()']]],
+  ['settmqttclient_102',['settMqttClient',['../classhgardenpi_1_1v1_1_1_engine.html#aa01fe65c0c8788f62dc1bfdcee3c9863',1,'hgardenpi::v1::Engine']]],
+  ['start_103',['start',['../classhgardenpi_1_1v1_1_1_device_concrete.html#a6309f703c7e72031f628651d5780d24f',1,'hgardenpi::v1::DeviceConcrete::start()'],['../classhgardenpi_1_1v1_1_1_system_concrete.html#a3f3d1600bf364387c37fd7291bdaf7c0',1,'hgardenpi::v1::SystemConcrete::start()'],['../classhgardenpi_1_1v1_1_1_startable.html#ab9bb5fa4d0b9b64443addc076bd96d88',1,'hgardenpi::v1::Startable::start()'],['../classhgardenpi_1_1v1_1_1_system.html#ab9bb5fa4d0b9b64443addc076bd96d88',1,'hgardenpi::v1::System::start()']]]
 ];

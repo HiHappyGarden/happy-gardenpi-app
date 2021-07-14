@@ -108,13 +108,15 @@ $(function() {
 <div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_loggable.html">   39</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classhgardenpi_1_1v1_1_1_loggable.html">Loggable</a></div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        {</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> setLogService(<span class="keyword">const</span> <a class="code" href="classhgardenpi_1_1v1_1_1_log_service.html">LogService</a> *) noexcept = 0;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        };</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    }</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;}</div>
-<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_log_service_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_log_service.html">hgardenpi::LogService</a></div><div class="ttdoc">Abstract LogService to write log.</div><div class="ttdef"><b>Definition:</b> logservice.hpp:35</div></div>
-<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_loggable_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_loggable.html">hgardenpi::Loggable</a></div><div class="ttdoc">Set LogServcice to obj.</div><div class="ttdef"><b>Definition:</b> loggable.hpp:40</div></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            <span class="keyword">virtual</span> ~<a class="code" href="classhgardenpi_1_1v1_1_1_loggable.html">Loggable</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_loggable.html#a795e1f33b2f82947e2597d178a1eae61">   47</a></span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classhgardenpi_1_1v1_1_1_loggable.html#a795e1f33b2f82947e2597d178a1eae61">setLogService</a>(<span class="keyword">const</span> <a class="code" href="classhgardenpi_1_1v1_1_1_log_service.html">LogService</a> *) noexcept = 0;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        };</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    }</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;}</div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_log_service_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_log_service.html">hgardenpi::v1::LogService</a></div><div class="ttdoc">Abstract LogService to write log.</div><div class="ttdef"><b>Definition:</b> logservice.hpp:37</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_loggable_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_loggable.html">hgardenpi::Loggable</a></div><div class="ttdoc">Abstract class for set LogServcice to obj.</div><div class="ttdef"><b>Definition:</b> loggable.hpp:40</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_loggable_html_a795e1f33b2f82947e2597d178a1eae61"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_loggable.html#a795e1f33b2f82947e2597d178a1eae61">hgardenpi::v1::Loggable::setLogService</a></div><div class="ttdeci">virtual void setLogService(const LogService *) noexcept=0</div><div class="ttdoc">Set the Log Service object.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

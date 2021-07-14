@@ -81,6 +81,7 @@ Inheritance diagram for hgardenpi::v1::FactoryConcrete:</div>
   <img src="classhgardenpi_1_1v1_1_1_factory_concrete.png" usemap="#hgardenpi::v1::FactoryConcrete_map" alt=""/>
   <map id="hgardenpi::v1::FactoryConcrete_map" name="hgardenpi::v1::FactoryConcrete_map">
 <area href="classhgardenpi_1_1v1_1_1_factory.html" title="Abstract factory for build system." alt="hgardenpi::v1::Factory" shape="rect" coords="0,0,191,24"/>
+<area href="classhgardenpi_1_1v1_1_1_object.html" title="Generic class ttat all functionals objects must extend." alt="hgardenpi::v1::Object" shape="rect" coords="201,0,392,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -92,6 +93,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a741c31aada95d22c8ff58451dd1bb763"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classhgardenpi_1_1v1_1_1_system.html">System</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_factory_concrete.html#a741c31aada95d22c8ff58451dd1bb763">getSystem</a> () const noexcept override</td></tr>
 <tr class="memdesc:a741c31aada95d22c8ff58451dd1bb763"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classhgardenpi_1_1v1_1_1_system.html" title="Factory for management of system services devices.">System</a> object.  <a href="classhgardenpi_1_1v1_1_1_factory_concrete.html#a741c31aada95d22c8ff58451dd1bb763">More...</a><br /></td></tr>
 <tr class="separator:a741c31aada95d22c8ff58451dd1bb763"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4033dcc92386922038893ff84b030076"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_factory_concrete.html#a4033dcc92386922038893ff84b030076">toString</a> () noexcept override</td></tr>
+<tr class="memdesc:a4033dcc92386922038893ff84b030076"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the name of object.  <a href="classhgardenpi_1_1v1_1_1_factory_concrete.html#a4033dcc92386922038893ff84b030076">More...</a><br /></td></tr>
+<tr class="separator:a4033dcc92386922038893ff84b030076"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a81ab7981fe4169262da6a1042bc780ee"></a>
@@ -120,7 +124,7 @@ Public Member Functions</h2></td></tr>
 <p>Get the <a class="el" href="classhgardenpi_1_1v1_1_1_device.html" title="Factory for management of peripherals devices.">Device</a> object. </p>
 <dl class="section return"><dt>Returns</dt><dd>const Device* </dd></dl>
 
-<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_factory.html">hgardenpi::v1::Factory</a>.</p>
+<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_factory.html#af2be63c8b9e90aaabc514f649b086a47">hgardenpi::v1::Factory</a>.</p>
 
 </div>
 </div>
@@ -150,7 +154,37 @@ Public Member Functions</h2></td></tr>
 <p>Get the <a class="el" href="classhgardenpi_1_1v1_1_1_system.html" title="Factory for management of system services devices.">System</a> object. </p>
 <dl class="section return"><dt>Returns</dt><dd>const System* </dd></dl>
 
-<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_factory.html">hgardenpi::v1::Factory</a>.</p>
+<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_factory.html#a0751b001172a7e06e0fd5ba333a83b11">hgardenpi::v1::Factory</a>.</p>
+
+</div>
+</div>
+<a id="a4033dcc92386922038893ff84b030076"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4033dcc92386922038893ff84b030076">&#9670;&nbsp;</a></span>toString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">string hgardenpi::v1::FactoryConcrete::toString </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the name of object. </p>
+<dl class="section return"><dt>Returns</dt><dd>std::string name of object </dd></dl>
+
+<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_object.html#ae4e2a30bbac895dbb9efb643ad8e5600">hgardenpi::v1::Object</a>.</p>
 
 </div>
 </div>
