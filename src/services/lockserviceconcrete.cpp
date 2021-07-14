@@ -53,7 +53,7 @@ bool LockServiceConcrete::lock() noexcept
         // convert string to pid
         stringstream ss;
         ss << line;
-        ss >> pidInExecution;
+        ss >> LockService::pidInExecution;
     }
 
     lockFileCheck.close();
@@ -62,10 +62,11 @@ bool LockServiceConcrete::lock() noexcept
 
 void LockServiceConcrete::release() const noexcept
 {
-    ifstream lockFileCheck(HGARDENPI_FILE_LOCK_PATH);
+    ifstream lockFileCheck(configInfo->fileLock);
     if (lockFileCheck.good())
     {
-        remove(HGARDENPI_FILE_LOCK_PATH);
+        if (pidInExecution == 0)
+            remove(configInfo->fileLock.c_str());
     }
     lockFileCheck.close();
 }

@@ -41,8 +41,6 @@ namespace hgardenpi
          */
         class LockServiceConcrete final : public Object, public LockService
         {
-            pid_t pidInExecution = 0;
-
             const ConfigInfo::Ptr &configInfo;
 
         public:
