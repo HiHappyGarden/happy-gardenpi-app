@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "mqttclientlocalsub.hpp"
+#include "mqttclientmosquitto.hpp"
 
 
 #include <mosquitto.h>
@@ -37,7 +37,7 @@ namespace hgardenpi
     inline namespace v1
     {
 
-        MQTTClientLocalSub::MQTTClientLocalSub(const string &serial, const string &host, const string &user, const string &passwd, uint16_t port, uint16_t keepAlive)
+        MQTTClientMosquitto::MQTTClientMosquitto(const string &serial, const string &host, const string &user, const string &passwd, uint16_t port, uint16_t keepAlive)
             : topic("/HappyGardenPI/" + serial),
               user(user),
               passwd(passwd)
@@ -108,7 +108,7 @@ namespace hgardenpi
             }
         }
 
-        MQTTClientLocalSub::~MQTTClientLocalSub() noexcept
+        MQTTClientMosquitto::~MQTTClientMosquitto() noexcept
         {
             if (mosq)
             {
@@ -116,7 +116,7 @@ namespace hgardenpi
             }
         }
 
-        void MQTTClientLocalSub::loop(volatile bool &run)
+        void MQTTClientMosquitto::loop(volatile bool &run)
         {
 
             int rc = mosquitto_loop(mosq, static_cast<int>(Time::TICK), 1);

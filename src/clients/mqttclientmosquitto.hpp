@@ -39,7 +39,7 @@ namespace hgardenpi
         /**
          * @brief MQTT Client for connect to mosquitto
          */
-        class MQTTClientLocalSub final : public MQTTClient
+        class MQTTClientMosquitto final : public MQTTClient
         {
 
             static inline const constexpr uint16_t KEEP_ALIVE = 60;
@@ -54,7 +54,7 @@ namespace hgardenpi
             string id;
 
         public:
-            typedef shared_ptr<MQTTClientLocalSub> Ptr;
+            typedef shared_ptr<MQTTClientMosquitto> Ptr;
 
             /**
              * @brief Construct a new MQTTClient object
@@ -66,7 +66,7 @@ namespace hgardenpi
              * @param port host
              * @param keepAlive keep alive connection timeout
              */
-            MQTTClientLocalSub(const string &serial, const string &host, const string &user, const string &passwd, uint16_t port = MQTTClientLocalSub::PORT, uint16_t keepAlive = MQTTClientLocalSub::KEEP_ALIVE);
+            MQTTClientMosquitto(const string &serial, const string &host, const string &user, const string &passwd, uint16_t port = MQTTClientMosquitto::PORT, uint16_t keepAlive = MQTTClientMosquitto::KEEP_ALIVE);
 
             /**
              * @brief Construct a new MQTTClient object
@@ -78,13 +78,13 @@ namespace hgardenpi
              * @param port host
              * @param keepAlive keep alive connection timeout
              */
-            MQTTClientLocalSub(const string &serial, const string &&host, const string &&user, const string &&passwd, uint16_t port = MQTTClientLocalSub::PORT, uint16_t keepAlive = MQTTClientLocalSub::KEEP_ALIVE) : MQTTClientLocalSub(serial, host, user, passwd, port, keepAlive)
+            MQTTClientMosquitto(const string &serial, const string &&host, const string &&user, const string &&passwd, uint16_t port = MQTTClientMosquitto::PORT, uint16_t keepAlive = MQTTClientMosquitto::KEEP_ALIVE) : MQTTClientMosquitto(serial, host, user, passwd, port, keepAlive)
             {
             }
 
-            ~MQTTClientLocalSub() noexcept;
+            ~MQTTClientMosquitto() noexcept;
 
-            HGARDENPI_NO_COPY_NO_MOVE(MQTTClientLocalSub)
+            HGARDENPI_NO_COPY_NO_MOVE(MQTTClientMosquitto)
 
             /**
              * @brief start loop 
