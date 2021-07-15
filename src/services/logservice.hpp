@@ -23,11 +23,28 @@
 #pragma once
 
 #include <cstdint>
+#include <functional>
+#include <vector>
 
 namespace hgardenpi
 {
     inline namespace v1
     {
+
+        using std::function;
+        using std::string;
+        using std::vector;
+
+        enum class LogLevel {
+            TRACE,
+            DBG,
+            INFO,
+            WARN,
+            ERROR,
+            FATAL
+        };
+
+        using LogWriter = function<void(LogLevel level, const string &source, const string &param, const vector<uint8_t> &params)>;
 
         /**
          * @brief Abstract LogService to write log

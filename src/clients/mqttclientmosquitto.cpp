@@ -26,11 +26,8 @@
 #include <mosquitto.h>
 #include <unistd.h>
 
-#include <cstring>
 #include <sstream>
 
-#include "../services/logservice.hpp"
-#include "../constants.hpp"
 
 namespace hgardenpi
 {

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 
 PROJECT(hgardenpi VERSION "0.20.0" LANGUAGES CXX C)
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_C_STANDARD 17)
+set(CMAKE_C_STANDARD 11)
 set(RASPBIAN_ROOTFS "$ENV{HOME}/raspberrypi/rootfs")
 set(FILE_LOCK_PATH "/tmp/hgardenpi.pid")
 set(FILE_CONFIG "./config.json")
@@ -18,13 +18,21 @@ include(FetchContent)
 FetchContent_Declare(json
   GIT_REPOSITORY https://github.com/ArthurSonzogni/nlohmann_json_cmake_fetchcontent
   GIT_TAG v3.9.1)
-
 FetchContent_GetProperties(json)
 if(NOT json_POPULATED)
   FetchContent_Populate(json)
   add_subdirectory(${json_SOURCE_DIR} ${json_BINARY_DIR} EXCLUDE_FROM_ALL)
 endif()
 
+FetchContent_Declare(SQLiteCpp
+        GIT_REPOSITORY https://github.com/SRombauts/SQLiteCpp.git
+        GIT_TAG 3.1.1)
+FetchContent_MakeAvailable(SQLiteCpp)
+#FetchContent_GetProperties(sqlitecpp)
+#if(NOT sqlitecpp_POPULATED)
+#  FetchContent_Populate(sqlitecpp)
+#  add_subdirectory(${sqlitecpp_SOURCE_DIR} ${sqlitecpp_BINARY_DIR} EXCLUDE_FROM_ALL)
+#endif()
 
 configure_file(config.h.in ../src/config.h)
 include_directories("3thparty/include/date")
@@ -34,17 +42,9 @@ link_directories("${RASPBIAN_ROOTFS}/usr/local/lib")
 link_directories("${RASPBIAN_ROOTFS}/usr/lib")
 
 add_executable(hgardenpi
-    src/clients/database.h
-    src/clients/databasefactory.cpp
-    src/clients/databasefactory.hpp
-        src/clients/mqttclientmosquitto.cpp
-        src/clients/mqttclientmosquitto.hpp
+    src/clients/mqttclientmosquitto.cpp
+    src/clients/mqttclientmosquitto.hpp
     src/clients/mqttclient.hpp
-    src/clients/resultset.hpp
-    src/clients/sqlite3database.cpp
-    src/clients/sqlite3database.hpp
-    src/clients/sqlite3resultset.cpp
-    src/clients/sqlite3resultset.hpp
     src/factories/device.hpp 
     src/factories/deviceconcrete.cpp 
     src/factories/deviceconcrete.hpp
@@ -77,10 +77,6 @@ add_executable(hgardenpi
     src/services/schedulerconcrete.hpp
     src/utilities/stringutils.cpp
     src/utilities/stringutils.hpp
-    src/utilities/variant.cpp
-    src/utilities/variant.hpp
-    src/utilities/types.cpp
-    src/utilities/types.hpp
     src/constants.cpp
     src/constants.hpp
     src/engine.cpp
@@ -93,6 +89,8 @@ target_link_libraries(hgardenpi
                         wiringPiDev
                         pthread
                         mosquitto
+                        SQLiteCpp
                         sqlite3
+                        dl
                         nlohmann_json::nlohmann_json
                         )
