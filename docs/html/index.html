@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Happi GardenPI: Main Page</title>
+<title>Happi GardenPI: Happy GardenPI app</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -62,11 +62,103 @@ $(function() {
 </iframe>
 </div>
 
-<div class="header">
+<div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">Happi GardenPI Documentation</div>  </div>
+<div class="title">Happy GardenPI app </div>  </div>
 </div><!--header-->
 <div class="contents">
+<div class="textblock"><p><a class="anchor" id="md_README"></a> Source code of Happy GardenPI, simple project for the construction of an automated watering can managed by a Pasrperry PI Zero</p>
+<h1><a class="anchor" id="autotoc_md1"></a>
+Setup</h1>
+<p>For build the project you must do this:</p>
+<h2><a class="anchor" id="autotoc_md2"></a>
+1. Install packages needed</h2>
+<p>On Ubuntu</p>
+<div class="fragment"><div class="line">sudo apt install gdb-multiarch</div>
+</div><!-- fragment --><p>On Rasperry PI W</p>
+<div class="fragment"><div class="line">sudo apt install libmosquittopp-dev sqlite3 libsqlite3-dev</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3"></a>
+2. Install WiringPi</h2>
+<div class="fragment"><div class="line">sudo apt update</div>
+<div class="line">sudo apt install cmake git</div>
+<div class="line">git clone https://github.com/WiringPi/WiringPi.git</div>
+<div class="line">cd WiringPi/</div>
+<div class="line">./build</div>
+</div><!-- fragment --><p>check if the configuration is ready</p>
+<div class="fragment"><div class="line">gpio -v</div>
+</div><!-- fragment --><p>In my case return the follow informations:</p>
+<div class="fragment"><div class="line">gpio version: 2.60</div>
+<div class="line">Copyright (c) 2012-2018 Gordon Henderson</div>
+<div class="line">This is free software with ABSOLUTELY NO WARRANTY.</div>
+<div class="line">For details type: gpio -warranty</div>
+<div class="line"> </div>
+<div class="line">Raspberry Pi Details:</div>
+<div class="line">  Type: Pi Zero-W, Revision: 01, Memory: 512MB, Maker: Sony</div>
+<div class="line">  * Device tree is enabled.</div>
+<div class="line">  *--&gt; Raspberry Pi Zero W Rev 1.1</div>
+<div class="line">  * This Raspberry Pi supports user-level GPIO access.</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md4"></a>
+3. Install on own Ubuntu (21.04) system the raspberry pi toolchain</h2>
+<p>form <a href="https://stackoverflow.com/questions/19162072/how-to-install-the-raspberry-pi-cross-compiler-on-my-linux-host-machine">https://stackoverflow.com/questions/19162072/how-to-install-the-raspberry-pi-cross-compiler-on-my-linux-host-machine</a>. (Thank to <a href="https://stackoverflow.com/users/869402/stefan-profanter">Stefan Profanter</a>)</p>
+<p>This tutorial is based on @Stenyg answer. In addition to many other solutions in the internet, this tutorial also supports older Rasperry Pi (A, B, B+, Zero) based on the ARMv6 CPU. See also: GCC 8 Cross Compiler outputs ARMv7 executable instead of ARMv6.</p>
+<ul>
+<li>Set up the toolchain</li>
+</ul>
+<p>There is no official git repository containing an updated toolchain (See <a href="https://github.com/raspberrypi/tools/issues/102">https://github.com/raspberrypi/tools/issues/102</a>).</p>
+<p>I created a new github repository which includes building and precompiled toolchains for ARMv6 based on GCC8 and newer: <br  />
+ <a href="https://github.com/Pro/raspi-toolchain">https://github.com/Pro/raspi-toolchain</a></p>
+<p>As mentioned in the project's readme, these are the steps to get the toolchain. You can also build it yourself (see the README for further details).</p>
+<p>Download the toolchain:</p>
+<div class="fragment"><div class="line">wget https://github.com/Pro/raspi-toolchain/releases/latest/download/raspi-toolchain.tar.gz</div>
+</div><!-- fragment --><p>Extract it. Note: The toolchain has to be in /opt/cross-pi-gcc since it's not location independent.</p>
+<div class="fragment"><div class="line">sudo tar xfz raspi-toolchain.tar.gz --strip-components=1 -C /opt</div>
+</div><!-- fragment --><p>You are done! The toolchain is now in /opt/cross-pi-gcc.</p>
+<p>Optional, add the toolchain to your path, by adding:</p>
+<div class="fragment"><div class="line">export PATH=$PATH:/opt/cross-pi-gcc/bin</div>
+</div><!-- fragment --><p>to the end of the file named ~/.bashrc.</p>
+<p>Now you can either log out and log back in (i.e. restart your terminal session), or run . ~/.bashrc in your terminal to pick up the PATH addition in your current terminal session.</p>
+<ul>
+<li>Get the libraries from the Raspberry PI</li>
+</ul>
+<p>To cross-compile for your own Raspberry Pi, which may have some custom libraries installed, you need to get these libraries onto your host.</p>
+<p>Create a folder $HOME/raspberrypi. In your raspberrypi folder, make a folder called rootfs.</p>
+<p>Now you need to copy the entire /lib and /usr directory to this newly created folder. I usually bring the rpi image up and copy it via rsync:</p>
+<div class="fragment"><div class="line">rsync -vR --progress -rl --delete-after --safe-links pi@192.168.1.PI:/{lib,usr,opt/vc/lib} $HOME/raspberrypi/rootfs</div>
+</div><!-- fragment --><p>where 192.168.1.PI is replaced by the IP of your Raspberry Pi.</p>
+<ul>
+<li>Use CMake to compile your project To tell CMake to take your own toolchain, you need to have a toolchain file which initializes the compiler settings.</li>
+</ul>
+<p>Get this toolchain file from here: <a href="https://github.com/Pro/raspi-toolchain/blob/master/Toolchain-rpi.cmake">https://github.com/Pro/raspi-toolchain/blob/master/Toolchain-rpi.cmake</a>.</p>
+<p>Now you should be able to compile your cmake programs simply by adding this extra flag: -D CMAKE_TOOLCHAIN_FILE=$HOME/raspberrypi/toolchain-rpi.cmake. and setting the correct environment variables:</p>
+<div class="fragment"><div class="line">export RASPBIAN_ROOTFS=$HOME/raspberrypi/rootfs</div>
+<div class="line">export PATH=/opt/cross-pi-gcc/bin:$PATH</div>
+<div class="line">export RASPBERRY_VERSION=1</div>
+<div class="line">mkdir build</div>
+<div class="line">cd build</div>
+<div class="line">cmake -DCMAKE_TOOLCHAIN_FILE=$HOME/raspberrypi/toolchain-rpi.cmake ..</div>
+<div class="line">make</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md5"></a>
+4. Create a build script</h2>
+<p>Create a facility script build.sh for building project and sync data to tasberrypi like this:</p>
+<div class="fragment"><div class="line">#!/bin/bash</div>
+<div class="line"> </div>
+<div class="line">export RASPBIAN_ROOTFS=$HOME/raspberrypi/rootfs</div>
+<div class="line">export PATH=/opt/cross-pi-gcc/bin:$PATH</div>
+<div class="line">export RASPBERRY_VERSION=1</div>
+<div class="line">cd build</div>
+<div class="line">cmake -DCMAKE_TOOLCHAIN_FILE=$HOME/raspberrypi/toolchain-rpi.cmake ..</div>
+<div class="line">make</div>
+<div class="line"> </div>
+<div class="line">/usr/bin/rsync -azP ..  pi@192.168.1.PI:/path_of_project/happy-gardenpi-app</div>
+</div><!-- fragment --><p>then add execution permission to file</p>
+<div class="fragment"><div class="line">chmod u+x build.sh</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md6"></a>
+Remote DEBUG</h1>
+<p>In order to follow guide <a href="https://medium.com/@karel.l.vermeiren/cross-architecture-remote-debugging-using-gdb-with-visual-studio-code-vscode-on-linux-c0572794b4ef">Cross architecture remote debugging using gdb with Visual Studio Code (vscode) on Linux</a></p>
+<p>You can momodify .vscode/launch.json and fix the right path</p>
+<p>When you need debug on Rasberry PI W you must execute te follow command form happy-gardenpi-app folder:</p>
+<div class="fragment"><div class="line">gdbserver --multi localhost:3000 build/hgardenpi</div>
+</div><!-- fragment --> </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
