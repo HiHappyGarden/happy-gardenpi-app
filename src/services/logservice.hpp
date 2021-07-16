@@ -35,6 +35,9 @@ namespace hgardenpi
         using std::string;
         using std::vector;
 
+        /**
+         * @brief Levelo of logging
+         */
         enum class LogLevel {
             TRACE,
             DBG,
@@ -44,6 +47,9 @@ namespace hgardenpi
             FATAL
         };
 
+        /**
+         * @brief Callback for manage log call
+         */
         using LogWriter = function<void(LogLevel level, const string &source, const string &param, const vector<uint8_t> &params)>;
 
         /**

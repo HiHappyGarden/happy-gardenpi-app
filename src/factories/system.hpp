@@ -45,28 +45,28 @@ namespace hgardenpi
             using Startable::initialize;
             using Startable::start;
 
-            virtual ~System() = default;
+            ~System() override = default;
 
             /**
              * @brief Get the Config Info object
              * 
              * @return ConfigInfo::Ptr 
              */
-            virtual ConfigInfo::Ptr getConfigInfo() const noexcept = 0;
+            [[nodiscard]] virtual ConfigInfo::Ptr getConfigInfo() const noexcept = 0;
 
             /**
              * @brief Get the Lock Service object
              * 
              * @return const LockService*
              */
-            virtual const LockService *getLockService() const noexcept = 0;
+            [[nodiscard]] virtual const LockService *getLockService() const noexcept = 0;
 
             /**
              * @brief Get the Log Service object
              * 
              * @return const LogService& 
              */
-            virtual const LogService *getLogService() const noexcept = 0;
+            [[nodiscard]] virtual const LogService *getLogService() const noexcept = 0;
         };
 
     }

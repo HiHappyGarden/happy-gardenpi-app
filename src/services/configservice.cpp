@@ -79,6 +79,14 @@ namespace hgardenpi
                         ret->broker.passwd = containerObj["passwd"].get<string>();
                     }
                 }
+                if (jsonConfig.contains("database") && jsonConfig.is_object())
+                {
+                    auto &&containerObj = jsonConfig["database"];
+                    if (containerObj.contains("file") && containerObj["file"].is_string())
+                    {
+                        ret->database.file = containerObj["file"].get<string>();
+                    }
+                }
             }
             return ret;
         }

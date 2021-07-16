@@ -23,7 +23,6 @@
 #pragma once
 
 #include <string>
-#include <memory>
 #include <functional>
 
 #include "../interfaces/loggable.hpp"
@@ -43,11 +42,11 @@ namespace hgardenpi
         {
 
         public:
-            using Ptr = shared_ptr<MQTTClient>;
             using MessageCallback = function<void(uint8_t *)>;
 
             MQTTClient() = default;
-            virtual ~MQTTClient() = default;
+            ~MQTTClient() override = default;
+            HGARDENPI_NO_COPY_NO_MOVE(MQTTClient)
 
             /**
              * @brief start loop 

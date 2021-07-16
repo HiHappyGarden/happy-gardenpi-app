@@ -40,13 +40,14 @@ namespace hgardenpi
         public:
             FactoryConcrete();
             ~FactoryConcrete() noexcept override;
+            HGARDENPI_NO_COPY_NO_MOVE(FactoryConcrete)
 
             /**
              * @brief Get the Device object
              * 
              * @return const Device* 
              */
-            inline const Device *getDevice() const noexcept override
+            [[nodiscard]] inline const Device *getDevice() const noexcept override
             {
                 return device;
             }
@@ -56,7 +57,7 @@ namespace hgardenpi
              * 
              * @return const System* 
              */
-            inline const System *getSystem() const noexcept override
+            [[nodiscard]] inline const System *getSystem() const noexcept override
             {
                 return system;
             }

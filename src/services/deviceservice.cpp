@@ -51,7 +51,7 @@ namespace hgardenpi
             {
                 if (stringContain(line, "Hardware"))
                 {
-                    device->hardhare = move(stringRight(line, ":", 2));
+                    device->hardware = move(stringRight(line, ":", 2));
                 }
                 if (stringContain(line, "Revision"))
                 {

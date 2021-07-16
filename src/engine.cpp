@@ -51,13 +51,32 @@ namespace hgardenpi
             run = false;
         };
 
+        static void initDatabase()
+        {
+
+        }
+
         Engine::~Engine() noexcept
         {
-            delete factory;
+            if (factory)
+            {
+                delete factory;
+            }
+
+            if (mqttClient)
+            {
+                delete mqttClient;
+            }
+
+            if (database)
+            {
+                delete database;
+            }
         }
 
         void initialize()
         {
+            //initialize factory
             Engine::getInstance()->factory = new (nothrow) FactoryConcrete;
             if (!Engine::getInstance()->factory) {
                 throw runtime_error("no memory for Engine::getInstance()->factory");
@@ -72,37 +91,18 @@ namespace hgardenpi
 
             device->initialize();
 
-            // //check if already run an instance of Happy GardenPI
-            // if (Globals::getInstance()->lockService->lock())
-            // {
-            //     string error("another instance already run pid:");
-            //     error += to_string(Globals::getInstance()->lockService->getPidInExecution());
-            //     LogService::getInstance()->write(LOG_ERR, "%s", error.c_str());
-            //     throw runtime_error(error);
-            // }
+            string &dbFile = system->getConfigInfo()->database.file;
 
-            // //print init info on log
-            // LogService::getInstance()->write(LOG_INFO, "version: %s", HGARDENPI_VER);
+            //write sw vertionb in log
+            system->getLogService()->write(LOG_INFO, "database: %s", dbFile.c_str());
 
-            // //get device info
-            // Globals::getInstance()->deviceInfo = getDeviceInfo();
+            Engine::getInstance()->database = new Database(dbFile, SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
+            auto database = Engine::getInstance()->database;
 
-            // //print device info to log
-            // LogService::getInstance()->write(LOG_INFO, "hardware: %s", Globals::getInstance()->deviceInfo->hardhare.c_str());
-            // LogService::getInstance()->write(LOG_INFO, "revision: %s", Globals::getInstance()->deviceInfo->revision.c_str());
-            // LogService::getInstance()->write(LOG_INFO, "serial: %s", Globals::getInstance()->deviceInfo->serial.c_str());
-            // LogService::getInstance()->write(LOG_INFO, "model: %s", Globals::getInstance()->deviceInfo->model.c_str());
-            // LogService::getInstance()->write(LOG_INFO, "cpu: %d", Globals::getInstance()->deviceInfo->cpu);
+            if (database->tableExists(""))
+            {
 
-            // //HW check
-            // if (Globals::getInstance()->deviceInfo->hardhare != HW_V1)
-            // {
-            //     HGARDENPI_ERROR_LOG_AMD_THROW("hardware not supporrted, you need a Raspberry Pi Zero W")
-            // }
-
-            // ConfigService config(HGARDENPI_FILE_CONFIG);
-
-            // config.read();
+            }
 
             // //initialize WiringPI
             // wiringPiSetupGpio();
