@@ -41,20 +41,20 @@ namespace hgardenpi
         {
 
         public:
-            virtual ~Device() = default;
+            ~Device() override = default;
             /**
              * @brief Get CPU temperature
              * @exception throw exception when temp is not available
              * @return return degrees temperature
              */
-            virtual float getCPUTemperature() const = 0;
+            [[nodiscard]] virtual float getCPUTemperature() const = 0;
 
             /**
              * @brief Get Raspberry PI info
              * @exception throw exception when temp is not available
              * @return return Raspberry PI info
              */
-            virtual DeviceInfo::Ptr getInfo() const = 0;
+            [[nodiscard]] virtual DeviceInfo::Ptr getInfo() const = 0;
         };
 
     }

@@ -10,6 +10,7 @@ set(BROKER_HOST "passy-raspberrypi")
 set(BROKER_PORT 1883)
 set(BROKER_USER "hgardepi")
 set(BROKER_PASSWD "hgardepi")
+set(DB_FILE "./hgardepi.db")
 
 
 

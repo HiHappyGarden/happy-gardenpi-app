@@ -23,19 +23,18 @@
 #pragma once
 
 #include <memory>
+#include <SQLiteCpp/Database.h>
 
 #include "interfaces/singleton.hpp"
 #include "factories/factory.hpp"
 #include "factories/factoryconcrete.hpp"
-
-#include "clients/mqttclientmosquitto.hpp"
-//#include "interfaces/mqttclient.hpp"
+#include "clients/mqttclient.hpp"
 
 namespace hgardenpi
 {
     inline namespace v1
     {
-        using std::unique_ptr;
+        using SQLite::Database;
 
         /**
          * @brief Singleton where are put global variable
@@ -47,12 +46,11 @@ namespace hgardenpi
             friend void start();
 
             Factory *factory = nullptr;
-
-            MQTTClient::Ptr mqttClient;
-
+            MQTTClient *mqttClient = nullptr;
+            Database *database = nullptr;
         public:
             Engine() = default;
-            ~Engine() noexcept;
+            ~Engine() noexcept override;
             HGARDENPI_NO_COPY_NO_MOVE(Engine)
 
             /**
@@ -68,21 +66,41 @@ namespace hgardenpi
             /**
              * @brief Set the Mqtt Client object
              * 
-             * @param mqttClient 
+             * @param mqttClient mqtt client instance
              */
-            inline void settMqttClient(const MQTTClient::Ptr &mqttClient) noexcept
+            inline void settMqttClient(const MQTTClient *mqttClient) noexcept
             {
-                this->mqttClient = mqttClient;
+                this->mqttClient = const_cast<MQTTClient *>(mqttClient);
             }
 
             /**
              * @brief Get the Mqtt Client object
              * 
-             * @return const MQTTClient* 
+             * @return const MQTTClient* mqtt client instance
              */
             inline const MQTTClient *getMqttClient() const noexcept
             {
-                return mqttClient.get();
+                return mqttClient;
+            }
+
+            /**
+             * @brief Set the Database object
+             *
+             * @param database database instabce
+             */
+            inline void settDatabase(const Database *database) noexcept
+            {
+                this->database = const_cast<Database *>(database);
+            }
+
+            /**
+             * @brief Get the Mqtt Client object
+             *
+             * @return const MQTTClient* mqtt client instance
+             */
+            inline const Database *getDatabase() const noexcept
+            {
+                return database;
             }
         };
 

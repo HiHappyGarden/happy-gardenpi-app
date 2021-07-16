@@ -39,20 +39,24 @@ namespace hgardenpi
         {
 
         public:
+            Factory() = default;
             virtual ~Factory() = default;
+            HGARDENPI_NO_COPY_NO_MOVE(Factory)
             /**
              * @brief Get the Device object
              * 
              * @return const Device* 
              */
-            virtual const Device *getDevice() const noexcept = 0;
+            [[nodiscard]] virtual const Device *getDevice() const noexcept = 0;
 
             /**
              * @brief Get the System object
              * 
              * @return const Device* 
              */
-            virtual const System *getSystem() const noexcept = 0;
+            [[nodiscard]] virtual const System *getSystem() const noexcept = 0;
+
+
         };
 
     }

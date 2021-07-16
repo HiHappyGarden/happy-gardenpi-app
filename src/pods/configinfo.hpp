@@ -58,6 +58,11 @@ namespace hgardenpi
                 string passwd = HGARDENPI_BROKER_PASSWD;
             } broker;
 
+            struct Database
+            {
+                string file = HGARDENPI_DB_FILE;
+            } database;
+
             string toString() noexcept override;
         };
 

@@ -42,7 +42,7 @@ namespace hgardenpi
 
             typedef shared_ptr<DeviceInfo> Ptr;
 
-            string hardhare;
+            string hardware;
             string revision;
             string serial;
             string model;

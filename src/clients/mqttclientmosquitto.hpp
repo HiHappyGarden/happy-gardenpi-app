@@ -54,7 +54,6 @@ namespace hgardenpi
             string id;
 
         public:
-            typedef shared_ptr<MQTTClientMosquitto> Ptr;
 
             /**
              * @brief Construct a new MQTTClient object
@@ -82,7 +81,7 @@ namespace hgardenpi
             {
             }
 
-            ~MQTTClientMosquitto() noexcept;
+            ~MQTTClientMosquitto() noexcept override;
 
             HGARDENPI_NO_COPY_NO_MOVE(MQTTClientMosquitto)
 

@@ -46,14 +46,14 @@ namespace hgardenpi
             deviceInfo = ::hgardenpi::v1::getDeviceInfo();
 
             //print device info to log
-            logService->write(LOG_INFO, "hardware: %s", deviceInfo->hardhare.c_str());
+            logService->write(LOG_INFO, "hardware: %s", deviceInfo->hardware.c_str());
             logService->write(LOG_INFO, "revision: %s", deviceInfo->revision.c_str());
             logService->write(LOG_INFO, "serial: %s", deviceInfo->serial.c_str());
             logService->write(LOG_INFO, "model: %s", deviceInfo->model.c_str());
             logService->write(LOG_INFO, "cpu: %d", deviceInfo->cpu);
 
             //HW check
-            if (deviceInfo->hardhare != HW_V1)
+            if (deviceInfo->hardware != HW_V1)
             {
                 HGARDENPI_ERROR_LOG_AMD_THROW("hardware not supported, you need a Raspberry Pi Zero W")
             }
