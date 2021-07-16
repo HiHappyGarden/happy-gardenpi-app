@@ -127,17 +127,23 @@ $(function() {
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                <span class="keywordtype">string</span> passwd = HGARDENPI_BROKER_PASSWD;</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            } broker;</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordtype">string</span> <a class="code" href="structhgardenpi_1_1v1_1_1_config_info.html#a6b11d090e3312450c7f14582cfd7a8b6">toString</a>() noexcept override;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        };</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        ostream &amp;operator&lt;&lt;(ostream &amp;, <a class="code" href="structhgardenpi_1_1v1_1_1_config_info.html">ConfigInfo</a>::Ptr const &amp;);</div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="structhgardenpi_1_1v1_1_1_config_info_1_1_database.html">   61</a></span>&#160;            <span class="keyword">struct </span><a class="code" href="structhgardenpi_1_1v1_1_1_config_info_1_1_database.html">Database</a></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            {</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                <span class="keywordtype">string</span> file = HGARDENPI_DB_FILE;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            } database;</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        ostream &amp;operator&lt;&lt;(ostream &amp;, <a class="code" href="structhgardenpi_1_1v1_1_1_config_info.html">ConfigInfo</a> const &amp;);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    }</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;}</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="keywordtype">string</span> <a class="code" href="structhgardenpi_1_1v1_1_1_config_info.html#a6b11d090e3312450c7f14582cfd7a8b6">toString</a>() noexcept override;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        };</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        ostream &amp;operator&lt;&lt;(ostream &amp;, <a class="code" href="structhgardenpi_1_1v1_1_1_config_info.html">ConfigInfo</a>::Ptr const &amp;);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        ostream &amp;operator&lt;&lt;(ostream &amp;, <a class="code" href="structhgardenpi_1_1v1_1_1_config_info.html">ConfigInfo</a> const &amp;);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    }</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;}</div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_object_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_object.html">hgardenpi::Object</a></div><div class="ttdoc">Generic class ttat all functionals objects must extend.</div><div class="ttdef"><b>Definition:</b> object.hpp:39</div></div>
 <div class="ttc" id="astructhgardenpi_1_1v1_1_1_config_info_1_1_broker_html"><div class="ttname"><a href="structhgardenpi_1_1v1_1_1_config_info_1_1_broker.html">hgardenpi::v1::ConfigInfo::Broker</a></div><div class="ttdef"><b>Definition:</b> configinfo.hpp:54</div></div>
+<div class="ttc" id="astructhgardenpi_1_1v1_1_1_config_info_1_1_database_html"><div class="ttname"><a href="structhgardenpi_1_1v1_1_1_config_info_1_1_database.html">hgardenpi::v1::ConfigInfo::Database</a></div><div class="ttdef"><b>Definition:</b> configinfo.hpp:62</div></div>
 <div class="ttc" id="astructhgardenpi_1_1v1_1_1_config_info_html"><div class="ttname"><a href="structhgardenpi_1_1v1_1_1_config_info.html">hgardenpi::ConfigInfo</a></div><div class="ttdoc">Data container for HW informations.</div><div class="ttdef"><b>Definition:</b> configinfo.hpp:47</div></div>
 <div class="ttc" id="astructhgardenpi_1_1v1_1_1_config_info_html_a6b11d090e3312450c7f14582cfd7a8b6"><div class="ttname"><a href="structhgardenpi_1_1v1_1_1_config_info.html#a6b11d090e3312450c7f14582cfd7a8b6">hgardenpi::v1::ConfigInfo::toString</a></div><div class="ttdeci">string toString() noexcept override</div><div class="ttdoc">Virtual method that return data of object in srteing format.</div><div class="ttdef"><b>Definition:</b> configinfo.cpp:31</div></div>
 </div><!-- fragment --></div><!-- contents -->
