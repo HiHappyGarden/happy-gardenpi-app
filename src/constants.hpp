@@ -49,6 +49,13 @@ namespace hgardenpi
             TICK = 200
         };
 
+        enum class Status: uint8_t
+        {
+            UNACTIVE = 0,
+            ACTIVE,
+            ERROR,
+        };
+
         //hw needed for Happy GardenPI
         const constexpr char *HW_V1 = "BCM2835";
 
