@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2021 Happy GardenPI
+// Copyright (c) 2021. Happy GardenPI
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -19,38 +19,19 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+//
 
-#include <cstdlib>
-#include <iostream>
-#include <date.h>
+//
+// Created by Antonio Salsi on 17/07/21.
+//
 
-#include "services/logservice.hpp"
-#include "engine.hpp"
+#pragma once
 
-int main(int argc, char *argv[])
+namespace hgardenpi
 {
-    try
+    inline namespace v1
     {
-        //initialize Happy GardenPI
-        hgardenpi::initialize();
 
-        //start loops
-        hgardenpi::start();
-
-        //hgardenpi::LogService::getInstance()->write(LOG_INFO, "end");
     }
-    catch (const std::exception &e)
-    {
-        std::cerr << "error: " << e.what() << std::endl;
-
-        hgardenpi::Engine::getInstance()
-                ->getFactory()
-                ->getSystem()
-                ->getLogService()
-                ->write(LOG_ERR, e.what());
-
-        return EXIT_FAILURE;
-    }
-
-    return EXIT_SUCCESS;
 }
+

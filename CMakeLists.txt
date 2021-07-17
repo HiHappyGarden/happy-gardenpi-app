@@ -10,7 +10,7 @@ set(BROKER_HOST "passy-raspberrypi")
 set(BROKER_PORT 1883)
 set(BROKER_USER "hgardepi")
 set(BROKER_PASSWD "hgardepi")
-set(DB_FILE "./hgardepi.db")
+set(DB_FILE "./hgardenpi.db")
 
 
 
@@ -60,6 +60,7 @@ add_executable(hgardenpi
     src/interfaces/releasable.hpp
     src/interfaces/singleton.hpp
     src/interfaces/startable.hpp
+    src/daos/dao.hpp
     src/pods/configinfo.cpp
     src/pods/configinfo.hpp
     src/pods/deviceinfo.hpp
@@ -76,6 +77,8 @@ add_executable(hgardenpi
     src/services/scheduler.hpp
     src/services/schedulerconcrete.cpp
     src/services/schedulerconcrete.hpp
+    src/utilities/databaseutils.cpp
+    src/utilities/databaseutils.hpp
     src/utilities/stringutils.cpp
     src/utilities/stringutils.hpp
     src/constants.cpp
@@ -83,6 +86,8 @@ add_executable(hgardenpi
     src/engine.cpp
     src/engine.hpp
     src/main.cpp
+
+
         )
 
 target_link_libraries(hgardenpi

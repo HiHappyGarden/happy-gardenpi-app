@@ -48,11 +48,6 @@ namespace hgardenpi
         };
 
         /**
-         * @brief Callback for manage log call
-         */
-        using LogWriter = function<void(LogLevel level, const string &source, const string &param, const vector<uint8_t> &params)>;
-
-        /**
          * @brief Abstract LogService to write log
          * 
          */

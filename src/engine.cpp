@@ -30,12 +30,11 @@
 #include <thread>
 using namespace std;
 
-#include "services/lockservice.hpp"
-using std::make_unique;
-
-#include "services/logservice.hpp"
-#include "services/configservice.hpp"
 #include "constants.hpp"
+#include "utilities/databaseutils.hpp"
+
+
+
 
 namespace hgardenpi
 {
@@ -51,10 +50,6 @@ namespace hgardenpi
             run = false;
         };
 
-        static void initDatabase()
-        {
-
-        }
 
         Engine::~Engine() noexcept
         {
@@ -76,12 +71,13 @@ namespace hgardenpi
 
         void initialize()
         {
-            //initialize factory
+            //initialize factory and all sub factory
             Engine::getInstance()->factory = new (nothrow) FactoryConcrete;
             if (!Engine::getInstance()->factory) {
                 throw runtime_error("no memory for Engine::getInstance()->factory");
             }
 
+            //get pointers of system and device
             auto system = const_cast<System *>(Engine::getInstance()->factory->getSystem());
             auto device = const_cast<Device *>(Engine::getInstance()->factory->getDevice());
 
@@ -91,21 +87,34 @@ namespace hgardenpi
 
             device->initialize();
 
+            //get database file path from config file
             string &dbFile = system->getConfigInfo()->database.file;
 
             //write sw vertionb in log
             system->getLogService()->write(LOG_INFO, "database: %s", dbFile.c_str());
 
+            //init database, out of SOLID pattern :)
             Engine::getInstance()->database = new Database(dbFile, SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
+
+            //get database pointer
             auto database = Engine::getInstance()->database;
 
-            if (database->tableExists(""))
+            //check if database exist or not
+            if (!database->tableExists(DB_METADATA_TABLE))
             {
-
+                DBUpdate(database);
+            }
+            else
+            {
+                //update db structure to new one version
+                auto &&version = DBGetVersion(database);
+                if (version == 0)
+                {
+                    throw runtime_error("database initialized but version not found");
+                }
+                DBUpdate(database, version);
             }
 
-            // //initialize WiringPI
-            // wiringPiSetupGpio();
 
             // //initialize mosquittopp
             // if (mosquitto_lib_init() != MOSQ_ERR_SUCCESS)
