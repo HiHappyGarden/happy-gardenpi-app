@@ -1,9 +1,6 @@
-#ifndef CHRONO_IO_H
-#define CHRONO_IO_H
-
-// The MIT License (MIT)
+// MIT License
 //
-// Copyright (c) 2016, 2017 Howard Hinnant
+// Copyright (c) $year. Happy GardenPI
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,12 +20,41 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-// Our apologies.  When the previous paragraph was written, lowercase had not yet
-// been invented (that would involve another several millennia of evolution).
-// We did not mean to shout.
 
-// This functionality has moved to "date.h"
+//
+// Created by Antonio Salsi on 17/07/21.
+//
 
-#include "date.h"
+#pragma once
+#include <string>
+#include <memory>
+#include <list>
 
-#endif  // CHRONO_IO_H
+#include "../constants.hpp"
+
+namespace hgardenpi
+{
+
+    inline namespace v1
+    {
+
+        using std::string;
+        using std::shared_ptr;
+        using std::list;
+
+        struct Station
+        {
+
+            typedef shared_ptr<Station> Ptr;
+
+            uint id;
+            string name;
+            string description;
+            Status status;
+
+        };
+
+        typedef list<Station::Ptr> Stations;
+
+    }
+}
