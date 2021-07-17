@@ -64,33 +64,23 @@ namespace hgardenpi
             }
 
             /**
-             * @brief Set the Mqtt Client object
-             * 
-             * @param mqttClient mqtt client instance
-             */
-            inline void settMqttClient(const MQTTClient *mqttClient) noexcept
-            {
-                this->mqttClient = const_cast<MQTTClient *>(mqttClient);
-            }
-
-            /**
              * @brief Get the Mqtt Client object
              * 
              * @return const MQTTClient* mqtt client instance
              */
-            inline const MQTTClient *getMqttClient() const noexcept
+            [[nodiscard]] inline const MQTTClient *getMqttClient() const noexcept
             {
                 return mqttClient;
             }
 
             /**
-             * @brief Set the Database object
+             * @brief Get the Mqtt Client object
              *
-             * @param database database instabce
+             * @return const MQTTClient* mqtt client instance
              */
-            inline void settDatabase(const Database *database) noexcept
+            [[nodiscard]] inline const Database *getDatabase() const noexcept
             {
-                this->database = const_cast<Database *>(database);
+                return database;
             }
 
             /**
@@ -98,9 +88,9 @@ namespace hgardenpi
              *
              * @return const MQTTClient* mqtt client instance
              */
-            inline const Database *getDatabase() const noexcept
+            [[nodiscard]] inline const Factory *getFactory() const noexcept
             {
-                return database;
+                return factory;
             }
         };
 
