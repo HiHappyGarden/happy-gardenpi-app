@@ -42,14 +42,29 @@ namespace hgardenpi
         using std::shared_ptr;
         using std::list;
 
+        /**
+         * @brief pod who describe a irrigation station
+         */
         struct Station
         {
 
             typedef shared_ptr<Station> Ptr;
 
+            /**
+             * @brief id in db
+             */
             uint id;
+            /**
+             * @brief name of station
+             */
             string name;
+            /**
+             * @brief brief description of station
+             */
             string description;
+            /**
+             * @brief status of station
+             */
             Status status;
 
         };

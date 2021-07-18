@@ -22,7 +22,6 @@
 
 #include <cstdlib>
 #include <iostream>
-#include <date/date.h>
 
 #include "services/logservice.hpp"
 #include "engine.hpp"
@@ -36,8 +35,6 @@ int main(int argc, char *argv[])
 
         //start loops
         hgardenpi::start();
-
-        //hgardenpi::LogService::getInstance()->write(LOG_INFO, "end");
     }
     catch (const std::exception &e)
     {

@@ -23,7 +23,7 @@
 #pragma once
 
 #include <memory>
-#include <SQLiteCpp/Database.h>
+#include <mutex>
 
 #include "interfaces/singleton.hpp"
 #include "factories/factory.hpp"
@@ -34,7 +34,8 @@ namespace hgardenpi
 {
     inline namespace v1
     {
-        using SQLite::Database;
+
+        using std::mutex;
 
         /**
          * @brief Singleton where are put global variable
@@ -42,14 +43,16 @@ namespace hgardenpi
         class Engine final : public Singleton<Engine>
         {
 
+            mutable mutex m;
+
             friend void initialize();
             friend void start();
 
             Factory *factory = nullptr;
             MQTTClient *mqttClient = nullptr;
-            Database *database = nullptr;
+
         public:
-            Engine() = default;
+            Engine();
             ~Engine() noexcept override;
             HGARDENPI_NO_COPY_NO_MOVE(Engine)
 
@@ -70,17 +73,8 @@ namespace hgardenpi
              */
             [[nodiscard]] inline const MQTTClient *getMqttClient() const noexcept
             {
+                lock_guard<mutex> lg(m);
                 return mqttClient;
-            }
-
-            /**
-             * @brief Get the Mqtt Client object
-             *
-             * @return const MQTTClient* mqtt client instance
-             */
-            [[nodiscard]] inline const Database *getDatabase() const noexcept
-            {
-                return database;
             }
 
             /**
@@ -90,6 +84,7 @@ namespace hgardenpi
              */
             [[nodiscard]] inline const Factory *getFactory() const noexcept
             {
+                lock_guard<mutex> lg(m);
                 return factory;
             }
         };

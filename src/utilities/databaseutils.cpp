@@ -39,34 +39,53 @@ namespace hgardenpi
 
         static const char *dbSql[] = {
                 "CREATE TABLE `metadata` (`version` INTEGER NOT NULL DEFAULT 0);",
+                "CREATE TABLE \"aggregations\" (\n"
+                "\t\"id\"\tINTEGER NOT NULL UNIQUE,\n"
+                "\t\"description\"\tTEXT,\n"
+                "\t\"manual\"\tINTEGER NOT NULL DEFAULT 1,\n"
+                "\t\"schedule\"\tTEXT,\n"
+                "\t\"start\"\tTEXT,\n"
+                "\t\"end\"\tTEXT,\n"
+                "\t\"status\"\tINTEGER DEFAULT 1,\n"
+                "\tPRIMARY KEY(\"id\" AUTOINCREMENT)\n"
+                ")",
+                "CREATE TABLE \"stations\" (\n"
+                "\t\"id\"\tINTEGER NOT NULL UNIQUE,\n"
+                "\t\"name\"\tTEXT NOT NULL,\n"
+                "\t\"description\"\tTEXT,\n"
+                "\t\"status\"\tINTEGER DEFAULT 1,\n"
+                "\t\"id_aggregation\"\tINTEGER,\n"
+                "\tFOREIGN KEY(\"id_aggregation\") REFERENCES \"aggregations\"(\"id\"),\n"
+                "\tPRIMARY KEY(\"id\" AUTOINCREMENT)\n"
+                ")",
                 nullptr
         };
 
-        static void execute(Database *db, const char *sequence[])
+        static void execute(Database &db, const char *sequence[])
         {
             const char **p = sequence;
 
-            Transaction transaction(*db);
+            Transaction transaction(db);
             while (*p)
             {
-                db->exec(*p);
+                db.exec(*p);
                 p++;
             }
 
-            db->exec("INSERT INTO metadata VALUES (1)");
+            db.exec("INSERT INTO metadata VALUES (1)");
 
             transaction.commit();
         }
 
 
-        uint8_t DBGetVersion(const Database *database)
+        uint8_t DBGetVersion(const Database &database)
         {
             uint8_t ret = 0;
 
-            auto db = const_cast<Database *>(database);
+            auto &db = const_cast<Database &>(database);
 
             // Compile a SQL query, containing one parameter (index 1)
-            SQLite::Statement query(*db, "SELECT * FROM metadata");
+            SQLite::Statement query(db, "SELECT * FROM metadata");
 
             // Loop to execute the query step by step, to get rows of result
             while (query.executeStep())
@@ -77,9 +96,9 @@ namespace hgardenpi
             return ret;
         }
 
-        void DBUpdate(const Database *database, uint8_t actualVersion)
+        void DBUpdate(const Database &database, uint8_t actualVersion)
         {
-            auto db = const_cast<Database *>(database);
+            auto &db = const_cast<Database &>(database);
             if (actualVersion == 0)
             {
                 execute(db, dbSql);

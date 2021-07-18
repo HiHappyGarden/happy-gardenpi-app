@@ -28,6 +28,7 @@
 #pragma once
 
 #include "station.hpp"
+#include <date/date.h>
 
 namespace hgardenpi
 {
@@ -35,17 +36,49 @@ namespace hgardenpi
     inline namespace v1
     {
 
+        using date::year_month_day;
+
+        /**
+         * @brief pod who describe an aggregation of station
+         *
+         * in this struct there are all information for scheduling a single or block of station
+         */
         struct Aggregation
         {
 
             typedef shared_ptr<Aggregation> Ptr;
 
+            /**
+             * @brief id in db
+             */
             uint id;
-            string name;
+            /**
+             * @brief brief description of aggregation
+             */
             string description;
+            /**
+             * @brief brief manual check if the aggregation start automatically or manually by follow fields
+             */
+            bool manual = true;
+            /**
+             * @brief scheduling info
+             */
+            string schedule;
+            /**
+             * @brief start scheduling period if enhanced
+             */
+            year_month_day *start = nullptr;
+            /**
+             * @brief end scheduling period if enhanced
+             */
+            year_month_day *end = nullptr;
+            /**
+             * @brief status of station
+             */
             Status status;
-
-
+            /**
+             * @brief list of managed stations
+             */
             Stations stations;
         };
 

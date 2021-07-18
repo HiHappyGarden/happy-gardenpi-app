@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2021. Happy GardenPI
+// Copyright (c) $year. Happy GardenPI
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,64 +22,52 @@
 //
 
 //
-// Created by Antonio Salsi on 17/07/21.
+// Created by Antonio Salsi on 18/07/21.
 //
 
 #pragma once
 
-#include <memory>
-#include <string>
-#include <SQLiteCpp/Statement.h>
-#include <SQLiteCpp/Database.h>
-#include <SQLiteCpp/Transaction.h>
+#include "dao.hpp"
+#include "../pods/station.hpp"
 
 namespace hgardenpi
 {
     inline namespace v1
     {
 
-        using std::shared_ptr;
-        using std::string;
-        using SQLite::Statement;
-        using SQLite::Database;
-        using SQLite::Transaction;
-
-        /**
-         * @brief base dao class
-         */
-        template<typename T>
-        class DAO
+        class StationDAO : public DAO<Station>
         {
-        protected:
-            string dbFile;
+        public:
+            static const constexpr char *TABLE = "stations";
 
-            inline explicit DAO(const string &dbFile) noexcept : dbFile(dbFile)
+            inline explicit StationDAO(const string &dbFile) noexcept : DAO(dbFile)
             {
 
             }
 
-        public:
-
+            /**
+             * @brief Fill a Station pod
+             * @param statement of an already execute query
+             * @return aggregation pod
+             * @throws exception when occur wrong access field
+             */
+            [[nodiscard]] Station::Ptr fill(const Statement &statement) const override;
 
             /**
-             * @brief fill a pod
-             * @return pod filled
+             * @brief insert Station pod
+             * @param ptr to pod
+             * @throws exception when occur wrong access field
              */
-            [[nodiscard]] virtual shared_ptr<T> fill(const Statement &) const = 0;
+            void insert(const Station::Ptr &ptr) const override;
 
             /**
-             * @brief insert a pod in db
-             * @param pod to insert
+             * @brief update Station pod
+             * @param ptr to pod
+             * @throws exception when occur wrong access field
              */
-            virtual void insert(const shared_ptr<T> &) const = 0;
+            void update(const Station::Ptr &ptr) const override;
 
-            /**
-             * @brief update a pod in db
-             * @param pod to update
-             */
-            virtual void update(const shared_ptr<T> &) const = 0;
         };
 
     }
 }
-

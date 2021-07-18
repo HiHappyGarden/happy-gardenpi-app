@@ -30,6 +30,8 @@
 #include <thread>
 using namespace std;
 
+#include <SQLiteCpp/Database.h>
+
 #include "constants.hpp"
 #include "utilities/databaseutils.hpp"
 
@@ -50,6 +52,13 @@ namespace hgardenpi
             run = false;
         };
 
+        Engine::Engine() : factory(new (nothrow) FactoryConcrete)
+        {
+            //initialize factory and all sub factory
+            if (!factory) {
+                throw runtime_error("no memory for factory");
+            }
+        }
 
         Engine::~Engine() noexcept
         {
@@ -62,21 +71,10 @@ namespace hgardenpi
             {
                 delete mqttClient;
             }
-
-            if (database)
-            {
-                delete database;
-            }
         }
 
         void initialize()
         {
-            //initialize factory and all sub factory
-            Engine::getInstance()->factory = new (nothrow) FactoryConcrete;
-            if (!Engine::getInstance()->factory) {
-                throw runtime_error("no memory for Engine::getInstance()->factory");
-            }
-
             //get pointers of system and device
             auto system = const_cast<System *>(Engine::getInstance()->factory->getSystem());
             auto device = const_cast<Device *>(Engine::getInstance()->factory->getDevice());
@@ -90,17 +88,14 @@ namespace hgardenpi
             //get database file path from config file
             string &dbFile = system->getConfigInfo()->database.file;
 
-            //write sw vertionb in log
+            //write sw version in log
             system->getLogService()->write(LOG_INFO, "database: %s", dbFile.c_str());
 
             //init database, out of SOLID pattern :)
-            Engine::getInstance()->database = new Database(dbFile, SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
-
-            //get database pointer
-            auto database = Engine::getInstance()->database;
+            Database database(dbFile, SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
 
             //check if database exist or not
-            if (!database->tableExists(DB_METADATA_TABLE))
+            if (!database.tableExists(DB_METADATA_TABLE))
             {
                 DBUpdate(database);
             }

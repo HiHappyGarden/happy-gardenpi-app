@@ -11,11 +11,15 @@ set(BROKER_PORT 1883)
 set(BROKER_USER "hgardepi")
 set(BROKER_PASSWD "hgardepi")
 set(DB_FILE "./hgardenpi.db")
+set(BUILD_TZ_LIB ON)
+#set(USE_SYSTEM_TZ_DB ON)
+
 
 
 
 include(FetchContent)
 
+message(STATUS " start json download")
 FetchContent_Declare(json
   GIT_REPOSITORY https://github.com/ArthurSonzogni/nlohmann_json_cmake_fetchcontent
   GIT_TAG v3.9.1)
@@ -25,17 +29,16 @@ if(NOT json_POPULATED)
   add_subdirectory(${json_SOURCE_DIR} ${json_BINARY_DIR} EXCLUDE_FROM_ALL)
 endif()
 
+message(STATUS " start SQLiteCpp download")
 FetchContent_Declare(SQLiteCpp
         GIT_REPOSITORY https://github.com/SRombauts/SQLiteCpp.git
         GIT_TAG 3.1.1)
 FetchContent_MakeAvailable(SQLiteCpp)
-FetchContent_Declare(SQLiteCpp
-        GIT_REPOSITORY https://github.com/SRombauts/SQLiteCpp.git
-        GIT_TAG 3.1.1)
-FetchContent_MakeAvailable(SQLiteCpp)
+
+message(STATUS " start date download")
 FetchContent_Declare( date_src
         GIT_REPOSITORY https://github.com/HowardHinnant/date.git
-        GIT_TAG        v3.0.1  # adjust tag/branch/commit as needed
+        GIT_TAG        v3.0.1
         )
 FetchContent_MakeAvailable(date_src)
 
@@ -66,10 +69,16 @@ add_executable(hgardenpi
     src/interfaces/releasable.hpp
     src/interfaces/singleton.hpp
     src/interfaces/startable.hpp
+    src/daos/aggregationdao.cpp
+    src/daos/aggregationdao.hpp
     src/daos/dao.hpp
+    src/daos/stationdao.cpp
+    src/daos/stationdao.hpp
+    src/pods/aggregation.hpp
     src/pods/configinfo.cpp
     src/pods/configinfo.hpp
     src/pods/deviceinfo.hpp
+    src/pods/station.hpp
     src/services/configservice.cpp
     src/services/configservice.hpp
     src/services/deviceservice.cpp
@@ -91,10 +100,7 @@ add_executable(hgardenpi
     src/constants.hpp
     src/engine.cpp
     src/engine.hpp
-    src/main.cpp
-
-
-        src/pods/station.hpp)
+    src/main.cpp )
 
 target_link_libraries(hgardenpi
                         wiringPi
