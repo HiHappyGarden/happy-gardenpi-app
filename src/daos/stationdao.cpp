@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2021. Happy GardenPI
+// Copyright (c) $year. Happy GardenPI
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,41 +22,24 @@
 //
 
 //
-// Created by Antonio Salsi on 17/07/21.
+// Created by Antonio Salsi on 18/07/21.
 //
-#pragma once
 
-#include <cstdint>
+#include "stationdao.hpp"
 
-namespace SQLite
+using namespace hgardenpi::v1;
+
+Station::Ptr StationDAO::fill(const SQLite::Statement &statement) const
 {
-    class Database;
+    return shared_ptr<Station>();
 }
 
-namespace hgardenpi
+void StationDAO::insert(const Station::Ptr &ptr) const
 {
-    inline namespace v1
-    {
 
-        using SQLite::Database;
-
-        const constexpr char *DB_METADATA_TABLE = "metadata";
-
-        /**
-         * @brief Get version of database
-         * @param database instance
-         * @return version
-         */
-        uint8_t DBGetVersion(const Database &database);
-
-        /**
-         * @brief Update or create a database structure
-         * @param database instance
-         * @param actualVersion actual version database if pass 0 the database structure will be create
-         */
-        void DBUpdate(const Database &database, uint8_t actualVersion = 0);
-
-    }
 }
 
+void StationDAO::update(const Station::Ptr &ptr) const
+{
 
+}

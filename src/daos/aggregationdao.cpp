@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2021. Happy GardenPI
+// Copyright (c) $year. Happy GardenPI
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,41 +22,37 @@
 //
 
 //
-// Created by Antonio Salsi on 17/07/21.
+// Created by Antonio Salsi on 18/07/21.
 //
-#pragma once
 
-#include <cstdint>
+#include "aggregationdao.hpp"
 
-namespace SQLite
+using namespace hgardenpi::v1;
+
+Aggregation::Ptr AggregationDAO::fill(const Statement &statement) const
 {
-    class Database;
+    return shared_ptr<Aggregation>();
 }
 
-namespace hgardenpi
+void AggregationDAO::insert(const Aggregation::Ptr &ptr) const
 {
-    inline namespace v1
-    {
+    Database database(dbFile, SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
 
-        using SQLite::Database;
+    Transaction transaction(database);
 
-        const constexpr char *DB_METADATA_TABLE = "metadata";
+    Statement   query(database, "INSERT INTO aggregation (description, manual, schedule, start, end, status) VALUES (?, ?, ?, ?, ?, ?)");
+    // Bind the blob value to the first parameter of the SQL query
+    query.bind(1, ptr->description);
+    query.bind(2, ptr->manual);
+    query.bind(3, ptr->schedule);
+    //query.bind(4, ptr->start);
+    //query.bind(5, ptr->end);
+    query.bind(6, static_cast<int>(ptr->status));
 
-        /**
-         * @brief Get version of database
-         * @param database instance
-         * @return version
-         */
-        uint8_t DBGetVersion(const Database &database);
-
-        /**
-         * @brief Update or create a database structure
-         * @param database instance
-         * @param actualVersion actual version database if pass 0 the database structure will be create
-         */
-        void DBUpdate(const Database &database, uint8_t actualVersion = 0);
-
-    }
+    transaction.commit();
 }
 
+void AggregationDAO::update(const Aggregation::Ptr &ptr) const
+{
 
+}
