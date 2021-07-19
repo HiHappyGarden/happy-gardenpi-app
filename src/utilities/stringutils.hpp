@@ -131,7 +131,7 @@ namespace hgardenpi
          * @param upperCase force uppercase
          * @return string convderted
          */
-        [[maybe_unused]] [[maybe_unused]] string stringHexToString(const uint8_t *bytes, size_t size, bool upperCase = true) noexcept; //
+        [[maybe_unused]] string stringHexToString(const uint8_t *bytes, size_t size, bool upperCase = true) noexcept; //
 
         /**
          * @brief Convert string to lower case

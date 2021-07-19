@@ -33,6 +33,8 @@
 #include <SQLiteCpp/Database.h>
 #include <SQLiteCpp/Transaction.h>
 
+#include "../interfaces/object.hpp"
+
 namespace hgardenpi
 {
     inline namespace v1
@@ -48,7 +50,7 @@ namespace hgardenpi
          * @brief base dao class
          */
         template<typename T>
-        class DAO
+        class DAO : public Object
         {
         protected:
             string dbFile;
@@ -59,7 +61,7 @@ namespace hgardenpi
             }
 
         public:
-
+            HGARDENPI_NO_COPY_NO_MOVE(DAO)
 
             /**
              * @brief fill a pod

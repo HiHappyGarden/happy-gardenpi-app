@@ -12,7 +12,6 @@ set(BROKER_USER "hgardepi")
 set(BROKER_PASSWD "hgardepi")
 set(DB_FILE "./hgardenpi.db")
 set(BUILD_TZ_LIB ON)
-#set(USE_SYSTEM_TZ_DB ON)
 
 
 
@@ -74,6 +73,7 @@ add_executable(hgardenpi
     src/daos/dao.hpp
     src/daos/stationdao.cpp
     src/daos/stationdao.hpp
+    src/pods/aggregation.cpp
     src/pods/aggregation.hpp
     src/pods/configinfo.cpp
     src/pods/configinfo.hpp
@@ -100,7 +100,7 @@ add_executable(hgardenpi
     src/constants.hpp
     src/engine.cpp
     src/engine.hpp
-    src/main.cpp )
+    src/main.cpp src/pods/aggregation.cpp)
 
 target_link_libraries(hgardenpi
                         wiringPi

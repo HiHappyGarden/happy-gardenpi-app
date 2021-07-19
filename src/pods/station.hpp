@@ -65,7 +65,7 @@ namespace hgardenpi
             /**
              * @brief status of station
              */
-            Status status;
+            Status status = Status::ACTIVE;;
 
         };
 
