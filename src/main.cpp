@@ -26,12 +26,18 @@
 #include "services/logservice.hpp"
 #include "engine.hpp"
 
+#include "pods/aggregation.hpp"
+
 int main(int argc, char *argv[])
 {
     try
     {
         //initialize Happy GardenPI
         hgardenpi::initialize();
+
+        hgardenpi::Aggregation a;
+
+        a.setSchedule("10/3/10/*/*");
 
         //start loops
         hgardenpi::start();

@@ -50,7 +50,7 @@ namespace hgardenpi
 
             string fileLock = HGARDENPI_FILE_LOCK_PATH;
 
-            struct Broker
+            struct
             {
                 string host = HGARDENPI_BROKER_HOST;
                 uint16_t port = HGARDENPI_BROKER_PORT;

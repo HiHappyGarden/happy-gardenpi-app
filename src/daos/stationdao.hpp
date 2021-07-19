@@ -35,6 +35,9 @@ namespace hgardenpi
     inline namespace v1
     {
 
+        /**
+         * @brief Direct Access Object for Station POD
+         */
         class StationDAO : public DAO<Station>
         {
         public:
@@ -44,6 +47,7 @@ namespace hgardenpi
             {
 
             }
+            HGARDENPI_NO_COPY_NO_MOVE(StationDAO)
 
             /**
              * @brief Fill a Station pod
@@ -67,6 +71,15 @@ namespace hgardenpi
              */
             void update(const Station::Ptr &ptr) const override;
 
+            /**
+             * @brief Return the name of object
+             *
+             * @return std::string name of object
+             */
+            inline string toString() noexcept override
+            {
+                return typeid(*this).name();
+            }
         };
 
     }

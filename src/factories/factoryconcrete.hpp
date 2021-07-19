@@ -31,6 +31,9 @@ namespace hgardenpi
     inline namespace v1
     {
 
+        /**
+         * @brief Concrete factory
+         */
         class FactoryConcrete final : public Factory, public Object
         {
 

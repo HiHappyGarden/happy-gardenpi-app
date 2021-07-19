@@ -57,6 +57,11 @@ namespace hgardenpi
         };
 
         //hw needed for Happy GardenPI
+
+        //raspberry pi 4
+        const constexpr char *HW_V1_DEBUG = "BCM2711";
+
+        //raspberry pi zero
         const constexpr char *HW_V1 = "BCM2835";
 
     }

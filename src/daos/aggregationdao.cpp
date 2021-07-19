@@ -44,7 +44,7 @@ void AggregationDAO::insert(const Aggregation::Ptr &ptr) const
     // Bind the blob value to the first parameter of the SQL query
     query.bind(1, ptr->description);
     query.bind(2, ptr->manual);
-    query.bind(3, ptr->schedule);
+    //query.bind(3, ptr->schedule);
     //query.bind(4, ptr->start);
     //query.bind(5, ptr->end);
     query.bind(6, static_cast<int>(ptr->status));

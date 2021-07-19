@@ -53,7 +53,7 @@ namespace hgardenpi
             logService->write(LOG_INFO, "cpu: %d", deviceInfo->cpu);
 
             //HW check
-            if (deviceInfo->hardware != HW_V1)
+            if (deviceInfo->hardware != HW_V1 && deviceInfo->hardware != HW_V1_DEBUG)
             {
                 HGARDENPI_ERROR_LOG_AMD_THROW("hardware not supported, you need a Raspberry Pi Zero W")
             }

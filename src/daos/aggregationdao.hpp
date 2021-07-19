@@ -48,6 +48,7 @@ namespace hgardenpi
             {
 
             }
+            HGARDENPI_NO_COPY_NO_MOVE(AggregationDAO)
 
             /**
              * @brief Fill a Aggregation pod
@@ -70,6 +71,16 @@ namespace hgardenpi
              * @throws exception when occur wrong access field
              */
             void update(const Aggregation::Ptr &ptr) const override;
+
+            /**
+             * @brief Return the name of object
+             *
+             * @return std::string name of object
+             */
+            inline string toString() noexcept override
+            {
+                return typeid(*this).name();
+            }
         };
 
     }

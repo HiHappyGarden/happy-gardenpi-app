@@ -28,15 +28,12 @@
 #pragma once
 
 #include "station.hpp"
-#include <date/date.h>
 
 namespace hgardenpi
 {
 
     inline namespace v1
     {
-
-        using date::year_month_day;
 
         /**
          * @brief pod who describe an aggregation of station
@@ -47,6 +44,7 @@ namespace hgardenpi
         {
 
             typedef shared_ptr<Aggregation> Ptr;
+
 
             /**
              * @brief id in db
@@ -63,23 +61,59 @@ namespace hgardenpi
             /**
              * @brief scheduling info
              */
-            string schedule;
+            struct Schedule
+            {
+                static const constexpr uint8_t NOT_SET = 0xFF;
+
+                uint8_t minute; //0 - 59
+                uint8_t hour; //0 - 23
+                uint8_t dayOfMonth; //1 - 31
+                uint8_t month; //1 - 12
+                uint8_t weekDay; //1 - 7
+            } schedule;
             /**
              * @brief start scheduling period if enhanced
              */
-            year_month_day *start = nullptr;
+            string start;
             /**
              * @brief end scheduling period if enhanced
              */
-            year_month_day *end = nullptr;
+            string end;
+            /**
+             * If true execute sequentially the station otherwise execute all station at the same time
+             */
+            bool sequential = true;
             /**
              * @brief status of station
              */
-            Status status;
+            Status status = Status::ACTIVE;
             /**
              * @brief list of managed stations
              */
             Stations stations;
+
+            /**
+             * @brief Set the scheduling
+             * @param minute valid value 0 - 59
+             * @param hour valid value 0 - 23
+             * @param dayOfMonth valid value 1 - 31
+             * @param month valid value 1 - 12
+             * @param weekDay valid value 1 - 7
+             * @exception runtime_error when some value in not valid
+             */
+            void setSchedule(uint8_t minute, uint8_t hour, uint8_t dayOfMonth, uint8_t month, uint8_t weekDay);
+
+            /**
+             * @brief Set the scheduling
+             * @param scheduleFormat
+             */
+            void setSchedule(const string &scheduleFormat);
+
+            /**
+             * @brief Get the scheduling
+             * @return string form of schedule
+             */
+            [[nodiscard]] string getSchedule() const noexcept;
         };
 
 
