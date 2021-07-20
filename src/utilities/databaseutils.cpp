@@ -46,6 +46,7 @@ namespace hgardenpi
                 "\t\"schedule\"\tTEXT,\n"
                 "\t\"start\"\tTEXT,\n"
                 "\t\"end\"\tTEXT,\n"
+                "\t\"sequential\"\tINTEGER DEFAULT 1,\n"
                 "\t\"status\"\tINTEGER DEFAULT 1,\n"
                 "\tPRIMARY KEY(\"id\" AUTOINCREMENT)\n"
                 ")",

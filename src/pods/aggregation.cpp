@@ -27,22 +27,25 @@
 
 #include "aggregation.hpp"
 
-#include <stdexcept>
 #include <vector>
 #include <iostream>
 #include <sstream>
-#include <iterator>
 using namespace std;
 
 #define HGARDENPI_SET_SCHEDULE_FIELD(field) \
-if (schedule.field < Schedule::NOT_SET) \
+if (this->field < Schedule::NOT_SET) \
 { \
-    ret += to_string(schedule.field); \
+    ret += to_string(this->field); \
 } \
 else \
 { \
     ret += "*"; \
 } \
+ret += "/"; \
+
+
+#define HGARDENPI_FROM_STRING_TO_UINT(field) \
+ field = s != "*" ? stoi(s) : NOT_SET; break;
 
 namespace hgardenpi
 {
@@ -51,7 +54,7 @@ namespace hgardenpi
     {
 
 
-        void Aggregation::setSchedule(uint8_t minute, uint8_t hour, uint8_t dayOfMonth, uint8_t month, uint8_t weekDay)
+        void Aggregation::Schedule::set(uint8_t minute, uint8_t hour, uint8_t dayOfMonth, uint8_t month, uint8_t weekDay)
         {
             if (minute > 59 && minute != Aggregation::Schedule::NOT_SET)
             {
@@ -78,14 +81,35 @@ namespace hgardenpi
                 throw runtime_error("weekDay value not in 1-7 range");
             }
 
-            schedule.minute = minute;
-            schedule.hour = hour;
-            schedule.dayOfMonth = dayOfMonth;
-            schedule.month = month;
-            schedule.weekDay = weekDay;
+            this->minute = minute;
+            this->hour = hour;
+            this->dayOfMonth = dayOfMonth;
+            this->month = month;
+            this->weekDay = weekDay;
         }
 
-        string Aggregation::getSchedule() const noexcept
+        void Aggregation::Schedule::set(const string &scheduleFormat)
+        {
+            stringstream ss(scheduleFormat);
+            string s;
+
+            uint8_t index = 0;
+            while (getline(ss, s, '/')) {
+                switch (index) // NOLINT(hicpp-multiway-paths-covered)
+                {
+                    case 0: HGARDENPI_FROM_STRING_TO_UINT(minute)
+                    case 1: HGARDENPI_FROM_STRING_TO_UINT(hour)
+                    case 2: HGARDENPI_FROM_STRING_TO_UINT(dayOfMonth)
+                    case 3: HGARDENPI_FROM_STRING_TO_UINT(month)
+                    case 4: HGARDENPI_FROM_STRING_TO_UINT(weekDay)
+                }
+                index++;
+            }
+            set(minute, hour, dayOfMonth, month, weekDay);
+        }
+
+
+        string Aggregation::Schedule::get() const noexcept
         {
             string ret;
             HGARDENPI_SET_SCHEDULE_FIELD(minute)
@@ -93,21 +117,11 @@ namespace hgardenpi
             HGARDENPI_SET_SCHEDULE_FIELD(dayOfMonth)
             HGARDENPI_SET_SCHEDULE_FIELD(month)
             HGARDENPI_SET_SCHEDULE_FIELD(weekDay)
+
+            ret = ret.substr(0, ret.size() - 1);
+
             return ret;
         }
-
-        void Aggregation::setSchedule(const string &scheduleFormat)
-        {
-            istringstream iss(scheduleFormat);
-            vector<string> results(istream_iterator<string>{iss}, istream_iterator<string>());
-
-            for (auto &&str : results)
-            {
-                cout << str << endl;
-            }
-
-        }
-
 
     }
 }
