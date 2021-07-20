@@ -34,6 +34,7 @@ namespace hgardenpi
 
     inline namespace v1
     {
+        using std::to_string;
 
         /**
          * @brief pod who describe an aggregation of station
@@ -70,6 +71,31 @@ namespace hgardenpi
                 uint8_t dayOfMonth; //1 - 31
                 uint8_t month; //1 - 12
                 uint8_t weekDay; //1 - 7
+
+
+                /**
+                 * @brief Set the scheduling
+                 * @param minute valid value 0 - 59
+                 * @param hour valid value 0 - 23
+                 * @param dayOfMonth valid value 1 - 31
+                 * @param month valid value 1 - 12
+                 * @param weekDay valid value 1 - 7
+                 * @exception runtime_error when some value in not valid
+                 */
+                void set(uint8_t minute, uint8_t hour, uint8_t dayOfMonth, uint8_t month, uint8_t weekDay);
+
+                /**
+                 * @brief Set the scheduling
+                 * @param scheduleFormat
+                 */
+                void set(const string &scheduleFormat);
+
+                /**
+                 * @brief Get the scheduling
+                 * @return string form of schedule
+                 */
+                [[nodiscard]] string get() const noexcept;
+
             } schedule;
             /**
              * @brief start scheduling period if enhanced
@@ -92,30 +118,21 @@ namespace hgardenpi
              */
             Stations stations;
 
-            /**
-             * @brief Set the scheduling
-             * @param minute valid value 0 - 59
-             * @param hour valid value 0 - 23
-             * @param dayOfMonth valid value 1 - 31
-             * @param month valid value 1 - 12
-             * @param weekDay valid value 1 - 7
-             * @exception runtime_error when some value in not valid
-             */
-            void setSchedule(uint8_t minute, uint8_t hour, uint8_t dayOfMonth, uint8_t month, uint8_t weekDay);
 
-            /**
-             * @brief Set the scheduling
-             * @param scheduleFormat
-             */
-            void setSchedule(const string &scheduleFormat);
-
-            /**
-             * @brief Get the scheduling
-             * @return string form of schedule
-             */
-            [[nodiscard]] string getSchedule() const noexcept;
+            inline string toString() const noexcept
+            {
+                return "id:" + to_string(id) + " "
+                + "description:" + description + " "
+                + "manual:" + to_string(manual) + " "
+                + "schedule:" + schedule.get() + " "
+                + "start:" + start + " "
+                + "end:" + end + " "
+                + "sequential:" + to_string(sequential) + " "
+                + "status:" + to_string(static_cast<uint8_t>(status)) + " ";
+            }
         };
 
+        typedef list<Aggregation::Ptr> Aggregations;
 
     }
 }

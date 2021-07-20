@@ -31,7 +31,17 @@ using namespace hgardenpi::v1;
 
 Aggregation::Ptr AggregationDAO::fill(const Statement &statement) const
 {
-    return shared_ptr<Aggregation>();
+    auto &&query = const_cast<Statement &>(statement);
+    Aggregation::Ptr ret = std::make_shared<Aggregation>();
+    ret->id = query.getColumn("id");
+    ret->description = query.getColumn("description").getString();
+    ret->manual = query.getColumn("manual").getInt();
+    ret->schedule.set( query.getColumn("schedule").getString());
+    ret->start = query.getColumn("start").getString();
+    ret->end = query.getColumn("end").getString();
+    ret->status = static_cast<Status>(query.getColumn("status").getUInt());
+
+    return ret;
 }
 
 void AggregationDAO::insert(const Aggregation::Ptr &ptr) const
@@ -40,19 +50,37 @@ void AggregationDAO::insert(const Aggregation::Ptr &ptr) const
 
     Transaction transaction(database);
 
-    Statement   query(database, "INSERT INTO aggregation (description, manual, schedule, start, end, status) VALUES (?, ?, ?, ?, ?, ?)");
-    // Bind the blob value to the first parameter of the SQL query
+    Statement query(database, "INSERT INTO aggregations (description, manual, schedule, start, end, status) VALUES (?, ?, ?, ?, ?, ?)");
+
     query.bind(1, ptr->description);
     query.bind(2, ptr->manual);
-    //query.bind(3, ptr->schedule);
-    //query.bind(4, ptr->start);
-    //query.bind(5, ptr->end);
+    query.bind(3, ptr->schedule.get());
+    query.bind(4, ptr->start);
+    query.bind(5, ptr->end);
     query.bind(6, static_cast<int>(ptr->status));
+
+    query.executeStep();
 
     transaction.commit();
 }
 
 void AggregationDAO::update(const Aggregation::Ptr &ptr) const
 {
+    Database database(dbFile, SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
 
+    Transaction transaction(database);
+
+    Statement query(database, "UPDATE aggregations SET description = ?, manual = ?, schedule = ?, start = ?, end = ?, status = ? WHERE id = ?");
+
+    query.bind(1, ptr->description);
+    query.bind(2, ptr->manual);
+    query.bind(3, ptr->schedule.get());
+    query.bind(4, ptr->start);
+    query.bind(5, ptr->end);
+    query.bind(6, static_cast<int>(ptr->status));
+    query.bind(7, ptr->id);
+
+    query.executeStep();
+
+    transaction.commit();
 }

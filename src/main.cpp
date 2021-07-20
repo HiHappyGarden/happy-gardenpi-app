@@ -26,7 +26,8 @@
 #include "services/logservice.hpp"
 #include "engine.hpp"
 
-#include "pods/aggregation.hpp"
+#include "daos/aggregationdao.hpp"
+#include "engine.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -35,11 +36,34 @@ int main(int argc, char *argv[])
         //initialize Happy GardenPI
         hgardenpi::initialize();
 
-        hgardenpi::Aggregation a;
+        hgardenpi::Aggregation::Ptr a = std::make_shared<hgardenpi::Aggregation>();
 
-        a.setSchedule("10/3/10/*/*");
+        a->description = "test";
+        a->start = "06/2021";
+        a->schedule.set("10/3/10/*/*");
 
-        //start loops
+        hgardenpi::AggregationDAO dao(hgardenpi::Engine::getInstance()->getFactory()->getSystem()->getConfigInfo()->database.file);
+
+        dao.insert(a);
+
+        a->id = 1;
+        a->description = "ciao";
+        dao.update(a);
+
+        // Open a database file
+        SQLite::Database    db(hgardenpi::Engine::getInstance()->getFactory()->getSystem()->getConfigInfo()->database.file);
+
+        SQLite::Statement   query(db, "SELECT * FROM aggregations");
+
+        // Loop to execute the query step by step, to get rows of result
+        while (query.executeStep())
+        {
+            auto &&ptr = dao.fill(query);
+
+            std::cout << ptr->toString() << std::endl;
+        }
+
+        //start loop
         hgardenpi::start();
     }
     catch (const std::exception &e)
