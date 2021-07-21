@@ -29,9 +29,6 @@
 #include "daos/aggregationdao.hpp"
 #include "engine.hpp"
 
-#include <thread>
-
-
 int main(int argc, char *argv[])
 {
 
