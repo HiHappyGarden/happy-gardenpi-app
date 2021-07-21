@@ -31,15 +31,69 @@ using namespace hgardenpi::v1;
 
 Station::Ptr StationDAO::fill(const SQLite::Statement &statement) const
 {
-    return shared_ptr<Station>();
+    auto &&query = const_cast<Statement &>(statement);
+    Station::Ptr ret = std::make_shared<Station>();
+    ret->id = query.getColumn("id");
+    ret->name = query.getColumn("name").getString();
+    ret->description = query.getColumn("description").getString();
+    ret->status = static_cast<Status>(query.getColumn("status").getUInt());
+
+    return ret;
 }
 
 void StationDAO::insert(const Station::Ptr &ptr) const
 {
+    Database database(dbFile, SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
 
+    Transaction transaction(database);
+
+    Statement query(database, "INSERT INTO stations (name, description, status) VALUES (?, ?, ?)");
+
+    query.bind(1, ptr->name);
+    query.bind(2, ptr->description);
+    query.bind(3, static_cast<int>(ptr->status));
+
+    query.executeStep();
+
+    transaction.commit();
 }
 
 void StationDAO::update(const Station::Ptr &ptr) const
 {
+    Database database(dbFile, SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
 
+    Transaction transaction(database);
+
+    Statement query(database, "UPDATE aggregations SET name = ?, description = ? status = ? WHERE id = ?");
+
+    query.bind(1, ptr->name);
+    query.bind(2, ptr->description);
+    query.bind(3, static_cast<int>(ptr->status));
+    query.bind(4, ptr->id);
+
+    query.executeStep();
+
+    transaction.commit();
+}
+
+Stations StationDAO::getList(const Aggregation::Ptr &ptr) const
+{
+    Stations ret;
+
+    Database database(dbFile, SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
+
+    Transaction transaction(database);
+
+    Statement query(database, "SELECT * FROM stations WHERE id = ?");
+
+    query.bind(1, ptr->id);
+
+    while (query.executeStep())
+    {
+        ret.push_back(move(fill(query)));
+    }
+
+    transaction.commit();
+
+    return  ret;
 }
