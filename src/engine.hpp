@@ -23,7 +23,6 @@
 #pragma once
 
 #include <memory>
-#include <mutex>
 
 #include "interfaces/singleton.hpp"
 #include "factories/factory.hpp"
