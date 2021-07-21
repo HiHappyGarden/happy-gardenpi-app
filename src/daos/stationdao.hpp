@@ -29,6 +29,7 @@
 
 #include "dao.hpp"
 #include "../pods/station.hpp"
+#include "../pods/aggregation.hpp"
 
 namespace hgardenpi
 {
@@ -70,6 +71,13 @@ namespace hgardenpi
              * @throws exception when occur wrong access field
              */
             void update(const Station::Ptr &ptr) const override;
+
+            /**
+             * Get list of stations for aggregation
+             * @param prt to aggregation
+             * @return list of stations for aggregation
+             */
+            [[nodiscard]] Stations getList(const Aggregation::Ptr &ptr) const;
 
             /**
              * @brief Return the name of object
