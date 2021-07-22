@@ -35,7 +35,7 @@ namespace hgardenpi
          * @brief Factory for management of peripherals devices
          * 
          */
-        class DeviceConcrete : public Device, public Object
+        class DeviceConcrete : public Device
         {
             mutable DeviceInfo::Ptr deviceInfo = nullptr;
             LogService *logService = nullptr;

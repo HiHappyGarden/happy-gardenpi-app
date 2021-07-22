@@ -97,15 +97,9 @@ typedef shared_ptr&lt; <a class="el" href="structhgardenpi_1_1v1_1_1_aggregation
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a07baaa3e6a1dd41a331fa81b4e7b65dc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhgardenpi_1_1v1_1_1_aggregation.html#a07baaa3e6a1dd41a331fa81b4e7b65dc">setSchedule</a> (uint8_t minute, uint8_t hour, uint8_t dayOfMonth, uint8_t month, uint8_t weekDay)</td></tr>
-<tr class="memdesc:a07baaa3e6a1dd41a331fa81b4e7b65dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the scheduling.  <a href="structhgardenpi_1_1v1_1_1_aggregation.html#a07baaa3e6a1dd41a331fa81b4e7b65dc">More...</a><br /></td></tr>
-<tr class="separator:a07baaa3e6a1dd41a331fa81b4e7b65dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9afc72293b58470eacacfa2027c41039"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhgardenpi_1_1v1_1_1_aggregation.html#a9afc72293b58470eacacfa2027c41039">setSchedule</a> (const string &amp;scheduleFormat)</td></tr>
-<tr class="memdesc:a9afc72293b58470eacacfa2027c41039"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the scheduling.  <a href="structhgardenpi_1_1v1_1_1_aggregation.html#a9afc72293b58470eacacfa2027c41039">More...</a><br /></td></tr>
-<tr class="separator:a9afc72293b58470eacacfa2027c41039"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a715385a9a5cfabc8be8ef1788bb146a3"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhgardenpi_1_1v1_1_1_aggregation.html#a715385a9a5cfabc8be8ef1788bb146a3">getSchedule</a> () const noexcept</td></tr>
-<tr class="memdesc:a715385a9a5cfabc8be8ef1788bb146a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the scheduling.  <a href="structhgardenpi_1_1v1_1_1_aggregation.html#a715385a9a5cfabc8be8ef1788bb146a3">More...</a><br /></td></tr>
-<tr class="separator:a715385a9a5cfabc8be8ef1788bb146a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3ffa1bdb963b26ffa42aa89fbb1b768"><td class="memItemLeft" align="right" valign="top"><a id="aa3ffa1bdb963b26ffa42aa89fbb1b768"></a>
+string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> () const noexcept</td></tr>
+<tr class="separator:aa3ffa1bdb963b26ffa42aa89fbb1b768"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -146,126 +140,7 @@ Stations&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>pod who describe an aggregation of station </p>
 <p>in this struct there are all information for scheduling a single or block of station </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a715385a9a5cfabc8be8ef1788bb146a3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a715385a9a5cfabc8be8ef1788bb146a3">&#9670;&nbsp;</a></span>getSchedule()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">string hgardenpi::v1::Aggregation::getSchedule </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Get the scheduling. </p>
-<dl class="section return"><dt>Returns</dt><dd>string form of schedule </dd></dl>
-
-</div>
-</div>
-<a id="a9afc72293b58470eacacfa2027c41039"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9afc72293b58470eacacfa2027c41039">&#9670;&nbsp;</a></span>setSchedule() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void hgardenpi::v1::Aggregation::setSchedule </td>
-          <td>(</td>
-          <td class="paramtype">const string &amp;&#160;</td>
-          <td class="paramname"><em>scheduleFormat</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Set the scheduling. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">scheduleFormat</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a07baaa3e6a1dd41a331fa81b4e7b65dc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a07baaa3e6a1dd41a331fa81b4e7b65dc">&#9670;&nbsp;</a></span>setSchedule() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void hgardenpi::v1::Aggregation::setSchedule </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>minute</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>hour</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>dayOfMonth</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>month</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>weekDay</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Set the scheduling. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">minute</td><td>valid value 0 - 59 </td></tr>
-    <tr><td class="paramname">hour</td><td>valid value 0 - 23 </td></tr>
-    <tr><td class="paramname">dayOfMonth</td><td>valid value 1 - 31 </td></tr>
-    <tr><td class="paramname">month</td><td>valid value 1 - 12 </td></tr>
-    <tr><td class="paramname">weekDay</td><td>valid value 1 - 7 </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">runtime_error</td><td>when some value in not valid </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
+</div><h2 class="groupheader">Member Data Documentation</h2>
 <a id="ad9d7780a325769129bf627a391334d4f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad9d7780a325769129bf627a391334d4f">&#9670;&nbsp;</a></span>sequential</h2>
 
@@ -281,9 +156,8 @@ Stations&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
-<hr/>The documentation for this struct was generated from the following files:<ul>
+<hr/>The documentation for this struct was generated from the following file:<ul>
 <li>src/pods/<a class="el" href="aggregation_8hpp_source.html">aggregation.hpp</a></li>
-<li>src/pods/aggregation.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

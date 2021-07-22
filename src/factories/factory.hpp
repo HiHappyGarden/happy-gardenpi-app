@@ -35,12 +35,12 @@ namespace hgardenpi
          * @brief Abstract factory for build system
          * 
          */
-        class Factory
+        class Factory : public Object
         {
 
         public:
             Factory() = default;
-            virtual ~Factory() = default;
+            ~Factory() override = default;
             HGARDENPI_NO_COPY_NO_MOVE(Factory)
             /**
              * @brief Get the Device object

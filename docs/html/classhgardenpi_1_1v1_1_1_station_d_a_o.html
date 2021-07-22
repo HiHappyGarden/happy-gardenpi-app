@@ -86,7 +86,8 @@ Inheritance diagram for hgardenpi::v1::StationDAO:</div>
  <div class="center">
   <img src="classhgardenpi_1_1v1_1_1_station_d_a_o.png" usemap="#hgardenpi::v1::StationDAO_map" alt=""/>
   <map id="hgardenpi::v1::StationDAO_map" name="hgardenpi::v1::StationDAO_map">
-<area href="classhgardenpi_1_1v1_1_1_d_a_o.html" alt="hgardenpi::v1::DAO&lt; Station &gt;" shape="rect" coords="0,0,185,24"/>
+<area href="classhgardenpi_1_1v1_1_1_d_a_o.html" alt="hgardenpi::v1::DAO&lt; Station &gt;" shape="rect" coords="0,56,185,80"/>
+<area href="classhgardenpi_1_1v1_1_1_object.html" title="Generic class ttat all functionals objects must extend." alt="hgardenpi::v1::Object" shape="rect" coords="0,0,185,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -104,6 +105,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad1911b10490cacc2585636ef5da6b075"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_station_d_a_o.html#ad1911b10490cacc2585636ef5da6b075">update</a> (const Station::Ptr &amp;ptr) const override</td></tr>
 <tr class="memdesc:ad1911b10490cacc2585636ef5da6b075"><td class="mdescLeft">&#160;</td><td class="mdescRight">update <a class="el" href="structhgardenpi_1_1v1_1_1_station.html" title="pod who describe a irrigation station">Station</a> pod  <a href="classhgardenpi_1_1v1_1_1_station_d_a_o.html#ad1911b10490cacc2585636ef5da6b075">More...</a><br /></td></tr>
 <tr class="separator:ad1911b10490cacc2585636ef5da6b075"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9e5f4aa6b742325f2459b46260cdb6c"><td class="memItemLeft" align="right" valign="top">Stations&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_station_d_a_o.html#ad9e5f4aa6b742325f2459b46260cdb6c">getList</a> (const Aggregation::Ptr &amp;ptr) const</td></tr>
+<tr class="separator:ad9e5f4aa6b742325f2459b46260cdb6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02e734ae91ca7232970acfddf3bd4cf3"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_station_d_a_o.html#a02e734ae91ca7232970acfddf3bd4cf3">toString</a> () noexcept override</td></tr>
+<tr class="memdesc:a02e734ae91ca7232970acfddf3bd4cf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the name of object.  <a href="classhgardenpi_1_1v1_1_1_station_d_a_o.html#a02e734ae91ca7232970acfddf3bd4cf3">More...</a><br /></td></tr>
+<tr class="separator:a02e734ae91ca7232970acfddf3bd4cf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classhgardenpi_1_1v1_1_1_d_a_o"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classhgardenpi_1_1v1_1_1_d_a_o')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classhgardenpi_1_1v1_1_1_d_a_o.html">hgardenpi::v1::DAO&lt; Station &gt;</a></td></tr>
 <tr class="memitem:ac2af8d093f23239d7ecbee57956679b7 inherit pub_methods_classhgardenpi_1_1v1_1_1_d_a_o"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_d_a_o.html#ac2af8d093f23239d7ecbee57956679b7">insert</a> (const shared_ptr&lt; <a class="el" href="structhgardenpi_1_1v1_1_1_station.html">Station</a> &gt; &amp;) const=0</td></tr>
 <tr class="memdesc:ac2af8d093f23239d7ecbee57956679b7 inherit pub_methods_classhgardenpi_1_1v1_1_1_d_a_o"><td class="mdescLeft">&#160;</td><td class="mdescRight">insert a pod in db  <a href="classhgardenpi_1_1v1_1_1_d_a_o.html#ac2af8d093f23239d7ecbee57956679b7">More...</a><br /></td></tr>
@@ -187,6 +193,31 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>dbFile</b></td></tr
 
 </div>
 </div>
+<a id="ad9e5f4aa6b742325f2459b46260cdb6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9e5f4aa6b742325f2459b46260cdb6c">&#9670;&nbsp;</a></span>getList()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Stations StationDAO::getList </td>
+          <td>(</td>
+          <td class="paramtype">const Aggregation::Ptr &amp;&#160;</td>
+          <td class="paramname"><em>ptr</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get list of stations for aggregation </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">prt</td><td>to aggregation </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>list of stations for aggregation </dd></dl>
+
+</div>
+</div>
 <a id="a2f6192c8643cfb4bd022da508a3502f9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2f6192c8643cfb4bd022da508a3502f9">&#9670;&nbsp;</a></span>insert()</h2>
 
@@ -224,6 +255,36 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>dbFile</b></td></tr
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a02e734ae91ca7232970acfddf3bd4cf3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02e734ae91ca7232970acfddf3bd4cf3">&#9670;&nbsp;</a></span>toString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">string hgardenpi::v1::StationDAO::toString </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the name of object. </p>
+<dl class="section return"><dt>Returns</dt><dd>std::string name of object </dd></dl>
+
+<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_object.html#ae4e2a30bbac895dbb9efb643ad8e5600">hgardenpi::v1::Object</a>.</p>
 
 </div>
 </div>

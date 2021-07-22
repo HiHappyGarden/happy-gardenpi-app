@@ -38,7 +38,7 @@ namespace hgardenpi
          * @brief Factory for management of system services devices
          * 
          */
-        class System : public Startable, public Releasable
+        class System : public Startable, public Releasable, public Object
         {
 
         public:
