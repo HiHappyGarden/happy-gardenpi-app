@@ -22,9 +22,23 @@
 
 #include "deviceservice.hpp"
 
+#include <cstdio>
+#include <cstring>
+
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/ioctl.h>
+#include <netinet/in.h>
+#include <net/if.h>
+#include <arpa/inet.h>
+
 #include <iostream>
+#include <iosfwd>
 #include <fstream>
 #include <thread>
+#include <iomanip>
+
 using namespace std;
 
 #include "../utilities/stringutils.hpp"
@@ -33,6 +47,9 @@ namespace hgardenpi
 {
     inline namespace v1
     {
+
+        const constexpr char *IFR_NAME = "wlan0";
+
         float getCPUTemperature()
         {
             string val;
@@ -68,6 +85,47 @@ namespace hgardenpi
             }
             file.close();
             return device;
+        }
+
+        string getWlan0IP()
+        {
+            int fd;
+            struct ifreq ifr;
+
+            fd = socket(AF_INET, SOCK_DGRAM, 0);
+
+            /* I want to get an IPv4 IP address */
+            ifr.ifr_addr.sa_family = AF_INET;
+
+            /* I want IP address attached to "eth0" */
+            strncpy(ifr.ifr_name, IFR_NAME, IFNAMSIZ-1);
+
+            ioctl(fd, SIOCGIFADDR, &ifr);
+
+            close(fd);
+
+            return inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr);
+
+        }
+
+        string getWlan0MAC()
+        {
+            string ret;
+            struct ifreq s;
+            int fd = socket(PF_INET, SOCK_DGRAM, IPPROTO_IP);
+
+            strcpy(s.ifr_name, IFR_NAME);
+            if (0 == ioctl(fd, SIOCGIFHWADDR, &s)) {
+                int i;
+                stringstream ss;
+                for (i = 0; i < 6; ++i)
+                {
+                    ss << setfill('0') << setw(2) << hex << (0xff & (unsigned int)s.ifr_addr.sa_data[i]) << ":";
+                }
+
+                ret = move(ss.str());
+            }
+            return ret.substr(0, ret.size() - 1);
         }
 
     }

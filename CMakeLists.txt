@@ -54,6 +54,9 @@ add_executable(hgardenpi
     src/clients/mqttclientmosquitto.cpp
     src/clients/mqttclientmosquitto.hpp
     src/clients/mqttclient.hpp
+    src/components/display.hpp
+    src/components/lcd1602.cpp
+    src/components/lcd1602.hpp
     src/factories/device.hpp 
     src/factories/deviceconcrete.cpp 
     src/factories/deviceconcrete.hpp
