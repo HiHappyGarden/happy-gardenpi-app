@@ -78,6 +78,18 @@ namespace hgardenpi
             DeviceInfo::Ptr getInfo() const override;
 
             /**
+             * @brief Get Raspberry wla0 IP
+             * @return actual ip address of wlan0 interface
+             */
+            [[nodiscard]] string getWlan0IP() const override;
+
+            /**
+             * @brief Get Raspberry MAC ADDRESS IP
+             * @return actual MAC ADDRESS address of wlan0 interface
+             */
+            [[maybe_unused]] string getWlan0MAC() const override;
+
+            /**
              * @brief Return the name of object
              * 
              * @return std::string name of object

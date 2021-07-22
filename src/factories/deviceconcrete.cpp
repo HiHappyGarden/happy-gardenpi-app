@@ -22,10 +22,10 @@
 
 #include "deviceconcrete.hpp"
 
+#include <wiringPi.h>
+
 #include <stdexcept>
 using std::runtime_error;
-
-#include <wiringPi.h>
 
 #include "../services/deviceservice.hpp"
 
@@ -86,6 +86,16 @@ namespace hgardenpi
         DeviceInfo::Ptr DeviceConcrete::getInfo() const
         {
             return deviceInfo;
+        }
+
+        string DeviceConcrete::getWlan0IP() const
+        {
+            return ::hgardenpi::v1::getWlan0IP();
+        }
+
+        string DeviceConcrete::getWlan0MAC() const
+        {
+            return ::hgardenpi::v1::getWlan0MAC();
         }
 
     }

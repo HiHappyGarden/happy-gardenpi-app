@@ -43,5 +43,17 @@ namespace hgardenpi
          * @return return Raspberry PI info
          */
         [[maybe_unused]] DeviceInfo::Ptr getDeviceInfo();
+
+        /**
+         * @brief Get Raspberry wlan0 IP
+         * @return actual ip address of wlan0 interface
+         */
+        [[maybe_unused]] string getWlan0IP();
+
+        /**
+         * @brief Get Raspberry MAC ADDRESS IP
+         * @return actual MAC ADDRESS address of wlan0 interface
+         */
+        [[maybe_unused]] string getWlan0MAC();
     }
 }
