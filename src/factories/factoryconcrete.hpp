@@ -34,7 +34,7 @@ namespace hgardenpi
         /**
          * @brief Concrete factory
          */
-        class FactoryConcrete final : public Factory, public Object
+        class FactoryConcrete final : public Factory
         {
 
             Device *device = nullptr;

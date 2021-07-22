@@ -68,6 +68,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="structhgardenpi_1_1v1_1_1_aggregation_1_1_schedule-members.html">List of all members</a>  </div>
@@ -81,6 +82,18 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="aggregation_8hpp_source.html">aggregation.hpp</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a69980a5431c609f138ea8508058b6b05"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhgardenpi_1_1v1_1_1_aggregation_1_1_schedule.html#a69980a5431c609f138ea8508058b6b05">set</a> (uint8_t minute, uint8_t hour, uint8_t dayOfMonth, uint8_t month, uint8_t weekDay)</td></tr>
+<tr class="memdesc:a69980a5431c609f138ea8508058b6b05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the scheduling.  <a href="structhgardenpi_1_1v1_1_1_aggregation_1_1_schedule.html#a69980a5431c609f138ea8508058b6b05">More...</a><br /></td></tr>
+<tr class="separator:a69980a5431c609f138ea8508058b6b05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0061d72874c1ad45b78a0b036be3f3bb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhgardenpi_1_1v1_1_1_aggregation_1_1_schedule.html#a0061d72874c1ad45b78a0b036be3f3bb">set</a> (const string &amp;scheduleFormat)</td></tr>
+<tr class="memdesc:a0061d72874c1ad45b78a0b036be3f3bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the scheduling.  <a href="structhgardenpi_1_1v1_1_1_aggregation_1_1_schedule.html#a0061d72874c1ad45b78a0b036be3f3bb">More...</a><br /></td></tr>
+<tr class="separator:a0061d72874c1ad45b78a0b036be3f3bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5672fb686cec0712244377d4a7e7ce99"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhgardenpi_1_1v1_1_1_aggregation_1_1_schedule.html#a5672fb686cec0712244377d4a7e7ce99">get</a> () const noexcept</td></tr>
+<tr class="memdesc:a5672fb686cec0712244377d4a7e7ce99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the scheduling.  <a href="structhgardenpi_1_1v1_1_1_aggregation_1_1_schedule.html#a5672fb686cec0712244377d4a7e7ce99">More...</a><br /></td></tr>
+<tr class="separator:a5672fb686cec0712244377d4a7e7ce99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a63383cfb7e494dbc402fd4e5388424c3"><td class="memItemLeft" align="right" valign="top"><a id="a63383cfb7e494dbc402fd4e5388424c3"></a>
@@ -107,8 +120,128 @@ static constexpr const uint8_t&#160;</td><td class="memItemRight" valign="bottom
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>scheduling info </p>
-</div><hr/>The documentation for this struct was generated from the following file:<ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a5672fb686cec0712244377d4a7e7ce99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5672fb686cec0712244377d4a7e7ce99">&#9670;&nbsp;</a></span>get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">string hgardenpi::v1::Aggregation::Schedule::get </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the scheduling. </p>
+<dl class="section return"><dt>Returns</dt><dd>string form of schedule </dd></dl>
+
+</div>
+</div>
+<a id="a0061d72874c1ad45b78a0b036be3f3bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0061d72874c1ad45b78a0b036be3f3bb">&#9670;&nbsp;</a></span>set() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hgardenpi::v1::Aggregation::Schedule::set </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>scheduleFormat</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the scheduling. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">scheduleFormat</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a69980a5431c609f138ea8508058b6b05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69980a5431c609f138ea8508058b6b05">&#9670;&nbsp;</a></span>set() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hgardenpi::v1::Aggregation::Schedule::set </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>minute</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>hour</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>dayOfMonth</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>month</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>weekDay</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the scheduling. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">minute</td><td>valid value 0 - 59 </td></tr>
+    <tr><td class="paramname">hour</td><td>valid value 0 - 23 </td></tr>
+    <tr><td class="paramname">dayOfMonth</td><td>valid value 1 - 31 </td></tr>
+    <tr><td class="paramname">month</td><td>valid value 1 - 12 </td></tr>
+    <tr><td class="paramname">weekDay</td><td>valid value 1 - 7 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">runtime_error</td><td>when some value in not valid </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/>The documentation for this struct was generated from the following files:<ul>
 <li>src/pods/<a class="el" href="aggregation_8hpp_source.html">aggregation.hpp</a></li>
+<li>src/pods/aggregation.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

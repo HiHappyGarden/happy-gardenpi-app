@@ -38,7 +38,7 @@ namespace hgardenpi
          * @brief Factory for management of system services devices
          * 
          */
-        class SystemConcrete final : public System, public Object
+        class SystemConcrete final : public System
         {
 
             mutable ConfigInfo::Ptr configInfo = nullptr;

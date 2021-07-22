@@ -100,34 +100,37 @@ $(function() {
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &quot;../interfaces/singleton.hpp&quot;</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &quot;../constants.hpp&quot;</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">namespace </span>hgardenpi</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;{</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">inline</span> <span class="keyword">namespace </span>v1</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    {</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keyword">using</span> std::mutex;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">using</span> std::string;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keyword">class </span>Scheduler final : <span class="keyword">public</span> Singleton&lt;Scheduler&gt;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        {</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <span class="keywordtype">bool</span> start = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            <span class="keyword">mutable</span> mutex m;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            HGARDENPI_NO_COPY_NO_MOVE(Scheduler)</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            </div>
-<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_scheduler.html#a5c16a40935cca7865321f4a8a8d9ce1a">   57</a></span>&#160;            inline <span class="keywordtype">string</span> <a class="code" href="classhgardenpi_1_1v1_1_1_scheduler.html#a5c16a40935cca7865321f4a8a8d9ce1a">toString</a>() noexcept<span class="keyword"> override</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keyword">            </span>{</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">typeid</span>(*this).name();</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            }</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        };</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    }</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;}</div>
-<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_scheduler_html_a5c16a40935cca7865321f4a8a8d9ce1a"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_scheduler.html#a5c16a40935cca7865321f4a8a8d9ce1a">hgardenpi::v1::Scheduler::toString</a></div><div class="ttdeci">string toString() noexcept override</div><div class="ttdoc">Return the name of object.</div><div class="ttdef"><b>Definition:</b> scheduler.hpp:58</div></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;scheduler.hpp&quot;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">namespace </span>hgardenpi</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;{</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keyword">inline</span> <span class="keyword">namespace </span>v1</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">using</span> std::mutex;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keyword">using</span> std::string;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html">   43</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html">SchedulerConcrete</a> final : <span class="keyword">public</span> <a class="code" href="classhgardenpi_1_1v1_1_1_scheduler.html">Scheduler</a></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        {</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            <span class="keywordtype">bool</span> start = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <span class="keyword">mutable</span> mutex m;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            HGARDENPI_NO_COPY_NO_MOVE(<a class="code" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html">SchedulerConcrete</a>)</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            </div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#ab18d5a276fceda7ee956058860bc11cb">   58</a></span>&#160;            inline <span class="keywordtype">string</span> <a class="code" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#ab18d5a276fceda7ee956058860bc11cb">toString</a>() noexcept<span class="keyword"> override</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keyword">            </span>{</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">typeid</span>(*this).name();</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            }</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        };</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    }</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;}</div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_scheduler_concrete_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html">hgardenpi::SchedulerConcrete</a></div><div class="ttdoc">Scheduler for scheduing acrion, inside of this run a loop every one second.</div><div class="ttdef"><b>Definition:</b> schedulerconcrete.hpp:44</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_scheduler_concrete_html_ab18d5a276fceda7ee956058860bc11cb"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#ab18d5a276fceda7ee956058860bc11cb">hgardenpi::v1::SchedulerConcrete::toString</a></div><div class="ttdeci">string toString() noexcept override</div><div class="ttdoc">Return the name of object.</div><div class="ttdef"><b>Definition:</b> schedulerconcrete.hpp:58</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_scheduler_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_scheduler.html">hgardenpi::Scheduler</a></div><div class="ttdoc">Scheduler for scheduing acrion, inside of this run a loop every one second.</div><div class="ttdef"><b>Definition:</b> scheduler.hpp:43</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

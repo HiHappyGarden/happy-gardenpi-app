@@ -25,6 +25,7 @@
 #include "../interfaces/loggable.hpp"
 #include "../interfaces/startable.hpp"
 #include "../interfaces/releasable.hpp"
+#include "../interfaces/object.hpp"
 #include "../pods/deviceinfo.hpp"
 
 namespace hgardenpi
@@ -37,7 +38,7 @@ namespace hgardenpi
          * @brief Factory for management of peripherals devices
          * 
          */
-        class Device : public Loggable, public Startable, public Releasable
+        class Device : public Loggable, public Startable, public Releasable, public Object
         {
 
         public:
