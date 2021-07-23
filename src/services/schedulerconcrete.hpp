@@ -27,6 +27,7 @@
 
 #include "../interfaces/singleton.hpp"
 #include "../constants.hpp"
+#include "scheduler.hpp"
 
 namespace hgardenpi
 {
@@ -39,7 +40,7 @@ namespace hgardenpi
          * @brief Scheduler for scheduing acrion, inside of this run a loop every one second
          * 
          */
-        class Scheduler final : public Singleton<Scheduler>
+        class SchedulerConcrete final : public Scheduler
         {
 
             bool start = false;
@@ -47,7 +48,7 @@ namespace hgardenpi
             mutable mutex m;
 
         public:
-            HGARDENPI_NO_COPY_NO_MOVE(Scheduler)
+            HGARDENPI_NO_COPY_NO_MOVE(SchedulerConcrete)
 
             /**
              * @brief Return the name of object

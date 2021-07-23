@@ -32,28 +32,23 @@ using std::runtime_error;
 
 using hgardenpi::v1::LCD1602;
 
-LCD1602::LCD1602(const vector<int> &pins) : handle(0)
+void LCD1602::init(int lcdRs, int lcdE, int lcd04, int lcd05, int lcd06, int lcd07, int lcdContrast)
 {
-    init(pins);
-}
-
-void LCD1602::init(const vector<int> &pins)
-{
-    if (pins.empty() || pins.size() < 4)
-    {
-        throw runtime_error("No set minimum pins = 6");
-    }
 
     handle = lcdInit(rows,
                      colls,
-                     4,       //bits
-                     pins[0], //LCD_RS
-                     pins[1], //LCD_E
-                     pins[2], //LCD_04
-                     pins[3], //LCD_05
-                     pins[4], //LCD_06
-                     pins[5], //LCD_07
+                     4, //bits
+                     lcdRs, //LCD_RS
+                     lcdE, //LCD_E
+                     lcd04, //LCD_04
+                     lcd05, //LCD_05
+                     lcd06, //LCD_06
+                     lcd07, //LCD_07
                      0, 0, 0, 0);
+
+    //set OUTPUT for pin 13
+    pinMode(lcdContrast, OUTPUT);
+    digitalWrite(lcdContrast, contrastTurnOn);
 
         print("");
 
@@ -120,4 +115,10 @@ void LCD1602::sendCommand(uint8_t command) noexcept
 void LCD1602::charDef(int index, uint8_t data[8]) noexcept
 {
     ::lcdCharDef(handle, index, data);
+}
+
+void LCD1602::setContrastTurnOn(int contrastTurnOn) noexcept
+{
+    ::digitalWrite(lcdContrast, contrastTurnOn);
+    this->contrastTurnOn = contrastTurnOn;
 }

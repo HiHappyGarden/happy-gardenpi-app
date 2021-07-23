@@ -39,26 +39,14 @@ namespace hgardenpi
          * @brief Scheduler for scheduing acrion, inside of this run a loop every one second
          * 
          */
-        class Scheduler final : public Singleton<Scheduler>
+        class Scheduler : public Singleton<Scheduler>
         {
 
             bool start = false;
 
-            mutable mutex m;
-
         public:
             virtual ~Scheduler() = default;
             HGARDENPI_NO_COPY_NO_MOVE(Scheduler)
-
-            /**
-             * @brief Return the name of object
-             * 
-             * @return std::string name of object
-             */
-            inline string toString() noexcept override
-            {
-                return typeid(*this).name();
-            }
         };
 
     }

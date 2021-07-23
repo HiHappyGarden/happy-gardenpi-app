@@ -103,7 +103,7 @@ add_executable(hgardenpi
     src/constants.hpp
     src/engine.cpp
     src/engine.hpp
-    src/main.cpp src/pods/aggregation.cpp)
+    src/main.cpp)
 
 target_link_libraries(hgardenpi
                         wiringPi
