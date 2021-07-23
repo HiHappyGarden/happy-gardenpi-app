@@ -22,6 +22,8 @@
 
 #pragma once
 
+#include <functional>
+
 #include "../interfaces/loggable.hpp"
 #include "../interfaces/startable.hpp"
 #include "../interfaces/releasable.hpp"
@@ -34,14 +36,18 @@ namespace hgardenpi
     inline namespace v1
     {
 
+
+
         /**
          * @brief Factory for management of peripherals devices
          * 
          */
         class Device : public Loggable, public Startable, public Releasable, public Object
         {
-
         public:
+
+            //using OnIpChange = std::function<void(const string &)>;
+
             ~Device() override = default;
             /**
              * @brief Get CPU temperature
@@ -67,7 +73,14 @@ namespace hgardenpi
              * @brief Get Raspberry MAC ADDRESS IP
              * @return actual MAC ADDRESS address of wlan0 interface
              */
-            [[maybe_unused]] virtual string getWlan0MAC() const = 0;
+            [[nodiscard]] virtual string getWlan0MAC() const = 0;
+
+
+//            /**
+//             * @brief Set callback on ip change
+//             * @param onIpChange call this callback
+//             */
+//            virtual void setOnIpChange(OnIpChange &&onIpChange) noexcept = 0;
         };
 
     }

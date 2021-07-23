@@ -38,13 +38,16 @@ namespace hgardenpi
 
             uint16_t rows = 2;
             uint16_t colls = 16;
+            int lcdContrast;
+            int contrastTurnOn = true;
 
-            void init(const vector<int> &);
+            void init(int lcdRs, int lcdE, int lcd04, int lcd05, int lcd06, int lcd07, int lcdContrast);
         public:
 
-
-            explicit LCD1602(const vector<int> &);
-            explicit LCD1602(const vector<int> &&pins) : LCD1602(pins) {}
+            inline LCD1602(int lcdRs, int lcdE, int lcd04, int lcd05, int lcd06, int lcd07, int lcdContrast) : handle(0), lcdContrast(lcdContrast)
+            {
+                init(lcdRs, lcdE, lcd04, lcd05, lcd06, lcd07, lcdContrast);
+            }
 
             //remove copy constructor
             HGARDENPI_NO_COPY_NO_MOVE(LCD1602)
@@ -53,13 +56,13 @@ namespace hgardenpi
              * Print a string on display
              * @param[in]     txt    Text to show
              */
-            void print(const string &txt) noexcept;
+            void print(const string &txt) noexcept override;
 
             /**
              * Print a string on display
              * @param[in]     txt    Text to show
              */
-            inline void print(const string &&txt) noexcept
+            inline void print(const string &&txt) noexcept override
             {
                 print(txt);
             }
@@ -70,23 +73,23 @@ namespace hgardenpi
              * @param[in]     txt    Text to show formatted printf like
              * @param[in]     ...    Variatic arguments
              */
-            void printf(const string &txt, ...) noexcept;
+            void printf(const string &txt, ...) noexcept override;
 
             /**
              * Print add char on display
              * @param[in]     v    Char to add
              */
-            void print(uint8_t c) noexcept;
+            void print(uint8_t c) noexcept override;
 
             /**
              * This home the cursor on display
              */
-            void home() noexcept;
+            void home() noexcept override;
 
             /**
              * This clear the cursor on display
              */
-            void clear() noexcept;
+            void clear() noexcept override;
 
             /**
              * Set position on display
@@ -94,35 +97,35 @@ namespace hgardenpi
              * @param[in]     x      Number rows
              * @param[in]     y      N umber colls
              */
-            void position(int x, int y) noexcept;
+            void position(int x, int y) noexcept override;
 
             /**
              * This turn the display on or off
              *
              * @param[in]    state   True turn on the display otherwise turn off
              */
-            void display(bool state) noexcept;
+            void display(bool state) noexcept override;
 
             /**
              * This turn the cursor on or off
              *
              * @param[in]    state   True turn on the cursor otherwise turn off
              */
-            void cursor(bool state) noexcept;
+            void cursor(bool state) noexcept override;
 
             /**
              * This turn the cursor on or off and blink it
              *
              * @param[in]    state   True turn on the cursor otherwise turn off
              */
-            void cursorBlink(bool state) noexcept;
+            void cursorBlink(bool state) noexcept override;
 
             /**
              * Send command to lcd
              *
              * @param[in]    command   Send a byte command to lcd
              */
-            void sendCommand(uint8_t command) noexcept;
+            void sendCommand(uint8_t command) noexcept override;
 
             /**
              * @brief This allows you to re-define one of the 8 user-definable chanracters in the display.
@@ -131,7 +134,22 @@ namespace hgardenpi
              * @param[in]    index   Position to redifine
              * @param[in]    data    The data array is 8 bytes which represent the character
              */
-            void charDef(int index, uint8_t data[8]) noexcept;
+            void charDef(int index, uint8_t data[8]) noexcept override;
+
+            /**
+             * @brief get if is turno on the display contrast
+             * @return bool
+             */
+            [[nodiscard]] inline int isContrastTurnOn() const noexcept override
+            {
+                return contrastTurnOn;
+            }
+
+            /**
+             * @brief set if is turn on the display contrast
+             * @param contrastTurnOn true if you wont turn on the display contrast
+             */
+            void setContrastTurnOn(int contrastTurnOn) noexcept override;
 
             /**
              * @brief Return the name of object

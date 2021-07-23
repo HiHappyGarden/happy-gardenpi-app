@@ -39,7 +39,7 @@ namespace hgardenpi
         {
             mutable DeviceInfo::Ptr deviceInfo = nullptr;
             LogService *logService = nullptr;
-
+//            OnIpChange onIpChange;
         public:
             DeviceConcrete() = default;
             HGARDENPI_NO_COPY_NO_MOVE(DeviceConcrete)
@@ -89,6 +89,24 @@ namespace hgardenpi
              */
             [[maybe_unused]] string getWlan0MAC() const override;
 
+//            /**
+//             * @brief Set callback on ip change
+//             * @param onIpChange call this callback
+//             */
+//            void setOnIpChange(OnIpChange &&onIpChange) noexcept override
+//            {
+//                this->onIpChange = move(onIpChange);
+//            }
+
+            /**
+             * @brief Set the Log Service object
+             *
+             */
+            inline void setLogService(const LogService *logService) noexcept override
+            {
+                this->logService = const_cast<LogService *>(logService);
+            }
+
             /**
              * @brief Return the name of object
              * 
@@ -99,14 +117,6 @@ namespace hgardenpi
                 return typeid(*this).name();
             }
 
-            /**
-             * @brief Set the Log Service object
-             * 
-             */
-            inline void setLogService(const LogService *logService) noexcept override
-            {
-                this->logService = const_cast<LogService *>(logService);
-            }
         };
 
     }

@@ -127,6 +127,18 @@ namespace hgardenpi
              */
             virtual void charDef(int index, uint8_t data[8]) noexcept = 0;
 
+            /**
+             * @brief get if is turn on the display contrast
+             * @return bool
+             */
+            [[nodiscard]] virtual int isContrastTurnOn() const noexcept = 0;
+
+            /**
+             * @brief set if is turn on the display contrast
+             * @param contrastTurnOn true if you wont turn on the display contrast
+             */
+            virtual void setContrastTurnOn(int contrastTurnOn) noexcept = 0;
+
         };
     }
 }
