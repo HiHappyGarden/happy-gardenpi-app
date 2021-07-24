@@ -49,9 +49,9 @@ namespace hgardenpi
             HGARDENPI_NO_COPY_NO_MOVE(MQTTClient)
 
             /**
-             * @brief start loop 
-             * 
-             * @param run if the loop is in execution
+             * @brief start loop
+             * @param run check if the loops are in execution
+             * @exception runtime_error when hardware requisites mismatch
              */
             virtual void loop(volatile bool &run) = 0;
 

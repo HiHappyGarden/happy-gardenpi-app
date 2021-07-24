@@ -87,8 +87,8 @@ namespace hgardenpi
 
             /**
              * @brief start loop 
-             * 
-             * @param run if the loop is in execution
+             * @param run check if the loops are in execution
+             * @exception runtime_error when hardware requisites mismatch
              */
             void loop(volatile bool &run) override;
 

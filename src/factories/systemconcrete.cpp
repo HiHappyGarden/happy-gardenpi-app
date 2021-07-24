@@ -86,7 +86,7 @@ namespace hgardenpi
             logService->write(LOG_INFO, "version: %s", HGARDENPI_VER);
         }
 
-        void SystemConcrete::start() {}
+        void SystemConcrete::start(volatile bool &run) {}
 
         inline void SystemConcrete::release() noexcept
         {
