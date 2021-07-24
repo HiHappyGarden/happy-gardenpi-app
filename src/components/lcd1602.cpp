@@ -32,13 +32,13 @@ using std::runtime_error;
 
 using hgardenpi::v1::LCD1602;
 
-void LCD1602::init(int lcdRs, int lcdE, int lcd04, int lcd05, int lcd06, int lcd07, int lcdContrast)
+void LCD1602::init(int lcdRS, int lcdE, int lcd04, int lcd05, int lcd06, int lcd07, int lcdContrast)
 {
 
     handle = lcdInit(rows,
                      colls,
                      4, //bits
-                     lcdRs, //LCD_RS
+                     lcdRS, //LCD_RS
                      lcdE, //LCD_E
                      lcd04, //LCD_04
                      lcd05, //LCD_05
@@ -46,7 +46,6 @@ void LCD1602::init(int lcdRs, int lcdE, int lcd04, int lcd05, int lcd06, int lcd
                      lcd07, //LCD_07
                      0, 0, 0, 0);
 
-    //set OUTPUT for pin 13
     pinMode(lcdContrast, OUTPUT);
     digitalWrite(lcdContrast, contrastTurnOn);
 

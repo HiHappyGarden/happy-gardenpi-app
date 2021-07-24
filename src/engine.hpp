@@ -56,16 +56,6 @@ namespace hgardenpi
             HGARDENPI_NO_COPY_NO_MOVE(Engine)
 
             /**
-             * @brief Return the name of object
-             * 
-             * @return std::string name of object
-             */
-            inline string toString() noexcept override
-            {
-                return typeid(*this).name();
-            }
-
-            /**
              * @brief Get the Mqtt Client object
              * 
              * @return const MQTTClient* mqtt client instance
@@ -86,6 +76,16 @@ namespace hgardenpi
                 lock_guard<mutex> lg(m);
                 return factory;
             }
+
+            /**
+             * @brief Return the name of object
+             *
+             * @return std::string name of object
+             */
+            inline string toString() noexcept override
+            {
+                return typeid(*this).name();
+            }
         };
 
         /**
@@ -97,7 +97,7 @@ namespace hgardenpi
 
         /**
          * @brief Start main look and scheduler
-         * 
+         * @exception runtime_error when hardware requisites mismatch
          */
         void start();
 

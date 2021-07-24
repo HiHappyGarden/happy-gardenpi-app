@@ -76,6 +76,7 @@ namespace hgardenpi
              * Get list of stations for aggregation
              * @param prt to aggregation
              * @return list of stations for aggregation
+             * @exception runtime_error when hardware requisites mismatch
              */
             [[nodiscard]] Stations getList(const Aggregation::Ptr &ptr) const;
 

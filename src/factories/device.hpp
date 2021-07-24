@@ -63,24 +63,7 @@ namespace hgardenpi
              */
             [[nodiscard]] virtual DeviceInfo::Ptr getInfo() const = 0;
 
-            /**
-             * @brief Get Raspberry wla0 IP
-             * @return actual ip address of wlan0 interface
-             */
-            [[nodiscard]] virtual string getWlan0IP() const = 0;
 
-            /**
-             * @brief Get Raspberry MAC ADDRESS IP
-             * @return actual MAC ADDRESS address of wlan0 interface
-             */
-            [[nodiscard]] virtual string getWlan0MAC() const = 0;
-
-
-//            /**
-//             * @brief Set callback on ip change
-//             * @param onIpChange call this callback
-//             */
-//            virtual void setOnIpChange(OnIpChange &&onIpChange) noexcept = 0;
         };
 
     }

@@ -45,7 +45,7 @@ namespace hgardenpi
             bool start = false;
 
         public:
-            virtual ~Scheduler() = default;
+            ~Scheduler() override = default;
             HGARDENPI_NO_COPY_NO_MOVE(Scheduler)
         };
 
