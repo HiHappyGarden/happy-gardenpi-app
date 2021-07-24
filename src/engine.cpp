@@ -146,6 +146,7 @@ namespace hgardenpi
             system->start(run);
             device->start(run);
 
+//            int i = 0;
             while (run)
             {
                 //cout << "tick" << endl;
@@ -155,6 +156,13 @@ namespace hgardenpi
                 //     this_thread::sleep_for(chrono::milliseconds(static_cast<int64_t>(Time::TICK)));
                 // }
                 this_thread::sleep_for(chrono::milliseconds(static_cast<int64_t>(Time::TICK)));
+//                if (i < 50)
+//                {
+//                    i++;
+//                } else {
+//                    run = false;
+//                }
+
             }
         }
     }

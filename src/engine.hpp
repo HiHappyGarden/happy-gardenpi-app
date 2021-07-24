@@ -85,7 +85,7 @@ namespace hgardenpi
         };
 
         /**
-         * @brief Before all call this functiuon fo inilialize the project
+         * @brief Before all call this function fo initialize the project
          * 
          * @exception runtime_error when hardware requisites mismatch
          */

@@ -28,7 +28,7 @@ namespace hgardenpi
     {
 
         /**
-         * @brief Generic class for release a resorce
+         * @brief Generic class for release a resource
          * 
          */
         class Releasable
@@ -37,7 +37,7 @@ namespace hgardenpi
             virtual ~Releasable() = default;
 
             /**
-             * @brief release a resorce
+             * @brief release a resource
              * @exception runtime_error when hardware requisites mismatch
              */
             virtual void release() noexcept = 0;

@@ -51,7 +51,7 @@ namespace hgardenpi
             HGARDENPI_NO_COPY_NO_MOVE(SystemConcrete)
 
             /**
-             * @brief Before all call this functiuon fo inilialize the project
+             * @brief Before all call this function fo initialize the project
              * 
              * @exception runtime_error when hardware requisites mismatch
              */
@@ -65,7 +65,7 @@ namespace hgardenpi
             void start(volatile bool &run) override;
 
             /**
-             * @brief release a resorce
+             * @brief release a resource
              * 
              */
             void release() noexcept override;
