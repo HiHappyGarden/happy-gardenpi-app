@@ -33,22 +33,24 @@ namespace hgardenpi
     {
 
 // the constructor just launches some amount of workers
-        inline ThreadPool::ThreadPool(size_t threads)
-                :   stop(false)
+        ThreadPool::ThreadPool(size_t threads)
+                : stop(false),
+                  threads(threads)
         {
-            for(size_t i = 0;i<threads;++i)
+            for (size_t i = 0; i < threads; ++i)
                 workers.emplace_back(
                         [this]
                         {
-                            for(;;)
+                            for (;;)
                             {
                                 function<void()> task;
 
                                 {
                                     unique_lock<mutex> lock(this->queue_mutex);
                                     this->condition.wait(lock,
-                                                         [this]{ return this->stop || !this->tasks.empty(); });
-                                    if(this->stop && this->tasks.empty())
+                                                         [this]
+                                                         { return this->stop || !this->tasks.empty(); });
+                                    if (this->stop && this->tasks.empty())
                                         return;
                                     task = move(this->tasks.front());
                                     this->tasks.pop();
@@ -60,26 +62,25 @@ namespace hgardenpi
                 );
         }
 
-        inline ThreadPool::~ThreadPool() noexcept
+        ThreadPool::~ThreadPool() noexcept
         {
             {
                 unique_lock<mutex> lock(queue_mutex);
                 stop = true;
             }
             condition.notify_all();
-            for(thread &worker: workers)
+            for (thread &worker: workers)
                 worker.join();
         }
 
 
-        // add new work item to the pool
         template<class F, class... Args>
-        auto ThreadPool::enqueue(F&& f, Args&&... args)
+        auto ThreadPool::enqueue(F &&f, Args &&... args)
         -> future<typename result_of<F(Args...)>::type>
         {
             using return_type = typename result_of<F(Args...)>::type;
 
-            auto task = make_shared< packaged_task<return_type()> >(
+            auto task = make_shared<packaged_task<return_type()> >(
                     bind(forward<F>(f), forward<Args>(args)...)
             );
 
@@ -88,10 +89,11 @@ namespace hgardenpi
                 unique_lock<mutex> lock(queue_mutex);
 
                 // don't allow enqueueing after stopping the pool
-                if(stop)
+                if (stop)
                     throw runtime_error("enqueue on stopped ThreadPool");
 
-                tasks.emplace([task](){ (*task)(); });
+                tasks.emplace([task]()
+                              { (*task)(); });
             }
             condition.notify_one();
             return res;

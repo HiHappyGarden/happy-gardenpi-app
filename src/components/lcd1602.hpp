@@ -22,17 +22,23 @@
 
 #pragma once
 
+#include <mutex>
+
 #include "display.hpp"
 
 namespace hgardenpi
 {
     inline namespace v1
     {
+        using std::mutex;
+
         /**
          * @brief LCD 16x02 implementation 4bit configuration
          */
         class LCD1602 final : public Display
         {
+
+            mutex m;
 
             int handle;
 
@@ -42,19 +48,18 @@ namespace hgardenpi
             int lcdContrast;
             int contrastTurnOn = true;
 
-            /**
-             * @brief Initialize display 16x2
-             * @param lcdRS set GPIO pin number for lcd RS pin
-             * @param lcdE set GPIO pin number for lcd E pin
-             * @param lcd04 set GPIO pin number for lcd 04 pin
-             * @param lcd05 set GPIO pin number for lcd 05 pin
-             * @param lcd06 set GPIO pin number for lcd 06 pin
-             * @param lcd07 set GPIO pin number for lcd 07 pin
-             * @param lcdContrast set GPIO pin number for lcd Contrast pin
-             * @exception runtime_error when hardware requisites mismatch
-             */
-            void init(int lcdRS, int lcdE, int lcd04, int lcd05, int lcd06, int lcd07, int lcdContrast);
         public:
+
+            enum GPIOPinDisplay : int
+            {
+                LCD_RS = 25,      //Register select pin
+                LCD_E = 24,       //Enable Pin
+                LCD_D4 = 23,       //Data pin 4
+                LCD_D5 = 22,       //Data pin 5
+                LCD_D6 = 21,       //Data pin 6
+                LCD_D7 = 14,       //Data pin 7
+                LCD_CONTRAST = 13  //Contrast
+            };
 
             /**
              * @brief Constructor for the display 16x2
@@ -67,10 +72,7 @@ namespace hgardenpi
              * @param lcdContrast set GPIO pin number for lcd Contrast pin
              * @exception runtime_error when hardware requisites mismatch
              */
-            inline LCD1602(int lcdRS, int lcdE, int lcd04, int lcd05, int lcd06, int lcd07, int lcdContrast) : handle(0), lcdContrast(lcdContrast)
-            {
-                init(lcdRS, lcdE, lcd04, lcd05, lcd06, lcd07, lcdContrast);
-            }
+            LCD1602(int lcdRS, int lcdE, int lcd04, int lcd05, int lcd06, int lcd07, int lcdContrast);
 
             //remove copy constructor
             HGARDENPI_NO_COPY_NO_MOVE(LCD1602)

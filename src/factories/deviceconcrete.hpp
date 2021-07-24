@@ -22,8 +22,9 @@
 
 #pragma once
 
-#include "../interfaces/object.hpp"
 #include "device.hpp"
+#include "../interfaces/object.hpp"
+#include "../components/display.hpp"
 
 namespace hgardenpi
 {
@@ -39,9 +40,12 @@ namespace hgardenpi
         {
             mutable DeviceInfo::Ptr deviceInfo = nullptr;
             LogService *logService = nullptr;
-//            OnIpChange onIpChange;
+            ThreadPool *threadPool = nullptr;
+
+            Display *display = nullptr;
         public:
             DeviceConcrete() = default;
+            ~DeviceConcrete() noexcept override;
             HGARDENPI_NO_COPY_NO_MOVE(DeviceConcrete)
 
             /**
@@ -87,15 +91,29 @@ namespace hgardenpi
             }
 
             /**
+             * Set ThreadPool instance
+             * @param threadPool instance
+             */
+            inline void setThreadPool(const ThreadPool *threadPool) noexcept override
+            {
+                this->threadPool = const_cast<ThreadPool *>(threadPool);
+            }
+
+            /**
+             * @brief Print on system display
+             * @param txt to show
+             */
+            void printOnDisplay(const string &txt) const noexcept override;
+
+            /**
              * @brief Return the name of object
-             * 
+             *
              * @return std::string name of object
              */
             inline string toString() noexcept override
             {
                 return typeid(*this).name();
             }
-
         };
 
     }

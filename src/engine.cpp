@@ -43,6 +43,8 @@ namespace hgardenpi
     inline namespace v1
     {
 
+        const string check = "OK";
+
         //enable loop
         static volatile bool run = true;
 
@@ -71,6 +73,10 @@ namespace hgardenpi
             {
                 delete mqttClient;
             }
+            if (threadPool)
+            {
+                delete threadPool;
+            }
         }
 
         void initialize()
@@ -79,10 +85,18 @@ namespace hgardenpi
             auto system = const_cast<System *>(Engine::getInstance()->factory->getSystem());
             auto device = const_cast<Device *>(Engine::getInstance()->factory->getDevice());
 
+            //initialize threadPool and all sub factory
+            Engine::getInstance()->threadPool = new (nothrow) ThreadPool(device->getInfo()->cpu);
+            if (!Engine::getInstance()->threadPool) {
+                throw runtime_error("no memory for threadPool");
+            }
+
+            //init system
             system->initialize();
 
+            //init device
             device->setLogService(system->getLogService());
-
+            device->setThreadPool(Engine::getInstance()->threadPool);
             device->initialize();
 
             //get database file path from config file
@@ -121,9 +135,15 @@ namespace hgardenpi
 
         void start()
         {
+            //get pointers of system and device
+            auto system = const_cast<System *>(Engine::getInstance()->factory->getSystem());
+            auto device = const_cast<Device *>(Engine::getInstance()->factory->getDevice());
 
             signal(SIGINT, handleSignal);
             signal(SIGTERM, handleSignal);
+
+            system->start();
+            device->start();
 
             while (run)
             {

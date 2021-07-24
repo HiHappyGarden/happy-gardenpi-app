@@ -22,19 +22,18 @@
 
 #pragma once
 
-#include <memory>
-
 #include "interfaces/singleton.hpp"
 #include "factories/factory.hpp"
 #include "factories/factoryconcrete.hpp"
 #include "clients/mqttclient.hpp"
+#include "utilities/threadpool.hpp"
 
 namespace hgardenpi
 {
     inline namespace v1
     {
 
-        using std::mutex;
+        extern const string check;
 
         /**
          * @brief Singleton where are put global variable
@@ -42,13 +41,12 @@ namespace hgardenpi
         class Engine final : public Singleton<Engine>
         {
 
-            mutable mutex m;
-
             friend void initialize();
             friend void start();
 
             Factory *factory = nullptr;
             MQTTClient *mqttClient = nullptr;
+            ThreadPool *threadPool = nullptr;
 
         public:
             Engine();
@@ -62,7 +60,6 @@ namespace hgardenpi
              */
             [[nodiscard]] inline const MQTTClient *getMqttClient() const noexcept
             {
-                lock_guard<mutex> lg(m);
                 return mqttClient;
             }
 
@@ -73,7 +70,6 @@ namespace hgardenpi
              */
             [[nodiscard]] inline const Factory *getFactory() const noexcept
             {
-                lock_guard<mutex> lg(m);
                 return factory;
             }
 

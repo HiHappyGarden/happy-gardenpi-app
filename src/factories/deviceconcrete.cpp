@@ -28,12 +28,21 @@
 using std::runtime_error;
 
 #include "../services/deviceservice.hpp"
+#include "../components/lcd1602.hpp"
 
 namespace hgardenpi
 {
 
     inline namespace v1
     {
+
+        DeviceConcrete::~DeviceConcrete() noexcept
+        {
+            if (display)
+            {
+                delete display;
+            }
+        }
 
         /**
          * @brief Before all call this functiuon fo inilialize the project
@@ -59,7 +68,15 @@ namespace hgardenpi
             }
 
             //initialize WiringPI
-            wiringPiSetupGpio();
+            wiringPiSetup();
+
+            display = new (std::nothrow) LCD1602(LCD1602::LCD_RS, LCD1602::LCD_E, LCD1602::LCD_D4, LCD1602::LCD_D5, LCD1602::LCD_D6, LCD1602::LCD_D7, LCD1602::LCD_CONTRAST);
+            if (!display)
+            {
+                HGARDENPI_ERROR_LOG_AMD_THROW("no memory for display")
+            }
+            display->setContrastTurnOn(false);
+
         }
 
         /**
@@ -68,6 +85,9 @@ namespace hgardenpi
          */
         void DeviceConcrete::start()
         {
+            display->setContrastTurnOn(true);
+            display->print(getWlan0MAC());
+
         }
 
         /**
@@ -88,5 +108,9 @@ namespace hgardenpi
             return deviceInfo;
         }
 
+        void DeviceConcrete::printOnDisplay(const string &txt) const noexcept
+        {
+
+        }
     }
 }

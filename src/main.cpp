@@ -37,6 +37,9 @@ int main(int argc, char *argv[])
     try
     {
         //initialize Happy GardenPI
+
+        std::cout << "init engine: " << hgardenpi::check << std::endl;
+
         hgardenpi::initialize();
 
         hgardenpi::Aggregation::Ptr a = std::make_shared<hgardenpi::Aggregation>();
