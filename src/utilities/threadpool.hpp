@@ -93,6 +93,7 @@ namespace hgardenpi
                                   { (*task)(); });
                 }
                 condition.notify_one();
+
                 return res;
             }
 

@@ -89,9 +89,10 @@ namespace hgardenpi
 
         /**
          * @brief Start main look and scheduler
-         * 
+         * @param run check if the loops are in execution
+         * @exception runtime_error when hardware requisites mismatch
          */
-        void DeviceConcrete::start()
+        void DeviceConcrete::start(volatile bool &run)
         {
 
             threadPool->enqueue([&]() {

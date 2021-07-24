@@ -59,9 +59,10 @@ namespace hgardenpi
 
             /**
              * @brief Start main look and scheduler
+             * @param run check if the loops are in execution
              * @exception runtime_error when hardware requisites mismatch
              */
-            void start() override;
+            void start(volatile bool &run) override;
 
             /**
              * @brief release a resorce

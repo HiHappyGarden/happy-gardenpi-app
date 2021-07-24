@@ -143,12 +143,12 @@ namespace hgardenpi
             signal(SIGINT, handleSignal);
             signal(SIGTERM, handleSignal);
 
-            system->start();
-            device->start();
+            system->start(run);
+            device->start(run);
 
             while (run)
             {
-                cout << "tick" << endl;
+                //cout << "tick" << endl;
                 //Globals::getInstance()->mqttClient->loop(run);
                 // while (run)
                 // {
