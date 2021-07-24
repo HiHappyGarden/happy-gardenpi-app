@@ -123,6 +123,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab0cc346140c17142b13864d598b2d2df"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_display.html#ab0cc346140c17142b13864d598b2d2df">setContrastTurnOn</a> (int contrastTurnOn) noexcept=0</td></tr>
 <tr class="memdesc:ab0cc346140c17142b13864d598b2d2df"><td class="mdescLeft">&#160;</td><td class="mdescRight">set if is turn on the display contrast  <a href="classhgardenpi_1_1v1_1_1_display.html#ab0cc346140c17142b13864d598b2d2df">More...</a><br /></td></tr>
 <tr class="separator:ab0cc346140c17142b13864d598b2d2df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b8e10e7f6a6fc3c5f406d87f51e1103"><td class="memItemLeft" align="right" valign="top">virtual uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_display.html#a3b8e10e7f6a6fc3c5f406d87f51e1103">getRows</a> () const noexcept</td></tr>
+<tr class="separator:a3b8e10e7f6a6fc3c5f406d87f51e1103"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55a2ed11b9470660d720d9a7504a919a"><td class="memItemLeft" align="right" valign="top">virtual uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_display.html#a55a2ed11b9470660d720d9a7504a919a">getColls</a> () const noexcept</td></tr>
+<tr class="separator:a55a2ed11b9470660d720d9a7504a919a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classhgardenpi_1_1v1_1_1_object"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classhgardenpi_1_1v1_1_1_object')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classhgardenpi_1_1v1_1_1_object.html">hgardenpi::v1::Object</a></td></tr>
 <tr class="memitem:ae4e2a30bbac895dbb9efb643ad8e5600 inherit pub_methods_classhgardenpi_1_1v1_1_1_object"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_object.html#ae4e2a30bbac895dbb9efb643ad8e5600">toString</a> () noexcept=0</td></tr>
 <tr class="memdesc:ae4e2a30bbac895dbb9efb643ad8e5600 inherit pub_methods_classhgardenpi_1_1v1_1_1_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual method that return data of object in srteing format.  <a href="classhgardenpi_1_1v1_1_1_object.html#ae4e2a30bbac895dbb9efb643ad8e5600">More...</a><br /></td></tr>
@@ -310,6 +314,62 @@ Public Member Functions</h2></td></tr>
 </dl>
 
 <p>Implemented in <a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#a948332a6b0b296a352dfeaf72022de28">hgardenpi::v1::LCD1602</a>.</p>
+
+</div>
+</div>
+<a id="a55a2ed11b9470660d720d9a7504a919a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55a2ed11b9470660d720d9a7504a919a">&#9670;&nbsp;</a></span>getColls()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual uint16_t hgardenpi::v1::Display::getColls </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get display colls </p><dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+<p>Reimplemented in <a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#a9c53cb52b32236820bb1faf1f45192be">hgardenpi::v1::LCD1602</a>.</p>
+
+</div>
+</div>
+<a id="a3b8e10e7f6a6fc3c5f406d87f51e1103"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b8e10e7f6a6fc3c5f406d87f51e1103">&#9670;&nbsp;</a></span>getRows()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual uint16_t hgardenpi::v1::Display::getRows </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get display row </p><dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+<p>Reimplemented in <a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#aed63e29f30703dca9c0538d8868441b6">hgardenpi::v1::LCD1602</a>.</p>
 
 </div>
 </div>
