@@ -88,23 +88,5 @@ namespace hgardenpi
             return deviceInfo;
         }
 
-        string DeviceConcrete::getWlan0IP() const
-        {
-            return ::hgardenpi::v1::getWlan0IP();
-        }
-
-        string DeviceConcrete::getWlan0MAC() const
-        {
-            //static string oldIp;
-            string &&ret = ::hgardenpi::v1::getWlan0MAC();
-
-//            if (oldIp != ret) {
-//                oldIp = ret;
-//                onIpChange(ret);
-//            }
-
-            return ret;
-        }
-
     }
 }

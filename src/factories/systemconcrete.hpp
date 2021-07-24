@@ -59,7 +59,7 @@ namespace hgardenpi
 
             /**
              * @brief Start main look and scheduler
-             * 
+             * @exception runtime_error when hardware requisites mismatch
              */
             void start() override;
 

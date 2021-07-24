@@ -36,17 +36,40 @@ namespace hgardenpi
 
             int handle;
 
-            uint16_t rows = 2;
             uint16_t colls = 16;
+            uint16_t rows = 2;
+
             int lcdContrast;
             int contrastTurnOn = true;
 
-            void init(int lcdRs, int lcdE, int lcd04, int lcd05, int lcd06, int lcd07, int lcdContrast);
+            /**
+             * @brief Initialize display 16x2
+             * @param lcdRS set GPIO pin number for lcd RS pin
+             * @param lcdE set GPIO pin number for lcd E pin
+             * @param lcd04 set GPIO pin number for lcd 04 pin
+             * @param lcd05 set GPIO pin number for lcd 05 pin
+             * @param lcd06 set GPIO pin number for lcd 06 pin
+             * @param lcd07 set GPIO pin number for lcd 07 pin
+             * @param lcdContrast set GPIO pin number for lcd Contrast pin
+             * @exception runtime_error when hardware requisites mismatch
+             */
+            void init(int lcdRS, int lcdE, int lcd04, int lcd05, int lcd06, int lcd07, int lcdContrast);
         public:
 
-            inline LCD1602(int lcdRs, int lcdE, int lcd04, int lcd05, int lcd06, int lcd07, int lcdContrast) : handle(0), lcdContrast(lcdContrast)
+            /**
+             * @brief Constructor for the display 16x2
+             * @param lcdRS set GPIO pin number for lcd RS pin
+             * @param lcdE set GPIO pin number for lcd E pin
+             * @param lcd04 set GPIO pin number for lcd 04 pin
+             * @param lcd05 set GPIO pin number for lcd 05 pin
+             * @param lcd06 set GPIO pin number for lcd 06 pin
+             * @param lcd07 set GPIO pin number for lcd 07 pin
+             * @param lcdContrast set GPIO pin number for lcd Contrast pin
+             * @exception runtime_error when hardware requisites mismatch
+             */
+            inline LCD1602(int lcdRS, int lcdE, int lcd04, int lcd05, int lcd06, int lcd07, int lcdContrast) : handle(0), lcdContrast(lcdContrast)
             {
-                init(lcdRs, lcdE, lcd04, lcd05, lcd06, lcd07, lcdContrast);
+                init(lcdRS, lcdE, lcd04, lcd05, lcd06, lcd07, lcdContrast);
             }
 
             //remove copy constructor

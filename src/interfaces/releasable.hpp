@@ -38,7 +38,7 @@ namespace hgardenpi
 
             /**
              * @brief release a resorce
-             * 
+             * @exception runtime_error when hardware requisites mismatch
              */
             virtual void release() noexcept = 0;
         };

@@ -56,7 +56,7 @@ namespace hgardenpi
             ifstream file("/sys/class/thermal/thermal_zone0/temp");
             file >> val;
             file.close();
-            return stof(val) / 1000.0f;
+            return stof(val) / 1'000.0f;
         }
 
         DeviceInfo::Ptr getDeviceInfo()
@@ -90,7 +90,7 @@ namespace hgardenpi
         string getWlan0IP()
         {
             int fd;
-            struct ifreq ifr;
+            struct ifreq ifr{};
 
             fd = socket(AF_INET, SOCK_DGRAM, 0);
 
@@ -111,7 +111,7 @@ namespace hgardenpi
         string getWlan0MAC()
         {
             string ret;
-            struct ifreq s;
+            struct ifreq s{};
             int fd = socket(PF_INET, SOCK_DGRAM, IPPROTO_IP);
 
             strcpy(s.ifr_name, IFR_NAME);

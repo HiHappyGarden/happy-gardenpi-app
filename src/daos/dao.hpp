@@ -72,12 +72,14 @@ namespace hgardenpi
             /**
              * @brief insert a pod in db
              * @param pod to insert
+             * @exception runtime_error when hardware requisites mismatch
              */
             virtual void insert(const shared_ptr<T> &) const = 0;
 
             /**
              * @brief update a pod in db
              * @param pod to update
+             * @exception runtime_error when hardware requisites mismatch
              */
             virtual void update(const shared_ptr<T> &) const = 0;
         };
