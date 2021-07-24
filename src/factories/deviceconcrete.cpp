@@ -27,8 +27,17 @@
 #include <stdexcept>
 using std::runtime_error;
 
+#include <sstream>
+using std::stringstream;
+
 #include "../services/deviceservice.hpp"
 #include "../components/lcd1602.hpp"
+#include "../utilities/threadpool.hpp"
+
+
+#include <iostream>
+using namespace std;
+
 
 namespace hgardenpi
 {
@@ -75,7 +84,6 @@ namespace hgardenpi
             {
                 HGARDENPI_ERROR_LOG_AMD_THROW("no memory for display")
             }
-            display->setContrastTurnOn(false);
 
         }
 
@@ -85,8 +93,34 @@ namespace hgardenpi
          */
         void DeviceConcrete::start()
         {
-            display->setContrastTurnOn(true);
-            display->print(getWlan0MAC());
+
+            threadPool->enqueue([&]() {
+                display->setContrastTurnOn(true);
+                while (enableMainDisplayLoop)
+                {
+                    std::cout << "start" << endl;
+                    printOnDisplay("MAC ADDRESS|" + getWlan0MAC(), true);
+
+                    this_thread::sleep_for(chrono::seconds(static_cast<int64_t>(Time::DISPLAY_TICK)));
+
+                    printOnDisplay("", false);
+
+                    this_thread::sleep_for(chrono::milliseconds (static_cast<int64_t>(Time::DISPLAY_PAUSE)));
+
+                    printOnDisplay("IP ADDRESS|" + getWlan0IP(), true);
+
+                    this_thread::sleep_for(chrono::seconds(static_cast<int64_t>(Time::DISPLAY_TICK)));
+
+                    printOnDisplay("", false);
+
+                    this_thread::sleep_for(chrono::milliseconds(static_cast<int64_t>(Time::DISPLAY_PAUSE)));
+                    std::cout << "end" << endl;
+                }
+                display->setContrastTurnOn(false);
+                std::cout << "pippo" << endl;
+            });
+
+
 
         }
 
@@ -108,9 +142,54 @@ namespace hgardenpi
             return deviceInfo;
         }
 
-        void DeviceConcrete::printOnDisplay(const string &txt) const noexcept
+        void DeviceConcrete::printOnDisplay(const string &txt, bool splitByDivisor) const noexcept
         {
+            if (!splitByDivisor)
+            {
+                display->print(txt);
+                return;
+            }
+            stringstream ss( txt);
+            vector<string> result;
 
+            while( ss.good() )
+            {
+                string substr;
+                getline( ss, substr, DIVISOR);
+                result.push_back( substr );
+            }
+
+            if (result.size() == 2)
+            {
+                uint8_t i = 0;
+                for (auto &it : result)
+                {
+                    if (i >= display->getRows())
+                    {
+                        break;
+                    }
+                    decltype(auto) diff = display->getColls() - it.size();
+                    if (diff > 0) {
+                        auto &&row = result[i];
+                        for (int count = 0; count < static_cast<int>(diff / 2) + (diff % 2 ? 1 : 0) ; count++) {
+                            row = move(" " + row);
+                        }
+                        for (int count = 0; count < static_cast<int>(diff / 2); count++) {
+                            row += " ";
+                        }
+                        display->print(row);
+                    } else {
+                        display->print(txt);
+                        break;
+                    }
+                    i++;
+                }
+
+            }
+            else
+            {
+                display->print(txt);
+            }
         }
     }
 }

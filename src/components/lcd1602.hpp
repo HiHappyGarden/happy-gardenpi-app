@@ -42,8 +42,8 @@ namespace hgardenpi
 
             int handle;
 
-            uint16_t colls = 16;
-            uint16_t rows = 2;
+            const uint16_t colls = 16;
+            const uint16_t rows = 2;
 
             int lcdContrast;
             int contrastTurnOn = true;
@@ -175,6 +175,24 @@ namespace hgardenpi
              * @param contrastTurnOn true if you wont turn on the display contrast
              */
             void setContrastTurnOn(int contrastTurnOn) noexcept override;
+
+            /**
+             * Get display row
+             * @return
+             */
+            inline uint16_t getRows() const noexcept override
+            {
+                return rows;
+            }
+
+            /**
+             * Get display colls
+             * @return
+             */
+            inline uint16_t getColls() const noexcept override
+            {
+                return colls;
+            }
 
             /**
              * @brief Return the name of object

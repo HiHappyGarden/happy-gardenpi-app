@@ -43,6 +43,8 @@ namespace hgardenpi
             ThreadPool *threadPool = nullptr;
 
             Display *display = nullptr;
+
+            bool enableMainDisplayLoop = true;
         public:
             DeviceConcrete() = default;
             ~DeviceConcrete() noexcept override;
@@ -103,7 +105,7 @@ namespace hgardenpi
              * @brief Print on system display
              * @param txt to show
              */
-            void printOnDisplay(const string &txt) const noexcept override;
+            void printOnDisplay(const string &txt, bool splitByDivisor) const noexcept override;
 
             /**
              * @brief Return the name of object

@@ -85,19 +85,19 @@ namespace hgardenpi
             auto system = const_cast<System *>(Engine::getInstance()->factory->getSystem());
             auto device = const_cast<Device *>(Engine::getInstance()->factory->getDevice());
 
-            //initialize threadPool and all sub factory
-            Engine::getInstance()->threadPool = new (nothrow) ThreadPool(device->getInfo()->cpu);
-            if (!Engine::getInstance()->threadPool) {
-                throw runtime_error("no memory for threadPool");
-            }
-
             //init system
             system->initialize();
 
             //init device
             device->setLogService(system->getLogService());
-            device->setThreadPool(Engine::getInstance()->threadPool);
             device->initialize();
+
+            //initialize threadPool and all sub factory
+            Engine::getInstance()->threadPool = new (nothrow) ThreadPool(device->getInfo()->cpu);
+            if (!Engine::getInstance()->threadPool) {
+                throw runtime_error("no memory for threadPool");
+            }
+            device->setThreadPool(Engine::getInstance()->threadPool);
 
             //get database file path from config file
             string &dbFile = system->getConfigInfo()->database.file;

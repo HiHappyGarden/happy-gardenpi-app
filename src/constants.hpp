@@ -45,7 +45,8 @@ namespace hgardenpi
          */
         enum class Time : int64_t
         {
-            SECOND = 1'000,
+            DISPLAY_TICK = 6,
+            DISPLAY_PAUSE = 750,
             TICK = 200
         };
 
@@ -58,7 +59,7 @@ namespace hgardenpi
             ACTIVE,
             ERROR,
         };
-        
+
         //hw needed for Happy GardenPI
 
         //raspberry pi 4

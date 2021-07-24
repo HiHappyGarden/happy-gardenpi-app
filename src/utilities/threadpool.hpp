@@ -71,7 +71,28 @@ namespace hgardenpi
              */
             template<class F, class... Args>
             auto enqueue(F &&f, Args &&... args)
-            -> future<typename result_of<F(Args...)>::type>;
+            -> future<typename result_of<F(Args...)>::type>
+            {
+                using return_type = typename result_of<F(Args...)>::type;
+
+                auto task = make_shared<packaged_task<return_type()> >(
+                        bind(forward<F>(f), forward<Args>(args)...)
+                );
+
+                future<return_type> res = task->get_future();
+                {
+                    unique_lock<mutex> lock(queue_mutex);
+
+                    // don't allow enqueueing after stopping the pool
+                    if (stop)
+                        throw runtime_error("enqueue on stopped ThreadPool");
+
+                    tasks.emplace([task]()
+                                  { (*task)(); });
+                }
+                condition.notify_one();
+                return res;
+            }
 
             /**
              * @brief Return the name of object

@@ -50,3 +50,8 @@ Raspberry Pi Details:
   *--> Raspberry Pi Zero W Rev 1.1
   * This Raspberry Pi supports user-level GPIO access.
 ```
+
+### 3 Debug whith Valgrind
+```
+valgrind --leak-check=full --show-leak-kinds=all  --track-origins=yes  --verbose  --log-file=valgrind-out.txt ./hgardenpi 
+```

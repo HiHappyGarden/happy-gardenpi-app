@@ -120,7 +120,7 @@ namespace hgardenpi
                 stringstream ss;
                 for (i = 0; i < 6; ++i)
                 {
-                    ss << setfill('0') << setw(2) << hex << (0xff & (unsigned int)s.ifr_addr.sa_data[i]) << ":";
+                    ss << setfill('0') << setw(2) << hex << (0xff & (unsigned int)s.ifr_addr.sa_data[i]);
                 }
 
                 ret = move(ss.str());

@@ -38,7 +38,7 @@ namespace hgardenpi
     {
 
         static const char *dbSql[] = {
-                "CREATE TABLE `metadata` (`version` INTEGER NOT NULL DEFAULT 0);",
+                "CREATE TABLE `metadata` (`version` INTEGER NOT NULL DEFAULT 0, `connected` INTEGER NOT NULL DEFAULT 0);",
                 "CREATE TABLE \"aggregations\" (\n"
                 "\t\"id\"\tINTEGER NOT NULL UNIQUE,\n"
                 "\t\"description\"\tTEXT,\n"
@@ -73,7 +73,7 @@ namespace hgardenpi
                 p++;
             }
 
-            db.exec("INSERT INTO metadata VALUES (1)");
+            db.exec("INSERT INTO metadata VALUES (1, 1)");
 
             transaction.commit();
         }
