@@ -99,11 +99,14 @@ add_executable(hgardenpi
     src/utilities/databaseutils.hpp
     src/utilities/stringutils.cpp
     src/utilities/stringutils.hpp
+    src/utilities/threadpool.cpp
+    src/utilities/threadpool.hpp
     src/constants.cpp
     src/constants.hpp
     src/engine.cpp
     src/engine.hpp
-    src/main.cpp)
+    src/main.cpp
+        )
 
 target_link_libraries(hgardenpi
                         wiringPi

@@ -60,63 +60,63 @@ void LCD1602::init(int lcdRS, int lcdE, int lcd04, int lcd05, int lcd06, int lcd
 }
 
 
-void LCD1602::print(const string &txt) noexcept
+inline void LCD1602::print(const string &txt) noexcept
 {
     ::lcdPuts(handle, txt.c_str());
 }
 
-void LCD1602::printf(const string &txt, ...) noexcept
+inline void LCD1602::printf(const string &txt, ...) noexcept
 {
     va_list(args);
     va_start(args, txt);
     ::lcdPrintf(handle, txt.c_str(), args);
 }
 
-void LCD1602::print(const uint8_t c) noexcept
+inline void LCD1602::print(const uint8_t c) noexcept
 {
     ::lcdPutchar(handle, c);
 }
 
-void LCD1602::home() noexcept
+inline void LCD1602::home() noexcept
 {
     ::lcdHome(handle);
 }
 
-void LCD1602::clear() noexcept
+inline void LCD1602::clear() noexcept
 {
     ::lcdClear(handle);
 }
 
-void LCD1602::position(int x, int y) noexcept
+inline void LCD1602::position(int x, int y) noexcept
 {
     ::lcdPosition(handle, x, y);
 }
 
-void LCD1602::display(bool state) noexcept
+inline void LCD1602::display(bool state) noexcept
 {
     ::lcdDisplay(handle, state);
 }
 
-void LCD1602::cursor(bool state) noexcept
+inline void LCD1602::cursor(bool state) noexcept
 {
     ::lcdCursor(handle, state);
 }
 
-void LCD1602::cursorBlink(bool state) noexcept
+inline void LCD1602::cursorBlink(bool state) noexcept
 {
     ::lcdCursorBlink(handle, state);
 }
 
-void LCD1602::sendCommand(uint8_t command) noexcept
+inline void LCD1602::sendCommand(uint8_t command) noexcept
 {
     ::lcdCursorBlink(handle, command);
 }
-void LCD1602::charDef(int index, uint8_t data[8]) noexcept
+inline void LCD1602::charDef(int index, uint8_t data[8]) noexcept
 {
     ::lcdCharDef(handle, index, data);
 }
 
-void LCD1602::setContrastTurnOn(int contrastTurnOn) noexcept
+inline void LCD1602::setContrastTurnOn(int contrastTurnOn) noexcept
 {
     ::digitalWrite(lcdContrast, contrastTurnOn);
     this->contrastTurnOn = contrastTurnOn;

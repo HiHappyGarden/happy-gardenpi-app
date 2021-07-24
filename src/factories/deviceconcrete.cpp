@@ -78,12 +78,12 @@ namespace hgardenpi
         {
         }
 
-        float DeviceConcrete::getCPUTemperature() const
+        inline float DeviceConcrete::getCPUTemperature() const
         {
             return ::hgardenpi::v1::getCPUTemperature();
         }
 
-        DeviceInfo::Ptr DeviceConcrete::getInfo() const
+        inline DeviceInfo::Ptr DeviceConcrete::getInfo() const
         {
             return deviceInfo;
         }
