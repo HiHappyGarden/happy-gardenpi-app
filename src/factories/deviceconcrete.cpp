@@ -54,7 +54,7 @@ namespace hgardenpi
         }
 
         /**
-         * @brief Before all call this functiuon fo inilialize the project
+         * @brief Before all call this function fo initialize the project
          * 
          * @exception runtime_error when hardware requisites mismatch
          */
@@ -94,28 +94,11 @@ namespace hgardenpi
          */
         void DeviceConcrete::start(volatile bool &run)
         {
-
             threadPool->enqueue([&]() {
                 display->setContrastTurnOn(true);
-                while (enableMainDisplayLoop)
+                while (run)
                 {
-                    std::cout << "start" << endl;
-                    printOnDisplay("MAC ADDRESS|" + getWlan0MAC(), true);
 
-                    this_thread::sleep_for(chrono::seconds(static_cast<int64_t>(Time::DISPLAY_TICK)));
-
-                    display->print("");
-
-                    this_thread::sleep_for(chrono::milliseconds (static_cast<int64_t>(Time::DISPLAY_PAUSE)));
-
-                    printOnDisplay("IP ADDRESS|" + getWlan0IP(), true);
-
-                    this_thread::sleep_for(chrono::seconds(static_cast<int64_t>(Time::DISPLAY_TICK)));
-
-                    display->print("");
-
-                    this_thread::sleep_for(chrono::milliseconds(static_cast<int64_t>(Time::DISPLAY_PAUSE)));
-                    std::cout << "end" << endl;
                 }
                 display->setContrastTurnOn(false);
                 std::cout << "pippo" << endl;
@@ -125,10 +108,6 @@ namespace hgardenpi
 
         }
 
-        /**
-         * @brief release a resorce
-         * 
-         */
         void DeviceConcrete::release() noexcept
         {
         }
@@ -191,6 +170,27 @@ namespace hgardenpi
             {
                 display->print(txt);
             }
+        }
+
+        void DeviceConcrete::printOnDisplayStandardInfo() noexcept
+        {
+            std::cout << "start" << endl;
+            printOnDisplay("MAC ADDRESS|" + getWlan0MAC(), true);
+
+            this_thread::sleep_for(chrono::seconds(static_cast<int64_t>(Time::DISPLAY_TICK)));
+
+            display->print("");
+
+            this_thread::sleep_for(chrono::milliseconds (static_cast<int64_t>(Time::DISPLAY_PAUSE)));
+
+            printOnDisplay("IP ADDRESS|" + getWlan0IP(), true);
+
+            this_thread::sleep_for(chrono::seconds(static_cast<int64_t>(Time::DISPLAY_TICK)));
+
+            display->print("");
+
+            this_thread::sleep_for(chrono::milliseconds(static_cast<int64_t>(Time::DISPLAY_PAUSE)));
+            std::cout << "end" << endl;
         }
     }
 }
