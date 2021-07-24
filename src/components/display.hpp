@@ -139,6 +139,23 @@ namespace hgardenpi
              */
             virtual void setContrastTurnOn(int contrastTurnOn) noexcept = 0;
 
+            /**
+             * Get display row
+             * @return
+             */
+            virtual inline uint16_t getRows() const noexcept
+            {
+                return 0;
+            }
+
+            /**
+             * Get display colls
+             * @return
+             */
+            virtual inline uint16_t getColls() const noexcept
+            {
+                return 0;
+            }
         };
     }
 }

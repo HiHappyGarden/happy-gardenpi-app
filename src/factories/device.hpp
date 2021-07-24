@@ -46,6 +46,8 @@ namespace hgardenpi
         {
         public:
 
+            static const constexpr char DIVISOR = '|';
+
             ~Device() override = default;
             /**
              * @brief Get CPU temperature
@@ -71,8 +73,9 @@ namespace hgardenpi
             /**
              * @brief Print on system display
              * @param txt to show
+             * @param splitByDivisor ilf true split txt by Device::DIVISOR
              */
-            virtual void printOnDisplay(const string &txt) const noexcept = 0;
+            virtual void printOnDisplay(const string &txt, bool splitByDivisor) const noexcept = 0;
 
         };
 
