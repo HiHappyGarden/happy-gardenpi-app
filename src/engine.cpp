@@ -27,6 +27,7 @@
 #include <csignal>
 #include <syslog.h>
 
+#include <iostream>
 #include <thread>
 using namespace std;
 
@@ -147,6 +148,7 @@ namespace hgardenpi
 
             while (run)
             {
+                cout << "tick" << endl;
                 //Globals::getInstance()->mqttClient->loop(run);
                 // while (run)
                 // {

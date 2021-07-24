@@ -46,7 +46,7 @@ namespace hgardenpi
         enum class Time : int64_t
         {
             DISPLAY_TICK = 6,
-            DISPLAY_PAUSE = 750,
+            DISPLAY_PAUSE = 1500,
             TICK = 200
         };
 

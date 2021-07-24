@@ -103,7 +103,7 @@ namespace hgardenpi
 
                     this_thread::sleep_for(chrono::seconds(static_cast<int64_t>(Time::DISPLAY_TICK)));
 
-                    printOnDisplay("", false);
+                    display->print("");
 
                     this_thread::sleep_for(chrono::milliseconds (static_cast<int64_t>(Time::DISPLAY_PAUSE)));
 
@@ -111,7 +111,7 @@ namespace hgardenpi
 
                     this_thread::sleep_for(chrono::seconds(static_cast<int64_t>(Time::DISPLAY_TICK)));
 
-                    printOnDisplay("", false);
+                    display->print("");
 
                     this_thread::sleep_for(chrono::milliseconds(static_cast<int64_t>(Time::DISPLAY_PAUSE)));
                     std::cout << "end" << endl;
