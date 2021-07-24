@@ -58,11 +58,19 @@ namespace hgardenpi
                 string passwd = HGARDENPI_BROKER_PASSWD;
             } broker;
 
+            /**
+             * @brief Database POD config
+             */
             struct Database
             {
                 string file = HGARDENPI_DB_FILE;
             } database;
 
+            /**
+             * @brief Return the representation off all data in POD
+             *
+             * @return std::string data inn json format
+             */
             string toString() noexcept override;
         };
 

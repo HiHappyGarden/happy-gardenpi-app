@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 #include "lcd1602.hpp"
+using std::lock_guard;
 
 #include <cstdarg>
 
@@ -32,7 +33,7 @@ using std::runtime_error;
 
 using hgardenpi::v1::LCD1602;
 
-void LCD1602::init(int lcdRS, int lcdE, int lcd04, int lcd05, int lcd06, int lcd07, int lcdContrast)
+LCD1602::LCD1602(int lcdRS, int lcdE, int lcd04, int lcd05, int lcd06, int lcd07, int lcdContrast) : handle(-1), lcdContrast(lcdContrast)
 {
 
     handle = lcdInit(rows,
@@ -49,7 +50,7 @@ void LCD1602::init(int lcdRS, int lcdE, int lcd04, int lcd05, int lcd06, int lcd
     pinMode(lcdContrast, OUTPUT);
     digitalWrite(lcdContrast, contrastTurnOn);
 
-        print("");
+    print("");
 
     clear();
 
@@ -62,11 +63,13 @@ void LCD1602::init(int lcdRS, int lcdE, int lcd04, int lcd05, int lcd06, int lcd
 
 inline void LCD1602::print(const string &txt) noexcept
 {
+    lock_guard<mutex> lg(m);
     ::lcdPuts(handle, txt.c_str());
 }
 
 inline void LCD1602::printf(const string &txt, ...) noexcept
 {
+    lock_guard<mutex> lg(m);
     va_list(args);
     va_start(args, txt);
     ::lcdPrintf(handle, txt.c_str(), args);
@@ -74,50 +77,60 @@ inline void LCD1602::printf(const string &txt, ...) noexcept
 
 inline void LCD1602::print(const uint8_t c) noexcept
 {
+    lock_guard<mutex> lg(m);
     ::lcdPutchar(handle, c);
 }
 
 inline void LCD1602::home() noexcept
 {
+    lock_guard<mutex> lg(m);
     ::lcdHome(handle);
 }
 
 inline void LCD1602::clear() noexcept
 {
+    lock_guard<mutex> lg(m);
     ::lcdClear(handle);
 }
 
 inline void LCD1602::position(int x, int y) noexcept
 {
+    lock_guard<mutex> lg(m);
     ::lcdPosition(handle, x, y);
 }
 
 inline void LCD1602::display(bool state) noexcept
 {
+    lock_guard<mutex> lg(m);
     ::lcdDisplay(handle, state);
 }
 
 inline void LCD1602::cursor(bool state) noexcept
 {
+    lock_guard<mutex> lg(m);
     ::lcdCursor(handle, state);
 }
 
 inline void LCD1602::cursorBlink(bool state) noexcept
 {
+    lock_guard<mutex> lg(m);
     ::lcdCursorBlink(handle, state);
 }
 
 inline void LCD1602::sendCommand(uint8_t command) noexcept
 {
+    lock_guard<mutex> lg(m);
     ::lcdCursorBlink(handle, command);
 }
 inline void LCD1602::charDef(int index, uint8_t data[8]) noexcept
 {
+    lock_guard<mutex> lg(m);
     ::lcdCharDef(handle, index, data);
 }
 
 inline void LCD1602::setContrastTurnOn(int contrastTurnOn) noexcept
 {
+    lock_guard<mutex> lg(m);
     ::digitalWrite(lcdContrast, contrastTurnOn);
     this->contrastTurnOn = contrastTurnOn;
 }

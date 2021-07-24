@@ -49,13 +49,16 @@ namespace hgardenpi
             TICK = 200
         };
 
+        /**
+         * Status of an element in the project
+         */
         enum class Status: uint8_t
         {
             UNACTIVE = 0,
             ACTIVE,
             ERROR,
         };
-
+        
         //hw needed for Happy GardenPI
 
         //raspberry pi 4

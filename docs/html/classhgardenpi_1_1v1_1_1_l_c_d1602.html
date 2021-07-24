@@ -68,6 +68,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classhgardenpi_1_1v1_1_1_l_c_d1602-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -90,48 +91,145 @@ Inheritance diagram for hgardenpi::v1::LCD1602:</div>
   </map>
 </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a61acc925ca4dc096614359105ecf278b"><td class="memItemLeft" align="right" valign="top"><a id="a61acc925ca4dc096614359105ecf278b"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>GPIOPinDisplay</b> : int { <br />
+&#160;&#160;<b>LCD_RS</b> = 25
+, <b>LCD_E</b> = 24
+, <b>LCD_D4</b> = 23
+, <b>LCD_D5</b> = 22
+, <br />
+&#160;&#160;<b>LCD_D6</b> = 21
+, <b>LCD_D7</b> = 14
+, <b>LCD_CONTRAST</b> = 13
+<br />
+ }</td></tr>
+<tr class="separator:a61acc925ca4dc096614359105ecf278b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aa9bba570021d1eb2d39977516c439687"><td class="memItemLeft" align="right" valign="top"><a id="aa9bba570021d1eb2d39977516c439687"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>LCD1602</b> (const vector&lt; int &gt; &amp;)</td></tr>
-<tr class="separator:aa9bba570021d1eb2d39977516c439687"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affae5f1380cb0567bb3b5571ed988a66"><td class="memItemLeft" align="right" valign="top"><a id="affae5f1380cb0567bb3b5571ed988a66"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>LCD1602</b> (const vector&lt; int &gt; &amp;&amp;pins)</td></tr>
-<tr class="separator:affae5f1380cb0567bb3b5571ed988a66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad81ff3ec87ca3e84794e4e2e9e0e678a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#ad81ff3ec87ca3e84794e4e2e9e0e678a">print</a> (const string &amp;txt) noexcept</td></tr>
-<tr class="separator:ad81ff3ec87ca3e84794e4e2e9e0e678a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe9dc7736b2cd1e9f01e876577aa9d3a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#afe9dc7736b2cd1e9f01e876577aa9d3a">print</a> (const string &amp;&amp;txt) noexcept</td></tr>
-<tr class="separator:afe9dc7736b2cd1e9f01e876577aa9d3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adba2ed8da4441a1c778efbd469ba9741"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#adba2ed8da4441a1c778efbd469ba9741">printf</a> (const string &amp;txt,...) noexcept</td></tr>
-<tr class="separator:adba2ed8da4441a1c778efbd469ba9741"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20c7ba0228572bc713c2c7dd519f9c2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#a20c7ba0228572bc713c2c7dd519f9c2e">print</a> (uint8_t c) noexcept</td></tr>
-<tr class="separator:a20c7ba0228572bc713c2c7dd519f9c2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae31433c65731fcb54a0e8548ec0200be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#ae31433c65731fcb54a0e8548ec0200be">home</a> () noexcept</td></tr>
-<tr class="separator:ae31433c65731fcb54a0e8548ec0200be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac2588f2a871c769f08f1141c9b1443e0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#ac2588f2a871c769f08f1141c9b1443e0">clear</a> () noexcept</td></tr>
-<tr class="separator:ac2588f2a871c769f08f1141c9b1443e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a83a9bed8a8b15c14e1b788176dc5ebfa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#a83a9bed8a8b15c14e1b788176dc5ebfa">position</a> (int x, int y) noexcept</td></tr>
-<tr class="separator:a83a9bed8a8b15c14e1b788176dc5ebfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67b939bfb3a39093605b743c0c2f5ede"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#a67b939bfb3a39093605b743c0c2f5ede">display</a> (bool state) noexcept</td></tr>
-<tr class="separator:a67b939bfb3a39093605b743c0c2f5ede"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b711f79b8e05b39afb5ea87cf79aa08"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#a4b711f79b8e05b39afb5ea87cf79aa08">cursor</a> (bool state) noexcept</td></tr>
-<tr class="separator:a4b711f79b8e05b39afb5ea87cf79aa08"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27b1cc6679692c49ad9da8412eeabf71"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#a27b1cc6679692c49ad9da8412eeabf71">cursorBlink</a> (bool state) noexcept</td></tr>
-<tr class="separator:a27b1cc6679692c49ad9da8412eeabf71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaaa78314b705ff786d04c45992c69103"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#aaaa78314b705ff786d04c45992c69103">sendCommand</a> (uint8_t command) noexcept</td></tr>
-<tr class="separator:aaaa78314b705ff786d04c45992c69103"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2fd3bfa747c776bc945f28a6a46d07dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#a2fd3bfa747c776bc945f28a6a46d07dd">charDef</a> (int index, uint8_t data[8]) noexcept</td></tr>
-<tr class="memdesc:a2fd3bfa747c776bc945f28a6a46d07dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">This allows you to re-define one of the 8 user-definable chanracters in the display.  <a href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#a2fd3bfa747c776bc945f28a6a46d07dd">More...</a><br /></td></tr>
-<tr class="separator:a2fd3bfa747c776bc945f28a6a46d07dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b8cfa37adcab85535c833b7c52f812e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#a5b8cfa37adcab85535c833b7c52f812e">LCD1602</a> (int lcdRS, int lcdE, int lcd04, int lcd05, int lcd06, int lcd07, int lcdContrast)</td></tr>
+<tr class="memdesc:a5b8cfa37adcab85535c833b7c52f812e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for the display 16x2.  <a href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#a5b8cfa37adcab85535c833b7c52f812e">More...</a><br /></td></tr>
+<tr class="separator:a5b8cfa37adcab85535c833b7c52f812e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f5955da22cf4f6aff13d0fc18e98d68"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#a9f5955da22cf4f6aff13d0fc18e98d68">print</a> (const string &amp;txt) noexcept override</td></tr>
+<tr class="separator:a9f5955da22cf4f6aff13d0fc18e98d68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2639f4a036222956e94f03656ffc170"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#aa2639f4a036222956e94f03656ffc170">print</a> (const string &amp;&amp;txt) noexcept override</td></tr>
+<tr class="separator:aa2639f4a036222956e94f03656ffc170"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a893475a073770f29233aed2a0f3d55f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#a893475a073770f29233aed2a0f3d55f7">printf</a> (const string &amp;txt,...) noexcept override</td></tr>
+<tr class="separator:a893475a073770f29233aed2a0f3d55f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a181f628d2696cce8d54719ede4b4cff0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#a181f628d2696cce8d54719ede4b4cff0">print</a> (uint8_t c) noexcept override</td></tr>
+<tr class="separator:a181f628d2696cce8d54719ede4b4cff0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8595dee9e22dba4b2839bbf6690005a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#ac8595dee9e22dba4b2839bbf6690005a">home</a> () noexcept override</td></tr>
+<tr class="separator:ac8595dee9e22dba4b2839bbf6690005a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af89239b161123e610ed706c59370b86b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#af89239b161123e610ed706c59370b86b">clear</a> () noexcept override</td></tr>
+<tr class="separator:af89239b161123e610ed706c59370b86b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a905edb613bf7000cf616c8cbb1bf1d82"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#a905edb613bf7000cf616c8cbb1bf1d82">position</a> (int x, int y) noexcept override</td></tr>
+<tr class="separator:a905edb613bf7000cf616c8cbb1bf1d82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a948332a6b0b296a352dfeaf72022de28"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#a948332a6b0b296a352dfeaf72022de28">display</a> (bool state) noexcept override</td></tr>
+<tr class="separator:a948332a6b0b296a352dfeaf72022de28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8f19027ae3e415a8491849af4a87a05"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#ac8f19027ae3e415a8491849af4a87a05">cursor</a> (bool state) noexcept override</td></tr>
+<tr class="separator:ac8f19027ae3e415a8491849af4a87a05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e271b3311539cc5d5a53e4a068dac2f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#a4e271b3311539cc5d5a53e4a068dac2f">cursorBlink</a> (bool state) noexcept override</td></tr>
+<tr class="separator:a4e271b3311539cc5d5a53e4a068dac2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4be5bf07600d3a1f08e1be9f54550392"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#a4be5bf07600d3a1f08e1be9f54550392">sendCommand</a> (uint8_t command) noexcept override</td></tr>
+<tr class="separator:a4be5bf07600d3a1f08e1be9f54550392"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0275e919a20bd0de62996ff6fb95407d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#a0275e919a20bd0de62996ff6fb95407d">charDef</a> (int index, uint8_t data[8]) noexcept override</td></tr>
+<tr class="memdesc:a0275e919a20bd0de62996ff6fb95407d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This allows you to re-define one of the 8 user-definable chanracters in the display.  <a href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#a0275e919a20bd0de62996ff6fb95407d">More...</a><br /></td></tr>
+<tr class="separator:a0275e919a20bd0de62996ff6fb95407d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8b1a4d1f0782ebaf2f6b007eacfe3fd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#aa8b1a4d1f0782ebaf2f6b007eacfe3fd">isContrastTurnOn</a> () const noexcept override</td></tr>
+<tr class="memdesc:aa8b1a4d1f0782ebaf2f6b007eacfe3fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">get if is turno on the display contrast  <a href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#aa8b1a4d1f0782ebaf2f6b007eacfe3fd">More...</a><br /></td></tr>
+<tr class="separator:aa8b1a4d1f0782ebaf2f6b007eacfe3fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77e0593f4d2dde24e48b986d1a8f9b08"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#a77e0593f4d2dde24e48b986d1a8f9b08">setContrastTurnOn</a> (int contrastTurnOn) noexcept override</td></tr>
+<tr class="memdesc:a77e0593f4d2dde24e48b986d1a8f9b08"><td class="mdescLeft">&#160;</td><td class="mdescRight">set if is turn on the display contrast  <a href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#a77e0593f4d2dde24e48b986d1a8f9b08">More...</a><br /></td></tr>
+<tr class="separator:a77e0593f4d2dde24e48b986d1a8f9b08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af62fdaf5cbf40847921c32aab16af866"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#af62fdaf5cbf40847921c32aab16af866">toString</a> () noexcept override</td></tr>
 <tr class="memdesc:af62fdaf5cbf40847921c32aab16af866"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the name of object.  <a href="classhgardenpi_1_1v1_1_1_l_c_d1602.html#af62fdaf5cbf40847921c32aab16af866">More...</a><br /></td></tr>
 <tr class="separator:af62fdaf5cbf40847921c32aab16af866"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>LCD 16x02 implementation 4bit configuration. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a2fd3bfa747c776bc945f28a6a46d07dd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2fd3bfa747c776bc945f28a6a46d07dd">&#9670;&nbsp;</a></span>charDef()</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a5b8cfa37adcab85535c833b7c52f812e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b8cfa37adcab85535c833b7c52f812e">&#9670;&nbsp;</a></span>LCD1602()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">LCD1602::LCD1602 </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>lcdRS</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>lcdE</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>lcd04</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>lcd05</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>lcd06</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>lcd07</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>lcdContrast</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor for the display 16x2. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">lcdRS</td><td>set GPIO pin number for lcd RS pin </td></tr>
+    <tr><td class="paramname">lcdE</td><td>set GPIO pin number for lcd E pin </td></tr>
+    <tr><td class="paramname">lcd04</td><td>set GPIO pin number for lcd 04 pin </td></tr>
+    <tr><td class="paramname">lcd05</td><td>set GPIO pin number for lcd 05 pin </td></tr>
+    <tr><td class="paramname">lcd06</td><td>set GPIO pin number for lcd 06 pin </td></tr>
+    <tr><td class="paramname">lcd07</td><td>set GPIO pin number for lcd 07 pin </td></tr>
+    <tr><td class="paramname">lcdContrast</td><td>set GPIO pin number for lcd Contrast pin </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">runtime_error</td><td>when hardware requisites mismatch </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a0275e919a20bd0de62996ff6fb95407d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0275e919a20bd0de62996ff6fb95407d">&#9670;&nbsp;</a></span>charDef()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -159,7 +257,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -178,8 +276,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ac2588f2a871c769f08f1141c9b1443e0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac2588f2a871c769f08f1141c9b1443e0">&#9670;&nbsp;</a></span>clear()</h2>
+<a id="af89239b161123e610ed706c59370b86b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af89239b161123e610ed706c59370b86b">&#9670;&nbsp;</a></span>clear()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -196,7 +294,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -206,8 +304,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a4b711f79b8e05b39afb5ea87cf79aa08"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4b711f79b8e05b39afb5ea87cf79aa08">&#9670;&nbsp;</a></span>cursor()</h2>
+<a id="ac8f19027ae3e415a8491849af4a87a05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8f19027ae3e415a8491849af4a87a05">&#9670;&nbsp;</a></span>cursor()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -225,7 +323,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -241,8 +339,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a27b1cc6679692c49ad9da8412eeabf71"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a27b1cc6679692c49ad9da8412eeabf71">&#9670;&nbsp;</a></span>cursorBlink()</h2>
+<a id="a4e271b3311539cc5d5a53e4a068dac2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e271b3311539cc5d5a53e4a068dac2f">&#9670;&nbsp;</a></span>cursorBlink()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -260,7 +358,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -276,8 +374,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a67b939bfb3a39093605b743c0c2f5ede"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a67b939bfb3a39093605b743c0c2f5ede">&#9670;&nbsp;</a></span>display()</h2>
+<a id="a948332a6b0b296a352dfeaf72022de28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a948332a6b0b296a352dfeaf72022de28">&#9670;&nbsp;</a></span>display()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -295,7 +393,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -311,8 +409,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ae31433c65731fcb54a0e8548ec0200be"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae31433c65731fcb54a0e8548ec0200be">&#9670;&nbsp;</a></span>home()</h2>
+<a id="ac8595dee9e22dba4b2839bbf6690005a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8595dee9e22dba4b2839bbf6690005a">&#9670;&nbsp;</a></span>home()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -329,7 +427,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -339,8 +437,38 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a83a9bed8a8b15c14e1b788176dc5ebfa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a83a9bed8a8b15c14e1b788176dc5ebfa">&#9670;&nbsp;</a></span>position()</h2>
+<a id="aa8b1a4d1f0782ebaf2f6b007eacfe3fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8b1a4d1f0782ebaf2f6b007eacfe3fd">&#9670;&nbsp;</a></span>isContrastTurnOn()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int hgardenpi::v1::LCD1602::isContrastTurnOn </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>get if is turno on the display contrast </p>
+<dl class="section return"><dt>Returns</dt><dd>bool </dd></dl>
+
+<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_display.html#a0c61ec2e0b3fbdfeeac029a2b5f401d7">hgardenpi::v1::Display</a>.</p>
+
+</div>
+</div>
+<a id="a905edb613bf7000cf616c8cbb1bf1d82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a905edb613bf7000cf616c8cbb1bf1d82">&#9670;&nbsp;</a></span>position()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -368,7 +496,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -385,8 +513,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="afe9dc7736b2cd1e9f01e876577aa9d3a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afe9dc7736b2cd1e9f01e876577aa9d3a">&#9670;&nbsp;</a></span>print() <span class="overload">[1/3]</span></h2>
+<a id="aa2639f4a036222956e94f03656ffc170"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2639f4a036222956e94f03656ffc170">&#9670;&nbsp;</a></span>print() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -404,7 +532,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -419,8 +547,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ad81ff3ec87ca3e84794e4e2e9e0e678a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad81ff3ec87ca3e84794e4e2e9e0e678a">&#9670;&nbsp;</a></span>print() <span class="overload">[2/3]</span></h2>
+<a id="a9f5955da22cf4f6aff13d0fc18e98d68"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f5955da22cf4f6aff13d0fc18e98d68">&#9670;&nbsp;</a></span>print() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -438,7 +566,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -453,8 +581,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a20c7ba0228572bc713c2c7dd519f9c2e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a20c7ba0228572bc713c2c7dd519f9c2e">&#9670;&nbsp;</a></span>print() <span class="overload">[3/3]</span></h2>
+<a id="a181f628d2696cce8d54719ede4b4cff0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a181f628d2696cce8d54719ede4b4cff0">&#9670;&nbsp;</a></span>print() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -472,7 +600,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -487,8 +615,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="adba2ed8da4441a1c778efbd469ba9741"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adba2ed8da4441a1c778efbd469ba9741">&#9670;&nbsp;</a></span>printf()</h2>
+<a id="a893475a073770f29233aed2a0f3d55f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a893475a073770f29233aed2a0f3d55f7">&#9670;&nbsp;</a></span>printf()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -516,7 +644,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -532,8 +660,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aaaa78314b705ff786d04c45992c69103"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaaa78314b705ff786d04c45992c69103">&#9670;&nbsp;</a></span>sendCommand()</h2>
+<a id="a4be5bf07600d3a1f08e1be9f54550392"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4be5bf07600d3a1f08e1be9f54550392">&#9670;&nbsp;</a></span>sendCommand()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -551,7 +679,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -564,6 +692,42 @@ Public Member Functions</h2></td></tr>
 </dl>
 
 <p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_display.html#a70aed224fb86aa5f61d8b7023a66a9a8">hgardenpi::v1::Display</a>.</p>
+
+</div>
+</div>
+<a id="a77e0593f4d2dde24e48b986d1a8f9b08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77e0593f4d2dde24e48b986d1a8f9b08">&#9670;&nbsp;</a></span>setContrastTurnOn()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LCD1602::setContrastTurnOn </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>contrastTurnOn</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>set if is turn on the display contrast </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">contrastTurnOn</td><td>true if you wont turn on the display contrast </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_display.html#ab0cc346140c17142b13864d598b2d2df">hgardenpi::v1::Display</a>.</p>
 
 </div>
 </div>

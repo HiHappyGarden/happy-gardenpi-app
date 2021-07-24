@@ -46,32 +46,55 @@ namespace hgardenpi
 
         using namespace std;
 
+        /**
+         * @brief Thread Pool class
+         */
         class ThreadPool final : public Object
         {
         public:
             explicit ThreadPool(size_t);
-            // the destructor joins all threads
-            ~ThreadPool() noexcept;
+
+            /**
+             * @brief the destructor joins all threads
+             */
+            ~ThreadPool() noexcept override;
 
             HGARDENPI_NO_COPY_NO_MOVE(ThreadPool)
 
+            /**
+             * @brief add new work item to the pool
+             * @tparam F function to execute
+             * @tparam Args arguments
+             * @param f concrete lambda
+             * @param args concrete args
+             * @return future result
+             */
             template<class F, class... Args>
             auto enqueue(F &&f, Args &&... args)
             -> future<typename result_of<F(Args...)>::type>;
 
-
+            /**
+             * @brief Return the name of object
+             *
+             * @return std::string name of object
+             */
+            inline string toString() noexcept override
+            {
+                return string(typeid(*this).name()) + " threadPooled" + to_string(threads);
+            }
 
         private:
             // need to keep track of threads so we can join them
-            vector <thread> workers;
+            vector<thread> workers;
 
             // the task queue
-            queue <function<void()>> tasks;
+            queue<function<void()>> tasks;
 
             // synchronization
             mutex queue_mutex;
             condition_variable condition;
             bool stop;
+            size_t threads;
         };
 
     }

@@ -36,7 +36,7 @@ namespace hgardenpi
     inline namespace v1
     {
 
-
+        class ThreadPool;
 
         /**
          * @brief Factory for management of peripherals devices
@@ -45,8 +45,6 @@ namespace hgardenpi
         class Device : public Loggable, public Startable, public Releasable, public Object
         {
         public:
-
-            //using OnIpChange = std::function<void(const string &)>;
 
             ~Device() override = default;
             /**
@@ -63,6 +61,18 @@ namespace hgardenpi
              */
             [[nodiscard]] virtual DeviceInfo::Ptr getInfo() const = 0;
 
+
+            /**
+             * Set ThreadPool instance
+             * @param threadPool instance
+             */
+            virtual void setThreadPool(const ThreadPool *threadPool) noexcept = 0;
+
+            /**
+             * @brief Print on system display
+             * @param txt to show
+             */
+            virtual void printOnDisplay(const string &txt) const noexcept = 0;
 
         };
 
