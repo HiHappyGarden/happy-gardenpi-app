@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2021 Happy GardenPI
+// Copyright (c) $year. Happy GardenPI
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -19,42 +19,61 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+//
 
-#include "factoryconcrete.hpp"
+//
+// Created by Antonio Salsi on 24/07/21.
+//
 
+#pragma once
+
+#include <vector>
+#include <queue>
+#include <memory>
+#include <thread>
+#include <mutex>
+#include <condition_variable>
+#include <future>
+#include <functional>
 #include <stdexcept>
-using namespace std;
 
-#include "systemconcrete.hpp"
-#include "deviceconcrete.hpp"
+#include "../interfaces/object.hpp"
 
 namespace hgardenpi
 {
-
     inline namespace v1
     {
-        FactoryConcrete::FactoryConcrete() : system(new (nothrow) SystemConcrete), device(new (nothrow) DeviceConcrete)
-        {
-            if (!system)
-            {
-                throw runtime_error("no memory for SystemConcrete");
-            }
-            if (!device)
-            {
-                throw runtime_error("no memory for DeviceConcrete");
-            }
-        }
 
-        inline FactoryConcrete::~FactoryConcrete() noexcept
+        using namespace std;
+
+        class ThreadPool final : public Object
         {
-            if (system)
-            {
-                delete system;
-            }
-            if (device)
-            {
-                delete device;
-            }
-        }
+        public:
+            explicit ThreadPool(size_t);
+            // the destructor joins all threads
+            ~ThreadPool() noexcept;
+
+            HGARDENPI_NO_COPY_NO_MOVE(ThreadPool)
+
+            template<class F, class... Args>
+            auto enqueue(F &&f, Args &&... args)
+            -> future<typename result_of<F(Args...)>::type>;
+
+
+
+        private:
+            // need to keep track of threads so we can join them
+            vector <thread> workers;
+
+            // the task queue
+            queue <function<void()>> tasks;
+
+            // synchronization
+            mutex queue_mutex;
+            condition_variable condition;
+            bool stop;
+        };
+
     }
 }
+

@@ -110,9 +110,6 @@ namespace hgardenpi
                 DBUpdate(database, version);
             }
 
-            printf("---%s\n", Engine::getInstance()->factory->getDevice()->getWlan0IP().c_str());
-            printf("---%s\n", Engine::getInstance()->factory->getDevice()->getWlan0MAC().c_str());
-
             // //initialize mosquittopp
             // if (mosquitto_lib_init() != MOSQ_ERR_SUCCESS)
             // {

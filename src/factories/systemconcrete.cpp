@@ -88,7 +88,7 @@ namespace hgardenpi
 
         void SystemConcrete::start() {}
 
-        void SystemConcrete::release() noexcept
+        inline void SystemConcrete::release() noexcept
         {
             lockService->release();
         }
