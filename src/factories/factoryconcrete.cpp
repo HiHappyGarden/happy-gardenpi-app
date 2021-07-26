@@ -37,11 +37,11 @@ namespace hgardenpi
         {
             if (!system)
             {
-                throw runtime_error("no memory for SystemConcrete");
+                throw runtime_error(_("no memory for SystemConcrete"));
             }
             if (!device)
             {
-                throw runtime_error("no memory for DeviceConcrete");
+                throw runtime_error(_("no memory for DeviceConcrete"));
             }
         }
 

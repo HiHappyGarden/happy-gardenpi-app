@@ -56,27 +56,27 @@ namespace hgardenpi
 
             if (!configInfo)
             {
-                throw runtime_error("system non initialized");
+                throw runtime_error(_("system non initialized"));
             }
 
             //initialize log service
             logService = new (nothrow) LogServiceConcrete;
             if (!logService)
             {
-                throw runtime_error("no memory for lockService");
+                throw runtime_error(_("no memory for lockService"));
             }
 
             //initialize lock service
             lockService = new (nothrow) LockServiceConcrete(configInfo);
             if (!lockService)
             {
-                throw runtime_error("no memory for lockService");
+                throw runtime_error(_("no memory for lockService"));
             }
 
             //check if already run an instance of Happy GardenPI
             if (lockService->lock())
             {
-                string error("another instance already run pid:");
+                string error(_("another instance already run pid:"));
                 error += to_string(lockService->getPidInExecution());
                 logService->write(LOG_ERR, "%s", error.c_str());
                 throw runtime_error(error);
