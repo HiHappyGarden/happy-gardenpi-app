@@ -46,7 +46,6 @@ namespace hgardenpi
 
             Factory *factory = nullptr;
             MQTTClient *mqttClient = nullptr;
-            ThreadPool *threadPool = nullptr;
 
         public:
             Engine();
@@ -98,4 +97,7 @@ namespace hgardenpi
         void start();
 
     }
+
+
+    extern ThreadPool *threadPool;
 }

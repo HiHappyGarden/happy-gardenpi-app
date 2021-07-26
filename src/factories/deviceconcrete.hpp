@@ -22,6 +22,9 @@
 
 #pragma once
 
+#include <thread>
+using std::thread;
+
 #include "device.hpp"
 #include "../interfaces/object.hpp"
 #include "../components/display.hpp"
@@ -120,7 +123,7 @@ namespace hgardenpi
 
         private:
 
-            void printOnDisplayStandardInfo() noexcept;
+            void printOnDisplayStandardInfo() const noexcept;
 
         };
 
