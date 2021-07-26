@@ -49,11 +49,20 @@ namespace hgardenpi
         //enable loop
         static volatile bool run = true;
 
+        ThreadPool *threadPool = nullptr;
+
         //exit signal handler
-        static __sighandler_t handleSignal = [](int)
+        static const __sighandler_t handleSignal = [](int)
         {
             run = false;
+            if (threadPool)
+            {
+                delete threadPool;
+                threadPool = nullptr;
+            }
         };
+
+
 
         Engine::Engine() : factory(new (nothrow) FactoryConcrete)
         {
@@ -94,11 +103,11 @@ namespace hgardenpi
             device->initialize();
 
             //initialize threadPool and all sub factory
-            Engine::getInstance()->threadPool = new (nothrow) ThreadPool(device->getInfo()->cpu);
-            if (!Engine::getInstance()->threadPool) {
+            threadPool = new (nothrow) ThreadPool(device->getInfo()->cpu);
+            if (!threadPool) {
                 throw runtime_error("no memory for threadPool");
             }
-            device->setThreadPool(Engine::getInstance()->threadPool);
+            device->setThreadPool(threadPool);
 
             //get database file path from config file
             string &dbFile = system->getConfigInfo()->database.file;

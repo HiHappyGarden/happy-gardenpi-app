@@ -33,7 +33,11 @@ int main(int argc, char *argv[])
 {
 
     using namespace std;
-    
+
+    setlocale(LC_ALL, "");
+    bindtextdomain(HGARDENPI_NAME, "./locale");
+    textdomain(HGARDENPI_NAME);
+
     try
     {
         //initialize Happy GardenPI

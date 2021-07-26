@@ -17,7 +17,7 @@ sudo apt install gdb-multiarch
 On Rasperry PI W
 
 ```
-sudo apt install libmosquittopp-dev libcurl4-openssl-dev
+sudo apt install libmosquittopp-dev libcurl4-openssl-dev gettext
 ```
 
 ### 2. Install WiringPi

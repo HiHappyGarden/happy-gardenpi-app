@@ -23,6 +23,8 @@
 #pragma once
 
 #include <cstdint>
+#include <clocale>
+#include <libintl.h>
 
 //generic no copy no move constructor
 #define HGARDENPI_NO_COPY_NO_MOVE(clazz)      \
@@ -35,6 +37,8 @@
     logService->write(LOG_ERR, "%d", msg); \
     throw runtime_error(msg);
 
+#define _(str) gettext(str)
+
 namespace hgardenpi
 {
     inline namespace v1
@@ -45,8 +49,7 @@ namespace hgardenpi
          */
         enum class Time : int64_t
         {
-            DISPLAY_TICK = 6,
-            DISPLAY_PAUSE = 1500,
+            DISPLAY_TICK = 6'000,
             TICK = 200
         };
 
