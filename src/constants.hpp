@@ -35,7 +35,7 @@
 
 #define HGARDENPI_ERROR_LOG_AMD_THROW(msg) \
     logService->write(LOG_ERR, "%d", msg); \
-    throw runtime_error(msg);
+    throw runtime_error(_(msg));
 
 #define _(str) gettext(str)
 
