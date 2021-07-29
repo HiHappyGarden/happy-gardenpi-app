@@ -78,7 +78,7 @@ namespace hgardenpi
              * @return list of stations for aggregation
              * @exception runtime_error when hardware requisites mismatch
              */
-            [[nodiscard]] Stations getList(const Aggregation::Ptr &ptr) const;
+            [[nodiscard]] Stations getList(const Aggregation::Ptr &ptr, Status status = Status::ACTIVE) const;
 
             /**
              * @brief Return the name of object

@@ -100,9 +100,7 @@ namespace hgardenpi
             threadPool->enqueue([&]() {
                 display->setContrastTurnOn(true);
                 while (run)
-                {
                     printOnDisplayStandardInfo(run);
-                }
             });
 
         }

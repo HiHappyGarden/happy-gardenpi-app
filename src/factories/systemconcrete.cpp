@@ -60,8 +60,14 @@ namespace hgardenpi
         void SystemConcrete::initialize()
         {
             //load configuration
-            ConfigService config(HGARDENPI_FILE_CONFIG);
-            configInfo = move(config.read());
+            ConfigService *config = new (nothrow) ConfigServiceConcrete(HGARDENPI_FILE_CONFIG);
+            if (!config)
+            {
+                throw runtime_error(_("no memory for config"));
+            }
+
+            configInfo = move(config->read());
+            delete config;
 
             if (!configInfo)
             {
@@ -94,7 +100,6 @@ namespace hgardenpi
             //write sw vertionb in log
             logService->write(LOG_INFO, "version: %s", HGARDENPI_VER);
 
-            scheduler = new SchedulerConcrete(threadPool);
         }
 
         void SystemConcrete::start(volatile bool &run) {}
@@ -102,6 +107,15 @@ namespace hgardenpi
         inline void SystemConcrete::release() noexcept
         {
             lockService->release();
+        }
+
+        inline void SystemConcrete::setThreadPool(const ThreadPool *threadPool)
+        {
+            scheduler = new (nothrow) SchedulerConcrete(threadPool);
+            if (!scheduler)
+            {
+                throw runtime_error(_("no memory for scheduler"));
+            }
         }
 
     }

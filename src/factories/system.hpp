@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "../services/configservice.hpp"
+#include "../services/configserviceconcrete.hpp"
 #include "../services/lockservice.hpp"
 #include "../services/logservice.hpp"
 #include "../services/scheduler.hpp"
@@ -81,8 +81,9 @@ namespace hgardenpi
             /**
              * Set ThreadPool instance
              * @param threadPool instance
+             * @throw runtime_error when something goes wrong
              */
-            virtual void setThreadPool(const ThreadPool *threadPool) noexcept = 0;
+            virtual void setThreadPool(const ThreadPool *threadPool) = 0;
         };
 
     }

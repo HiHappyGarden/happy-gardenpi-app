@@ -86,7 +86,7 @@ namespace hgardenpi
             auto &db = const_cast<Database &>(database);
 
             // Compile a SQL query, containing one parameter (index 1)
-            SQLite::Statement query(db, "SELECT * FROM metadata");
+            Statement query(db, "SELECT * FROM metadata");
 
             // Loop to execute the query step by step, to get rows of result
             while (query.executeStep())
