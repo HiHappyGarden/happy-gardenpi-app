@@ -26,6 +26,7 @@
 #include <functional>
 
 #include "../interfaces/singleton.hpp"
+#include "../utilities/threadpool.hpp"
 #include "../constants.hpp"
 #include "scheduler.hpp"
 
@@ -40,14 +41,18 @@ namespace hgardenpi
          * @brief Scheduler for scheduing acrion, inside of this run a loop every one second
          * 
          */
-        class SchedulerConcrete final : public Scheduler
+        class SchedulerConcrete final : public Scheduler, public Object
         {
 
             bool start = false;
 
             mutable mutex m;
+            const ThreadPool *threadPool = nullptr;
 
         public:
+            explicit SchedulerConcrete(const ThreadPool *threadPool);
+            ~SchedulerConcrete() override = default;
+
             HGARDENPI_NO_COPY_NO_MOVE(SchedulerConcrete)
 
             /**

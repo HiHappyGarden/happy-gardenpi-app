@@ -41,7 +41,6 @@ namespace hgardenpi
 
         public:
             virtual ~LockService() = default;
-
             /** 
             * @brief Try to get lock.
             * 

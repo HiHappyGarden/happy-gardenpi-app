@@ -28,6 +28,8 @@ using std::to_string;
 #include <stdexcept>
 using std::runtime_error;
 
+#include "../services/schedulerconcrete.hpp"
+
 namespace hgardenpi
 {
 
@@ -41,10 +43,17 @@ namespace hgardenpi
             {
                 release();
                 delete lockService;
+                lockService = nullptr;
             }
             if (logService)
             {
                 delete logService;
+                logService = nullptr;
+            }
+            if (scheduler)
+            {
+                delete scheduler;
+                scheduler = nullptr;
             }
         }
 
@@ -84,6 +93,8 @@ namespace hgardenpi
 
             //write sw vertionb in log
             logService->write(LOG_INFO, "version: %s", HGARDENPI_VER);
+
+            scheduler = new SchedulerConcrete(threadPool);
         }
 
         void SystemConcrete::start(volatile bool &run) {}

@@ -52,6 +52,7 @@ namespace hgardenpi
             if (display)
             {
                 delete display;
+                display = nullptr;
             }
         }
 
@@ -102,8 +103,6 @@ namespace hgardenpi
                 {
                     printOnDisplayStandardInfo(run);
                 }
-                display->setContrastTurnOn(false);
-                std::cout << "pippo" << endl;
             });
 
         }
@@ -175,18 +174,17 @@ namespace hgardenpi
 
         void DeviceConcrete::printOnDisplayStandardInfo(volatile bool &run) const noexcept
         {
-            std::cout << "start" << endl;
             printOnDisplay("MAC ADDRESS|" + getWlan0MAC(), true);
 
             threadSleep(run, Time::DISPLAY_TICK);
 
             auto &&ip = getWlan0IP();
 
-            printOnDisplay("IP ADDRESS|" + (ip != "0:0:0:0" ? ip : _("not connected")), true);
+            printOnDisplay(_("IP ADDRESS|") + (ip != "0:0:0:0" ? ip : _("not connected")), true);
 
             threadSleep(run, Time::DISPLAY_TICK);
 
-            std::cout << "end" << endl;
+            display->setContrastTurnOn(false);
         }
     }
 }

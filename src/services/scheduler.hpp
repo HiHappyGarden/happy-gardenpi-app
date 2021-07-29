@@ -39,14 +39,12 @@ namespace hgardenpi
          * @brief Scheduler for scheduing acrion, inside of this run a loop every one second
          * 
          */
-        class Scheduler : public Singleton<Scheduler>
+        class Scheduler
         {
 
-            bool start = false;
-
         public:
-            ~Scheduler() override = default;
-            HGARDENPI_NO_COPY_NO_MOVE(Scheduler)
+            Scheduler() = default;
+            virtual ~Scheduler() = default;
         };
 
     }

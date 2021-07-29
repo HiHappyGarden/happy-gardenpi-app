@@ -44,10 +44,12 @@ namespace hgardenpi
     inline namespace v1
     {
 
-        //enable loop
+        //enable loops
         static volatile bool run = true;
 
         ThreadPool *threadPool = nullptr;
+
+        extern void threadSleep(volatile bool &run, Time &&millis) noexcept;
 
         //exit signal handler
         static const __sighandler_t handleSignal = [](int)
@@ -55,7 +57,6 @@ namespace hgardenpi
             run = false;
             if (threadPool)
             {
-                cout << "kill threadPool" << endl;
                 delete threadPool;
                 threadPool = nullptr;
             }
@@ -76,15 +77,18 @@ namespace hgardenpi
             if (factory)
             {
                 delete factory;
+                factory = nullptr;
             }
 
             if (mqttClient)
             {
                 delete mqttClient;
+                mqttClient = nullptr;
             }
             if (threadPool)
             {
                 delete threadPool;
+                threadPool = nullptr;
             }
         }
 
@@ -134,6 +138,7 @@ namespace hgardenpi
             }
 
             // //initialize mosquittopp
+            // //init database, out of SOLID pattern :)
             // if (mosquitto_lib_init() != MOSQ_ERR_SUCCESS)
             // {
             //     HGARDENPI_ERROR_LOG_AMD_THROW("mosquitto_lib_init() error")
@@ -163,13 +168,7 @@ namespace hgardenpi
                 // {
                 //     this_thread::sleep_for(chrono::milliseconds(static_cast<int64_t>(Time::TICK)));
                 // }
-                this_thread::sleep_for(chrono::milliseconds(static_cast<int64_t>(Time::TICK)));
-//                if (i < 50)
-//                {
-//                    i++;
-//                } else {
-//                    run = false;
-//                }
+                threadSleep(run, Time::TICK);
 
             }
         }

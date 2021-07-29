@@ -37,25 +37,26 @@ namespace hgardenpi
 
         void threadSleep(volatile bool &run, size_t millis) noexcept
         {
+            static const auto tick = static_cast<size_t>(Time::TICK) / 10;
             size_t count = 0;
             while (run)
             {
-                if (count >= millis)
+                if (count >= millis / tick)
                 {
                     return;
                 }
-                this_thread::sleep_for(chrono::milliseconds(1));
+                this_thread::sleep_for(chrono::milliseconds(tick));
                 count ++;
             }
         }
 
-        void threadSleep(volatile bool &run, Time &&millis) noexcept
+        void threadSleep(volatile bool &run, Time &&millis) noexcept //keep not inline
         {
             threadSleep(run, static_cast<size_t>(millis));
         }
 
 
-        void threadSleep(volatile bool &run, const Time &millis) noexcept
+        void threadSleep(volatile bool &run, const Time &millis) noexcept //keep not inline
         {
             threadSleep(run, static_cast<size_t>(millis));
         }
