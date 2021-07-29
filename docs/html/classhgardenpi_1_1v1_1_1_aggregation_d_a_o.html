@@ -105,6 +105,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a70f1ea67fb66622578d0ecc2146757da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_aggregation_d_a_o.html#a70f1ea67fb66622578d0ecc2146757da">update</a> (const Aggregation::Ptr &amp;ptr) const override</td></tr>
 <tr class="memdesc:a70f1ea67fb66622578d0ecc2146757da"><td class="mdescLeft">&#160;</td><td class="mdescRight">update <a class="el" href="structhgardenpi_1_1v1_1_1_aggregation.html" title="pod who describe an aggregation of station">Aggregation</a> pod  <a href="classhgardenpi_1_1v1_1_1_aggregation_d_a_o.html#a70f1ea67fb66622578d0ecc2146757da">More...</a><br /></td></tr>
 <tr class="separator:a70f1ea67fb66622578d0ecc2146757da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af76cfd61ebde2305f2905911454099a2"><td class="memItemLeft" align="right" valign="top">Aggregations&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_aggregation_d_a_o.html#af76cfd61ebde2305f2905911454099a2">getList</a> (Status status=Status::ACTIVE) const</td></tr>
+<tr class="separator:af76cfd61ebde2305f2905911454099a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae47b116cafcd49a52ca25bb89f6a0b4d"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_aggregation_d_a_o.html#ae47b116cafcd49a52ca25bb89f6a0b4d">toString</a> () noexcept override</td></tr>
 <tr class="memdesc:ae47b116cafcd49a52ca25bb89f6a0b4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the name of object.  <a href="classhgardenpi_1_1v1_1_1_aggregation_d_a_o.html#ae47b116cafcd49a52ca25bb89f6a0b4d">More...</a><br /></td></tr>
 <tr class="separator:ae47b116cafcd49a52ca25bb89f6a0b4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -188,6 +190,37 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>dbFile</b></td></tr
 </dl>
 
 <p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_d_a_o.html#ab7c26b296066d1db83a2804e2defa516">hgardenpi::v1::DAO&lt; Aggregation &gt;</a>.</p>
+
+</div>
+</div>
+<a id="af76cfd61ebde2305f2905911454099a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af76cfd61ebde2305f2905911454099a2">&#9670;&nbsp;</a></span>getList()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Aggregations AggregationDAO::getList </td>
+          <td>(</td>
+          <td class="paramtype">Status&#160;</td>
+          <td class="paramname"><em>status</em> = <code>Status::ACTIVE</code></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Retrieve list of <a class="el" href="structhgardenpi_1_1v1_1_1_aggregation.html" title="pod who describe an aggregation of station">Aggregation</a> </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">status</td><td>filter by status </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>list of aggregation </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">exception</td><td>when query is wrong </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

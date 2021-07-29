@@ -50,6 +50,8 @@ namespace hgardenpi
             AggregationDAO *aggregationDao = nullptr;
             StationDAO *stationDao = nullptr;
 
+            bool wifiConfigured = false;
+
         public:
             Engine();
             ~Engine() noexcept override;

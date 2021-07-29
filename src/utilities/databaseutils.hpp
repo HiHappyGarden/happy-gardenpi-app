@@ -27,6 +27,7 @@
 #pragma once
 
 #include <cstdint>
+#include <tuple>
 
 namespace SQLite
 {
@@ -40,6 +41,9 @@ namespace hgardenpi
 
         using SQLite::Database;
 
+
+        typedef std::tuple<uint8_t, bool> Metadata;
+
         const constexpr char *DB_METADATA_TABLE = "metadata";
 
         /**
@@ -47,7 +51,7 @@ namespace hgardenpi
          * @param database instance
          * @return version
          */
-        uint8_t DBGetVersion(const Database &database);
+        Metadata DBGetMetadata(const Database &database);
 
         /**
          * @brief Update or create a database structure
