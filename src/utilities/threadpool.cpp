@@ -46,7 +46,7 @@ namespace hgardenpi
                                 function<void()> task;
 
                                 {
-                                    unique_lock<mutex> lock(this->queue_mutex);
+                                    unique_lock<mutex> lock(this->queueMutex);
                                     this->condition.wait(lock,
                                                          [this]
                                                          { return this->stop || !this->tasks.empty(); });
@@ -65,7 +65,7 @@ namespace hgardenpi
         ThreadPool::~ThreadPool() noexcept
         {
             {
-                unique_lock<mutex> lock(queue_mutex);
+                unique_lock<mutex> lock(queueMutex);
                 stop = true;
             }
             condition.notify_all();

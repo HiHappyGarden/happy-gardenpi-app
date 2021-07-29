@@ -123,7 +123,7 @@ namespace hgardenpi
 
         private:
 
-            void printOnDisplayStandardInfo() const noexcept;
+            void printOnDisplayStandardInfo(volatile bool &run) const noexcept;
 
         };
 

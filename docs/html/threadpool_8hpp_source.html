@@ -141,7 +141,7 @@ $(function() {
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                future&lt;return_type&gt; res = task-&gt;get_future();</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                {</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                    unique_lock&lt;mutex&gt; lock(queue_mutex);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                    unique_lock&lt;mutex&gt; lock(queueMutex);</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;                    <span class="comment">// don&#39;t allow enqueueing after stopping the pool</span></div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;                    <span class="keywordflow">if</span> (stop)</div>
@@ -167,7 +167,7 @@ $(function() {
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            queue&lt;<span class="keyword">function</span>&lt;void()&gt;&gt; tasks;</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            <span class="comment">// synchronization</span></div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            mutex queue_mutex;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            mutex queueMutex;</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;            condition_variable condition;</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;            <span class="keywordtype">bool</span> stop;</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;            <span class="keywordtype">size_t</span> threads;</div>

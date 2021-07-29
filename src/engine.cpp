@@ -44,8 +44,6 @@ namespace hgardenpi
     inline namespace v1
     {
 
-        const string check = "OK";
-
         //enable loop
         static volatile bool run = true;
 
@@ -57,6 +55,7 @@ namespace hgardenpi
             run = false;
             if (threadPool)
             {
+                cout << "kill threadPool" << endl;
                 delete threadPool;
                 threadPool = nullptr;
             }

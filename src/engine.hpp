@@ -33,8 +33,6 @@ namespace hgardenpi
     inline namespace v1
     {
 
-        extern const string check;
-
         /**
          * @brief Singleton where are put global variable
          */

@@ -45,6 +45,8 @@ namespace hgardenpi
     inline namespace v1
     {
 
+        extern void threadSleep(volatile bool &run, Time &&millis) noexcept;
+
         DeviceConcrete::~DeviceConcrete() noexcept
         {
             if (display)
@@ -98,7 +100,7 @@ namespace hgardenpi
                 display->setContrastTurnOn(true);
                 while (run)
                 {
-                    printOnDisplayStandardInfo();
+                    printOnDisplayStandardInfo(run);
                 }
                 display->setContrastTurnOn(false);
                 std::cout << "pippo" << endl;
@@ -171,23 +173,18 @@ namespace hgardenpi
             }
         }
 
-        void DeviceConcrete::printOnDisplayStandardInfo() const noexcept
+        void DeviceConcrete::printOnDisplayStandardInfo(volatile bool &run) const noexcept
         {
             std::cout << "start" << endl;
             printOnDisplay("MAC ADDRESS|" + getWlan0MAC(), true);
 
-            for(int64_t i = 0;i < static_cast<int64_t>(Time::DISPLAY_TICK); i += static_cast<int64_t>(Time::TICK) ) {
-                this_thread::sleep_for(chrono::milliseconds(static_cast<int64_t>(Time::TICK)));
-            }
+            threadSleep(run, Time::DISPLAY_TICK);
 
             auto &&ip = getWlan0IP();
 
             printOnDisplay("IP ADDRESS|" + (ip != "0:0:0:0" ? ip : _("not connected")), true);
 
-            for(int64_t i = 0;i < static_cast<int64_t>(Time::DISPLAY_TICK); i += static_cast<int64_t>(Time::TICK) ) {
-                this_thread::sleep_for(chrono::milliseconds(static_cast<int64_t>(Time::TICK)));
-            }
-
+            threadSleep(run, Time::DISPLAY_TICK);
 
             std::cout << "end" << endl;
         }

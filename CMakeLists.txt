@@ -98,6 +98,8 @@ add_executable(hgardenpi
         src/utilities/stringutils.hpp
         src/utilities/threadpool.cpp
         src/utilities/threadpool.hpp
+        src/utilities/threadutils.cpp
+        src/utilities/threadutils.hpp
         src/constants.hpp
         src/engine.cpp
         src/engine.hpp
