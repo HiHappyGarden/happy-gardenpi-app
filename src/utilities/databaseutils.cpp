@@ -38,7 +38,7 @@ namespace hgardenpi
     {
 
         static const char *dbSql[] = {
-                "CREATE TABLE `metadata` (`version` INTEGER NOT NULL DEFAULT 0, `connected` INTEGER NOT NULL DEFAULT 0);",
+                "CREATE TABLE `metadata` (`version` INTEGER NOT NULL DEFAULT 0, `wifiConfigured` INTEGER NOT NULL DEFAULT 0);",
                 "CREATE TABLE \"aggregations\" (\n"
                 "\t\"id\"\tINTEGER NOT NULL UNIQUE,\n"
                 "\t\"description\"\tTEXT,\n"
@@ -79,9 +79,9 @@ namespace hgardenpi
         }
 
 
-        uint8_t DBGetVersion(const Database &database)
+        Metadata DBGetMetadata(const Database &database)
         {
-            uint8_t ret = 0;
+            Metadata ret{0, false};
 
             auto &db = const_cast<Database &>(database);
 
@@ -91,7 +91,8 @@ namespace hgardenpi
             // Loop to execute the query step by step, to get rows of result
             while (query.executeStep())
             {
-                ret = query.getColumn(0);
+                std::get<0>(ret) = query.getColumn(0);
+                std::get<1>(ret) = query.getColumn(1).getInt();
             }
 
             return ret;

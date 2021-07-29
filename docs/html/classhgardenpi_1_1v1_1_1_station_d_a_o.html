@@ -105,8 +105,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad1911b10490cacc2585636ef5da6b075"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_station_d_a_o.html#ad1911b10490cacc2585636ef5da6b075">update</a> (const Station::Ptr &amp;ptr) const override</td></tr>
 <tr class="memdesc:ad1911b10490cacc2585636ef5da6b075"><td class="mdescLeft">&#160;</td><td class="mdescRight">update <a class="el" href="structhgardenpi_1_1v1_1_1_station.html" title="pod who describe a irrigation station">Station</a> pod  <a href="classhgardenpi_1_1v1_1_1_station_d_a_o.html#ad1911b10490cacc2585636ef5da6b075">More...</a><br /></td></tr>
 <tr class="separator:ad1911b10490cacc2585636ef5da6b075"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9e5f4aa6b742325f2459b46260cdb6c"><td class="memItemLeft" align="right" valign="top">Stations&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_station_d_a_o.html#ad9e5f4aa6b742325f2459b46260cdb6c">getList</a> (const Aggregation::Ptr &amp;ptr) const</td></tr>
-<tr class="separator:ad9e5f4aa6b742325f2459b46260cdb6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a146d1f2c27977906bb4eba4d435e95f7"><td class="memItemLeft" align="right" valign="top">Stations&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_station_d_a_o.html#a146d1f2c27977906bb4eba4d435e95f7">getList</a> (const Aggregation::Ptr &amp;ptr, Status status=Status::ACTIVE) const</td></tr>
+<tr class="separator:a146d1f2c27977906bb4eba4d435e95f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a02e734ae91ca7232970acfddf3bd4cf3"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_station_d_a_o.html#a02e734ae91ca7232970acfddf3bd4cf3">toString</a> () noexcept override</td></tr>
 <tr class="memdesc:a02e734ae91ca7232970acfddf3bd4cf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the name of object.  <a href="classhgardenpi_1_1v1_1_1_station_d_a_o.html#a02e734ae91ca7232970acfddf3bd4cf3">More...</a><br /></td></tr>
 <tr class="separator:a02e734ae91ca7232970acfddf3bd4cf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -193,8 +193,8 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>dbFile</b></td></tr
 
 </div>
 </div>
-<a id="ad9e5f4aa6b742325f2459b46260cdb6c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad9e5f4aa6b742325f2459b46260cdb6c">&#9670;&nbsp;</a></span>getList()</h2>
+<a id="a146d1f2c27977906bb4eba4d435e95f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a146d1f2c27977906bb4eba4d435e95f7">&#9670;&nbsp;</a></span>getList()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -203,8 +203,18 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>dbFile</b></td></tr
           <td class="memname">Stations StationDAO::getList </td>
           <td>(</td>
           <td class="paramtype">const Aggregation::Ptr &amp;&#160;</td>
-          <td class="paramname"><em>ptr</em></td><td>)</td>
-          <td> const</td>
+          <td class="paramname"><em>ptr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Status&#160;</td>
+          <td class="paramname"><em>status</em> = <code>Status::ACTIVE</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">

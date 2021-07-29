@@ -136,12 +136,14 @@ namespace hgardenpi
                 else
                 {
                     //update db structure to new one version
-                    auto &&version = DBGetVersion(database);
+                    auto &&[version, wifiConfigured] = DBGetMetadata(database);
                     if (version == 0)
                     {
                         throw runtime_error(_("database initialized but version not found"));
                     }
                     DBUpdate(database, version);
+
+                    Engine::getInstance()->wifiConfigured = wifiConfigured;
                 }
             }
 
