@@ -60,7 +60,6 @@ namespace hgardenpi
                 LCD_D7 = 14,       //Data pin 7
                 LCD_CONTRAST = 13  //Contrast
             };
-
             /**
              * @brief Constructor for the display 16x2
              * @param lcdRS set GPIO pin number for lcd RS pin
@@ -174,7 +173,7 @@ namespace hgardenpi
              * @brief set if is turn on the display contrast
              * @param contrastTurnOn true if you wont turn on the display contrast
              */
-            void setContrastTurnOn(int contrastTurnOn) noexcept override;
+            void setContrastTurnOn(bool contrastTurnOn) noexcept override;
 
             /**
              * Get display row

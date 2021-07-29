@@ -137,7 +137,7 @@ namespace hgardenpi
              * @brief set if is turn on the display contrast
              * @param contrastTurnOn true if you wont turn on the display contrast
              */
-            virtual void setContrastTurnOn(int contrastTurnOn) noexcept = 0;
+            virtual void setContrastTurnOn(bool contrastTurnOn) noexcept = 0;
 
             /**
              * Get display row

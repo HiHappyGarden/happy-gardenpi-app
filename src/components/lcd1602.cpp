@@ -127,7 +127,7 @@ inline void LCD1602::charDef(int index, uint8_t data[8]) noexcept
     ::lcdCharDef(handle, index, data);
 }
 
-inline void LCD1602::setContrastTurnOn(int contrastTurnOn) noexcept
+inline void LCD1602::setContrastTurnOn(bool contrastTurnOn) noexcept
 {
     lock_guard<mutex> lg(m);
     ::digitalWrite(lcdContrast, contrastTurnOn);
