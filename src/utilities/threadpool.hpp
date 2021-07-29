@@ -83,7 +83,7 @@ namespace hgardenpi
 
                 future<return_type> res = task->get_future();
                 {
-                    unique_lock<mutex> lock(queue_mutex);
+                    unique_lock<mutex> lock(queueMutex);
 
                     // don't allow enqueueing after stopping the pool
                     if (stop)
@@ -115,7 +115,7 @@ namespace hgardenpi
             queue<function<void()>> tasks;
 
             // synchronization
-            mutex queue_mutex;
+            mutex queueMutex;
             condition_variable condition;
             bool stop;
             size_t threads;

@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2021 Happy GardenPI
+// Copyright (c) $year. Happy GardenPI
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -19,48 +19,44 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+//
 
-#include <cstdlib>
-#include <iostream>
+//
+// Created by Antonio Salsi on 29/07/21.
+//
 
-#include "services/logservice.hpp"
-#include "engine.hpp"
+#pragma once
 
-#include "daos/aggregationdao.hpp"
-#include "engine.hpp"
+#include <cstdio>
 
-int main(int argc, char *argv[])
+#include "../constants.hpp"
+
+namespace hgardenpi
 {
-
-    using namespace std;
-
-    setlocale(LC_ALL, "");
-    bindtextdomain(HGARDENPI_NAME, "./locale");
-    textdomain(HGARDENPI_NAME);
-
-    try
+    inline namespace v1
     {
-        //initialize Happy GardenPI
 
-        hgardenpi::initialize();
+        /**
+         * @brief Sleep a thread for n millis
+         * @param run if run is false exit from loop
+         * @param millis to sleep
+         */
+        void threadSleep(volatile bool &run, size_t millis) noexcept;
 
-        hgardenpi::Aggregation::Ptr a = std::make_shared<hgardenpi::Aggregation>();
+        /**
+         * @brief Sleep a thread for n millis
+         * @param run if run is false exit from loop
+         * @param millis to sleep
+         */
+        void threadSleep(volatile bool &run, Time &&millis) noexcept;
 
-        //start loop
-        hgardenpi::start();
+        /**
+         * @brief Sleep a thread for n millis
+         * @param run if run is false exit from loop
+         * @param millis to sleep
+         */
+        void threadSleep(volatile bool &run, const Time &millis) noexcept;
     }
-    catch (const std::exception &e)
-    {
-        std::cerr << "error: " << e.what() << std::endl;
-
-        hgardenpi::Engine::getInstance()
-                ->getFactory()
-                ->getSystem()
-                ->getLogService()
-                ->write(LOG_ERR, e.what());
-
-        return EXIT_FAILURE;
-    }
-
-    return EXIT_SUCCESS;
 }
+
+
