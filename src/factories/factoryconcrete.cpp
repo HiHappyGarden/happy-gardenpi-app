@@ -50,10 +50,12 @@ namespace hgardenpi
             if (system)
             {
                 delete system;
+                system = nullptr;
             }
             if (device)
             {
                 delete device;
+                device = nullptr;
             }
         }
     }

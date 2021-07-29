@@ -44,6 +44,8 @@ namespace hgardenpi
             mutable ConfigInfo::Ptr configInfo = nullptr;
             mutable LockService *lockService = nullptr;
             mutable LogService *logService = nullptr;
+            ThreadPool *threadPool = nullptr;
+            mutable Scheduler *scheduler = nullptr;
 
         public:
             SystemConcrete() = default;
@@ -98,6 +100,25 @@ namespace hgardenpi
             inline const LogService *getLogService() const noexcept override
             {
                 return logService;
+            }
+
+            /**
+             * @brief Get the Service Scheduler
+             *
+             * @return const Scheduler *
+             */
+            [[nodiscard]] const Scheduler *getScheduler() const noexcept override
+            {
+                return scheduler;
+            }
+
+            /**
+             * Set ThreadPool instance
+             * @param threadPool instance
+             */
+            inline void setThreadPool(const ThreadPool *threadPool) noexcept override
+            {
+                this->threadPool = const_cast<ThreadPool *>(threadPool);
             }
 
             /**

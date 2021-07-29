@@ -62,27 +62,24 @@ namespace hgardenpi
             /**
              * @brief scheduling info
              */
+            #pragma pack(push,2)
             struct Schedule
             {
                 static const constexpr uint8_t NOT_SET = 0xFF;
 
                 uint8_t minute; //0 - 59
                 uint8_t hour; //0 - 23
-                uint8_t dayOfMonth; //1 - 31
-                uint8_t month; //1 - 12
-                uint8_t weekDay; //1 - 7
+                uint8_t days; //byte contains day enabled
 
 
                 /**
                  * @brief Set the scheduling
                  * @param minute valid value 0 - 59
                  * @param hour valid value 0 - 23
-                 * @param dayOfMonth valid value 1 - 31
-                 * @param month valid value 1 - 12
-                 * @param weekDay valid value 1 - 7
+                 * @param days in bit format
                  * @exception runtime_error when some value in not valid
                  */
-                void set(uint8_t minute, uint8_t hour, uint8_t dayOfMonth, uint8_t month, uint8_t weekDay);
+                void set(uint8_t minute, uint8_t hour, uint8_t days);
 
                 /**
                  * @brief Set the scheduling
@@ -97,6 +94,8 @@ namespace hgardenpi
                 [[nodiscard]] string get() const noexcept;
 
             } schedule;
+            #pragma pack(pop)
+
             /**
              * @brief start scheduling period if enhanced
              */
@@ -118,8 +117,11 @@ namespace hgardenpi
              */
             Stations stations;
 
-
-            inline string toString() const noexcept
+            /**
+             *
+             * @return
+             */
+            [[nodiscard]] inline string toString() const noexcept
             {
                 return "id:" + to_string(id) + " "
                 + "description:" + description + " "

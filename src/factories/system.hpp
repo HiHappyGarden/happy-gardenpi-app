@@ -25,6 +25,7 @@
 #include "../services/configservice.hpp"
 #include "../services/lockservice.hpp"
 #include "../services/logservice.hpp"
+#include "../services/scheduler.hpp"
 #include "../interfaces/startable.hpp"
 #include "../interfaces/releasable.hpp"
 
@@ -33,6 +34,8 @@ namespace hgardenpi
 
     inline namespace v1
     {
+
+        class ThreadPool;
 
         /**
          * @brief Factory for management of system services devices
@@ -57,16 +60,29 @@ namespace hgardenpi
             /**
              * @brief Get the Lock Service object
              * 
-             * @return const LockService*
+             * @return const LockService *
              */
             [[nodiscard]] virtual const LockService *getLockService() const noexcept = 0;
 
             /**
              * @brief Get the Log Service object
              * 
-             * @return const LogService& 
+             * @return const LogService *
              */
             [[nodiscard]] virtual const LogService *getLogService() const noexcept = 0;
+
+            /**
+             * @brief Get the Service Scheduler
+             *
+             * @return const Scheduler *
+             */
+            [[nodiscard]] virtual const Scheduler *getScheduler() const noexcept = 0;
+
+            /**
+             * Set ThreadPool instance
+             * @param threadPool instance
+             */
+            virtual void setThreadPool(const ThreadPool *threadPool) noexcept = 0;
         };
 
     }

@@ -54,6 +54,20 @@ namespace hgardenpi
         };
 
         /**
+         * Day of week representation
+         */
+        enum class DayOfWeek : uint8_t
+        {
+            MONDAY    = 0b00000001,
+            TUESDAY   = 0b00000010,
+            WEDNESDAY = 0b00000100,
+            THURSDAY  = 0b00001000,
+            FRIDAY    = 0b00010000,
+            SATURDAY  = 0b00100000,
+            SUNDAY    = 0b01000000
+        };
+
+        /**
          * Status of an element in the project
          */
         enum class Status: uint8_t

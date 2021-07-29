@@ -54,7 +54,7 @@ namespace hgardenpi
     {
 
 
-        void Aggregation::Schedule::set(uint8_t minute, uint8_t hour, uint8_t dayOfMonth, uint8_t month, uint8_t weekDay)
+        void Aggregation::Schedule::set(uint8_t minute, uint8_t hour, uint8_t days)
         {
             if (minute > 59 && minute != Aggregation::Schedule::NOT_SET)
             {
@@ -66,26 +66,14 @@ namespace hgardenpi
                 throw runtime_error("hour value not in 0-59 range");
             }
 
-            if (dayOfMonth > 31 && dayOfMonth != Aggregation::Schedule::NOT_SET)
+            if (days > 0x7F && days != Aggregation::Schedule::NOT_SET)
             {
-                throw runtime_error("dayOfMonth value not in 1-31 range");
-            }
-
-            if (month > 7 && month != Aggregation::Schedule::NOT_SET)
-            {
-                throw runtime_error("month value not in 1-12 range");
-            }
-
-            if (weekDay > 7 && weekDay != Aggregation::Schedule::NOT_SET)
-            {
-                throw runtime_error("weekDay value not in 1-7 range");
+                throw runtime_error("days value not in 0x01-0x7F range");
             }
 
             this->minute = minute;
             this->hour = hour;
-            this->dayOfMonth = dayOfMonth;
-            this->month = month;
-            this->weekDay = weekDay;
+            this->days = days;
         }
 
         void Aggregation::Schedule::set(const string &scheduleFormat)
@@ -99,13 +87,11 @@ namespace hgardenpi
                 {
                     case 0: HGARDENPI_FROM_STRING_TO_UINT(minute)
                     case 1: HGARDENPI_FROM_STRING_TO_UINT(hour)
-                    case 2: HGARDENPI_FROM_STRING_TO_UINT(dayOfMonth)
-                    case 3: HGARDENPI_FROM_STRING_TO_UINT(month)
-                    case 4: HGARDENPI_FROM_STRING_TO_UINT(weekDay)
+                    case 2: HGARDENPI_FROM_STRING_TO_UINT(days)
                 }
                 index++;
             }
-            set(minute, hour, dayOfMonth, month, weekDay);
+            set(minute, hour, days);
         }
 
 
@@ -114,9 +100,7 @@ namespace hgardenpi
             string ret;
             HGARDENPI_SET_SCHEDULE_FIELD(minute)
             HGARDENPI_SET_SCHEDULE_FIELD(hour)
-            HGARDENPI_SET_SCHEDULE_FIELD(dayOfMonth)
-            HGARDENPI_SET_SCHEDULE_FIELD(month)
-            HGARDENPI_SET_SCHEDULE_FIELD(weekDay)
+            HGARDENPI_SET_SCHEDULE_FIELD(days)
 
             ret = ret.substr(0, ret.size() - 1);
 

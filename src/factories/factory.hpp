@@ -55,8 +55,6 @@ namespace hgardenpi
              * @return const Device* 
              */
             [[nodiscard]] virtual const System *getSystem() const noexcept = 0;
-
-
         };
 
     }

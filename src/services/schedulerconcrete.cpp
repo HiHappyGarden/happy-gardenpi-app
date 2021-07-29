@@ -22,4 +22,9 @@
 
 #include "schedulerconcrete.hpp"
 
-using hgardenpi::v1::Scheduler;
+using hgardenpi::v1::SchedulerConcrete;
+
+SchedulerConcrete::SchedulerConcrete(const ThreadPool *threadPool) : threadPool(threadPool)
+{
+
+}
