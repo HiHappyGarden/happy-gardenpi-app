@@ -27,6 +27,8 @@
 #include "factories/factoryconcrete.hpp"
 #include "clients/mqttclient.hpp"
 #include "utilities/threadpool.hpp"
+#include "daos/aggregationdao.hpp"
+#include "daos/stationdao.hpp"
 
 namespace hgardenpi
 {
@@ -44,6 +46,9 @@ namespace hgardenpi
 
             Factory *factory = nullptr;
             MQTTClient *mqttClient = nullptr;
+
+            AggregationDAO *aggregationDao = nullptr;
+            StationDAO *stationDao = nullptr;
 
         public:
             Engine();
@@ -79,6 +84,17 @@ namespace hgardenpi
             {
                 return typeid(*this).name();
             }
+
+            inline const  AggregationDAO *getAggregationDao() const noexcept
+            {
+                return aggregationDao;
+            }
+
+            inline const StationDAO *getStationDao() const noexcept
+            {
+                return stationDao;
+            }
+
         };
 
         /**

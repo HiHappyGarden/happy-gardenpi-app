@@ -73,6 +73,14 @@ namespace hgardenpi
             void update(const Aggregation::Ptr &ptr) const override;
 
             /**
+             * Retrieve list of Aggregation
+             * @param status filter by status
+             * @return list of aggregation
+             * @throws exception when query is wrong
+             */
+            [[nodiscard]] Aggregations getList(Status status = Status::ACTIVE) const;
+
+            /**
              * @brief Return the name of object
              *
              * @return std::string name of object

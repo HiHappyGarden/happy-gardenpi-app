@@ -24,7 +24,7 @@
 
 #include "system.hpp"
 
-#include "../services/configservice.hpp"
+#include "../services/configserviceconcrete.hpp"
 #include "../services/lockserviceconcrete.hpp"
 #include "../services/logserviceconcrete.hpp"
 
@@ -44,7 +44,6 @@ namespace hgardenpi
             mutable ConfigInfo::Ptr configInfo = nullptr;
             mutable LockService *lockService = nullptr;
             mutable LogService *logService = nullptr;
-            ThreadPool *threadPool = nullptr;
             mutable Scheduler *scheduler = nullptr;
 
         public:
@@ -115,11 +114,9 @@ namespace hgardenpi
             /**
              * Set ThreadPool instance
              * @param threadPool instance
+             * @throw runtime_error when something goes wrong
              */
-            inline void setThreadPool(const ThreadPool *threadPool) noexcept override
-            {
-                this->threadPool = const_cast<ThreadPool *>(threadPool);
-            }
+            void setThreadPool(const ThreadPool *threadPool) override;
 
             /**
              * @brief Return the name of object

@@ -84,3 +84,23 @@ void AggregationDAO::update(const Aggregation::Ptr &ptr) const
 
     transaction.commit();
 }
+
+[[maybe_unused]] Aggregations AggregationDAO::getList(Status status) const
+{
+    Aggregations ret;
+
+    Database database(dbFile, SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
+
+    // Compile a SQL query, containing one parameter (index 1)
+    SQLite::Statement query(database, "SELECT * FROM aggregations WHERE status = ?");
+
+    query.bind(1, static_cast<uint8_t>(status));
+
+    // Loop to execute the query step by step, to get rows of result
+    while (query.executeStep())
+    {
+        ret.push_back(fill(query));
+    }
+
+    return ret;
+}

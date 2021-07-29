@@ -79,8 +79,9 @@ add_executable(hgardenpi
         src/pods/configinfo.hpp
         src/pods/deviceinfo.hpp
         src/pods/station.hpp
-        src/services/configservice.cpp
         src/services/configservice.hpp
+        src/services/configserviceconcrete.cpp
+        src/services/configserviceconcrete.hpp
         src/services/deviceservice.cpp
         src/services/deviceservice.hpp
         src/services/lockservice.hpp

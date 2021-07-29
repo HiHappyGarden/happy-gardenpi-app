@@ -76,7 +76,7 @@ void StationDAO::update(const Station::Ptr &ptr) const
     transaction.commit();
 }
 
-Stations StationDAO::getList(const Aggregation::Ptr &ptr) const
+Stations StationDAO::getList(const Aggregation::Ptr &ptr, Status status) const
 {
     Stations ret;
 
@@ -84,9 +84,10 @@ Stations StationDAO::getList(const Aggregation::Ptr &ptr) const
 
     Transaction transaction(database);
 
-    Statement query(database, "SELECT * FROM stations WHERE id = ?");
+    Statement query(database, "SELECT * FROM stations WHERE status = ? AND id = ?");
 
-    query.bind(1, ptr->id);
+    query.bind(1, static_cast<uint8_t>(status));
+    query.bind(2, ptr->id);
 
     while (query.executeStep())
     {

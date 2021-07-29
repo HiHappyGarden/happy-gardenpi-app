@@ -22,14 +22,9 @@
 
 #include "engine.hpp"
 
-#include <wiringPi.h>
 #include <mosquitto.h>
 #include <csignal>
 #include <syslog.h>
-
-#include <iostream>
-#include <thread>
-using namespace std;
 
 #include <SQLiteCpp/Database.h>
 
@@ -90,6 +85,16 @@ namespace hgardenpi
                 delete threadPool;
                 threadPool = nullptr;
             }
+            if (aggregationDao)
+            {
+                delete aggregationDao;
+                aggregationDao = nullptr;
+            }
+            if (stationDao)
+            {
+                delete stationDao;
+                stationDao = nullptr;
+            }
         }
 
         void initialize()
@@ -105,12 +110,13 @@ namespace hgardenpi
             device->setLogService(system->getLogService());
             device->initialize();
 
-            //initialize threadPool and all sub factory
+            //initialize threadPool in all sub factory
             threadPool = new (nothrow) ThreadPool(device->getInfo()->cpu);
             if (!threadPool) {
-                throw runtime_error("no memory for threadPool");
+                throw runtime_error(_("no memory for threadPool"));
             }
             device->setThreadPool(threadPool);
+            system->setThreadPool(threadPool);
 
             //get database file path from config file
             string &dbFile = system->getConfigInfo()->database.file;
@@ -118,24 +124,40 @@ namespace hgardenpi
             //write sw version in log
             system->getLogService()->write(LOG_INFO, "database: %s", dbFile.c_str());
 
-            //init database, out of SOLID pattern :)
-            Database database(dbFile, SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
+            {
+                //init database, out of SOLID pattern :)
+                Database database(dbFile, SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
 
-            //check if database exist or not
-            if (!database.tableExists(DB_METADATA_TABLE))
-            {
-                DBUpdate(database);
-            }
-            else
-            {
-                //update db structure to new one version
-                auto &&version = DBGetVersion(database);
-                if (version == 0)
+                //check if database exist or not
+                if (!database.tableExists(DB_METADATA_TABLE))
                 {
-                    throw runtime_error("database initialized but version not found");
+                    DBUpdate(database);
                 }
-                DBUpdate(database, version);
+                else
+                {
+                    //update db structure to new one version
+                    auto &&version = DBGetVersion(database);
+                    if (version == 0)
+                    {
+                        throw runtime_error(_("database initialized but version not found"));
+                    }
+                    DBUpdate(database, version);
+                }
             }
+
+
+            Engine::getInstance()->aggregationDao = new (nothrow) AggregationDAO(dbFile);
+            if(!Engine::getInstance()->aggregationDao)
+            {
+                throw runtime_error(_("no memory for aggregationDao"));
+            }
+
+            Engine::getInstance()->stationDao = new (nothrow) StationDAO(dbFile);
+            if(!Engine::getInstance()->stationDao)
+            {
+                throw runtime_error(_("no memory for stationDao"));
+            }
+
 
             // //initialize mosquittopp
             // //init database, out of SOLID pattern :)
@@ -152,10 +174,21 @@ namespace hgardenpi
             //get pointers of system and device
             auto system = const_cast<System *>(Engine::getInstance()->factory->getSystem());
             auto device = const_cast<Device *>(Engine::getInstance()->factory->getDevice());
+            auto aggregationDao = Engine::getInstance()->aggregationDao;
+            auto stationDao = Engine::getInstance()->stationDao;
 
+            //add signal management
             signal(SIGINT, handleSignal);
             signal(SIGTERM, handleSignal);
 
+            //retrieve all active aggregations
+            auto && aggregations = aggregationDao->getList();
+            for (auto &&aggregation : aggregations)
+            {
+                aggregation->stations = move(stationDao->getList(aggregation));
+            }
+
+            //start all
             system->start(run);
             device->start(run);
 

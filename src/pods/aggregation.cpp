@@ -102,7 +102,7 @@ namespace hgardenpi
             HGARDENPI_SET_SCHEDULE_FIELD(hour)
             HGARDENPI_SET_SCHEDULE_FIELD(days)
 
-            ret = ret.substr(0, ret.size() - 1);
+            ret = move(ret.substr(0, ret.size() - 1));
 
             return ret;
         }
