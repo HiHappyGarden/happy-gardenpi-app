@@ -36,6 +36,7 @@ Station::Ptr StationDAO::fill(const SQLite::Statement &statement) const
     ret->id = query.getColumn("id");
     ret->name = query.getColumn("name").getString();
     ret->description = query.getColumn("description").getString();
+    ret->wateringTime = query.getColumn("watering_time").getUInt();
     ret->status = static_cast<Status>(query.getColumn("status").getUInt());
 
     return ret;
@@ -47,11 +48,12 @@ void StationDAO::insert(const Station::Ptr &ptr) const
 
     Transaction transaction(database);
 
-    Statement query(database, "INSERT INTO stations (name, description, status) VALUES (?, ?, ?)");
+    Statement query(database, "INSERT INTO stations (name, description, watering_time, status) VALUES (?, ?, ?, ?)");
 
     query.bind(1, ptr->name);
     query.bind(2, ptr->description);
-    query.bind(3, static_cast<int>(ptr->status));
+    query.bind(3, ptr->wateringTime);
+    query.bind(4, static_cast<int>(ptr->status));
 
     query.executeStep();
 
@@ -68,8 +70,9 @@ void StationDAO::update(const Station::Ptr &ptr) const
 
     query.bind(1, ptr->name);
     query.bind(2, ptr->description);
-    query.bind(3, static_cast<int>(ptr->status));
-    query.bind(4, ptr->id);
+    query.bind(3, ptr->wateringTime);
+    query.bind(4, static_cast<uint8_t>(ptr->status));
+    query.bind(5, ptr->id);
 
     query.executeStep();
 

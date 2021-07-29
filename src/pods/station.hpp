@@ -59,9 +59,13 @@ namespace hgardenpi
              */
             string name;
             /**
-             * @brief brief description of station
+             * @brief description of station
              */
             string description;
+            /**
+             * @brief watering time in minutes
+             */
+            uint wateringTime;
             /**
              * @brief status of station
              */

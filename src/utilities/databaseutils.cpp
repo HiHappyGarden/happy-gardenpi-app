@@ -54,6 +54,7 @@ namespace hgardenpi
                 "\t\"id\"\tINTEGER NOT NULL UNIQUE,\n"
                 "\t\"name\"\tTEXT NOT NULL,\n"
                 "\t\"description\"\tTEXT,\n"
+                "\t\"watering_time\"\tINTEGER,\n"
                 "\t\"status\"\tINTEGER DEFAULT 1,\n"
                 "\t\"id_aggregation\"\tINTEGER,\n"
                 "\tFOREIGN KEY(\"id_aggregation\") REFERENCES \"aggregations\"(\"id\"),\n"
