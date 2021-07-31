@@ -31,8 +31,10 @@ using std::runtime_error;
 using std::stringstream;
 
 #include "../services/deviceservice.hpp"
-#include "../components/lcd1602.hpp"
 #include "../utilities/threadpool.hpp"
+#include "../components/lcd1602.hpp"
+#include "../components/buttonconcrete.hpp"
+
 
 
 #include <iostream>
@@ -88,6 +90,16 @@ namespace hgardenpi
                 HGARDENPI_ERROR_LOG_AMD_THROW("no memory for display")
             }
 
+            button = new (std::nothrow) ButtonConcrete(ButtonConcrete::PIN);
+            if (!button)
+            {
+                HGARDENPI_ERROR_LOG_AMD_THROW("no memory for button")
+            }
+
+            button->setInternalOnClick([&]
+            {
+                display->setContrastTurnOn(true);
+            });
         }
 
         /**

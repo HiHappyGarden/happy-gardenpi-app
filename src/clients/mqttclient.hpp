@@ -56,7 +56,7 @@ namespace hgardenpi
             virtual void loop(volatile bool &run) = 0;
 
             /**
-             * @brief Set the On Message Callback object
+             * @brief Set the On Message OnClick object
              * 
              * @param onMessageCallback 
              */

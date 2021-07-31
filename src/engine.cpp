@@ -190,9 +190,17 @@ namespace hgardenpi
                 aggregation->stations = move(stationDao->getList(aggregation));
             }
 
+            device->setButtonOnClick([] {
+
+                printf("clieck\n");
+
+            });
+
             //start all
             system->start(run);
             device->start(run);
+
+
 
 //            int i = 0;
             while (run)

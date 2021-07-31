@@ -27,6 +27,9 @@
 
 #pragma once
 
+#include <functional>
+
+
 #include "../interfaces/object.hpp"
 
 namespace hgardenpi
@@ -35,6 +38,20 @@ namespace hgardenpi
     {
         class Button : public Object
         {
+        public:
+            using OnClick = std::function<void()>;
+
+            /**
+             * @brief Set onClick triggered when button pull down
+             * @param onClick called when button pull down
+             */
+            virtual void setOnClick(OnClick onClick) const noexcept = 0;
+
+            /**
+             * @brief Set onClick only for internal management triggered when button pull down
+             * @param onClick called when button pull down
+             */
+            virtual void setInternalOnClick(OnClick onClick) const noexcept = 0;
 
         };
     }

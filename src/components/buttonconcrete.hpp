@@ -31,7 +31,6 @@
 
 #include "button.hpp"
 #include <mutex>
-#include <functional>
 
 namespace hgardenpi
 {
@@ -40,35 +39,37 @@ namespace hgardenpi
 
         using std::string;
         using std::mutex;
-        using std::function;
 
         /**
          * @brief Representation concrete of button
          */
         class ButtonConcrete final : public Button
         {
-        public:
-
-            using Callback = function<void()>;
-
-            enum GPIOPinDisplay : int
-            {
-                PIN = 8,
-            };
-
         private:
             mutex m;
 
-            Callback callback;
         public:
+
+            enum GPIOPinDisplay : int
+            {
+                PIN = 9,
+            };
+
+
             explicit ButtonConcrete(int lcdRS) noexcept;
             HGARDENPI_NO_COPY_NO_MOVE(ButtonConcrete)
 
             /**
-             * @brief Set callback triggered when button pull down
-             * @param callback called when button pull down
+             * @brief Set onClick triggered when button pull down
+             * @param onClick called when button pull down
              */
-            void setCallback(Callback callback) noexcept;
+            void setOnClick(OnClick onClick) const noexcept override;
+
+            /**
+             * @brief Set onClick only for internal management triggered when button pull down
+             * @param onClick called when button pull down
+             */
+            void setInternalOnClick(OnClick onClick) const noexcept override;
 
             /**
              * @brief Return the name of object
@@ -80,7 +81,6 @@ namespace hgardenpi
                 return typeid(*this).name();
             }
         };
-
 
     }
 }
