@@ -32,11 +32,9 @@
 using hgardenpi::v1::ButtonConcrete;
 
 static int lcdRS;
-
 static ButtonConcrete::OnClick callback;
 static ButtonConcrete::OnClick internalCallback;
 
-bool lastClickValue = false;
 
 ButtonConcrete::ButtonConcrete(int lcdRS) noexcept
 {
