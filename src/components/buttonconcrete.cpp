@@ -29,6 +29,10 @@
 
 #include <wiringPi.h>
 
+#include <thread>
+using namespace std;
+
+
 using hgardenpi::v1::ButtonConcrete;
 
 static int lcdRS;
@@ -46,7 +50,8 @@ ButtonConcrete::ButtonConcrete(int lcdRS) noexcept
 
 void ButtonConcrete::setOnClick(OnClick onClick) const noexcept
 {
-    ::callback = std::move(onClick);
+    lock_guard<mutex> lg(m);
+    ::callback = move(onClick);
 
     wiringPiISR(::lcdRS, INT_EDGE_RISING, []()
     {
@@ -57,5 +62,6 @@ void ButtonConcrete::setOnClick(OnClick onClick) const noexcept
 
 void ButtonConcrete::setInternalOnClick(OnClick onClick) const noexcept
 {
-    ::internalCallback = std::move(onClick);
+    lock_guard<mutex> lg(m);
+    ::internalCallback = move(onClick);
 }
