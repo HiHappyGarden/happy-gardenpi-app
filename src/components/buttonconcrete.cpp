@@ -31,13 +31,33 @@
 
 using hgardenpi::v1::ButtonConcrete;
 
-ButtonConcrete::ButtonConcrete(int lcdRS) noexcept: callback([]{})
+static int lcdRS;
+
+static ButtonConcrete::OnClick callback;
+static ButtonConcrete::OnClick internalCallback;
+
+bool lastClickValue = false;
+
+ButtonConcrete::ButtonConcrete(int lcdRS) noexcept
 {
     pinMode(lcdRS, INPUT);
+    ::callback = [](){};
+    ::internalCallback = [](){};
+    ::lcdRS = lcdRS;
 }
 
-void ButtonConcrete::setCallback(Callback callback) noexcept
+void ButtonConcrete::setOnClick(OnClick onClick) const noexcept
 {
-    this->callback = std::move(callback);
+    ::callback = std::move(onClick);
 
+    wiringPiISR(::lcdRS, INT_EDGE_RISING, []()
+    {
+        ::internalCallback();
+        ::callback();
+    });
+}
+
+void ButtonConcrete::setInternalOnClick(OnClick onClick) const noexcept
+{
+    ::internalCallback = std::move(onClick);
 }

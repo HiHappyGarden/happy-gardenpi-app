@@ -93,7 +93,7 @@ namespace hgardenpi
             void loop(volatile bool &run) override;
 
             /**
-             * @brief Set the On Message Callback object
+             * @brief Set the On Message OnClick object
              * 
              * @param onMessageCallback 
              */

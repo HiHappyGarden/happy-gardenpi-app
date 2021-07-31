@@ -29,6 +29,7 @@
 #include "../interfaces/releasable.hpp"
 #include "../interfaces/object.hpp"
 #include "../pods/deviceinfo.hpp"
+#include "../components/button.hpp"
 
 namespace hgardenpi
 {
@@ -69,6 +70,12 @@ namespace hgardenpi
              * @param threadPool instance
              */
             virtual void setThreadPool(const ThreadPool *threadPool) noexcept = 0;
+
+            /**
+             * @brief set callback triggered whet button willi be pressed or released
+             * @param onClick callback lambda
+             */
+            virtual void setButtonOnClick(Button::OnClick onClick) noexcept = 0;
 
             /**
              * @brief Print on system display
