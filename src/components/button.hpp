@@ -36,9 +36,15 @@ namespace hgardenpi
 {
     inline namespace v1
     {
+        /**
+         * Abstract button
+         */
         class Button : public Object
         {
         public:
+            /**
+             * Callback function
+             */
             using OnClick = std::function<void()>;
 
             /**
