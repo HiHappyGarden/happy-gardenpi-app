@@ -49,8 +49,6 @@ namespace hgardenpi
             Display *display = nullptr;
             Button *button = nullptr;
 
-            bool enableMainDisplayLoop = true;
-
         public:
             DeviceConcrete() = default;
             ~DeviceConcrete() noexcept override;
@@ -69,12 +67,6 @@ namespace hgardenpi
              * @exception runtime_error when hardware requisites mismatch
              */
             void start(volatile bool &run) override;
-
-            /**
-             * @brief release a resource
-             * 
-             */
-            void release() noexcept override;
 
             /**
              * @brief Get CPU temperature

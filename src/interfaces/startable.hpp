@@ -36,12 +36,6 @@ namespace hgardenpi
         {
         public:
             virtual ~Startable() = default;
-            /**
-             * @brief Before all call this function fo initialize the project
-             * 
-             * @exception runtime_error when hardware requisites mismatch
-             */
-            virtual void initialize() = 0;
 
             /**
              * @brief Start main look and scheduler

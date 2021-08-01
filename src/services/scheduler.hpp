@@ -22,29 +22,48 @@
 
 #pragma once
 
-#include <mutex>
-#include <functional>
 
-#include "../interfaces/singleton.hpp"
+#include "../interfaces/startable.hpp"
+#include "../pods/aggregation.hpp"
 #include "../constants.hpp"
 
 namespace hgardenpi
 {
     inline namespace v1
     {
-        using std::mutex;
-        using std::string;
 
         /**
          * @brief Scheduler for scheduing acrion, inside of this run a loop every one second
          * 
          */
-        class Scheduler
+        class Scheduler : public Startable
         {
 
         public:
             Scheduler() = default;
             virtual ~Scheduler() = default;
+
+            /**
+             * Insert into scheduler an aggregation of station
+             * @param ptr of aggregation
+             * @throw runtime_error when there some problem in aggregation
+             */
+            virtual void schedule(const Aggregation::Ptr &ptr) = 0;
+
+            /**
+             * Shot one time an aggregation of station triggered from user
+             * @param ptr of aggregation
+             * @throw runtime_error when there some problem in aggregation
+             */
+            virtual void shot(const Aggregation::Ptr &ptr) const = 0;
+
+            /**
+             * Shot one time an station triggered from user
+             * @param ptr of station
+             * @throw runtime_error when there some problem in station
+             */
+            virtual void shot(const Station::Ptr &ptr) const = 0;
+
         };
 
     }

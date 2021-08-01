@@ -39,14 +39,11 @@ namespace hgardenpi
 
         /**
          * @brief Scheduler for scheduing acrion, inside of this run a loop every one second
-         * 
          */
         class SchedulerConcrete final : public Scheduler, public Object
         {
-
-            bool start = false;
-
             mutable mutex m;
+
             const ThreadPool *threadPool = nullptr;
 
         public:
@@ -54,6 +51,34 @@ namespace hgardenpi
             ~SchedulerConcrete() override = default;
 
             HGARDENPI_NO_COPY_NO_MOVE(SchedulerConcrete)
+
+            /**
+             * @brief Start main look and scheduler
+             * @param run check if the loops are in execution
+             * @exception runtime_error when hardware requisites mismatch
+             */
+            void start(volatile bool &run) override;
+
+            /**
+             * Insert into scheduler an aggregation of station
+             * @param ptr of aggregation
+             * @throw runtime_error when there some problem in aggregation
+             */
+            void schedule(const Aggregation::Ptr &ptr) override;
+
+            /**
+             * Shot one time an aggregation of station triggered from user
+             * @param ptr of aggregation
+             * @throw runtime_error when there some problem in aggregation
+             */
+            void shot(const Aggregation::Ptr &ptr) const override;
+
+            /**
+             * Shot one time an station triggered from user
+             * @param ptr of station
+             * @throw runtime_error when there some problem in station
+             */
+            void shot(const Station::Ptr &ptr) const override;
 
             /**
              * @brief Return the name of object
@@ -64,6 +89,7 @@ namespace hgardenpi
             {
                 return typeid(*this).name();
             }
+
         };
 
     }

@@ -44,7 +44,7 @@ namespace hgardenpi
 
         typedef std::tuple<uint8_t, bool> Metadata;
 
-        const constexpr char *DB_METADATA_TABLE = "metadata";
+        const inline constexpr char *DB_METADATA_TABLE = "metadata";
 
         /**
          * @brief Get version of database

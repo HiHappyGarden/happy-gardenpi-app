@@ -28,3 +28,26 @@ SchedulerConcrete::SchedulerConcrete(const ThreadPool *threadPool) : threadPool(
 {
 
 }
+
+
+void SchedulerConcrete::start(volatile bool &run)
+{
+
+}
+
+void SchedulerConcrete::schedule(const Aggregation::Ptr &ptr)
+{
+
+}
+
+void SchedulerConcrete::shot(const Aggregation::Ptr &ptr) const
+{
+
+}
+
+void SchedulerConcrete::shot(const Station::Ptr &ptr) const
+{
+
+}
+
+
