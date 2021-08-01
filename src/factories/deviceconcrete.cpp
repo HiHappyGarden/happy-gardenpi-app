@@ -116,16 +116,15 @@ namespace hgardenpi
                                            turnOnContrastDisplayFor(run);
                                        });
 
-            //show welcome message
-            printOnDisplay(_("Ready..."), true);
-
-            turnOnContrastDisplayFor(run, Time::DISPLAY_SHORT_TICK);
-
-            threadSleep(run, Time::DISPLAY_SHORT_TICK);
-
             //set display loop
             threadPool->enqueue([&]
                                 {
+                                    //show welcome message
+                                    printOnDisplay(_("Ready..."), true);
+
+                                    turnOnContrastDisplayFor(run, Time::DISPLAY_SHORT_TICK);
+
+                                    threadSleep(run, Time::DISPLAY_SHORT_TICK);
 
                                     turnOnContrastDisplayFor(run);
 
