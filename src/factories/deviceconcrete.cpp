@@ -25,9 +25,11 @@
 #include <wiringPi.h>
 
 #include <stdexcept>
+
 using std::runtime_error;
 
 #include <sstream>
+
 using std::stringstream;
 
 #include "../services/deviceservice.hpp"
@@ -36,8 +38,8 @@ using std::stringstream;
 #include "../components/buttonconcrete.hpp"
 
 
-
 #include <iostream>
+
 using namespace std;
 
 
@@ -48,6 +50,8 @@ namespace hgardenpi
     {
 
         extern void threadSleep(volatile bool &run, Time &&millis) noexcept;
+
+        extern void threadSleep(volatile bool &run, const Time &millis) noexcept;
 
         DeviceConcrete::~DeviceConcrete() noexcept
         {
@@ -84,22 +88,19 @@ namespace hgardenpi
             //initialize WiringPI
             wiringPiSetup();
 
-            display = new (std::nothrow) LCD1602(LCD1602::LCD_RS, LCD1602::LCD_E, LCD1602::LCD_D4, LCD1602::LCD_D5, LCD1602::LCD_D6, LCD1602::LCD_D7, LCD1602::LCD_CONTRAST);
+            display = new(std::nothrow) LCD1602(LCD1602::LCD_RS, LCD1602::LCD_E, LCD1602::LCD_D4, LCD1602::LCD_D5,
+                                                LCD1602::LCD_D6, LCD1602::LCD_D7, LCD1602::LCD_CONTRAST);
             if (!display)
             {
                 HGARDENPI_ERROR_LOG_AMD_THROW("no memory for display")
             }
 
-            button = new (std::nothrow) ButtonConcrete(ButtonConcrete::PIN);
+            button = new(std::nothrow) ButtonConcrete(ButtonConcrete::PIN);
             if (!button)
             {
                 HGARDENPI_ERROR_LOG_AMD_THROW("no memory for button")
             }
 
-            button->setInternalOnClick([&]
-            {
-                display->setContrastTurnOn(true);
-            });
         }
 
         /**
@@ -109,11 +110,28 @@ namespace hgardenpi
          */
         void DeviceConcrete::start(volatile bool &run)
         {
-            threadPool->enqueue([&]() {
-                display->setContrastTurnOn(true);
-                while (run)
-                    printOnDisplayStandardInfo(run);
-            });
+            //set contrast management when click on button
+            button->setInternalOnClick([&]
+                                       {
+                                           turnOnContrastDisplayFor(run);
+                                       });
+
+            //show welcome message
+            printOnDisplay(_("Ready..."), true);
+
+            turnOnContrastDisplayFor(run, Time::DISPLAY_SHORT_TICK);
+
+            threadSleep(run, Time::DISPLAY_SHORT_TICK);
+
+            //set display loop
+            threadPool->enqueue([&]
+                                {
+
+                                    turnOnContrastDisplayFor(run);
+
+                                    while (run)
+                                        printOnDisplayStandardInfo(run);
+                                });
 
         }
 
@@ -132,54 +150,52 @@ namespace hgardenpi
             return deviceInfo;
         }
 
-        void DeviceConcrete::printOnDisplay(const string &txt, bool splitByDivisor) const noexcept
+        void DeviceConcrete::printOnDisplay(const string &txt, bool enableFormat) const noexcept
         {
-            if (!splitByDivisor)
+            if (!enableFormat)
             {
                 display->print(txt);
                 return;
             }
-            stringstream ss( txt);
+            stringstream ss(txt);
             vector<string> result;
 
-            while( ss.good() )
+            while (ss.good())
             {
                 string substr;
-                getline( ss, substr, DIVISOR);
-                result.push_back( substr );
+                getline(ss, substr, DIVISOR);
+                result.push_back(substr);
             }
 
-            if (result.size() == 2)
+
+            uint8_t i = 0;
+            for (auto &it : result)
             {
-                uint8_t i = 0;
-                for (auto &it : result)
+                if (i >= display->getRows())
                 {
-                    if (i >= display->getRows())
-                    {
-                        break;
-                    }
-                    decltype(auto) diff = display->getColls() - it.size();
-                    if (diff > 0) {
-                        auto &&row = result[i];
-                        for (int count = 0; count < static_cast<int>(diff / 2) + (diff % 2 ? 1 : 0) ; count++) {
-                            row = move(" " + row);
-                        }
-                        for (int count = 0; count < static_cast<int>(diff / 2); count++) {
-                            row += " ";
-                        }
-                        display->print(row);
-                    } else {
-                        display->print(txt);
-                        break;
-                    }
-                    i++;
+                    break;
                 }
+                decltype(auto) diff = display->getColls() - it.size();
+                if (diff > 0)
+                {
+                    auto &&row = result[i];
+                    for (int count = 0; count < static_cast<int>(diff / 2) + (diff % 2 ? 1 : 0); count++)
+                    {
+                        row = move(" " + row);
+                    }
+                    for (int count = 0; count < static_cast<int>(diff / 2); count++)
+                    {
+                        row += " ";
+                    }
+                    display->print(row);
+                } else
+                {
+                    display->print(txt);
+                    break;
+                }
+                i++;
+            }
 
-            }
-            else
-            {
-                display->print(txt);
-            }
         }
 
         void DeviceConcrete::printOnDisplayStandardInfo(volatile bool &run) const noexcept
@@ -193,8 +209,17 @@ namespace hgardenpi
             printOnDisplay(_("IP ADDRESS|") + (ip != "0:0:0:0" ? ip : _("not connected")), true);
 
             threadSleep(run, Time::DISPLAY_TICK);
+        }
 
-            display->setContrastTurnOn(false);
+        void DeviceConcrete::turnOnContrastDisplayFor(volatile bool &run, const Time &&wait) noexcept
+        {
+            threadPool->enqueue([&]
+                                {
+                                    display->setContrastTurnOn(true);
+                                    threadSleep(run, wait);
+                                    display->setContrastTurnOn(false);
+                                });
+
         }
     }
 }

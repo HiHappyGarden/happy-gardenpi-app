@@ -39,6 +39,7 @@ namespace hgardenpi
 
         using std::string;
         using std::mutex;
+        using std::lock_guard;
 
         /**
          * @brief Representation concrete of button
@@ -46,7 +47,7 @@ namespace hgardenpi
         class ButtonConcrete final : public Button
         {
         private:
-            mutex m;
+            mutable mutex m;
 
         public:
 

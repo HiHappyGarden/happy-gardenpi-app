@@ -80,9 +80,9 @@ namespace hgardenpi
             /**
              * @brief Print on system display
              * @param txt to show
-             * @param splitByDivisor ilf true split txt by Device::DIVISOR
+             * @param enableFormat enable center formation
              */
-            virtual void printOnDisplay(const string &txt, bool splitByDivisor) const noexcept = 0;
+            virtual void printOnDisplay(const string &txt, bool enableFormat) const noexcept = 0;
 
         };
 

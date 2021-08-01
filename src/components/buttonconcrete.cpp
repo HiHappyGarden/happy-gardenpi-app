@@ -53,7 +53,7 @@ void ButtonConcrete::setOnClick(OnClick onClick) const noexcept
     lock_guard<mutex> lg(m);
     ::callback = move(onClick);
 
-    wiringPiISR(::lcdRS, INT_EDGE_RISING, []()
+    wiringPiISR(::lcdRS, INT_EDGE_RISING, []
     {
         ::internalCallback();
         ::callback();

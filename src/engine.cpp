@@ -192,7 +192,7 @@ namespace hgardenpi
 
             device->setButtonOnClick([] {
 
-                printf("clieck\n");
+                printf("cliek\n");
 
             });
 
