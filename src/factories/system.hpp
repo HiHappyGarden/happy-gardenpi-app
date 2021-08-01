@@ -26,6 +26,7 @@
 #include "../services/lockservice.hpp"
 #include "../services/logservice.hpp"
 #include "../services/scheduler.hpp"
+#include "../interfaces/initializable.hpp"
 #include "../interfaces/startable.hpp"
 #include "../interfaces/releasable.hpp"
 
@@ -41,11 +42,11 @@ namespace hgardenpi
          * @brief Factory for management of system services devices
          * 
          */
-        class System : public Startable, public Releasable, public Object
+        class System : public Initializable, public Startable, public Releasable, public Object
         {
 
         public:
-            using Startable::initialize;
+            using Initializable::initialize;
             using Startable::start;
 
             ~System() override = default;

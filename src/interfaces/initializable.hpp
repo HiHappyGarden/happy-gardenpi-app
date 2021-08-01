@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2021. Happy GardenPI
+// Copyright (c) $year. Happy GardenPI
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,44 +22,34 @@
 //
 
 //
-// Created by Antonio Salsi on 29/07/21.
+// Created by Antonio Salsi on 01/08/21.
 //
 
-#include "threadutils.hpp"
-
-#include <thread>
-using namespace std;
+#pragma once
 
 namespace hgardenpi
 {
+
     inline namespace v1
     {
 
-        static constexpr const inline auto tick = static_cast<size_t>(Time::TICK) / 10;
-
-        void threadSleep(volatile bool &run, size_t millis) noexcept
+        /**
+         * @brief Abstract class for objet able to start somethink
+         *
+         */
+        class Initializable
         {
-            size_t count = 0;
-            while (run)
-            {
-                if (count >= millis / tick)
-                {
-                    return;
-                }
-                this_thread::sleep_for(chrono::milliseconds(tick));
-                count ++;
-            }
-        }
+        public:
+            virtual ~Initializable() = default;
 
-        void threadSleep(volatile bool &run, Time &&millis) noexcept //keep not inline
-        {
-            threadSleep(run, static_cast<size_t>(millis));
-        }
+            /**
+             * @brief Before all call this function fo initialize the project
+             *
+             * @exception runtime_error when hardware requisites mismatch
+             */
+            virtual void initialize() = 0;
 
+        };
 
-        void threadSleep(volatile bool &run, const Time &millis) noexcept //keep not inline
-        {
-            threadSleep(run, static_cast<size_t>(millis));
-        }
     }
 }

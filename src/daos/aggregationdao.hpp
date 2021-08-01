@@ -42,7 +42,7 @@ namespace hgardenpi
         {
         public:
 
-            static const constexpr char *TABLE = "aggregations";
+            static inline const constexpr char *TABLE = "aggregations";
 
             inline explicit AggregationDAO(const string &dbFile) noexcept : DAO(dbFile)
             {

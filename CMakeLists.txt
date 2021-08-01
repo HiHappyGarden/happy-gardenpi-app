@@ -68,6 +68,7 @@ add_executable(hgardenpi
         src/factories/system.hpp
         src/factories/systemconcrete.cpp
         src/factories/systemconcrete.hpp
+        src/interfaces/initializable.hpp
         src/interfaces/loggable.hpp
         src/interfaces/object.hpp
         src/interfaces/releasable.hpp

@@ -65,7 +65,7 @@ namespace hgardenpi
             #pragma pack(push,2)
             struct Schedule
             {
-                static const constexpr uint8_t NOT_SET = 0xFF;
+                static inline const constexpr uint8_t NOT_SET = 0xFF;
 
                 uint8_t minute; //0 - 59
                 uint8_t hour; //0 - 23

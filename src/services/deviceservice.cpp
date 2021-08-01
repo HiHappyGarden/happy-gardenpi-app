@@ -48,7 +48,7 @@ namespace hgardenpi
     inline namespace v1
     {
 
-        const constexpr char *IFR_NAME = "wlan0";
+        const inline constexpr char *IFR_NAME = "wlan0";
 
         float getCPUTemperature()
         {

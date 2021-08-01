@@ -42,7 +42,7 @@ namespace hgardenpi
         class StationDAO : public DAO<Station>
         {
         public:
-            static const constexpr char *TABLE = "stations";
+            static inline const constexpr char *TABLE = "stations";
 
             inline explicit StationDAO(const string &dbFile) noexcept : DAO(dbFile)
             {

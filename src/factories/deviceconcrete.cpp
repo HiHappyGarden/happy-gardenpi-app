@@ -38,7 +38,9 @@ using std::stringstream;
 #include "../components/buttonconcrete.hpp"
 
 
-#include <iostream>
+#include <iomanip>
+using std::setprecision;
+
 
 using namespace std;
 
@@ -120,9 +122,10 @@ namespace hgardenpi
             threadPool->enqueue([&]
                                 {
                                     //show welcome message
-                                    printOnDisplay(_("Ready..."), true);
 
                                     turnOnContrastDisplayFor(run, Time::DISPLAY_SHORT_TICK);
+
+                                    printOnDisplay("Happy|Garden PI", true);
 
                                     threadSleep(run, Time::DISPLAY_SHORT_TICK);
 
@@ -131,11 +134,6 @@ namespace hgardenpi
                                     while (run)
                                         printOnDisplayStandardInfo(run);
                                 });
-
-        }
-
-        void DeviceConcrete::release() noexcept
-        {
 
         }
 
@@ -151,6 +149,7 @@ namespace hgardenpi
 
         void DeviceConcrete::printOnDisplay(const string &txt, bool enableFormat) const noexcept
         {
+            display->print("");
             if (!enableFormat)
             {
                 display->print(txt);
@@ -208,9 +207,17 @@ namespace hgardenpi
             printOnDisplay(_("IP ADDRESS|") + (ip != "0:0:0:0" ? ip : _("not connected")), true);
 
             threadSleep(run, Time::DISPLAY_TICK);
+
+            stringstream ss;
+            ss << setprecision(2) << getCPUTemperature();
+
+            printOnDisplay(_("INTERNAL TEMP|") + ss.str() + "C", true);
+
+            threadSleep(run, Time::DISPLAY_TICK);
+
         }
 
-        void DeviceConcrete::turnOnContrastDisplayFor(volatile bool &run, const Time &&wait) noexcept
+        inline void DeviceConcrete::turnOnContrastDisplayFor(volatile bool &run, const Time &&wait) noexcept
         {
             threadPool->enqueue([&]
                                 {

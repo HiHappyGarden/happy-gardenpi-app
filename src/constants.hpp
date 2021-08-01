@@ -52,7 +52,7 @@ namespace hgardenpi
 
             DISPLAY_TICK = 6'000,
             DISPLAY_SHORT_TICK = DISPLAY_TICK / 2,
-            DISPLAY_CONTRAST = DISPLAY_TICK * 2,
+            DISPLAY_CONTRAST = DISPLAY_TICK * 3,
             TICK = 200
         };
 
@@ -83,10 +83,10 @@ namespace hgardenpi
         //hw needed for Happy GardenPI
 
         //raspberry pi 4
-        const constexpr char *HW_V1_DEBUG = "BCM2711";
+        const constexpr inline char *HW_V1_DEBUG = "BCM2711";
 
         //raspberry pi zero
-        const constexpr char *HW_V1 = "BCM2835";
+        const constexpr inline char *HW_V1 = "BCM2835";
 
     }
 }

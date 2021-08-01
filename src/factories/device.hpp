@@ -25,6 +25,7 @@
 #include <functional>
 
 #include "../interfaces/loggable.hpp"
+#include "../interfaces/initializable.hpp"
 #include "../interfaces/startable.hpp"
 #include "../interfaces/releasable.hpp"
 #include "../interfaces/object.hpp"
@@ -43,11 +44,11 @@ namespace hgardenpi
          * @brief Factory for management of peripherals devices
          * 
          */
-        class Device : public Loggable, public Startable, public Releasable, public Object
+        class Device : public Loggable, public Initializable, public Startable, public Object
         {
         public:
 
-            static const constexpr char DIVISOR = '|';
+            static inline const constexpr char DIVISOR = '|';
 
             ~Device() override = default;
             /**

@@ -47,7 +47,7 @@ namespace hgardenpi
         extern void threadSleep(volatile bool &run, Time &&millis) noexcept;
 
         //exit signal handler
-        static const __sighandler_t handleSignal = [](int)
+        static inline const __sighandler_t handleSignal = [](int)
         {
             run = false;
             if (threadPool)
