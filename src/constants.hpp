@@ -49,7 +49,10 @@ namespace hgardenpi
          */
         enum class Time : int64_t
         {
+
             DISPLAY_TICK = 6'000,
+            DISPLAY_SHORT_TICK = DISPLAY_TICK / 2,
+            DISPLAY_CONTRAST = DISPLAY_TICK * 2,
             TICK = 200
         };
 

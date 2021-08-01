@@ -23,7 +23,6 @@
 #pragma once
 
 #include <thread>
-using std::thread;
 
 #include "device.hpp"
 #include "../interfaces/object.hpp"
@@ -34,6 +33,8 @@ namespace hgardenpi
 
     inline namespace v1
     {
+
+        using std::thread;
 
         /**
          * @brief Factory for management of peripherals devices
@@ -49,6 +50,7 @@ namespace hgardenpi
             Button *button = nullptr;
 
             bool enableMainDisplayLoop = true;
+
         public:
             DeviceConcrete() = default;
             ~DeviceConcrete() noexcept override;
@@ -109,8 +111,9 @@ namespace hgardenpi
             /**
              * @brief Print on system display
              * @param txt to show
+             * @param enableFormat enable center formation
              */
-            void printOnDisplay(const string &txt, bool splitByDivisor) const noexcept override;
+            void printOnDisplay(const string &txt, bool enableFormat) const noexcept override;
 
             /**
              * @brief set callback triggered whet button willi be pressed or released
@@ -133,7 +136,18 @@ namespace hgardenpi
 
         private:
 
+            /**
+             * Show mac address and ip to display
+             * @param run true is in execution the loop
+             */
             void printOnDisplayStandardInfo(volatile bool &run) const noexcept;
+
+            /**
+             * Turn on the display contrast for some time
+             * @param run true is in execution the loop
+             * @param wait time of contrast display it's turned on
+             */
+            void turnOnContrastDisplayFor(volatile bool &run, const Time &&wait = Time::DISPLAY_CONTRAST) noexcept;
 
         };
 
