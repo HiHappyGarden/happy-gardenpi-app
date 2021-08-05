@@ -28,6 +28,7 @@
 #pragma once
 
 #include <cstdio>
+#include <mutex>
 
 #include "../constants.hpp"
 
@@ -36,26 +37,28 @@ namespace hgardenpi
     inline namespace v1
     {
 
-        /**
-         * @brief Sleep a thread for n millis
-         * @param run if run is false exit from loop
-         * @param millis to sleep
-         */
-        void threadSleep(volatile bool &run, size_t millis) noexcept;
+        using std::mutex;
 
         /**
          * @brief Sleep a thread for n millis
          * @param run if run is false exit from loop
          * @param millis to sleep
          */
-        void threadSleep(volatile bool &run, Time &&millis) noexcept;
+        void threadSleep(volatile bool &run, mutex &m, size_t millis) noexcept;
 
         /**
          * @brief Sleep a thread for n millis
          * @param run if run is false exit from loop
          * @param millis to sleep
          */
-        void threadSleep(volatile bool &run, const Time &millis) noexcept;
+        void threadSleep(volatile bool &run, mutex &m, Time &&millis) noexcept;
+
+        /**
+         * @brief Sleep a thread for n millis
+         * @param run if run is false exit from loop
+         * @param millis to sleep
+         */
+        void threadSleep(volatile bool &run, mutex &m, const Time &millis) noexcept;
     }
 }
 
