@@ -23,6 +23,7 @@
 #pragma once
 
 #include <thread>
+#include <mutex>
 
 #include "device.hpp"
 #include "../interfaces/object.hpp"
@@ -35,6 +36,7 @@ namespace hgardenpi
     {
 
         using std::thread;
+        using std::mutex;
 
         /**
          * @brief Factory for management of peripherals devices
@@ -42,6 +44,8 @@ namespace hgardenpi
          */
         class DeviceConcrete : public Device
         {
+            mutable mutex m;
+
             mutable DeviceInfo::Ptr deviceInfo = nullptr;
             LogService *logService = nullptr;
             ThreadPool *threadPool = nullptr;

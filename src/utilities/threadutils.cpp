@@ -35,10 +35,13 @@ namespace hgardenpi
     inline namespace v1
     {
 
-        static constexpr const inline auto tick = static_cast<size_t>(Time::TICK) / 10;
+        static constexpr const inline auto tick = static_cast<size_t>(Time::TICK);
 
-        void threadSleep(volatile bool &run, size_t millis) noexcept
+        void threadSleep(volatile bool &run, mutex &m, size_t millis) noexcept
         {
+            lock_guard<mutex> lg(m);
+            printf("%d %d %d\n", tick, millis, millis / tick);
+
             size_t count = 0;
             while (run)
             {
@@ -48,18 +51,19 @@ namespace hgardenpi
                 }
                 this_thread::sleep_for(chrono::milliseconds(tick));
                 count ++;
+                printf("%d\n", count);
             }
         }
 
-        void threadSleep(volatile bool &run, Time &&millis) noexcept //keep not inline
+        void threadSleep(volatile bool &run, mutex &m, Time &&millis) noexcept //keep not inline
         {
-            threadSleep(run, static_cast<size_t>(millis));
+            threadSleep(run, m, static_cast<size_t>(millis));
         }
 
 
-        void threadSleep(volatile bool &run, const Time &millis) noexcept //keep not inline
+        void threadSleep(volatile bool &run, mutex &m, const Time &millis) noexcept //keep not inline
         {
-            threadSleep(run, static_cast<size_t>(millis));
+            threadSleep(run, m, static_cast<size_t>(millis));
         }
     }
 }

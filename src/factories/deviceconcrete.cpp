@@ -51,9 +51,9 @@ namespace hgardenpi
     inline namespace v1
     {
 
-        extern void threadSleep(volatile bool &run, Time &&millis) noexcept;
+        extern void threadSleep(volatile bool &run, mutex &m, Time &&millis) noexcept;
 
-        extern void threadSleep(volatile bool &run, const Time &millis) noexcept;
+        extern void threadSleep(volatile bool &run, mutex &m, const Time &millis) noexcept;
 
         DeviceConcrete::~DeviceConcrete() noexcept
         {
@@ -127,7 +127,7 @@ namespace hgardenpi
 
                                     printOnDisplay("Happy|Garden PI", true);
 
-                                    threadSleep(run, Time::DISPLAY_SHORT_TICK);
+                                    threadSleep(run, m, Time::DISPLAY_SHORT_TICK);
 
                                     turnOnContrastDisplayFor(run);
 
@@ -200,20 +200,20 @@ namespace hgardenpi
         {
             printOnDisplay("MAC ADDRESS|" + getWlan0MAC(), true);
 
-            threadSleep(run, Time::DISPLAY_TICK);
+            threadSleep(run, m, Time::DISPLAY_TICK);
 
             auto &&ip = getWlan0IP();
 
             printOnDisplay(_("IP ADDRESS|") + (ip != "0:0:0:0" ? ip : _("not connected")), true);
 
-            threadSleep(run, Time::DISPLAY_TICK);
+            threadSleep(run, m, Time::DISPLAY_TICK);
 
             stringstream ss;
             ss << setprecision(2) << getCPUTemperature();
 
             printOnDisplay(_("INTERNAL TEMP|") + ss.str() + "C", true);
 
-            threadSleep(run, Time::DISPLAY_TICK);
+            threadSleep(run, m, Time::DISPLAY_TICK);
 
         }
 
@@ -221,8 +221,10 @@ namespace hgardenpi
         {
             threadPool->enqueue([&]
                                 {
+                                    lock_guard<mutex> lg(m);
                                     display->setContrastTurnOn(true);
-                                    threadSleep(run, wait);
+                                    threadSleep(run, m, wait);
+                                    //this_thread::sleep_for(chrono::milliseconds(static_cast<uint64_t>(wait)));
                                     display->setContrastTurnOn(false);
                                 });
 

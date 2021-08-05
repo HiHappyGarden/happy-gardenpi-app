@@ -38,7 +38,7 @@ namespace hgardenpi
         using std::string;
 
         /**
-         * @brief Scheduler for scheduing acrion, inside of this run a loop every one second
+         * @brief Scheduler for scheduling action, inside of this run a loop every one second
          */
         class SchedulerConcrete final : public Scheduler, public Object
         {
