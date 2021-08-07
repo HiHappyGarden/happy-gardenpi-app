@@ -22,8 +22,8 @@
 
 #pragma once
 
-#include <thread>
 #include <mutex>
+#include <condition_variable>
 
 #include "device.hpp"
 #include "../interfaces/object.hpp"
@@ -35,8 +35,8 @@ namespace hgardenpi
     inline namespace v1
     {
 
-        using std::thread;
         using std::mutex;
+        using std::condition_variable;
 
         /**
          * @brief Factory for management of peripherals devices
@@ -44,7 +44,11 @@ namespace hgardenpi
          */
         class DeviceConcrete : public Device
         {
+
             mutable mutex m;
+            mutable mutex mContrast;
+            mutable condition_variable cvContrast;
+            mutable bool processed = false;
 
             mutable DeviceInfo::Ptr deviceInfo = nullptr;
             LogService *logService = nullptr;

@@ -39,8 +39,9 @@ namespace hgardenpi
 
         void threadSleep(volatile bool &run, mutex &m, size_t millis) noexcept
         {
-            lock_guard<mutex> lg(m);
-            printf("%d %d %d\n", tick, millis, millis / tick);
+            //lock_guard<mutex> lg(m);
+            auto &&t =this_thread::get_id();
+            printf("t:%p %d %d %d\n", &t,  tick, millis, millis / tick);
 
             size_t count = 0;
             while (run)
@@ -51,7 +52,7 @@ namespace hgardenpi
                 }
                 this_thread::sleep_for(chrono::milliseconds(tick));
                 count ++;
-                printf("%d\n", count);
+                //printf("t:%p %d\n", &t, count);
             }
         }
 
