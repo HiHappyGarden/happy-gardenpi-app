@@ -25,24 +25,16 @@
 #include <wiringPi.h>
 
 #include <stdexcept>
-
-using std::runtime_error;
-
 #include <sstream>
-
-using std::stringstream;
+#include <iomanip>
+#include <iostream>
+using namespace std;
 
 #include "../services/deviceservice.hpp"
 #include "../utilities/threadpool.hpp"
 #include "../components/lcd1602.hpp"
 #include "../components/buttonconcrete.hpp"
 
-
-#include <iomanip>
-using std::setprecision;
-
-
-using namespace std;
 
 
 namespace hgardenpi
@@ -114,15 +106,15 @@ namespace hgardenpi
         {
             //set contrast management when click on button
             button->setInternalOnClick([&]
-                                       {
-                                           turnOnContrastDisplayFor(run);
-                                       });
+            {
+                turnOnContrastDisplayFor(run, Time::DISPLAY_CONTRAST);
+            });
 
             //set display loop
             threadPool->enqueue([&]
                                 {
-                                    //show welcome message
 
+                                    //show welcome message
                                     turnOnContrastDisplayFor(run, Time::DISPLAY_SHORT_TICK);
 
                                     printOnDisplay("Happy|Garden PI", true);
@@ -198,6 +190,7 @@ namespace hgardenpi
 
         void DeviceConcrete::printOnDisplayStandardInfo(volatile bool &run) const noexcept
         {
+
             printOnDisplay("MAC ADDRESS|" + getWlan0MAC(), true);
 
             threadSleep(run, m, Time::DISPLAY_TICK);
@@ -219,15 +212,24 @@ namespace hgardenpi
 
         inline void DeviceConcrete::turnOnContrastDisplayFor(volatile bool &run, const Time &&wait) noexcept
         {
-            threadPool->enqueue([&]
-                                {
-                                    lock_guard<mutex> lg(m);
-                                    display->setContrastTurnOn(true);
-                                    threadSleep(run, m, wait);
-                                    //this_thread::sleep_for(chrono::milliseconds(static_cast<uint64_t>(wait)));
-                                    display->setContrastTurnOn(false);
-                                });
 
+
+            threadPool->enqueue([&]
+            {
+                unique_lock<mutex> lk(mContrast);
+//                cvContrast.wait(lk);
+
+                display->setContrastTurnOn(true);
+                threadSleep(run, mContrast, wait);
+                //this_thread::sleep_for(chrono::milliseconds(static_cast<uint64_t>(wait)));
+                display->setContrastTurnOn(false);
+
+                // Manual unlocking is done before notifying, to avoid waking up
+                // the waiting thread only to block again (see notify_one for details)
+                lk.unlock();
+//                cvContrast.notify_one();
+            });
+            //cv.notify_one();
         }
     }
 }
