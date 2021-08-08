@@ -57,6 +57,14 @@ namespace hgardenpi
 
         Engine::~Engine() noexcept
         {
+            //is not a mistake leave here
+            if (threadPool)
+            {
+                cout << "delete threadPool" << endl;
+                delete threadPool;
+                threadPool = nullptr;
+            }
+
             if (factory)
             {
                 cout << "delete factory" << endl;
@@ -83,13 +91,7 @@ namespace hgardenpi
                 stationDao = nullptr;
             }
 
-            //is not a mistake leave here
-            if (threadPool)
-            {
-                cout << "delete threadPool" << endl;
-                delete threadPool;
-                threadPool = nullptr;
-            }
+
         }
 
         void initialize()
@@ -98,18 +100,19 @@ namespace hgardenpi
             auto system = const_cast<System *>(Engine::getInstance()->factory->getSystem());
             auto device = const_cast<Device *>(Engine::getInstance()->factory->getDevice());
 
-            //init system
+//            //init system
             system->initialize();
 
-            //init device
+//            //init device
             device->setLogService(system->getLogService());
             device->initialize();
 
-            //initialize threadPool in all sub factory
-            threadPool = new (nothrow) ThreadPool(device->getInfo()->cpu);
-            if (!threadPool) {
-                throw runtime_error(_("no memory for threadPool"));
-            }
+            //todo: to debug
+//            //initialize threadPool in all sub factory
+//            threadPool = new (nothrow) ThreadPool(device->getInfo()->cpu);
+//            if (!threadPool) {
+//                throw runtime_error(_("no memory for threadPool"));
+//            }
             device->setThreadPool(threadPool);
             system->setThreadPool(threadPool);
 
@@ -174,29 +177,36 @@ namespace hgardenpi
             auto aggregationDao = Engine::getInstance()->aggregationDao;
             auto stationDao = Engine::getInstance()->stationDao;
 
-            //retrieve all active aggregations
+//            //retrieve all active aggregations
             auto && aggregations = aggregationDao->getList();
             for (auto &&aggregation : aggregations)
             {
                 aggregation->stations = move(stationDao->getList(aggregation));
             }
 
-            device->setButtonOnClick([] {
+            //todo: to debug
+//            device->setButtonOnClick([] {
+//
+//                printf("click\n");
+//
+//            });
 
-                printf("click\n");
-
-            });
-
-            //start all
+//            //start all
             device->start(run);
 
-            //write stat service on log
+//            //write stat service on log
             system->getLogService()->write(LOG_INFO, _("service ready"));
 
-            //add signal management
-//            signal(SIGINT, handleSignal);
-//            signal(SIGTERM, handleSignal);
-
+            //set signal behavior on SIGINT SIGTERM
+            sigemptyset(&sigset);
+            sigaddset(&sigset, SIGINT);
+            sigaddset(&sigset, SIGTERM);
+            pthread_sigmask(SIG_BLOCK, &sigset, nullptr);
+            
+            auto signalHandler = async(launch::async, threadSignalHandler);
+            
+            int signal = signalHandler.get();
+            cout << "received signal " << signal << endl;
         }
     }
 }
