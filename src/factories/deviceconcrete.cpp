@@ -31,10 +31,9 @@
 using namespace std;
 
 #include "../services/deviceservice.hpp"
-#include "../utilities/threadpool.hpp"
+#include "../utilities/threadutils.hpp"
 #include "../components/lcd1602.hpp"
 #include "../components/buttonconcrete.hpp"
-
 
 
 namespace hgardenpi
@@ -106,26 +105,40 @@ namespace hgardenpi
         {
             //set contrast management when click on button
             button->setInternalOnClick([&]
-            {
-                turnOnContrastDisplayFor(run, Time::DISPLAY_CONTRAST);
-            });
+                                       {
+                                           turnOnContrastDisplayFor(run, Time::DISPLAY_CONTRAST);
+                                       });
 
             //set display loop
-            threadPool->enqueue([&]
-                                {
+            if (threadPool)
+            {
+                threadPool->enqueue([&]
+                {
+                    unique_lock lock(m);
+                    //show welcome message
+                    cv.wait_for(
+                            lock,
+                            // wait for up to an hour
+                            chrono::hours(1),
 
-                                    //show welcome message
-                                    turnOnContrastDisplayFor(run, Time::DISPLAY_SHORT_TICK);
+                            [&]
+                            {
+                                turnOnContrastDisplayFor(run, Time::DISPLAY_SHORT_TICK);
 
-                                    printOnDisplay("Happy|Garden PI", true);
+                                printOnDisplay("Happy|Garden PI", true);
 
-                                    threadSleep(run, m, Time::DISPLAY_SHORT_TICK);
+                                threadSleep(run, m, Time::DISPLAY_SHORT_TICK);
 
-                                    turnOnContrastDisplayFor(run);
+                                turnOnContrastDisplayFor(run);
 
-                                    while (run)
-                                        printOnDisplayStandardInfo(run);
-                                });
+                                while (run)
+                                    printOnDisplayStandardInfo(run);
+
+                                return shutdownRequest.load();
+                            });
+                });
+            }
+
 
         }
 
@@ -213,23 +226,25 @@ namespace hgardenpi
         inline void DeviceConcrete::turnOnContrastDisplayFor(volatile bool &run, const Time &&wait) noexcept
         {
 
-
-            threadPool->enqueue([&]
+            if (threadPool)
             {
-                unique_lock<mutex> lk(mContrast);
-//                cvContrast.wait(lk);
+                threadPool->enqueue([&]
+                {
+                    unique_lock<mutex> lk(mContrast);
+                    //                cvContrast.wait(lk);
 
-                display->setContrastTurnOn(true);
-                threadSleep(run, mContrast, wait);
-                //this_thread::sleep_for(chrono::milliseconds(static_cast<uint64_t>(wait)));
-                display->setContrastTurnOn(false);
+                    display->setContrastTurnOn(true);
+                    threadSleep(run, mContrast, wait);
+                    //this_thread::sleep_for(chrono::milliseconds(static_cast<uint64_t>(wait)));
+                    display->setContrastTurnOn(false);
 
-                // Manual unlocking is done before notifying, to avoid waking up
-                // the waiting thread only to block again (see notify_one for details)
-                lk.unlock();
-//                cvContrast.notify_one();
-            });
-            //cv.notify_one();
+                    // Manual unlocking is done before notifying, to avoid waking up
+                    // the waiting thread only to block again (see notify_one for details)
+                    lk.unlock();
+                    //                cvContrast.notify_one();
+                });
+                //cv.notify_one();
+            }
         }
     }
 }

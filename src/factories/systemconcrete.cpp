@@ -66,6 +66,7 @@ namespace hgardenpi
                 throw runtime_error(_("no memory for config"));
             }
 
+            //read config
             configInfo = move(config->read());
             delete config;
 

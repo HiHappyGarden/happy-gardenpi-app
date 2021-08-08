@@ -26,7 +26,6 @@
 #include "factories/factory.hpp"
 #include "factories/factoryconcrete.hpp"
 #include "clients/mqttclient.hpp"
-#include "utilities/threadpool.hpp"
 #include "daos/aggregationdao.hpp"
 #include "daos/stationdao.hpp"
 
@@ -113,7 +112,4 @@ namespace hgardenpi
         void start();
 
     }
-
-
-    extern ThreadPool *threadPool;
 }

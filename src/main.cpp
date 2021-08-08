@@ -20,13 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <cstdlib>
 #include <iostream>
 
-#include "services/logservice.hpp"
-#include "engine.hpp"
-
-#include "daos/aggregationdao.hpp"
 #include "engine.hpp"
 
 int main(int argc, char *argv[])
@@ -41,17 +36,14 @@ int main(int argc, char *argv[])
     try
     {
         //initialize Happy GardenPI
-
         hgardenpi::initialize();
-
-        hgardenpi::Aggregation::Ptr a = std::make_shared<hgardenpi::Aggregation>();
 
         //start loop
         hgardenpi::start();
     }
     catch (const std::exception &e)
     {
-        std::cerr << "error: " << e.what() << std::endl;
+        cerr << "error: " << e.what() << std::endl;
 
         hgardenpi::Engine::getInstance()
                 ->getFactory()

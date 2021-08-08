@@ -27,17 +27,26 @@
 
 #pragma once
 
-#include <cstdio>
-    #include <mutex>
+#include <condition_variable>
+#include <atomic>
+#include <csignal>
 
 #include "../constants.hpp"
+#include "threadpool.hpp"
 
 namespace hgardenpi
 {
     inline namespace v1
     {
 
-        using std::mutex;
+        using namespace std;
+
+        extern sigset_t sigset;
+        extern atomic<bool> shutdownRequest;
+        extern mutex cvMutex;
+        extern condition_variable cv;
+
+        extern ThreadPool *threadPool;
 
         /**
          * @brief Sleep a thread for n millis
