@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.16)
 
-PROJECT(hgardenpi VERSION "0.30.0" LANGUAGES CXX C)
+PROJECT(hgardenpi VERSION "0.40.0" LANGUAGES CXX C)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_EXTENSIONS OFF)
-set(RASPBIAN_ROOTFS "$ENV{HOME}/raspberrypi/rootfs")
+#set(RASPBIAN_ROOTFS "$ENV{HOME}/raspberrypi/rootfs")
 set(FILE_LOCK_PATH "/tmp/hgardenpi.pid")
 set(FILE_CONFIG "./config.json")
 set(BROKER_HOST "passy-raspberrypi")
