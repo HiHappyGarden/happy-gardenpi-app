@@ -35,36 +35,47 @@ namespace hgardenpi
     inline namespace v1
     {
 
+        sigset_t sigset;
+        atomic<bool> shutdownRequest(false);
+        mutex cvMutex;
+        condition_variable cv;
+
+        ThreadPool *threadPool = nullptr;
+
         static constexpr const inline auto tick = static_cast<size_t>(Time::TICK);
 
         void threadSleep(volatile bool &run, mutex &m, size_t millis) noexcept
         {
             //lock_guard<mutex> lg(m);
-            auto &&t =this_thread::get_id();
-            printf("t:%p %d %d %d\n", &t,  tick, millis, millis / tick);
+//            auto &&t =this_thread::get_id();
+//            printf("t:%p %d %d %d\n", &t,  tick, millis, millis / tick);
+//
+//            size_t count = 0;
+//            while (run)
+//            {
+//                if (count >= millis / tick)
+//                {
+//                    return;
+//                }
+//                this_thread::sleep_for(chrono::milliseconds(tick));
+//                count ++;
+//                //printf("t:%p %d\n", &t, count);
+//            }
+            this_thread::sleep_for(chrono::milliseconds(millis));
 
-            size_t count = 0;
-            while (run)
-            {
-                if (count >= millis / tick)
-                {
-                    return;
-                }
-                this_thread::sleep_for(chrono::milliseconds(tick));
-                count ++;
-                //printf("t:%p %d\n", &t, count);
-            }
         }
 
         void threadSleep(volatile bool &run, mutex &m, Time &&millis) noexcept //keep not inline
         {
-            threadSleep(run, m, static_cast<size_t>(millis));
+//            threadSleep(run, m, static_cast<size_t>(millis));
+            this_thread::sleep_for(chrono::milliseconds(static_cast<size_t>(millis)));
         }
 
 
         void threadSleep(volatile bool &run, mutex &m, const Time &millis) noexcept //keep not inline
         {
-            threadSleep(run, m, static_cast<size_t>(millis));
+//            threadSleep(run, m, static_cast<size_t>(millis));
+            this_thread::sleep_for(chrono::milliseconds(static_cast<size_t>(millis)));
         }
     }
 }

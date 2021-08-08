@@ -23,16 +23,15 @@
 #include "engine.hpp"
 
 #include <mosquitto.h>
-#include <csignal>
 #include <syslog.h>
 
+#include <csignal>
+#include <iostream>
 #include <SQLiteCpp/Database.h>
 
 #include "constants.hpp"
 #include "utilities/databaseutils.hpp"
-
-
-
+#include "utilities/threadutils.hpp"
 
 namespace hgardenpi
 {
@@ -42,20 +41,11 @@ namespace hgardenpi
         //enable loops
         static volatile bool run = true;
 
-        ThreadPool *threadPool = nullptr;
-
         //exit signal handler
-        static inline const __sighandler_t handleSignal = [](int)
-        {
-            run = false;
-            if (threadPool)
-            {
-                delete threadPool;
-                threadPool = nullptr;
-            }
-        };
-
-
+//        static inline const __sighandler_t handleSignal = [](int)
+//        {
+//            run = false;
+//        };
 
         Engine::Engine() : factory(new (nothrow) FactoryConcrete)
         {
@@ -69,29 +59,36 @@ namespace hgardenpi
         {
             if (factory)
             {
+                cout << "delete factory" << endl;
                 delete factory;
                 factory = nullptr;
             }
 
             if (mqttClient)
             {
+                cout << "delete mqttClient" << endl;
                 delete mqttClient;
                 mqttClient = nullptr;
             }
-            if (threadPool)
-            {
-                delete threadPool;
-                threadPool = nullptr;
-            }
             if (aggregationDao)
             {
+                cout << "delete aggregationDao" << endl;
                 delete aggregationDao;
                 aggregationDao = nullptr;
             }
             if (stationDao)
             {
+                cout << "delete stationDao" << endl;
                 delete stationDao;
                 stationDao = nullptr;
+            }
+
+            //is not a mistake leave here
+            if (threadPool)
+            {
+                cout << "delete threadPool" << endl;
+                delete threadPool;
+                threadPool = nullptr;
             }
         }
 
@@ -171,15 +168,11 @@ namespace hgardenpi
 
         void start()
         {
-            //get pointers of system and device
+//            //get pointers of system and device
             auto system = const_cast<System *>(Engine::getInstance()->factory->getSystem());
             auto device = const_cast<Device *>(Engine::getInstance()->factory->getDevice());
             auto aggregationDao = Engine::getInstance()->aggregationDao;
             auto stationDao = Engine::getInstance()->stationDao;
-
-            //add signal management
-            signal(SIGINT, handleSignal);
-            signal(SIGTERM, handleSignal);
 
             //retrieve all active aggregations
             auto && aggregations = aggregationDao->getList();
@@ -198,20 +191,44 @@ namespace hgardenpi
             system->start(run);
             device->start(run);
 
+            //write stat service on log
+            system->getLogService()->write(LOG_INFO, _("service ready"));
 
+            //add signal management
+//            signal(SIGINT, handleSignal);
+//            signal(SIGTERM, handleSignal);
 
-//            int i = 0;
-            while (run)
+//            //set signal behavior on SIGINT SIGTERM
+            sigemptyset(&sigset);
+            sigaddset(&sigset, SIGINT);
+            sigaddset(&sigset, SIGQUIT);
+            sigaddset(&sigset, SIGKILL);
+            sigaddset(&sigset, SIGTERM);
+
+            pthread_sigmask(SIG_BLOCK, &sigset, nullptr);
+
+            //program not exit until interrupt trig SIGINT or SIGTERM
+            auto signalHandler = async(launch::async, []
             {
-                //cout << "tick" << endl;
-                //Globals::getInstance()->mqttClient->loop(run);
-                // while (run)
-                // {
-                //     this_thread::sleep_for(chrono::milliseconds(static_cast<int64_t>(Time::TICK)));
-                // }
-                this_thread::sleep_for(chrono::milliseconds(static_cast<int64_t>(Time::TICK)));
+                int signum = 0;
+                // wait until a signal is delivered:
+                sigwait(&sigset, &signum);
+                shutdownRequest.store(true);
 
-            }
+                if (threadPool)
+                {
+                    cout << "delete threadPool" << endl;
+                    delete threadPool;
+                    threadPool = nullptr;
+                }
+                // notify all waiting workers to check their predicate:
+                cv.notify_all();
+                return signum;
+            });
+
+            auto &&signal = signalHandler.get();
+
+            cout << HGARDENPI_NAME << _(" shuting down, signal") << to_string(signal) << endl;
         }
     }
 }
