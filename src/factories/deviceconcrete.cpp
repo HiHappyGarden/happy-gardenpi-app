@@ -109,6 +109,7 @@ namespace hgardenpi
                                            turnOnContrastDisplayFor(run, Time::DISPLAY_CONTRAST);
                                        });
 
+            //todo: to debug
             //set display loop
             if (threadPool)
             {
@@ -225,7 +226,7 @@ namespace hgardenpi
 
         inline void DeviceConcrete::turnOnContrastDisplayFor(volatile bool &run, const Time &&wait) noexcept
         {
-
+            //todo: to debug
             if (threadPool)
             {
                 threadPool->enqueue([&]
