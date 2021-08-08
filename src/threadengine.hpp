@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2021. Happy GardenPI
+// Copyright (c) $year. Happy GardenPI
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
 //
 
 //
-// Created by Antonio Salsi on 24/07/21.
+// Created by Antonio Salsi on 29/07/21.
 //
 
 #pragma once
@@ -36,8 +36,11 @@
 #include <future>
 #include <functional>
 #include <stdexcept>
+#include <csignal>
+#include <iostream>
 
-#include "../interfaces/object.hpp"
+#include "constants.hpp"
+#include "interfaces/object.hpp"
 
 namespace hgardenpi
 {
@@ -45,6 +48,8 @@ namespace hgardenpi
     {
 
         using namespace std;
+
+#pragma region ThreadPool
 
         /**
          * @brief Thread Pool class
@@ -54,6 +59,8 @@ namespace hgardenpi
 
 
         public:
+
+            // the constructor just launches some amount of workers
             explicit ThreadPool(size_t);
 
             /**
@@ -89,7 +96,8 @@ namespace hgardenpi
                     if (stop)
                         throw runtime_error("enqueue on stopped ThreadPool");
 
-                    tasks.emplace([task] { (*task)(); });
+                    tasks.emplace([task]
+                                  { (*task)(); });
                 }
                 condition.notify_one();
 
@@ -120,6 +128,39 @@ namespace hgardenpi
             size_t threads;
         };
 
+        extern ThreadPool *threadPool;
+
+#pragma endregion ThreadPool
+
+#pragma region variables
+        extern sigset_t sigset;
+        extern atomic<bool> shutdownRequest;
+        extern condition_variable cv;
+
+        /**
+         * @brief Function to handle exit signals
+         */
+        extern function<int()> threadSignalHandler;
+
+#pragma endregion variables
+
+#pragma region functions
+        /**
+         * @brief Sleep a thread for n millis
+         * @param run if run is false exit from loop
+         * @param millis to sleep
+         */
+        void threadSleep(volatile bool &run, mutex &m, Time &&millis) noexcept;
+
+        /**
+         * @brief Sleep a thread for n millis
+         * @param run if run is false exit from loop
+         * @param millis to sleep
+         */
+        void threadSleep(volatile bool &run, mutex &m, const Time &millis) noexcept;
+#pragma endregion functions
+
     }
 }
+
 

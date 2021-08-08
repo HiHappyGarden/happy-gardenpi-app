@@ -22,17 +22,25 @@
 //
 
 //
-// Created by Antonio Salsi on 24/07/21.
+// Created by Antonio Salsi on 29/07/21.
 //
 
-#include "threadpool.hpp"
+#include "threadengine.hpp"
+
+#include <thread>
+
+using namespace std;
 
 namespace hgardenpi
 {
     inline namespace v1
     {
 
-// the constructor just launches some amount of workers
+#pragma region staticVariables
+        static constexpr const inline auto tick = static_cast<size_t>(Time::TICK);
+#pragma endregion staticVariables
+
+#pragma region ThreadPool
         ThreadPool::ThreadPool(size_t threads)
                 : stop(false),
                   threads(threads)
@@ -73,6 +81,48 @@ namespace hgardenpi
                 worker.join();
         }
 
+        ThreadPool *threadPool = nullptr;
+#pragma endregion ThreadPool
 
+#pragma region variables
+        sigset_t sigset;
+        atomic<bool> shutdownRequest(false);
+        mutex cvMutex;
+        condition_variable cv;
+
+        //exit signal handler
+        function<int()> threadSignalHandler = []
+                {
+
+            int signum = 0;
+            // wait until a signal is delivered:
+            sigwait(&sigset, &signum);
+            shutdownRequest.store(true);
+
+            cout << "signum:" << to_string(signum) << endl;
+
+            if (threadPool)
+            {
+                cout << "delete threadPool" << endl;
+                delete threadPool;
+                threadPool = nullptr;
+            }
+            // notify all waiting workers to check their predicate:
+            cv.notify_all();
+            return signum;
+                };
+#pragma endregion variables
+
+#pragma region functions
+        void threadSleep(volatile bool &run, mutex &m, Time &&millis) noexcept //keep not inline
+        {
+            this_thread::sleep_for(chrono::milliseconds(static_cast<size_t>(millis)));
+        }
+
+        void threadSleep(volatile bool &run, mutex &m, const Time &millis) noexcept //keep not inline
+        {
+            this_thread::sleep_for(chrono::milliseconds(static_cast<size_t>(millis)));
+        }
+#pragma endregion functions
     }
 }
