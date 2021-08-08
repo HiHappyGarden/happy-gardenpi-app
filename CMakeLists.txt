@@ -103,14 +103,12 @@ add_executable(hgardenpi
         src/utilities/databaseutils.hpp
         src/utilities/stringutils.cpp
         src/utilities/stringutils.hpp
-        src/utilities/threadpool.cpp
-        src/utilities/threadpool.hpp
-        src/utilities/threadutils.cpp
-        src/utilities/threadutils.hpp
         src/constants.hpp
         src/engine.cpp
         src/engine.hpp
         src/main.cpp
+        src/threadengine.cpp
+        src/threadengine.hpp
         )
 
 target_link_libraries(hgardenpi

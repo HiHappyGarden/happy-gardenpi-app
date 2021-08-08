@@ -31,7 +31,7 @@
 
 #include "constants.hpp"
 #include "utilities/databaseutils.hpp"
-#include "utilities/threadutils.hpp"
+#include "threadengine.hpp"
 
 namespace hgardenpi
 {
@@ -204,7 +204,7 @@ namespace hgardenpi
             pthread_sigmask(SIG_BLOCK, &sigset, nullptr);
             
             auto signalHandler = async(launch::async, threadSignalHandler);
-            
+
             int signal = signalHandler.get();
             cout << "received signal " << signal << endl;
         }

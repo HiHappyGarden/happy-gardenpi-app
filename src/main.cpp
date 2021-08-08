@@ -23,7 +23,7 @@
 #include <iostream>
 
 #include "engine.hpp"
-#include "utilities/threadutils.hpp"
+#include "threadengine.hpp"
 
 using namespace std;
 

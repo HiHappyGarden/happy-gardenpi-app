@@ -31,7 +31,7 @@
 using namespace std;
 
 #include "../services/deviceservice.hpp"
-#include "../utilities/threadutils.hpp"
+#include "../threadengine.hpp"
 #include "../components/lcd1602.hpp"
 #include "../components/buttonconcrete.hpp"
 
@@ -41,10 +41,6 @@ namespace hgardenpi
 
     inline namespace v1
     {
-
-        extern void threadSleep(volatile bool &run, mutex &m, Time &&millis) noexcept;
-
-        extern void threadSleep(volatile bool &run, mutex &m, const Time &millis) noexcept;
 
         DeviceConcrete::~DeviceConcrete() noexcept
         {
