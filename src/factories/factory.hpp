@@ -39,9 +39,8 @@ namespace hgardenpi
         {
 
         public:
-            Factory() = default;
             ~Factory() override = default;
-            HGARDENPI_NO_COPY_NO_MOVE(Factory)
+
             /**
              * @brief Get the Device object
              * 

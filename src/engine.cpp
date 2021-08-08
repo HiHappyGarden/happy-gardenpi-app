@@ -188,7 +188,6 @@ namespace hgardenpi
             });
 
             //start all
-            system->start(run);
             device->start(run);
 
             //write stat service on log
@@ -198,37 +197,6 @@ namespace hgardenpi
 //            signal(SIGINT, handleSignal);
 //            signal(SIGTERM, handleSignal);
 
-//            //set signal behavior on SIGINT SIGTERM
-            sigemptyset(&sigset);
-            sigaddset(&sigset, SIGINT);
-            sigaddset(&sigset, SIGQUIT);
-            sigaddset(&sigset, SIGKILL);
-            sigaddset(&sigset, SIGTERM);
-
-            pthread_sigmask(SIG_BLOCK, &sigset, nullptr);
-
-            //program not exit until interrupt trig SIGINT or SIGTERM
-            auto signalHandler = async(launch::async, []
-            {
-                int signum = 0;
-                // wait until a signal is delivered:
-                sigwait(&sigset, &signum);
-                shutdownRequest.store(true);
-
-                if (threadPool)
-                {
-                    cout << "delete threadPool" << endl;
-                    delete threadPool;
-                    threadPool = nullptr;
-                }
-                // notify all waiting workers to check their predicate:
-                cv.notify_all();
-                return signum;
-            });
-
-            auto &&signal = signalHandler.get();
-
-            cout << HGARDENPI_NAME << _(" shuting down, signal") << to_string(signal) << endl;
         }
     }
 }

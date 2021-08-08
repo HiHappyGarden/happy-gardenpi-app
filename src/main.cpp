@@ -23,6 +23,7 @@
 #include <iostream>
 
 #include "engine.hpp"
+#include "utilities/threadutils.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -40,6 +41,21 @@ int main(int argc, char *argv[])
 
         //start loop
         hgardenpi::start();
+        
+        //set signal behavior on SIGINT SIGTERM
+        sigemptyset(&hgardenpi::sigset);
+        sigaddset(&hgardenpi::sigset, SIGINT);
+        //            sigaddset(&sigset, SIGQUIT);
+        //            sigaddset(&sigset, SIGKILL);
+        sigaddset(&hgardenpi::sigset, SIGTERM);
+        pthread_sigmask(SIG_BLOCK, &hgardenpi::sigset, nullptr);
+
+        //program not exit until interrupt trig SIGINT or SIGTERM
+        auto &&signalHandler = async(launch::async, hgardenpi::threadSignalHandler);
+
+        auto &&signal = signalHandler.get();
+
+        cout << HGARDENPI_NAME << _(" shuting down, signal:") << to_string(signal) << endl;
     }
     catch (const std::exception &e)
     {

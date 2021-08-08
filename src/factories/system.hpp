@@ -28,7 +28,7 @@
 #include "../services/scheduler.hpp"
 #include "../interfaces/initializable.hpp"
 #include "../interfaces/startable.hpp"
-#include "../interfaces/releasable.hpp"
+#include "../interfaces/closeable.hpp"
 
 namespace hgardenpi
 {
@@ -42,13 +42,10 @@ namespace hgardenpi
          * @brief Factory for management of system services devices
          * 
          */
-        class System : public Initializable, public Startable, public Releasable, public Object
+        class System : public Initializable, public Closeable, public Object
         {
 
         public:
-            using Initializable::initialize;
-            using Startable::start;
-
             ~System() override = default;
 
             /**

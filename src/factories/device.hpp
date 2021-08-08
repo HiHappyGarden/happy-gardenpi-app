@@ -27,7 +27,7 @@
 #include "../interfaces/loggable.hpp"
 #include "../interfaces/initializable.hpp"
 #include "../interfaces/startable.hpp"
-#include "../interfaces/releasable.hpp"
+#include "../interfaces/closeable.hpp"
 #include "../interfaces/object.hpp"
 #include "../pods/deviceinfo.hpp"
 #include "../components/button.hpp"

@@ -85,18 +85,15 @@ Inheritance diagram for hgardenpi::v1::Startable:</div>
  <div class="center">
   <img src="classhgardenpi_1_1v1_1_1_startable.png" usemap="#hgardenpi::v1::Startable_map" alt=""/>
   <map id="hgardenpi::v1::Startable_map" name="hgardenpi::v1::Startable_map">
-<area href="classhgardenpi_1_1v1_1_1_device.html" title="Factory for management of peripherals devices." alt="hgardenpi::v1::Device" shape="rect" coords="0,56,187,80"/>
-<area href="classhgardenpi_1_1v1_1_1_system.html" title="Factory for management of system services devices." alt="hgardenpi::v1::System" shape="rect" coords="197,56,384,80"/>
-<area href="classhgardenpi_1_1v1_1_1_device_concrete.html" title="Factory for management of peripherals devices." alt="hgardenpi::v1::DeviceConcrete" shape="rect" coords="0,112,187,136"/>
-<area href="classhgardenpi_1_1v1_1_1_system_concrete.html" title="Factory for management of system services devices." alt="hgardenpi::v1::SystemConcrete" shape="rect" coords="197,112,384,136"/>
+<area href="classhgardenpi_1_1v1_1_1_device.html" title="Factory for management of peripherals devices." alt="hgardenpi::v1::Device" shape="rect" coords="0,56,205,80"/>
+<area href="classhgardenpi_1_1v1_1_1_scheduler.html" title="Scheduler for scheduing acrion, inside of this run a loop every one second." alt="hgardenpi::v1::Scheduler" shape="rect" coords="215,56,420,80"/>
+<area href="classhgardenpi_1_1v1_1_1_device_concrete.html" title="Factory for management of peripherals devices." alt="hgardenpi::v1::DeviceConcrete" shape="rect" coords="0,112,205,136"/>
+<area href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html" title="Scheduler for scheduling action, inside of this run a loop every one second." alt="hgardenpi::v1::SchedulerConcrete" shape="rect" coords="215,112,420,136"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a30998dad1893ee9e09e99fe04033562f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_startable.html#a30998dad1893ee9e09e99fe04033562f">initialize</a> ()=0</td></tr>
-<tr class="memdesc:a30998dad1893ee9e09e99fe04033562f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Before all call this function fo initialize the project.  <a href="classhgardenpi_1_1v1_1_1_startable.html#a30998dad1893ee9e09e99fe04033562f">More...</a><br /></td></tr>
-<tr class="separator:a30998dad1893ee9e09e99fe04033562f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a65720fd3f9e4a0138f019a68f679b474"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_startable.html#a65720fd3f9e4a0138f019a68f679b474">start</a> (volatile bool &amp;run)=0</td></tr>
 <tr class="memdesc:a65720fd3f9e4a0138f019a68f679b474"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start main look and scheduler.  <a href="classhgardenpi_1_1v1_1_1_startable.html#a65720fd3f9e4a0138f019a68f679b474">More...</a><br /></td></tr>
 <tr class="separator:a65720fd3f9e4a0138f019a68f679b474"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -104,41 +101,6 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstract class for objet able to start somethink. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a30998dad1893ee9e09e99fe04033562f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a30998dad1893ee9e09e99fe04033562f">&#9670;&nbsp;</a></span>initialize()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void hgardenpi::v1::Startable::initialize </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Before all call this function fo initialize the project. </p>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">runtime_error</td><td>when hardware requisites mismatch </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implemented in <a class="el" href="classhgardenpi_1_1v1_1_1_system.html#a30998dad1893ee9e09e99fe04033562f">hgardenpi::v1::System</a>, <a class="el" href="classhgardenpi_1_1v1_1_1_system_concrete.html#aee0d5615896f0da438adcbc98bffbce1">hgardenpi::v1::SystemConcrete</a>, and <a class="el" href="classhgardenpi_1_1v1_1_1_device_concrete.html#aea089bcf4324176ddbfe18bff0204b78">hgardenpi::v1::DeviceConcrete</a>.</p>
-
-</div>
-</div>
 <a id="a65720fd3f9e4a0138f019a68f679b474"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a65720fd3f9e4a0138f019a68f679b474">&#9670;&nbsp;</a></span>start()</h2>
 
@@ -177,7 +139,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classhgardenpi_1_1v1_1_1_system_concrete.html#a7a55f6415a9dc616a98b051c9a302b27">hgardenpi::v1::SystemConcrete</a>, and <a class="el" href="classhgardenpi_1_1v1_1_1_device_concrete.html#a2d807054658b5da3f638765384459ee1">hgardenpi::v1::DeviceConcrete</a>.</p>
+<p>Implemented in <a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#a948ef755241b7c4cb42b67d4a998a2bc">hgardenpi::v1::SchedulerConcrete</a>, and <a class="el" href="classhgardenpi_1_1v1_1_1_device_concrete.html#a2d807054658b5da3f638765384459ee1">hgardenpi::v1::DeviceConcrete</a>.</p>
 
 </div>
 </div>

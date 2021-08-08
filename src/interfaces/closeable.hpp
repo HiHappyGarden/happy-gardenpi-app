@@ -28,19 +28,19 @@ namespace hgardenpi
     {
 
         /**
-         * @brief Generic class for release a resource
+         * @brief Generic class for close a resource
          * 
          */
-        class Releasable
+        class Closeable
         {
         public:
-            virtual ~Releasable() = default;
+            virtual ~Closeable() = default;
 
             /**
-             * @brief release a resource
+             * @brief close a resource
              * @exception runtime_error when hardware requisites mismatch
              */
-            virtual void release() noexcept = 0;
+            virtual void close() noexcept = 0;
         };
 
     }

@@ -75,7 +75,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler.html" title="Scheduler for scheduing acrion, inside of this run a loop every one second.">Scheduler</a> for scheduing acrion, inside of this run a loop every one second.  
+<p><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler.html" title="Scheduler for scheduing acrion, inside of this run a loop every one second.">Scheduler</a> for scheduling action, inside of this run a loop every one second.  
  <a href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="schedulerconcrete_8hpp_source.html">schedulerconcrete.hpp</a>&gt;</code></p>
@@ -85,8 +85,9 @@ Inheritance diagram for hgardenpi::v1::SchedulerConcrete:</div>
  <div class="center">
   <img src="classhgardenpi_1_1v1_1_1_scheduler_concrete.png" usemap="#hgardenpi::v1::SchedulerConcrete_map" alt=""/>
   <map id="hgardenpi::v1::SchedulerConcrete_map" name="hgardenpi::v1::SchedulerConcrete_map">
-<area href="classhgardenpi_1_1v1_1_1_scheduler.html" title="Scheduler for scheduing acrion, inside of this run a loop every one second." alt="hgardenpi::v1::Scheduler" shape="rect" coords="0,0,205,24"/>
-<area href="classhgardenpi_1_1v1_1_1_object.html" title="Generic class ttat all functionals objects must extend." alt="hgardenpi::v1::Object" shape="rect" coords="215,0,420,24"/>
+<area href="classhgardenpi_1_1v1_1_1_scheduler.html" title="Scheduler for scheduing acrion, inside of this run a loop every one second." alt="hgardenpi::v1::Scheduler" shape="rect" coords="0,56,205,80"/>
+<area href="classhgardenpi_1_1v1_1_1_object.html" title="Generic class ttat all functionals objects must extend." alt="hgardenpi::v1::Object" shape="rect" coords="215,56,420,80"/>
+<area href="classhgardenpi_1_1v1_1_1_startable.html" title="Abstract class for objet able to start somethink." alt="hgardenpi::v1::Startable" shape="rect" coords="0,0,205,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -95,13 +96,184 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0437b2a86a192051b0e06ed3b75bfb3f"><td class="memItemLeft" align="right" valign="top"><a id="a0437b2a86a192051b0e06ed3b75bfb3f"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>SchedulerConcrete</b> (const <a class="el" href="classhgardenpi_1_1v1_1_1_thread_pool.html">ThreadPool</a> *threadPool)</td></tr>
 <tr class="separator:a0437b2a86a192051b0e06ed3b75bfb3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a948ef755241b7c4cb42b67d4a998a2bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#a948ef755241b7c4cb42b67d4a998a2bc">start</a> (volatile bool &amp;run) override</td></tr>
+<tr class="memdesc:a948ef755241b7c4cb42b67d4a998a2bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start main look and scheduler.  <a href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#a948ef755241b7c4cb42b67d4a998a2bc">More...</a><br /></td></tr>
+<tr class="separator:a948ef755241b7c4cb42b67d4a998a2bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11025b3cfadef4fcc3e0d83091234c79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#a11025b3cfadef4fcc3e0d83091234c79">schedule</a> (const Aggregation::Ptr &amp;ptr) override</td></tr>
+<tr class="separator:a11025b3cfadef4fcc3e0d83091234c79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20b1269bfb3376e95886a57746f06600"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#a20b1269bfb3376e95886a57746f06600">shot</a> (const Aggregation::Ptr &amp;ptr) const override</td></tr>
+<tr class="separator:a20b1269bfb3376e95886a57746f06600"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57d5c40cb5a7f6c141cefef18dd24635"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#a57d5c40cb5a7f6c141cefef18dd24635">shot</a> (const Station::Ptr &amp;ptr) const override</td></tr>
+<tr class="separator:a57d5c40cb5a7f6c141cefef18dd24635"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab18d5a276fceda7ee956058860bc11cb"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#ab18d5a276fceda7ee956058860bc11cb">toString</a> () noexcept override</td></tr>
 <tr class="memdesc:ab18d5a276fceda7ee956058860bc11cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the name of object.  <a href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#ab18d5a276fceda7ee956058860bc11cb">More...</a><br /></td></tr>
 <tr class="separator:ab18d5a276fceda7ee956058860bc11cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler.html" title="Scheduler for scheduing acrion, inside of this run a loop every one second.">Scheduler</a> for scheduing acrion, inside of this run a loop every one second. </p>
+<div class="textblock"><p><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler.html" title="Scheduler for scheduing acrion, inside of this run a loop every one second.">Scheduler</a> for scheduling action, inside of this run a loop every one second. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a11025b3cfadef4fcc3e0d83091234c79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11025b3cfadef4fcc3e0d83091234c79">&#9670;&nbsp;</a></span>schedule()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SchedulerConcrete::schedule </td>
+          <td>(</td>
+          <td class="paramtype">const Aggregation::Ptr &amp;&#160;</td>
+          <td class="paramname"><em>ptr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Insert into scheduler an aggregation of station </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ptr</td><td>of aggregation </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">runtime_error</td><td>when there some problem in aggregation </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_scheduler.html#a4f4f07e74b29bf317528c67c61ba77fb">hgardenpi::v1::Scheduler</a>.</p>
+
+</div>
+</div>
+<a id="a20b1269bfb3376e95886a57746f06600"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20b1269bfb3376e95886a57746f06600">&#9670;&nbsp;</a></span>shot() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SchedulerConcrete::shot </td>
+          <td>(</td>
+          <td class="paramtype">const Aggregation::Ptr &amp;&#160;</td>
+          <td class="paramname"><em>ptr</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Shot one time an aggregation of station triggered from user </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ptr</td><td>of aggregation </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">runtime_error</td><td>when there some problem in aggregation </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_scheduler.html#a4c0917d338950b70116ef18f8aa8e024">hgardenpi::v1::Scheduler</a>.</p>
+
+</div>
+</div>
+<a id="a57d5c40cb5a7f6c141cefef18dd24635"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57d5c40cb5a7f6c141cefef18dd24635">&#9670;&nbsp;</a></span>shot() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SchedulerConcrete::shot </td>
+          <td>(</td>
+          <td class="paramtype">const Station::Ptr &amp;&#160;</td>
+          <td class="paramname"><em>ptr</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Shot one time an station triggered from user </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ptr</td><td>of station </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">runtime_error</td><td>when there some problem in station </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_scheduler.html#a0a73e5b58b620caca46d7cd5f2953995">hgardenpi::v1::Scheduler</a>.</p>
+
+</div>
+</div>
+<a id="a948ef755241b7c4cb42b67d4a998a2bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a948ef755241b7c4cb42b67d4a998a2bc">&#9670;&nbsp;</a></span>start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SchedulerConcrete::start </td>
+          <td>(</td>
+          <td class="paramtype">volatile bool &amp;&#160;</td>
+          <td class="paramname"><em>run</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Start main look and scheduler. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">run</td><td>check if the loops are in execution </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">runtime_error</td><td>when hardware requisites mismatch </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_startable.html#a65720fd3f9e4a0138f019a68f679b474">hgardenpi::v1::Startable</a>.</p>
+
+</div>
+</div>
 <a id="ab18d5a276fceda7ee956058860bc11cb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab18d5a276fceda7ee956058860bc11cb">&#9670;&nbsp;</a></span>toString()</h2>
 

@@ -85,8 +85,8 @@ Inheritance diagram for hgardenpi::v1::System:</div>
  <div class="center">
   <img src="classhgardenpi_1_1v1_1_1_system.png" usemap="#hgardenpi::v1::System_map" alt=""/>
   <map id="hgardenpi::v1::System_map" name="hgardenpi::v1::System_map">
-<area href="classhgardenpi_1_1v1_1_1_startable.html" title="Abstract class for objet able to start somethink." alt="hgardenpi::v1::Startable" shape="rect" coords="0,0,187,24"/>
-<area href="classhgardenpi_1_1v1_1_1_releasable.html" title="Generic class for release a resource." alt="hgardenpi::v1::Releasable" shape="rect" coords="197,0,384,24"/>
+<area href="classhgardenpi_1_1v1_1_1_initializable.html" title="Abstract class for objet able to start somethink." alt="hgardenpi::v1::Initializable" shape="rect" coords="0,0,187,24"/>
+<area href="classhgardenpi_1_1v1_1_1_closeable.html" title="Generic class for close a resource." alt="hgardenpi::v1::Closeable" shape="rect" coords="197,0,384,24"/>
 <area href="classhgardenpi_1_1v1_1_1_object.html" title="Generic class ttat all functionals objects must extend." alt="hgardenpi::v1::Object" shape="rect" coords="394,0,581,24"/>
 <area href="classhgardenpi_1_1v1_1_1_system_concrete.html" title="Factory for management of system services devices." alt="hgardenpi::v1::SystemConcrete" shape="rect" coords="197,112,384,136"/>
   </map>
@@ -108,20 +108,14 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ab659f436d8968f4c50f32908dd0f48a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab3645b046d12639502ec611c13eec03c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_system.html#ab3645b046d12639502ec611c13eec03c">setThreadPool</a> (const <a class="el" href="classhgardenpi_1_1v1_1_1_thread_pool.html">ThreadPool</a> *threadPool)=0</td></tr>
 <tr class="separator:ab3645b046d12639502ec611c13eec03c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30998dad1893ee9e09e99fe04033562f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_system.html#a30998dad1893ee9e09e99fe04033562f">initialize</a> ()=0</td></tr>
-<tr class="memdesc:a30998dad1893ee9e09e99fe04033562f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Before all call this function fo initialize the project.  <a href="classhgardenpi_1_1v1_1_1_system.html#a30998dad1893ee9e09e99fe04033562f">More...</a><br /></td></tr>
-<tr class="separator:a30998dad1893ee9e09e99fe04033562f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a65720fd3f9e4a0138f019a68f679b474"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_system.html#a65720fd3f9e4a0138f019a68f679b474">start</a> (volatile bool &amp;run)=0</td></tr>
-<tr class="memdesc:a65720fd3f9e4a0138f019a68f679b474"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start main look and scheduler.  <a href="classhgardenpi_1_1v1_1_1_system.html#a65720fd3f9e4a0138f019a68f679b474">More...</a><br /></td></tr>
-<tr class="separator:a65720fd3f9e4a0138f019a68f679b474"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_classhgardenpi_1_1v1_1_1_startable"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classhgardenpi_1_1v1_1_1_startable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classhgardenpi_1_1v1_1_1_startable.html">hgardenpi::v1::Startable</a></td></tr>
-<tr class="memitem:a65720fd3f9e4a0138f019a68f679b474 inherit pub_methods_classhgardenpi_1_1v1_1_1_startable"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_startable.html#a65720fd3f9e4a0138f019a68f679b474">start</a> (volatile bool &amp;run)=0</td></tr>
-<tr class="memdesc:a65720fd3f9e4a0138f019a68f679b474 inherit pub_methods_classhgardenpi_1_1v1_1_1_startable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start main look and scheduler.  <a href="classhgardenpi_1_1v1_1_1_startable.html#a65720fd3f9e4a0138f019a68f679b474">More...</a><br /></td></tr>
-<tr class="separator:a65720fd3f9e4a0138f019a68f679b474 inherit pub_methods_classhgardenpi_1_1v1_1_1_startable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_classhgardenpi_1_1v1_1_1_releasable"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classhgardenpi_1_1v1_1_1_releasable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classhgardenpi_1_1v1_1_1_releasable.html">hgardenpi::v1::Releasable</a></td></tr>
-<tr class="memitem:adf4764bd6153f48d0cffac89db943b48 inherit pub_methods_classhgardenpi_1_1v1_1_1_releasable"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_releasable.html#adf4764bd6153f48d0cffac89db943b48">release</a> () noexcept=0</td></tr>
-<tr class="memdesc:adf4764bd6153f48d0cffac89db943b48 inherit pub_methods_classhgardenpi_1_1v1_1_1_releasable"><td class="mdescLeft">&#160;</td><td class="mdescRight">release a resource  <a href="classhgardenpi_1_1v1_1_1_releasable.html#adf4764bd6153f48d0cffac89db943b48">More...</a><br /></td></tr>
-<tr class="separator:adf4764bd6153f48d0cffac89db943b48 inherit pub_methods_classhgardenpi_1_1v1_1_1_releasable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classhgardenpi_1_1v1_1_1_initializable"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classhgardenpi_1_1v1_1_1_initializable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classhgardenpi_1_1v1_1_1_initializable.html">hgardenpi::v1::Initializable</a></td></tr>
+<tr class="memitem:a58e44eaad8e2c3857ad7f49b6850e1d6 inherit pub_methods_classhgardenpi_1_1v1_1_1_initializable"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_initializable.html#a58e44eaad8e2c3857ad7f49b6850e1d6">initialize</a> ()=0</td></tr>
+<tr class="memdesc:a58e44eaad8e2c3857ad7f49b6850e1d6 inherit pub_methods_classhgardenpi_1_1v1_1_1_initializable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Before all call this function fo initialize the project.  <a href="classhgardenpi_1_1v1_1_1_initializable.html#a58e44eaad8e2c3857ad7f49b6850e1d6">More...</a><br /></td></tr>
+<tr class="separator:a58e44eaad8e2c3857ad7f49b6850e1d6 inherit pub_methods_classhgardenpi_1_1v1_1_1_initializable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classhgardenpi_1_1v1_1_1_closeable"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classhgardenpi_1_1v1_1_1_closeable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classhgardenpi_1_1v1_1_1_closeable.html">hgardenpi::v1::Closeable</a></td></tr>
+<tr class="memitem:a98b031f618c8dca1d89386a9bf976b07 inherit pub_methods_classhgardenpi_1_1v1_1_1_closeable"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_closeable.html#a98b031f618c8dca1d89386a9bf976b07">close</a> () noexcept=0</td></tr>
+<tr class="memdesc:a98b031f618c8dca1d89386a9bf976b07 inherit pub_methods_classhgardenpi_1_1v1_1_1_closeable"><td class="mdescLeft">&#160;</td><td class="mdescRight">close a resource  <a href="classhgardenpi_1_1v1_1_1_closeable.html#a98b031f618c8dca1d89386a9bf976b07">More...</a><br /></td></tr>
+<tr class="separator:a98b031f618c8dca1d89386a9bf976b07 inherit pub_methods_classhgardenpi_1_1v1_1_1_closeable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classhgardenpi_1_1v1_1_1_object"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classhgardenpi_1_1v1_1_1_object')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classhgardenpi_1_1v1_1_1_object.html">hgardenpi::v1::Object</a></td></tr>
 <tr class="memitem:ae4e2a30bbac895dbb9efb643ad8e5600 inherit pub_methods_classhgardenpi_1_1v1_1_1_object"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_object.html#ae4e2a30bbac895dbb9efb643ad8e5600">toString</a> () noexcept=0</td></tr>
 <tr class="memdesc:ae4e2a30bbac895dbb9efb643ad8e5600 inherit pub_methods_classhgardenpi_1_1v1_1_1_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual method that return data of object in srteing format.  <a href="classhgardenpi_1_1v1_1_1_object.html#ae4e2a30bbac895dbb9efb643ad8e5600">More...</a><br /></td></tr>
@@ -250,38 +244,6 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a30998dad1893ee9e09e99fe04033562f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a30998dad1893ee9e09e99fe04033562f">&#9670;&nbsp;</a></span>initialize()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void hgardenpi::v1::Startable::initialize</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Before all call this function fo initialize the project. </p>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">runtime_error</td><td>when hardware requisites mismatch </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_startable.html#a30998dad1893ee9e09e99fe04033562f">hgardenpi::v1::Startable</a>.</p>
-
-</div>
-</div>
 <a id="ab3645b046d12639502ec611c13eec03c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab3645b046d12639502ec611c13eec03c">&#9670;&nbsp;</a></span>setThreadPool()</h2>
 
@@ -319,34 +281,6 @@ Public Member Functions</h2></td></tr>
 </dl>
 
 <p>Implemented in <a class="el" href="classhgardenpi_1_1v1_1_1_system_concrete.html#abbd1662920c084ee9e2b8cf104c20a51">hgardenpi::v1::SystemConcrete</a>.</p>
-
-</div>
-</div>
-<a id="a65720fd3f9e4a0138f019a68f679b474"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a65720fd3f9e4a0138f019a68f679b474">&#9670;&nbsp;</a></span>start()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void hgardenpi::v1::Startable::start</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Start main look and scheduler. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">run</td><td>check if the loops are in execution </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">runtime_error</td><td>when hardware requisites mismatch </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
