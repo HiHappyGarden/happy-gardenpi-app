@@ -30,6 +30,7 @@
 #include <condition_variable>
 #include <atomic>
 #include <csignal>
+#include <iostream>
 
 #include "../constants.hpp"
 #include "threadpool.hpp"
@@ -43,17 +44,14 @@ namespace hgardenpi
 
         extern sigset_t sigset;
         extern atomic<bool> shutdownRequest;
-        extern mutex cvMutex;
         extern condition_variable cv;
 
         extern ThreadPool *threadPool;
 
         /**
-         * @brief Sleep a thread for n millis
-         * @param run if run is false exit from loop
-         * @param millis to sleep
+         * @brief Function to handle exit signals
          */
-        void threadSleep(volatile bool &run, mutex &m, size_t millis) noexcept;
+        extern function<int()> threadSignalHandler;
 
         /**
          * @brief Sleep a thread for n millis
@@ -68,6 +66,8 @@ namespace hgardenpi
          * @param millis to sleep
          */
         void threadSleep(volatile bool &run, mutex &m, const Time &millis) noexcept;
+
+
     }
 }
 

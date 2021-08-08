@@ -87,8 +87,8 @@ Inheritance diagram for hgardenpi::v1::DeviceConcrete:</div>
   <map id="hgardenpi::v1::DeviceConcrete_map" name="hgardenpi::v1::DeviceConcrete_map">
 <area href="classhgardenpi_1_1v1_1_1_device.html" title="Factory for management of peripherals devices." alt="hgardenpi::v1::Device" shape="rect" coords="295,56,482,80"/>
 <area href="classhgardenpi_1_1v1_1_1_loggable.html" title="Abstract class for set LogServcice to obj." alt="hgardenpi::v1::Loggable" shape="rect" coords="0,0,187,24"/>
-<area href="classhgardenpi_1_1v1_1_1_startable.html" title="Abstract class for objet able to start somethink." alt="hgardenpi::v1::Startable" shape="rect" coords="197,0,384,24"/>
-<area href="classhgardenpi_1_1v1_1_1_releasable.html" title="Generic class for release a resource." alt="hgardenpi::v1::Releasable" shape="rect" coords="394,0,581,24"/>
+<area href="classhgardenpi_1_1v1_1_1_initializable.html" title="Abstract class for objet able to start somethink." alt="hgardenpi::v1::Initializable" shape="rect" coords="197,0,384,24"/>
+<area href="classhgardenpi_1_1v1_1_1_startable.html" title="Abstract class for objet able to start somethink." alt="hgardenpi::v1::Startable" shape="rect" coords="394,0,581,24"/>
 <area href="classhgardenpi_1_1v1_1_1_object.html" title="Generic class ttat all functionals objects must extend." alt="hgardenpi::v1::Object" shape="rect" coords="591,0,778,24"/>
   </map>
 </div></div>
@@ -101,10 +101,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2d807054658b5da3f638765384459ee1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_device_concrete.html#a2d807054658b5da3f638765384459ee1">start</a> (volatile bool &amp;run) override</td></tr>
 <tr class="memdesc:a2d807054658b5da3f638765384459ee1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start main look and scheduler.  <a href="classhgardenpi_1_1v1_1_1_device_concrete.html#a2d807054658b5da3f638765384459ee1">More...</a><br /></td></tr>
 <tr class="separator:a2d807054658b5da3f638765384459ee1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a134b437a659bb71b8b66d0fecdaecae8"><td class="memItemLeft" align="right" valign="top"><a id="a134b437a659bb71b8b66d0fecdaecae8"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_device_concrete.html#a134b437a659bb71b8b66d0fecdaecae8">release</a> () noexcept override</td></tr>
-<tr class="memdesc:a134b437a659bb71b8b66d0fecdaecae8"><td class="mdescLeft">&#160;</td><td class="mdescRight">release a resource <br /></td></tr>
-<tr class="separator:a134b437a659bb71b8b66d0fecdaecae8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a060dff57e22cc3a9456dc3c12c8d75d6"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_device_concrete.html#a060dff57e22cc3a9456dc3c12c8d75d6">getCPUTemperature</a> () const override</td></tr>
 <tr class="memdesc:a060dff57e22cc3a9456dc3c12c8d75d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get CPU temperature.  <a href="classhgardenpi_1_1v1_1_1_device_concrete.html#a060dff57e22cc3a9456dc3c12c8d75d6">More...</a><br /></td></tr>
 <tr class="separator:a060dff57e22cc3a9456dc3c12c8d75d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -117,9 +113,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="separator:a39a61012698b9171f80f1c642a492dbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adc8cab05f8afaca12f031e584a6d2a0f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_device_concrete.html#adc8cab05f8afaca12f031e584a6d2a0f">setThreadPool</a> (const <a class="el" href="classhgardenpi_1_1v1_1_1_thread_pool.html">ThreadPool</a> *threadPool) noexcept override</td></tr>
 <tr class="separator:adc8cab05f8afaca12f031e584a6d2a0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a335baca89d66b8a5b64bc3e0949608"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_device_concrete.html#a7a335baca89d66b8a5b64bc3e0949608">printOnDisplay</a> (const string &amp;txt, bool splitByDivisor) const noexcept override</td></tr>
-<tr class="memdesc:a7a335baca89d66b8a5b64bc3e0949608"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print on system display.  <a href="classhgardenpi_1_1v1_1_1_device_concrete.html#a7a335baca89d66b8a5b64bc3e0949608">More...</a><br /></td></tr>
-<tr class="separator:a7a335baca89d66b8a5b64bc3e0949608"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e249182072eab1a2aa9ead8627e3db1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_device_concrete.html#a1e249182072eab1a2aa9ead8627e3db1">printOnDisplay</a> (const string &amp;txt, bool enableFormat) const noexcept override</td></tr>
+<tr class="memdesc:a1e249182072eab1a2aa9ead8627e3db1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print on system display.  <a href="classhgardenpi_1_1v1_1_1_device_concrete.html#a1e249182072eab1a2aa9ead8627e3db1">More...</a><br /></td></tr>
+<tr class="separator:a1e249182072eab1a2aa9ead8627e3db1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a625e268c4b3ab4be88c34696462945a0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_device_concrete.html#a625e268c4b3ab4be88c34696462945a0">setButtonOnClick</a> (<a class="el" href="classhgardenpi_1_1v1_1_1_button.html#a61236750ff6f20c713aca8b7252c519e">Button::OnClick</a> onClick) noexcept override</td></tr>
 <tr class="memdesc:a625e268c4b3ab4be88c34696462945a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">set callback triggered whet button willi be pressed or released  <a href="classhgardenpi_1_1v1_1_1_device_concrete.html#a625e268c4b3ab4be88c34696462945a0">More...</a><br /></td></tr>
 <tr class="separator:a625e268c4b3ab4be88c34696462945a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -240,12 +236,12 @@ static constexpr const char&#160;</td><td class="memItemRight" valign="bottom"><
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_startable.html#a30998dad1893ee9e09e99fe04033562f">hgardenpi::v1::Startable</a>.</p>
+<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_initializable.html#a58e44eaad8e2c3857ad7f49b6850e1d6">hgardenpi::v1::Initializable</a>.</p>
 
 </div>
 </div>
-<a id="a7a335baca89d66b8a5b64bc3e0949608"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7a335baca89d66b8a5b64bc3e0949608">&#9670;&nbsp;</a></span>printOnDisplay()</h2>
+<a id="a1e249182072eab1a2aa9ead8627e3db1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e249182072eab1a2aa9ead8627e3db1">&#9670;&nbsp;</a></span>printOnDisplay()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -263,7 +259,7 @@ static constexpr const char&#160;</td><td class="memItemRight" valign="bottom"><
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>splitByDivisor</em>&#160;</td>
+          <td class="paramname"><em>enableFormat</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -282,11 +278,12 @@ static constexpr const char&#160;</td><td class="memItemRight" valign="bottom"><
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">txt</td><td>to show </td></tr>
+    <tr><td class="paramname">enableFormat</td><td>enable center formation </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_device.html#a039ee27c7237fbd4457c2c3f09c8eada">hgardenpi::v1::Device</a>.</p>
+<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_device.html#aa80f33b30fd4b1a0ca9deeecaba21f19">hgardenpi::v1::Device</a>.</p>
 
 </div>
 </div>

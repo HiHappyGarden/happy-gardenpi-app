@@ -59,17 +59,10 @@ namespace hgardenpi
             void initialize() override;
 
             /**
-             * @brief Start main look and scheduler
-             * @param run check if the loops are in execution
-             * @exception runtime_error when hardware requisites mismatch
-             */
-            void start(volatile bool &run) override;
-
-            /**
-             * @brief release a resource
+             * @brief close all resource
              * 
              */
-            void release() noexcept override;
+            void close() noexcept override;
 
             /**
              * @brief Get the Config Info object

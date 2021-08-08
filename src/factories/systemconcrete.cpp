@@ -41,7 +41,7 @@ namespace hgardenpi
 
             if (lockService)
             {
-                release();
+                close();
                 delete lockService;
                 lockService = nullptr;
             }
@@ -70,6 +70,7 @@ namespace hgardenpi
             configInfo = move(config->read());
             delete config;
 
+            //if config info is not initialized the system cannot run
             if (!configInfo)
             {
                 throw runtime_error(_("system non initialized"));
@@ -103,9 +104,7 @@ namespace hgardenpi
 
         }
 
-        void SystemConcrete::start(volatile bool &run) {}
-
-        inline void SystemConcrete::release() noexcept
+        inline void SystemConcrete::close() noexcept
         {
             lockService->release();
         }

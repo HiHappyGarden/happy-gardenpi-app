@@ -28,6 +28,7 @@
 #include "threadutils.hpp"
 
 #include <thread>
+
 using namespace std;
 
 namespace hgardenpi
@@ -44,38 +45,38 @@ namespace hgardenpi
 
         static constexpr const inline auto tick = static_cast<size_t>(Time::TICK);
 
-        void threadSleep(volatile bool &run, mutex &m, size_t millis) noexcept
-        {
-            //lock_guard<mutex> lg(m);
-//            auto &&t =this_thread::get_id();
-//            printf("t:%p %d %d %d\n", &t,  tick, millis, millis / tick);
-//
-//            size_t count = 0;
-//            while (run)
-//            {
-//                if (count >= millis / tick)
-//                {
-//                    return;
-//                }
-//                this_thread::sleep_for(chrono::milliseconds(tick));
-//                count ++;
-//                //printf("t:%p %d\n", &t, count);
-//            }
-            this_thread::sleep_for(chrono::milliseconds(millis));
-
-        }
-
         void threadSleep(volatile bool &run, mutex &m, Time &&millis) noexcept //keep not inline
         {
-//            threadSleep(run, m, static_cast<size_t>(millis));
             this_thread::sleep_for(chrono::milliseconds(static_cast<size_t>(millis)));
         }
 
 
         void threadSleep(volatile bool &run, mutex &m, const Time &millis) noexcept //keep not inline
         {
-//            threadSleep(run, m, static_cast<size_t>(millis));
             this_thread::sleep_for(chrono::milliseconds(static_cast<size_t>(millis)));
         }
+
+        //exit signal handler
+        function<int()> threadSignalHandler = []
+        {
+
+            int signum = 0;
+            // wait until a signal is delivered:
+            sigwait(&sigset, &signum);
+            shutdownRequest.store(true);
+
+            cout << "signum:" << to_string(signum) << endl;
+
+            if (threadPool)
+            {
+                cout << "delete threadPool" << endl;
+                delete threadPool;
+                threadPool = nullptr;
+            }
+            // notify all waiting workers to check their predicate:
+            cv.notify_all();
+            return signum;
+        };
+
     }
 }
