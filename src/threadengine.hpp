@@ -134,7 +134,7 @@ namespace hgardenpi
 
 #pragma region variables
         extern sigset_t sigset;
-        extern atomic<bool> shutdownRequest;
+        extern atomic_bool shutdownRequest;
         extern condition_variable cv;
 
         /**

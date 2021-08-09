@@ -38,15 +38,6 @@ namespace hgardenpi
     inline namespace v1
     {
 
-        //enable loops
-        static volatile bool run = true;
-
-        //exit signal handler
-//        static inline const __sighandler_t handleSignal = [](int)
-//        {
-//            run = false;
-//        };
-
         Engine::Engine() : factory(new (nothrow) FactoryConcrete)
         {
             //initialize factory and all sub factory
@@ -192,7 +183,7 @@ namespace hgardenpi
 //            });
 
 //            //start all
-            device->start(run);
+            device->start();
 
 //            //write stat service on log
             system->getLogService()->write(LOG_INFO, _("service ready"));
@@ -205,8 +196,8 @@ namespace hgardenpi
             
             auto signalHandler = async(launch::async, threadSignalHandler);
 
-            int signal = signalHandler.get();
-            cout << "received signal " << signal << endl;
+            //int signal = signalHandler.get();
+            //cout << "received signal " << signal << endl;
         }
     }
 }

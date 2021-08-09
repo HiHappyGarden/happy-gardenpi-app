@@ -25,8 +25,7 @@
 #include <mutex>
 #include <functional>
 
-#include "../interfaces/singleton.hpp"
-#include "../utilities/threadpool.hpp"
+#include "../threadengine.hpp"
 #include "../constants.hpp"
 #include "scheduler.hpp"
 
@@ -40,7 +39,7 @@ namespace hgardenpi
         /**
          * @brief Scheduler for scheduling action, inside of this run a loop every one second
          */
-        class SchedulerConcrete final : public Scheduler, public Object
+        class SchedulerConcrete final : public Scheduler
         {
             mutable mutex m;
 
@@ -54,10 +53,9 @@ namespace hgardenpi
 
             /**
              * @brief Start main look and scheduler
-             * @param run check if the loops are in execution
              * @exception runtime_error when hardware requisites mismatch
              */
-            void start(volatile bool &run) override;
+            void start() override;
 
             /**
              * Insert into scheduler an aggregation of station

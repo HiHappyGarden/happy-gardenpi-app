@@ -41,6 +41,7 @@ namespace hgardenpi
 #pragma endregion staticVariables
 
 #pragma region ThreadPool
+
         ThreadPool::ThreadPool(size_t threads)
                 : stop(false),
                   threads(threads)
@@ -86,13 +87,13 @@ namespace hgardenpi
 
 #pragma region variables
         sigset_t sigset;
-        atomic<bool> shutdownRequest(false);
+        atomic_bool shutdownRequest(false);
         mutex cvMutex;
         condition_variable cv;
 
         //exit signal handler
         function<int()> threadSignalHandler = []
-                {
+        {
 
             int signum = 0;
             // wait until a signal is delivered:
@@ -110,10 +111,11 @@ namespace hgardenpi
             // notify all waiting workers to check their predicate:
             cv.notify_all();
             return signum;
-                };
+        };
 #pragma endregion variables
 
 #pragma region functions
+
         void threadSleep(volatile bool &run, mutex &m, Time &&millis) noexcept //keep not inline
         {
             this_thread::sleep_for(chrono::milliseconds(static_cast<size_t>(millis)));
@@ -123,6 +125,7 @@ namespace hgardenpi
         {
             this_thread::sleep_for(chrono::milliseconds(static_cast<size_t>(millis)));
         }
+
 #pragma endregion functions
     }
 }
