@@ -92,48 +92,43 @@ namespace hgardenpi
 
         }
 
-        /**
-         * @brief Start main look and scheduler
-         * @param run check if the loops are in execution
-         * @exception runtime_error when hardware requisites mismatch
-         */
-        void DeviceConcrete::start(volatile bool &run)
+        void DeviceConcrete::start()
         {
             //set contrast management when click on button
             button->setInternalOnClick([&]
                                        {
-                                           turnOnContrastDisplayFor(run, Time::DISPLAY_CONTRAST);
+                                           //turnOnContrastDisplayFor(run, Time::DISPLAY_CONTRAST);
                                        });
 
             //todo: to debug
             //set display loop
             if (threadPool)
             {
-                threadPool->enqueue([&]
-                {
-                    unique_lock lock(m);
-                    //show welcome message
-                    cv.wait_for(
-                            lock,
-                            // wait for up to an hour
-                            chrono::hours(1),
-
-                            [&]
-                            {
-                                turnOnContrastDisplayFor(run, Time::DISPLAY_SHORT_TICK);
-
-                                printOnDisplay("Happy|Garden PI", true);
-
-                                threadSleep(run, m, Time::DISPLAY_SHORT_TICK);
-
-                                turnOnContrastDisplayFor(run);
-
-                                while (run)
-                                    printOnDisplayStandardInfo(run);
-
-                                return shutdownRequest.load();
-                            });
-                });
+//                threadPool->enqueue([&]
+//                {
+//                    unique_lock lock(m);
+//                    //show welcome message
+//                    cv.wait_for(
+//                            lock,
+//                            // wait for up to an hour
+//                            chrono::hours(1),
+//
+//                            [&]
+//                            {
+//                                turnOnContrastDisplayFor(run, Time::DISPLAY_SHORT_TICK);
+//
+//                                printOnDisplay("Happy|Garden PI", true);
+//
+//                                threadSleep(run, m, Time::DISPLAY_SHORT_TICK);
+//
+//                                turnOnContrastDisplayFor(run);
+//
+//                                while (run)
+//                                    printOnDisplayStandardInfo(run);
+//
+//                                return shutdownRequest.load();
+//                            });
+//                });
             }
 
 

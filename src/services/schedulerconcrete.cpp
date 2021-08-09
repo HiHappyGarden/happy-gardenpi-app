@@ -30,7 +30,7 @@ SchedulerConcrete::SchedulerConcrete(const ThreadPool *threadPool) : threadPool(
 }
 
 
-void SchedulerConcrete::start(volatile bool &run)
+void SchedulerConcrete::start()
 {
 
 }

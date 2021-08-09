@@ -36,7 +36,7 @@ namespace hgardenpi
          * @brief Scheduler for scheduing acrion, inside of this run a loop every one second
          * 
          */
-        class Scheduler : public Startable
+        class Scheduler : public Startable, public Object
         {
 
         public:
