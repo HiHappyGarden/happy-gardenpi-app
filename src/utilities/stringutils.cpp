@@ -99,5 +99,12 @@ namespace hgardenpi
             return ret;
         }
 
+        vector<string> split(const string &s, char delim) noexcept {
+            vector<string> elems;
+            split(s, delim, back_inserter(elems));
+            return elems;
+        }
+
+
     }
 }

@@ -56,8 +56,9 @@ namespace hgardenpi
             /**
              * @brief Set onClick only for internal management triggered when button pull down
              * @param onClick called when button pull down
+             * @exception runtime_error when hardware requisites mismatch
              */
-            virtual void setInternalOnClick(OnClick onClick) const noexcept = 0;
+            virtual void setInternalOnClick(OnClick onClick) const = 0;
 
         };
     }

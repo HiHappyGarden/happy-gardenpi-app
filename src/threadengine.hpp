@@ -136,6 +136,7 @@ namespace hgardenpi
         extern sigset_t sigset;
         extern atomic_bool shutdownRequest;
         extern condition_variable cv;
+        extern long pidMain;
 
         /**
          * @brief Function to handle exit signals
@@ -147,17 +148,23 @@ namespace hgardenpi
 #pragma region functions
         /**
          * @brief Sleep a thread for n millis
-         * @param run if run is false exit from loop
          * @param millis to sleep
          */
         void threadSleep(volatile bool &run, mutex &m, Time &&millis) noexcept;
 
         /**
          * @brief Sleep a thread for n millis
-         * @param run if run is false exit from loop
          * @param millis to sleep
          */
-        void threadSleep(volatile bool &run, mutex &m, const Time &millis) noexcept;
+        void threadSleep(const Time &millis) noexcept;
+
+        /**
+         * @brief Get the pid fot thread child
+         * @param exclude exclude some pid
+         * @return vector with list of child pid
+         */
+        vector<long> threadGetChildPid(long exclude = -1) noexcept;
+
 #pragma endregion functions
 
     }

@@ -28,6 +28,10 @@ using std::to_string;
 #include <stdexcept>
 using std::runtime_error;
 
+#include <unistd.h>
+#include <sys/syscall.h>
+
+#include "../threadengine.hpp"
 #include "../services/schedulerconcrete.hpp"
 
 namespace hgardenpi
@@ -89,6 +93,9 @@ namespace hgardenpi
             {
                 throw runtime_error(_("no memory for lockService"));
             }
+
+            //get Happy GardenPI pid
+            pidMain = syscall(__NR_gettid);
 
             //check if already run an instance of Happy GardenPI
             if (lockService->lock())

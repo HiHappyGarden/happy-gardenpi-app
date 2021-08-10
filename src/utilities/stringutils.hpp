@@ -25,6 +25,8 @@
 #include <string>
 #include <utility>
 #include <algorithm>
+#include <vector>
+#include <sstream>
 
 namespace hgardenpi
 {
@@ -34,6 +36,8 @@ namespace hgardenpi
         using std::pair;
         using std::string;
         using std::transform;
+        using std::vector;
+        using std::istringstream;
 
         /**
          * @brief Check if into a string is contains another string
@@ -180,5 +184,38 @@ namespace hgardenpi
             return stringRight(src, token, offset);
         }
 
+        /**
+         * @brief Split a string fill container by value
+         * @param str Source string
+         * @param delim char to split
+         * @return vector with string splitted
+         */
+        template <typename Out>
+        void split(const string &str, char delim, Out result) noexcept {
+            istringstream iss(str);
+            string item;
+            while (getline(iss, item, delim)) {
+                *result++ = item;
+            }
+        }
+
+        /**
+         * @brief Split a string
+         * @param str Source string
+         * @param delim char to split
+         * @return vector with string splitted
+         */
+        vector<string> split(const string &str, char delim) noexcept;
+
+        /**
+         * @brief Split a string
+         * @param str Source string
+         * @param delim char to split
+         * @return vector with string splitted
+         */
+        inline vector<string> split(const string &&str, char delim) noexcept
+        {
+            return split(str, delim);
+        }
     }
 }

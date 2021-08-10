@@ -28,8 +28,11 @@
 #include "buttonconcrete.hpp"
 
 #include <wiringPi.h>
+#include <unistd.h>
+#include <sys/syscall.h>
 
-#include <thread>
+
+#include "../threadengine.hpp"
 using namespace std;
 
 
@@ -50,18 +53,28 @@ ButtonConcrete::ButtonConcrete(int lcdRS) noexcept
 
 void ButtonConcrete::setOnClick(OnClick onClick) const noexcept
 {
-    lock_guard<mutex> lg(m);
     ::callback = move(onClick);
-
-    wiringPiISR(::lcdRS, INT_EDGE_RISING, []
-    {
-        ::internalCallback();
-        ::callback();
-    });
 }
 
-void ButtonConcrete::setInternalOnClick(OnClick onClick) const noexcept
+void ButtonConcrete::setInternalOnClick(OnClick onClick) const
 {
-    lock_guard<mutex> lg(m);
     ::internalCallback = move(onClick);
+
+    if (waitForInterrupt(::lcdRS, static_cast<int>(Time::TICK)) == -1)
+    {
+        throw runtime_error("waitForInterrupt not run, the hw is not ready");
+    }
+
+    if (wiringPiISR(::lcdRS, INT_EDGE_RISING, []
+    {
+        int ret2;
+//        wiringPiPid = syscall(__NR_gettid);
+//        printf("%d\n", wiringPiPid);
+        pthread_exit(&ret2);
+        ::internalCallback();
+        ::callback();
+    }) == -1)
+    {
+        throw runtime_error("wiringPiISR not run, the hw is not ready");
+    }
 }

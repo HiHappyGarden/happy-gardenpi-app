@@ -30,7 +30,6 @@
 #include <string>
 
 #include "button.hpp"
-#include <mutex>
 
 namespace hgardenpi
 {
@@ -38,17 +37,12 @@ namespace hgardenpi
     {
 
         using std::string;
-        using std::mutex;
-        using std::lock_guard;
 
         /**
          * @brief Representation concrete of button
          */
         class ButtonConcrete final : public Button
         {
-        private:
-            mutable mutex m;
-
         public:
 
             enum GPIOPinDisplay : int
@@ -69,12 +63,12 @@ namespace hgardenpi
             /**
              * @brief Set onClick only for internal management triggered when button pull down
              * @param onClick called when button pull down
+             * @exception runtime_error when hardware requisites mismatch
              */
-            void setInternalOnClick(OnClick onClick) const noexcept override;
+            void setInternalOnClick(OnClick onClick) const override;
 
             /**
              * @brief Return the name of object
-             *
              * @return std::string name of object
              */
             inline string toString() noexcept override
