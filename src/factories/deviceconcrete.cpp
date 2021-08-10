@@ -198,20 +198,20 @@ namespace hgardenpi
 
             printOnDisplay("MAC ADDRESS|" + getWlan0MAC(), true);
 
-            threadSleep(run, m, Time::DISPLAY_TICK);
+            threadSleep(Time::DISPLAY_TICK);
 
             auto &&ip = getWlan0IP();
 
             printOnDisplay(_("IP ADDRESS|") + (ip != "0:0:0:0" ? ip : _("not connected")), true);
 
-            threadSleep(run, m, Time::DISPLAY_TICK);
+            threadSleep(Time::DISPLAY_TICK);
 
             stringstream ss;
             ss << setprecision(2) << getCPUTemperature();
 
             printOnDisplay(_("INTERNAL TEMP|") + ss.str() + "C", true);
 
-            threadSleep(run, m, Time::DISPLAY_TICK);
+            threadSleep(Time::DISPLAY_TICK);
 
         }
 
@@ -226,7 +226,7 @@ namespace hgardenpi
                     //                cvContrast.wait(lk);
 
                     display->setContrastTurnOn(true);
-                    threadSleep(run, mContrast, wait);
+                    threadSleep(wait);
                     //this_thread::sleep_for(chrono::milliseconds(static_cast<uint64_t>(wait)));
                     display->setContrastTurnOn(false);
 

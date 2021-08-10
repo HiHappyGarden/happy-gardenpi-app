@@ -108,8 +108,7 @@ add_executable(hgardenpi
         src/engine.hpp
         src/main.cpp
         src/threadengine.cpp
-        src/threadengine.hpp
-        )
+        src/threadengine.hpp)
 
 target_link_libraries(hgardenpi
         wiringPi

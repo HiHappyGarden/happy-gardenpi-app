@@ -176,16 +176,16 @@ namespace hgardenpi
             }
 
             //todo: to debug
-//            device->setButtonOnClick([] {
-//
-//                printf("click\n");
-//
-//            });
+            device->setButtonOnClick([] {
 
-//            //start all
+                printf("click\n");
+
+            });
+
+            //start all
             device->start();
 
-//            //write stat service on log
+            //write stat service on log
             system->getLogService()->write(LOG_INFO, _("service ready"));
 
             //set signal behavior on SIGINT SIGTERM
@@ -193,11 +193,18 @@ namespace hgardenpi
             sigaddset(&sigset, SIGINT);
             sigaddset(&sigset, SIGTERM);
             pthread_sigmask(SIG_BLOCK, &sigset, nullptr);
-            
-            auto signalHandler = async(launch::async, threadSignalHandler);
+
+            auto &&signalHandler = async(launch::async, threadSignalHandler);
+
+            cout << "pidMain" << pidMain << endl;
+            for(auto &&it : threadGetChildPid())
+            {
+                cout << it << endl;
+            }
 
             //int signal = signalHandler.get();
             //cout << "received signal " << signal << endl;
+
         }
     }
 }
