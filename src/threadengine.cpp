@@ -32,17 +32,12 @@
 #include "utilities/stringutils.hpp"
 
 
-//from wiringPi Happy GardenPi version
-extern volatile unsigned wiringPiRunningThread ;
-
 namespace hgardenpi
 {
     inline namespace v1
     {
 
-#pragma region staticVariables
-        static constexpr const inline auto tick = static_cast<size_t>(Time::TICK);
-#pragma endregion staticVariables
+        static constexpr const uint64_t TICK = static_cast<uint64_t>(Time::TICK);
 
 #pragma region ThreadPool
 
@@ -115,17 +110,16 @@ namespace hgardenpi
             return result;
         }
 
-        void threadSleep(Time &&millis) noexcept //keep not inline
+        void threadSleep(atomic_uint64_t millis) noexcept //keep not inline
         {
-            this_thread::sleep_for(chrono::milliseconds(static_cast<size_t>(millis)));
+            for (uint64_t i = 0; i < millis && wiringPiRunningThread; i += TICK)
+            {
+                cout << to_string(millis) << "---" << to_string(i) << endl;
+                this_thread::sleep_for(chrono::milliseconds(TICK));
+            }
         }
 
-        void threadSleep(const Time &millis) noexcept //keep not inline
-        {
-            this_thread::sleep_for(chrono::milliseconds(static_cast<size_t>(millis)));
-        }
-
-        [[maybe_unused]] vector<long> threadGetChildPid(long exclude) noexcept
+        vector<long> threadGetChildPid(long exclude) noexcept
         {
 
             vector<long> ret{};
