@@ -153,7 +153,6 @@ namespace hgardenpi
                 result.push_back(substr);
             }
 
-
             uint8_t i = 0;
             for (auto &it : result)
             {

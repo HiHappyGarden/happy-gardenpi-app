@@ -85,24 +85,26 @@ Inheritance diagram for hgardenpi::v1::Startable:</div>
  <div class="center">
   <img src="classhgardenpi_1_1v1_1_1_startable.png" usemap="#hgardenpi::v1::Startable_map" alt=""/>
   <map id="hgardenpi::v1::Startable_map" name="hgardenpi::v1::Startable_map">
-<area href="classhgardenpi_1_1v1_1_1_device.html" title="Factory for management of peripherals devices." alt="hgardenpi::v1::Device" shape="rect" coords="0,56,205,80"/>
-<area href="classhgardenpi_1_1v1_1_1_scheduler.html" title="Scheduler for scheduing acrion, inside of this run a loop every one second." alt="hgardenpi::v1::Scheduler" shape="rect" coords="215,56,420,80"/>
-<area href="classhgardenpi_1_1v1_1_1_device_concrete.html" title="Factory for management of peripherals devices." alt="hgardenpi::v1::DeviceConcrete" shape="rect" coords="0,112,205,136"/>
-<area href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html" title="Scheduler for scheduling action, inside of this run a loop every one second." alt="hgardenpi::v1::SchedulerConcrete" shape="rect" coords="215,112,420,136"/>
+<area href="classhgardenpi_1_1v1_1_1_device.html" title="Factory for management of peripherals devices." alt="hgardenpi::v1::Device" shape="rect" coords="0,56,215,80"/>
+<area href="classhgardenpi_1_1v1_1_1_m_q_t_t_client.html" title="Generic MQTT Client for connect to mosquitto." alt="hgardenpi::v1::MQTTClient" shape="rect" coords="225,56,440,80"/>
+<area href="classhgardenpi_1_1v1_1_1_scheduler.html" title="Scheduler for scheduing acrion, inside of this run a loop every one second." alt="hgardenpi::v1::Scheduler" shape="rect" coords="450,56,665,80"/>
+<area href="classhgardenpi_1_1v1_1_1_device_concrete.html" title="Factory for management of peripherals devices." alt="hgardenpi::v1::DeviceConcrete" shape="rect" coords="0,112,215,136"/>
+<area href="classhgardenpi_1_1v1_1_1_m_q_t_t_client_mosquitto.html" title="MQTT Client for connect to mosquitto." alt="hgardenpi::v1::MQTTClientMosquitto" shape="rect" coords="225,112,440,136"/>
+<area href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html" title="Scheduler for scheduling action, inside of this run a loop every one second." alt="hgardenpi::v1::SchedulerConcrete" shape="rect" coords="450,112,665,136"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a65720fd3f9e4a0138f019a68f679b474"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_startable.html#a65720fd3f9e4a0138f019a68f679b474">start</a> (volatile bool &amp;run)=0</td></tr>
-<tr class="memdesc:a65720fd3f9e4a0138f019a68f679b474"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start main look and scheduler.  <a href="classhgardenpi_1_1v1_1_1_startable.html#a65720fd3f9e4a0138f019a68f679b474">More...</a><br /></td></tr>
-<tr class="separator:a65720fd3f9e4a0138f019a68f679b474"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9bb5fa4d0b9b64443addc076bd96d88"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_startable.html#ab9bb5fa4d0b9b64443addc076bd96d88">start</a> ()=0</td></tr>
+<tr class="memdesc:ab9bb5fa4d0b9b64443addc076bd96d88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start main look and scheduler.  <a href="classhgardenpi_1_1v1_1_1_startable.html#ab9bb5fa4d0b9b64443addc076bd96d88">More...</a><br /></td></tr>
+<tr class="separator:ab9bb5fa4d0b9b64443addc076bd96d88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstract class for objet able to start somethink. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a65720fd3f9e4a0138f019a68f679b474"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a65720fd3f9e4a0138f019a68f679b474">&#9670;&nbsp;</a></span>start()</h2>
+<a id="ab9bb5fa4d0b9b64443addc076bd96d88"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9bb5fa4d0b9b64443addc076bd96d88">&#9670;&nbsp;</a></span>start()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -113,8 +115,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">virtual void hgardenpi::v1::Startable::start </td>
           <td>(</td>
-          <td class="paramtype">volatile bool &amp;&#160;</td>
-          <td class="paramname"><em>run</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -126,12 +127,6 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Start main look and scheduler. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">run</td><td>check if the loops are in execution </td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname">runtime_error</td><td>when hardware requisites mismatch </td></tr>
@@ -139,7 +134,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#a948ef755241b7c4cb42b67d4a998a2bc">hgardenpi::v1::SchedulerConcrete</a>, and <a class="el" href="classhgardenpi_1_1v1_1_1_device_concrete.html#a2d807054658b5da3f638765384459ee1">hgardenpi::v1::DeviceConcrete</a>.</p>
+<p>Implemented in <a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#ad3f06457dd2cc39b17096e135939f472">hgardenpi::v1::SchedulerConcrete</a>, <a class="el" href="classhgardenpi_1_1v1_1_1_device_concrete.html#a6309f703c7e72031f628651d5780d24f">hgardenpi::v1::DeviceConcrete</a>, and <a class="el" href="classhgardenpi_1_1v1_1_1_m_q_t_t_client_mosquitto.html#a76914c3880a029e460ef120f1882f6f1">hgardenpi::v1::MQTTClientMosquitto</a>.</p>
 
 </div>
 </div>

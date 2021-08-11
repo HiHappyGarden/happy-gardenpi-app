@@ -29,6 +29,9 @@
 
 #include "../threadengine.hpp"
 
+//todo: place here in global
+static hgardenpi::v1::MQTTClient::MessageCallback onMessageCallback;
+
 namespace hgardenpi
 {
     inline namespace v1
@@ -42,6 +45,17 @@ namespace hgardenpi
               user(user),
               passwd(passwd)
         {
+            /*
+            * new instance client
+            */
+            ostringstream ss;
+            ss << pidMain;
+
+            mosq = mosquitto_new(ss.str().c_str(), true, nullptr);
+            if (!mosq)
+            {
+                HGARDENPI_ERROR_LOG_AMD_THROW("no memory available")
+            }
         }
 
         MQTTClientMosquitto::~MQTTClientMosquitto() noexcept
@@ -58,13 +72,12 @@ namespace hgardenpi
 
         void MQTTClientMosquitto::start()
         {
-            ostringstream ss;
-            ss << getpid();
+            if (!initalizated)
+            {
+                throw runtime_error(_("MQTTClientMosquitto not initialized"));
+            }
 
-            /*
-            * new instance client
-            */
-            mosq = mosquitto_new(ss.str().c_str(), true, nullptr);
+            //check il moquitto client is allocated
             if (mosq)
             {
                 /*
@@ -77,19 +90,20 @@ namespace hgardenpi
                     {
                         string err("connection error: ");
                         err.append(mosquitto_strerror(result));
-                        //LogService::getInstance()->write(LOG_ERR, "%s", err.c_str());
                         cerr << err << endl;
                     }
                 });
 
                 /*
                 * Subscription callback
-                * call when the message will senf succesfully to broker
+                * call when the message will send successfully to broker
                 */
                 mosquitto_message_callback_set(mosq, [](mosquitto *mosq, void *obj, const mosquitto_message *message)
                 {
-                    bool match = 0;
-                    printf("received message '%.*s' for topic '%s'\n", message->payloadlen, (char *)message->payload, message->topic);
+//                    bool match = 0;
+//                    printf("received message '%.*s' for topic '%s'\n", message->payloadlen, (char *)message->payload, message->topic);
+
+                    ::onMessageCallback((uint8_t *)message->payload);
 
                     //todo
                     //    mosquitto_topic_matches_sub(, message->topic, &match);
@@ -99,51 +113,55 @@ namespace hgardenpi
                     //    }
                 });
 
+                //set username and passwd
+                logService->write(LOG_INFO, "broker %s: %s", "user", user.c_str());
                 int rc = mosquitto_username_pw_set(mosq, user.c_str(), passwd.c_str());
                 if (rc != MOSQ_ERR_SUCCESS)
                 {
                     string err("set user and password: ");
                     err.append(mosquitto_strerror(rc));
                     logService->write(LOG_ERR, "%s", err.c_str());
-                    cerr << err << endl;
                     throw runtime_error(err);
                 }
 
+                //set protocol version
                 int ver = MQTT_PROTOCOL_V311;
                 mosquitto_opts_set(mosq, MOSQ_OPT_PROTOCOL_VERSION, &ver);
 
-                mosquitto_connect(mosq, host.c_str(), port, keepAlive);
+                //connect
+                logService->write(LOG_INFO, "broker %s: %s:%d", "host", host.c_str(), port);
+                if (mosquitto_connect(mosq, host.c_str(), port, keepAlive) != MOSQ_ERR_SUCCESS)
+                {
+                    string err("connection: ");
+                    err.append(mosquitto_strerror(rc));
+                    logService->write(LOG_ERR, "%s", err.c_str());
+                    throw runtime_error(err);
+                }
 
-                logService->write(LOG_INFO, "%s: %s", "topic", topic.c_str());
+                logService->write(LOG_INFO, "broker %s: %s", "topic", topic.c_str());
                 mosquitto_subscribe(mosq, nullptr, topic.c_str(), 0);
-
-                connected = true;
-            }
-            else
-            {
-                HGARDENPI_ERROR_LOG_AMD_THROW("no memory available")
             }
         }
 
         void MQTTClientMosquitto::loop()
         {
-            if (!connected)
+
+            while(mosquitto_loop(mosq, 0, 1) == MOSQ_ERR_SUCCESS && wiringPiRunningThread)
             {
-                return;
+                threadSleep(Time::TICK);
             }
 
-            int rc = mosquitto_loop(mosq, static_cast<int>(Time::TICK), 1);
-
-            if (wiringPiRunningThread && rc)
-            {
-                logService->write(LOG_WARNING, "%s", "connection error! Try to reconnect");
-                threadSleep(5'000);
-                rc = mosquitto_reconnect(mosq);
-                if (rc != MOSQ_ERR_SUCCESS)
-                {
-                    HGARDENPI_ERROR_LOG_AMD_THROW("reconnection fail")
-                }
-            }
+//            int rc = mosquitto_loop_forever(mosq, static_cast<int>(Time::TICK), 1);
+//            if (!wiringPiRunningThread && rc)
+//            {
+//                logService->write(LOG_WARNING, "%s", "connection error! Try to reconnect");
+//                threadSleep(5'000);
+//                rc = mosquitto_reconnect(mosq);
+//                if (rc != MOSQ_ERR_SUCCESS)
+//                {
+//                    HGARDENPI_ERROR_LOG_AMD_THROW("reconnection fail")
+//                }
+//            }
         }
 
         void MQTTClientMosquitto::initialize()
@@ -156,6 +174,11 @@ namespace hgardenpi
                 throw runtime_error(_(msg.c_str()));
             }
             initalizated = true;
+        }
+
+        void MQTTClientMosquitto::setOnMessageCallback(MQTTClient::MessageCallback &&onMessageCallback) noexcept
+        {
+            ::onMessageCallback = onMessageCallback;
         }
 
 

@@ -85,8 +85,10 @@ Inheritance diagram for hgardenpi::v1::MQTTClientMosquitto:</div>
  <div class="center">
   <img src="classhgardenpi_1_1v1_1_1_m_q_t_t_client_mosquitto.png" usemap="#hgardenpi::v1::MQTTClientMosquitto_map" alt=""/>
   <map id="hgardenpi::v1::MQTTClientMosquitto_map" name="hgardenpi::v1::MQTTClientMosquitto_map">
-<area href="classhgardenpi_1_1v1_1_1_m_q_t_t_client.html" title="Generic MQTT Client for connect to mosquitto." alt="hgardenpi::v1::MQTTClient" shape="rect" coords="0,56,215,80"/>
+<area href="classhgardenpi_1_1v1_1_1_m_q_t_t_client.html" title="Generic MQTT Client for connect to mosquitto." alt="hgardenpi::v1::MQTTClient" shape="rect" coords="225,56,440,80"/>
 <area href="classhgardenpi_1_1v1_1_1_loggable.html" title="Abstract class for set LogServcice to obj." alt="hgardenpi::v1::Loggable" shape="rect" coords="0,0,215,24"/>
+<area href="classhgardenpi_1_1v1_1_1_initializable.html" title="Abstract class for objet able to start somethink." alt="hgardenpi::v1::Initializable" shape="rect" coords="225,0,440,24"/>
+<area href="classhgardenpi_1_1v1_1_1_startable.html" title="Abstract class for objet able to start somethink." alt="hgardenpi::v1::Startable" shape="rect" coords="450,0,665,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -98,16 +100,22 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a76bce1423728b9c97f4b527a3c34578e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_m_q_t_t_client_mosquitto.html#a76bce1423728b9c97f4b527a3c34578e">MQTTClientMosquitto</a> (const string &amp;serial, const string &amp;&amp;host, const string &amp;&amp;user, const string &amp;&amp;passwd, uint16_t port=MQTTClientMosquitto::PORT, uint16_t keepAlive=MQTTClientMosquitto::KEEP_ALIVE)</td></tr>
 <tr class="memdesc:a76bce1423728b9c97f4b527a3c34578e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classhgardenpi_1_1v1_1_1_m_q_t_t_client.html" title="Generic MQTT Client for connect to mosquitto.">MQTTClient</a> object.  <a href="classhgardenpi_1_1v1_1_1_m_q_t_t_client_mosquitto.html#a76bce1423728b9c97f4b527a3c34578e">More...</a><br /></td></tr>
 <tr class="separator:a76bce1423728b9c97f4b527a3c34578e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f1ead0d7ae001df4f38557de879eb9e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_m_q_t_t_client_mosquitto.html#a1f1ead0d7ae001df4f38557de879eb9e">loop</a> (volatile bool &amp;run) override</td></tr>
-<tr class="memdesc:a1f1ead0d7ae001df4f38557de879eb9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">start loop  <a href="classhgardenpi_1_1v1_1_1_m_q_t_t_client_mosquitto.html#a1f1ead0d7ae001df4f38557de879eb9e">More...</a><br /></td></tr>
-<tr class="separator:a1f1ead0d7ae001df4f38557de879eb9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87b7b1f678354754ae45d891a63f6009"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_m_q_t_t_client_mosquitto.html#a87b7b1f678354754ae45d891a63f6009">loop</a> () override</td></tr>
+<tr class="memdesc:a87b7b1f678354754ae45d891a63f6009"><td class="mdescLeft">&#160;</td><td class="mdescRight">start loop, place on the end of engine class  <a href="classhgardenpi_1_1v1_1_1_m_q_t_t_client_mosquitto.html#a87b7b1f678354754ae45d891a63f6009">More...</a><br /></td></tr>
+<tr class="separator:a87b7b1f678354754ae45d891a63f6009"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aca39c46d4a11f98afaa7338f18b236e8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_m_q_t_t_client_mosquitto.html#aca39c46d4a11f98afaa7338f18b236e8">setOnMessageCallback</a> (MessageCallback &amp;&amp;onMessageCallback) noexcept override</td></tr>
 <tr class="memdesc:aca39c46d4a11f98afaa7338f18b236e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the On Message OnClick object.  <a href="classhgardenpi_1_1v1_1_1_m_q_t_t_client_mosquitto.html#aca39c46d4a11f98afaa7338f18b236e8">More...</a><br /></td></tr>
 <tr class="separator:aca39c46d4a11f98afaa7338f18b236e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9cc66ef2c262472c13bbc24ca5cf5aa"><td class="memItemLeft" align="right" valign="top"><a id="ac9cc66ef2c262472c13bbc24ca5cf5aa"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_m_q_t_t_client_mosquitto.html#ac9cc66ef2c262472c13bbc24ca5cf5aa">setLogService</a> (const <a class="el" href="classhgardenpi_1_1v1_1_1_log_service.html">LogService</a> *logService) noexcept override</td></tr>
-<tr class="memdesc:ac9cc66ef2c262472c13bbc24ca5cf5aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Log Service object. <br /></td></tr>
+<tr class="memitem:ac9cc66ef2c262472c13bbc24ca5cf5aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_m_q_t_t_client_mosquitto.html#ac9cc66ef2c262472c13bbc24ca5cf5aa">setLogService</a> (const <a class="el" href="classhgardenpi_1_1v1_1_1_log_service.html">LogService</a> *logService) noexcept override</td></tr>
+<tr class="memdesc:ac9cc66ef2c262472c13bbc24ca5cf5aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set log.  <a href="classhgardenpi_1_1v1_1_1_m_q_t_t_client_mosquitto.html#ac9cc66ef2c262472c13bbc24ca5cf5aa">More...</a><br /></td></tr>
 <tr class="separator:ac9cc66ef2c262472c13bbc24ca5cf5aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab3d7bdcc659da275d35902f5a1946b8"><td class="memItemLeft" align="right" valign="top"><a id="aab3d7bdcc659da275d35902f5a1946b8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_m_q_t_t_client_mosquitto.html#aab3d7bdcc659da275d35902f5a1946b8">initialize</a> () override</td></tr>
+<tr class="memdesc:aab3d7bdcc659da275d35902f5a1946b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize lib. <br /></td></tr>
+<tr class="separator:aab3d7bdcc659da275d35902f5a1946b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76914c3880a029e460ef120f1882f6f1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_m_q_t_t_client_mosquitto.html#a76914c3880a029e460ef120f1882f6f1">start</a> () override</td></tr>
+<tr class="memdesc:a76914c3880a029e460ef120f1882f6f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start service.  <a href="classhgardenpi_1_1v1_1_1_m_q_t_t_client_mosquitto.html#a76914c3880a029e460ef120f1882f6f1">More...</a><br /></td></tr>
+<tr class="separator:a76914c3880a029e460ef120f1882f6f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -258,8 +266,8 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>MessageCallback</b> 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a1f1ead0d7ae001df4f38557de879eb9e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1f1ead0d7ae001df4f38557de879eb9e">&#9670;&nbsp;</a></span>loop()</h2>
+<a id="a87b7b1f678354754ae45d891a63f6009"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87b7b1f678354754ae45d891a63f6009">&#9670;&nbsp;</a></span>loop()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -270,8 +278,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>MessageCallback</b> 
         <tr>
           <td class="memname">void hgardenpi::v1::MQTTClientMosquitto::loop </td>
           <td>(</td>
-          <td class="paramtype">volatile bool &amp;&#160;</td>
-          <td class="paramname"><em>run</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -282,21 +289,51 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>MessageCallback</b> 
 </table>
 </div><div class="memdoc">
 
-<p>start loop </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">run</td><td>check if the loops are in execution </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>start loop, place on the end of engine class </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">runtime_error</td><td>when hardware requisites mismatch </td></tr>
+    <tr><td class="paramname">runtime_error</td><td>when something goes wrong </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_m_q_t_t_client.html#aeac5c56a67ca152a19312b6506ee3b2d">hgardenpi::v1::MQTTClient</a>.</p>
+<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_m_q_t_t_client.html#a2eb208ff84a0e24f5f4282bdc2284fa0">hgardenpi::v1::MQTTClient</a>.</p>
+
+</div>
+</div>
+<a id="ac9cc66ef2c262472c13bbc24ca5cf5aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9cc66ef2c262472c13bbc24ca5cf5aa">&#9670;&nbsp;</a></span>setLogService()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hgardenpi::v1::MQTTClientMosquitto::setLogService </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classhgardenpi_1_1v1_1_1_log_service.html">LogService</a> *&#160;</td>
+          <td class="paramname"><em>logService</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set log. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">logService</td><td>instance </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_loggable.html#a795e1f33b2f82947e2597d178a1eae61">hgardenpi::v1::Loggable</a>.</p>
 
 </div>
 </div>
@@ -312,14 +349,14 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>MessageCallback</b> 
         <tr>
           <td class="memname">void hgardenpi::v1::MQTTClientMosquitto::setOnMessageCallback </td>
           <td>(</td>
-          <td class="paramtype">MessageCallback &amp;&amp;&#160;</td>
+          <td class="paramtype">MQTTClient::MessageCallback &amp;&amp;&#160;</td>
           <td class="paramname"><em>onMessageCallback</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -333,6 +370,41 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>MessageCallback</b> 
 </dl>
 
 <p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_m_q_t_t_client.html#ab987de58d187cd3ef7f1c5e73954267e">hgardenpi::v1::MQTTClient</a>.</p>
+
+</div>
+</div>
+<a id="a76914c3880a029e460ef120f1882f6f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76914c3880a029e460ef120f1882f6f1">&#9670;&nbsp;</a></span>start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hgardenpi::v1::MQTTClientMosquitto::start </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Start service. </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">runtime_error</td><td>when hardware requisites mismatch </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_startable.html#ab9bb5fa4d0b9b64443addc076bd96d88">hgardenpi::v1::Startable</a>.</p>
 
 </div>
 </div>

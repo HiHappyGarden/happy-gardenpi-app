@@ -103,9 +103,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa5630f6a9a2761fc67bd845f7bae95a4"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_button.html#aa5630f6a9a2761fc67bd845f7bae95a4">setOnClick</a> (<a class="el" href="classhgardenpi_1_1v1_1_1_button.html#a61236750ff6f20c713aca8b7252c519e">OnClick</a> onClick) const noexcept=0</td></tr>
 <tr class="memdesc:aa5630f6a9a2761fc67bd845f7bae95a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set onClick triggered when button pull down.  <a href="classhgardenpi_1_1v1_1_1_button.html#aa5630f6a9a2761fc67bd845f7bae95a4">More...</a><br /></td></tr>
 <tr class="separator:aa5630f6a9a2761fc67bd845f7bae95a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4dac690ea768add37beee7442cb31e59"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_button.html#a4dac690ea768add37beee7442cb31e59">setInternalOnClick</a> (<a class="el" href="classhgardenpi_1_1v1_1_1_button.html#a61236750ff6f20c713aca8b7252c519e">OnClick</a> onClick) const noexcept=0</td></tr>
-<tr class="memdesc:a4dac690ea768add37beee7442cb31e59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set onClick only for internal management triggered when button pull down.  <a href="classhgardenpi_1_1v1_1_1_button.html#a4dac690ea768add37beee7442cb31e59">More...</a><br /></td></tr>
-<tr class="separator:a4dac690ea768add37beee7442cb31e59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c2c85a4254961c74436a768eeb9938d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_button.html#a1c2c85a4254961c74436a768eeb9938d">setInternalOnClick</a> (<a class="el" href="classhgardenpi_1_1v1_1_1_button.html#a61236750ff6f20c713aca8b7252c519e">OnClick</a> onClick) const =0</td></tr>
+<tr class="memdesc:a1c2c85a4254961c74436a768eeb9938d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set onClick only for internal management triggered when button pull down.  <a href="classhgardenpi_1_1v1_1_1_button.html#a1c2c85a4254961c74436a768eeb9938d">More...</a><br /></td></tr>
+<tr class="separator:a1c2c85a4254961c74436a768eeb9938d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classhgardenpi_1_1v1_1_1_object"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classhgardenpi_1_1v1_1_1_object')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classhgardenpi_1_1v1_1_1_object.html">hgardenpi::v1::Object</a></td></tr>
 <tr class="memitem:ae4e2a30bbac895dbb9efb643ad8e5600 inherit pub_methods_classhgardenpi_1_1v1_1_1_object"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_object.html#ae4e2a30bbac895dbb9efb643ad8e5600">toString</a> () noexcept=0</td></tr>
 <tr class="memdesc:ae4e2a30bbac895dbb9efb643ad8e5600 inherit pub_methods_classhgardenpi_1_1v1_1_1_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual method that return data of object in srteing format.  <a href="classhgardenpi_1_1v1_1_1_object.html#ae4e2a30bbac895dbb9efb643ad8e5600">More...</a><br /></td></tr>
@@ -114,8 +114,8 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstract button. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a4dac690ea768add37beee7442cb31e59"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4dac690ea768add37beee7442cb31e59">&#9670;&nbsp;</a></span>setInternalOnClick()</h2>
+<a id="a1c2c85a4254961c74436a768eeb9938d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c2c85a4254961c74436a768eeb9938d">&#9670;&nbsp;</a></span>setInternalOnClick()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -133,7 +133,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -145,8 +145,14 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">runtime_error</td><td>when hardware requisites mismatch </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Implemented in <a class="el" href="classhgardenpi_1_1v1_1_1_button_concrete.html#a6ff459494067512ba11f82136aa3ac82">hgardenpi::v1::ButtonConcrete</a>.</p>
+<p>Implemented in <a class="el" href="classhgardenpi_1_1v1_1_1_button_concrete.html#ada8b3ec25c7691d0c58d837595557585">hgardenpi::v1::ButtonConcrete</a>.</p>
 
 </div>
 </div>

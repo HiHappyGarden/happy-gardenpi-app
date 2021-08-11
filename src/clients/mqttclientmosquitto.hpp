@@ -58,7 +58,6 @@ namespace hgardenpi
             string id;
 
             bool initalizated = false;
-            bool connected = false;
         public:
 
             /**
@@ -92,8 +91,8 @@ namespace hgardenpi
             HGARDENPI_NO_COPY_NO_MOVE(MQTTClientMosquitto)
 
             /**
-             * @brief start loop n
-             * @exception runtime_error when hardware requisites mismatch
+             * @brief start loop, place on the end of engine class
+             * @exception runtime_error when something goes wrong
              */
             void loop() override;
 
@@ -102,10 +101,7 @@ namespace hgardenpi
              * 
              * @param onMessageCallback 
              */
-            inline void setOnMessageCallback(MessageCallback &&onMessageCallback) noexcept override
-            {
-                this->onMessageCallback = onMessageCallback;
-            }
+            void setOnMessageCallback(MessageCallback &&onMessageCallback) noexcept override;
 
             /**
              * @brief Set log
@@ -116,20 +112,17 @@ namespace hgardenpi
                 this->logService = const_cast<LogService *>(logService);
             }
 
-
             /**
              * @brief Initialize lib
              */
             void initialize() override;
 
-
             /**
              * @brief Start service
+             * @exception runtime_error when hardware requisites mismatch
              */
             void start() override;
 
-        private:
-            MessageCallback onMessageCallback = nullptr;
         };
     }
 }

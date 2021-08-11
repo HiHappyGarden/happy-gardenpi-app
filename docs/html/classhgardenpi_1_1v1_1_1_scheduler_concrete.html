@@ -85,9 +85,9 @@ Inheritance diagram for hgardenpi::v1::SchedulerConcrete:</div>
  <div class="center">
   <img src="classhgardenpi_1_1v1_1_1_scheduler_concrete.png" usemap="#hgardenpi::v1::SchedulerConcrete_map" alt=""/>
   <map id="hgardenpi::v1::SchedulerConcrete_map" name="hgardenpi::v1::SchedulerConcrete_map">
-<area href="classhgardenpi_1_1v1_1_1_scheduler.html" title="Scheduler for scheduing acrion, inside of this run a loop every one second." alt="hgardenpi::v1::Scheduler" shape="rect" coords="0,56,205,80"/>
-<area href="classhgardenpi_1_1v1_1_1_object.html" title="Generic class ttat all functionals objects must extend." alt="hgardenpi::v1::Object" shape="rect" coords="215,56,420,80"/>
+<area href="classhgardenpi_1_1v1_1_1_scheduler.html" title="Scheduler for scheduing acrion, inside of this run a loop every one second." alt="hgardenpi::v1::Scheduler" shape="rect" coords="107,56,312,80"/>
 <area href="classhgardenpi_1_1v1_1_1_startable.html" title="Abstract class for objet able to start somethink." alt="hgardenpi::v1::Startable" shape="rect" coords="0,0,205,24"/>
+<area href="classhgardenpi_1_1v1_1_1_object.html" title="Generic class ttat all functionals objects must extend." alt="hgardenpi::v1::Object" shape="rect" coords="215,0,420,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -96,9 +96,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0437b2a86a192051b0e06ed3b75bfb3f"><td class="memItemLeft" align="right" valign="top"><a id="a0437b2a86a192051b0e06ed3b75bfb3f"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>SchedulerConcrete</b> (const <a class="el" href="classhgardenpi_1_1v1_1_1_thread_pool.html">ThreadPool</a> *threadPool)</td></tr>
 <tr class="separator:a0437b2a86a192051b0e06ed3b75bfb3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a948ef755241b7c4cb42b67d4a998a2bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#a948ef755241b7c4cb42b67d4a998a2bc">start</a> (volatile bool &amp;run) override</td></tr>
-<tr class="memdesc:a948ef755241b7c4cb42b67d4a998a2bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start main look and scheduler.  <a href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#a948ef755241b7c4cb42b67d4a998a2bc">More...</a><br /></td></tr>
-<tr class="separator:a948ef755241b7c4cb42b67d4a998a2bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3f06457dd2cc39b17096e135939f472"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#ad3f06457dd2cc39b17096e135939f472">start</a> () override</td></tr>
+<tr class="memdesc:ad3f06457dd2cc39b17096e135939f472"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start main look and scheduler.  <a href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#ad3f06457dd2cc39b17096e135939f472">More...</a><br /></td></tr>
+<tr class="separator:ad3f06457dd2cc39b17096e135939f472"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a11025b3cfadef4fcc3e0d83091234c79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#a11025b3cfadef4fcc3e0d83091234c79">schedule</a> (const Aggregation::Ptr &amp;ptr) override</td></tr>
 <tr class="separator:a11025b3cfadef4fcc3e0d83091234c79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a20b1269bfb3376e95886a57746f06600"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#a20b1269bfb3376e95886a57746f06600">shot</a> (const Aggregation::Ptr &amp;ptr) const override</td></tr>
@@ -232,8 +232,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a948ef755241b7c4cb42b67d4a998a2bc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a948ef755241b7c4cb42b67d4a998a2bc">&#9670;&nbsp;</a></span>start()</h2>
+<a id="ad3f06457dd2cc39b17096e135939f472"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3f06457dd2cc39b17096e135939f472">&#9670;&nbsp;</a></span>start()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -244,8 +244,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void SchedulerConcrete::start </td>
           <td>(</td>
-          <td class="paramtype">volatile bool &amp;&#160;</td>
-          <td class="paramname"><em>run</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -257,12 +256,6 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Start main look and scheduler. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">run</td><td>check if the loops are in execution </td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname">runtime_error</td><td>when hardware requisites mismatch </td></tr>
@@ -270,7 +263,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_startable.html#a65720fd3f9e4a0138f019a68f679b474">hgardenpi::v1::Startable</a>.</p>
+<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_startable.html#ab9bb5fa4d0b9b64443addc076bd96d88">hgardenpi::v1::Startable</a>.</p>
 
 </div>
 </div>

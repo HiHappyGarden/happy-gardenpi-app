@@ -23,10 +23,6 @@
 #include <iostream>
 
 #include "engine.hpp"
-#include "threadengine.hpp"
-
-using namespace std;
-
 
 int main(int argc, char *argv[])
 {
@@ -60,6 +56,7 @@ int main(int argc, char *argv[])
     catch (...)
     {
         cerr << "unhandled exception" << std::endl;
+        return EXIT_FAILURE;
     }
 
     return EXIT_SUCCESS;
