@@ -114,7 +114,6 @@ namespace hgardenpi
         {
             for (uint64_t i = 0; i < millis && wiringPiRunningThread; i += TICK)
             {
-                cout << to_string(millis) << "---" << to_string(i) << endl;
                 this_thread::sleep_for(chrono::milliseconds(TICK));
             }
         }
