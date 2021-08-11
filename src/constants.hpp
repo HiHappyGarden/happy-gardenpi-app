@@ -51,8 +51,8 @@ namespace hgardenpi
         {
 
             DISPLAY_TICK = 6'000,
-            DISPLAY_SHORT_TICK = DISPLAY_TICK / 2,
-            DISPLAY_CONTRAST = DISPLAY_TICK * 3,
+            DISPLAY_SHORT_TICK = DISPLAY_TICK / 3,
+            DISPLAY_CONTRAST_TICK = DISPLAY_TICK * 3,
             TICK = 200
         };
 

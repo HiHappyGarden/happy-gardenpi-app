@@ -32,9 +32,6 @@
 #include "clients/mqttclientmosquitto.hpp"
 #include "threadengine.hpp"
 
-//from wiringPi Happy GardenPi version
-extern volatile unsigned wiringPiRunningThread ;
-
 namespace hgardenpi
 {
     inline namespace v1
@@ -88,19 +85,18 @@ namespace hgardenpi
             auto system = const_cast<System *>(Engine::getInstance()->factory->getSystem());
             auto device = const_cast<Device *>(Engine::getInstance()->factory->getDevice());
 
-//            //init system
+            //init system
             system->initialize();
 
-//            //init device
+            //init device
             device->setLogService(system->getLogService());
             device->initialize();
 
-            //todo: to debug
-//            //initialize threadPool in all sub factory
-//            threadPool = new (nothrow) ThreadPool(device->getInfo()->cpu);
-//            if (!threadPool) {
-//                throw runtime_error(_("no memory for threadPool"));
-//            }
+            //initialize threadPool in all sub factory
+            threadPool = new (nothrow) ThreadPool(device->getInfo()->cpu);
+            if (!threadPool) {
+                throw runtime_error(_("no memory for threadPool"));
+            }
             device->setThreadPool(threadPool);
             system->setThreadPool(threadPool);
 
@@ -194,7 +190,8 @@ namespace hgardenpi
             //main loop, managed by WiringPI mutex thread
             while (wiringPiRunningThread)
             {
-                threadSleep(Time::TICK);
+                //threadSleep(Time::TICK);
+                this_thread::sleep_for(chrono::milliseconds(static_cast<size_t>(Time::TICK)));
             }
 
 

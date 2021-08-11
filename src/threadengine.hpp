@@ -42,6 +42,9 @@
 #include "constants.hpp"
 #include "interfaces/object.hpp"
 
+//from wiringPi Happy GardenPi fork
+extern volatile unsigned wiringPiRunningThread ;
+
 namespace hgardenpi
 {
     inline namespace v1
@@ -143,13 +146,27 @@ namespace hgardenpi
          * @brief Sleep a thread for n millis
          * @param millis to sleep
          */
-        [[maybe_unused]]  void threadSleep(volatile bool &run, mutex &m, Time &&millis) noexcept;
+        [[maybe_unused]] void threadSleep(atomic_uint64_t millis) noexcept;
 
         /**
-         * @brief Sleep a thread for n millis
+         * @brief Sleep a thread by constant
          * @param millis to sleep
          */
-        [[maybe_unused]]  void threadSleep(const Time &millis) noexcept;
+        [[maybe_unused]] inline void threadSleep(const Time &millis) noexcept
+        {
+            cout << to_string(static_cast<uint64_t>(millis)) << endl;
+            threadSleep(static_cast<uint64_t>(millis));
+        }
+
+        /**
+         * @brief Sleep a thread for by constant
+         * @param millis to sleep
+         */
+        [[maybe_unused]] inline void threadSleep(Time &&millis) noexcept
+        {
+            cout << to_string(static_cast<uint64_t>(millis)) << endl;
+            threadSleep(static_cast<uint64_t>(millis));
+        }
 
         /**
          * @brief Get the pid fot thread child

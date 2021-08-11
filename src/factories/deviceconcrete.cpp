@@ -99,39 +99,27 @@ namespace hgardenpi
             //set contrast management when click on button
             button->setInternalOnClick([&]
             {
-                cout << "internal click" << endl;
                 turnOnContrastDisplayFor();
             });
 
-            //todo: to debug
             //set display loop
             if (threadPool)
             {
-//                threadPool->enqueue([&]
-//                {
-//                    unique_lock lock(m);
-//                    //show welcome message
-//                    cv.wait_for(
-//                            lock,
-//                            // wait for up to an hour
-//                            chrono::hours(1),
-//
-//                            [&]
-//                            {
-//                                turnOnContrastDisplayFor(run, Time::DISPLAY_SHORT_TICK);
-//
-//                                printOnDisplay("Happy|Garden PI", true);
-//
-//                                threadSleep(run, m, Time::DISPLAY_SHORT_TICK);
-//
-//                                turnOnContrastDisplayFor(run);
-//
-//                                while (run)
-//                                    printOnDisplayStandardInfo(run);
-//
-//                                return shutdownRequest.load();
-//                            });
-//                });
+                threadPool->enqueue([&]
+                {
+                    turnOnContrastDisplayFor(Time::DISPLAY_SHORT_TICK);
+
+                    printOnDisplay("Happy|Garden PI", true);
+
+                    threadSleep(Time::DISPLAY_SHORT_TICK);
+
+                    turnOnContrastDisplayFor(Time::DISPLAY_CONTRAST_TICK);
+
+                    while (wiringPiRunningThread)
+                    {
+                        printOnDisplayStandardInfo();
+                    }
+                });
             }
 
 
@@ -196,7 +184,7 @@ namespace hgardenpi
 
         }
 
-        void DeviceConcrete::printOnDisplayStandardInfo(volatile bool &run) const noexcept
+        void DeviceConcrete::printOnDisplayStandardInfo() const noexcept
         {
 
             printOnDisplay("MAC ADDRESS|" + getWlan0MAC(), true);
@@ -220,25 +208,22 @@ namespace hgardenpi
 
         inline void DeviceConcrete::turnOnContrastDisplayFor(const Time &&wait) noexcept
         {
-//            //todo: to debug
-//            if (threadPool)
-//            {
-//                threadPool->enqueue([&]
-//                {
-//                    unique_lock<mutex> lk(mContrast);
-//                    //                cvContrast.wait(lk);
-
+            if (contrastDisplayClicked)
+            {
+                return;
+            }
+            contrastDisplayClicked.store(true);
+            if (threadPool)
+            {
+                threadPool->enqueue([&, wait]
+                {
                     display->setContrastTurnOn(true);
                     threadSleep(wait);
                     display->setContrastTurnOn(false);
+                    contrastDisplayClicked = false;
+                });
+            }
 
-//                    // Manual unlocking is done before notifying, to avoid waking up
-//                    // the waiting thread only to block again (see notify_one for details)
-//                    lk.unlock();
-//                    //                cvContrast.notify_one();
-//                });
-                //cv.notify_one();
-//            }
         }
     }
 }

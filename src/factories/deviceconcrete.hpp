@@ -22,8 +22,7 @@
 
 #pragma once
 
-#include <mutex>
-#include <condition_variable>
+#include <atomic>
 
 #include "device.hpp"
 #include "../interfaces/object.hpp"
@@ -35,20 +34,13 @@ namespace hgardenpi
     inline namespace v1
     {
 
-        using std::mutex;
-        using std::condition_variable;
-
         /**
          * @brief Factory for management of peripherals devices
          * 
          */
         class DeviceConcrete : public Device
         {
-
-            mutable mutex m;
-            mutable mutex mContrast;
-            mutable condition_variable cvContrast;
-            mutable bool processed = false;
+            mutable std::atomic_bool contrastDisplayClicked = false;
 
             mutable DeviceInfo::Ptr deviceInfo = nullptr;
             LogService *logService = nullptr;
@@ -139,14 +131,14 @@ namespace hgardenpi
              * Show mac address and ip to display
              * @param run true is in execution the loop
              */
-            void printOnDisplayStandardInfo(volatile bool &run) const noexcept;
+            void printOnDisplayStandardInfo() const noexcept;
 
             /**
              * Turn on the display contrast for some time
              * @param run true is in execution the loop
              * @param wait time of contrast display it's turned on
              */
-            void turnOnContrastDisplayFor(const Time &&wait = Time::DISPLAY_CONTRAST) noexcept;
+            void turnOnContrastDisplayFor(const Time &&wait = Time::DISPLAY_CONTRAST_TICK) noexcept;
 
         };
 
