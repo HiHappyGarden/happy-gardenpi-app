@@ -110,7 +110,7 @@ namespace hgardenpi
              * @brief set callback triggered whet button willi be pressed or released
              * @param onClick callback lambda
              */
-            inline void setButtonOnClick(Button::OnClick onClick) noexcept override
+            inline void setOnButtonClick(Button::OnClick onClick) noexcept override
             {
                 button->setOnClick(std::move(onClick));
             }
