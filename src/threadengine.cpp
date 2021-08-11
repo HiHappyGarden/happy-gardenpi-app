@@ -36,9 +36,10 @@ namespace hgardenpi
 {
     inline namespace v1
     {
-
+#pragma region staticVariables
         static constexpr const uint64_t TICK = static_cast<uint64_t>(Time::TICK);
-
+#pragma endregion staticVariables
+        
 #pragma region ThreadPool
 
         ThreadPool::ThreadPool(size_t threads)
