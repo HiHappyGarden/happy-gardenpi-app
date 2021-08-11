@@ -22,7 +22,6 @@
 
 #include "engine.hpp"
 
-#include <mosquitto.h>
 #include <syslog.h>
 
 #include <SQLiteCpp/Database.h>
@@ -47,8 +46,6 @@ namespace hgardenpi
 
         Engine::~Engine() noexcept
         {
-            mosquitto_lib_cleanup();
-
             //is not a mistake leave here
             if (threadPool)
             {
@@ -143,20 +140,16 @@ namespace hgardenpi
             }
 
 
-             //initialize mosquittopp
-             if (mosquitto_lib_init() != MOSQ_ERR_SUCCESS)
-             {
-                 string msg("mosquitto_lib_init() error");
-                 system->getLogService()->write(LOG_ERR, "%d", msg.c_str()); \
-                 throw runtime_error(_(msg.c_str()));
-             }
+            //initialize mosquittopp
+            Engine::getInstance()->mqttClient = new MQTTClientMosquitto(device->getInfo()->serial,
+                                                                        system->getConfigInfo()->broker.host,
+                                                                        system->getConfigInfo()->broker.user,
+                                                                        system->getConfigInfo()->broker.passwd,
+                                                                        system->getConfigInfo()->broker.port
+            );
+            Engine::getInstance()->mqttClient->setLogService(system->getLogService());
+            Engine::getInstance()->mqttClient->initialize();
 
-//             Engine::getInstance()->mqttClient = new MQTTClientMosquitto(device->getInfo()->serial,
-//                                                                         system->getConfigInfo()->broker.host,
-//                                                                         system->getConfigInfo()->broker.user,
-//                                                                         system->getConfigInfo()->broker.passwd,
-//                                                                         system->getConfigInfo()->broker.port
-//                                                                         );
         }
 
         void start()
@@ -187,13 +180,13 @@ namespace hgardenpi
             //write stat service on log
             system->getLogService()->write(LOG_INFO, _("service ready"));
 
-            //main loop, managed by WiringPI mutex thread
-            while (wiringPiRunningThread)
-            {
-                //threadSleep(Time::TICK);
-                this_thread::sleep_for(chrono::milliseconds(static_cast<size_t>(Time::TICK)));
-            }
-
+//            //main loop, managed by WiringPI mutex thread
+//            while (wiringPiRunningThread)
+//            {
+//                //threadSleep(Time::TICK);
+//                this_thread::sleep_for(chrono::milliseconds(static_cast<size_t>(Time::TICK)));
+//            }
+            Engine::getInstance()->mqttClient->loop();
 
         }
     }

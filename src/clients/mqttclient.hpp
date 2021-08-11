@@ -26,6 +26,8 @@
 #include <functional>
 
 #include "../interfaces/loggable.hpp"
+#include "../interfaces/startable.hpp"
+#include "../interfaces/initializable.hpp"
 
 namespace hgardenpi
 {
@@ -38,7 +40,7 @@ namespace hgardenpi
          * 
          * @tparam T callback type 
          */
-        class MQTTClient : public Loggable
+        class MQTTClient : public Loggable, public Initializable, public Startable
         {
 
         public:
@@ -50,10 +52,9 @@ namespace hgardenpi
 
             /**
              * @brief start loop
-             * @param run check if the loops are in execution
              * @exception runtime_error when hardware requisites mismatch
              */
-            virtual void loop(volatile bool &run) = 0;
+            virtual void loop() = 0;
 
             /**
              * @brief Set the On Message OnClick object
