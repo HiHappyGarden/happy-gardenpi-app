@@ -39,7 +39,7 @@ namespace hgardenpi
 #pragma region staticVariables
         static constexpr const uint64_t TICK = static_cast<uint64_t>(Time::TICK);
 #pragma endregion staticVariables
-        
+
 #pragma region ThreadPool
 
         ThreadPool::ThreadPool(size_t threads)
@@ -111,7 +111,7 @@ namespace hgardenpi
             return result;
         }
 
-        void threadSleep(atomic_uint64_t millis) noexcept //keep not inline
+        void threadSleep(uint64_t millis) noexcept //keep not inline
         {
             for (uint64_t i = 0; i < millis && wiringPiRunningThread; i += TICK)
             {
