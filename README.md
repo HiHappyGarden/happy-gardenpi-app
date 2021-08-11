@@ -25,7 +25,7 @@ sudo apt install libmosquittopp-dev libcurl4-openssl-dev gettext
 ```
 sudo apt update
 sudo apt install cmake git
-git clone https://github.com/WiringPi/WiringPi.git
+git clone https://github.com/HappyGardenPI/WiringPi.git
 cd WiringPi/
 ./build
 ```

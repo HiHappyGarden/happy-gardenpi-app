@@ -31,6 +31,7 @@
 
 #include "constants.hpp"
 #include "utilities/databaseutils.hpp"
+#include "clients/mqttclientmosquitto.hpp"
 #include "threadengine.hpp"
 
 namespace hgardenpi
@@ -150,14 +151,20 @@ namespace hgardenpi
             }
 
 
-            // //initialize mosquittopp
-            // //init database, out of SOLID pattern :)
-            // if (mosquitto_lib_init() != MOSQ_ERR_SUCCESS)
-            // {
-            //     HGARDENPI_ERROR_LOG_AMD_THROW("mosquitto_lib_init() error")
-            // }
+             //initialize mosquittopp
+             if (mosquitto_lib_init() != MOSQ_ERR_SUCCESS)
+             {
+                 string msg("mosquitto_lib_init() error");
+                 system->getLogService()->write(LOG_ERR, "%d", msg.c_str()); \
+                 throw runtime_error(_(msg.c_str()));
+             }
 
-            // //Globals::getInstance()->mqttClient = make_shared<MQTTClientMosquitto>(Globals::getInstance()->deviceInfo->serial, HGARDENPI_MQTT_BROKER_HOST, HGARDENPI_MQTT_BROKER_USER, HGARDENPI_MQTT_BROKER_PASSWD, HGARDENPI_MQTT_BROKER_PORT);
+             Engine::getInstance()->mqttClient = new MQTTClientMosquitto(device->getInfo()->serial,
+                                                                         system->getConfigInfo()->broker.host,
+                                                                         system->getConfigInfo()->broker.user,
+                                                                         system->getConfigInfo()->broker.passwd,
+                                                                         system->getConfigInfo()->broker.port
+                                                                         );
         }
 
         void start()
@@ -189,21 +196,22 @@ namespace hgardenpi
             system->getLogService()->write(LOG_INFO, _("service ready"));
 
             //set signal behavior on SIGINT SIGTERM
-            sigemptyset(&sigset);
-            sigaddset(&sigset, SIGINT);
-            sigaddset(&sigset, SIGTERM);
-            pthread_sigmask(SIG_BLOCK, &sigset, nullptr);
-
-            auto &&signalHandler = async(launch::async, threadSignalHandler);
-
-            cout << "pidMain" << pidMain << endl;
-            for(auto &&it : threadGetChildPid())
-            {
-                cout << it << endl;
-            }
+//            sigemptyset(&sigset);
+//            sigaddset(&sigset, SIGINT);
+//            sigaddset(&sigset, SIGTERM);
+//            pthread_sigmask(SIG_BLOCK, &sigset, nullptr);
+//
+//            auto &&signalHandler = async(launch::async, threadSignalHandler);
+//            signal(SIGINT,threadSignalHandler);
+//            signal(SIGTERM,threadSignalHandler);
 
             //int signal = signalHandler.get();
             //cout << "received signal " << signal << endl;
+
+            while (!shutdownRequest.load())
+            {
+                threadSleep(Time::TICK);
+            }
 
         }
     }
