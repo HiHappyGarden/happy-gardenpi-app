@@ -146,7 +146,7 @@ namespace hgardenpi
          * @brief Sleep a thread for n millis
          * @param millis to sleep
          */
-        [[maybe_unused]] void threadSleep(atomic_uint64_t millis) noexcept;
+        [[maybe_unused]] void threadSleep(uint64_t millis) noexcept;
 
         /**
          * @brief Sleep a thread by constant
@@ -154,7 +154,6 @@ namespace hgardenpi
          */
         [[maybe_unused]] inline void threadSleep(const Time &millis) noexcept
         {
-            cout << to_string(static_cast<uint64_t>(millis)) << endl;
             threadSleep(static_cast<uint64_t>(millis));
         }
 
@@ -164,7 +163,6 @@ namespace hgardenpi
          */
         [[maybe_unused]] inline void threadSleep(Time &&millis) noexcept
         {
-            cout << to_string(static_cast<uint64_t>(millis)) << endl;
             threadSleep(static_cast<uint64_t>(millis));
         }
 
