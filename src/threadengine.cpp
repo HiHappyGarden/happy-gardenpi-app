@@ -28,13 +28,12 @@
 #include "threadengine.hpp"
 
 #include <unistd.h>
-#include <sys/syscall.h>
 
 #include "utilities/stringutils.hpp"
 
 
 //from wiringPi Happy GardenPi version
-extern volatile unsigned runThread ;
+extern volatile unsigned wiringPiRunningThread ;
 
 namespace hgardenpi
 {
@@ -98,38 +97,45 @@ namespace hgardenpi
 #pragma endregion ThreadPool
 
 #pragma region variables
-        sigset_t sigset;
-        atomic_bool shutdownRequest(false);
-        condition_variable cv;
+//        sigset_t sigset;
+//        atomic_bool shutdownRequest(false);
+//        condition_variable cv;
         long pidMain;
 
 
         //exit signal handler
-        void threadSignalHandler(int)
-        {
-
-            int signum = 0;
-
-            // wait until a signal is delivered:
-            sigwait(&sigset, &signum);
-            shutdownRequest.store(true);
-            runThread = false;
-
-            cout << "signum:" << to_string(signum) << endl;
-
-            if (threadPool)
-            {
-                cout << "delete threadPool" << endl;
-                delete threadPool;
-                threadPool = nullptr;
-            }
-            // notify all waiting workers to check their predicate:
-            cv.notify_all();
-        };
+        //int threadSignalHandler(int)
+//        function<int()> threadSignalHandler = []
+//        {
+//
+//            int signum = 0;
+//
+//            // wait until a signal is delivered:
+//            sigwait(&sigset, &signum);
+//            shutdownRequest.store(true);
+//            runThread = false;
+//
+//            cout << "signum:" << to_string(signum) << endl;
+//
+//            if (threadPool)
+//            {
+//                cout << "delete threadPool" << endl;
+//                delete threadPool;
+//                threadPool = nullptr;
+//            }
+//            // notify all waiting workers to check their predicate:
+//            cv.notify_all();
+//            return signum;
+//        };
 #pragma endregion variables
 
 #pragma region functions
 
+        /**
+         * @brief Exec sys command
+         * @param cmd sys command
+         * @return stdout of command
+         */
         static vector<string> exec(string &&cmd) {
             array<char, 128> buffer{};
             vector<string> result{};

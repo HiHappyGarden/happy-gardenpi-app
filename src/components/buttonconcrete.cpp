@@ -67,8 +67,8 @@ void ButtonConcrete::setInternalOnClick(OnClick onClick) const
 
     if (wiringPiISR(::lcdRS, INT_EDGE_RISING, []
     {
-        ::internalCallback();
         ::callback();
+        ::internalCallback();
     }) == -1)
     {
         throw runtime_error("wiringPiISR not run, the hw is not ready");

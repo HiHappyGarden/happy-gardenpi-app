@@ -21,7 +21,7 @@ sudo apt install libmosquittopp-dev libcurl4-openssl-dev gettext
 ```
 
 ### 2. Install WiringPi
-
+Make sure to install Happy GardenPI WiringPi fork because it's a modified version 
 ```
 sudo apt update
 sudo apt install cmake git
