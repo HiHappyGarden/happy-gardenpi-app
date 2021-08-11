@@ -46,13 +46,19 @@ namespace hgardenpi
             static inline const constexpr uint16_t PORT = 1883;
 
             const string topic;
+            const string &host;
+            uint16_t port;
+            uint16_t keepAlive;
             const string &user;
             const string &passwd;
 
             LogService *logService = nullptr;
             mosquitto *mosq = nullptr;
+
             string id;
 
+            bool initalizated = false;
+            bool connected = false;
         public:
 
             /**
@@ -86,11 +92,10 @@ namespace hgardenpi
             HGARDENPI_NO_COPY_NO_MOVE(MQTTClientMosquitto)
 
             /**
-             * @brief start loop 
-             * @param run check if the loops are in execution
+             * @brief start loop n
              * @exception runtime_error when hardware requisites mismatch
              */
-            void loop(volatile bool &run) override;
+            void loop() override;
 
             /**
              * @brief Set the On Message OnClick object
@@ -102,10 +107,26 @@ namespace hgardenpi
                 this->onMessageCallback = onMessageCallback;
             }
 
+            /**
+             * @brief Set log
+             * @param logService instance
+             */
             inline void setLogService(const LogService *logService) noexcept override
             {
                 this->logService = const_cast<LogService *>(logService);
             }
+
+
+            /**
+             * @brief Initialize lib
+             */
+            void initialize() override;
+
+
+            /**
+             * @brief Start service
+             */
+            void start() override;
 
         private:
             MessageCallback onMessageCallback = nullptr;

@@ -57,6 +57,10 @@ int main(int argc, char *argv[])
 
         return EXIT_FAILURE;
     }
+    catch (...)
+    {
+        cerr << "unhandled exception" << std::endl;
+    }
 
     return EXIT_SUCCESS;
 }
