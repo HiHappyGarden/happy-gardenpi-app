@@ -40,13 +40,6 @@ namespace hgardenpi
     inline namespace v1
     {
 
-        /**
-         * @brief exec command
-         * @param cmd command to throw
-         * @return result
-         */
-        static vector<string> exec(string &&cmd);
-
 #pragma region staticVariables
         static constexpr const inline auto tick = static_cast<size_t>(Time::TICK);
 #pragma endregion staticVariables
@@ -97,36 +90,8 @@ namespace hgardenpi
 #pragma endregion ThreadPool
 
 #pragma region variables
-//        sigset_t sigset;
-//        atomic_bool shutdownRequest(false);
-//        condition_variable cv;
         long pidMain;
 
-
-        //exit signal handler
-        //int threadSignalHandler(int)
-//        function<int()> threadSignalHandler = []
-//        {
-//
-//            int signum = 0;
-//
-//            // wait until a signal is delivered:
-//            sigwait(&sigset, &signum);
-//            shutdownRequest.store(true);
-//            runThread = false;
-//
-//            cout << "signum:" << to_string(signum) << endl;
-//
-//            if (threadPool)
-//            {
-//                cout << "delete threadPool" << endl;
-//                delete threadPool;
-//                threadPool = nullptr;
-//            }
-//            // notify all waiting workers to check their predicate:
-//            cv.notify_all();
-//            return signum;
-//        };
 #pragma endregion variables
 
 #pragma region functions
@@ -160,7 +125,7 @@ namespace hgardenpi
             this_thread::sleep_for(chrono::milliseconds(static_cast<size_t>(millis)));
         }
 
-        vector<long> threadGetChildPid(long exclude) noexcept
+        [[maybe_unused]] vector<long> threadGetChildPid(long exclude) noexcept
         {
 
             vector<long> ret{};
