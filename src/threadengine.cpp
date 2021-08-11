@@ -27,8 +27,6 @@
 
 #include "threadengine.hpp"
 
-#include <unistd.h>
-
 #include "utilities/stringutils.hpp"
 
 
