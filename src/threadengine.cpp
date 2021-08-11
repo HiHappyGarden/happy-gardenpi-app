@@ -32,6 +32,10 @@
 
 #include "utilities/stringutils.hpp"
 
+
+//from wiringPi Happy GardenPi version
+extern volatile unsigned runThread ;
+
 namespace hgardenpi
 {
     inline namespace v1
@@ -101,7 +105,7 @@ namespace hgardenpi
 
 
         //exit signal handler
-        function<int()> threadSignalHandler = []
+        void threadSignalHandler(int)
         {
 
             int signum = 0;
@@ -109,13 +113,9 @@ namespace hgardenpi
             // wait until a signal is delivered:
             sigwait(&sigset, &signum);
             shutdownRequest.store(true);
+            runThread = false;
 
             cout << "signum:" << to_string(signum) << endl;
-
-            for (auto &&pid : threadGetChildPid(syscall(__NR_gettid)))
-            {
-                exec("kill -9 " + to_string(pid));
-            }
 
             if (threadPool)
             {
@@ -125,7 +125,6 @@ namespace hgardenpi
             }
             // notify all waiting workers to check their predicate:
             cv.notify_all();
-            return signum;
         };
 #pragma endregion variables
 

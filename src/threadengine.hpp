@@ -141,11 +141,14 @@ namespace hgardenpi
         /**
          * @brief Function to handle exit signals
          */
-        extern function<int()> threadSignalHandler;
+        //extern function<int()> threadSignalHandler;
 
 #pragma endregion variables
 
 #pragma region functions
+
+        void threadSignalHandler(int);
+
         /**
          * @brief Sleep a thread for n millis
          * @param millis to sleep

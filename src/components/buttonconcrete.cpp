@@ -67,10 +67,6 @@ void ButtonConcrete::setInternalOnClick(OnClick onClick) const
 
     if (wiringPiISR(::lcdRS, INT_EDGE_RISING, []
     {
-        int ret2;
-//        wiringPiPid = syscall(__NR_gettid);
-//        printf("%d\n", wiringPiPid);
-        pthread_exit(&ret2);
         ::internalCallback();
         ::callback();
     }) == -1)
