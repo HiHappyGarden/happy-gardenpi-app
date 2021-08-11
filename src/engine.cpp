@@ -25,14 +25,15 @@
 #include <mosquitto.h>
 #include <syslog.h>
 
-#include <csignal>
-#include <iostream>
 #include <SQLiteCpp/Database.h>
 
 #include "constants.hpp"
 #include "utilities/databaseutils.hpp"
 #include "clients/mqttclientmosquitto.hpp"
 #include "threadengine.hpp"
+
+//from wiringPi Happy GardenPi version
+extern volatile unsigned wiringPiRunningThread ;
 
 namespace hgardenpi
 {
@@ -49,41 +50,36 @@ namespace hgardenpi
 
         Engine::~Engine() noexcept
         {
+            mosquitto_lib_cleanup();
+
             //is not a mistake leave here
             if (threadPool)
             {
-                cout << "delete threadPool" << endl;
                 delete threadPool;
                 threadPool = nullptr;
             }
 
             if (factory)
             {
-                cout << "delete factory" << endl;
                 delete factory;
                 factory = nullptr;
             }
 
             if (mqttClient)
             {
-                cout << "delete mqttClient" << endl;
                 delete mqttClient;
                 mqttClient = nullptr;
             }
             if (aggregationDao)
             {
-                cout << "delete aggregationDao" << endl;
                 delete aggregationDao;
                 aggregationDao = nullptr;
             }
             if (stationDao)
             {
-                cout << "delete stationDao" << endl;
                 delete stationDao;
                 stationDao = nullptr;
             }
-
-
         }
 
         void initialize()
@@ -159,30 +155,30 @@ namespace hgardenpi
                  throw runtime_error(_(msg.c_str()));
              }
 
-             Engine::getInstance()->mqttClient = new MQTTClientMosquitto(device->getInfo()->serial,
-                                                                         system->getConfigInfo()->broker.host,
-                                                                         system->getConfigInfo()->broker.user,
-                                                                         system->getConfigInfo()->broker.passwd,
-                                                                         system->getConfigInfo()->broker.port
-                                                                         );
+//             Engine::getInstance()->mqttClient = new MQTTClientMosquitto(device->getInfo()->serial,
+//                                                                         system->getConfigInfo()->broker.host,
+//                                                                         system->getConfigInfo()->broker.user,
+//                                                                         system->getConfigInfo()->broker.passwd,
+//                                                                         system->getConfigInfo()->broker.port
+//                                                                         );
         }
 
         void start()
         {
-//            //get pointers of system and device
+            //get pointers of system and device
             auto system = const_cast<System *>(Engine::getInstance()->factory->getSystem());
             auto device = const_cast<Device *>(Engine::getInstance()->factory->getDevice());
             auto aggregationDao = Engine::getInstance()->aggregationDao;
             auto stationDao = Engine::getInstance()->stationDao;
 
-//            //retrieve all active aggregations
+            //retrieve all active aggregations
             auto && aggregations = aggregationDao->getList();
             for (auto &&aggregation : aggregations)
             {
                 aggregation->stations = move(stationDao->getList(aggregation));
             }
 
-            //todo: to debug
+            //set the button callback
             device->setButtonOnClick([] {
 
                 printf("click\n");
@@ -195,23 +191,12 @@ namespace hgardenpi
             //write stat service on log
             system->getLogService()->write(LOG_INFO, _("service ready"));
 
-            //set signal behavior on SIGINT SIGTERM
-//            sigemptyset(&sigset);
-//            sigaddset(&sigset, SIGINT);
-//            sigaddset(&sigset, SIGTERM);
-//            pthread_sigmask(SIG_BLOCK, &sigset, nullptr);
-//
-//            auto &&signalHandler = async(launch::async, threadSignalHandler);
-//            signal(SIGINT,threadSignalHandler);
-//            signal(SIGTERM,threadSignalHandler);
-
-            //int signal = signalHandler.get();
-            //cout << "received signal " << signal << endl;
-
-            while (!shutdownRequest.load())
+            //main loop, managed by WiringPI mutex thread
+            while (wiringPiRunningThread)
             {
                 threadSleep(Time::TICK);
             }
+
 
         }
     }

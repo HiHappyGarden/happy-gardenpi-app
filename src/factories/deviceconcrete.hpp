@@ -146,7 +146,7 @@ namespace hgardenpi
              * @param run true is in execution the loop
              * @param wait time of contrast display it's turned on
              */
-            void turnOnContrastDisplayFor(volatile bool &run, const Time &&wait = Time::DISPLAY_CONTRAST) noexcept;
+            void turnOnContrastDisplayFor(const Time &&wait = Time::DISPLAY_CONTRAST) noexcept;
 
         };
 

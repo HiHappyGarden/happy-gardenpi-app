@@ -90,15 +90,18 @@ namespace hgardenpi
                 HGARDENPI_ERROR_LOG_AMD_THROW("no memory for button")
             }
 
+            //on initialization turn off contrast display
+            display->setContrastTurnOn(false);
         }
 
         void DeviceConcrete::start()
         {
             //set contrast management when click on button
             button->setInternalOnClick([&]
-                                       {
-                                           //turnOnContrastDisplayFor(run, Time::DISPLAY_CONTRAST);
-                                       });
+            {
+                cout << "internal click" << endl;
+                turnOnContrastDisplayFor();
+            });
 
             //todo: to debug
             //set display loop
@@ -215,28 +218,27 @@ namespace hgardenpi
 
         }
 
-        inline void DeviceConcrete::turnOnContrastDisplayFor(volatile bool &run, const Time &&wait) noexcept
+        inline void DeviceConcrete::turnOnContrastDisplayFor(const Time &&wait) noexcept
         {
-            //todo: to debug
-            if (threadPool)
-            {
-                threadPool->enqueue([&]
-                {
-                    unique_lock<mutex> lk(mContrast);
-                    //                cvContrast.wait(lk);
+//            //todo: to debug
+//            if (threadPool)
+//            {
+//                threadPool->enqueue([&]
+//                {
+//                    unique_lock<mutex> lk(mContrast);
+//                    //                cvContrast.wait(lk);
 
                     display->setContrastTurnOn(true);
                     threadSleep(wait);
-                    //this_thread::sleep_for(chrono::milliseconds(static_cast<uint64_t>(wait)));
                     display->setContrastTurnOn(false);
 
-                    // Manual unlocking is done before notifying, to avoid waking up
-                    // the waiting thread only to block again (see notify_one for details)
-                    lk.unlock();
-                    //                cvContrast.notify_one();
-                });
+//                    // Manual unlocking is done before notifying, to avoid waking up
+//                    // the waiting thread only to block again (see notify_one for details)
+//                    lk.unlock();
+//                    //                cvContrast.notify_one();
+//                });
                 //cv.notify_one();
-            }
+//            }
         }
     }
 }
