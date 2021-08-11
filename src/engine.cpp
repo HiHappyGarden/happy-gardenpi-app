@@ -46,6 +46,9 @@ namespace hgardenpi
 
         Engine::~Engine() noexcept
         {
+            //stop WiringPI thread
+            wiringPiRunningThread = false;
+
             //is not a mistake leave here
             if (threadPool)
             {
@@ -157,6 +160,7 @@ namespace hgardenpi
             //get pointers of system and device
             auto system = const_cast<System *>(Engine::getInstance()->factory->getSystem());
             auto device = const_cast<Device *>(Engine::getInstance()->factory->getDevice());
+            auto mqttClient = Engine::getInstance()->mqttClient;
             auto aggregationDao = Engine::getInstance()->aggregationDao;
             auto stationDao = Engine::getInstance()->stationDao;
 
@@ -168,25 +172,27 @@ namespace hgardenpi
             }
 
             //set the button callback
-            device->setButtonOnClick([] {
+            device->setButtonOnClick([]
+            {
 
                 printf("click\n");
 
             });
 
+            mqttClient->setOnMessageCallback([](uint8_t *data)
+            {
+                cout << "msg:" << data << endl;
+            });
+
             //start all
             device->start();
+            mqttClient->start();
 
             //write stat service on log
             system->getLogService()->write(LOG_INFO, _("service ready"));
 
-//            //main loop, managed by WiringPI mutex thread
-//            while (wiringPiRunningThread)
-//            {
-//                //threadSleep(Time::TICK);
-//                this_thread::sleep_for(chrono::milliseconds(static_cast<size_t>(Time::TICK)));
-//            }
-            Engine::getInstance()->mqttClient->loop();
+            //enable broker loop
+            mqttClient->loop();
 
         }
     }

@@ -4,7 +4,7 @@
   },
   "broker": {
     "host": "localhost1",
-    "port": 18831,
+    "port": 1883,
     "user": "hgardepi1",
     "passwd": "hgardepi1"
   },
