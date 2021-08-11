@@ -133,43 +133,30 @@ namespace hgardenpi
 #pragma endregion ThreadPool
 
 #pragma region variables
-//        extern sigset_t sigset;
-//        extern atomic_bool shutdownRequest;
-//        extern condition_variable cv;
         extern long pidMain;
-
-        /**
-         * @brief Function to handle exit signals
-         */
-//        extern function<int()> threadSignalHandler;
 
 #pragma endregion variables
 
 #pragma region functions
 
         /**
-         * @brief Function to handle exit signals
+         * @brief Sleep a thread for n millis
+         * @param millis to sleep
          */
-        //int threadSignalHandler(int);
-
-//        /**
-//         * @brief Sleep a thread for n millis
-//         * @param millis to sleep
-//         */
-//        void threadSleep(volatile bool &run, mutex &m, Time &&millis) noexcept;
+        [[maybe_unused]]  void threadSleep(volatile bool &run, mutex &m, Time &&millis) noexcept;
 
         /**
          * @brief Sleep a thread for n millis
          * @param millis to sleep
          */
-        void threadSleep(const Time &millis) noexcept;
+        [[maybe_unused]]  void threadSleep(const Time &millis) noexcept;
 
         /**
          * @brief Get the pid fot thread child
          * @param exclude exclude some pid
          * @return vector with list of child pid
          */
-        vector<long> threadGetChildPid(long exclude = -1) noexcept;
+        [[maybe_unused]] vector<long> threadGetChildPid(long exclude = -1) noexcept;
 
 #pragma endregion functions
 
