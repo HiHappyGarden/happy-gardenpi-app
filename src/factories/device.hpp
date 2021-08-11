@@ -76,7 +76,7 @@ namespace hgardenpi
              * @brief set callback triggered whet button willi be pressed or released
              * @param onClick callback lambda
              */
-            virtual void setButtonOnClick(Button::OnClick onClick) noexcept = 0;
+            virtual void setOnButtonClick(Button::OnClick onClick) noexcept = 0;
 
             /**
              * @brief Print on system display

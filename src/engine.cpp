@@ -172,10 +172,10 @@ namespace hgardenpi
             }
 
             //set the button callback
-            device->setButtonOnClick([]
+            device->setOnButtonClick([]
             {
 
-                printf("click\n");
+                 printf("click\n");
 
             });
 
