@@ -46,7 +46,6 @@ namespace hgardenpi
 
             typedef shared_ptr<Aggregation> Ptr;
 
-
             /**
              * @brief id in db
              */
@@ -67,9 +66,9 @@ namespace hgardenpi
             {
                 static inline const constexpr uint8_t NOT_SET = 0xFF;
 
-                uint8_t minute; //0 - 59
-                uint8_t hour; //0 - 23
-                uint8_t days; //byte contains day enabled
+                uint8_t minute = 0; //0 - 59
+                uint8_t hour = 0; //0 - 23
+                uint8_t days = 0x7F; //byte contains day enabled
 
 
                 /**

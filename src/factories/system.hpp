@@ -87,7 +87,7 @@ namespace hgardenpi
              * @brief Return threadPool instance
              * @return instance of threadPool
              */
-            virtual ThreadPool * getThreadPool() const noexcept = 0;
+            [[nodiscard]] virtual ThreadPool * getThreadPool() const noexcept = 0;
 
             /**
              * @brief Initialize scheduler after initializeThreadPool

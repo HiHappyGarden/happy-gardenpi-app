@@ -36,6 +36,7 @@ namespace hgardenpi
     {
         using std::mutex;
         using std::string;
+        using std::atomic;
 
         /**
          * @brief Scheduler for scheduling action, inside of this run a loop every one second
@@ -47,8 +48,10 @@ namespace hgardenpi
             ThreadPool *threadPool = nullptr;
 
             OnExecute onExecute;
+
+            Aggregations aggregations{};
         public:
-            explicit SchedulerConcrete(const ThreadPool *threadPool);
+            explicit SchedulerConcrete(ThreadPool *threadPool);
             ~SchedulerConcrete() override = default;
 
             HGARDENPI_NO_COPY_NO_MOVE(SchedulerConcrete)
@@ -64,14 +67,14 @@ namespace hgardenpi
              * @param ptr of aggregation
              * @throw runtime_error when there some problem in aggregation
              */
-            void schedule(const Aggregation::Ptr &ptr) override;
+            void schedule(Aggregation::Ptr &ptr) override;
 
-            /**
-             * Remove scheduling
-             * @param ptr of aggregation
-             * @throw runtime_error when there some problem in aggregation
-             */
-            void remove(const Aggregation::Ptr &ptr);
+//            /**
+//             * Remove scheduling
+//             * @param ptr of aggregation
+//             * @throw runtime_error when there some problem in aggregation
+//             */
+//            void remove(const Aggregation::Ptr &ptr) override;
 
             /**
              * Shot one time an aggregation of station triggered from user

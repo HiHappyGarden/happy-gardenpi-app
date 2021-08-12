@@ -118,7 +118,7 @@ namespace hgardenpi
              */
             void initializeScheduler() override;
 
-            inline ThreadPool * getThreadPool() const noexcept override
+            [[nodiscard]] inline ThreadPool * getThreadPool() const noexcept override
             {
                 return threadPool;
             }

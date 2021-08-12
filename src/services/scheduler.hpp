@@ -50,14 +50,14 @@ namespace hgardenpi
              * @param ptr of aggregation
              * @throw runtime_error when there some problem in aggregation
              */
-            virtual void schedule(const Aggregation::Ptr &ptr) = 0;
+            virtual void schedule(Aggregation::Ptr &ptr) = 0;
 
-            /**
-             * Remove scheduling
-             * @param ptr of aggregation
-             * @throw runtime_error when there some problem in aggregation
-             */
-            virtual void remove(const Aggregation::Ptr &ptr) = 0;
+//            /**
+//             * Remove scheduling
+//             * @param ptr of aggregation
+//             * @throw runtime_error when there some problem in aggregation
+//             */
+//            virtual void remove(const Aggregation::Ptr &ptr) = 0;
 
             /**
              * Shot one time an aggregation of station triggered from user

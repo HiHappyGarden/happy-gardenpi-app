@@ -87,7 +87,7 @@ Stations StationDAO::getList(const Aggregation::Ptr &ptr, Status status) const
 
     Transaction transaction(database);
 
-    Statement query(database, "SELECT * FROM stations WHERE status = ? AND id = ?");
+    Statement query(database, "SELECT * FROM stations WHERE status = ? AND id_aggregation = ?");
 
     query.bind(1, static_cast<uint8_t>(status));
     query.bind(2, ptr->id);
