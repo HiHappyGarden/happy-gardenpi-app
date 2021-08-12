@@ -25,9 +25,10 @@
 #include <mutex>
 #include <functional>
 
+#include "scheduler.hpp"
 #include "../threadengine.hpp"
 #include "../constants.hpp"
-#include "scheduler.hpp"
+
 
 namespace hgardenpi
 {
