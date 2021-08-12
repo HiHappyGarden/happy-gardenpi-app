@@ -29,7 +29,7 @@
 #include "constants.hpp"
 #include "utilities/databaseutils.hpp"
 #include "clients/mqttclientmosquitto.hpp"
-#include "threadengine.hpp"
+
 
 namespace hgardenpi
 {
@@ -93,12 +93,12 @@ namespace hgardenpi
             device->initialize();
 
             //initialize threadPool in all sub factory
-            threadPool = new (nothrow) ThreadPool(device->getInfo()->cpu);
-            if (!threadPool) {
+            Engine::getInstance()->threadPool = new (nothrow) ThreadPool(device->getInfo()->cpu);
+            if (!Engine::getInstance()->threadPool) {
                 throw runtime_error(_("no memory for threadPool"));
             }
-            device->setThreadPool(threadPool);
-            system->setThreadPool(threadPool);
+            device->setThreadPool(Engine::getInstance()->threadPool);
+            system->setThreadPool(Engine::getInstance()->threadPool);
 
             //get database file path from config file
             string &dbFile = system->getConfigInfo()->database.file;

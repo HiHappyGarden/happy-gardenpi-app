@@ -80,7 +80,6 @@ namespace hgardenpi
                 worker.join();
         }
 
-        ThreadPool *threadPool = nullptr;
 #pragma endregion ThreadPool
 
 #pragma region variables

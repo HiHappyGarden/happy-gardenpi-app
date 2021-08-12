@@ -24,6 +24,7 @@
 
 
 #include "../interfaces/startable.hpp"
+#include "../interfaces/object.hpp"
 #include "../pods/aggregation.hpp"
 #include "../constants.hpp"
 
