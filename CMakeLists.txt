@@ -1,19 +1,20 @@
 cmake_minimum_required(VERSION 3.16)
 
-PROJECT(hgardenpi VERSION "0.40.0" LANGUAGES CXX C)
+PROJECT(hgardenpi VERSION "0.41.0" LANGUAGES CXX C)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -latomic")
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_EXTENSIONS OFF)
-#set(RASPBIAN_ROOTFS "$ENV{HOME}/raspberrypi/rootfs")
 set(FILE_LOCK_PATH "/tmp/hgardenpi.pid")
 set(FILE_CONFIG "./config.json")
 set(BROKER_HOST "localhost")
 set(BROKER_PORT 1883)
-set(BROKER_USER "hgardepi")
-set(BROKER_PASSWD "hgardepi")
+set(BROKER_USER "hgardenpi")
+set(BROKER_PASSWD "hgardenpi")
 set(DB_FILE "./hgardenpi.db")
+
+#date param
 set(BUILD_TZ_LIB ON)
 
 
@@ -44,7 +45,6 @@ FetchContent_MakeAvailable(date_src)
 
 
 configure_file(config.h.in ../src/config.h)
-#include_directories("3thparty/include/date")
 include_directories("${RASPBIAN_ROOTFS}/usr/local/include")
 include_directories("${RASPBIAN_ROOTFS}/usr/include")
 link_directories("${RASPBIAN_ROOTFS}/usr/local/lib")

@@ -52,7 +52,6 @@ namespace hgardenpi
             const string &user;
             const string &passwd;
 
-            LogService *logService = nullptr;
             mosquitto *mosq = nullptr;
 
             string id;
@@ -107,10 +106,7 @@ namespace hgardenpi
              * @brief Set log
              * @param logService instance
              */
-            inline void setLogService(const LogService *logService) noexcept override
-            {
-                this->logService = const_cast<LogService *>(logService);
-            }
+            void setLogService(const LogService *logService) noexcept override;
 
             /**
              * @brief Initialize lib

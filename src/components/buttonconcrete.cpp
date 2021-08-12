@@ -28,11 +28,7 @@
 #include "buttonconcrete.hpp"
 
 #include <wiringPi.h>
-#include <unistd.h>
-#include <sys/syscall.h>
 
-
-#include "../threadengine.hpp"
 using namespace std;
 
 
@@ -46,8 +42,8 @@ static ButtonConcrete::OnClick internalCallback;
 ButtonConcrete::ButtonConcrete(int lcdRS) noexcept
 {
     pinMode(lcdRS, INPUT);
-    ::callback = [](){};
-    ::internalCallback = [](){};
+    ::callback = []{};
+    ::internalCallback = []{};
     ::lcdRS = lcdRS;
 }
 
@@ -60,11 +56,13 @@ void ButtonConcrete::setInternalOnClick(OnClick onClick) const
 {
     ::internalCallback = move(onClick);
 
+    //set timeout for interrupt
     if (waitForInterrupt(::lcdRS, static_cast<int>(Time::TICK)) == -1)
     {
         throw runtime_error("waitForInterrupt not run, the hw is not ready");
     }
 
+    //set callback on click button
     if (wiringPiISR(::lcdRS, INT_EDGE_RISING, []
     {
         ::callback();

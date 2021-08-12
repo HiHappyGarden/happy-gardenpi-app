@@ -28,6 +28,7 @@
 #include <sstream>
 
 #include "../threadengine.hpp"
+#include "../config.h"
 
 //todo: place here in global
 static hgardenpi::v1::MQTTClient::MessageCallback onMessageCallback;
@@ -37,8 +38,10 @@ namespace hgardenpi
     inline namespace v1
     {
 
+        static LogService *logService = nullptr;
+
         MQTTClientMosquitto::MQTTClientMosquitto(const string &serial, const string &host, const string &user, const string &passwd, uint16_t port, uint16_t keepAlive)
-            : topic("/HappyGardenPI/" + serial),
+            : topic(move("/HappyGardenPI/" + serial)),
               host(host),
               port(port),
               keepAlive(keepAlive),
@@ -49,6 +52,8 @@ namespace hgardenpi
             * new instance client
             */
             ostringstream ss;
+            ss << HGARDENPI_NAME;
+            ss << "_";
             ss << pidMain;
 
             mosq = mosquitto_new(ss.str().c_str(), true, nullptr);
@@ -74,7 +79,7 @@ namespace hgardenpi
         {
             if (!initalizated)
             {
-                throw runtime_error(_("MQTTClientMosquitto not initialized"));
+                HGARDENPI_ERROR_LOG_AMD_THROW("MQTTClientMosquitto not initialized")
             }
 
             //check il moquitto client is allocated
@@ -88,9 +93,10 @@ namespace hgardenpi
                 {
                     if (result != MOSQ_ERR_SUCCESS)
                     {
-                        string err("connection error: ");
+                        string err("mosquitto client connection error: ");
                         err.append(mosquitto_strerror(result));
                         cerr << err << endl;
+                        HGARDENPI_ERROR_LOG_AMD_THROW(err.c_str())
                     }
                 });
 
@@ -100,17 +106,7 @@ namespace hgardenpi
                 */
                 mosquitto_message_callback_set(mosq, [](mosquitto *mosq, void *obj, const mosquitto_message *message)
                 {
-//                    bool match = 0;
-//                    printf("received message '%.*s' for topic '%s'\n", message->payloadlen, (char *)message->payload, message->topic);
-
                     ::onMessageCallback((uint8_t *)message->payload);
-
-                    //todo
-                    //    mosquitto_topic_matches_sub(, message->topic, &match);
-                    //    if (match)
-                    //    {
-                    //        printf("received message for Telemetry topic\n");
-                    //    }
                 });
 
                 //set username and passwd
@@ -120,8 +116,7 @@ namespace hgardenpi
                 {
                     string err("set user and password: ");
                     err.append(mosquitto_strerror(rc));
-                    logService->write(LOG_ERR, "%s", err.c_str());
-                    throw runtime_error(err);
+                    HGARDENPI_ERROR_LOG_AMD_THROW(err.c_str())
                 }
 
                 //set protocol version
@@ -134,8 +129,7 @@ namespace hgardenpi
                 {
                     string err("connection: ");
                     err.append(mosquitto_strerror(rc));
-                    logService->write(LOG_ERR, "%s", err.c_str());
-                    throw runtime_error(err);
+                    HGARDENPI_ERROR_LOG_AMD_THROW(err.c_str())
                 }
 
                 logService->write(LOG_INFO, "broker %s: %s", "topic", topic.c_str());
@@ -150,18 +144,11 @@ namespace hgardenpi
             {
                 threadSleep(Time::TICK);
             }
+        }
 
-//            int rc = mosquitto_loop_forever(mosq, static_cast<int>(Time::TICK), 1);
-//            if (!wiringPiRunningThread && rc)
-//            {
-//                logService->write(LOG_WARNING, "%s", "connection error! Try to reconnect");
-//                threadSleep(5'000);
-//                rc = mosquitto_reconnect(mosq);
-//                if (rc != MOSQ_ERR_SUCCESS)
-//                {
-//                    HGARDENPI_ERROR_LOG_AMD_THROW("reconnection fail")
-//                }
-//            }
+        inline void MQTTClientMosquitto::setLogService(const LogService *logService) noexcept
+        {
+            hgardenpi::v1::logService = const_cast<LogService *>(logService);
         }
 
         void MQTTClientMosquitto::initialize()
@@ -169,9 +156,8 @@ namespace hgardenpi
             //initialize mosquittopp
             if (mosquitto_lib_init() != MOSQ_ERR_SUCCESS)
             {
-                string msg("mosquitto_lib_init() error");
-                logService->write(LOG_ERR, "%d", msg.c_str());
-                throw runtime_error(_(msg.c_str()));
+                HGARDENPI_ERROR_LOG_AMD_THROW("mosquitto_lib_init() error")
+                initalizated = true;
             }
             initalizated = true;
         }
