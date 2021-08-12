@@ -29,12 +29,19 @@
 #include "constants.hpp"
 #include "utilities/databaseutils.hpp"
 #include "clients/mqttclientmosquitto.hpp"
-
+#include "threadengine.hpp"
 
 namespace hgardenpi
 {
     inline namespace v1
     {
+        /**
+         * @brief Event triggered when MqttClient message arrive
+         * @param data message data
+         */
+        static void onMqttClientMessageCallback(const uint8_t *data);
+
+        static void onSchedulerEvent(const Aggregation::Ptr &aggregation, const Station::Ptr &station);
 
         Engine::Engine() : factory(new (nothrow) FactoryConcrete)
         {
@@ -48,13 +55,6 @@ namespace hgardenpi
         {
             //stop WiringPI thread
             wiringPiRunningThread = false;
-
-            //is not a mistake leave here
-            if (threadPool)
-            {
-                delete threadPool;
-                threadPool = nullptr;
-            }
 
             if (factory)
             {
@@ -92,13 +92,14 @@ namespace hgardenpi
             device->setLogService(system->getLogService());
             device->initialize();
 
-            //initialize threadPool in all sub factory
-            Engine::getInstance()->threadPool = new (nothrow) ThreadPool(device->getInfo()->cpu);
-            if (!Engine::getInstance()->threadPool) {
-                throw runtime_error(_("no memory for threadPool"));
-            }
-            device->setThreadPool(Engine::getInstance()->threadPool);
-            system->setThreadPool(Engine::getInstance()->threadPool);
+            //initialize threadPool
+            system->initializeThreadPool(device->getInfo()->cpu);
+
+            //set threadPool to device
+            device->setThreadPool(system->getThreadPool());
+
+            //initialize scheduler here because I attempt threadPool is initialized
+            system->initializeScheduler();
 
             //get database file path from config file
             string &dbFile = system->getConfigInfo()->database.file;
@@ -157,34 +158,33 @@ namespace hgardenpi
 
         void start()
         {
-            //get pointers of system and device
+            //get pointers of all element
             auto system = const_cast<System *>(Engine::getInstance()->factory->getSystem());
             auto device = const_cast<Device *>(Engine::getInstance()->factory->getDevice());
             auto mqttClient = Engine::getInstance()->mqttClient;
             auto aggregationDao = Engine::getInstance()->aggregationDao;
             auto stationDao = Engine::getInstance()->stationDao;
 
-            //retrieve all active aggregations
+            //retrieve all active aggregations and set to scheduler
             auto && aggregations = aggregationDao->getList();
             for (auto &&aggregation : aggregations)
             {
                 aggregation->stations = move(stationDao->getList(aggregation));
+                system->getScheduler()->schedule(aggregation);
             }
 
-            //set the button callback
+            //set all callback
             device->setOnButtonClick([]
             {
 
-                 printf("click\n");
+                printf("click\n");
 
             });
-
-            mqttClient->setOnMessageCallback([](uint8_t *data)
-            {
-                cout << "msg:" << data << endl;
-            });
+            mqttClient->setOnMessageCallback(&onMqttClientMessageCallback);
+            system->getScheduler()->setOnExecute(&onSchedulerEvent);
 
             //start all
+            system->start();
             device->start();
             mqttClient->start();
 
@@ -194,6 +194,16 @@ namespace hgardenpi
             //enable broker loop
             mqttClient->loop();
 
+        }
+
+        static void onMqttClientMessageCallback(const uint8_t *data)
+        {
+            cout << "msg:" << data << endl;
+        }
+
+        static void onSchedulerEvent(const Aggregation::Ptr &aggregation, const Station::Ptr &station)
+        {
+            cout << "event aggregation:" << aggregation->id  << "station:" << station->id << endl;
         }
     }
 }

@@ -44,8 +44,9 @@ namespace hgardenpi
         {
             mutable mutex m;
 
-            const ThreadPool *threadPool = nullptr;
+            ThreadPool *threadPool = nullptr;
 
+            OnExecute onExecute;
         public:
             explicit SchedulerConcrete(const ThreadPool *threadPool);
             ~SchedulerConcrete() override = default;
@@ -64,6 +65,13 @@ namespace hgardenpi
              * @throw runtime_error when there some problem in aggregation
              */
             void schedule(const Aggregation::Ptr &ptr) override;
+
+            /**
+             * Remove scheduling
+             * @param ptr of aggregation
+             * @throw runtime_error when there some problem in aggregation
+             */
+            void remove(const Aggregation::Ptr &ptr);
 
             /**
              * Shot one time an aggregation of station triggered from user
@@ -87,6 +95,15 @@ namespace hgardenpi
             inline string toString() noexcept override
             {
                 return typeid(*this).name();
+            }
+
+            /**
+             * @brief Set callback on scheduled event
+             * @param onExecute on trig event
+             */
+            inline void setOnExecute(OnExecute onExecute) noexcept override
+            {
+                this->onExecute = move(onExecute);
             }
 
         };

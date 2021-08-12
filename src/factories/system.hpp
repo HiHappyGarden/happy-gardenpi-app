@@ -42,7 +42,7 @@ namespace hgardenpi
          * @brief Factory for management of system services devices
          * 
          */
-        class System : public Initializable, public Closeable, public Object
+        class System : public Initializable, public Closeable, public Object, public Startable
         {
 
         public:
@@ -74,14 +74,26 @@ namespace hgardenpi
              *
              * @return const Scheduler *
              */
-            [[nodiscard]] virtual const Scheduler *getScheduler() const noexcept = 0;
+            [[nodiscard]] virtual Scheduler *getScheduler() const noexcept = 0;
 
             /**
-             * Set ThreadPool instance
-             * @param threadPool instance
+             * Initialize ThreadPool instance
+             * @param threadNumber number of thread
              * @throw runtime_error when something goes wrong
              */
-            virtual void setThreadPool(const ThreadPool *threadPool) = 0;
+            virtual void initializeThreadPool(size_t threadNumber) = 0;
+
+            /**
+             * @brief Return threadPool instance
+             * @return instance of threadPool
+             */
+            virtual ThreadPool * getThreadPool() const noexcept = 0;
+
+            /**
+             * @brief Initialize scheduler after initializeThreadPool
+             * @throw runtime_error when something goes wrong
+             */
+            virtual void initializeScheduler() = 0;
         };
 
     }

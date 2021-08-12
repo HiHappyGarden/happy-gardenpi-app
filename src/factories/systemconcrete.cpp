@@ -59,6 +59,11 @@ namespace hgardenpi
                 delete scheduler;
                 scheduler = nullptr;
             }
+            if (threadPool)
+            {
+                delete threadPool;
+                threadPool = nullptr;
+            }
         }
 
         void SystemConcrete::initialize()
@@ -116,13 +121,30 @@ namespace hgardenpi
             lockService->release();
         }
 
-        inline void SystemConcrete::setThreadPool(const ThreadPool *threadPool)
+        void SystemConcrete::initializeThreadPool(size_t threadNumber)
         {
+            threadPool = new (nothrow) ThreadPool(threadNumber -1 < 1 ? 1 : threadNumber - 1);
+            if (!threadPool) {
+                throw runtime_error(_("no memory for threadPool"));
+            }
+        }
+
+        void SystemConcrete::initializeScheduler()
+        {
+            if (!threadPool)
+            {
+                throw runtime_error("threadPool not initialized");
+            }
             scheduler = new (nothrow) SchedulerConcrete(threadPool);
             if (!scheduler)
             {
                 throw runtime_error(_("no memory for scheduler"));
             }
+        }
+
+        inline void SystemConcrete::start()
+        {
+            scheduler->start();
         }
 
     }

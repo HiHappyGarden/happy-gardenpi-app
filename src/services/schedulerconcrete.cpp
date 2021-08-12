@@ -22,9 +22,11 @@
 
 #include "schedulerconcrete.hpp"
 
+#include "../threadengine.hpp"
+
 using hgardenpi::v1::SchedulerConcrete;
 
-SchedulerConcrete::SchedulerConcrete(const ThreadPool *threadPool) : threadPool(threadPool)
+SchedulerConcrete::SchedulerConcrete(const ThreadPool *threadPool) : threadPool(const_cast<ThreadPool *>(threadPool))
 {
 
 }
@@ -32,22 +34,34 @@ SchedulerConcrete::SchedulerConcrete(const ThreadPool *threadPool) : threadPool(
 
 void SchedulerConcrete::start()
 {
+    threadPool->enqueue([]
+    {
+        while (wiringPiRunningThread)
+        {
 
+            threadSleep(Time::SCHEDULER_TICK);
+        }
+    });
 }
 
 void SchedulerConcrete::schedule(const Aggregation::Ptr &ptr)
 {
-
+    lock_guard<mutex> lg(m);
 }
 
 void SchedulerConcrete::shot(const Aggregation::Ptr &ptr) const
 {
+    lock_guard<mutex> lg(m);
+}
 
+void SchedulerConcrete::remove(const Aggregation::Ptr &ptr)
+{
+    lock_guard<mutex> lg(m);
 }
 
 void SchedulerConcrete::shot(const Station::Ptr &ptr) const
 {
-
+    lock_guard<mutex> lg(m);
 }
 
 

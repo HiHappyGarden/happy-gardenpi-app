@@ -41,7 +41,8 @@ namespace hgardenpi
         {
 
         public:
-            Scheduler() = default;
+            using OnExecute = std::function<void(const Aggregation::Ptr &, const Station::Ptr &)>;
+
             virtual ~Scheduler() = default;
 
             /**
@@ -50,6 +51,13 @@ namespace hgardenpi
              * @throw runtime_error when there some problem in aggregation
              */
             virtual void schedule(const Aggregation::Ptr &ptr) = 0;
+
+            /**
+             * Remove scheduling
+             * @param ptr of aggregation
+             * @throw runtime_error when there some problem in aggregation
+             */
+            virtual void remove(const Aggregation::Ptr &ptr) = 0;
 
             /**
              * Shot one time an aggregation of station triggered from user
@@ -64,6 +72,13 @@ namespace hgardenpi
              * @throw runtime_error when there some problem in station
              */
             virtual void shot(const Station::Ptr &ptr) const = 0;
+
+            /**
+             * @brief Set callback on scheduled event
+             * @param onExecute on trig event
+             */
+            virtual void setOnExecute(OnExecute onExecute) noexcept = 0;
+
 
         };
 

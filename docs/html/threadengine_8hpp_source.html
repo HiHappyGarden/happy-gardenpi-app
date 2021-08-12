@@ -176,37 +176,35 @@ $(function() {
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;            <span class="keywordtype">size_t</span> threads;</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        };</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        <span class="keyword">extern</span> <a class="code" href="classhgardenpi_1_1v1_1_1_thread_pool.html">ThreadPool</a> *threadPool;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="preprocessor">#pragma endregion ThreadPool</span></div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="preprocessor">#pragma endregion ThreadPool</span></div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160; </div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="preprocessor">#pragma region variables</span></div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <span class="keyword">extern</span> <span class="keywordtype">long</span> pidMain;</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="preprocessor">#pragma region variables</span></div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        <span class="keyword">extern</span> <span class="keywordtype">long</span> pidMain;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160; </div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="preprocessor">#pragma endregion variables</span></div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="preprocessor">#pragma endregion variables</span></div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="preprocessor">#pragma region functions</span></div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="preprocessor">#pragma region functions</span></div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160; </div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;        [[maybe_unused]] <span class="keywordtype">void</span> threadSleep(uint64_t millis) noexcept;</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160; </div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;        [[maybe_unused]] <span class="keyword">inline</span> <span class="keywordtype">void</span> threadSleep(<span class="keyword">const</span> Time &amp;millis) noexcept</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;        {</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;            threadSleep(<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(millis));</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        }</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160; </div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        [[maybe_unused]] <span class="keyword">inline</span> <span class="keywordtype">void</span> threadSleep(Time &amp;&amp;millis) noexcept</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;        {</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;            threadSleep(<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(millis));</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        }</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160; </div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        [[maybe_unused]] vector&lt;long&gt; threadGetChildPid(<span class="keywordtype">long</span> exclude = -1) noexcept;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;        [[maybe_unused]] <span class="keywordtype">void</span> threadSleep(uint64_t millis) noexcept;</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160; </div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;        [[maybe_unused]] <span class="keyword">inline</span> <span class="keywordtype">void</span> threadSleep(<span class="keyword">const</span> Time &amp;millis) noexcept</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        {</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;            threadSleep(<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(millis));</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;        }</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; </div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;        [[maybe_unused]] <span class="keyword">inline</span> <span class="keywordtype">void</span> threadSleep(Time &amp;&amp;millis) noexcept</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;        {</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;            threadSleep(<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(millis));</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;        }</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160; </div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        [[maybe_unused]] vector&lt;long&gt; threadGetChildPid(<span class="keywordtype">long</span> exclude = -1) noexcept;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160; </div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="preprocessor">#pragma endregion functions</span></div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160; </div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="preprocessor">#pragma endregion functions</span></div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160; </div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    }</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;}</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160; </div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160; </div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    }</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;}</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160; </div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160; </div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_object_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_object.html">hgardenpi::Object</a></div><div class="ttdoc">Generic class ttat all functionals objects must extend.</div><div class="ttdef"><b>Definition:</b> object.hpp:39</div></div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_thread_pool_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_thread_pool.html">hgardenpi::ThreadPool</a></div><div class="ttdoc">Thread Pool class.</div><div class="ttdef"><b>Definition:</b> threadengine.hpp:51</div></div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_thread_pool_html_a0374ea3b0abb5697f15ed94cf6ea14ec"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_thread_pool.html#a0374ea3b0abb5697f15ed94cf6ea14ec">hgardenpi::v1::ThreadPool::toString</a></div><div class="ttdeci">string toString() noexcept override</div><div class="ttdoc">Return the name of object.</div><div class="ttdef"><b>Definition:</b> threadengine.hpp:105</div></div>
