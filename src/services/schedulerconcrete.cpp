@@ -26,7 +26,7 @@
 
 using hgardenpi::v1::SchedulerConcrete;
 
-SchedulerConcrete::SchedulerConcrete(const ThreadPool *threadPool) : threadPool(const_cast<ThreadPool *>(threadPool))
+SchedulerConcrete::SchedulerConcrete(ThreadPool *threadPool) : threadPool(threadPool)
 {
 
 }
@@ -44,20 +44,31 @@ void SchedulerConcrete::start()
     });
 }
 
-void SchedulerConcrete::schedule(const Aggregation::Ptr &ptr)
+void SchedulerConcrete::schedule(Aggregation::Ptr &ptr)
 {
     lock_guard<mutex> lg(m);
+    for (auto &&it : aggregations)
+    {
+        if(it->id == ptr->id)
+        {
+            aggregations.remove(it);
+            break;
+        }
+    }
+    aggregations.push_back(ptr);
 }
+
+//void SchedulerConcrete::remove(const Aggregation::Ptr &ptr)
+//{
+//    lock_guard<mutex> lg(m);
+//}
+
 
 void SchedulerConcrete::shot(const Aggregation::Ptr &ptr) const
 {
     lock_guard<mutex> lg(m);
 }
 
-void SchedulerConcrete::remove(const Aggregation::Ptr &ptr)
-{
-    lock_guard<mutex> lg(m);
-}
 
 void SchedulerConcrete::shot(const Station::Ptr &ptr) const
 {

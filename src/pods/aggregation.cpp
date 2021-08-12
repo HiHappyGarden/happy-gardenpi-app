@@ -54,16 +54,16 @@ namespace hgardenpi
     {
 
 
-        void Aggregation::Schedule::set(uint8_t minute, uint8_t hour, uint8_t days)
+        void Aggregation::Schedule::set(uint8_t hour, uint8_t minute, uint8_t days)
         {
-            if (minute > 59 && minute != Aggregation::Schedule::NOT_SET)
-            {
-                throw runtime_error("minute value not in 0-59 range");
-            }
-
             if (hour > 23 && hour != Aggregation::Schedule::NOT_SET)
             {
                 throw runtime_error("hour value not in 0-59 range");
+            }
+
+            if (minute > 59 && minute != Aggregation::Schedule::NOT_SET)
+            {
+                throw runtime_error("minute value not in 0-59 range");
             }
 
             if (days > 0x7F && days != Aggregation::Schedule::NOT_SET)
@@ -71,8 +71,8 @@ namespace hgardenpi
                 throw runtime_error("days value not in 0x01-0x7F range");
             }
 
-            this->minute = minute;
             this->hour = hour;
+            this->minute = minute;
             this->days = days;
         }
 
@@ -85,21 +85,21 @@ namespace hgardenpi
             while (getline(ss, s, '/')) {
                 switch (index) // NOLINT(hicpp-multiway-paths-covered)
                 {
-                    case 0: HGARDENPI_FROM_STRING_TO_UINT(minute)
-                    case 1: HGARDENPI_FROM_STRING_TO_UINT(hour)
+                    case 0: HGARDENPI_FROM_STRING_TO_UINT(hour)
+                    case 1: HGARDENPI_FROM_STRING_TO_UINT(minute)
                     case 2: HGARDENPI_FROM_STRING_TO_UINT(days)
                 }
                 index++;
             }
-            set(minute, hour, days);
+            set(hour, minute, days);
         }
 
 
         string Aggregation::Schedule::get() const noexcept
         {
             string ret;
-            HGARDENPI_SET_SCHEDULE_FIELD(minute)
             HGARDENPI_SET_SCHEDULE_FIELD(hour)
+            HGARDENPI_SET_SCHEDULE_FIELD(minute)
             HGARDENPI_SET_SCHEDULE_FIELD(days)
 
             ret = move(ret.substr(0, ret.size() - 1));
