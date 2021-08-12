@@ -121,8 +121,6 @@ namespace hgardenpi
             size_t threads;
         };
 
-        extern ThreadPool *threadPool;
-
 #pragma endregion ThreadPool
 
 #pragma region variables
