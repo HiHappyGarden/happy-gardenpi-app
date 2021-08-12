@@ -70,7 +70,7 @@ namespace hgardenpi
              * Set ThreadPool instance
              * @param threadPool instance
              */
-            virtual void setThreadPool(const ThreadPool *threadPool) noexcept = 0;
+            virtual void setThreadPool(ThreadPool *threadPool) noexcept = 0;
 
             /**
              * @brief set callback triggered whet button willi be pressed or released

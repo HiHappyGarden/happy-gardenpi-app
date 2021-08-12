@@ -94,9 +94,9 @@ namespace hgardenpi
              * Set ThreadPool instance
              * @param threadPool instance
              */
-            inline void setThreadPool(const ThreadPool *threadPool) noexcept override
+            inline void setThreadPool(ThreadPool *threadPool) noexcept override
             {
-                this->threadPool = const_cast<ThreadPool *>(threadPool);
+                this->threadPool = threadPool;
             }
 
             /**

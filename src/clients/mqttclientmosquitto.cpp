@@ -30,13 +30,12 @@
 #include "../threadengine.hpp"
 #include "../config.h"
 
-//todo: place here in global
-static hgardenpi::v1::MQTTClient::MessageCallback onMessageCallback;
-
 namespace hgardenpi
 {
     inline namespace v1
     {
+        //todo: place here in global
+        static hgardenpi::v1::MQTTClient::MessageCallback onMessageCallback;
 
         static LogService *logService = nullptr;
 
@@ -106,7 +105,7 @@ namespace hgardenpi
                 */
                 mosquitto_message_callback_set(mosq, [](mosquitto *mosq, void *obj, const mosquitto_message *message)
                 {
-                    ::onMessageCallback((uint8_t *)message->payload);
+                    hgardenpi::v1::onMessageCallback((uint8_t *)message->payload);
                 });
 
                 //set username and passwd
@@ -146,6 +145,11 @@ namespace hgardenpi
             }
         }
 
+        inline void MQTTClientMosquitto::setOnMessageCallback(MQTTClient::MessageCallback &&onMessageCallback) noexcept
+        {
+            hgardenpi::v1::onMessageCallback = move(onMessageCallback);
+        }
+
         inline void MQTTClientMosquitto::setLogService(const LogService *logService) noexcept
         {
             hgardenpi::v1::logService = const_cast<LogService *>(logService);
@@ -160,11 +164,6 @@ namespace hgardenpi
                 initalizated = true;
             }
             initalizated = true;
-        }
-
-        void MQTTClientMosquitto::setOnMessageCallback(MQTTClient::MessageCallback &&onMessageCallback) noexcept
-        {
-            ::onMessageCallback = onMessageCallback;
         }
 
 

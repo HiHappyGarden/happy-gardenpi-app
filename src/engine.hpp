@@ -28,7 +28,6 @@
 #include "clients/mqttclient.hpp"
 #include "daos/aggregationdao.hpp"
 #include "daos/stationdao.hpp"
-#include "threadengine.hpp"
 
 namespace hgardenpi
 {
@@ -44,7 +43,6 @@ namespace hgardenpi
             friend void initialize();
             friend void start();
 
-            ThreadPool *threadPool = nullptr;
             Factory *factory = nullptr;
             MQTTClient *mqttClient = nullptr;
 

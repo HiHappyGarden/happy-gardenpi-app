@@ -44,7 +44,7 @@ namespace hgardenpi
         {
 
         public:
-            using MessageCallback = function<void(uint8_t *)>;
+            using MessageCallback = function<void(const uint8_t *)>;
 
             MQTTClient() = default;
             ~MQTTClient() override = default;

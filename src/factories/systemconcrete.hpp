@@ -45,6 +45,7 @@ namespace hgardenpi
             mutable LockService *lockService = nullptr;
             mutable LogService *logService = nullptr;
             mutable Scheduler *scheduler = nullptr;
+            ThreadPool *threadPool;
 
         public:
             SystemConcrete() = default;
@@ -99,17 +100,33 @@ namespace hgardenpi
              *
              * @return const Scheduler *
              */
-            [[nodiscard]] const Scheduler *getScheduler() const noexcept override
+            [[nodiscard]] Scheduler *getScheduler() const noexcept override
             {
                 return scheduler;
             }
 
             /**
-             * Set ThreadPool instance
-             * @param threadPool instance
+             * Initialize ThreadPool instance
+             * @param threadNumber number of thread
              * @throw runtime_error when something goes wrong
              */
-            void setThreadPool(const ThreadPool *threadPool) override;
+            void initializeThreadPool(size_t threadNumber) override;
+
+            /**
+             * @brief Initialize scheduler after initializeThreadPool
+             * @throw runtime_error when something goes wrong
+             */
+            void initializeScheduler() override;
+
+            inline ThreadPool * getThreadPool() const noexcept override
+            {
+                return threadPool;
+            }
+
+            /**
+             * Start system service
+             */
+            void start() override;
 
             /**
              * @brief Return the name of object
@@ -120,6 +137,7 @@ namespace hgardenpi
             {
                 return typeid(*this).name();
             }
+
         };
 
     }
