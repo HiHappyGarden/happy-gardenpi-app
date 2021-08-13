@@ -56,21 +56,21 @@ namespace hgardenpi
             virtual ~Scheduler() = default;
 
             /**
-             * Insert into scheduler an aggregation of station
+             * @brief Insert into scheduler an aggregation of station
              * @param ptr of aggregation
              * @throw runtime_error when there some problem in aggregation
              */
             virtual void schedule(Aggregation::Ptr &ptr) = 0;
 
             /**
-             * Shot one time an aggregation of station triggered from user
+             * @brief Shot one time an aggregation of station triggered from user
              * @param ptr of aggregation
              * @throw runtime_error when there some problem in aggregation
              */
             virtual void shot(const Aggregation::Ptr &ptr) const = 0;
 
             /**
-             * Shot one time an station triggered from user
+             * @brief Shot one time an station triggered from user
              * @param ptr of station
              * @throw runtime_error when there some problem in station
              */
