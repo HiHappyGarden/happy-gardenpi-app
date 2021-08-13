@@ -77,14 +77,14 @@ namespace hgardenpi
             //initialize WiringPI
             wiringPiSetup();
 
-            display = new(std::nothrow) LCD1602(LCD1602::LCD_RS, LCD1602::LCD_E, LCD1602::LCD_D4, LCD1602::LCD_D5,
+            display = new(nothrow) LCD1602(LCD1602::LCD_RS, LCD1602::LCD_E, LCD1602::LCD_D4, LCD1602::LCD_D5,
                                                 LCD1602::LCD_D6, LCD1602::LCD_D7, LCD1602::LCD_CONTRAST);
             if (!display)
             {
                 HGARDENPI_ERROR_LOG_AMD_THROW("no memory for display")
             }
 
-            button = new(std::nothrow) ButtonConcrete(ButtonConcrete::PIN);
+            button = new(nothrow) ButtonConcrete(ButtonConcrete::PIN);
             if (!button)
             {
                 HGARDENPI_ERROR_LOG_AMD_THROW("no memory for button")
