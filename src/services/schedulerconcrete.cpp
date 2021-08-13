@@ -107,6 +107,9 @@ namespace hgardenpi
                     //test
                     delete now;
 #endif
+
+                    //todo: code for trig event
+
                 }
 
 

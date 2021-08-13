@@ -42,7 +42,9 @@ namespace hgardenpi
          */
         static void onMqttClientMessageCallback(const uint8_t *data);
 
-        static void onSchedulerEvent(const Aggregation::Ptr &aggregation, const Station::Ptr &station);
+        static void onSchedulerEventStart(const Station::Ptr &station);
+
+        static void onSchedulerEventEnd();
 
         Engine::Engine() : factory(new (nothrow) FactoryConcrete)
         {
@@ -186,7 +188,8 @@ namespace hgardenpi
 
             });
             mqttClient->setOnMessageCallback(&onMqttClientMessageCallback);
-            system->getScheduler()->setOnExecute(&onSchedulerEvent);
+            system->getScheduler()->setScheduleStart(&onSchedulerEventStart);
+            system->getScheduler()->setScheduleEnd(&onSchedulerEventEnd);
 
             //start all
             device->start(); //keep this position
@@ -206,9 +209,14 @@ namespace hgardenpi
             cout << "msg:" << data << endl;
         }
 
-        static void onSchedulerEvent(const Aggregation::Ptr &aggregation, const Station::Ptr &station)
+        static void onSchedulerEventStart(const Station::Ptr &station)
         {
-            cout << "event aggregation:" << aggregation->id  << "station:" << station->id << endl;
+            cout << "station:" << station->id << endl;
+        }
+
+        static void onSchedulerEventEnd()
+        {
+            cout << "end:" << endl;
         }
     }
 }

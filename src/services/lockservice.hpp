@@ -37,6 +37,9 @@ namespace hgardenpi
         {
 
         protected:
+            /**
+             * @brief if an other instance already run, this variable contain the reference pid
+             */
             pid_t pidInExecution = 0;
 
         public:

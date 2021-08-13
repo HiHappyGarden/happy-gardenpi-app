@@ -47,7 +47,8 @@ namespace hgardenpi
             ThreadPool *threadPool = nullptr;
             future<void> loopThread;
 
-            OnScheduleStart onExecute;
+            OnScheduleStart onScheduleStart;
+            OnScheduleEnd onScheduleEnd;
 
             Aggregations aggregations{};
             queue<Station::Ptr> scheduled;
@@ -59,12 +60,15 @@ namespace hgardenpi
 
             /**
              * @brief Check if execute a station in aggretation
-             * @param now date/time now
              * @param aggregation aggregation to check
              */
             friend void check(const Aggregation::Ptr aggregation);
 
         public:
+
+            /**
+             * @brief Create a new instance
+             */
             explicit SchedulerConcrete(ThreadPool *threadPool);
             ~SchedulerConcrete() override;
 
@@ -114,12 +118,21 @@ namespace hgardenpi
             }
 
             /**
-             * @brief Set callback on scheduled event
-             * @param onExecute on trig event
+             * @brief Set callback on start scheduled event
+             * @param onScheduleStart on start event
              */
-            inline void setOnExecute(OnScheduleStart onExecute) noexcept override
+            inline void setScheduleStart(OnScheduleStart onScheduleStart) noexcept override
             {
-                this->onExecute = move(onExecute);
+                this->onScheduleStart = move(onScheduleStart);
+            }
+
+            /**
+             * @brief Set callback on end scheduled event
+             * @param onScheduleEnd on start event
+             */
+            inline void setScheduleEnd(OnScheduleEnd onScheduleEnd) noexcept override
+            {
+                this->onScheduleEnd = move(onScheduleEnd);
             }
 
         };
