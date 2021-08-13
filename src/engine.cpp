@@ -35,6 +35,9 @@ namespace hgardenpi
 {
     inline namespace v1
     {
+
+        static const LogService *logService = nullptr;
+
         /**
          * @brief Event triggered when MqttClient message arrive
          * @param data message data
@@ -88,8 +91,11 @@ namespace hgardenpi
             //init system
             system->initialize();
 
+            //reference a local poiter of systemService
+            logService = system->getLogService();
+
             //init device
-            device->setLogService(system->getLogService());
+            device->setLogService(logService);
             device->initialize();
 
             //initialize threadPool
@@ -105,7 +111,7 @@ namespace hgardenpi
             string &dbFile = system->getConfigInfo()->database.file;
 
             //write sw version in log
-            system->getLogService()->write(LOG_INFO, "database: %s", dbFile.c_str());
+            logService->write(LOG_INFO, "database: %s", dbFile.c_str());
 
             {
                 //init database, out of SOLID pattern :)
@@ -122,7 +128,7 @@ namespace hgardenpi
                     auto &&[version, wifiConfigured] = DBGetMetadata(database);
                     if (version == 0)
                     {
-                        throw runtime_error(_("database initialized but version not found"));
+                        throw runtime_error("database initialized but version not found");
                     }
                     DBUpdate(database, version);
 
@@ -134,24 +140,28 @@ namespace hgardenpi
             Engine::getInstance()->aggregationDao = new (nothrow) AggregationDAO(dbFile);
             if(!Engine::getInstance()->aggregationDao)
             {
-                throw runtime_error(_("no memory for aggregationDao"));
+                throw runtime_error("no memory for aggregationDao");
             }
 
             Engine::getInstance()->stationDao = new (nothrow) StationDAO(dbFile);
             if(!Engine::getInstance()->stationDao)
             {
-                throw runtime_error(_("no memory for stationDao"));
+                throw runtime_error("no memory for stationDao");
             }
 
 
             //initialize mosquittopp
-            Engine::getInstance()->mqttClient = new MQTTClientMosquitto(device->getInfo()->serial,
+            Engine::getInstance()->mqttClient = new (nothrow) MQTTClientMosquitto(device->getInfo()->serial,
                                                                         system->getConfigInfo()->broker.host,
                                                                         system->getConfigInfo()->broker.user,
                                                                         system->getConfigInfo()->broker.passwd,
                                                                         system->getConfigInfo()->broker.port
             );
-            Engine::getInstance()->mqttClient->setLogService(system->getLogService());
+            if(!Engine::getInstance()->mqttClient)
+            {
+                throw runtime_error("no memory for mqttClient");
+            }
+            Engine::getInstance()->mqttClient->setLogService(logService);
             Engine::getInstance()->mqttClient->initialize();
 
         }
@@ -189,7 +199,7 @@ namespace hgardenpi
             mqttClient->start();
 
             //write stat service on log
-            system->getLogService()->write(LOG_INFO, _("service ready"));
+            logService->write(LOG_INFO, _("service ready"));
 
             //enable broker loop
             mqttClient->loop();

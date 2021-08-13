@@ -43,13 +43,18 @@ int main(int argc, char *argv[])
     }
     catch (const std::exception &e)
     {
-        cerr << "error: " << e.what() << std::endl;
-
+        cerr << "catch exception: " << e.what() << endl;
         hgardenpi::Engine::getInstance()
                 ->getFactory()
                 ->getSystem()
                 ->getLogService()
-                ->write(LOG_ERR, e.what());
+                ->write(LOG_ERR, "catch exception: %s", e.what());
+
+        hgardenpi::Engine::getInstance()
+            ->getFactory()
+            ->getSystem()
+            ->getLogService()
+            ->write(LOG_ERR, "exit failure");
 
         return EXIT_FAILURE;
     }

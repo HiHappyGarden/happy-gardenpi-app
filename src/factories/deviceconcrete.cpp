@@ -71,7 +71,7 @@ namespace hgardenpi
             //HW check
             if (deviceInfo->hardware != HW_V1 && deviceInfo->hardware != HW_V1_DEBUG)
             {
-                HGARDENPI_ERROR_LOG_AMD_THROW("hardware not supported, you need a Raspberry Pi Zero W")
+                throw runtime_error("hardware not supported, you need a Raspberry Pi Zero W");
             }
 
             //initialize WiringPI
@@ -81,13 +81,13 @@ namespace hgardenpi
                                                 LCD1602::LCD_D6, LCD1602::LCD_D7, LCD1602::LCD_CONTRAST);
             if (!display)
             {
-                HGARDENPI_ERROR_LOG_AMD_THROW("no memory for display")
+                throw runtime_error("no memory for display");
             }
 
             button = new(nothrow) ButtonConcrete(ButtonConcrete::PIN);
             if (!button)
             {
-                HGARDENPI_ERROR_LOG_AMD_THROW("no memory for button")
+                throw runtime_error("no memory for button");
             }
 
             //on initialization turn off contrast display
