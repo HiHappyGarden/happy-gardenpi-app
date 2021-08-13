@@ -36,8 +36,6 @@ namespace hgardenpi
     inline namespace v1
     {
 
-        static const LogService *logService = nullptr;
-
         /**
          * @brief Event triggered when MqttClient message arrive
          * @param data message data
@@ -91,11 +89,8 @@ namespace hgardenpi
             //init system
             system->initialize();
 
-            //reference a local poiter of systemService
-            logService = system->getLogService();
-
             //init device
-            device->setLogService(logService);
+            device->setLogService(system->getLogService());
             device->initialize();
 
             //initialize threadPool
@@ -108,10 +103,10 @@ namespace hgardenpi
             system->initializeScheduler();
 
             //get database file path from config file
-            string &dbFile = system->getConfigInfo()->database.file;
+            const string &dbFile = system->getConfigInfo()->database.file;
 
             //write sw version in log
-            logService->write(LOG_INFO, "database: %s", dbFile.c_str());
+            system->getLogService()->write(LOG_INFO, "database: %s", dbFile.c_str());
 
             {
                 //init database, out of SOLID pattern :)
@@ -125,7 +120,7 @@ namespace hgardenpi
                 else
                 {
                     //update db structure to new one version
-                    auto &&[version, wifiConfigured] = DBGetMetadata(database);
+                    const auto &&[version, wifiConfigured] = DBGetMetadata(database);
                     if (version == 0)
                     {
                         throw runtime_error("database initialized but version not found");
@@ -161,7 +156,7 @@ namespace hgardenpi
             {
                 throw runtime_error("no memory for mqttClient");
             }
-            Engine::getInstance()->mqttClient->setLogService(logService);
+            Engine::getInstance()->mqttClient->setLogService(system->getLogService());
             Engine::getInstance()->mqttClient->initialize();
 
         }
@@ -199,7 +194,7 @@ namespace hgardenpi
             mqttClient->start();
 
             //write stat service on log
-            logService->write(LOG_INFO, _("service ready"));
+            system->getLogService()->write(LOG_INFO, _("service ready"));
 
             //enable broker loop
             mqttClient->loop();
