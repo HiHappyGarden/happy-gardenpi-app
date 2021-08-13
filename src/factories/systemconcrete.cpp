@@ -107,7 +107,6 @@ namespace hgardenpi
             {
                 string error(_("another instance already run pid:"));
                 error += to_string(lockService->getPidInExecution());
-                logService->write(LOG_ERR, "%s", error.c_str());
                 throw runtime_error(error);
             }
 

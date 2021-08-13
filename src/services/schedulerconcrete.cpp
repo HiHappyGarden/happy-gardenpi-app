@@ -24,6 +24,8 @@
 
 #include <iostream>
 
+#include "../config.h"
+
 namespace hgardenpi
 {
     inline namespace v1
@@ -33,12 +35,7 @@ namespace hgardenpi
 
         static bool loopRun = false;
 
-        /**
-         * @brief Check if execute a station in aggretation
-         * @param now date/time now
-         * @param aggregation aggregation to check
-         */
-        static void check(const tm* now, const Aggregation::Ptr aggregation);
+        void check(const Aggregation::Ptr aggregation);
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "LoopDoesntUseConditionVariableInspection"
@@ -46,53 +43,73 @@ namespace hgardenpi
         {
             self->m.lock();
             Aggregations aggregations(self->aggregations);
+            self->aggregations.clear();
             self->m.unlock();
             while (wiringPiRunningThread && loopRun)
             {
 
-                time_t t = time(0);   // get time now
-                tm* now = localtime(&t);
-
-                cout << "now wday:" << to_string(now->tm_wday) << " now hours:" << to_string(now->tm_hour) << " minutes:" << to_string(now->tm_min) << " second:" << to_string(now->tm_sec) << endl;
-
-                for (auto &&aggregation : aggregations)
+                //cycle aggregation for create a queue of stations to handle
                 {
                     lock_guard<mutex>(self->m);
 
-                    auto &schedule = aggregation->schedule;
+#if HGARDENPI_TEST > 0
+                    //test
+                    tm* now = new tm {
+                        .tm_min = 30,
+                        .tm_hour = 10,
+                        .tm_wday = 5
+                    };
+                    cout << "now wday:" << to_string(now->tm_wday) << " now hours:" << to_string(now->tm_hour) << " minutes:" << to_string(now->tm_min) << endl;
+#else
+                    time_t t = time(0);   // get time now
+                    tm* now = localtime(&t);
+#endif
 
-                    if (now->tm_hour == schedule.hour && now->tm_min == schedule.minute)
+                    for (auto &&aggregation : aggregations)
                     {
-                        if (schedule.days & MONDAY && now->tm_wday == 1)
+                        auto &schedule = aggregation->schedule;
+
+                        if (now->tm_hour == schedule.hour && now->tm_min == schedule.minute)
                         {
-                            check(now, aggregation);
-                        }
-                        else if (schedule.days & TUESDAY && now->tm_wday == 2)
-                        {
-                            check(now, aggregation);
-                        }
-                        else if (schedule.days & WEDNESDAY && now->tm_wday == 3)
-                        {
-                            check(now, aggregation);
-                        }
-                        else if (schedule.days & THURSDAY && now->tm_wday == 4)
-                        {
-                            check(now, aggregation);
-                        }
-                        else if (schedule.days & FRIDAY && now->tm_wday == 5)
-                        {
-                            check(now, aggregation);
-                        }
-                        else if (schedule.days & SATURDAY && now->tm_wday == 6)
-                        {
-                            check(now, aggregation);
-                        }
-                        else if (schedule.days & SUNDAY && now->tm_wday == 7)
-                        {
-                            check(now, aggregation);
+                            if (schedule.days & MONDAY && now->tm_wday == 1)
+                            {
+                                check(aggregation);
+                            }
+                            else if (schedule.days & TUESDAY && now->tm_wday == 2)
+                            {
+                                check(aggregation);
+                            }
+                            else if (schedule.days & WEDNESDAY && now->tm_wday == 3)
+                            {
+                                check(aggregation);
+                            }
+                            else if (schedule.days & THURSDAY && now->tm_wday == 4)
+                            {
+                                check(aggregation);
+                            }
+                            else if (schedule.days & FRIDAY && now->tm_wday == 5)
+                            {
+                                check(aggregation);
+                            }
+                            else if (schedule.days & SATURDAY && now->tm_wday == 6)
+                            {
+                                check(aggregation);
+                            }
+                            else if (schedule.days & SUNDAY && now->tm_wday == 7)
+                            {
+                                check(aggregation);
+                            }
                         }
                     }
+                    aggregations.clear();
+
+#if HGARDENPI_TEST > 0
+                    //test
+                    delete now;
+#endif
                 }
+
+
 
                 threadSleep(Time::SCHEDULER_TICK, loopRun);
 
@@ -101,17 +118,26 @@ namespace hgardenpi
 #pragma clang diagnostic pop
 
 
-        static void check(const tm* now, const Aggregation::Ptr aggregation)
+        void check(const Aggregation::Ptr aggregation)
         {
             for(auto &&station : aggregation->stations)
             {
-
+                self->scheduled.push(station);
+                cout << "station:" << to_string(station->id) << endl;
             }
         }
 
         SchedulerConcrete::SchedulerConcrete(ThreadPool *threadPool) : threadPool(threadPool)
         {
             self = this;
+        }
+
+        SchedulerConcrete::~SchedulerConcrete()
+        {
+            if (loopRun)
+            {
+                stop();
+            }
         }
 
 
@@ -128,6 +154,9 @@ namespace hgardenpi
             lock_guard<mutex> lg(m);
             loopRun = false;
             aggregations.clear();
+
+            queue<Station::Ptr> empty;
+            scheduled.swap(empty);
         }
 
 

@@ -14,6 +14,9 @@ set(BROKER_USER "hgardenpi")
 set(BROKER_PASSWD "hgardenpi")
 set(DB_FILE "./hgardenpi.db")
 
+#test macro
+set(TEST 1)
+
 #date param
 set(BUILD_TZ_LIB ON)
 

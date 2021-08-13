@@ -30,6 +30,8 @@
 #include <SQLiteCpp/Database.h>
 #include <SQLiteCpp/Transaction.h>
 
+#include "../config.h"
+
 using namespace SQLite;
 
 namespace hgardenpi
@@ -60,12 +62,15 @@ namespace hgardenpi
                 "\tFOREIGN KEY(\"id_aggregation\") REFERENCES \"aggregations\"(\"id\"),\n"
                 "\tPRIMARY KEY(\"id\" AUTOINCREMENT)\n"
                 ")",
+
+#if HGARDENPI_TEST > 0
                 //test
                 "INSERT INTO aggregations VALUES (1, \"Test station\", 1, \"10/30/127\",  \"2021/01/01\", \"2021/12/31\", 1, 1);",
                 "INSERT INTO stations  VALUES (1, \"Station 1\", \"Giardino nord\", 40, 1, 1);",
                 "INSERT INTO stations  VALUES (2, \"Station 2\", \"Giardino sud\", 15, 1, 1);",
                 "INSERT INTO stations  VALUES (3, \"Station 3\", \"Giardino est\", 30, 1, 1);",
                 "INSERT INTO stations  VALUES (4, \"Station 4\", \"Giardino ovest\", 10, 1, 1);",
+#endif
                 nullptr
         };
 

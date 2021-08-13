@@ -42,7 +42,8 @@ namespace hgardenpi
         {
 
         public:
-            using OnExecute = std::function<void(const Aggregation::Ptr &, const Station::Ptr &)>;
+            using OnScheduleStart = std::function<void(const Station::Ptr &)>;
+            using OnScheduleEnd = std::function<void()>;
 
             virtual ~Scheduler() = default;
 
@@ -71,7 +72,7 @@ namespace hgardenpi
              * @brief Set callback on scheduled event
              * @param onExecute on trig event
              */
-            virtual void setOnExecute(OnExecute onExecute) noexcept = 0;
+            virtual void setOnExecute(OnScheduleStart onExecute) noexcept = 0;
 
 
         };

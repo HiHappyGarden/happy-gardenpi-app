@@ -86,18 +86,20 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhgardenpi_1_1v1_1_1_aggregation_1_1_schedule.html">Schedule</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">scheduling info  <a href="structhgardenpi_1_1v1_1_1_aggregation_1_1_schedule.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">scheduling data info  <a href="structhgardenpi_1_1v1_1_1_aggregation_1_1_schedule.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:a28a30bf01d497ea37c2aa9ee4000b792"><td class="memItemLeft" align="right" valign="top"><a id="a28a30bf01d497ea37c2aa9ee4000b792"></a>
-typedef shared_ptr&lt; <a class="el" href="structhgardenpi_1_1v1_1_1_aggregation.html">Aggregation</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Ptr</b></td></tr>
+typedef shared_ptr&lt; <a class="el" href="structhgardenpi_1_1v1_1_1_aggregation.html">Aggregation</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhgardenpi_1_1v1_1_1_aggregation.html#a28a30bf01d497ea37c2aa9ee4000b792">Ptr</a></td></tr>
+<tr class="memdesc:a28a30bf01d497ea37c2aa9ee4000b792"><td class="mdescLeft">&#160;</td><td class="mdescRight">shared_ptr of <a class="el" href="structhgardenpi_1_1v1_1_1_aggregation.html" title="pod who describe an aggregation of station">Aggregation</a> <br /></td></tr>
 <tr class="separator:a28a30bf01d497ea37c2aa9ee4000b792"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aa3ffa1bdb963b26ffa42aa89fbb1b768"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhgardenpi_1_1v1_1_1_aggregation.html#aa3ffa1bdb963b26ffa42aa89fbb1b768">toString</a> () const noexcept</td></tr>
+<tr class="memdesc:aa3ffa1bdb963b26ffa42aa89fbb1b768"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the representation off all data in POD.  <a href="structhgardenpi_1_1v1_1_1_aggregation.html#aa3ffa1bdb963b26ffa42aa89fbb1b768">More...</a><br /></td></tr>
 <tr class="separator:aa3ffa1bdb963b26ffa42aa89fbb1b768"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -126,6 +128,7 @@ string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="st
 <tr class="memdesc:ab1b3de8a4253b683a0257762ec589347"><td class="mdescLeft">&#160;</td><td class="mdescRight">end scheduling period if enhanced <br /></td></tr>
 <tr class="separator:ab1b3de8a4253b683a0257762ec589347"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9d7780a325769129bf627a391334d4f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhgardenpi_1_1v1_1_1_aggregation.html#ad9d7780a325769129bf627a391334d4f">sequential</a> = true</td></tr>
+<tr class="memdesc:ad9d7780a325769129bf627a391334d4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">If true execute sequentially the station otherwise execute all station at the same time.  <a href="structhgardenpi_1_1v1_1_1_aggregation.html#ad9d7780a325769129bf627a391334d4f">More...</a><br /></td></tr>
 <tr class="separator:ad9d7780a325769129bf627a391334d4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab2b4a489be99006af877300217676dd4"><td class="memItemLeft" align="right" valign="top"><a id="ab2b4a489be99006af877300217676dd4"></a>
 Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhgardenpi_1_1v1_1_1_aggregation.html#ab2b4a489be99006af877300217676dd4">status</a> = Status::ACTIVE</td></tr>
@@ -162,7 +165,9 @@ Stations&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+<p>Return the representation off all data in POD. </p>
+<dl class="section return"><dt>Returns</dt><dd>std::string data inn json format </dd></dl>
 
 </div>
 </div>
@@ -178,7 +183,9 @@ Stations&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>If true execute sequentially the station otherwise execute all station at the same time </p>
+
+<p>If true execute sequentially the station otherwise execute all station at the same time. </p>
+<dl class="section note"><dt>Note</dt><dd>not implemented in this version, may be in next version </dd></dl>
 
 </div>
 </div>

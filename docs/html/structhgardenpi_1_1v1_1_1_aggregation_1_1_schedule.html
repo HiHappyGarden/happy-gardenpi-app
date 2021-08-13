@@ -77,14 +77,14 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>scheduling info  
+<p>scheduling data info  
  <a href="structhgardenpi_1_1v1_1_1_aggregation_1_1_schedule.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="aggregation_8hpp_source.html">aggregation.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aa382052c525bccba2d6b8e97d5d05c7d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhgardenpi_1_1v1_1_1_aggregation_1_1_schedule.html#aa382052c525bccba2d6b8e97d5d05c7d">set</a> (uint8_t minute, uint8_t hour, uint8_t days)</td></tr>
+<tr class="memitem:aa382052c525bccba2d6b8e97d5d05c7d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhgardenpi_1_1v1_1_1_aggregation_1_1_schedule.html#aa382052c525bccba2d6b8e97d5d05c7d">set</a> (uint8_t <a class="el" href="structhgardenpi_1_1v1_1_1_aggregation_1_1_schedule.html#a63383cfb7e494dbc402fd4e5388424c3">minute</a>, uint8_t <a class="el" href="structhgardenpi_1_1v1_1_1_aggregation_1_1_schedule.html#a283fec8e56b2343ccf0d8319bfd127cf">hour</a>, uint8_t <a class="el" href="structhgardenpi_1_1v1_1_1_aggregation_1_1_schedule.html#a108cbca1430d1c0a13f30a7a186c4364">days</a>)</td></tr>
 <tr class="memdesc:aa382052c525bccba2d6b8e97d5d05c7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the scheduling.  <a href="structhgardenpi_1_1v1_1_1_aggregation_1_1_schedule.html#aa382052c525bccba2d6b8e97d5d05c7d">More...</a><br /></td></tr>
 <tr class="separator:aa382052c525bccba2d6b8e97d5d05c7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0061d72874c1ad45b78a0b036be3f3bb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhgardenpi_1_1v1_1_1_aggregation_1_1_schedule.html#a0061d72874c1ad45b78a0b036be3f3bb">set</a> (const string &amp;scheduleFormat)</td></tr>
@@ -97,23 +97,27 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a63383cfb7e494dbc402fd4e5388424c3"><td class="memItemLeft" align="right" valign="top"><a id="a63383cfb7e494dbc402fd4e5388424c3"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>minute</b></td></tr>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhgardenpi_1_1v1_1_1_aggregation_1_1_schedule.html#a63383cfb7e494dbc402fd4e5388424c3">minute</a> = 0</td></tr>
+<tr class="memdesc:a63383cfb7e494dbc402fd4e5388424c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">minute, values allowed 0 - 59 <br /></td></tr>
 <tr class="separator:a63383cfb7e494dbc402fd4e5388424c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a283fec8e56b2343ccf0d8319bfd127cf"><td class="memItemLeft" align="right" valign="top"><a id="a283fec8e56b2343ccf0d8319bfd127cf"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>hour</b></td></tr>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhgardenpi_1_1v1_1_1_aggregation_1_1_schedule.html#a283fec8e56b2343ccf0d8319bfd127cf">hour</a> = 0</td></tr>
+<tr class="memdesc:a283fec8e56b2343ccf0d8319bfd127cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">minute, values allowed 0 - 23 or NOT_SET <br /></td></tr>
 <tr class="separator:a283fec8e56b2343ccf0d8319bfd127cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a108cbca1430d1c0a13f30a7a186c4364"><td class="memItemLeft" align="right" valign="top"><a id="a108cbca1430d1c0a13f30a7a186c4364"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>days</b></td></tr>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhgardenpi_1_1v1_1_1_aggregation_1_1_schedule.html#a108cbca1430d1c0a13f30a7a186c4364">days</a> = 0x7F</td></tr>
+<tr class="memdesc:a108cbca1430d1c0a13f30a7a186c4364"><td class="mdescLeft">&#160;</td><td class="mdescRight">days, values allowed 0x01 - 0x7F or NOT_SET <br /></td></tr>
 <tr class="separator:a108cbca1430d1c0a13f30a7a186c4364"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:a0009f0eb61a8d1863ac89b3429ae1766"><td class="memItemLeft" align="right" valign="top"><a id="a0009f0eb61a8d1863ac89b3429ae1766"></a>
-static constexpr const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>NOT_SET</b> = 0xFF</td></tr>
+static constexpr const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhgardenpi_1_1v1_1_1_aggregation_1_1_schedule.html#a0009f0eb61a8d1863ac89b3429ae1766">NOT_SET</a> = 0xFF</td></tr>
+<tr class="memdesc:a0009f0eb61a8d1863ac89b3429ae1766"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constant for set unused value. <br /></td></tr>
 <tr class="separator:a0009f0eb61a8d1863ac89b3429ae1766"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>scheduling info </p>
+<div class="textblock"><p>scheduling data info </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a5672fb686cec0712244377d4a7e7ce99"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5672fb686cec0712244377d4a7e7ce99">&#9670;&nbsp;</a></span>get()</h2>
@@ -162,10 +166,12 @@ static constexpr const uint8_t&#160;</td><td class="memItemRight" valign="bottom
 <p>Set the scheduling. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">scheduleFormat</td><td></td></tr>
+    <tr><td class="paramname">scheduleFormat</td><td>string format in hh/MM/days example 10/30/127 </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>for set day </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>{Time} </dd></dl>
 
 </div>
 </div>

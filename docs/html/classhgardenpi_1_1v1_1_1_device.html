@@ -88,7 +88,7 @@ Inheritance diagram for hgardenpi::v1::Device:</div>
   <map id="hgardenpi::v1::Device_map" name="hgardenpi::v1::Device_map">
 <area href="classhgardenpi_1_1v1_1_1_loggable.html" title="Abstract class for set LogServcice to obj." alt="hgardenpi::v1::Loggable" shape="rect" coords="0,0,187,24"/>
 <area href="classhgardenpi_1_1v1_1_1_initializable.html" title="Abstract class for objet able to start somethink." alt="hgardenpi::v1::Initializable" shape="rect" coords="197,0,384,24"/>
-<area href="classhgardenpi_1_1v1_1_1_startable.html" title="Abstract class for objet able to start somethink." alt="hgardenpi::v1::Startable" shape="rect" coords="394,0,581,24"/>
+<area href="classhgardenpi_1_1v1_1_1_startable.html" title="Abstract class for start something." alt="hgardenpi::v1::Startable" shape="rect" coords="394,0,581,24"/>
 <area href="classhgardenpi_1_1v1_1_1_object.html" title="Generic class ttat all functionals objects must extend." alt="hgardenpi::v1::Object" shape="rect" coords="591,0,778,24"/>
 <area href="classhgardenpi_1_1v1_1_1_device_concrete.html" title="Factory for management of peripherals devices." alt="hgardenpi::v1::DeviceConcrete" shape="rect" coords="295,112,482,136"/>
   </map>
@@ -99,7 +99,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad2d9b391234f12b142bad44f45323d2e"><td class="memItemLeft" align="right" valign="top">virtual float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_device.html#ad2d9b391234f12b142bad44f45323d2e">getCPUTemperature</a> () const =0</td></tr>
 <tr class="memdesc:ad2d9b391234f12b142bad44f45323d2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get CPU temperature.  <a href="classhgardenpi_1_1v1_1_1_device.html#ad2d9b391234f12b142bad44f45323d2e">More...</a><br /></td></tr>
 <tr class="separator:ad2d9b391234f12b142bad44f45323d2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a919677135fa3b71d2fbdca0876502459"><td class="memItemLeft" align="right" valign="top">virtual DeviceInfo::Ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_device.html#a919677135fa3b71d2fbdca0876502459">getInfo</a> () const =0</td></tr>
+<tr class="memitem:a919677135fa3b71d2fbdca0876502459"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="structhgardenpi_1_1v1_1_1_device_info.html#aa56a9829fa68c4da5303b50e59f16764">DeviceInfo::Ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_device.html#a919677135fa3b71d2fbdca0876502459">getInfo</a> () const =0</td></tr>
 <tr class="memdesc:a919677135fa3b71d2fbdca0876502459"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Raspberry PI info.  <a href="classhgardenpi_1_1v1_1_1_device.html#a919677135fa3b71d2fbdca0876502459">More...</a><br /></td></tr>
 <tr class="separator:a919677135fa3b71d2fbdca0876502459"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee89f3a28e368e684db751ee1ed7e645"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_device.html#aee89f3a28e368e684db751ee1ed7e645">setThreadPool</a> (<a class="el" href="classhgardenpi_1_1v1_1_1_thread_pool.html">ThreadPool</a> *threadPool) noexcept=0</td></tr>
@@ -121,7 +121,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="separator:a58e44eaad8e2c3857ad7f49b6850e1d6 inherit pub_methods_classhgardenpi_1_1v1_1_1_initializable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classhgardenpi_1_1v1_1_1_startable"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classhgardenpi_1_1v1_1_1_startable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classhgardenpi_1_1v1_1_1_startable.html">hgardenpi::v1::Startable</a></td></tr>
 <tr class="memitem:ab9bb5fa4d0b9b64443addc076bd96d88 inherit pub_methods_classhgardenpi_1_1v1_1_1_startable"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_startable.html#ab9bb5fa4d0b9b64443addc076bd96d88">start</a> ()=0</td></tr>
-<tr class="memdesc:ab9bb5fa4d0b9b64443addc076bd96d88 inherit pub_methods_classhgardenpi_1_1v1_1_1_startable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start main look and scheduler.  <a href="classhgardenpi_1_1v1_1_1_startable.html#ab9bb5fa4d0b9b64443addc076bd96d88">More...</a><br /></td></tr>
+<tr class="memdesc:ab9bb5fa4d0b9b64443addc076bd96d88 inherit pub_methods_classhgardenpi_1_1v1_1_1_startable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start a service.  <a href="classhgardenpi_1_1v1_1_1_startable.html#ab9bb5fa4d0b9b64443addc076bd96d88">More...</a><br /></td></tr>
 <tr class="separator:ab9bb5fa4d0b9b64443addc076bd96d88 inherit pub_methods_classhgardenpi_1_1v1_1_1_startable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classhgardenpi_1_1v1_1_1_object"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classhgardenpi_1_1v1_1_1_object')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classhgardenpi_1_1v1_1_1_object.html">hgardenpi::v1::Object</a></td></tr>
 <tr class="memitem:ae4e2a30bbac895dbb9efb643ad8e5600 inherit pub_methods_classhgardenpi_1_1v1_1_1_object"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_object.html#ae4e2a30bbac895dbb9efb643ad8e5600">toString</a> () noexcept=0</td></tr>
@@ -183,7 +183,7 @@ static constexpr const char&#160;</td><td class="memItemRight" valign="bottom"><
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual DeviceInfo::Ptr hgardenpi::v1::Device::getInfo </td>
+          <td class="memname">virtual <a class="el" href="structhgardenpi_1_1v1_1_1_device_info.html#aa56a9829fa68c4da5303b50e59f16764">DeviceInfo::Ptr</a> hgardenpi::v1::Device::getInfo </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
