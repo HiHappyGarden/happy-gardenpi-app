@@ -95,9 +95,14 @@ Inheritance diagram for hgardenpi::v1::Scheduler:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a8ee97df03f26ca2a2f9559cea90de996"><td class="memItemLeft" align="right" valign="top"><a id="a8ee97df03f26ca2a2f9559cea90de996"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>OnScheduleStart</b> = std::function&lt; void(const <a class="el" href="structhgardenpi_1_1v1_1_1_aggregation.html#a28a30bf01d497ea37c2aa9ee4000b792">Aggregation::Ptr</a> &amp;, const <a class="el" href="structhgardenpi_1_1v1_1_1_station.html#af6aa513b2d07432f4921b7f8b7d7c119">Station::Ptr</a> &amp;)&gt;</td></tr>
-<tr class="separator:a8ee97df03f26ca2a2f9559cea90de996"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26270e7b3912d4622104771c658c6a24"><td class="memItemLeft" align="right" valign="top"><a id="a26270e7b3912d4622104771c658c6a24"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler.html#a26270e7b3912d4622104771c658c6a24">OnScheduleStart</a> = std::function&lt; void(const <a class="el" href="structhgardenpi_1_1v1_1_1_station.html#af6aa513b2d07432f4921b7f8b7d7c119">Station::Ptr</a> &amp;)&gt;</td></tr>
+<tr class="memdesc:a26270e7b3912d4622104771c658c6a24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype of callback on schedule start event. <br /></td></tr>
+<tr class="separator:a26270e7b3912d4622104771c658c6a24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad603b5e326d5d0739607bc0e1b9768b3"><td class="memItemLeft" align="right" valign="top"><a id="ad603b5e326d5d0739607bc0e1b9768b3"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler.html#ad603b5e326d5d0739607bc0e1b9768b3">OnScheduleEnd</a> = std::function&lt; void()&gt;</td></tr>
+<tr class="memdesc:ad603b5e326d5d0739607bc0e1b9768b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype of callback on schedule end event. <br /></td></tr>
+<tr class="separator:ad603b5e326d5d0739607bc0e1b9768b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -107,9 +112,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a4c0917d338950b70116ef18f8aa8e024"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0a73e5b58b620caca46d7cd5f2953995"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler.html#a0a73e5b58b620caca46d7cd5f2953995">shot</a> (const <a class="el" href="structhgardenpi_1_1v1_1_1_station.html#af6aa513b2d07432f4921b7f8b7d7c119">Station::Ptr</a> &amp;ptr) const =0</td></tr>
 <tr class="separator:a0a73e5b58b620caca46d7cd5f2953995"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a179d9609db18cba4aed77e4fd00a6b26"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler.html#a179d9609db18cba4aed77e4fd00a6b26">setOnExecute</a> (OnScheduleStart onExecute) noexcept=0</td></tr>
-<tr class="memdesc:a179d9609db18cba4aed77e4fd00a6b26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set callback on scheduled event.  <a href="classhgardenpi_1_1v1_1_1_scheduler.html#a179d9609db18cba4aed77e4fd00a6b26">More...</a><br /></td></tr>
-<tr class="separator:a179d9609db18cba4aed77e4fd00a6b26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7abfed3b88b007c4662c3ba09e1dfacb"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler.html#a7abfed3b88b007c4662c3ba09e1dfacb">setScheduleStart</a> (<a class="el" href="classhgardenpi_1_1v1_1_1_scheduler.html#a26270e7b3912d4622104771c658c6a24">OnScheduleStart</a> onScheduleStart) noexcept=0</td></tr>
+<tr class="memdesc:a7abfed3b88b007c4662c3ba09e1dfacb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set callback on start scheduled event.  <a href="classhgardenpi_1_1v1_1_1_scheduler.html#a7abfed3b88b007c4662c3ba09e1dfacb">More...</a><br /></td></tr>
+<tr class="separator:a7abfed3b88b007c4662c3ba09e1dfacb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c30a13417912116fd6ceaab7a479fa6"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler.html#a7c30a13417912116fd6ceaab7a479fa6">setScheduleEnd</a> (<a class="el" href="classhgardenpi_1_1v1_1_1_scheduler.html#ad603b5e326d5d0739607bc0e1b9768b3">OnScheduleEnd</a> onScheduleEnd) noexcept=0</td></tr>
+<tr class="memdesc:a7c30a13417912116fd6ceaab7a479fa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set callback on end scheduled event.  <a href="classhgardenpi_1_1v1_1_1_scheduler.html#a7c30a13417912116fd6ceaab7a479fa6">More...</a><br /></td></tr>
+<tr class="separator:a7c30a13417912116fd6ceaab7a479fa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classhgardenpi_1_1v1_1_1_startable"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classhgardenpi_1_1v1_1_1_startable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classhgardenpi_1_1v1_1_1_startable.html">hgardenpi::v1::Startable</a></td></tr>
 <tr class="memitem:ab9bb5fa4d0b9b64443addc076bd96d88 inherit pub_methods_classhgardenpi_1_1v1_1_1_startable"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_startable.html#ab9bb5fa4d0b9b64443addc076bd96d88">start</a> ()=0</td></tr>
 <tr class="memdesc:ab9bb5fa4d0b9b64443addc076bd96d88 inherit pub_methods_classhgardenpi_1_1v1_1_1_startable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start a service.  <a href="classhgardenpi_1_1v1_1_1_startable.html#ab9bb5fa4d0b9b64443addc076bd96d88">More...</a><br /></td></tr>
@@ -166,8 +174,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a179d9609db18cba4aed77e4fd00a6b26"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a179d9609db18cba4aed77e4fd00a6b26">&#9670;&nbsp;</a></span>setOnExecute()</h2>
+<a id="a7c30a13417912116fd6ceaab7a479fa6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c30a13417912116fd6ceaab7a479fa6">&#9670;&nbsp;</a></span>setScheduleEnd()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -176,10 +184,10 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void hgardenpi::v1::Scheduler::setOnExecute </td>
+          <td class="memname">virtual void hgardenpi::v1::Scheduler::setScheduleEnd </td>
           <td>(</td>
-          <td class="paramtype">OnScheduleStart&#160;</td>
-          <td class="paramname"><em>onExecute</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler.html#ad603b5e326d5d0739607bc0e1b9768b3">OnScheduleEnd</a>&#160;</td>
+          <td class="paramname"><em>onScheduleEnd</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -190,15 +198,51 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Set callback on scheduled event. </p>
+<p>Set callback on end scheduled event. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">onExecute</td><td>on trig event </td></tr>
+    <tr><td class="paramname">onScheduleEnd</td><td>on start event </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#af4a33a4d5f453cb3954a408755fd8dbb">hgardenpi::v1::SchedulerConcrete</a>.</p>
+<p>Implemented in <a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#a1c695f3dfea42bb2da499f3538f62cda">hgardenpi::v1::SchedulerConcrete</a>.</p>
+
+</div>
+</div>
+<a id="a7abfed3b88b007c4662c3ba09e1dfacb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7abfed3b88b007c4662c3ba09e1dfacb">&#9670;&nbsp;</a></span>setScheduleStart()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void hgardenpi::v1::Scheduler::setScheduleStart </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler.html#a26270e7b3912d4622104771c658c6a24">OnScheduleStart</a>&#160;</td>
+          <td class="paramname"><em>onScheduleStart</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set callback on start scheduled event. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">onScheduleStart</td><td>on start event </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#a8ca69ee498855f17a377f338171fa7c9">hgardenpi::v1::SchedulerConcrete</a>.</p>
 
 </div>
 </div>

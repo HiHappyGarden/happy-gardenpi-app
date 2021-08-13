@@ -42,7 +42,15 @@ namespace hgardenpi
         {
 
         public:
+
+            /**
+             * @brief Prototype of callback on schedule start event
+             */
             using OnScheduleStart = std::function<void(const Station::Ptr &)>;
+
+            /**
+             * @brief Prototype of callback on schedule end event
+             */
             using OnScheduleEnd = std::function<void()>;
 
             virtual ~Scheduler() = default;
@@ -69,12 +77,16 @@ namespace hgardenpi
             virtual void shot(const Station::Ptr &ptr) const = 0;
 
             /**
-             * @brief Set callback on scheduled event
-             * @param onExecute on trig event
+             * @brief Set callback on start scheduled event
+             * @param onScheduleStart on start event
              */
-            virtual void setOnExecute(OnScheduleStart onExecute) noexcept = 0;
+            virtual void setScheduleStart(OnScheduleStart onScheduleStart) noexcept = 0;
 
-
+            /**
+             * @brief Set callback on end scheduled event
+             * @param onScheduleEnd on start event
+             */
+            virtual void setScheduleEnd(OnScheduleEnd onScheduleEnd) noexcept = 0;
         };
 
     }
