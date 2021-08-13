@@ -87,21 +87,21 @@ namespace hgardenpi
             void stop() override;
 
             /**
-             * Insert into scheduler an aggregation of station
+             * @brief Insert into scheduler an aggregation of station
              * @param ptr of aggregation
              * @throw runtime_error when there some problem in aggregation
              */
             void schedule(Aggregation::Ptr &ptr) override;
 
             /**
-             * Shot one time an aggregation of station triggered from user
+             * @brief Shot one time an aggregation of station triggered from user
              * @param ptr of aggregation
              * @throw runtime_error when there some problem in aggregation
              */
             void shot(const Aggregation::Ptr &ptr) const override;
 
             /**
-             * Shot one time an station triggered from user
+             * @brief Shot one time an station triggered from user
              * @param ptr of station
              * @throw runtime_error when there some problem in station
              */
@@ -109,7 +109,6 @@ namespace hgardenpi
 
             /**
              * @brief Return the name of object
-             * 
              * @return std::string name of object
              */
             inline string toString() noexcept override
