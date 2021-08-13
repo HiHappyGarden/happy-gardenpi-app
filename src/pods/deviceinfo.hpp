@@ -34,18 +34,36 @@ namespace hgardenpi
         using std::string;
 
         /**
-         * @brief Data container for HW informations
+         * @brief Data container for HW information
          * 
          */
         struct DeviceInfo final
         {
 
+            /**
+             * @brief shared_ptr of DeviceInfo
+             */
             typedef shared_ptr<DeviceInfo> Ptr;
 
+            /**
+             * @brief information about chip
+             */
             string hardware;
+            /**
+             * @brief board revision
+             */
             string revision;
+            /**
+             * @brief board serial
+             */
             string serial;
+            /**
+             * @brief board model
+             */
             string model;
+            /**
+             * @brief board number of cpu
+             */
             uint cpu;
         };
 

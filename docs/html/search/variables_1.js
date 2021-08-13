@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['end_210',['end',['../structhgardenpi_1_1v1_1_1_aggregation.html#ab1b3de8a4253b683a0257762ec589347',1,'hgardenpi::v1::Aggregation']]]
+  ['cpu_231',['cpu',['../structhgardenpi_1_1v1_1_1_device_info.html#a6701bfbecb27e16f64d4f35f42ce14ba',1,'hgardenpi::v1::DeviceInfo']]]
 ];

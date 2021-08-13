@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['manual_212',['manual',['../structhgardenpi_1_1v1_1_1_aggregation.html#ad3a3c6bc5e696bad70ad98a099d80602',1,'hgardenpi::v1::Aggregation']]]
+  ['end_234',['end',['../structhgardenpi_1_1v1_1_1_aggregation.html#ab1b3de8a4253b683a0257762ec589347',1,'hgardenpi::v1::Aggregation']]]
 ];

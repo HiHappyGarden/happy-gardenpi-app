@@ -46,15 +46,36 @@ namespace hgardenpi
         struct ConfigInfo final : public Object
         {
 
+            /**
+             * @brief shared_ptr of ConfigInfo
+             */
             typedef shared_ptr<ConfigInfo> Ptr;
 
+            /**
+             * @brief where store file lock
+             */
             string fileLock = HGARDENPI_FILE_LOCK_PATH;
 
+            /**
+             * @brief config info about mqtt broker
+             */
             struct
             {
+                /**
+                 * @brief broker address or ip
+                 */
                 string host = HGARDENPI_BROKER_HOST;
+                /**
+                 * @brief broker port
+                 */
                 uint16_t port = HGARDENPI_BROKER_PORT;
+                /**
+                 * @brief broker user name for auth
+                 */
                 string user = HGARDENPI_BROKER_USER;
+                /**
+                 * @brief broker password for auth
+                 */
                 string passwd = HGARDENPI_BROKER_PASSWD;
             } broker;
 
@@ -63,19 +84,29 @@ namespace hgardenpi
              */
             struct Database
             {
+                /**
+                 * @brief where store database file
+                 */
                 string file = HGARDENPI_DB_FILE;
             } database;
 
             /**
              * @brief Return the representation off all data in POD
-             *
              * @return std::string data inn json format
              */
             string toString() noexcept override;
         };
 
+        /**
+         * Convenience operator overload for compatibility whit iostream
+         * @return iostream reference
+         */
         ostream &operator<<(ostream &, ConfigInfo::Ptr const &);
 
+        /**
+         * Convenience operator overload for compatibility whit iostream
+         * @return iostream reference
+         */
         ostream &operator<<(ostream &, ConfigInfo const &);
 
     }

@@ -24,6 +24,7 @@
 
 #include <mutex>
 #include <functional>
+#include <queue>
 
 #include "scheduler.hpp"
 #include "../threadengine.hpp"
@@ -34,9 +35,7 @@ namespace hgardenpi
 {
     inline namespace v1
     {
-        using std::mutex;
-        using std::string;
-        using std::atomic;
+        using namespace std;
 
         /**
          * @brief Scheduler for scheduling action, inside of this run a loop every one second
@@ -46,17 +45,28 @@ namespace hgardenpi
             mutable mutex m;
 
             ThreadPool *threadPool = nullptr;
-
-            OnExecute onExecute;
-
-            Aggregations aggregations{};
             future<void> loopThread;
 
+            OnScheduleStart onExecute;
+
+            Aggregations aggregations{};
+            queue<Station::Ptr> scheduled;
+
+            /**
+             * @brief function executed in loop
+             */
             friend void run();
+
+            /**
+             * @brief Check if execute a station in aggretation
+             * @param now date/time now
+             * @param aggregation aggregation to check
+             */
+            friend void check(const Aggregation::Ptr aggregation);
 
         public:
             explicit SchedulerConcrete(ThreadPool *threadPool);
-            ~SchedulerConcrete() override = default;
+            ~SchedulerConcrete() override;
 
             HGARDENPI_NO_COPY_NO_MOVE(SchedulerConcrete)
 
@@ -107,7 +117,7 @@ namespace hgardenpi
              * @brief Set callback on scheduled event
              * @param onExecute on trig event
              */
-            inline void setOnExecute(OnExecute onExecute) noexcept override
+            inline void setOnExecute(OnScheduleStart onExecute) noexcept override
             {
                 this->onExecute = move(onExecute);
             }

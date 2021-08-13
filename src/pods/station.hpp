@@ -48,6 +48,9 @@ namespace hgardenpi
         struct Station
         {
 
+            /**
+             * @brief shared_ptr of Station
+             */
             typedef shared_ptr<Station> Ptr;
 
             /**
@@ -73,6 +76,9 @@ namespace hgardenpi
 
         };
 
+        /**
+         * @brief List of Station shared_ptr
+         */
         typedef list<Station::Ptr> Stations;
 
     }

@@ -129,7 +129,7 @@ $(function() {
 <div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_singleton.html#afdfc00b438ac0f028a7db89a0886a5f4">   66</a></span>&#160;            <span class="keyword">static</span> T *<a class="code" href="classhgardenpi_1_1v1_1_1_singleton.html#afdfc00b438ac0f028a7db89a0886a5f4">getInstance</a>() noexcept</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            {</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;                call_once(once, []()</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                          { instance.reset(<span class="keyword">new</span> T); });</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                          { instance.reset(<span class="keyword">new</span> (std::nothrow) T); });</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                <span class="keywordflow">return</span> instance.get();</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            }</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
@@ -137,7 +137,7 @@ $(function() {
 <div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_singleton.html#a712f17ad85ffde7d54f740fc5a81e979">   81</a></span>&#160;            <span class="keyword">static</span> T *<a class="code" href="classhgardenpi_1_1v1_1_1_singleton.html#a712f17ad85ffde7d54f740fc5a81e979">getInstance</a>(Args &amp;&amp;...args) noexcept</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            {</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                call_once(once, [&amp;]()</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                          { instance.reset(<span class="keyword">new</span> T(forward&lt;Args&gt;(args)...)); });</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                          { instance.reset(<span class="keyword">new</span> (std::nothrow) T(forward&lt;Args&gt;(args)...)); });</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;                <span class="keywordflow">return</span> instance.get();</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            }</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        };</div>

@@ -69,6 +69,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="classhgardenpi_1_1v1_1_1_scheduler_concrete-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">hgardenpi::v1::SchedulerConcrete Class Reference<span class="mlabels"><span class="mlabel">final</span></span></div>  </div>
@@ -85,47 +86,59 @@ Inheritance diagram for hgardenpi::v1::SchedulerConcrete:</div>
  <div class="center">
   <img src="classhgardenpi_1_1v1_1_1_scheduler_concrete.png" usemap="#hgardenpi::v1::SchedulerConcrete_map" alt=""/>
   <map id="hgardenpi::v1::SchedulerConcrete_map" name="hgardenpi::v1::SchedulerConcrete_map">
-<area href="classhgardenpi_1_1v1_1_1_scheduler.html" title="Scheduler for scheduing acrion, inside of this run a loop every one second." alt="hgardenpi::v1::Scheduler" shape="rect" coords="107,56,312,80"/>
-<area href="classhgardenpi_1_1v1_1_1_startable.html" title="Abstract class for objet able to start somethink." alt="hgardenpi::v1::Startable" shape="rect" coords="0,0,205,24"/>
-<area href="classhgardenpi_1_1v1_1_1_object.html" title="Generic class ttat all functionals objects must extend." alt="hgardenpi::v1::Object" shape="rect" coords="215,0,420,24"/>
+<area href="classhgardenpi_1_1v1_1_1_scheduler.html" title="Scheduler for scheduing acrion, inside of this run a loop every one second." alt="hgardenpi::v1::Scheduler" shape="rect" coords="215,56,420,80"/>
+<area href="classhgardenpi_1_1v1_1_1_startable.html" title="Abstract class for start something." alt="hgardenpi::v1::Startable" shape="rect" coords="0,0,205,24"/>
+<area href="classhgardenpi_1_1v1_1_1_stoppable.html" title="Abstract class for stop something." alt="hgardenpi::v1::Stoppable" shape="rect" coords="215,0,420,24"/>
+<area href="classhgardenpi_1_1v1_1_1_object.html" title="Generic class ttat all functionals objects must extend." alt="hgardenpi::v1::Object" shape="rect" coords="430,0,635,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0437b2a86a192051b0e06ed3b75bfb3f"><td class="memItemLeft" align="right" valign="top"><a id="a0437b2a86a192051b0e06ed3b75bfb3f"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>SchedulerConcrete</b> (const <a class="el" href="classhgardenpi_1_1v1_1_1_thread_pool.html">ThreadPool</a> *threadPool)</td></tr>
-<tr class="separator:a0437b2a86a192051b0e06ed3b75bfb3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad3f06457dd2cc39b17096e135939f472"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#ad3f06457dd2cc39b17096e135939f472">start</a> () override</td></tr>
-<tr class="memdesc:ad3f06457dd2cc39b17096e135939f472"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start main look and scheduler.  <a href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#ad3f06457dd2cc39b17096e135939f472">More...</a><br /></td></tr>
-<tr class="separator:ad3f06457dd2cc39b17096e135939f472"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a11025b3cfadef4fcc3e0d83091234c79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#a11025b3cfadef4fcc3e0d83091234c79">schedule</a> (const Aggregation::Ptr &amp;ptr) override</td></tr>
-<tr class="separator:a11025b3cfadef4fcc3e0d83091234c79"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22d30c1c0644f5bbca8014cae5bc1ecb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#a22d30c1c0644f5bbca8014cae5bc1ecb">remove</a> (const Aggregation::Ptr &amp;ptr)</td></tr>
-<tr class="separator:a22d30c1c0644f5bbca8014cae5bc1ecb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20b1269bfb3376e95886a57746f06600"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#a20b1269bfb3376e95886a57746f06600">shot</a> (const Aggregation::Ptr &amp;ptr) const override</td></tr>
-<tr class="separator:a20b1269bfb3376e95886a57746f06600"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a57d5c40cb5a7f6c141cefef18dd24635"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#a57d5c40cb5a7f6c141cefef18dd24635">shot</a> (const Station::Ptr &amp;ptr) const override</td></tr>
-<tr class="separator:a57d5c40cb5a7f6c141cefef18dd24635"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aded713f8c826800ab44d3f0746383192"><td class="memItemLeft" align="right" valign="top"><a id="aded713f8c826800ab44d3f0746383192"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>SchedulerConcrete</b> (<a class="el" href="classhgardenpi_1_1v1_1_1_thread_pool.html">ThreadPool</a> *threadPool)</td></tr>
+<tr class="separator:aded713f8c826800ab44d3f0746383192"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad538acf2c8bcc59916e4be25d08681a7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#ad538acf2c8bcc59916e4be25d08681a7">start</a> () override</td></tr>
+<tr class="memdesc:ad538acf2c8bcc59916e4be25d08681a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start service.  <a href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#ad538acf2c8bcc59916e4be25d08681a7">More...</a><br /></td></tr>
+<tr class="separator:ad538acf2c8bcc59916e4be25d08681a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3543cc35a588f590c22f8c3ee14fe63"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#ae3543cc35a588f590c22f8c3ee14fe63">stop</a> () override</td></tr>
+<tr class="memdesc:ae3543cc35a588f590c22f8c3ee14fe63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop service.  <a href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#ae3543cc35a588f590c22f8c3ee14fe63">More...</a><br /></td></tr>
+<tr class="separator:ae3543cc35a588f590c22f8c3ee14fe63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0409cc07e241950b4aea74d22b7429cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#a0409cc07e241950b4aea74d22b7429cc">schedule</a> (<a class="el" href="structhgardenpi_1_1v1_1_1_aggregation.html#a28a30bf01d497ea37c2aa9ee4000b792">Aggregation::Ptr</a> &amp;ptr) override</td></tr>
+<tr class="separator:a0409cc07e241950b4aea74d22b7429cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b1fcb6e10a18b84792ac147e6b203fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#a3b1fcb6e10a18b84792ac147e6b203fd">shot</a> (const <a class="el" href="structhgardenpi_1_1v1_1_1_aggregation.html#a28a30bf01d497ea37c2aa9ee4000b792">Aggregation::Ptr</a> &amp;ptr) const override</td></tr>
+<tr class="separator:a3b1fcb6e10a18b84792ac147e6b203fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3c641bcfb823a09cc315f565b8a29b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#ab3c641bcfb823a09cc315f565b8a29b3">shot</a> (const <a class="el" href="structhgardenpi_1_1v1_1_1_station.html#af6aa513b2d07432f4921b7f8b7d7c119">Station::Ptr</a> &amp;ptr) const override</td></tr>
+<tr class="separator:ab3c641bcfb823a09cc315f565b8a29b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab18d5a276fceda7ee956058860bc11cb"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#ab18d5a276fceda7ee956058860bc11cb">toString</a> () noexcept override</td></tr>
 <tr class="memdesc:ab18d5a276fceda7ee956058860bc11cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the name of object.  <a href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#ab18d5a276fceda7ee956058860bc11cb">More...</a><br /></td></tr>
 <tr class="separator:ab18d5a276fceda7ee956058860bc11cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4a33a4d5f453cb3954a408755fd8dbb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#af4a33a4d5f453cb3954a408755fd8dbb">setOnExecute</a> (OnExecute onExecute) noexcept override</td></tr>
+<tr class="memitem:af4a33a4d5f453cb3954a408755fd8dbb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#af4a33a4d5f453cb3954a408755fd8dbb">setOnExecute</a> (OnScheduleStart onExecute) noexcept override</td></tr>
 <tr class="memdesc:af4a33a4d5f453cb3954a408755fd8dbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set callback on scheduled event.  <a href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#af4a33a4d5f453cb3954a408755fd8dbb">More...</a><br /></td></tr>
 <tr class="separator:af4a33a4d5f453cb3954a408755fd8dbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:a13a43e6d814de94978c515cb084873b1"><td class="memItemLeft" align="right" valign="top"><a id="a13a43e6d814de94978c515cb084873b1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#a13a43e6d814de94978c515cb084873b1">run</a> ()</td></tr>
+<tr class="memdesc:a13a43e6d814de94978c515cb084873b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">function executed in loop <br /></td></tr>
+<tr class="separator:a13a43e6d814de94978c515cb084873b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41285320d722bc23e812f40d8b57035b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#a41285320d722bc23e812f40d8b57035b">check</a> (const <a class="el" href="structhgardenpi_1_1v1_1_1_aggregation.html#a28a30bf01d497ea37c2aa9ee4000b792">Aggregation::Ptr</a> aggregation)</td></tr>
+<tr class="memdesc:a41285320d722bc23e812f40d8b57035b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if execute a station in aggretation.  <a href="classhgardenpi_1_1v1_1_1_scheduler_concrete.html#a41285320d722bc23e812f40d8b57035b">More...</a><br /></td></tr>
+<tr class="separator:a41285320d722bc23e812f40d8b57035b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_types_classhgardenpi_1_1v1_1_1_scheduler"><td colspan="2" onclick="javascript:toggleInherit('pub_types_classhgardenpi_1_1v1_1_1_scheduler')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="classhgardenpi_1_1v1_1_1_scheduler.html">hgardenpi::v1::Scheduler</a></td></tr>
 <tr class="memitem:a8ee97df03f26ca2a2f9559cea90de996 inherit pub_types_classhgardenpi_1_1v1_1_1_scheduler"><td class="memItemLeft" align="right" valign="top"><a id="a8ee97df03f26ca2a2f9559cea90de996"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>OnExecute</b> = std::function&lt; void(const Aggregation::Ptr &amp;, const Station::Ptr &amp;)&gt;</td></tr>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>OnScheduleStart</b> = std::function&lt; void(const <a class="el" href="structhgardenpi_1_1v1_1_1_aggregation.html#a28a30bf01d497ea37c2aa9ee4000b792">Aggregation::Ptr</a> &amp;, const <a class="el" href="structhgardenpi_1_1v1_1_1_station.html#af6aa513b2d07432f4921b7f8b7d7c119">Station::Ptr</a> &amp;)&gt;</td></tr>
 <tr class="separator:a8ee97df03f26ca2a2f9559cea90de996 inherit pub_types_classhgardenpi_1_1v1_1_1_scheduler"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classhgardenpi_1_1v1_1_1_scheduler.html" title="Scheduler for scheduing acrion, inside of this run a loop every one second.">Scheduler</a> for scheduling action, inside of this run a loop every one second. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a22d30c1c0644f5bbca8014cae5bc1ecb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a22d30c1c0644f5bbca8014cae5bc1ecb">&#9670;&nbsp;</a></span>remove()</h2>
+<a id="a0409cc07e241950b4aea74d22b7429cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0409cc07e241950b4aea74d22b7429cc">&#9670;&nbsp;</a></span>schedule()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -134,49 +147,9 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>OnExecute</b> = std:
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void SchedulerConcrete::remove </td>
+          <td class="memname">void hgardenpi::v1::SchedulerConcrete::schedule </td>
           <td>(</td>
-          <td class="paramtype">const Aggregation::Ptr &amp;&#160;</td>
-          <td class="paramname"><em>ptr</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Remove scheduling </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">ptr</td><td>of aggregation </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">runtime_error</td><td>when there some problem in aggregation </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_scheduler.html#afa0bfb7f0c33488b894bc08e3a2087b0">hgardenpi::v1::Scheduler</a>.</p>
-
-</div>
-</div>
-<a id="a11025b3cfadef4fcc3e0d83091234c79"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a11025b3cfadef4fcc3e0d83091234c79">&#9670;&nbsp;</a></span>schedule()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SchedulerConcrete::schedule </td>
-          <td>(</td>
-          <td class="paramtype">const Aggregation::Ptr &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="structhgardenpi_1_1v1_1_1_aggregation.html#a28a30bf01d497ea37c2aa9ee4000b792">Aggregation::Ptr</a> &amp;&#160;</td>
           <td class="paramname"><em>ptr</em></td><td>)</td>
           <td></td>
         </tr>
@@ -200,7 +173,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>OnExecute</b> = std:
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_scheduler.html#a4f4f07e74b29bf317528c67c61ba77fb">hgardenpi::v1::Scheduler</a>.</p>
+<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_scheduler.html#a3ba326c375ff021421bdcdfe457c1c5f">hgardenpi::v1::Scheduler</a>.</p>
 
 </div>
 </div>
@@ -216,7 +189,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>OnExecute</b> = std:
         <tr>
           <td class="memname">void hgardenpi::v1::SchedulerConcrete::setOnExecute </td>
           <td>(</td>
-          <td class="paramtype">OnExecute&#160;</td>
+          <td class="paramtype">OnScheduleStart&#160;</td>
           <td class="paramname"><em>onExecute</em></td><td>)</td>
           <td></td>
         </tr>
@@ -240,8 +213,8 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>OnExecute</b> = std:
 
 </div>
 </div>
-<a id="a20b1269bfb3376e95886a57746f06600"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a20b1269bfb3376e95886a57746f06600">&#9670;&nbsp;</a></span>shot() <span class="overload">[1/2]</span></h2>
+<a id="a3b1fcb6e10a18b84792ac147e6b203fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b1fcb6e10a18b84792ac147e6b203fd">&#9670;&nbsp;</a></span>shot() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -250,9 +223,9 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>OnExecute</b> = std:
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void SchedulerConcrete::shot </td>
+          <td class="memname">void hgardenpi::v1::SchedulerConcrete::shot </td>
           <td>(</td>
-          <td class="paramtype">const Aggregation::Ptr &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="structhgardenpi_1_1v1_1_1_aggregation.html#a28a30bf01d497ea37c2aa9ee4000b792">Aggregation::Ptr</a> &amp;&#160;</td>
           <td class="paramname"><em>ptr</em></td><td>)</td>
           <td> const</td>
         </tr>
@@ -280,8 +253,8 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>OnExecute</b> = std:
 
 </div>
 </div>
-<a id="a57d5c40cb5a7f6c141cefef18dd24635"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a57d5c40cb5a7f6c141cefef18dd24635">&#9670;&nbsp;</a></span>shot() <span class="overload">[2/2]</span></h2>
+<a id="ab3c641bcfb823a09cc315f565b8a29b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3c641bcfb823a09cc315f565b8a29b3">&#9670;&nbsp;</a></span>shot() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -290,9 +263,9 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>OnExecute</b> = std:
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void SchedulerConcrete::shot </td>
+          <td class="memname">void hgardenpi::v1::SchedulerConcrete::shot </td>
           <td>(</td>
-          <td class="paramtype">const Station::Ptr &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="structhgardenpi_1_1v1_1_1_station.html#af6aa513b2d07432f4921b7f8b7d7c119">Station::Ptr</a> &amp;&#160;</td>
           <td class="paramname"><em>ptr</em></td><td>)</td>
           <td> const</td>
         </tr>
@@ -320,8 +293,8 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>OnExecute</b> = std:
 
 </div>
 </div>
-<a id="ad3f06457dd2cc39b17096e135939f472"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad3f06457dd2cc39b17096e135939f472">&#9670;&nbsp;</a></span>start()</h2>
+<a id="ad538acf2c8bcc59916e4be25d08681a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad538acf2c8bcc59916e4be25d08681a7">&#9670;&nbsp;</a></span>start()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -330,7 +303,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>OnExecute</b> = std:
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void SchedulerConcrete::start </td>
+          <td class="memname">void hgardenpi::v1::SchedulerConcrete::start </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -343,15 +316,50 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>OnExecute</b> = std:
 </table>
 </div><div class="memdoc">
 
-<p>Start main look and scheduler. </p>
+<p>Start service. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">runtime_error</td><td>when hardware requisites mismatch </td></tr>
+    <tr><td class="paramname">runtime_error</td><td>when something goes wrong </td></tr>
   </table>
   </dd>
 </dl>
 
 <p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_startable.html#ab9bb5fa4d0b9b64443addc076bd96d88">hgardenpi::v1::Startable</a>.</p>
+
+</div>
+</div>
+<a id="ae3543cc35a588f590c22f8c3ee14fe63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae3543cc35a588f590c22f8c3ee14fe63">&#9670;&nbsp;</a></span>stop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hgardenpi::v1::SchedulerConcrete::stop </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Stop service. </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">runtime_error</td><td>when something goes wrong </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_stoppable.html#a76b3ab139ae014d0308154fea754ab62">hgardenpi::v1::Stoppable</a>.</p>
 
 </div>
 </div>
@@ -382,6 +390,42 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>OnExecute</b> = std:
 <dl class="section return"><dt>Returns</dt><dd>std::string name of object </dd></dl>
 
 <p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_object.html#ae4e2a30bbac895dbb9efb643ad8e5600">hgardenpi::v1::Object</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Function Documentation</h2>
+<a id="a41285320d722bc23e812f40d8b57035b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41285320d722bc23e812f40d8b57035b">&#9670;&nbsp;</a></span>check</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void check </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structhgardenpi_1_1v1_1_1_aggregation.html#a28a30bf01d497ea37c2aa9ee4000b792">Aggregation::Ptr</a>&#160;</td>
+          <td class="paramname"><em>aggregation</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Check if execute a station in aggretation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">now</td><td>date/time now </td></tr>
+    <tr><td class="paramname">aggregation</td><td>aggregation to check </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

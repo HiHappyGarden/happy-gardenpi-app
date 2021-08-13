@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['sequential_214',['sequential',['../structhgardenpi_1_1v1_1_1_aggregation.html#ad9d7780a325769129bf627a391334d4f',1,'hgardenpi::v1::Aggregation']]],
-  ['start_215',['start',['../structhgardenpi_1_1v1_1_1_aggregation.html#a8d46f4e7f2fa0eec3c601f8cea942f72',1,'hgardenpi::v1::Aggregation']]],
-  ['stations_216',['stations',['../structhgardenpi_1_1v1_1_1_aggregation.html#ac6b23b920fa0842a86b9b98355029a78',1,'hgardenpi::v1::Aggregation']]],
-  ['status_217',['status',['../structhgardenpi_1_1v1_1_1_aggregation.html#ab2b4a489be99006af877300217676dd4',1,'hgardenpi::v1::Aggregation::status()'],['../structhgardenpi_1_1v1_1_1_station.html#a2e2ed9db2512c23ce306e960d42beacd',1,'hgardenpi::v1::Station::status()']]]
+  ['hardware_237',['hardware',['../structhgardenpi_1_1v1_1_1_device_info.html#abda68e28a75680d677412ed08fc955f9',1,'hgardenpi::v1::DeviceInfo']]],
+  ['host_238',['host',['../structhgardenpi_1_1v1_1_1_config_info.html#aa7ecc5b03cd28a54432ea3e01bbc4dd3',1,'hgardenpi::v1::ConfigInfo']]],
+  ['hour_239',['hour',['../structhgardenpi_1_1v1_1_1_aggregation_1_1_schedule.html#a283fec8e56b2343ccf0d8319bfd127cf',1,'hgardenpi::v1::Aggregation::Schedule']]]
 ];
