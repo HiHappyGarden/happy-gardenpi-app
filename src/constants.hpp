@@ -54,13 +54,13 @@ namespace hgardenpi
             DISPLAY_SHORT_TICK = DISPLAY_TICK / 3,
             DISPLAY_CONTRAST_TICK = DISPLAY_TICK * 3,
             TICK = 200,
-            SCHEDULER_TICK = 60'000
+            SCHEDULER_TICK = 1'000
         };
 
         /**
          * Day of week representation
          */
-        enum class DayOfWeek : uint8_t
+        enum DayOfWeek : uint8_t
         {
             MONDAY    = 0b00000001,
             TUESDAY   = 0b00000010,

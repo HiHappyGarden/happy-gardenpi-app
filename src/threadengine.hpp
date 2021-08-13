@@ -75,13 +75,13 @@ namespace hgardenpi
             auto enqueue(F &&f, Args &&... args)
             -> future<typename result_of<F(Args...)>::type>
             {
-                using return_type = typename result_of<F(Args...)>::type;
+                using ReturnType = typename result_of<F(Args...)>::type;
 
-                auto task = make_shared<packaged_task<return_type()> >(
+                auto task = make_shared<packaged_task<ReturnType()> >(
                         bind(forward<F>(f), forward<Args>(args)...)
                 );
 
-                future<return_type> res = task->get_future();
+                future<ReturnType> res = task->get_future();
                 {
                     unique_lock<mutex> lock(queueMutex);
 
@@ -90,7 +90,9 @@ namespace hgardenpi
                         throw runtime_error("enqueue on stopped ThreadPool");
 
                     tasks.emplace([task]
-                                  { (*task)(); });
+                    {
+                        (*task)();
+                    });
                 }
                 condition.notify_one();
 
@@ -133,31 +135,33 @@ namespace hgardenpi
         /**
          * @brief Sleep a thread for n millis
          * @param millis to sleep
+         * @param conditions add a external conditions for interrupt the loop
          */
-        [[maybe_unused]] void threadSleep(uint64_t millis) noexcept;
+        [[maybe_unused]] void threadSleep(uint64_t millis, bool conditions = true) noexcept;
 
         /**
          * @brief Sleep a thread by constant
          * @param millis to sleep
+         * @param conditions add a external conditions for interrupt the loop, true enable loop
          */
-        [[maybe_unused]] inline void threadSleep(const Time &millis) noexcept
+        [[maybe_unused]] inline void threadSleep(const Time &millis, bool conditions = true) noexcept
         {
-            threadSleep(static_cast<uint64_t>(millis));
+            threadSleep(static_cast<uint64_t>(millis), conditions);
         }
 
         /**
          * @brief Sleep a thread for by constant
          * @param millis to sleep
+         * @param conditions add a external conditions for interrupt the loop, true enable loop
          */
-        [[maybe_unused]] inline void threadSleep(Time &&millis) noexcept
+        [[maybe_unused]] inline void threadSleep(Time &&millis, bool conditions = true) noexcept
         {
-            threadSleep(static_cast<uint64_t>(millis));
+            threadSleep(static_cast<uint64_t>(millis), conditions);
         }
 
         /**
          * @brief Get the pid fot thread child
          * @param exclude exclude some pid
-         * @return vector with list of child pid
          */
         [[maybe_unused]] vector<long> threadGetChildPid(long exclude = -1) noexcept;
 

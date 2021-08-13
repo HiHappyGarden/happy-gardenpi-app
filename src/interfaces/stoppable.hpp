@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2021 Happy GardenPI
+// Copyright (c) $year. Happy GardenPI
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -19,6 +19,12 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+//
+
+//
+// Created by Antonio Salsi on 13/08/21.
+//
+
 
 #pragma once
 
@@ -29,19 +35,19 @@ namespace hgardenpi
     {
 
         /**
-         * @brief Abstract class for start something
-         * 
+         * @brief Abstract class for stop something
+         *
          */
-        class Startable
+        class Stoppable
         {
         public:
-            virtual ~Startable() = default;
+            virtual ~Stoppable() = default;
 
             /**
-             * @brief Start a service
+             * @brief Stop a service
              * @exception runtime_error when something goes wrong
              */
-            virtual void start() = 0;
+            virtual void stop() = 0;
         };
 
     }

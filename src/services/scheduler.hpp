@@ -24,6 +24,7 @@
 
 
 #include "../interfaces/startable.hpp"
+#include "../interfaces/stoppable.hpp"
 #include "../interfaces/object.hpp"
 #include "../pods/aggregation.hpp"
 #include "../constants.hpp"
@@ -37,7 +38,7 @@ namespace hgardenpi
          * @brief Scheduler for scheduing acrion, inside of this run a loop every one second
          * 
          */
-        class Scheduler : public Startable, public Object
+        class Scheduler : public Startable, public Stoppable, public Object
         {
 
         public:
@@ -51,13 +52,6 @@ namespace hgardenpi
              * @throw runtime_error when there some problem in aggregation
              */
             virtual void schedule(Aggregation::Ptr &ptr) = 0;
-
-//            /**
-//             * Remove scheduling
-//             * @param ptr of aggregation
-//             * @throw runtime_error when there some problem in aggregation
-//             */
-//            virtual void remove(const Aggregation::Ptr &ptr) = 0;
 
             /**
              * Shot one time an aggregation of station triggered from user

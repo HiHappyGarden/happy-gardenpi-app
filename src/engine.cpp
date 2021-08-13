@@ -184,8 +184,8 @@ namespace hgardenpi
             system->getScheduler()->setOnExecute(&onSchedulerEvent);
 
             //start all
-            system->start();
-            device->start();
+            device->start(); //keep this position
+            system->start(); //keep this position
             mqttClient->start();
 
             //write stat service on log

@@ -108,9 +108,9 @@ namespace hgardenpi
             return result;
         }
 
-        void threadSleep(uint64_t millis) noexcept //keep not inline
+        void threadSleep(uint64_t millis, bool conditions) noexcept //keep not inline
         {
-            for (uint64_t i = 0; i < millis && wiringPiRunningThread; i += TICK)
+            for (uint64_t i = 0; i <= millis && wiringPiRunningThread && conditions; i += TICK)
             {
                 this_thread::sleep_for(chrono::milliseconds(TICK));
             }

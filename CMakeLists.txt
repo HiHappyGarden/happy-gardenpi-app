@@ -75,6 +75,7 @@ add_executable(hgardenpi
         src/interfaces/object.hpp
         src/interfaces/singleton.hpp
         src/interfaces/startable.hpp
+        src/interfaces/stoppable.hpp
         src/daos/aggregationdao.cpp
         src/daos/aggregationdao.hpp
         src/daos/dao.hpp

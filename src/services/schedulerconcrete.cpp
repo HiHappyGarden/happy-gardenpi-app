@@ -22,57 +22,142 @@
 
 #include "schedulerconcrete.hpp"
 
-#include "../threadengine.hpp"
+#include <iostream>
 
-using hgardenpi::v1::SchedulerConcrete;
-
-SchedulerConcrete::SchedulerConcrete(ThreadPool *threadPool) : threadPool(threadPool)
+namespace hgardenpi
 {
-
-}
-
-
-void SchedulerConcrete::start()
-{
-    threadPool->enqueue([]
+    inline namespace v1
     {
-        while (wiringPiRunningThread)
-        {
 
-            threadSleep(Time::SCHEDULER_TICK);
-        }
-    });
-}
+        static SchedulerConcrete *self = nullptr;
 
-void SchedulerConcrete::schedule(Aggregation::Ptr &ptr)
-{
-    lock_guard<mutex> lg(m);
-    for (auto &&it : aggregations)
-    {
-        if(it->id == ptr->id)
+        static bool loopRun = false;
+
+        /**
+         * @brief Check if execute a station in aggretation
+         * @param now date/time now
+         * @param aggregation aggregation to check
+         */
+        static void check(const tm* now, const Aggregation::Ptr aggregation);
+
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "LoopDoesntUseConditionVariableInspection"
+        void run()
         {
-            aggregations.remove(it);
-            break;
+            self->m.lock();
+            Aggregations aggregations(self->aggregations);
+            self->m.unlock();
+            while (wiringPiRunningThread && loopRun)
+            {
+
+                time_t t = time(0);   // get time now
+                tm* now = localtime(&t);
+
+                cout << "now wday:" << to_string(now->tm_wday) << " now hours:" << to_string(now->tm_hour) << " minutes:" << to_string(now->tm_min) << " second:" << to_string(now->tm_sec) << endl;
+
+                for (auto &&aggregation : aggregations)
+                {
+                    lock_guard<mutex>(self->m);
+
+                    auto &schedule = aggregation->schedule;
+
+                    if (now->tm_hour == schedule.hour && now->tm_min == schedule.minute)
+                    {
+                        if (schedule.days & MONDAY && now->tm_wday == 1)
+                        {
+                            check(now, aggregation);
+                        }
+                        else if (schedule.days & TUESDAY && now->tm_wday == 2)
+                        {
+                            check(now, aggregation);
+                        }
+                        else if (schedule.days & WEDNESDAY && now->tm_wday == 3)
+                        {
+                            check(now, aggregation);
+                        }
+                        else if (schedule.days & THURSDAY && now->tm_wday == 4)
+                        {
+                            check(now, aggregation);
+                        }
+                        else if (schedule.days & FRIDAY && now->tm_wday == 5)
+                        {
+                            check(now, aggregation);
+                        }
+                        else if (schedule.days & SATURDAY && now->tm_wday == 6)
+                        {
+                            check(now, aggregation);
+                        }
+                        else if (schedule.days & SUNDAY && now->tm_wday == 7)
+                        {
+                            check(now, aggregation);
+                        }
+                    }
+                }
+
+                threadSleep(Time::SCHEDULER_TICK, loopRun);
+
+            }
         }
+#pragma clang diagnostic pop
+
+
+        static void check(const tm* now, const Aggregation::Ptr aggregation)
+        {
+            for(auto &&station : aggregation->stations)
+            {
+
+            }
+        }
+
+        SchedulerConcrete::SchedulerConcrete(ThreadPool *threadPool) : threadPool(threadPool)
+        {
+            self = this;
+        }
+
+
+        void SchedulerConcrete::start()
+        {
+            loopRun = true;
+            loopThread =  move(threadPool->enqueue(&run));
+
+        }
+
+
+        void SchedulerConcrete::stop()
+        {
+            lock_guard<mutex> lg(m);
+            loopRun = false;
+            aggregations.clear();
+        }
+
+
+        void SchedulerConcrete::schedule(Aggregation::Ptr &ptr)
+        {
+            lock_guard<mutex> lg(m);
+            for (auto &&it : aggregations)
+            {
+                if(it->id == ptr->id)
+                {
+                    aggregations.remove(it);
+                    break;
+                }
+            }
+            aggregations.push_back(ptr);
+        }
+
+
+        void SchedulerConcrete::shot(const Aggregation::Ptr &ptr) const
+        {
+            lock_guard<mutex> lg(m);
+        }
+
+
+        void SchedulerConcrete::shot(const Station::Ptr &ptr) const
+        {
+            lock_guard<mutex> lg(m);
+        }
+
     }
-    aggregations.push_back(ptr);
-}
-
-//void SchedulerConcrete::remove(const Aggregation::Ptr &ptr)
-//{
-//    lock_guard<mutex> lg(m);
-//}
-
-
-void SchedulerConcrete::shot(const Aggregation::Ptr &ptr) const
-{
-    lock_guard<mutex> lg(m);
-}
-
-
-void SchedulerConcrete::shot(const Station::Ptr &ptr) const
-{
-    lock_guard<mutex> lg(m);
 }
 
 
