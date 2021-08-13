@@ -50,6 +50,10 @@ namespace hgardenpi
             OnExecute onExecute;
 
             Aggregations aggregations{};
+            future<void> loopThread;
+
+            friend void run();
+
         public:
             explicit SchedulerConcrete(ThreadPool *threadPool);
             ~SchedulerConcrete() override = default;
@@ -57,10 +61,16 @@ namespace hgardenpi
             HGARDENPI_NO_COPY_NO_MOVE(SchedulerConcrete)
 
             /**
-             * @brief Start main look and scheduler
-             * @exception runtime_error when hardware requisites mismatch
+             * @brief Start service
+             * @exception runtime_error when something goes wrong
              */
             void start() override;
+
+            /**
+             * @brief Stop service
+             * @exception runtime_error when something goes wrong
+             */
+            void stop() override;
 
             /**
              * Insert into scheduler an aggregation of station
@@ -68,13 +78,6 @@ namespace hgardenpi
              * @throw runtime_error when there some problem in aggregation
              */
             void schedule(Aggregation::Ptr &ptr) override;
-
-//            /**
-//             * Remove scheduling
-//             * @param ptr of aggregation
-//             * @throw runtime_error when there some problem in aggregation
-//             */
-//            void remove(const Aggregation::Ptr &ptr) override;
 
             /**
              * Shot one time an aggregation of station triggered from user
