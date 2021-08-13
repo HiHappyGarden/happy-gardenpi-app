@@ -58,7 +58,7 @@ namespace hgardenpi
             mosq = mosquitto_new(ss.str().c_str(), true, nullptr);
             if (!mosq)
             {
-                HGARDENPI_ERROR_LOG_AMD_THROW("no memory available")
+                throw runtime_error("no memory available");
             }
         }
 
@@ -78,7 +78,7 @@ namespace hgardenpi
         {
             if (!initalizated)
             {
-                HGARDENPI_ERROR_LOG_AMD_THROW("MQTTClientMosquitto not initialized")
+                throw runtime_error("MQTTClientMosquitto not initialized");
             }
 
             //check il moquitto client is allocated
@@ -95,6 +95,8 @@ namespace hgardenpi
                         string err("mosquitto client connection error: ");
                         err.append(mosquitto_strerror(result));
                         cerr << err << endl;
+
+                        //keep here macro HGARDENPI_ERROR_LOG_AMD_THROW
                         HGARDENPI_ERROR_LOG_AMD_THROW(err.c_str())
                     }
                 });
@@ -103,7 +105,7 @@ namespace hgardenpi
                 * Subscription callback
                 * call when the message will send successfully to broker
                 */
-                mosquitto_message_callback_set(mosq, [](mosquitto *mosq, void *obj, const mosquitto_message *message)
+                mosquitto_message_callback_set(mosq, [](mosquitto *, void *, const mosquitto_message *message)
                 {
                     hgardenpi::v1::onMessageCallback((uint8_t *)message->payload);
                 });
@@ -115,7 +117,7 @@ namespace hgardenpi
                 {
                     string err("set user and password: ");
                     err.append(mosquitto_strerror(rc));
-                    HGARDENPI_ERROR_LOG_AMD_THROW(err.c_str())
+                    throw runtime_error(err.c_str());
                 }
 
                 //set protocol version
@@ -128,7 +130,7 @@ namespace hgardenpi
                 {
                     string err("connection: ");
                     err.append(mosquitto_strerror(rc));
-                    HGARDENPI_ERROR_LOG_AMD_THROW(err.c_str())
+                    throw runtime_error(err.c_str());
                 }
 
                 logService->write(LOG_INFO, "broker %s: %s", "topic", topic.c_str());
@@ -160,8 +162,7 @@ namespace hgardenpi
             //initialize mosquittopp
             if (mosquitto_lib_init() != MOSQ_ERR_SUCCESS)
             {
-                HGARDENPI_ERROR_LOG_AMD_THROW("mosquitto_lib_init() error")
-                initalizated = true;
+                throw runtime_error("mosquitto_lib_init() error");
             }
             initalizated = true;
         }

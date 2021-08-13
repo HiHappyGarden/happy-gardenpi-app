@@ -72,7 +72,7 @@ namespace hgardenpi
             ConfigService *config = new (nothrow) ConfigServiceConcrete(HGARDENPI_FILE_CONFIG);
             if (!config)
             {
-                throw runtime_error(_("no memory for config"));
+                throw runtime_error("no memory for config");
             }
 
             //read config
@@ -82,21 +82,21 @@ namespace hgardenpi
             //if config info is not initialized the system cannot run
             if (!configInfo)
             {
-                throw runtime_error(_("system non initialized"));
+                throw runtime_error("system non initialized");
             }
 
             //initialize log service
             logService = new (nothrow) LogServiceConcrete;
             if (!logService)
             {
-                throw runtime_error(_("no memory for lockService"));
+                throw runtime_error("no memory for lockService");
             }
 
             //initialize lock service
             lockService = new (nothrow) LockServiceConcrete(configInfo);
             if (!lockService)
             {
-                throw runtime_error(_("no memory for lockService"));
+                throw runtime_error("no memory for lockService");
             }
 
             //get Happy GardenPI pid
@@ -125,7 +125,7 @@ namespace hgardenpi
         {
             threadPool = new (nothrow) ThreadPool(threadNumber -1 < 1 ? 1 : threadNumber - 1);
             if (!threadPool) {
-                throw runtime_error(_("no memory for threadPool"));
+                throw runtime_error("no memory for threadPool");
             }
         }
 
@@ -138,7 +138,7 @@ namespace hgardenpi
             scheduler = new (nothrow) SchedulerConcrete(threadPool);
             if (!scheduler)
             {
-                throw runtime_error(_("no memory for scheduler"));
+                throw runtime_error("no memory for scheduler");
             }
         }
 
