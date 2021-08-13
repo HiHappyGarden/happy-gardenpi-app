@@ -39,11 +39,11 @@ namespace hgardenpi
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "LoopDoesntUseConditionVariableInspection"
-        void run()
+        void run(Aggregations &ref)
         {
             self->m.lock();
-            Aggregations aggregations(self->aggregations);
-            self->aggregations.clear();
+            queue aggregations(ref);
+            ref.clear();
             self->m.unlock();
             while (wiringPiRunningThread && loopRun)
             {
@@ -65,8 +65,9 @@ namespace hgardenpi
                     tm* now = localtime(&t);
 #endif
 
-                    for (auto &&aggregation : aggregations)
+                    while (!ref.empty())
                     {
+                        auto &&aggregation = ref.front();
                         auto &schedule = aggregation->schedule;
 
                         if (now->tm_hour == schedule.hour && now->tm_min == schedule.minute)
@@ -100,15 +101,33 @@ namespace hgardenpi
                                 check(aggregation);
                             }
                         }
+
+                        aggregations.pop();
                     }
-                    aggregations.clear();
 
 #if HGARDENPI_TEST > 0
                     //test
                     delete now;
+//                    self->aggregations.clear();
 #endif
 
-                    //todo: code for trig event
+                    //cicle all scheduled event
+                    {
+                        unique_lock<mutex> ul(self->m);
+
+                        while (self->scheduled.empty())
+                        {
+                            auto &&station = self->scheduled.front();
+
+                            self->onScheduleStart(station);
+
+                            threadSleep(station->wateringTime * 1'00);
+
+                            self->onScheduleEnd();
+
+                            self->scheduled.pop();
+                        }
+                    }
 
                 }
 
@@ -147,7 +166,7 @@ namespace hgardenpi
         void SchedulerConcrete::start()
         {
             loopRun = true;
-            loopThread =  move(threadPool->enqueue(&run));
+            loopThread =  move(threadPool->enqueue(&run, aggregations));
 
         }
 
@@ -158,8 +177,7 @@ namespace hgardenpi
             loopRun = false;
             aggregations.clear();
 
-            queue<Station::Ptr> empty;
-            scheduled.swap(empty);
+            scheduled = queue<Station::Ptr>();
         }
 
 
