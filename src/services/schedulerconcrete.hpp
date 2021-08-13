@@ -56,7 +56,7 @@ namespace hgardenpi
             /**
              * @brief function executed in loop
              */
-            friend void run();
+            friend void run(Aggregations &ref);
 
             /**
              * @brief Check if execute a station in aggretation
