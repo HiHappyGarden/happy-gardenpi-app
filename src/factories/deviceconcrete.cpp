@@ -34,6 +34,7 @@ using namespace std;
 #include "../threadengine.hpp"
 #include "../components/lcd1602.hpp"
 #include "../components/buttonconcrete.hpp"
+#include "../components/relaymodule4channel.hpp"
 
 
 namespace hgardenpi
@@ -48,6 +49,16 @@ namespace hgardenpi
             {
                 delete display;
                 display = nullptr;
+            }
+            if (button)
+            {
+                delete button;
+                button = nullptr;
+            }
+            if (relayModule)
+            {
+                delete relayModule;
+                relayModule = nullptr;
             }
         }
 
@@ -77,8 +88,13 @@ namespace hgardenpi
             //initialize WiringPI
             wiringPiSetup();
 
-            display = new(nothrow) LCD1602(LCD1602::LCD_RS, LCD1602::LCD_E, LCD1602::LCD_D4, LCD1602::LCD_D5,
-                                                LCD1602::LCD_D6, LCD1602::LCD_D7, LCD1602::LCD_CONTRAST);
+            display = new(nothrow) LCD1602(LCD1602::LCD_RS,
+                                           LCD1602::LCD_E,
+                                           LCD1602::LCD_D4,
+                                           LCD1602::LCD_D5,
+                                                LCD1602::LCD_D6,
+                                                LCD1602::LCD_D7,
+                                                LCD1602::LCD_CONTRAST);
             if (!display)
             {
                 throw runtime_error("no memory for display");
@@ -86,6 +102,15 @@ namespace hgardenpi
 
             button = new(nothrow) ButtonConcrete(ButtonConcrete::PIN);
             if (!button)
+            {
+                throw runtime_error("no memory for button");
+            }
+
+            relayModule = new(nothrow) RelayModule4Channel(RelayModule4Channel::IN1,
+                                                           RelayModule4Channel::IN2,
+                                                           RelayModule4Channel::IN3,
+                                                           RelayModule4Channel::IN4);
+            if (!relayModule)
             {
                 throw runtime_error("no memory for button");
             }

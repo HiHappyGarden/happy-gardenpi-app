@@ -27,6 +27,8 @@
 #include "device.hpp"
 #include "../interfaces/object.hpp"
 #include "../components/display.hpp"
+#include "../components/button.hpp"
+#include "../components/relaymodule.hpp"
 
 namespace hgardenpi
 {
@@ -48,6 +50,7 @@ namespace hgardenpi
 
             Display *display = nullptr;
             Button *button = nullptr;
+            const RelayModule *relayModule = nullptr;
 
         public:
             DeviceConcrete() = default;
@@ -113,6 +116,17 @@ namespace hgardenpi
             inline void setOnButtonClick(Button::OnClick onClick) noexcept override
             {
                 button->setOnClick(std::move(onClick));
+            }
+
+
+            /**
+             * @brief Set status relay
+             * @param ptr Status pointer for select the right relay
+             * @param status 1 close, 0 open
+             */
+            inline void setRelay(const Station::Ptr &ptr, int status) const noexcept override
+            {
+                relayModule->setRelay(ptr, status);
             }
 
             /**

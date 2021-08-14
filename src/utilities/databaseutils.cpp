@@ -39,6 +39,9 @@ namespace hgardenpi
     inline namespace v1
     {
 
+        /**
+         * @brief Creation database queries
+         */
         static const char *dbSql[] = {
                 "CREATE TABLE `metadata` (`version` INTEGER NOT NULL DEFAULT 0, `wifiConfigured` INTEGER NOT NULL DEFAULT 0);",
                 "CREATE TABLE \"aggregations\" (\n"
@@ -56,6 +59,7 @@ namespace hgardenpi
                 "\t\"id\"\tINTEGER NOT NULL UNIQUE,\n"
                 "\t\"name\"\tTEXT NOT NULL,\n"
                 "\t\"description\"\tTEXT,\n"
+                "\t\"relay_number\"\tINTEGER,\n"
                 "\t\"watering_time\"\tINTEGER,\n"
                 "\t\"status\"\tINTEGER DEFAULT 1,\n"
                 "\t\"id_aggregation\"\tINTEGER,\n"
@@ -66,10 +70,10 @@ namespace hgardenpi
 #if HGARDENPI_TEST > 0
                 //test
                 "INSERT INTO aggregations VALUES (1, \"Test station\", 1, \"10/30/127\",  \"2021/01/01\", \"2021/12/31\", 1, 1);",
-                "INSERT INTO stations  VALUES (1, \"Station 1\", \"Giardino nord\", 40, 1, 1);",
-                "INSERT INTO stations  VALUES (2, \"Station 2\", \"Giardino sud\", 15, 1, 1);",
-                "INSERT INTO stations  VALUES (3, \"Station 3\", \"Giardino est\", 30, 1, 1);",
-                "INSERT INTO stations  VALUES (4, \"Station 4\", \"Giardino ovest\", 10, 1, 1);",
+                "INSERT INTO stations  VALUES (1, \"Station 1\", \"Giardino nord\", 6, 40, 1, 1);",
+                "INSERT INTO stations  VALUES (2, \"Station 2\", \"Giardino sud\", 10, 15, 1, 1);",
+                "INSERT INTO stations  VALUES (3, \"Station 3\", \"Giardino est\", 11, 30, 1, 1);",
+                "INSERT INTO stations  VALUES (4, \"Station 4\", \"Giardino ovest\", 31, 10, 1, 1);",
 #endif
                 nullptr
         };

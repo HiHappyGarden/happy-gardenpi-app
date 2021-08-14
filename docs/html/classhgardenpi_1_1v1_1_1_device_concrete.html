@@ -85,10 +85,11 @@ Inheritance diagram for hgardenpi::v1::DeviceConcrete:</div>
  <div class="center">
   <img src="classhgardenpi_1_1v1_1_1_device_concrete.png" usemap="#hgardenpi::v1::DeviceConcrete_map" alt=""/>
   <map id="hgardenpi::v1::DeviceConcrete_map" name="hgardenpi::v1::DeviceConcrete_map">
-<area href="classhgardenpi_1_1v1_1_1_device.html" title="Factory for management of peripherals devices." alt="hgardenpi::v1::Device" shape="rect" coords="295,56,482,80"/>
-<area href="classhgardenpi_1_1v1_1_1_loggable.html" title="Abstract class for set LogServcice to obj." alt="hgardenpi::v1::Loggable" shape="rect" coords="0,0,187,24"/>
-<area href="classhgardenpi_1_1v1_1_1_initializable.html" title="Abstract class for objet able to start somethink." alt="hgardenpi::v1::Initializable" shape="rect" coords="197,0,384,24"/>
-<area href="classhgardenpi_1_1v1_1_1_startable.html" title="Abstract class for start something." alt="hgardenpi::v1::Startable" shape="rect" coords="394,0,581,24"/>
+<area href="classhgardenpi_1_1v1_1_1_device.html" title="Factory for management of peripherals devices." alt="hgardenpi::v1::Device" shape="rect" coords="295,112,482,136"/>
+<area href="classhgardenpi_1_1v1_1_1_loggable.html" title="Abstract class for set LogServcice to obj." alt="hgardenpi::v1::Loggable" shape="rect" coords="0,56,187,80"/>
+<area href="classhgardenpi_1_1v1_1_1_initializable.html" title="Abstract class for objet able to start somethink." alt="hgardenpi::v1::Initializable" shape="rect" coords="197,56,384,80"/>
+<area href="classhgardenpi_1_1v1_1_1_startable.html" title="Abstract class for start something." alt="hgardenpi::v1::Startable" shape="rect" coords="394,56,581,80"/>
+<area href="classhgardenpi_1_1v1_1_1_relay_module.html" title="Abstract relay module." alt="hgardenpi::v1::RelayModule" shape="rect" coords="591,56,778,80"/>
 <area href="classhgardenpi_1_1v1_1_1_object.html" title="Generic class ttat all functionals objects must extend." alt="hgardenpi::v1::Object" shape="rect" coords="591,0,778,24"/>
   </map>
 </div></div>
@@ -119,6 +120,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:aa0be9439279ca1253a29584d1e422acc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_device_concrete.html#aa0be9439279ca1253a29584d1e422acc">setOnButtonClick</a> (<a class="el" href="classhgardenpi_1_1v1_1_1_button.html#a61236750ff6f20c713aca8b7252c519e">Button::OnClick</a> onClick) noexcept override</td></tr>
 <tr class="memdesc:aa0be9439279ca1253a29584d1e422acc"><td class="mdescLeft">&#160;</td><td class="mdescRight">set callback triggered whet button willi be pressed or released  <a href="classhgardenpi_1_1v1_1_1_device_concrete.html#aa0be9439279ca1253a29584d1e422acc">More...</a><br /></td></tr>
 <tr class="separator:aa0be9439279ca1253a29584d1e422acc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74f466cbcc394a26d942952727dea1e1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_device_concrete.html#a74f466cbcc394a26d942952727dea1e1">setRelay</a> (const <a class="el" href="structhgardenpi_1_1v1_1_1_station.html#af6aa513b2d07432f4921b7f8b7d7c119">Station::Ptr</a> &amp;ptr, int status) const noexcept override</td></tr>
+<tr class="memdesc:a74f466cbcc394a26d942952727dea1e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set status relay.  <a href="classhgardenpi_1_1v1_1_1_device_concrete.html#a74f466cbcc394a26d942952727dea1e1">More...</a><br /></td></tr>
+<tr class="separator:a74f466cbcc394a26d942952727dea1e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4a18f85b697b78270cf0697428e545c7"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhgardenpi_1_1v1_1_1_device_concrete.html#a4a18f85b697b78270cf0697428e545c7">toString</a> () noexcept override</td></tr>
 <tr class="memdesc:a4a18f85b697b78270cf0697428e545c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the name of object.  <a href="classhgardenpi_1_1v1_1_1_device_concrete.html#a4a18f85b697b78270cf0697428e545c7">More...</a><br /></td></tr>
 <tr class="separator:a4a18f85b697b78270cf0697428e545c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -320,6 +324,53 @@ static constexpr const char&#160;</td><td class="memItemRight" valign="bottom"><
 </dl>
 
 <p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_device.html#a60285a5cf214f23614bf6b652c1376e4">hgardenpi::v1::Device</a>.</p>
+
+</div>
+</div>
+<a id="a74f466cbcc394a26d942952727dea1e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74f466cbcc394a26d942952727dea1e1">&#9670;&nbsp;</a></span>setRelay()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hgardenpi::v1::DeviceConcrete::setRelay </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structhgardenpi_1_1v1_1_1_station.html#af6aa513b2d07432f4921b7f8b7d7c119">Station::Ptr</a> &amp;&#160;</td>
+          <td class="paramname"><em>ptr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>status</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set status relay. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ptr</td><td>Status pointer for select the right relay </td></tr>
+    <tr><td class="paramname">status</td><td>1 close, 0 open </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classhgardenpi_1_1v1_1_1_relay_module.html#ae9caa8c43e2358eba038dce296afe9d5">hgardenpi::v1::RelayModule</a>.</p>
 
 </div>
 </div>

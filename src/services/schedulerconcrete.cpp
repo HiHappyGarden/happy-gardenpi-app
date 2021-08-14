@@ -39,12 +39,8 @@ namespace hgardenpi
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "LoopDoesntUseConditionVariableInspection"
-        void run(Aggregations &ref)
+        void run()
         {
-            self->m.lock();
-            queue aggregations(ref);
-            ref.clear();
-            self->m.unlock();
             while (wiringPiRunningThread && loopRun)
             {
 
@@ -65,9 +61,9 @@ namespace hgardenpi
                     tm* now = localtime(&t);
 #endif
 
-                    while (!ref.empty())
+                    while (!self->scheduledAggregations.empty())
                     {
-                        auto &&aggregation = ref.front();
+                        auto &&aggregation = self->scheduledAggregations.front();
                         auto &schedule = aggregation->schedule;
 
                         if (now->tm_hour == schedule.hour && now->tm_min == schedule.minute)
@@ -101,9 +97,9 @@ namespace hgardenpi
                                 check(aggregation);
                             }
                         }
-
-                        aggregations.pop();
+                        self->scheduledAggregations.pop();
                     }
+                    self->scheduledAggregations = queue<Aggregation::Ptr>();
 
 #if HGARDENPI_TEST > 0
                     //test
@@ -111,13 +107,13 @@ namespace hgardenpi
 //                    self->aggregations.clear();
 #endif
 
-                    //cicle all scheduled event
+                    //cicle all scheduledStations event
                     {
                         unique_lock<mutex> ul(self->m);
 
-                        while (self->scheduled.empty())
+                        while (!self->scheduledStations.empty())
                         {
-                            auto &&station = self->scheduled.front();
+                            auto &&station = self->scheduledStations.front();
 
                             self->onScheduleStart(station);
 
@@ -125,7 +121,7 @@ namespace hgardenpi
 
                             self->onScheduleEnd();
 
-                            self->scheduled.pop();
+                            self->scheduledStations.pop();
                         }
                     }
 
@@ -144,7 +140,7 @@ namespace hgardenpi
         {
             for(auto &&station : aggregation->stations)
             {
-                self->scheduled.push(station);
+                self->scheduledStations.push(station);
                 cout << "station:" << to_string(station->id) << endl;
             }
         }
@@ -162,11 +158,23 @@ namespace hgardenpi
             }
         }
 
+        void SchedulerConcrete::initialize()
+        {
+            if (scheduledAggregations.empty())
+            {
+                self->m.lock();
+                for (auto &&it : aggregations)
+                {
+                    scheduledAggregations.push(it);
+                }
+                self->m.unlock();
+            }
+        }
 
         void SchedulerConcrete::start()
         {
             loopRun = true;
-            loopThread =  move(threadPool->enqueue(&run, aggregations));
+            loopThread =  move(threadPool->enqueue(&run));
 
         }
 
@@ -177,7 +185,7 @@ namespace hgardenpi
             loopRun = false;
             aggregations.clear();
 
-            scheduled = queue<Station::Ptr>();
+            scheduledStations = queue<Station::Ptr>();
         }
 
 

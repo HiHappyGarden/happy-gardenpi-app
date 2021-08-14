@@ -48,12 +48,13 @@ void StationDAO::insert(const Station::Ptr &ptr) const
 
     Transaction transaction(database);
 
-    Statement query(database, "INSERT INTO stations (name, description, watering_time, status) VALUES (?, ?, ?, ?)");
+    Statement query(database, "INSERT INTO stations (name, description, relay_number, watering_time, status) VALUES (?, ?, ?, ?)");
 
     query.bind(1, ptr->name);
     query.bind(2, ptr->description);
-    query.bind(3, ptr->wateringTime);
-    query.bind(4, static_cast<int>(ptr->status));
+    query.bind(3, ptr->relayNumber);
+    query.bind(4, ptr->wateringTime);
+    query.bind(5, static_cast<int>(ptr->status));
 
     query.executeStep();
 
@@ -66,13 +67,14 @@ void StationDAO::update(const Station::Ptr &ptr) const
 
     Transaction transaction(database);
 
-    Statement query(database, "UPDATE aggregations SET name = ?, description = ? status = ? WHERE id = ?");
+    Statement query(database, "UPDATE aggregations SET name = ?, description = ?, relay_number = ?, watering_time = ?, status = ? WHERE id = ?");
 
     query.bind(1, ptr->name);
     query.bind(2, ptr->description);
-    query.bind(3, ptr->wateringTime);
-    query.bind(4, static_cast<uint8_t>(ptr->status));
-    query.bind(5, ptr->id);
+    query.bind(3, ptr->relayNumber);
+    query.bind(4, ptr->wateringTime);
+    query.bind(5, static_cast<int>(ptr->status));
+    query.bind(6, ptr->id);
 
     query.executeStep();
 

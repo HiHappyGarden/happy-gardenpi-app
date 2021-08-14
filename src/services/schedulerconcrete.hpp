@@ -51,12 +51,13 @@ namespace hgardenpi
             OnScheduleEnd onScheduleEnd;
 
             Aggregations aggregations{};
-            queue<Station::Ptr> scheduled;
+            queue<Aggregation::Ptr> scheduledAggregations;
+            queue<Station::Ptr> scheduledStations;
 
             /**
              * @brief function executed in loop
              */
-            friend void run(Aggregations &ref);
+            friend void run();
 
             /**
              * @brief Check if execute a station in aggretation
@@ -73,6 +74,11 @@ namespace hgardenpi
             ~SchedulerConcrete() override;
 
             HGARDENPI_NO_COPY_NO_MOVE(SchedulerConcrete)
+
+            /**
+             * @brief Initialize internal data
+             */
+            void initialize() override;
 
             /**
              * @brief Start service
@@ -117,7 +123,7 @@ namespace hgardenpi
             }
 
             /**
-             * @brief Set callback on start scheduled event
+             * @brief Set callback on start scheduledStations event
              * @param onScheduleStart on start event
              */
             inline void setScheduleStart(OnScheduleStart onScheduleStart) noexcept override
@@ -126,7 +132,7 @@ namespace hgardenpi
             }
 
             /**
-             * @brief Set callback on end scheduled event
+             * @brief Set callback on end scheduledStations event
              * @param onScheduleEnd on start event
              */
             inline void setScheduleEnd(OnScheduleEnd onScheduleEnd) noexcept override

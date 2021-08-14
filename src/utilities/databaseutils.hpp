@@ -41,9 +41,14 @@ namespace hgardenpi
 
         using SQLite::Database;
 
-
+        /**
+         * @brief definition of matadata type
+         */
         typedef std::tuple<uint8_t, bool> Metadata;
 
+        /**
+         * @brief Default metedata table name
+         */
         const inline constexpr char *DB_METADATA_TABLE = "metadata";
 
         /**
