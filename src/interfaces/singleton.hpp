@@ -49,7 +49,14 @@ namespace hgardenpi
             Singleton<T>() noexcept = default;
             virtual ~Singleton<T>() noexcept = default;
 
+            /**
+             * @brief Singleton instance
+             */
             static unique_ptr<T> instance;
+
+            /**
+             * @brief Check need for create a single instance
+             */
             static once_flag once;
 
         public:

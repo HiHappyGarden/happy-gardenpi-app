@@ -49,6 +49,9 @@ namespace hgardenpi
         {
         public:
 
+            /**
+             * @brief For splitting text on more rows
+             */
             static inline const constexpr char DIVISOR = '|';
 
             ~Device() override = default;

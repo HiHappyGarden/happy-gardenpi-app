@@ -33,7 +33,7 @@
 #include "interfaces/object.hpp"
 
 //from wiringPi Happy GardenPi fork
-extern volatile unsigned wiringPiRunningThread ;
+extern "C" volatile unsigned wiringPiRunningThread ;
 
 namespace hgardenpi
 {
@@ -53,7 +53,9 @@ namespace hgardenpi
 
         public:
 
-            // the constructor just launches some amount of workers
+            /**
+             * @brief the constructor just launches some amount of workers
+             */
             explicit ThreadPool(size_t);
 
             /**

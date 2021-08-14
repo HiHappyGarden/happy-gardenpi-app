@@ -109,31 +109,32 @@ $(function() {
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">using</span> std::mutex;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keyword">using</span> std::string;</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_log_service_concrete.html">   43</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classhgardenpi_1_1v1_1_1_log_service_concrete.html">LogServiceConcrete</a> final : <span class="keyword">public</span> <a class="code" href="classhgardenpi_1_1v1_1_1_log_service.html">LogService</a>, <span class="keyword">public</span> <a class="code" href="classhgardenpi_1_1v1_1_1_object.html">Object</a></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        {</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <span class="keyword">mutable</span> mutex m;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <a class="code" href="classhgardenpi_1_1v1_1_1_log_service_concrete.html">LogServiceConcrete</a>() noexcept;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            <span class="keyword">inline</span> ~<a class="code" href="classhgardenpi_1_1v1_1_1_log_service_concrete.html">LogServiceConcrete</a>() noexcept <span class="keyword">override</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            {</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                closelog();</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            }</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            HGARDENPI_NO_COPY_NO_MOVE(<a class="code" href="classhgardenpi_1_1v1_1_1_log_service_concrete.html">LogServiceConcrete</a>)</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classhgardenpi_1_1v1_1_1_log_service_concrete.html#af1dd85c521739d09cb736e12f7d606dc">write</a>(uint8_t level, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg, ...) <span class="keyword">const</span> noexcept <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_log_service_concrete.html#ac389247ee1d5c752fbca3ce247b61410">   69</a></span>&#160;            <span class="keyword">inline</span> <span class="keywordtype">string</span> <a class="code" href="classhgardenpi_1_1v1_1_1_log_service_concrete.html#ac389247ee1d5c752fbca3ce247b61410">toString</a>() noexcept<span class="keyword"> override</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="keyword">            </span>{</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">typeid</span>(*this).name();</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            }</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        };</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    }</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;}</div>
-<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_log_service_concrete_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_log_service_concrete.html">hgardenpi::LogServiceConcrete</a></div><div class="ttdoc">LogService singleton permit to write log into syslog.</div><div class="ttdef"><b>Definition:</b> logserviceconcrete.hpp:44</div></div>
-<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_log_service_concrete_html_ac389247ee1d5c752fbca3ce247b61410"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_log_service_concrete.html#ac389247ee1d5c752fbca3ce247b61410">hgardenpi::v1::LogServiceConcrete::toString</a></div><div class="ttdeci">string toString() noexcept override</div><div class="ttdoc">Return the name of object.</div><div class="ttdef"><b>Definition:</b> logserviceconcrete.hpp:69</div></div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_log_service_concrete.html">   42</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classhgardenpi_1_1v1_1_1_log_service_concrete.html">LogServiceConcrete</a> final : <span class="keyword">public</span> <a class="code" href="classhgardenpi_1_1v1_1_1_log_service.html">LogService</a>, <span class="keyword">public</span> <a class="code" href="classhgardenpi_1_1v1_1_1_object.html">Object</a></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        {</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            <span class="keyword">mutable</span> mutex m;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            <a class="code" href="classhgardenpi_1_1v1_1_1_log_service_concrete.html#ad5fc3007f4782f144dc6608b0899ac11">LogServiceConcrete</a>() noexcept;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            <span class="keyword">inline</span> ~<a class="code" href="classhgardenpi_1_1v1_1_1_log_service_concrete.html">LogServiceConcrete</a>() noexcept <span class="keyword">override</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            {</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                closelog();</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            }</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            HGARDENPI_NO_COPY_NO_MOVE(<a class="code" href="classhgardenpi_1_1v1_1_1_log_service_concrete.html">LogServiceConcrete</a>)</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classhgardenpi_1_1v1_1_1_log_service_concrete.html#af1dd85c521739d09cb736e12f7d606dc">write</a>(uint8_t level, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg, ...) <span class="keyword">const</span> noexcept <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_log_service_concrete.html#ac389247ee1d5c752fbca3ce247b61410">   71</a></span>&#160;            <span class="keyword">inline</span> <span class="keywordtype">string</span> <a class="code" href="classhgardenpi_1_1v1_1_1_log_service_concrete.html#ac389247ee1d5c752fbca3ce247b61410">toString</a>() noexcept<span class="keyword"> override</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword">            </span>{</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">typeid</span>(*this).name();</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            }</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        };</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    }</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;}</div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_log_service_concrete_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_log_service_concrete.html">hgardenpi::LogServiceConcrete</a></div><div class="ttdoc">LogService permit writing log into syslog.</div><div class="ttdef"><b>Definition:</b> logserviceconcrete.hpp:43</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_log_service_concrete_html_ac389247ee1d5c752fbca3ce247b61410"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_log_service_concrete.html#ac389247ee1d5c752fbca3ce247b61410">hgardenpi::v1::LogServiceConcrete::toString</a></div><div class="ttdeci">string toString() noexcept override</div><div class="ttdoc">Return the name of object.</div><div class="ttdef"><b>Definition:</b> logserviceconcrete.hpp:71</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_log_service_concrete_html_ad5fc3007f4782f144dc6608b0899ac11"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_log_service_concrete.html#ad5fc3007f4782f144dc6608b0899ac11">hgardenpi::v1::LogServiceConcrete::LogServiceConcrete</a></div><div class="ttdeci">LogServiceConcrete() noexcept</div><div class="ttdoc">Create new instance.</div><div class="ttdef"><b>Definition:</b> logserviceconcrete.cpp:36</div></div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_log_service_concrete_html_af1dd85c521739d09cb736e12f7d606dc"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_log_service_concrete.html#af1dd85c521739d09cb736e12f7d606dc">hgardenpi::v1::LogServiceConcrete::write</a></div><div class="ttdeci">void write(uint8_t level, const char *msg,...) const noexcept override</div><div class="ttdoc">Write log on system.</div><div class="ttdef"><b>Definition:</b> logserviceconcrete.cpp:42</div></div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_log_service_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_log_service.html">hgardenpi::LogService</a></div><div class="ttdoc">Abstract LogService to write log.</div><div class="ttdef"><b>Definition:</b> logservice.hpp:55</div></div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_object_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_object.html">hgardenpi::Object</a></div><div class="ttdoc">Generic class ttat all functionals objects must extend.</div><div class="ttdef"><b>Definition:</b> object.hpp:39</div></div>

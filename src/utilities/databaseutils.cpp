@@ -61,6 +61,7 @@ namespace hgardenpi
                 "\t\"description\"\tTEXT,\n"
                 "\t\"relay_number\"\tINTEGER,\n"
                 "\t\"watering_time\"\tINTEGER,\n"
+                "\t\"weight\"\tINTEGER DEFAULT 1,\n"
                 "\t\"status\"\tINTEGER DEFAULT 1,\n"
                 "\t\"id_aggregation\"\tINTEGER,\n"
                 "\tFOREIGN KEY(\"id_aggregation\") REFERENCES \"aggregations\"(\"id\"),\n"
@@ -70,10 +71,10 @@ namespace hgardenpi
 #if HGARDENPI_TEST > 0
                 //test
                 "INSERT INTO aggregations VALUES (1, \"Test station\", 1, \"10/30/127\",  \"2021/01/01\", \"2021/12/31\", 1, 1);",
-                "INSERT INTO stations  VALUES (1, \"Station 1\", \"Giardino nord\", 6, 40, 1, 1);",
-                "INSERT INTO stations  VALUES (2, \"Station 2\", \"Giardino sud\", 10, 15, 1, 1);",
-                "INSERT INTO stations  VALUES (3, \"Station 3\", \"Giardino est\", 11, 30, 1, 1);",
-                "INSERT INTO stations  VALUES (4, \"Station 4\", \"Giardino ovest\", 31, 10, 1, 1);",
+                "INSERT INTO stations  VALUES (1, \"Station 1\", \"Giardino nord\", 6, 40, 10, 1, 1);",
+                "INSERT INTO stations  VALUES (2, \"Station 2\", \"Giardino sud\", 10, 15, 20, 1, 1);",
+                "INSERT INTO stations  VALUES (3, \"Station 3\", \"Giardino est\", 11, 30, 30, 1, 1);",
+                "INSERT INTO stations  VALUES (4, \"Station 4\", \"Giardino ovest\", 31, 10, 40, 1, 1);",
 #endif
                 nullptr
         };

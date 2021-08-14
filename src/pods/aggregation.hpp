@@ -111,7 +111,11 @@ namespace hgardenpi
                  */
                 [[nodiscard]] string get() const noexcept;
 
-            } schedule;
+            }
+            /**
+             * @brief Instance of schedule data
+             */
+            schedule;
             #pragma pack(pop)
 
             /**

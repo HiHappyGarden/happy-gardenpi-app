@@ -23,6 +23,9 @@
 #include "lcd1602.hpp"
 using std::lock_guard;
 
+#include <stdexcept>
+using std::runtime_error;
+
 #include <cstdarg>
 
 #include <wiringPi.h>

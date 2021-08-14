@@ -51,7 +51,7 @@ namespace hgardenpi
             /**
              * @brief Prototype of callback on schedule end event
              */
-            using OnScheduleEnd = std::function<void()>;
+            using OnScheduleEnd = std::function<void(const Station::Ptr &)>;
 
             virtual ~Scheduler() = default;
 

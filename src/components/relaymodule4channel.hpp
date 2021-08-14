@@ -34,7 +34,7 @@ namespace hgardenpi
     inline namespace v1
     {
         /**
-         * @brief Abstract relay module
+         * @brief Relay module for manage ELEGOO 4 Channel Relay
          */
         class RelayModule4Channel : public RelayModule
         {
@@ -50,10 +50,10 @@ namespace hgardenpi
 
             /**
              * Create new instance of
-             * @param in1
-             * @param in2
-             * @param in3
-             * @param in4
+             * @param in1 pin of relay 1
+             * @param in2 pin of relay 2
+             * @param in3 pin of relay 3
+             * @param in4 pin of relay 1
              */
             RelayModule4Channel(int in1, int in2, int in3, int in4) noexcept;
 

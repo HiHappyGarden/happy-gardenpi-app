@@ -37,8 +37,7 @@ namespace hgardenpi
         using std::vector;
 
         /**
-         * @brief Simple class for diplay managing
-         * 
+         * @brief Simple abstract class for display managing
          * @details this class is generic for create instance you must use Display::factory 
          */
         class Display : public Object
