@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['wateringtime_262',['wateringTime',['../structhgardenpi_1_1v1_1_1_station.html#ae1b73ad185e36a7373687b2fa9a7dd99',1,'hgardenpi::v1::Station']]]
+  ['user_272',['user',['../structhgardenpi_1_1v1_1_1_config_info.html#afafb33de8f96a9ff07b0a7a367e8fe9c',1,'hgardenpi::v1::ConfigInfo']]]
 ];

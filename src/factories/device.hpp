@@ -31,6 +31,7 @@
 #include "../interfaces/object.hpp"
 #include "../pods/deviceinfo.hpp"
 #include "../components/button.hpp"
+#include "../components/relaymodule.hpp"
 
 namespace hgardenpi
 {
@@ -44,7 +45,7 @@ namespace hgardenpi
          * @brief Factory for management of peripherals devices
          * 
          */
-        class Device : public Loggable, public Initializable, public Startable, public Object
+        class Device : public Loggable, public Initializable, public Startable, public RelayModule
         {
         public:
 

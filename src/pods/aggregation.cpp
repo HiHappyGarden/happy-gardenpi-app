@@ -52,21 +52,21 @@ namespace hgardenpi
 
     inline namespace v1
     {
-
+        using Schedule = Aggregation::Schedule;
 
         void Aggregation::Schedule::set(uint8_t hour, uint8_t minute, uint8_t days)
         {
-            if (hour > 23 && hour != Aggregation::Schedule::NOT_SET)
+            if (hour > 23 && hour != Schedule::NOT_SET)
             {
                 throw runtime_error("hour value not in 0-59 range");
             }
 
-            if (minute > 59 && minute != Aggregation::Schedule::NOT_SET)
+            if (minute > 59 && minute != Schedule::NOT_SET)
             {
                 throw runtime_error("minute value not in 0-59 range");
             }
 
-            if (days > 0x7F && days != Aggregation::Schedule::NOT_SET)
+            if (days > 0x7F && days != Schedule::NOT_SET)
             {
                 throw runtime_error("days value not in 0x01-0x7F range");
             }

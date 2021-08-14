@@ -179,6 +179,7 @@ namespace hgardenpi
                 aggregation->stations = move(stationDao->getList(aggregation));
                 system->getScheduler()->schedule(aggregation);
             }
+            system->getScheduler()->initialize();
 
             //set all callback
             device->setOnButtonClick([]

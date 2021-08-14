@@ -25,9 +25,6 @@ using std::lock_guard;
 
 #include <cstdarg>
 
-#include <stdexcept>
-using std::runtime_error;
-
 #include <wiringPi.h>
 #include <lcd.h>
 

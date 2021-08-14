@@ -42,6 +42,9 @@ namespace hgardenpi
         class StationDAO : public DAO<Station>
         {
         public:
+            /**
+             * Table name of this DAO
+             */
             static inline const constexpr char *TABLE = "stations";
 
             inline explicit StationDAO(const string &dbFile) noexcept : DAO(dbFile)
@@ -82,7 +85,6 @@ namespace hgardenpi
 
             /**
              * @brief Return the name of object
-             *
              * @return std::string name of object
              */
             inline string toString() noexcept override

@@ -50,7 +50,7 @@ namespace hgardenpi
 
         public:
 
-            enum GPIOPinDisplay : int
+            enum GPIOPin : int
             {
                 LCD_RS = 25,      //Register select pin
                 LCD_E = 24,       //Enable Pin
@@ -60,6 +60,7 @@ namespace hgardenpi
                 LCD_D7 = 14,       //Data pin 7
                 LCD_CONTRAST = 13  //Contrast
             };
+
             /**
              * @brief Constructor for the display 16x2
              * @param lcdRS set GPIO pin number for lcd RS pin

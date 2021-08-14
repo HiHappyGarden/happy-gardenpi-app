@@ -39,12 +39,13 @@ FetchContent_Declare(SQLiteCpp
         GIT_TAG 3.1.1)
 FetchContent_MakeAvailable(SQLiteCpp)
 
-message(STATUS " start date download")
-FetchContent_Declare(date_src
-        GIT_REPOSITORY https://github.com/HowardHinnant/date.git
-        GIT_TAG v3.0.1
-        )
-FetchContent_MakeAvailable(date_src)
+#at the moment not needed
+#message(STATUS " start date download")
+#FetchContent_Declare(date_src
+#        GIT_REPOSITORY https://github.com/HowardHinnant/date.git
+#        GIT_TAG v3.0.1
+#        )
+#FetchContent_MakeAvailable(date_src)
 
 
 configure_file(config.h.in ../src/config.h)
@@ -113,7 +114,7 @@ add_executable(hgardenpi
         src/engine.hpp
         src/main.cpp
         src/threadengine.cpp
-        src/threadengine.hpp)
+        src/threadengine.hpp src/components/relaymodule4channel.cpp src/components/relaymodule4channel.hpp src/components/relaymodule.hpp)
 
 target_link_libraries(hgardenpi
         wiringPi
@@ -124,5 +125,5 @@ target_link_libraries(hgardenpi
         sqlite3
         dl
         nlohmann_json::nlohmann_json
-        date::date
+#        date::date
         )

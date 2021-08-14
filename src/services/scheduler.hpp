@@ -22,7 +22,7 @@
 
 #pragma once
 
-
+#include "../interfaces/initializable.hpp"
 #include "../interfaces/startable.hpp"
 #include "../interfaces/stoppable.hpp"
 #include "../interfaces/object.hpp"
@@ -38,7 +38,7 @@ namespace hgardenpi
          * @brief Scheduler for scheduing acrion, inside of this run a loop every one second
          * 
          */
-        class Scheduler : public Startable, public Stoppable, public Object
+        class Scheduler : public Initializable, public Startable, public Stoppable, public Object
         {
 
         public:
@@ -77,13 +77,13 @@ namespace hgardenpi
             virtual void shot(const Station::Ptr &ptr) const = 0;
 
             /**
-             * @brief Set callback on start scheduled event
+             * @brief Set callback on start scheduledStations event
              * @param onScheduleStart on start event
              */
             virtual void setScheduleStart(OnScheduleStart onScheduleStart) noexcept = 0;
 
             /**
-             * @brief Set callback on end scheduled event
+             * @brief Set callback on end scheduledStations event
              * @param onScheduleEnd on start event
              */
             virtual void setScheduleEnd(OnScheduleEnd onScheduleEnd) noexcept = 0;

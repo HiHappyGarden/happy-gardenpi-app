@@ -66,6 +66,10 @@ namespace hgardenpi
              */
             string description;
             /**
+             * @brief relay number association
+             */
+            uint8_t relayNumber;
+            /**
              * @brief watering time in minutes
              */
             uint wateringTime;
