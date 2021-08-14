@@ -88,7 +88,11 @@ namespace hgardenpi
                  * @brief where store database file
                  */
                 string file = HGARDENPI_DB_FILE;
-            } database;
+            }
+            /**
+             * @brief Instance of database config
+             */
+            database;
 
             /**
              * @brief Return the representation off all data in POD

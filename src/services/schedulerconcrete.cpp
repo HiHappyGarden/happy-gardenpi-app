@@ -25,11 +25,15 @@
 #include <iostream>
 
 #include "../config.h"
+#include "../threadengine.hpp"
+
+using Schedule = hgardenpi::v1::Aggregation::Schedule;
 
 namespace hgardenpi
 {
     inline namespace v1
     {
+
 
         static SchedulerConcrete *self = nullptr;
 
@@ -66,33 +70,42 @@ namespace hgardenpi
                         auto &&aggregation = self->scheduledAggregations.front();
                         auto &schedule = aggregation->schedule;
 
-                        if (now->tm_hour == schedule.hour && now->tm_min == schedule.minute)
+                        //check if the aggregation is scheduled now fot hours and minutes, if NOT_SET enter every loop
+                        //fill queue scheduledStations with the station to schedule
+                        if ( (now->tm_hour == schedule.hour || schedule.hour == Schedule::NOT_SET) && (now->tm_min == schedule.minute || schedule.minute == Schedule::NOT_SET))
                         {
-                            if (schedule.days & MONDAY && now->tm_wday == 1)
+                            //check if aggregation is scheduled monday, if NOT_SET enter every loop
+                            if (schedule.days & MONDAY && now->tm_wday == 1 || schedule.days == Schedule::NOT_SET)
                             {
                                 check(aggregation);
                             }
-                            else if (schedule.days & TUESDAY && now->tm_wday == 2)
+                            //check if aggregation is scheduled tuesday, if NOT_SET enter every loop
+                            else if (schedule.days & TUESDAY && now->tm_wday == 2 || schedule.days == Schedule::NOT_SET)
                             {
                                 check(aggregation);
                             }
-                            else if (schedule.days & WEDNESDAY && now->tm_wday == 3)
+                            //check if aggregation is scheduled wednesday, if NOT_SET enter every loop
+                            else if (schedule.days & WEDNESDAY && now->tm_wday == 3 || schedule.days == Schedule::NOT_SET)
                             {
                                 check(aggregation);
                             }
-                            else if (schedule.days & THURSDAY && now->tm_wday == 4)
+                            //check if aggregation is thursday wednesday, if NOT_SET enter every loop
+                            else if (schedule.days & THURSDAY && now->tm_wday == 4 || schedule.days == Schedule::NOT_SET )
                             {
                                 check(aggregation);
                             }
-                            else if (schedule.days & FRIDAY && now->tm_wday == 5)
+                            //check if aggregation is friday wednesday, if NOT_SET enter every loop
+                            else if (schedule.days & FRIDAY && now->tm_wday == 5 || schedule.days == Schedule::NOT_SET)
                             {
                                 check(aggregation);
                             }
-                            else if (schedule.days & SATURDAY && now->tm_wday == 6)
+                            //check if aggregation is saturday wednesday, if NOT_SET enter every loop
+                            else if (schedule.days & SATURDAY && now->tm_wday == 6 || schedule.days == Schedule::NOT_SET)
                             {
                                 check(aggregation);
                             }
-                            else if (schedule.days & SUNDAY && now->tm_wday == 7)
+                            //check if aggregation is sunday wednesday, if NOT_SET enter every loop
+                            else if (schedule.days & SUNDAY && now->tm_wday == 7 || schedule.days == Schedule::NOT_SET)
                             {
                                 check(aggregation);
                             }
@@ -107,41 +120,47 @@ namespace hgardenpi
 //                    self->aggregations.clear();
 #endif
 
-                    //cicle all scheduledStations event
+                    //cycle all scheduledStations event for watering a station of garden
                     {
                         unique_lock<mutex> ul(self->m);
 
                         while (!self->scheduledStations.empty())
                         {
+                            //get first station
                             auto &&station = self->scheduledStations.front();
 
+                            // start event
                             self->onScheduleStart(station);
 
+                            // sleep whit station's watering time
                             threadSleep(station->wateringTime * 1'00);
 
-                            self->onScheduleEnd();
+                            // end event
+                            self->onScheduleEnd(station);
 
+                            // remove from queue
                             self->scheduledStations.pop();
+
+                            if (!wiringPiRunningThread)
+                            {
+                                break;
+                            }
                         }
                     }
 
                 }
 
-
-
                 threadSleep(Time::SCHEDULER_TICK, loopRun);
-
             }
         }
 #pragma clang diagnostic pop
 
 
-        void check(const Aggregation::Ptr aggregation)
+        inline void check(const Aggregation::Ptr aggregation)
         {
             for(auto &&station : aggregation->stations)
             {
                 self->scheduledStations.push(station);
-                cout << "station:" << to_string(station->id) << endl;
             }
         }
 

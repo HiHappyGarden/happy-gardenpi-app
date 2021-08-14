@@ -44,7 +44,7 @@ namespace hgardenpi
 
         static void onSchedulerEventStart(const Station::Ptr &station);
 
-        static void onSchedulerEventEnd();
+        static void onSchedulerEventEnd(const Station::Ptr &station);
 
         Engine::Engine() : factory(new (nothrow) FactoryConcrete)
         {
@@ -215,7 +215,7 @@ namespace hgardenpi
             cout << "station:" << station->id << endl;
         }
 
-        static void onSchedulerEventEnd()
+        static void onSchedulerEventEnd(const Station::Ptr &station)
         {
             cout << "end:" << endl;
         }

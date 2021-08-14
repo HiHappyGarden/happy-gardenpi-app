@@ -37,14 +37,16 @@ namespace hgardenpi
         using std::string;
 
         /**
-         * @brief LogService singleton permit to write log into syslog
-         * 
+         * @brief LogService permit writing log into syslog
          */
         class LogServiceConcrete final : public LogService, public Object
         {
             mutable mutex m;
 
         public:
+            /**
+             * @brief Create new instance
+             */
             LogServiceConcrete() noexcept;
             inline ~LogServiceConcrete() noexcept override
             {

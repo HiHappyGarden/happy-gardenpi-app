@@ -94,7 +94,7 @@ namespace hgardenpi
             }
 
             /**
-             * Set ThreadPool instance
+             * @brief Set ThreadPool instance
              * @param threadPool instance
              */
             inline void setThreadPool(ThreadPool *threadPool) noexcept override

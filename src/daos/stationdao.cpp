@@ -36,9 +36,9 @@ Station::Ptr StationDAO::fill(const SQLite::Statement &statement) const
     ret->id = query.getColumn("id");
     ret->name = query.getColumn("name").getString();
     ret->description = query.getColumn("description").getString();
-    ret->wateringTime = query.getColumn("watering_time").getUInt();
+    ret->wateringTime = query.getColumn("watering_time");
+    ret->weight = query.getColumn("weight");
     ret->status = static_cast<Status>(query.getColumn("status").getUInt());
-
     return ret;
 }
 
@@ -48,13 +48,15 @@ void StationDAO::insert(const Station::Ptr &ptr) const
 
     Transaction transaction(database);
 
-    Statement query(database, "INSERT INTO stations (name, description, relay_number, watering_time, status) VALUES (?, ?, ?, ?)");
+    Statement query(database, "INSERT INTO stations (name, description, relay_number, watering_time, status, weight) VALUES (?, ?, ?, ?, ?, ?)");
 
     query.bind(1, ptr->name);
     query.bind(2, ptr->description);
     query.bind(3, ptr->relayNumber);
     query.bind(4, ptr->wateringTime);
-    query.bind(5, static_cast<int>(ptr->status));
+    query.bind(5, ptr->weight);
+    query.bind(6, static_cast<int>(ptr->status));
+
 
     query.executeStep();
 
@@ -67,14 +69,15 @@ void StationDAO::update(const Station::Ptr &ptr) const
 
     Transaction transaction(database);
 
-    Statement query(database, "UPDATE aggregations SET name = ?, description = ?, relay_number = ?, watering_time = ?, status = ? WHERE id = ?");
+    Statement query(database, "UPDATE aggregations SET name = ?, description = ?, relay_number = ?, watering_time = ?, weight = ?, status = ? WHERE id = ?");
 
     query.bind(1, ptr->name);
     query.bind(2, ptr->description);
     query.bind(3, ptr->relayNumber);
     query.bind(4, ptr->wateringTime);
-    query.bind(5, static_cast<int>(ptr->status));
-    query.bind(6, ptr->id);
+    query.bind(5, ptr->weight);
+    query.bind(6, static_cast<int>(ptr->status));
+    query.bind(7, ptr->id);
 
     query.executeStep();
 
@@ -89,7 +92,7 @@ Stations StationDAO::getList(const Aggregation::Ptr &ptr, Status status) const
 
     Transaction transaction(database);
 
-    Statement query(database, "SELECT * FROM stations WHERE status = ? AND id_aggregation = ?");
+    Statement query(database, "SELECT * FROM stations WHERE status = ? AND id_aggregation = ? ORDER BY weight");
 
     query.bind(1, static_cast<uint8_t>(status));
     query.bind(2, ptr->id);

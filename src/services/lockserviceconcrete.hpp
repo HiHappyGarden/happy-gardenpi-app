@@ -44,6 +44,10 @@ namespace hgardenpi
             const ConfigInfo::Ptr &configInfo;
 
         public:
+            /**
+             * @brief Create new instance
+             * @param configInfo device info instance
+             */
             inline explicit LockServiceConcrete(const ConfigInfo::Ptr &configInfo) : configInfo(configInfo)
             {
             }
