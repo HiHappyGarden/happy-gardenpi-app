@@ -33,7 +33,7 @@
 #include "interfaces/object.hpp"
 
 //from wiringPi Happy GardenPi fork
-extern "C" volatile unsigned wiringPiRunningThread ;
+extern volatile unsigned wiringPiRunningThread ;
 
 namespace hgardenpi
 {
