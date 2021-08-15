@@ -45,9 +45,9 @@ namespace hgardenpi
         {
         public:
 
-            enum GPIOPin : int
+            enum WiringPiPin : int
             {
-                PIN = 9,
+                PIN = 8, // GPIO 3
             };
 
 
