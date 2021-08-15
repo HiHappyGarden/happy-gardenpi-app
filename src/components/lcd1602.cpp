@@ -59,6 +59,12 @@ LCD1602::LCD1602(int lcdRS, int lcdE, int lcd04, int lcd05, int lcd06, int lcd07
     }
 }
 
+LCD1602::~LCD1602() noexcept
+{
+    clear();
+    setContrastTurnOn(false);
+}
+
 
 inline void LCD1602::print(const string &txt) noexcept
 {

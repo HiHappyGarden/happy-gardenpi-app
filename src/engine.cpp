@@ -216,12 +216,6 @@ namespace hgardenpi
                 .weight = 10
             });
 
-//            string
-//            for (int i = 0; i < len; i++)
-//            {
-//
-//            }
-
             string str(len, '\0');
             memcpy(&str[0], data, len);
             if ("station1" == str)

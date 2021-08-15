@@ -73,6 +73,7 @@ namespace hgardenpi
              * @exception runtime_error when hardware requisites mismatch
              */
             LCD1602(int lcdRS, int lcdE, int lcd04, int lcd05, int lcd06, int lcd07, int lcdContrast);
+            ~LCD1602() noexcept override;
 
             //remove copy constructor
             HGARDENPI_NO_COPY_NO_MOVE(LCD1602)

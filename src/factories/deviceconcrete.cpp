@@ -115,8 +115,9 @@ namespace hgardenpi
                 throw runtime_error("no memory for button");
             }
 
-            //on initialization turn off contrast display
+            //display normalization
             display->setContrastTurnOn(false);
+            display->clear();
         }
 
         void DeviceConcrete::start()
