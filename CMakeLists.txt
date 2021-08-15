@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-PROJECT(hgardenpi VERSION "0.41.0" LANGUAGES CXX C)
+PROJECT(hgardenpi VERSION "0.50.0" LANGUAGES CXX C)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -latomic")
@@ -64,6 +64,9 @@ add_executable(hgardenpi
         src/components/display.hpp
         src/components/lcd1602.cpp
         src/components/lcd1602.hpp
+        src/components/relaymodule.hpp
+        src/components/relaymodule4channel.cpp
+        src/components/relaymodule4channel.hpp
         src/factories/device.hpp
         src/factories/deviceconcrete.cpp
         src/factories/deviceconcrete.hpp
@@ -114,7 +117,7 @@ add_executable(hgardenpi
         src/engine.hpp
         src/main.cpp
         src/threadengine.cpp
-        src/threadengine.hpp src/components/relaymodule4channel.cpp src/components/relaymodule4channel.hpp src/components/relaymodule.hpp)
+        src/threadengine.hpp)
 
 target_link_libraries(hgardenpi
         wiringPi
