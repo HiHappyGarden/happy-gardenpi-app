@@ -116,7 +116,7 @@ namespace hgardenpi
             }
         }
 
-        vector<long> threadGetChildPid(long exclude) noexcept
+        vector<long> threadGetChildPid(long exclude)
         {
 
             vector<long> ret{};
