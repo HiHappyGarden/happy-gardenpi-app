@@ -36,6 +36,7 @@ Station::Ptr StationDAO::fill(const SQLite::Statement &statement) const
     ret->id = query.getColumn("id");
     ret->name = query.getColumn("name").getString();
     ret->description = query.getColumn("description").getString();
+    ret->relayNumber = query.getColumn("relay_number");
     ret->wateringTime = query.getColumn("watering_time");
     ret->weight = query.getColumn("weight");
     ret->status = static_cast<Status>(query.getColumn("status").getUInt());

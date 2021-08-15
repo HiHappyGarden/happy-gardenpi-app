@@ -41,6 +41,15 @@ namespace hgardenpi
         class RelayModule : public Object
         {
         public:
+            enum WiringPiPin : int
+            {
+                IN1 = 6, //GPIO 22
+                IN2 = 10, //GPIO 24
+                IN3 = 11, //GPIO 26
+                IN4 = 31, //GPIO 28
+            };
+
+
             RelayModule() = default;
 
             //remove copy constructor
@@ -50,8 +59,9 @@ namespace hgardenpi
              * @brief Set status relay
              * @param ptr Status pointer for select the right relay
              * @param status 1 close, 0 open
+             * @throw runtime_error when pin is wrong
              */
-            virtual void setRelay(const Station::Ptr &ptr, int status) const noexcept = 0;
+            virtual void setRelay(const Station::Ptr &ptr, bool status) const = 0;
         };
     }
 }

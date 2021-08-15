@@ -29,6 +29,7 @@
 #include "constants.hpp"
 #include "utilities/databaseutils.hpp"
 #include "clients/mqttclientmosquitto.hpp"
+#include "components/relaymodule.hpp"
 #include "threadengine.hpp"
 
 namespace hgardenpi
@@ -40,7 +41,7 @@ namespace hgardenpi
          * @brief Event triggered when MqttClient message arrive
          * @param data message data
          */
-        static void onMqttClientMessageCallback(const uint8_t *data);
+        static void onMqttClientMessageCallback(const uint8_t *data, int len);
 
         static void onSchedulerEventStart(const Station::Ptr &station);
 
@@ -182,12 +183,6 @@ namespace hgardenpi
             system->getScheduler()->initialize();
 
             //set all callback
-            device->setOnButtonClick([]
-            {
-
-                printf("click\n");
-
-            });
             mqttClient->setOnMessageCallback(&onMqttClientMessageCallback);
             system->getScheduler()->setScheduleStart(&onSchedulerEventStart);
             system->getScheduler()->setScheduleEnd(&onSchedulerEventEnd);
@@ -205,19 +200,85 @@ namespace hgardenpi
 
         }
 
-        static void onMqttClientMessageCallback(const uint8_t *data)
+        static void onMqttClientMessageCallback(const uint8_t *data, int len)
         {
-            cout << "msg:" << data << endl;
+            auto system = const_cast<System *>(Engine::getInstance()->getFactory()->getSystem());
+            if (!data)
+            {
+                system->getLogService()->write(LOG_WARNING,"wrong message length 0");
+                return;
+            }
+            Station::Ptr station = Station::Ptr(new Station{
+                .id = 0,
+                .name = "shot station",
+                .description = "... none",
+                .wateringTime = 5,
+                .weight = 10
+            });
+
+//            string
+//            for (int i = 0; i < len; i++)
+//            {
+//
+//            }
+
+            string str(len, '\0');
+            memcpy(&str[0], data, len);
+            if ("station1" == str)
+            {
+                station->relayNumber = RelayModule::IN1;
+            }
+            else if ("station2" == str)
+            {
+                station->relayNumber = RelayModule::IN2;
+            }
+            else if ("station3" == str)
+            {
+                station->relayNumber = RelayModule::IN3;
+            }
+            else if ("station4" == str)
+            {
+                station->relayNumber = RelayModule::IN4;
+            }
+
+            onSchedulerEventStart(station);
+            threadSleep(2'000);
+            onSchedulerEventEnd(station);
         }
 
         static void onSchedulerEventStart(const Station::Ptr &station)
         {
-            cout << "station:" << station->id << endl;
+            auto system = const_cast<System *>(Engine::getInstance()->getFactory()->getSystem());
+            auto device = const_cast<Device *>(Engine::getInstance()->getFactory()->getDevice());
+
+            //start station and log
+            try
+            {
+                device->getRelayModule()->setRelay(station, true);
+                system->getLogService()->write(LOG_INFO,"Start station: %s", station->name.c_str());
+            }
+            catch (const exception &e)
+            {
+                system->getLogService()->write(LOG_WARNING,"exception on start station: %s what: %s", station->name.c_str(), e.what());
+            }
+
         }
 
         static void onSchedulerEventEnd(const Station::Ptr &station)
         {
-            cout << "end:" << endl;
+            auto system = const_cast<System *>(Engine::getInstance()->getFactory()->getSystem());
+            auto device = const_cast<Device *>(Engine::getInstance()->getFactory()->getDevice());
+
+            //end station and log
+            try
+            {
+                device->getRelayModule()->setRelay(station, false);
+                system->getLogService()->write(LOG_INFO, "End station: %s", station->name.c_str());
+            }
+            catch (const exception &e)
+            {
+                system->getLogService()->write(LOG_WARNING,"exception on end station: %s what: %s", station->name.c_str(), e.what());
+            }
         }
     }
 }

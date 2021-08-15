@@ -86,7 +86,7 @@ namespace hgardenpi
 
             /**
              * @brief Set the Log Service object
-             *
+             * @param logService logService instance
              */
             inline void setLogService(const LogService *logService) noexcept override
             {
@@ -110,23 +110,30 @@ namespace hgardenpi
             void printOnDisplay(const string &txt, bool enableFormat) const noexcept override;
 
             /**
-             * @brief set callback triggered whet button willi be pressed or released
-             * @param onClick callback lambda
+             * @brief Get display instance
+             * @return display instance
              */
-            inline void setOnButtonClick(Button::OnClick onClick) noexcept override
+            inline Display *getDisplay() const noexcept override
             {
-                button->setOnClick(std::move(onClick));
+                return display;
             }
 
+            /**
+             * @brief Get button instance
+             * @return button instance
+             */
+            inline Button *getButton() const noexcept override
+            {
+                return button;
+            }
 
             /**
-             * @brief Set status relay
-             * @param ptr Status pointer for select the right relay
-             * @param status 1 close, 0 open
+             * @brief Get relayModule instance
+             * @return relayModule instance
              */
-            inline void setRelay(const Station::Ptr &ptr, int status) const noexcept override
+            inline const RelayModule *getRelayModule() const noexcept override
             {
-                relayModule->setRelay(ptr, status);
+                return relayModule;
             }
 
             /**

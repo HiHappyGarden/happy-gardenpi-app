@@ -39,15 +39,6 @@ namespace hgardenpi
         class RelayModule4Channel : public RelayModule
         {
         public:
-
-            enum WiringPiPin : int
-            {
-                IN1 = 6, //GPIO 22
-                IN2 = 10, //GPIO 24
-                IN3 = 11, //GPIO 26
-                IN4 = 31, //GPIO 28
-            };
-
             /**
              * Create new instance of
              * @param in1 pin of relay 1
@@ -57,7 +48,7 @@ namespace hgardenpi
              */
             RelayModule4Channel(int in1, int in2, int in3, int in4) noexcept;
 
-            void setRelay(const Station::Ptr &ptr, int status) const noexcept override;
+            void setRelay(const Station::Ptr &ptr, bool status) const override;
 
             /**
              * @brief Return the name of object
@@ -68,8 +59,9 @@ namespace hgardenpi
                 return typeid(*this).name();
             }
 
-        public:
+        private:
 
+            static constexpr WiringPiPin wiringPiPinAll[] = {IN1, IN2, IN3, IN4};
 
         };
     }

@@ -30,8 +30,6 @@
 #include "../interfaces/closeable.hpp"
 #include "../interfaces/object.hpp"
 #include "../pods/deviceinfo.hpp"
-#include "../components/button.hpp"
-#include "../components/relaymodule.hpp"
 
 namespace hgardenpi
 {
@@ -40,12 +38,15 @@ namespace hgardenpi
     {
 
         class ThreadPool;
+        class Display;
+        class Button;
+        class RelayModule;
 
         /**
          * @brief Factory for management of peripherals devices
          * 
          */
-        class Device : public Loggable, public Initializable, public Startable, public RelayModule
+        class Device : public Loggable, public Initializable, public Startable, public Object
         {
         public:
 
@@ -71,16 +72,10 @@ namespace hgardenpi
 
 
             /**
-             * Set ThreadPool instance
+             * @brief Set ThreadPool instance
              * @param threadPool instance
              */
             virtual void setThreadPool(ThreadPool *threadPool) noexcept = 0;
-
-            /**
-             * @brief set callback triggered whet button willi be pressed or released
-             * @param onClick callback lambda
-             */
-            virtual void setOnButtonClick(Button::OnClick onClick) noexcept = 0;
 
             /**
              * @brief Print on system display
@@ -89,6 +84,23 @@ namespace hgardenpi
              */
             virtual void printOnDisplay(const string &txt, bool enableFormat) const noexcept = 0;
 
+            /**
+             * @brief Get display instance
+             * @return display instance
+             */
+            virtual Display *getDisplay() const noexcept = 0;
+
+            /**
+             * @brief Get button instance
+             * @return button instance
+             */
+            virtual Button *getButton() const noexcept = 0;
+
+            /**
+             * @brief Get relayModule instance
+             * @return relayModule instance
+             */
+            virtual const RelayModule *getRelayModule() const noexcept = 0;
         };
 
     }

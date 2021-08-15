@@ -22,6 +22,8 @@
 
 #pragma once
 
+#include <atomic>
+
 #include "../interfaces/initializable.hpp"
 #include "../interfaces/startable.hpp"
 #include "../interfaces/stoppable.hpp"
@@ -63,18 +65,11 @@ namespace hgardenpi
             virtual void schedule(Aggregation::Ptr &ptr) = 0;
 
             /**
-             * @brief Shot one time an aggregation of station triggered from user
-             * @param ptr of aggregation
-             * @throw runtime_error when there some problem in aggregation
-             */
-            virtual void shot(const Aggregation::Ptr &ptr) const = 0;
-
-            /**
              * @brief Shot one time an station triggered from user
              * @param ptr of station
              * @throw runtime_error when there some problem in station
              */
-            virtual void shot(const Station::Ptr &ptr) const = 0;
+            virtual void shot(const Station::Ptr &ptr) = 0;
 
             /**
              * @brief Set callback on start scheduledStations event
@@ -87,6 +82,12 @@ namespace hgardenpi
              * @param onScheduleEnd on start event
              */
             virtual void setScheduleEnd(OnScheduleEnd onScheduleEnd) noexcept = 0;
+
+            /**
+             * Check a schedule is in execution
+             * @return reference to inExecution, true if it's in execution
+             */
+            [[maybe_unused]] virtual const std::atomic_bool &isInExecution() const noexcept = 0;
         };
 
     }

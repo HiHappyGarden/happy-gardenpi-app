@@ -112,7 +112,6 @@ namespace hgardenpi
                         }
                         self->scheduledAggregations.pop();
                     }
-                    self->scheduledAggregations = queue<Aggregation::Ptr>();
 
 #if HGARDENPI_TEST > 0
                     //test
@@ -124,8 +123,11 @@ namespace hgardenpi
                     {
                         unique_lock<mutex> ul(self->m);
 
-                        while (!self->scheduledStations.empty())
+                        while (!self->scheduledStations.empty() && wiringPiRunningThread)
                         {
+                            //set flag in execution
+                            self->inExecution = true;
+
                             //get first station
                             auto &&station = self->scheduledStations.front();
 
@@ -133,7 +135,7 @@ namespace hgardenpi
                             self->onScheduleStart(station);
 
                             // sleep whit station's watering time
-                            threadSleep(station->wateringTime * 1'00);
+                            threadSleep(station->wateringTime * 5'00);
 
                             // end event
                             self->onScheduleEnd(station);
@@ -141,10 +143,10 @@ namespace hgardenpi
                             // remove from queue
                             self->scheduledStations.pop();
 
-                            if (!wiringPiRunningThread)
-                            {
-                                break;
-                            }
+                            threadSleep(Time::SCHEDULER_NETX_TICK);
+
+                            //set flag in execution
+                            self->inExecution = false;
                         }
                     }
 
@@ -194,7 +196,6 @@ namespace hgardenpi
         {
             loopRun = true;
             loopThread =  move(threadPool->enqueue(&run));
-
         }
 
 
@@ -202,9 +203,9 @@ namespace hgardenpi
         {
             lock_guard<mutex> lg(m);
             loopRun = false;
-            aggregations.clear();
 
             scheduledStations = queue<Station::Ptr>();
+            scheduledAggregations = queue<Aggregation::Ptr>();
         }
 
 
@@ -222,16 +223,10 @@ namespace hgardenpi
             aggregations.push_back(ptr);
         }
 
-
-        void SchedulerConcrete::shot(const Aggregation::Ptr &ptr) const
+        void SchedulerConcrete::shot(const Station::Ptr &ptr)
         {
             lock_guard<mutex> lg(m);
-        }
-
-
-        void SchedulerConcrete::shot(const Station::Ptr &ptr) const
-        {
-            lock_guard<mutex> lg(m);
+            scheduledStations.push(ptr);
         }
 
     }
