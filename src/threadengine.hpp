@@ -165,7 +165,7 @@ namespace hgardenpi
          * @brief Get the pid fot thread child
          * @param exclude exclude some pid
          */
-        [[maybe_unused]] vector<long> threadGetChildPid(long exclude = -1) noexcept;
+        [[maybe_unused]] vector<long> threadGetChildPid(long exclude = -1);
 
 #pragma endregion functions
 
