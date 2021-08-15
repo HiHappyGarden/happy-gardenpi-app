@@ -107,7 +107,15 @@ namespace hgardenpi
                 */
                 mosquitto_message_callback_set(mosq, [](mosquitto *, void *, const mosquitto_message *message)
                 {
-                    hgardenpi::v1::onMessageCallback((uint8_t *)message->payload);
+                    if (message->payloadlen)
+                    {
+                        hgardenpi::v1::onMessageCallback((uint8_t *)message->payload, message->payloadlen);
+                    }
+                    else
+                    {
+                        hgardenpi::v1::onMessageCallback(nullptr, 0);
+                    }
+
                 });
 
                 //set username and passwd

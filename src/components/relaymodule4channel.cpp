@@ -26,9 +26,14 @@
 //
 
 #include "relaymodule4channel.hpp"
-using std::string;
+
+#include <iostream>
+#include <algorithm>
+using namespace std;
 
 #include <wiringPi.h>
+
+#include "../config.h"
 
 using hgardenpi::v1::RelayModule4Channel;
 
@@ -40,9 +45,19 @@ RelayModule4Channel::RelayModule4Channel(int in1, int in2, int in3, int in4) noe
     pinMode(in4, OUTPUT);
 }
 
-void RelayModule4Channel::setRelay(const Station::Ptr &ptr, int status) const noexcept
+void RelayModule4Channel::setRelay(const Station::Ptr &ptr, bool status) const
 {
+    if (find(begin(wiringPiPinAll), end(wiringPiPinAll), ptr->relayNumber) == end(wiringPiPinAll))
+    {
+        throw runtime_error("pin: " + to_string(ptr->relayNumber) + " not allowed");
+    }
+
+#if HGARDENPI_TEST > 0
+    digitalWrite(IN1, status);
+    cout << "Station: " << ptr->name << " pin: " << to_string(ptr->relayNumber) << " status: " << to_string(status) << endl;
+#else
     digitalWrite(ptr->relayNumber, status);
+#endif
 }
 
 

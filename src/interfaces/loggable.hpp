@@ -42,7 +42,7 @@ namespace hgardenpi
             virtual ~Loggable() = default;
             /**
              * @brief Set the Log Service object
-             * 
+             * @param logService instance
              */
             virtual void setLogService(const LogService *) noexcept = 0;
         };

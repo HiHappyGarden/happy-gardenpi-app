@@ -40,6 +40,7 @@ Aggregation::Ptr AggregationDAO::fill(const Statement &statement) const
     ret->start = query.getColumn("start").getString();
     ret->end = query.getColumn("end").getString();
     ret->status = static_cast<Status>(query.getColumn("status").getUInt());
+    ret->weight = query.getColumn("weight");
 
     return ret;
 }
@@ -50,14 +51,16 @@ void AggregationDAO::insert(const Aggregation::Ptr &ptr) const
 
     Transaction transaction(database);
 
-    Statement query(database, "INSERT INTO aggregations (description, manual, schedule, start, end, status) VALUES (?, ?, ?, ?, ?, ?)");
+    Statement query(database, "INSERT INTO aggregations (description, manual, schedule, start, end, weight, status) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
     query.bind(1, ptr->description);
     query.bind(2, ptr->manual);
     query.bind(3, ptr->schedule.get());
     query.bind(4, ptr->start);
     query.bind(5, ptr->end);
-    query.bind(6, static_cast<int>(ptr->status));
+    query.bind(6, ptr->weight);
+    query.bind(7, static_cast<int>(ptr->status));
+    query.bind(8, ptr->weight);
 
     query.executeStep();
 
@@ -70,15 +73,16 @@ void AggregationDAO::update(const Aggregation::Ptr &ptr) const
 
     Transaction transaction(database);
 
-    Statement query(database, "UPDATE aggregations SET description = ?, manual = ?, schedule = ?, start = ?, end = ?, status = ? WHERE id = ?");
+    Statement query(database, "UPDATE aggregations SET description = ?, manual = ?, schedule = ?, start = ?, end = ?, weight = ?, status = ? WHERE id = ?");
 
     query.bind(1, ptr->description);
     query.bind(2, ptr->manual);
     query.bind(3, ptr->schedule.get());
     query.bind(4, ptr->start);
     query.bind(5, ptr->end);
-    query.bind(6, static_cast<int>(ptr->status));
-    query.bind(7, ptr->id);
+    query.bind(6, ptr->weight);
+    query.bind(7, static_cast<int>(ptr->status));
+    query.bind(8, ptr->id);
 
     query.executeStep();
 
@@ -92,7 +96,7 @@ void AggregationDAO::update(const Aggregation::Ptr &ptr) const
     Database database(dbFile, SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
 
     // Compile a SQL query, containing one parameter (index 1)
-    SQLite::Statement query(database, "SELECT * FROM aggregations WHERE status = ?");
+    SQLite::Statement query(database, "SELECT * FROM aggregations WHERE status = ? ORDER BY weight");
 
     query.bind(1, static_cast<uint8_t>(status));
 

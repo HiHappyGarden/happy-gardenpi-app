@@ -54,6 +54,8 @@ namespace hgardenpi
             queue<Aggregation::Ptr> scheduledAggregations;
             queue<Station::Ptr> scheduledStations;
 
+            atomic_bool inExecution;
+
             /**
              * @brief function executed in loop
              */
@@ -100,27 +102,11 @@ namespace hgardenpi
             void schedule(Aggregation::Ptr &ptr) override;
 
             /**
-             * @brief Shot one time an aggregation of station triggered from user
-             * @param ptr of aggregation
-             * @throw runtime_error when there some problem in aggregation
-             */
-            void shot(const Aggregation::Ptr &ptr) const override;
-
-            /**
              * @brief Shot one time an station triggered from user
              * @param ptr of station
              * @throw runtime_error when there some problem in station
              */
-            void shot(const Station::Ptr &ptr) const override;
-
-            /**
-             * @brief Return the name of object
-             * @return std::string name of object
-             */
-            inline string toString() noexcept override
-            {
-                return typeid(*this).name();
-            }
+            void shot(const Station::Ptr &ptr) override;
 
             /**
              * @brief Set callback on start scheduledStations event
@@ -138,6 +124,24 @@ namespace hgardenpi
             inline void setScheduleEnd(OnScheduleEnd onScheduleEnd) noexcept override
             {
                 this->onScheduleEnd = move(onScheduleEnd);
+            }
+
+            /**
+             * Check a schedule is in execution
+             * @return reference to inExecution, true if it's in execution
+             */
+            [[maybe_unused]] inline const atomic_bool &isInExecution() const noexcept override
+            {
+                return inExecution;
+            }
+
+            /**
+             * @brief Return the name of object
+             * @return std::string name of object
+             */
+            inline string toString() noexcept override
+            {
+                return typeid(*this).name();
             }
 
         };

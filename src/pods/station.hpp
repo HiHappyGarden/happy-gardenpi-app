@@ -74,13 +74,13 @@ namespace hgardenpi
              */
             uint wateringTime;
             /**
-             * @brief status of station
-             */
-            Status status = Status::ACTIVE;;
-            /**
              * @brief for manage order of execution lighter is first then weightier
              */
             uint16_t weight;
+            /**
+             * @brief status of station
+             */
+            Status status = Status::ACTIVE;
         };
 
         /**

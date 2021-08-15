@@ -52,6 +52,7 @@ namespace hgardenpi
                 "\t\"start\"\tTEXT,\n"
                 "\t\"end\"\tTEXT,\n"
                 "\t\"sequential\"\tINTEGER DEFAULT 1,\n"
+                "\t\"weight\"\tINTEGER DEFAULT 1,\n"
                 "\t\"status\"\tINTEGER DEFAULT 1,\n"
                 "\tPRIMARY KEY(\"id\" AUTOINCREMENT)\n"
                 ")",
@@ -70,7 +71,7 @@ namespace hgardenpi
 
 #if HGARDENPI_TEST > 0
                 //test
-                "INSERT INTO aggregations VALUES (1, \"Test station\", 1, \"10/30/127\",  \"2021/01/01\", \"2021/12/31\", 1, 1);",
+                "INSERT INTO aggregations VALUES (1, \"Test station\", 1, \"10/30/127\",  \"2021/01/01\", \"2021/12/31\", 1, 10, 1);",
                 "INSERT INTO stations  VALUES (1, \"Station 1\", \"Giardino nord\", 6, 40, 10, 1, 1);",
                 "INSERT INTO stations  VALUES (2, \"Station 2\", \"Giardino sud\", 10, 15, 20, 1, 1);",
                 "INSERT INTO stations  VALUES (3, \"Station 3\", \"Giardino est\", 11, 30, 30, 1, 1);",
