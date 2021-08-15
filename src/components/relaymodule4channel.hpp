@@ -40,12 +40,12 @@ namespace hgardenpi
         {
         public:
 
-            enum GPIOPin : int
+            enum WiringPiPin : int
             {
-                IN1 = 6,
-                IN2 = 10,
-                IN3 = 11,
-                IN4 = 31,
+                IN1 = 6, //GPIO 22
+                IN2 = 10, //GPIO 24
+                IN3 = 11, //GPIO 26
+                IN4 = 31, //GPIO 28
             };
 
             /**
