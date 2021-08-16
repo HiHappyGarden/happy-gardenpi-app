@@ -71,7 +71,7 @@ $(function() {
 <div class="title">databaseutils.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// MIT License</span></div>
+<a href="databaseutils_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// MIT License</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">// Copyright (c) 2021. Happy GardenPI</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//</span></div>
@@ -102,30 +102,36 @@ $(function() {
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;cstdint&gt;</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;tuple&gt;</span></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">namespace </span>SQLite</div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="namespace_s_q_lite.html">   32</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_s_q_lite.html">SQLite</a></div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;{</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keyword">class </span>Database;</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;}</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">namespace </span>hgardenpi</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacehgardenpi.html">hgardenpi</a></div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;{</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">inline</span> <span class="keyword">namespace </span>v1</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    {</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keyword">using</span> SQLite::Database;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keyword">typedef</span> std::tuple&lt;uint8_t, bool&gt; Metadata;</div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="namespacehgardenpi_1_1v1.html#a5c8a55f7a908107327228fae08e9e107">   47</a></span>&#160;        <span class="keyword">typedef</span> std::tuple&lt;uint8_t, bool&gt; <a class="code" href="namespacehgardenpi_1_1v1.html#a5c8a55f7a908107327228fae08e9e107">Metadata</a>;</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keyword">const</span> <span class="keyword">inline</span> constexpr <span class="keywordtype">char</span> *DB_METADATA_TABLE = <span class="stringliteral">&quot;metadata&quot;</span>;</div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="namespacehgardenpi_1_1v1.html#a0c10eda20f12d5209da13512f8c7947f">   52</a></span>&#160;        <span class="keyword">const</span> <span class="keyword">inline</span> constexpr <span class="keywordtype">char</span> *<a class="code" href="namespacehgardenpi_1_1v1.html#a0c10eda20f12d5209da13512f8c7947f">DB_METADATA_TABLE</a> = <span class="stringliteral">&quot;metadata&quot;</span>;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        Metadata DBGetMetadata(<span class="keyword">const</span> Database &amp;database);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <a class="code" href="namespacehgardenpi_1_1v1.html#a5c8a55f7a908107327228fae08e9e107">Metadata</a> <a class="code" href="namespacehgardenpi_1_1v1.html#a0b98f4ff3e125fd5191f95a6be6669a1">DBGetMetadata</a>(<span class="keyword">const</span> Database &amp;database);</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keywordtype">void</span> DBUpdate(<span class="keyword">const</span> Database &amp;database, uint8_t actualVersion = 0);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="namespacehgardenpi_1_1v1.html#a13465566e273ce94e1ef9ea35ec621e4">DBUpdate</a>(<span class="keyword">const</span> Database &amp;database, uint8_t actualVersion = 0);</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    }</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;}</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="ttc" id="anamespace_s_q_lite_html"><div class="ttname"><a href="namespace_s_q_lite.html">SQLite</a></div><div class="ttdef"><b>Definition:</b> databaseutils.hpp:33</div></div>
+<div class="ttc" id="anamespacehgardenpi_1_1v1_html_a0b98f4ff3e125fd5191f95a6be6669a1"><div class="ttname"><a href="namespacehgardenpi_1_1v1.html#a0b98f4ff3e125fd5191f95a6be6669a1">hgardenpi::v1::DBGetMetadata</a></div><div class="ttdeci">Metadata DBGetMetadata(const Database &amp;database)</div><div class="ttdoc">Get version of database.</div><div class="ttdef"><b>Definition:</b> databaseutils.cpp:100</div></div>
+<div class="ttc" id="anamespacehgardenpi_1_1v1_html_a0c10eda20f12d5209da13512f8c7947f"><div class="ttname"><a href="namespacehgardenpi_1_1v1.html#a0c10eda20f12d5209da13512f8c7947f">hgardenpi::v1::DB_METADATA_TABLE</a></div><div class="ttdeci">constexpr const char * DB_METADATA_TABLE</div><div class="ttdoc">Default metedata table name.</div><div class="ttdef"><b>Definition:</b> databaseutils.hpp:52</div></div>
+<div class="ttc" id="anamespacehgardenpi_1_1v1_html_a13465566e273ce94e1ef9ea35ec621e4"><div class="ttname"><a href="namespacehgardenpi_1_1v1.html#a13465566e273ce94e1ef9ea35ec621e4">hgardenpi::v1::DBUpdate</a></div><div class="ttdeci">void DBUpdate(const Database &amp;database, uint8_t actualVersion)</div><div class="ttdoc">Update or create a database structure.</div><div class="ttdef"><b>Definition:</b> databaseutils.cpp:119</div></div>
+<div class="ttc" id="anamespacehgardenpi_1_1v1_html_a5c8a55f7a908107327228fae08e9e107"><div class="ttname"><a href="namespacehgardenpi_1_1v1.html#a5c8a55f7a908107327228fae08e9e107">hgardenpi::v1::Metadata</a></div><div class="ttdeci">std::tuple&lt; uint8_t, bool &gt; Metadata</div><div class="ttdoc">definition of matadata type</div><div class="ttdef"><b>Definition:</b> databaseutils.hpp:47</div></div>
+<div class="ttc" id="anamespacehgardenpi_html"><div class="ttname"><a href="namespacehgardenpi.html">hgardenpi</a></div><div class="ttdef"><b>Definition:</b> mqttclient.hpp:33</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

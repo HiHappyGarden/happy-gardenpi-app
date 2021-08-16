@@ -71,7 +71,7 @@ $(function() {
 <div class="title">threadengine.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// MIT License</span></div>
+<a href="threadengine_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// MIT License</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">// Copyright (c) $year. Happy GardenPI</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//</span></div>
@@ -103,12 +103,12 @@ $(function() {
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;queue&gt;</span></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &lt;future&gt;</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;interfaces/object.hpp&quot;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="object_8hpp.html">interfaces/object.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">//from wiringPi Happy GardenPi fork</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">extern</span> <span class="keyword">volatile</span> <span class="keywordtype">unsigned</span> wiringPiRunningThread ;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">extern</span> <span class="keyword">volatile</span> <span class="keywordtype">unsigned</span> <a class="code" href="threadengine_8hpp.html#a6d0b8116c6111a3f807b22e5a359777d">wiringPiRunningThread</a>;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">namespace </span>hgardenpi</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacehgardenpi.html">hgardenpi</a></div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;{</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">inline</span> <span class="keyword">namespace </span>v1</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    {</div>
@@ -127,89 +127,93 @@ $(function() {
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            ~<a class="code" href="classhgardenpi_1_1v1_1_1_thread_pool.html">ThreadPool</a>() noexcept <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            HGARDENPI_NO_COPY_NO_MOVE(<a class="code" href="classhgardenpi_1_1v1_1_1_thread_pool.html">ThreadPool</a>)</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            </div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            <span class="keyword">template</span>&lt;<span class="keyword">class </span>F, <span class="keyword">class</span>... Args&gt;</div>
-<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_thread_pool.html#a27355c231dc194cbefc30778b67a6829">   77</a></span>&#160;            <span class="keyword">auto</span> <a class="code" href="classhgardenpi_1_1v1_1_1_thread_pool.html#a27355c231dc194cbefc30778b67a6829">enqueue</a>(F &amp;&amp;f, Args &amp;&amp;... args)</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            -&gt; future&lt;<span class="keyword">typename</span> result_of&lt;F(Args...)&gt;::type&gt;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            {</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                <span class="keyword">using</span> ReturnType = <span class="keyword">typename</span> result_of&lt;F(Args...)&gt;::type;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                <span class="keyword">auto</span> task = make_shared&lt;packaged_task&lt;ReturnType()&gt; &gt;(</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                        bind(forward&lt;F&gt;(f), forward&lt;Args&gt;(args)...)</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                );</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;                future&lt;ReturnType&gt; res = task-&gt;get_future();</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;                {</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;                    unique_lock&lt;mutex&gt; lock(queueMutex);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;                    <span class="comment">// don&#39;t allow enqueueing after stopping the pool</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;                    <span class="keywordflow">if</span> (stop)</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;                        <span class="keywordflow">throw</span> runtime_error(<span class="stringliteral">&quot;enqueue on stopped ThreadPool&quot;</span>);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;                    tasks.emplace([task]</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;                    {</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;                        (*task)();</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;                    });</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;                }</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;                condition.notify_one();</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;                <span class="keywordflow">return</span> res;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            }</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_thread_pool.html#a0374ea3b0abb5697f15ed94cf6ea14ec">  109</a></span>&#160;            <span class="keyword">inline</span> <span class="keywordtype">string</span> <a class="code" href="classhgardenpi_1_1v1_1_1_thread_pool.html#a0374ea3b0abb5697f15ed94cf6ea14ec">toString</a>() noexcept<span class="keyword"> override</span></div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="keyword">            </span>{</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;                <span class="keywordflow">return</span> string(<span class="keyword">typeid</span>(*this).name()) + <span class="stringliteral">&quot; threadPooled&quot;</span> + to_string(threads);</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            }</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            <span class="comment">// need to keep track of threads so we can join them</span></div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;            vector&lt;thread&gt; workers;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;            <span class="comment">// the task queue</span></div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;            queue&lt;<span class="keyword">function</span>&lt;void()&gt;&gt; tasks;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;            <span class="comment">// synchronization</span></div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;            mutex queueMutex;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;            condition_variable condition;</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;            <span class="keywordtype">bool</span> stop;</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;            <span class="keywordtype">size_t</span> threads;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;        };</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            <span class="keyword">template</span>&lt;<span class="keyword">class </span>F, <span class="keyword">class</span>... Args&gt;</div>
+<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_thread_pool.html#a27355c231dc194cbefc30778b67a6829">   75</a></span>&#160;            <span class="keyword">auto</span> <a class="code" href="classhgardenpi_1_1v1_1_1_thread_pool.html#a27355c231dc194cbefc30778b67a6829">enqueue</a>(F &amp;&amp;f, Args &amp;&amp;... args)</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            -&gt; future&lt;<span class="keyword">typename</span> result_of&lt;F(Args...)&gt;::type&gt;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            {</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                <span class="keyword">using</span> ReturnType = <span class="keyword">typename</span> result_of&lt;F(Args...)&gt;::type;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                <span class="keyword">auto</span> task = make_shared&lt;packaged_task&lt;ReturnType()&gt; &gt;(</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                        bind(forward&lt;F&gt;(f), forward&lt;Args&gt;(args)...)</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                );</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                future&lt;ReturnType&gt; res = task-&gt;get_future();</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;                {</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;                    unique_lock&lt;mutex&gt; lock(queueMutex);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;                    <span class="comment">// don&#39;t allow enqueueing after stopping the pool</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;                    <span class="keywordflow">if</span> (stop)</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;                        <span class="keywordflow">throw</span> runtime_error(<span class="stringliteral">&quot;enqueue on stopped ThreadPool&quot;</span>);</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;                    tasks.emplace([task]</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;                    {</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;                        (*task)();</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;                    });</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;                }</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;                condition.notify_one();</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;                <span class="keywordflow">return</span> res;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            }</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
+<div class="line"><a name="l00107"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_thread_pool.html#a0374ea3b0abb5697f15ed94cf6ea14ec">  107</a></span>&#160;            <span class="keyword">inline</span> <span class="keywordtype">string</span> <a class="code" href="classhgardenpi_1_1v1_1_1_thread_pool.html#a0374ea3b0abb5697f15ed94cf6ea14ec">toString</a>() noexcept<span class="keyword"> override</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="keyword">            </span>{</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;                <span class="keywordflow">return</span> string(<span class="keyword">typeid</span>(*this).name()) + <span class="stringliteral">&quot; threadPooled&quot;</span> + to_string(threads);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            }</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            <span class="comment">// need to keep track of threads so we can join them</span></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            vector&lt;thread&gt; workers;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;            <span class="comment">// the task queue</span></div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;            queue&lt;<span class="keyword">function</span>&lt;void()&gt;&gt; tasks;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;            <span class="comment">// synchronization</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;            mutex queueMutex;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;            condition_variable condition;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;            <span class="keywordtype">bool</span> stop;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;            <span class="keywordtype">size_t</span> threads;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        };</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="preprocessor">#pragma endregion ThreadPool</span></div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160; </div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="preprocessor">#pragma endregion ThreadPool</span></div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="preprocessor">#pragma region variables</span></div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        <span class="keyword">extern</span> <span class="keywordtype">long</span> pidMain;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="preprocessor">#pragma region variables</span></div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <span class="keyword">extern</span> <span class="keywordtype">long</span> <a class="code" href="namespacehgardenpi_1_1v1.html#afb7c8a31e698c51c52314acf24e08e68">pidMain</a>;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="preprocessor">#pragma endregion variables</span></div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="preprocessor">#pragma endregion variables</span></div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="preprocessor">#pragma region functions</span></div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160; </div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="preprocessor">#pragma region functions</span></div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; </div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;        [[maybe_unused]] <span class="keywordtype">void</span> threadSleep(uint64_t millis, <span class="keywordtype">bool</span> conditions = <span class="keyword">true</span>) noexcept;</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160; </div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;        [[maybe_unused]] inline <span class="keywordtype">void</span> threadSleep(const Time &amp;millis, <span class="keywordtype">bool</span> conditions = true) noexcept</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        {</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;            threadSleep(<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(millis), conditions);</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;        }</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160; </div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;        [[maybe_unused]] <span class="keyword">inline</span> <span class="keywordtype">void</span> threadSleep(Time &amp;&amp;millis, <span class="keywordtype">bool</span> conditions = <span class="keyword">true</span>) noexcept</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        {</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;            threadSleep(<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(millis), conditions);</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        }</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160; </div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        [[maybe_unused]] vector&lt;long&gt; threadGetChildPid(<span class="keywordtype">long</span> exclude = -1) noexcept;</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;        [[maybe_unused]] <span class="keywordtype">void</span> <a class="code" href="namespacehgardenpi_1_1v1.html#a74729e9edfb51b36010b77c4a21bac76">threadSleep</a>(uint64_t millis, <span class="keywordtype">bool</span> conditions = <span class="keyword">true</span>) noexcept;</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160; </div>
+<div class="line"><a name="l00147"></a><span class="lineno"><a class="line" href="namespacehgardenpi_1_1v1.html#ae9438d8dbe71a9c442149fd714749861">  147</a></span>&#160;        [[maybe_unused]] inline <span class="keywordtype">void</span> <a class="code" href="namespacehgardenpi_1_1v1.html#a74729e9edfb51b36010b77c4a21bac76">threadSleep</a>(const <a class="code" href="namespacehgardenpi_1_1v1.html#abb2c64b750f9507ec1513e7af3e75e03">Time</a> &amp;millis, <span class="keywordtype">bool</span> conditions = true) noexcept</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        {</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;            <a class="code" href="namespacehgardenpi_1_1v1.html#a74729e9edfb51b36010b77c4a21bac76">threadSleep</a>(<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(millis), conditions);</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        }</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160; </div>
+<div class="line"><a name="l00157"></a><span class="lineno"><a class="line" href="namespacehgardenpi_1_1v1.html#a016424cb2c00bce9130aed2e79a270e6">  157</a></span>&#160;        [[maybe_unused]] <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespacehgardenpi_1_1v1.html#a74729e9edfb51b36010b77c4a21bac76">threadSleep</a>(<a class="code" href="namespacehgardenpi_1_1v1.html#abb2c64b750f9507ec1513e7af3e75e03">Time</a> &amp;&amp;millis, <span class="keywordtype">bool</span> conditions = <span class="keyword">true</span>) noexcept</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;        {</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;            <a class="code" href="namespacehgardenpi_1_1v1.html#a74729e9edfb51b36010b77c4a21bac76">threadSleep</a>(<span class="keyword">static_cast&lt;</span>uint64_t<span class="keyword">&gt;</span>(millis), conditions);</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        }</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160; </div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;        [[maybe_unused]] vector&lt;long&gt; <a class="code" href="namespacehgardenpi_1_1v1.html#aec72d4977012de37266cd358e1d31a46">threadGetChildPid</a>(<span class="keywordtype">long</span> exclude = -1);</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160; </div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="preprocessor">#pragma endregion functions</span></div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160; </div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="preprocessor">#pragma endregion functions</span></div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160; </div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    }</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;}</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160; </div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160; </div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    }</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;}</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160; </div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160; </div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_object_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_object.html">hgardenpi::Object</a></div><div class="ttdoc">Generic class ttat all functionals objects must extend.</div><div class="ttdef"><b>Definition:</b> object.hpp:39</div></div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_thread_pool_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_thread_pool.html">hgardenpi::ThreadPool</a></div><div class="ttdoc">Thread Pool class.</div><div class="ttdef"><b>Definition:</b> threadengine.hpp:51</div></div>
-<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_thread_pool_html_a0374ea3b0abb5697f15ed94cf6ea14ec"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_thread_pool.html#a0374ea3b0abb5697f15ed94cf6ea14ec">hgardenpi::v1::ThreadPool::toString</a></div><div class="ttdeci">string toString() noexcept override</div><div class="ttdoc">Return the name of object.</div><div class="ttdef"><b>Definition:</b> threadengine.hpp:109</div></div>
-<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_thread_pool_html_a27355c231dc194cbefc30778b67a6829"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_thread_pool.html#a27355c231dc194cbefc30778b67a6829">hgardenpi::v1::ThreadPool::enqueue</a></div><div class="ttdeci">auto enqueue(F &amp;&amp;f, Args &amp;&amp;... args) -&gt; future&lt; typename result_of&lt; F(Args...)&gt;::type &gt;</div><div class="ttdoc">add new work item to the pool</div><div class="ttdef"><b>Definition:</b> threadengine.hpp:77</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_thread_pool_html_a0374ea3b0abb5697f15ed94cf6ea14ec"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_thread_pool.html#a0374ea3b0abb5697f15ed94cf6ea14ec">hgardenpi::v1::ThreadPool::toString</a></div><div class="ttdeci">string toString() noexcept override</div><div class="ttdoc">Return the name of object.</div><div class="ttdef"><b>Definition:</b> threadengine.hpp:107</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_thread_pool_html_a27355c231dc194cbefc30778b67a6829"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_thread_pool.html#a27355c231dc194cbefc30778b67a6829">hgardenpi::v1::ThreadPool::enqueue</a></div><div class="ttdeci">auto enqueue(F &amp;&amp;f, Args &amp;&amp;... args) -&gt; future&lt; typename result_of&lt; F(Args...)&gt;::type &gt;</div><div class="ttdoc">add new work item to the pool</div><div class="ttdef"><b>Definition:</b> threadengine.hpp:75</div></div>
+<div class="ttc" id="anamespacehgardenpi_1_1v1_html_a74729e9edfb51b36010b77c4a21bac76"><div class="ttname"><a href="namespacehgardenpi_1_1v1.html#a74729e9edfb51b36010b77c4a21bac76">hgardenpi::v1::threadSleep</a></div><div class="ttdeci">void threadSleep(uint64_t millis, bool conditions) noexcept</div><div class="ttdoc">Sleep a thread for n millis.</div><div class="ttdef"><b>Definition:</b> threadengine.cpp:112</div></div>
+<div class="ttc" id="anamespacehgardenpi_1_1v1_html_abb2c64b750f9507ec1513e7af3e75e03"><div class="ttname"><a href="namespacehgardenpi_1_1v1.html#abb2c64b750f9507ec1513e7af3e75e03">hgardenpi::v1::Time</a></div><div class="ttdeci">Time</div><div class="ttdoc">Enum for manage times.</div><div class="ttdef"><b>Definition:</b> constants.hpp:51</div></div>
+<div class="ttc" id="anamespacehgardenpi_1_1v1_html_aec72d4977012de37266cd358e1d31a46"><div class="ttname"><a href="namespacehgardenpi_1_1v1.html#aec72d4977012de37266cd358e1d31a46">hgardenpi::v1::threadGetChildPid</a></div><div class="ttdeci">vector&lt; long &gt; threadGetChildPid(long exclude)</div><div class="ttdoc">Get the pid fot thread child.</div><div class="ttdef"><b>Definition:</b> threadengine.cpp:120</div></div>
+<div class="ttc" id="anamespacehgardenpi_1_1v1_html_afb7c8a31e698c51c52314acf24e08e68"><div class="ttname"><a href="namespacehgardenpi_1_1v1.html#afb7c8a31e698c51c52314acf24e08e68">hgardenpi::v1::pidMain</a></div><div class="ttdeci">long pidMain</div><div class="ttdef"><b>Definition:</b> threadengine.cpp:86</div></div>
+<div class="ttc" id="anamespacehgardenpi_html"><div class="ttname"><a href="namespacehgardenpi.html">hgardenpi</a></div><div class="ttdef"><b>Definition:</b> mqttclient.hpp:33</div></div>
+<div class="ttc" id="aobject_8hpp_html"><div class="ttname"><a href="object_8hpp.html">object.hpp</a></div></div>
+<div class="ttc" id="athreadengine_8hpp_html_a6d0b8116c6111a3f807b22e5a359777d"><div class="ttname"><a href="threadengine_8hpp.html#a6d0b8116c6111a3f807b22e5a359777d">wiringPiRunningThread</a></div><div class="ttdeci">volatile unsigned wiringPiRunningThread</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

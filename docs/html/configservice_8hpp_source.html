@@ -71,7 +71,7 @@ $(function() {
 <div class="title">configservice.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// MIT License</span></div>
+<a href="configservice_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// MIT License</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">// Copyright (c) 2021. Happy GardenPI</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//</span></div>
@@ -104,7 +104,7 @@ $(function() {
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;../pods/configinfo.hpp&quot;</span></div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">namespace </span>hgardenpi</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacehgardenpi.html">hgardenpi</a></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;{</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">inline</span> <span class="keyword">namespace </span>v1</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    {</div>
@@ -116,16 +116,23 @@ $(function() {
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        {</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            <span class="keyword">virtual</span> ~<a class="code" href="classhgardenpi_1_1v1_1_1_config_service.html">ConfigService</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_config_service.html#a1e27640cf926121dbfb7e420f4b2db19">   57</a></span>&#160;            <span class="keyword">virtual</span> <a class="code" href="structhgardenpi_1_1v1_1_1_config_info.html#a38eb5e5e31c5868558283cf0c89a6baf">ConfigInfo::Ptr</a> <a class="code" href="classhgardenpi_1_1v1_1_1_config_service.html#a1e27640cf926121dbfb7e420f4b2db19">read</a>() noexcept = 0;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        };</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    }</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;}</div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_config_service.html#ae3eaa98ca798c2d96e80406d37666d8a">   50</a></span>&#160;            <a class="code" href="classhgardenpi_1_1v1_1_1_config_service.html#ae3eaa98ca798c2d96e80406d37666d8a">ConfigService</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_config_service.html#a0b0dbeae1e504a625440baf69153f8bf">   51</a></span>&#160;            <span class="keyword">virtual</span> <a class="code" href="classhgardenpi_1_1v1_1_1_config_service.html#a0b0dbeae1e504a625440baf69153f8bf">~ConfigService</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            <a class="code" href="constants_8hpp.html#af7bda3be3826aae5ed688717e01c4618">HGARDENPI_NO_COPY_NO_MOVE</a>(<a class="code" href="classhgardenpi_1_1v1_1_1_config_service.html">ConfigService</a>)</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            </div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_config_service.html#a1e27640cf926121dbfb7e420f4b2db19">   59</a></span>&#160;            virtual <a class="code" href="structhgardenpi_1_1v1_1_1_config_info.html">ConfigInfo</a>::Ptr <a class="code" href="classhgardenpi_1_1v1_1_1_config_service.html#a1e27640cf926121dbfb7e420f4b2db19">read</a>() noexcept = 0;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        };</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    }</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;}</div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_config_service_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_config_service.html">hgardenpi::ConfigService</a></div><div class="ttdoc">Class for configuration reading from json file.</div><div class="ttdef"><b>Definition:</b> configservice.hpp:47</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_config_service_html_a0b0dbeae1e504a625440baf69153f8bf"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_config_service.html#a0b0dbeae1e504a625440baf69153f8bf">hgardenpi::v1::ConfigService::~ConfigService</a></div><div class="ttdeci">virtual ~ConfigService()=default</div></div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_config_service_html_a1e27640cf926121dbfb7e420f4b2db19"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_config_service.html#a1e27640cf926121dbfb7e420f4b2db19">hgardenpi::v1::ConfigService::read</a></div><div class="ttdeci">virtual ConfigInfo::Ptr read() noexcept=0</div><div class="ttdoc">read configuration</div></div>
-<div class="ttc" id="astructhgardenpi_1_1v1_1_1_config_info_html_a38eb5e5e31c5868558283cf0c89a6baf"><div class="ttname"><a href="structhgardenpi_1_1v1_1_1_config_info.html#a38eb5e5e31c5868558283cf0c89a6baf">hgardenpi::v1::ConfigInfo::Ptr</a></div><div class="ttdeci">shared_ptr&lt; ConfigInfo &gt; Ptr</div><div class="ttdoc">shared_ptr of ConfigInfo</div><div class="ttdef"><b>Definition:</b> configinfo.hpp:52</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_config_service_html_ae3eaa98ca798c2d96e80406d37666d8a"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_config_service.html#ae3eaa98ca798c2d96e80406d37666d8a">hgardenpi::v1::ConfigService::ConfigService</a></div><div class="ttdeci">ConfigService()=default</div></div>
+<div class="ttc" id="aconstants_8hpp_html_af7bda3be3826aae5ed688717e01c4618"><div class="ttname"><a href="constants_8hpp.html#af7bda3be3826aae5ed688717e01c4618">HGARDENPI_NO_COPY_NO_MOVE</a></div><div class="ttdeci">#define HGARDENPI_NO_COPY_NO_MOVE(clazz)</div><div class="ttdef"><b>Definition:</b> constants.hpp:30</div></div>
+<div class="ttc" id="anamespacehgardenpi_html"><div class="ttname"><a href="namespacehgardenpi.html">hgardenpi</a></div><div class="ttdef"><b>Definition:</b> mqttclient.hpp:33</div></div>
+<div class="ttc" id="astructhgardenpi_1_1v1_1_1_config_info_html"><div class="ttname"><a href="structhgardenpi_1_1v1_1_1_config_info.html">hgardenpi::v1::ConfigInfo</a></div><div class="ttdoc">Data container for HW informations.</div><div class="ttdef"><b>Definition:</b> configinfo.hpp:47</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -71,7 +71,7 @@ $(function() {
 <div class="title">dao.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// MIT License</span></div>
+<a href="dao_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// MIT License</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">// Copyright (c) 2021. Happy GardenPI</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//</span></div>
@@ -108,7 +108,7 @@ $(function() {
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#include &quot;../interfaces/object.hpp&quot;</span></div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">namespace </span>hgardenpi</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacehgardenpi.html">hgardenpi</a></div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;{</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">inline</span> <span class="keyword">namespace </span>v1</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    {</div>
@@ -123,32 +123,38 @@ $(function() {
 <div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_d_a_o.html">   53</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classhgardenpi_1_1v1_1_1_d_a_o.html">DAO</a> : <span class="keyword">public</span> <a class="code" href="classhgardenpi_1_1v1_1_1_object.html">Object</a></div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        {</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            <span class="keywordtype">string</span> dbFile;</div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_d_a_o.html#a35dda212b86cac0500fa487df73f7824">   56</a></span>&#160;            <span class="keywordtype">string</span> <a class="code" href="classhgardenpi_1_1v1_1_1_d_a_o.html#a35dda212b86cac0500fa487df73f7824">dbFile</a>;</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            <span class="keyword">inline</span> <span class="keyword">explicit</span> <a class="code" href="classhgardenpi_1_1v1_1_1_d_a_o.html">DAO</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;dbFile) noexcept : dbFile(dbFile)</div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_d_a_o.html#a5d7a11da21d58684752f903b62e248d8">   58</a></span>&#160;            <span class="keyword">inline</span> <span class="keyword">explicit</span> <a class="code" href="classhgardenpi_1_1v1_1_1_d_a_o.html#a5d7a11da21d58684752f903b62e248d8">DAO</a>(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;<a class="code" href="classhgardenpi_1_1v1_1_1_d_a_o.html#a35dda212b86cac0500fa487df73f7824">dbFile</a>) noexcept : <a class="code" href="classhgardenpi_1_1v1_1_1_d_a_o.html#a35dda212b86cac0500fa487df73f7824">dbFile</a>(<a class="code" href="classhgardenpi_1_1v1_1_1_d_a_o.html#a35dda212b86cac0500fa487df73f7824">dbFile</a>)</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            {</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            }</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            HGARDENPI_NO_COPY_NO_MOVE(<a class="code" href="classhgardenpi_1_1v1_1_1_d_a_o.html">DAO</a>)</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            </div>
-<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_d_a_o.html#ab7c26b296066d1db83a2804e2defa516">   70</a></span>&#160;            [[nodiscard]] <span class="keyword">virtual</span> shared_ptr&lt;T&gt; <a class="code" href="classhgardenpi_1_1v1_1_1_d_a_o.html#ab7c26b296066d1db83a2804e2defa516">fill</a>(<span class="keyword">const</span> Statement &amp;) <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_d_a_o.html#ac2af8d093f23239d7ecbee57956679b7">   77</a></span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classhgardenpi_1_1v1_1_1_d_a_o.html#ac2af8d093f23239d7ecbee57956679b7">insert</a>(<span class="keyword">const</span> shared_ptr&lt;T&gt; &amp;) <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_d_a_o.html#a27cf52f333ca4f96473b56ecf9dd6af2">   84</a></span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classhgardenpi_1_1v1_1_1_d_a_o.html#a27cf52f333ca4f96473b56ecf9dd6af2">update</a>(<span class="keyword">const</span> shared_ptr&lt;T&gt; &amp;) <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        };</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    }</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;}</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_d_a_o.html#a63355f326269e52a7579b3e5288c1e72">   64</a></span>&#160;            <span class="keyword">virtual</span> <a class="code" href="classhgardenpi_1_1v1_1_1_d_a_o.html#a63355f326269e52a7579b3e5288c1e72">~DAO</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <a class="code" href="constants_8hpp.html#af7bda3be3826aae5ed688717e01c4618">HGARDENPI_NO_COPY_NO_MOVE</a>(<a class="code" href="classhgardenpi_1_1v1_1_1_d_a_o.html">DAO</a>)</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            </div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_d_a_o.html#ab7c26b296066d1db83a2804e2defa516">   71</a></span>&#160;            [[nodiscard]] <span class="keyword">virtual</span> shared_ptr&lt;T&gt; <a class="code" href="classhgardenpi_1_1v1_1_1_d_a_o.html#ab7c26b296066d1db83a2804e2defa516">fill</a>(<span class="keyword">const</span> Statement &amp;) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_d_a_o.html#ac2af8d093f23239d7ecbee57956679b7">   78</a></span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classhgardenpi_1_1v1_1_1_d_a_o.html#ac2af8d093f23239d7ecbee57956679b7">insert</a>(<span class="keyword">const</span> shared_ptr&lt;T&gt; &amp;) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_d_a_o.html#a27cf52f333ca4f96473b56ecf9dd6af2">   85</a></span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classhgardenpi_1_1v1_1_1_d_a_o.html#a27cf52f333ca4f96473b56ecf9dd6af2">update</a>(<span class="keyword">const</span> shared_ptr&lt;T&gt; &amp;) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        };</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    }</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;}</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_d_a_o_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_d_a_o.html">hgardenpi::DAO</a></div><div class="ttdoc">base dao class</div><div class="ttdef"><b>Definition:</b> dao.hpp:54</div></div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_d_a_o_html_a27cf52f333ca4f96473b56ecf9dd6af2"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_d_a_o.html#a27cf52f333ca4f96473b56ecf9dd6af2">hgardenpi::v1::DAO::update</a></div><div class="ttdeci">virtual void update(const shared_ptr&lt; T &gt; &amp;) const =0</div><div class="ttdoc">update a pod in db</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_d_a_o_html_a35dda212b86cac0500fa487df73f7824"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_d_a_o.html#a35dda212b86cac0500fa487df73f7824">hgardenpi::v1::DAO::dbFile</a></div><div class="ttdeci">string dbFile</div><div class="ttdef"><b>Definition:</b> dao.hpp:56</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_d_a_o_html_a5d7a11da21d58684752f903b62e248d8"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_d_a_o.html#a5d7a11da21d58684752f903b62e248d8">hgardenpi::v1::DAO::DAO</a></div><div class="ttdeci">DAO(const string &amp;dbFile) noexcept</div><div class="ttdef"><b>Definition:</b> dao.hpp:58</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_d_a_o_html_a63355f326269e52a7579b3e5288c1e72"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_d_a_o.html#a63355f326269e52a7579b3e5288c1e72">hgardenpi::v1::DAO::~DAO</a></div><div class="ttdeci">virtual ~DAO()=default</div></div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_d_a_o_html_ab7c26b296066d1db83a2804e2defa516"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_d_a_o.html#ab7c26b296066d1db83a2804e2defa516">hgardenpi::v1::DAO::fill</a></div><div class="ttdeci">virtual shared_ptr&lt; T &gt; fill(const Statement &amp;) const =0</div><div class="ttdoc">fill a pod</div></div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_d_a_o_html_ac2af8d093f23239d7ecbee57956679b7"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_d_a_o.html#ac2af8d093f23239d7ecbee57956679b7">hgardenpi::v1::DAO::insert</a></div><div class="ttdeci">virtual void insert(const shared_ptr&lt; T &gt; &amp;) const =0</div><div class="ttdoc">insert a pod in db</div></div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_object_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_object.html">hgardenpi::Object</a></div><div class="ttdoc">Generic class ttat all functionals objects must extend.</div><div class="ttdef"><b>Definition:</b> object.hpp:39</div></div>
+<div class="ttc" id="aconstants_8hpp_html_af7bda3be3826aae5ed688717e01c4618"><div class="ttname"><a href="constants_8hpp.html#af7bda3be3826aae5ed688717e01c4618">HGARDENPI_NO_COPY_NO_MOVE</a></div><div class="ttdeci">#define HGARDENPI_NO_COPY_NO_MOVE(clazz)</div><div class="ttdef"><b>Definition:</b> constants.hpp:30</div></div>
+<div class="ttc" id="anamespacehgardenpi_html"><div class="ttname"><a href="namespacehgardenpi.html">hgardenpi</a></div><div class="ttdef"><b>Definition:</b> mqttclient.hpp:33</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
