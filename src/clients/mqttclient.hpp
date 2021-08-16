@@ -44,10 +44,13 @@ namespace hgardenpi
         {
 
         public:
+            /**
+             * @brief Callback on message received
+             */
             using MessageCallback = function<void(const uint8_t *, int)>;
 
             MQTTClient() = default;
-            ~MQTTClient() override = default;
+            virtual ~MQTTClient() = default;
             HGARDENPI_NO_COPY_NO_MOVE(MQTTClient)
 
             /**

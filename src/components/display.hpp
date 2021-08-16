@@ -44,6 +44,7 @@ namespace hgardenpi
         {
         public:
             Display() = default;
+            virtual ~Display() = default;
             HGARDENPI_NO_COPY_NO_MOVE(Display)
 
             /**

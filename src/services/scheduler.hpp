@@ -55,7 +55,9 @@ namespace hgardenpi
              */
             using OnScheduleEnd = std::function<void(const Station::Ptr &)>;
 
+            Scheduler() = default;
             virtual ~Scheduler() = default;
+            HGARDENPI_NO_COPY_NO_MOVE(Scheduler)
 
             /**
              * @brief Insert into scheduler an aggregation of station

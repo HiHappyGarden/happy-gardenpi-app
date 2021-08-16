@@ -46,7 +46,9 @@ namespace hgardenpi
         {
 
         public:
-            ~System() override = default;
+            System() = default;
+            virtual ~System() = default;
+            HGARDENPI_NO_COPY_NO_MOVE(System)
 
             /**
              * @brief Get the Config Info object

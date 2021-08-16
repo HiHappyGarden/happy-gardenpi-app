@@ -55,7 +55,10 @@ namespace hgardenpi
              */
             static inline const constexpr char DIVISOR = '|';
 
-            ~Device() override = default;
+            Device() = default;
+            virtual ~Device() = default;
+            HGARDENPI_NO_COPY_NO_MOVE(Device)
+
             /**
              * @brief Get CPU temperature
              * @exception throw exception when temp is not available

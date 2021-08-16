@@ -203,11 +203,15 @@ namespace hgardenpi
         static void onMqttClientMessageCallback(const uint8_t *data, int len)
         {
             auto system = const_cast<System *>(Engine::getInstance()->getFactory()->getSystem());
+
             if (!data)
             {
                 system->getLogService()->write(LOG_WARNING,"wrong message length 0");
                 return;
             }
+
+            //todo: protocol communication to implement
+            // start
             Station::Ptr station = Station::Ptr(new Station{
                 .id = 0,
                 .name = "shot station",
@@ -235,9 +239,7 @@ namespace hgardenpi
                 station->relayNumber = RelayModule::IN4;
             }
 
-            onSchedulerEventStart(station);
-            threadSleep(2'000);
-            onSchedulerEventEnd(station);
+            system->getScheduler()->shot(station);
         }
 
         static void onSchedulerEventStart(const Station::Ptr &station)

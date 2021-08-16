@@ -47,7 +47,9 @@ namespace hgardenpi
         {
 
         public:
+            ConfigService() = default;
             virtual ~ConfigService() = default;
+            HGARDENPI_NO_COPY_NO_MOVE(ConfigService)
 
             /**
              * @brief read configuration

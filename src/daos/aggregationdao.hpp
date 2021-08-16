@@ -48,9 +48,7 @@ namespace hgardenpi
 
             inline explicit AggregationDAO(const string &dbFile) noexcept : DAO(dbFile)
             {
-
             }
-            HGARDENPI_NO_COPY_NO_MOVE(AggregationDAO)
 
             /**
              * @brief Fill a Aggregation pod

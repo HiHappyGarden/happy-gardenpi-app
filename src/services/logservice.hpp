@@ -26,6 +26,8 @@
 #include <functional>
 #include <vector>
 
+#include "../constants.hpp"
+
 namespace hgardenpi
 {
     inline namespace v1
@@ -56,7 +58,10 @@ namespace hgardenpi
 
         public:
 
+            LogService() = default;
             virtual ~LogService() = default;
+            HGARDENPI_NO_COPY_NO_MOVE(LogService)
+            
             /**
              * @brief Write log on system 
              * 

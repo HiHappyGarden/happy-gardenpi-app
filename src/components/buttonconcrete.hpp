@@ -52,7 +52,6 @@ namespace hgardenpi
 
 
             explicit ButtonConcrete(int lcdRS) noexcept;
-            HGARDENPI_NO_COPY_NO_MOVE(ButtonConcrete)
 
             /**
              * @brief Set onClick triggered when button pull down

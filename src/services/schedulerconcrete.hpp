@@ -75,8 +75,6 @@ namespace hgardenpi
             explicit SchedulerConcrete(ThreadPool *threadPool);
             ~SchedulerConcrete() override;
 
-            HGARDENPI_NO_COPY_NO_MOVE(SchedulerConcrete)
-
             /**
              * @brief Initialize internal data
              */

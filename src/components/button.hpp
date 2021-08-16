@@ -42,6 +42,10 @@ namespace hgardenpi
         class Button : public Object
         {
         public:
+            Button() = default;
+            virtual ~Button() = default;
+            HGARDENPI_NO_COPY_NO_MOVE(Button)
+
             /**
              *  @brief Callback function
              */

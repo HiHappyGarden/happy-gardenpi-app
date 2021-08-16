@@ -43,7 +43,6 @@ namespace hgardenpi
         public:
             FactoryConcrete();
             ~FactoryConcrete() noexcept override;
-            HGARDENPI_NO_COPY_NO_MOVE(FactoryConcrete)
 
             /**
              * @brief Get the Device object

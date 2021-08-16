@@ -87,8 +87,6 @@ namespace hgardenpi
 
             ~MQTTClientMosquitto() noexcept override;
 
-            HGARDENPI_NO_COPY_NO_MOVE(MQTTClientMosquitto)
-
             /**
              * @brief start loop, place on the end of engine class
              * @exception runtime_error when something goes wrong

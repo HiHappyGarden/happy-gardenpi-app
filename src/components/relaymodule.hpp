@@ -51,6 +51,7 @@ namespace hgardenpi
 
 
             RelayModule() = default;
+            virtual ~RelayModule() = default;
 
             //remove copy constructor
             HGARDENPI_NO_COPY_NO_MOVE(RelayModule)

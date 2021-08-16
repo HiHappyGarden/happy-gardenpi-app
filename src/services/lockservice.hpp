@@ -24,6 +24,8 @@
 
 #include <sched.h>
 
+#include "../constants.hpp"
+
 namespace hgardenpi
 {
     inline namespace v1
@@ -43,7 +45,10 @@ namespace hgardenpi
             pid_t pidInExecution = 0;
 
         public:
+            LockService() = default;
             virtual ~LockService() = default;
+            HGARDENPI_NO_COPY_NO_MOVE(LockService)
+
             /** 
             * @brief Try to get lock.
             * 
