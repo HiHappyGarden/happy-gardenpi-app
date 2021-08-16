@@ -59,7 +59,6 @@ namespace hgardenpi
                     release();
                 }
             }
-            HGARDENPI_NO_COPY_NO_MOVE(LockServiceConcrete)
 
             /** 
             * @brief Try to get lock.

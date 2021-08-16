@@ -55,7 +55,6 @@ namespace hgardenpi
             inline explicit ConfigServiceConcrete(string &&configFile) noexcept : configFile(configFile)
             {
             }
-            HGARDENPI_NO_COPY_NO_MOVE(ConfigServiceConcrete)
 
             /**
              * @brief read configuration

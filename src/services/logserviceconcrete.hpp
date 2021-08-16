@@ -52,7 +52,6 @@ namespace hgardenpi
             {
                 closelog();
             }
-            HGARDENPI_NO_COPY_NO_MOVE(LogServiceConcrete)
 
             /**
              * @brief Write log on system 

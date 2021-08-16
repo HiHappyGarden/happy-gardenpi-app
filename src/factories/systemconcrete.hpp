@@ -50,7 +50,6 @@ namespace hgardenpi
         public:
             SystemConcrete() = default;
             ~SystemConcrete() override;
-            HGARDENPI_NO_COPY_NO_MOVE(SystemConcrete)
 
             /**
              * @brief Before all call this function fo initialize the project

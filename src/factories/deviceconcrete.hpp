@@ -55,7 +55,6 @@ namespace hgardenpi
         public:
             DeviceConcrete() = default;
             ~DeviceConcrete() noexcept override;
-            HGARDENPI_NO_COPY_NO_MOVE(DeviceConcrete)
 
             /**
              * @brief Before all call this function fo initialize the project

@@ -75,9 +75,6 @@ namespace hgardenpi
             LCD1602(int lcdRS, int lcdE, int lcd04, int lcd05, int lcd06, int lcd07, int lcdContrast);
             ~LCD1602() noexcept override;
 
-            //remove copy constructor
-            HGARDENPI_NO_COPY_NO_MOVE(LCD1602)
-
             /**
              * Print a string on display
              * @param[in]     txt    Text to show

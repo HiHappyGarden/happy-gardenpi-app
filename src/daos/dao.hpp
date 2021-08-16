@@ -61,6 +61,7 @@ namespace hgardenpi
             }
 
         public:
+            virtual ~DAO() = default;
             HGARDENPI_NO_COPY_NO_MOVE(DAO)
 
             /**

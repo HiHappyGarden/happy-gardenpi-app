@@ -49,9 +49,7 @@ namespace hgardenpi
 
             inline explicit StationDAO(const string &dbFile) noexcept : DAO(dbFile)
             {
-
             }
-            HGARDENPI_NO_COPY_NO_MOVE(StationDAO)
 
             /**
              * @brief Fill a Station pod
