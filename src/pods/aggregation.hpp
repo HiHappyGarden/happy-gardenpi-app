@@ -41,7 +41,7 @@ namespace hgardenpi
          *
          * in this struct there are all information for scheduling a single or block of station
          */
-        struct Aggregation
+        struct Aggregation final
         {
 
             /**

@@ -36,7 +36,7 @@ namespace hgardenpi
         /**
          * @brief Relay module for manage ELEGOO 4 Channel Relay
          */
-        class RelayModule4Channel : public RelayModule
+        class RelayModule4Channel final : public RelayModule
         {
         public:
             /**

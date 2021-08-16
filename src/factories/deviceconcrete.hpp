@@ -40,7 +40,7 @@ namespace hgardenpi
          * @brief Factory for management of peripherals devices
          * 
          */
-        class DeviceConcrete : public Device
+        class DeviceConcrete final : public Device
         {
             mutable std::atomic_bool contrastDisplayClicked = false;
 

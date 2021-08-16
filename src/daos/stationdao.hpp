@@ -39,7 +39,7 @@ namespace hgardenpi
         /**
          * @brief Direct Access Object for Station POD
          */
-        class StationDAO : public DAO<Station>
+        class StationDAO final : public DAO<Station>
         {
         public:
             /**
