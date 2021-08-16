@@ -61,7 +61,7 @@ namespace hgardenpi
 
         private:
 
-            static constexpr WiringPiPin wiringPiPinAll[] = {IN1, IN2, IN3, IN4};
+            static constexpr WiringPiPin wiringPiPinAll[]{IN1, IN2, IN3, IN4};
 
         };
     }
