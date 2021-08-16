@@ -71,7 +71,7 @@ $(function() {
 <div class="title">factoryconcrete.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// MIT License</span></div>
+<a href="factoryconcrete_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// MIT License</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">// Copyright (c) 2021 Happy GardenPI</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//</span></div>
@@ -95,10 +95,10 @@ $(function() {
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &quot;factory.hpp&quot;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="factory_8hpp.html">factory.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &quot;../interfaces/object.hpp&quot;</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">namespace </span>hgardenpi</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacehgardenpi.html">hgardenpi</a></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;{</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">inline</span> <span class="keyword">namespace </span>v1</div>
@@ -111,36 +111,38 @@ $(function() {
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            <a class="code" href="classhgardenpi_1_1v1_1_1_system.html">System</a> *system = <span class="keyword">nullptr</span>;</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            <a class="code" href="classhgardenpi_1_1v1_1_1_factory_concrete.html">FactoryConcrete</a>();</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            ~<a class="code" href="classhgardenpi_1_1v1_1_1_factory_concrete.html">FactoryConcrete</a>() noexcept <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            HGARDENPI_NO_COPY_NO_MOVE(<a class="code" href="classhgardenpi_1_1v1_1_1_factory_concrete.html">FactoryConcrete</a>)</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            </div>
-<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_factory_concrete.html#a81ab7981fe4169262da6a1042bc780ee">   53</a></span>&#160;            [[nodiscard]] <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classhgardenpi_1_1v1_1_1_device.html">Device</a> *<a class="code" href="classhgardenpi_1_1v1_1_1_factory_concrete.html#a81ab7981fe4169262da6a1042bc780ee">getDevice</a>() const noexcept<span class="keyword"> override</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keyword">            </span>{</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                <span class="keywordflow">return</span> device;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            }</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_factory_concrete.html#a741c31aada95d22c8ff58451dd1bb763">   63</a></span>&#160;            [[nodiscard]] <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classhgardenpi_1_1v1_1_1_system.html">System</a> *<a class="code" href="classhgardenpi_1_1v1_1_1_factory_concrete.html#a741c31aada95d22c8ff58451dd1bb763">getSystem</a>() const noexcept<span class="keyword"> override</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keyword">            </span>{</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                <span class="keywordflow">return</span> system;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            }</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_factory_concrete.html#a4033dcc92386922038893ff84b030076">   73</a></span>&#160;            <span class="keyword">inline</span> <span class="keywordtype">string</span> <a class="code" href="classhgardenpi_1_1v1_1_1_factory_concrete.html#a4033dcc92386922038893ff84b030076">toString</a>() noexcept<span class="keyword"> override</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keyword">            </span>{</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">typeid</span>(*this).name();</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            }</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        };</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    }</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;}</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            <a class="code" href="classhgardenpi_1_1v1_1_1_factory_concrete.html#a4bb334241fb54942dcf465d4da2eac32">FactoryConcrete</a>();</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <a class="code" href="classhgardenpi_1_1v1_1_1_factory_concrete.html#adf03bba4e828cea0e9d0830bb3f884dc">~FactoryConcrete</a>() noexcept <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_factory_concrete.html#a81ab7981fe4169262da6a1042bc780ee">   52</a></span>&#160;            [[nodiscard]] <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classhgardenpi_1_1v1_1_1_device.html">Device</a> *<a class="code" href="classhgardenpi_1_1v1_1_1_factory_concrete.html#a81ab7981fe4169262da6a1042bc780ee">getDevice</a>() const noexcept<span class="keyword"> override</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">            </span>{</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                <span class="keywordflow">return</span> device;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            }</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_factory_concrete.html#a741c31aada95d22c8ff58451dd1bb763">   62</a></span>&#160;            [[nodiscard]] <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classhgardenpi_1_1v1_1_1_system.html">System</a> *<a class="code" href="classhgardenpi_1_1v1_1_1_factory_concrete.html#a741c31aada95d22c8ff58451dd1bb763">getSystem</a>() const noexcept<span class="keyword"> override</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keyword">            </span>{</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                <span class="keywordflow">return</span> system;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            }</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_factory_concrete.html#a4033dcc92386922038893ff84b030076">   72</a></span>&#160;            <span class="keyword">inline</span> <span class="keywordtype">string</span> <a class="code" href="classhgardenpi_1_1v1_1_1_factory_concrete.html#a4033dcc92386922038893ff84b030076">toString</a>() noexcept<span class="keyword"> override</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keyword">            </span>{</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">typeid</span>(*this).name();</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            }</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        };</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    }</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;}</div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_device_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_device.html">hgardenpi::Device</a></div><div class="ttdoc">Factory for management of peripherals devices.</div><div class="ttdef"><b>Definition:</b> device.hpp:50</div></div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_factory_concrete_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_factory_concrete.html">hgardenpi::FactoryConcrete</a></div><div class="ttdoc">Concrete factory.</div><div class="ttdef"><b>Definition:</b> factoryconcrete.hpp:38</div></div>
-<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_factory_concrete_html_a4033dcc92386922038893ff84b030076"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_factory_concrete.html#a4033dcc92386922038893ff84b030076">hgardenpi::v1::FactoryConcrete::toString</a></div><div class="ttdeci">string toString() noexcept override</div><div class="ttdoc">Return the name of object.</div><div class="ttdef"><b>Definition:</b> factoryconcrete.hpp:73</div></div>
-<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_factory_concrete_html_a741c31aada95d22c8ff58451dd1bb763"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_factory_concrete.html#a741c31aada95d22c8ff58451dd1bb763">hgardenpi::v1::FactoryConcrete::getSystem</a></div><div class="ttdeci">const System * getSystem() const noexcept override</div><div class="ttdoc">Get the System object.</div><div class="ttdef"><b>Definition:</b> factoryconcrete.hpp:63</div></div>
-<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_factory_concrete_html_a81ab7981fe4169262da6a1042bc780ee"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_factory_concrete.html#a81ab7981fe4169262da6a1042bc780ee">hgardenpi::v1::FactoryConcrete::getDevice</a></div><div class="ttdeci">const Device * getDevice() const noexcept override</div><div class="ttdoc">Get the Device object.</div><div class="ttdef"><b>Definition:</b> factoryconcrete.hpp:53</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_factory_concrete_html_a4033dcc92386922038893ff84b030076"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_factory_concrete.html#a4033dcc92386922038893ff84b030076">hgardenpi::v1::FactoryConcrete::toString</a></div><div class="ttdeci">string toString() noexcept override</div><div class="ttdoc">Return the name of object.</div><div class="ttdef"><b>Definition:</b> factoryconcrete.hpp:72</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_factory_concrete_html_a4bb334241fb54942dcf465d4da2eac32"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_factory_concrete.html#a4bb334241fb54942dcf465d4da2eac32">hgardenpi::v1::FactoryConcrete::FactoryConcrete</a></div><div class="ttdeci">FactoryConcrete()</div><div class="ttdef"><b>Definition:</b> factoryconcrete.cpp:36</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_factory_concrete_html_a741c31aada95d22c8ff58451dd1bb763"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_factory_concrete.html#a741c31aada95d22c8ff58451dd1bb763">hgardenpi::v1::FactoryConcrete::getSystem</a></div><div class="ttdeci">const System * getSystem() const noexcept override</div><div class="ttdoc">Get the System object.</div><div class="ttdef"><b>Definition:</b> factoryconcrete.hpp:62</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_factory_concrete_html_a81ab7981fe4169262da6a1042bc780ee"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_factory_concrete.html#a81ab7981fe4169262da6a1042bc780ee">hgardenpi::v1::FactoryConcrete::getDevice</a></div><div class="ttdeci">const Device * getDevice() const noexcept override</div><div class="ttdoc">Get the Device object.</div><div class="ttdef"><b>Definition:</b> factoryconcrete.hpp:52</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_factory_concrete_html_adf03bba4e828cea0e9d0830bb3f884dc"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_factory_concrete.html#adf03bba4e828cea0e9d0830bb3f884dc">hgardenpi::v1::FactoryConcrete::~FactoryConcrete</a></div><div class="ttdeci">~FactoryConcrete() noexcept override</div><div class="ttdef"><b>Definition:</b> factoryconcrete.cpp:48</div></div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_factory_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_factory.html">hgardenpi::Factory</a></div><div class="ttdoc">Abstract factory for build system.</div><div class="ttdef"><b>Definition:</b> factory.hpp:39</div></div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_system_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_system.html">hgardenpi::System</a></div><div class="ttdoc">Factory for management of system services devices.</div><div class="ttdef"><b>Definition:</b> system.hpp:46</div></div>
+<div class="ttc" id="afactory_8hpp_html"><div class="ttname"><a href="factory_8hpp.html">factory.hpp</a></div></div>
+<div class="ttc" id="anamespacehgardenpi_html"><div class="ttname"><a href="namespacehgardenpi.html">hgardenpi</a></div><div class="ttdef"><b>Definition:</b> mqttclient.hpp:33</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

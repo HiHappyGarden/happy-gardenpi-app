@@ -71,7 +71,7 @@ $(function() {
 <div class="title">lockserviceconcrete.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// MIT License</span></div>
+<a href="lockserviceconcrete_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// MIT License</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">// Copyright (c) 2021 Happy GardenPI</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//</span></div>
@@ -97,11 +97,11 @@ $(function() {
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;cstdio&gt;</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &quot;lockservice.hpp&quot;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="lockservice_8hpp.html">lockservice.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &quot;../pods/configinfo.hpp&quot;</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &quot;../interfaces/object.hpp&quot;</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">namespace </span>hgardenpi</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacehgardenpi.html">hgardenpi</a></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;{</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">inline</span> <span class="keyword">namespace </span>v1</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    {</div>
@@ -117,36 +117,37 @@ $(function() {
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            {</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            }</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            <span class="keyword">inline</span> ~<a class="code" href="classhgardenpi_1_1v1_1_1_lock_service_concrete.html">LockServiceConcrete</a>() noexcept<span class="keyword"> override</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_lock_service_concrete.html#a972cdcc3c255a3a3f5077586e32149f9">   55</a></span>&#160;            <span class="keyword">inline</span> <a class="code" href="classhgardenpi_1_1v1_1_1_lock_service_concrete.html#a972cdcc3c255a3a3f5077586e32149f9">~LockServiceConcrete</a>() noexcept<span class="keyword"> override</span></div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keyword">            </span>{</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                <span class="keywordflow">if</span> (<a class="code" href="classhgardenpi_1_1v1_1_1_lock_service.html#ac9916e6a39120304fa3a0faafee95662">pidInExecution</a> == 0)</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                {</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                    <a class="code" href="classhgardenpi_1_1v1_1_1_lock_service_concrete.html#a81c00ed6eacbcd8d7e8ac939e10683a7">release</a>();</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                }</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            }</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            HGARDENPI_NO_COPY_NO_MOVE(<a class="code" href="classhgardenpi_1_1v1_1_1_lock_service_concrete.html#a53fa6605f02f30e69391e01139d79f0f">LockServiceConcrete</a>)</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <span class="keywordtype">bool</span> <a class="code" href="classhgardenpi_1_1v1_1_1_lock_service_concrete.html#a679f1cd4e5bc9a0c6d71adafb215285c">lock</a>() noexcept override;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classhgardenpi_1_1v1_1_1_lock_service_concrete.html#a81c00ed6eacbcd8d7e8ac939e10683a7">release</a>() const noexcept override;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_lock_service_concrete.html#adacf1a618ad6e55ffbabaffa44431a3b">   82</a></span>&#160;            inline <span class="keywordtype">string</span> <a class="code" href="classhgardenpi_1_1v1_1_1_lock_service_concrete.html#adacf1a618ad6e55ffbabaffa44431a3b">toString</a>() noexcept<span class="keyword"> override</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="keyword">            </span>{</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">typeid</span>(*this).name();</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            }</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        };</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    }</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;}</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            <span class="keywordtype">bool</span> <a class="code" href="classhgardenpi_1_1v1_1_1_lock_service_concrete.html#a679f1cd4e5bc9a0c6d71adafb215285c">lock</a>() noexcept override;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classhgardenpi_1_1v1_1_1_lock_service_concrete.html#a81c00ed6eacbcd8d7e8ac939e10683a7">release</a>() const noexcept override;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_lock_service_concrete.html#adacf1a618ad6e55ffbabaffa44431a3b">   81</a></span>&#160;            inline <span class="keywordtype">string</span> <a class="code" href="classhgardenpi_1_1v1_1_1_lock_service_concrete.html#adacf1a618ad6e55ffbabaffa44431a3b">toString</a>() noexcept<span class="keyword"> override</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="keyword">            </span>{</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">typeid</span>(*this).name();</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            }</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        };</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    }</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;}</div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_lock_service_concrete_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_lock_service_concrete.html">hgardenpi::LockServiceConcrete</a></div><div class="ttdoc">LockService check if exist another instance of Happy GardenPI.</div><div class="ttdef"><b>Definition:</b> lockserviceconcrete.hpp:43</div></div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_lock_service_concrete_html_a53fa6605f02f30e69391e01139d79f0f"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_lock_service_concrete.html#a53fa6605f02f30e69391e01139d79f0f">hgardenpi::v1::LockServiceConcrete::LockServiceConcrete</a></div><div class="ttdeci">LockServiceConcrete(const ConfigInfo::Ptr &amp;configInfo)</div><div class="ttdoc">Create new instance.</div><div class="ttdef"><b>Definition:</b> lockserviceconcrete.hpp:51</div></div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_lock_service_concrete_html_a679f1cd4e5bc9a0c6d71adafb215285c"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_lock_service_concrete.html#a679f1cd4e5bc9a0c6d71adafb215285c">hgardenpi::v1::LockServiceConcrete::lock</a></div><div class="ttdeci">bool lock() noexcept override</div><div class="ttdoc">Try to get lock.</div><div class="ttdef"><b>Definition:</b> lockserviceconcrete.cpp:36</div></div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_lock_service_concrete_html_a81c00ed6eacbcd8d7e8ac939e10683a7"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_lock_service_concrete.html#a81c00ed6eacbcd8d7e8ac939e10683a7">hgardenpi::v1::LockServiceConcrete::release</a></div><div class="ttdeci">void release() const noexcept override</div><div class="ttdoc">Release the lock obtained with lock().</div><div class="ttdef"><b>Definition:</b> lockserviceconcrete.cpp:63</div></div>
-<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_lock_service_concrete_html_adacf1a618ad6e55ffbabaffa44431a3b"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_lock_service_concrete.html#adacf1a618ad6e55ffbabaffa44431a3b">hgardenpi::v1::LockServiceConcrete::toString</a></div><div class="ttdeci">string toString() noexcept override</div><div class="ttdoc">Return the name of object.</div><div class="ttdef"><b>Definition:</b> lockserviceconcrete.hpp:82</div></div>
-<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_lock_service_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_lock_service.html">hgardenpi::LockService</a></div><div class="ttdoc">LockService check if exist another instance of Happy GardenPI.</div><div class="ttdef"><b>Definition:</b> lockservice.hpp:37</div></div>
-<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_lock_service_html_ac9916e6a39120304fa3a0faafee95662"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_lock_service.html#ac9916e6a39120304fa3a0faafee95662">hgardenpi::v1::LockService::pidInExecution</a></div><div class="ttdeci">pid_t pidInExecution</div><div class="ttdoc">if an other instance already run, this variable contain the reference pid</div><div class="ttdef"><b>Definition:</b> lockservice.hpp:43</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_lock_service_concrete_html_a972cdcc3c255a3a3f5077586e32149f9"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_lock_service_concrete.html#a972cdcc3c255a3a3f5077586e32149f9">hgardenpi::v1::LockServiceConcrete::~LockServiceConcrete</a></div><div class="ttdeci">~LockServiceConcrete() noexcept override</div><div class="ttdef"><b>Definition:</b> lockserviceconcrete.hpp:55</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_lock_service_concrete_html_adacf1a618ad6e55ffbabaffa44431a3b"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_lock_service_concrete.html#adacf1a618ad6e55ffbabaffa44431a3b">hgardenpi::v1::LockServiceConcrete::toString</a></div><div class="ttdeci">string toString() noexcept override</div><div class="ttdoc">Return the name of object.</div><div class="ttdef"><b>Definition:</b> lockserviceconcrete.hpp:81</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_lock_service_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_lock_service.html">hgardenpi::LockService</a></div><div class="ttdoc">LockService check if exist another instance of Happy GardenPI.</div><div class="ttdef"><b>Definition:</b> lockservice.hpp:39</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_lock_service_html_ac9916e6a39120304fa3a0faafee95662"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_lock_service.html#ac9916e6a39120304fa3a0faafee95662">hgardenpi::v1::LockService::pidInExecution</a></div><div class="ttdeci">pid_t pidInExecution</div><div class="ttdoc">if an other instance already run, this variable contain the reference pid</div><div class="ttdef"><b>Definition:</b> lockservice.hpp:45</div></div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_object_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_object.html">hgardenpi::Object</a></div><div class="ttdoc">Generic class ttat all functionals objects must extend.</div><div class="ttdef"><b>Definition:</b> object.hpp:39</div></div>
+<div class="ttc" id="alockservice_8hpp_html"><div class="ttname"><a href="lockservice_8hpp.html">lockservice.hpp</a></div></div>
+<div class="ttc" id="anamespacehgardenpi_html"><div class="ttname"><a href="namespacehgardenpi.html">hgardenpi</a></div><div class="ttdef"><b>Definition:</b> mqttclient.hpp:33</div></div>
 <div class="ttc" id="astructhgardenpi_1_1v1_1_1_config_info_html_a38eb5e5e31c5868558283cf0c89a6baf"><div class="ttname"><a href="structhgardenpi_1_1v1_1_1_config_info.html#a38eb5e5e31c5868558283cf0c89a6baf">hgardenpi::v1::ConfigInfo::Ptr</a></div><div class="ttdeci">shared_ptr&lt; ConfigInfo &gt; Ptr</div><div class="ttdoc">shared_ptr of ConfigInfo</div><div class="ttdef"><b>Definition:</b> configinfo.hpp:52</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

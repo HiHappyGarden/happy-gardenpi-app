@@ -71,7 +71,7 @@ $(function() {
 <div class="title">buttonconcrete.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// MIT License</span></div>
+<a href="buttonconcrete_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// MIT License</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">// Copyright (c) $year. Happy GardenPI</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//</span></div>
@@ -102,9 +102,9 @@ $(function() {
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;button.hpp&quot;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="button_8hpp.html">button.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">namespace </span>hgardenpi</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacehgardenpi.html">hgardenpi</a></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;{</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">inline</span> <span class="keyword">namespace </span>v1</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    {</div>
@@ -115,34 +115,37 @@ $(function() {
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        {</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <span class="keyword">enum</span> WiringPiPin : <span class="keywordtype">int</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_button_concrete.html#a14fed157621c36eba45621bd1d917590">   48</a></span>&#160;            <span class="keyword">enum</span> <a class="code" href="classhgardenpi_1_1v1_1_1_button_concrete.html#a14fed157621c36eba45621bd1d917590">WiringPiPin</a> : <span class="keywordtype">int</span></div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            {</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                PIN = 8, <span class="comment">// GPIO 3</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_button_concrete.html#a14fed157621c36eba45621bd1d917590a8b7ecf4d5273770bf51e786d61c561b8">   50</a></span>&#160;                <a class="code" href="classhgardenpi_1_1v1_1_1_button_concrete.html#a14fed157621c36eba45621bd1d917590a8b7ecf4d5273770bf51e786d61c561b8">PIN</a> = 8, <span class="comment">// GPIO 3</span></div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            };</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            <span class="keyword">explicit</span> <a class="code" href="classhgardenpi_1_1v1_1_1_button_concrete.html">ButtonConcrete</a>(<span class="keywordtype">int</span> lcdRS) noexcept;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            HGARDENPI_NO_COPY_NO_MOVE(<a class="code" href="classhgardenpi_1_1v1_1_1_button_concrete.html">ButtonConcrete</a>)</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classhgardenpi_1_1v1_1_1_button_concrete.html#a4b51ee339b2928228447cf13f2423b77">setOnClick</a>(<a class="code" href="classhgardenpi_1_1v1_1_1_button.html#a61236750ff6f20c713aca8b7252c519e">OnClick</a> onClick) <span class="keyword">const</span> noexcept <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classhgardenpi_1_1v1_1_1_button_concrete.html#ada8b3ec25c7691d0c58d837595557585">setInternalOnClick</a>(<a class="code" href="classhgardenpi_1_1v1_1_1_button.html#a61236750ff6f20c713aca8b7252c519e">OnClick</a> onClick) <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_button_concrete.html#a38fd34f29a60518ddad32f22c82699ed">   74</a></span>&#160;            <span class="keyword">inline</span> <span class="keywordtype">string</span> <a class="code" href="classhgardenpi_1_1v1_1_1_button_concrete.html#a38fd34f29a60518ddad32f22c82699ed">toString</a>() noexcept<span class="keyword"> override</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keyword">            </span>{</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">typeid</span>(*this).name();</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            }</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        };</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    }</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;}</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            <span class="keyword">explicit</span> <a class="code" href="classhgardenpi_1_1v1_1_1_button_concrete.html#a811a2aff137cd9830c10a08426e8640b">ButtonConcrete</a>(<span class="keywordtype">int</span> lcdRS) noexcept;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classhgardenpi_1_1v1_1_1_button_concrete.html#a4b51ee339b2928228447cf13f2423b77">setOnClick</a>(<a class="code" href="classhgardenpi_1_1v1_1_1_button.html#a61236750ff6f20c713aca8b7252c519e">OnClick</a> onClick) <span class="keyword">const</span> noexcept <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classhgardenpi_1_1v1_1_1_button_concrete.html#ada8b3ec25c7691d0c58d837595557585">setInternalOnClick</a>(<a class="code" href="classhgardenpi_1_1v1_1_1_button.html#a61236750ff6f20c713aca8b7252c519e">OnClick</a> onClick) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_button_concrete.html#a38fd34f29a60518ddad32f22c82699ed">   73</a></span>&#160;            <span class="keyword">inline</span> <span class="keywordtype">string</span> <a class="code" href="classhgardenpi_1_1v1_1_1_button_concrete.html#a38fd34f29a60518ddad32f22c82699ed">toString</a>() noexcept<span class="keyword"> override</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keyword">            </span>{</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">typeid</span>(*this).name();</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            }</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        };</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    }</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;}</div>
+<div class="ttc" id="abutton_8hpp_html"><div class="ttname"><a href="button_8hpp.html">button.hpp</a></div></div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_button_concrete_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_button_concrete.html">hgardenpi::ButtonConcrete</a></div><div class="ttdoc">Representation concrete of button.</div><div class="ttdef"><b>Definition:</b> buttonconcrete.hpp:45</div></div>
-<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_button_concrete_html_a38fd34f29a60518ddad32f22c82699ed"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_button_concrete.html#a38fd34f29a60518ddad32f22c82699ed">hgardenpi::v1::ButtonConcrete::toString</a></div><div class="ttdeci">string toString() noexcept override</div><div class="ttdoc">Return the name of object.</div><div class="ttdef"><b>Definition:</b> buttonconcrete.hpp:74</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_button_concrete_html_a14fed157621c36eba45621bd1d917590"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_button_concrete.html#a14fed157621c36eba45621bd1d917590">hgardenpi::v1::ButtonConcrete::WiringPiPin</a></div><div class="ttdeci">WiringPiPin</div><div class="ttdef"><b>Definition:</b> buttonconcrete.hpp:49</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_button_concrete_html_a14fed157621c36eba45621bd1d917590a8b7ecf4d5273770bf51e786d61c561b8"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_button_concrete.html#a14fed157621c36eba45621bd1d917590a8b7ecf4d5273770bf51e786d61c561b8">hgardenpi::v1::ButtonConcrete::PIN</a></div><div class="ttdeci">@ PIN</div><div class="ttdef"><b>Definition:</b> buttonconcrete.hpp:50</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_button_concrete_html_a38fd34f29a60518ddad32f22c82699ed"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_button_concrete.html#a38fd34f29a60518ddad32f22c82699ed">hgardenpi::v1::ButtonConcrete::toString</a></div><div class="ttdeci">string toString() noexcept override</div><div class="ttdoc">Return the name of object.</div><div class="ttdef"><b>Definition:</b> buttonconcrete.hpp:73</div></div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_button_concrete_html_a4b51ee339b2928228447cf13f2423b77"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_button_concrete.html#a4b51ee339b2928228447cf13f2423b77">hgardenpi::v1::ButtonConcrete::setOnClick</a></div><div class="ttdeci">void setOnClick(OnClick onClick) const noexcept override</div><div class="ttdoc">Set onClick triggered when button pull down.</div><div class="ttdef"><b>Definition:</b> buttonconcrete.cpp:50</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_button_concrete_html_a811a2aff137cd9830c10a08426e8640b"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_button_concrete.html#a811a2aff137cd9830c10a08426e8640b">hgardenpi::v1::ButtonConcrete::ButtonConcrete</a></div><div class="ttdeci">ButtonConcrete(int lcdRS) noexcept</div><div class="ttdef"><b>Definition:</b> buttonconcrete.cpp:42</div></div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_button_concrete_html_ada8b3ec25c7691d0c58d837595557585"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_button_concrete.html#ada8b3ec25c7691d0c58d837595557585">hgardenpi::v1::ButtonConcrete::setInternalOnClick</a></div><div class="ttdeci">void setInternalOnClick(OnClick onClick) const override</div><div class="ttdoc">Set onClick only for internal management triggered when button pull down.</div><div class="ttdef"><b>Definition:</b> buttonconcrete.cpp:55</div></div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_button_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_button.html">hgardenpi::Button</a></div><div class="ttdoc">Abstract button.</div><div class="ttdef"><b>Definition:</b> button.hpp:43</div></div>
-<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_button_html_a61236750ff6f20c713aca8b7252c519e"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_button.html#a61236750ff6f20c713aca8b7252c519e">hgardenpi::v1::Button::OnClick</a></div><div class="ttdeci">std::function&lt; void()&gt; OnClick</div><div class="ttdoc">Callback function.</div><div class="ttdef"><b>Definition:</b> button.hpp:48</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_button_html_a61236750ff6f20c713aca8b7252c519e"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_button.html#a61236750ff6f20c713aca8b7252c519e">hgardenpi::v1::Button::OnClick</a></div><div class="ttdeci">std::function&lt; void()&gt; OnClick</div><div class="ttdoc">Callback function.</div><div class="ttdef"><b>Definition:</b> button.hpp:52</div></div>
+<div class="ttc" id="anamespacehgardenpi_html"><div class="ttname"><a href="namespacehgardenpi.html">hgardenpi</a></div><div class="ttdef"><b>Definition:</b> mqttclient.hpp:33</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

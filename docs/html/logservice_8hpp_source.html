@@ -71,7 +71,7 @@ $(function() {
 <div class="title">logservice.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// MIT License</span></div>
+<a href="logservice_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// MIT License</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">// Copyright (c) 2021 Happy GardenPI</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//</span></div>
@@ -99,37 +99,54 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;functional&gt;</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">namespace </span>hgardenpi</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;{</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">inline</span> <span class="keyword">namespace </span>v1</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    {</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keyword">using</span> std::function;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keyword">using</span> std::string;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">using</span> std::vector;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keyword">enum class</span> LogLevel {</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            TRACE,</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            DBG,</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            INFO,</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            WARN,</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            ERROR,</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            FATAL</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        };</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_log_service.html">   54</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classhgardenpi_1_1v1_1_1_log_service.html">LogService</a></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        {</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &quot;../constants.hpp&quot;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacehgardenpi.html">hgardenpi</a></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;{</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">inline</span> <span class="keyword">namespace </span>v1</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    {</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">using</span> std::function;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keyword">using</span> std::string;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keyword">using</span> std::vector;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="namespacehgardenpi_1_1v1.html#a4eb8c7011ac865e062ba4d76d9d0d4fd">   43</a></span>&#160;        <span class="keyword">enum class</span> <a class="code" href="namespacehgardenpi_1_1v1.html#a4eb8c7011ac865e062ba4d76d9d0d4fd">LogLevel</a> {</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            <a class="code" href="namespacehgardenpi_1_1v1.html#a4eb8c7011ac865e062ba4d76d9d0d4fda2d3e4144aa384b18849ab9a8abad74d6">TRACE</a>,</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <a class="code" href="namespacehgardenpi_1_1v1.html#a4eb8c7011ac865e062ba4d76d9d0d4fdaa642a85aab89544a289fb1f29eab689d">DBG</a>,</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            <a class="code" href="namespacehgardenpi_1_1v1.html#a4eb8c7011ac865e062ba4d76d9d0d4fda551b723eafd6a31d444fcb2f5920fbd3">INFO</a>,</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            <a class="code" href="namespacehgardenpi_1_1v1.html#a4eb8c7011ac865e062ba4d76d9d0d4fda32bd8a1db2275458673903bdb84cb277">WARN</a>,</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <a class="code" href="namespacehgardenpi_1_1v1.html#a4eb8c7011ac865e062ba4d76d9d0d4fdabb1ca97ec761fc37101737ba0aa2e7c5">ERROR</a>,</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            <a class="code" href="namespacehgardenpi_1_1v1.html#a4eb8c7011ac865e062ba4d76d9d0d4fda19da7170bea36556dde582519795f3fc">FATAL</a></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        };</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_log_service.html">   56</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classhgardenpi_1_1v1_1_1_log_service.html">LogService</a></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        {</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            <span class="keyword">virtual</span> ~<a class="code" href="classhgardenpi_1_1v1_1_1_log_service.html">LogService</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_log_service.html#a0752ecfac00fbcb7860172b631de23e0">   67</a></span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classhgardenpi_1_1v1_1_1_log_service.html#a0752ecfac00fbcb7860172b631de23e0">write</a>(uint8_t level, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg, ...) const noexcept = 0;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        };</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    }</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;}</div>
-<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_log_service_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_log_service.html">hgardenpi::LogService</a></div><div class="ttdoc">Abstract LogService to write log.</div><div class="ttdef"><b>Definition:</b> logservice.hpp:55</div></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_log_service.html#ac50c2101779aa7cf477d98f5435e48e9">   61</a></span>&#160;            <a class="code" href="classhgardenpi_1_1v1_1_1_log_service.html#ac50c2101779aa7cf477d98f5435e48e9">LogService</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_log_service.html#a3b02ec59616968c4ff97bc4830efcf38">   62</a></span>&#160;            <span class="keyword">virtual</span> <a class="code" href="classhgardenpi_1_1v1_1_1_log_service.html#a3b02ec59616968c4ff97bc4830efcf38">~LogService</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            <a class="code" href="constants_8hpp.html#af7bda3be3826aae5ed688717e01c4618">HGARDENPI_NO_COPY_NO_MOVE</a>(<a class="code" href="classhgardenpi_1_1v1_1_1_log_service.html">LogService</a>)</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            </div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_log_service.html#a0752ecfac00fbcb7860172b631de23e0">   72</a></span>&#160;            virtual <span class="keywordtype">void</span> <a class="code" href="classhgardenpi_1_1v1_1_1_log_service.html#a0752ecfac00fbcb7860172b631de23e0">write</a>(uint8_t level, const <span class="keywordtype">char</span> *msg, ...) const noexcept = 0;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        };</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    }</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;}</div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_log_service_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_log_service.html">hgardenpi::LogService</a></div><div class="ttdoc">Abstract LogService to write log.</div><div class="ttdef"><b>Definition:</b> logservice.hpp:57</div></div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_log_service_html_a0752ecfac00fbcb7860172b631de23e0"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_log_service.html#a0752ecfac00fbcb7860172b631de23e0">hgardenpi::v1::LogService::write</a></div><div class="ttdeci">virtual void write(uint8_t level, const char *msg,...) const noexcept=0</div><div class="ttdoc">Write log on system.</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_log_service_html_a3b02ec59616968c4ff97bc4830efcf38"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_log_service.html#a3b02ec59616968c4ff97bc4830efcf38">hgardenpi::v1::LogService::~LogService</a></div><div class="ttdeci">virtual ~LogService()=default</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_log_service_html_ac50c2101779aa7cf477d98f5435e48e9"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_log_service.html#ac50c2101779aa7cf477d98f5435e48e9">hgardenpi::v1::LogService::LogService</a></div><div class="ttdeci">LogService()=default</div></div>
+<div class="ttc" id="aconstants_8hpp_html_af7bda3be3826aae5ed688717e01c4618"><div class="ttname"><a href="constants_8hpp.html#af7bda3be3826aae5ed688717e01c4618">HGARDENPI_NO_COPY_NO_MOVE</a></div><div class="ttdeci">#define HGARDENPI_NO_COPY_NO_MOVE(clazz)</div><div class="ttdef"><b>Definition:</b> constants.hpp:30</div></div>
+<div class="ttc" id="anamespacehgardenpi_1_1v1_html_a4eb8c7011ac865e062ba4d76d9d0d4fd"><div class="ttname"><a href="namespacehgardenpi_1_1v1.html#a4eb8c7011ac865e062ba4d76d9d0d4fd">hgardenpi::v1::LogLevel</a></div><div class="ttdeci">LogLevel</div><div class="ttdoc">Levelo of logging.</div><div class="ttdef"><b>Definition:</b> logservice.hpp:43</div></div>
+<div class="ttc" id="anamespacehgardenpi_1_1v1_html_a4eb8c7011ac865e062ba4d76d9d0d4fda19da7170bea36556dde582519795f3fc"><div class="ttname"><a href="namespacehgardenpi_1_1v1.html#a4eb8c7011ac865e062ba4d76d9d0d4fda19da7170bea36556dde582519795f3fc">hgardenpi::v1::LogLevel::FATAL</a></div><div class="ttdeci">@ FATAL</div></div>
+<div class="ttc" id="anamespacehgardenpi_1_1v1_html_a4eb8c7011ac865e062ba4d76d9d0d4fda2d3e4144aa384b18849ab9a8abad74d6"><div class="ttname"><a href="namespacehgardenpi_1_1v1.html#a4eb8c7011ac865e062ba4d76d9d0d4fda2d3e4144aa384b18849ab9a8abad74d6">hgardenpi::v1::LogLevel::TRACE</a></div><div class="ttdeci">@ TRACE</div></div>
+<div class="ttc" id="anamespacehgardenpi_1_1v1_html_a4eb8c7011ac865e062ba4d76d9d0d4fda32bd8a1db2275458673903bdb84cb277"><div class="ttname"><a href="namespacehgardenpi_1_1v1.html#a4eb8c7011ac865e062ba4d76d9d0d4fda32bd8a1db2275458673903bdb84cb277">hgardenpi::v1::LogLevel::WARN</a></div><div class="ttdeci">@ WARN</div></div>
+<div class="ttc" id="anamespacehgardenpi_1_1v1_html_a4eb8c7011ac865e062ba4d76d9d0d4fda551b723eafd6a31d444fcb2f5920fbd3"><div class="ttname"><a href="namespacehgardenpi_1_1v1.html#a4eb8c7011ac865e062ba4d76d9d0d4fda551b723eafd6a31d444fcb2f5920fbd3">hgardenpi::v1::LogLevel::INFO</a></div><div class="ttdeci">@ INFO</div></div>
+<div class="ttc" id="anamespacehgardenpi_1_1v1_html_a4eb8c7011ac865e062ba4d76d9d0d4fdaa642a85aab89544a289fb1f29eab689d"><div class="ttname"><a href="namespacehgardenpi_1_1v1.html#a4eb8c7011ac865e062ba4d76d9d0d4fdaa642a85aab89544a289fb1f29eab689d">hgardenpi::v1::LogLevel::DBG</a></div><div class="ttdeci">@ DBG</div></div>
+<div class="ttc" id="anamespacehgardenpi_1_1v1_html_a4eb8c7011ac865e062ba4d76d9d0d4fdabb1ca97ec761fc37101737ba0aa2e7c5"><div class="ttname"><a href="namespacehgardenpi_1_1v1.html#a4eb8c7011ac865e062ba4d76d9d0d4fdabb1ca97ec761fc37101737ba0aa2e7c5">hgardenpi::v1::LogLevel::ERROR</a></div><div class="ttdeci">@ ERROR</div></div>
+<div class="ttc" id="anamespacehgardenpi_html"><div class="ttname"><a href="namespacehgardenpi.html">hgardenpi</a></div><div class="ttdef"><b>Definition:</b> mqttclient.hpp:33</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

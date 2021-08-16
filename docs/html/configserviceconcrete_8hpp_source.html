@@ -71,7 +71,7 @@ $(function() {
 <div class="title">configserviceconcrete.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// MIT License</span></div>
+<a href="configserviceconcrete_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// MIT License</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">// Copyright (c) 2021 Happy GardenPI</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//</span></div>
@@ -97,12 +97,12 @@ $(function() {
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &quot;configservice.hpp&quot;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="configservice_8hpp.html">configservice.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &quot;../interfaces/object.hpp&quot;</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &quot;../constants.hpp&quot;</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;../pods/configinfo.hpp&quot;</span></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">namespace </span>hgardenpi</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacehgardenpi.html">hgardenpi</a></div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;{</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keyword">inline</span> <span class="keyword">namespace </span>v1</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    {</div>
@@ -119,24 +119,24 @@ $(function() {
 <div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_config_service_concrete.html#ad7babe086fa5dc74c372f7fab194f7b2">   55</a></span>&#160;            <span class="keyword">inline</span> <span class="keyword">explicit</span> <a class="code" href="classhgardenpi_1_1v1_1_1_config_service_concrete.html#ad7babe086fa5dc74c372f7fab194f7b2">ConfigServiceConcrete</a>(<span class="keywordtype">string</span> &amp;&amp;configFile) noexcept : configFile(configFile)</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            {</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            }</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            HGARDENPI_NO_COPY_NO_MOVE(<a class="code" href="classhgardenpi_1_1v1_1_1_config_service_concrete.html">ConfigServiceConcrete</a>)</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <a class="code" href="structhgardenpi_1_1v1_1_1_config_info.html#a38eb5e5e31c5868558283cf0c89a6baf">ConfigInfo::Ptr</a> <a class="code" href="classhgardenpi_1_1v1_1_1_config_service_concrete.html#a42bcdaf80aa6a67ae01baae1eac5faf6">read</a>() noexcept override;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_config_service_concrete.html#a216b4b683f03373761e1a6073fbcff84">   72</a></span>&#160;            inline <span class="keywordtype">string</span> <a class="code" href="classhgardenpi_1_1v1_1_1_config_service_concrete.html#a216b4b683f03373761e1a6073fbcff84">toString</a>() noexcept<span class="keyword"> override</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keyword">            </span>{</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">typeid</span>(*this).name();</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            }</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        };</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    }</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;}</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            <a class="code" href="structhgardenpi_1_1v1_1_1_config_info.html#a38eb5e5e31c5868558283cf0c89a6baf">ConfigInfo::Ptr</a> <a class="code" href="classhgardenpi_1_1v1_1_1_config_service_concrete.html#a42bcdaf80aa6a67ae01baae1eac5faf6">read</a>() noexcept override;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="classhgardenpi_1_1v1_1_1_config_service_concrete.html#a216b4b683f03373761e1a6073fbcff84">   71</a></span>&#160;            inline <span class="keywordtype">string</span> <a class="code" href="classhgardenpi_1_1v1_1_1_config_service_concrete.html#a216b4b683f03373761e1a6073fbcff84">toString</a>() noexcept<span class="keyword"> override</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword">            </span>{</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">typeid</span>(*this).name();</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            }</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        };</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    }</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;}</div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_config_service_concrete_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_config_service_concrete.html">hgardenpi::ConfigServiceConcrete</a></div><div class="ttdoc">Class for configuration reading from json file.</div><div class="ttdef"><b>Definition:</b> configserviceconcrete.hpp:45</div></div>
-<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_config_service_concrete_html_a216b4b683f03373761e1a6073fbcff84"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_config_service_concrete.html#a216b4b683f03373761e1a6073fbcff84">hgardenpi::v1::ConfigServiceConcrete::toString</a></div><div class="ttdeci">string toString() noexcept override</div><div class="ttdoc">Return the name of object.</div><div class="ttdef"><b>Definition:</b> configserviceconcrete.hpp:72</div></div>
+<div class="ttc" id="aclasshgardenpi_1_1v1_1_1_config_service_concrete_html_a216b4b683f03373761e1a6073fbcff84"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_config_service_concrete.html#a216b4b683f03373761e1a6073fbcff84">hgardenpi::v1::ConfigServiceConcrete::toString</a></div><div class="ttdeci">string toString() noexcept override</div><div class="ttdoc">Return the name of object.</div><div class="ttdef"><b>Definition:</b> configserviceconcrete.hpp:71</div></div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_config_service_concrete_html_a42bcdaf80aa6a67ae01baae1eac5faf6"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_config_service_concrete.html#a42bcdaf80aa6a67ae01baae1eac5faf6">hgardenpi::v1::ConfigServiceConcrete::read</a></div><div class="ttdeci">ConfigInfo::Ptr read() noexcept override</div><div class="ttdoc">read configuration</div><div class="ttdef"><b>Definition:</b> configserviceconcrete.cpp:38</div></div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_config_service_concrete_html_ad7babe086fa5dc74c372f7fab194f7b2"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_config_service_concrete.html#ad7babe086fa5dc74c372f7fab194f7b2">hgardenpi::v1::ConfigServiceConcrete::ConfigServiceConcrete</a></div><div class="ttdeci">ConfigServiceConcrete(string &amp;&amp;configFile) noexcept</div><div class="ttdoc">Construct a new Config Serivce object.</div><div class="ttdef"><b>Definition:</b> configserviceconcrete.hpp:55</div></div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_config_service_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_config_service.html">hgardenpi::ConfigService</a></div><div class="ttdoc">Class for configuration reading from json file.</div><div class="ttdef"><b>Definition:</b> configservice.hpp:47</div></div>
 <div class="ttc" id="aclasshgardenpi_1_1v1_1_1_object_html"><div class="ttname"><a href="classhgardenpi_1_1v1_1_1_object.html">hgardenpi::Object</a></div><div class="ttdoc">Generic class ttat all functionals objects must extend.</div><div class="ttdef"><b>Definition:</b> object.hpp:39</div></div>
+<div class="ttc" id="aconfigservice_8hpp_html"><div class="ttname"><a href="configservice_8hpp.html">configservice.hpp</a></div></div>
+<div class="ttc" id="anamespacehgardenpi_html"><div class="ttname"><a href="namespacehgardenpi.html">hgardenpi</a></div><div class="ttdef"><b>Definition:</b> mqttclient.hpp:33</div></div>
 <div class="ttc" id="astructhgardenpi_1_1v1_1_1_config_info_html_a38eb5e5e31c5868558283cf0c89a6baf"><div class="ttname"><a href="structhgardenpi_1_1v1_1_1_config_info.html#a38eb5e5e31c5868558283cf0c89a6baf">hgardenpi::v1::ConfigInfo::Ptr</a></div><div class="ttdeci">shared_ptr&lt; ConfigInfo &gt; Ptr</div><div class="ttdoc">shared_ptr of ConfigInfo</div><div class="ttdef"><b>Definition:</b> configinfo.hpp:52</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

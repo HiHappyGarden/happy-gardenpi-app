@@ -18,7 +18,7 @@ set(DB_FILE "./hgardenpi.db")
 set(TEST 1)
 
 #date param
-set(BUILD_TZ_LIB ON)
+#set(BUILD_TZ_LIB ON)
 
 
 include(FetchContent)

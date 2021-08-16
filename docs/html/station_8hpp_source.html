@@ -71,7 +71,7 @@ $(function() {
 <div class="title">station.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// MIT License</span></div>
+<a href="station_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// MIT License</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">// Copyright (c) 2021. Happy GardenPI</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//</span></div>
@@ -105,7 +105,7 @@ $(function() {
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;../constants.hpp&quot;</span></div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">namespace </span>hgardenpi</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacehgardenpi.html">hgardenpi</a></div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;{</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keyword">inline</span> <span class="keyword">namespace </span>v1</div>
@@ -115,7 +115,7 @@ $(function() {
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keyword">using</span> std::shared_ptr;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keyword">using</span> std::list;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="structhgardenpi_1_1v1_1_1_station.html">   48</a></span>&#160;        <span class="keyword">struct </span><a class="code" href="structhgardenpi_1_1v1_1_1_station.html">Station</a></div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="structhgardenpi_1_1v1_1_1_station.html">   48</a></span>&#160;        <span class="keyword">struct </span><a class="code" href="structhgardenpi_1_1v1_1_1_station.html">Station</a> final</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        {</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
 <div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="structhgardenpi_1_1v1_1_1_station.html#af6aa513b2d07432f4921b7f8b7d7c119">   54</a></span>&#160;            <span class="keyword">typedef</span> shared_ptr&lt;Station&gt; <a class="code" href="structhgardenpi_1_1v1_1_1_station.html#af6aa513b2d07432f4921b7f8b7d7c119">Ptr</a>;</div>
@@ -126,13 +126,17 @@ $(function() {
 <div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="structhgardenpi_1_1v1_1_1_station.html#aa84fc1c270765dc4a219fa5b20fb13f9">   71</a></span>&#160;            uint8_t <a class="code" href="structhgardenpi_1_1v1_1_1_station.html#aa84fc1c270765dc4a219fa5b20fb13f9">relayNumber</a>;</div>
 <div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="structhgardenpi_1_1v1_1_1_station.html#ae1b73ad185e36a7373687b2fa9a7dd99">   75</a></span>&#160;            uint <a class="code" href="structhgardenpi_1_1v1_1_1_station.html#ae1b73ad185e36a7373687b2fa9a7dd99">wateringTime</a>;</div>
 <div class="line"><a name="l00079"></a><span class="lineno"><a class="line" href="structhgardenpi_1_1v1_1_1_station.html#a7b151b9ba239915763b72f19cbd5d90e">   79</a></span>&#160;            uint16_t <a class="code" href="structhgardenpi_1_1v1_1_1_station.html#a7b151b9ba239915763b72f19cbd5d90e">weight</a>;</div>
-<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="structhgardenpi_1_1v1_1_1_station.html#a2e2ed9db2512c23ce306e960d42beacd">   83</a></span>&#160;            Status <a class="code" href="structhgardenpi_1_1v1_1_1_station.html#a2e2ed9db2512c23ce306e960d42beacd">status</a> = Status::ACTIVE;</div>
+<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="structhgardenpi_1_1v1_1_1_station.html#a2e2ed9db2512c23ce306e960d42beacd">   83</a></span>&#160;            <a class="code" href="namespacehgardenpi_1_1v1.html#ae4211c89a71f1c1b8562370259691589">Status</a> <a class="code" href="structhgardenpi_1_1v1_1_1_station.html#a2e2ed9db2512c23ce306e960d42beacd">status</a> = <a class="code" href="namespacehgardenpi_1_1v1.html#ae4211c89a71f1c1b8562370259691589a18ff74f43da410c5529f7d6fca84f115">Status::ACTIVE</a>;</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        };</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="keyword">typedef</span> list&lt;Station::Ptr&gt; Stations;</div>
+<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="namespacehgardenpi_1_1v1.html#afaec65b3262ff7baf43185c298e30763">   89</a></span>&#160;        <span class="keyword">typedef</span> list&lt;Station::Ptr&gt; <a class="code" href="namespacehgardenpi_1_1v1.html#afaec65b3262ff7baf43185c298e30763">Stations</a>;</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    }</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;}</div>
+<div class="ttc" id="anamespacehgardenpi_1_1v1_html_ae4211c89a71f1c1b8562370259691589"><div class="ttname"><a href="namespacehgardenpi_1_1v1.html#ae4211c89a71f1c1b8562370259691589">hgardenpi::v1::Status</a></div><div class="ttdeci">Status</div><div class="ttdef"><b>Definition:</b> constants.hpp:79</div></div>
+<div class="ttc" id="anamespacehgardenpi_1_1v1_html_ae4211c89a71f1c1b8562370259691589a18ff74f43da410c5529f7d6fca84f115"><div class="ttname"><a href="namespacehgardenpi_1_1v1.html#ae4211c89a71f1c1b8562370259691589a18ff74f43da410c5529f7d6fca84f115">hgardenpi::v1::Status::ACTIVE</a></div><div class="ttdeci">@ ACTIVE</div></div>
+<div class="ttc" id="anamespacehgardenpi_1_1v1_html_afaec65b3262ff7baf43185c298e30763"><div class="ttname"><a href="namespacehgardenpi_1_1v1.html#afaec65b3262ff7baf43185c298e30763">hgardenpi::v1::Stations</a></div><div class="ttdeci">list&lt; Station::Ptr &gt; Stations</div><div class="ttdoc">List of Station shared_ptr.</div><div class="ttdef"><b>Definition:</b> station.hpp:89</div></div>
+<div class="ttc" id="anamespacehgardenpi_html"><div class="ttname"><a href="namespacehgardenpi.html">hgardenpi</a></div><div class="ttdef"><b>Definition:</b> mqttclient.hpp:33</div></div>
 <div class="ttc" id="astructhgardenpi_1_1v1_1_1_station_html"><div class="ttname"><a href="structhgardenpi_1_1v1_1_1_station.html">hgardenpi::Station</a></div><div class="ttdoc">pod who describe a irrigation station</div><div class="ttdef"><b>Definition:</b> station.hpp:49</div></div>
 <div class="ttc" id="astructhgardenpi_1_1v1_1_1_station_html_a2e2ed9db2512c23ce306e960d42beacd"><div class="ttname"><a href="structhgardenpi_1_1v1_1_1_station.html#a2e2ed9db2512c23ce306e960d42beacd">hgardenpi::v1::Station::status</a></div><div class="ttdeci">Status status</div><div class="ttdoc">status of station</div><div class="ttdef"><b>Definition:</b> station.hpp:83</div></div>
 <div class="ttc" id="astructhgardenpi_1_1v1_1_1_station_html_a46cef8b7e291ec665ba1fa960339d621"><div class="ttname"><a href="structhgardenpi_1_1v1_1_1_station.html#a46cef8b7e291ec665ba1fa960339d621">hgardenpi::v1::Station::description</a></div><div class="ttdeci">string description</div><div class="ttdoc">description of station</div><div class="ttdef"><b>Definition:</b> station.hpp:67</div></div>
