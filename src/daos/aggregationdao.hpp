@@ -38,7 +38,7 @@ namespace hgardenpi
         /**
          * @brief AggregationDAO dao
          */
-        class AggregationDAO : public DAO<Aggregation>
+        class AggregationDAO final : public DAO<Aggregation>
         {
         public:
             /**

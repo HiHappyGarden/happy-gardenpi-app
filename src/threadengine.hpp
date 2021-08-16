@@ -33,7 +33,7 @@
 #include "interfaces/object.hpp"
 
 //from wiringPi Happy GardenPi fork
-extern volatile unsigned wiringPiRunningThread ;
+extern volatile unsigned wiringPiRunningThread;
 
 namespace hgardenpi
 {
@@ -62,8 +62,6 @@ namespace hgardenpi
              * @brief the destructor joins all threads
              */
             ~ThreadPool() noexcept override;
-
-            HGARDENPI_NO_COPY_NO_MOVE(ThreadPool)
 
             /**
              * @brief add new work item to the pool

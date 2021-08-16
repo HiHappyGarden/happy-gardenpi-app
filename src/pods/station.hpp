@@ -45,7 +45,7 @@ namespace hgardenpi
         /**
          * @brief pod who describe a irrigation station
          */
-        struct Station
+        struct Station final
         {
 
             /**
