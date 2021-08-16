@@ -93,6 +93,7 @@ namespace hgardenpi
          * @brief Exec sys command
          * @param cmd sys command
          * @return stdout of command
+         * @throw runtime_error when popen fail
          */
         static vector<string> exec(string &&cmd) {
             array<char, 128> buffer{};
