@@ -59,7 +59,7 @@ namespace hgardenpi
         };
 
         /**
-         * Day of week representation
+         * @brief Day of week representation
          */
         enum DayOfWeek : uint8_t
         {
@@ -73,21 +73,33 @@ namespace hgardenpi
         };
 
         /**
-         * Status of an element in the project
-         */
-        enum class Status: uint8_t
+        * @brief Status of an element in the project
+        */
+        enum class Status : uint8_t
         {
+            /**
+             * @brief element not active
+             */
             UNACTIVE = 0,
+            /**
+             * @brief element active
+             */
             ACTIVE,
+            /**
+             * @brief element error
+             */
             ERROR,
         };
 
-        //hw needed for Happy GardenPI
-
-        //raspberry pi 4
+        //hw tested for Happy GardenPI
+        /**
+         * @brief raspberry pi 4 hw
+         */
         const constexpr inline char *HW_V1_DEBUG = "BCM2711";
 
-        //raspberry pi zero
+        /**
+         * @brief raspberry pi zero hw
+         */
         const constexpr inline char *HW_V1 = "BCM2835";
 
     }
