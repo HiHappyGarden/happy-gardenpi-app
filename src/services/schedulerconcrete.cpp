@@ -55,11 +55,13 @@ namespace hgardenpi
 #if HGARDENPI_TEST > 0
                     //test
                     tm* now = new tm {
+                        .tm_sec = 32,
                         .tm_min = 30,
                         .tm_hour = 10,
-                        .tm_wday = 5
+                        .tm_wday = 5,
+
                     };
-                    cout << "now wday:" << to_string(now->tm_wday) << " now hours:" << to_string(now->tm_hour) << " minutes:" << to_string(now->tm_min) << endl;
+                    cout << "now wday:" << to_string(now->tm_wday) << " now hours:" << to_string(now->tm_hour) << " minutes:" << to_string(now->tm_min) << " sec:" << to_string(now->tm_sec) << endl;
 #else
                     time_t t = time(0);   // get time now
                     tm* now = localtime(&t);
@@ -116,7 +118,6 @@ namespace hgardenpi
 #if HGARDENPI_TEST > 0
                     //test
                     delete now;
-//                    self->aggregations.clear();
 #endif
 
                     //cycle all scheduledStations event for watering a station of garden
