@@ -43,18 +43,18 @@ RelayModule4Channel::RelayModule4Channel(int in1, int in2, int in3, int in4) noe
     pinMode(in2, OUTPUT);
     pinMode(in3, OUTPUT);
     pinMode(in4, OUTPUT);
-    digitalWrite(in1, HIGH);
-    digitalWrite(in2, HIGH);
-    digitalWrite(in3, HIGH);
-    digitalWrite(in4, HIGH);
-}
-
-hgardenpi::v1::RelayModule4Channel::~RelayModule4Channel()
-{
     digitalWrite(in1, LOW);
     digitalWrite(in2, LOW);
     digitalWrite(in3, LOW);
     digitalWrite(in4, LOW);
+}
+
+hgardenpi::v1::RelayModule4Channel::~RelayModule4Channel()
+{
+    digitalWrite(in1, HIGH);
+    digitalWrite(in2, HIGH);
+    digitalWrite(in3, HIGH);
+    digitalWrite(in4, HIGH);
 }
 
 
@@ -68,7 +68,7 @@ void RelayModule4Channel::setRelay(const Station::Ptr &ptr, bool status) const
 #if HGARDENPI_TEST > 1
     digitalWrite(IN1, status);
 #else
-    digitalWrite(ptr->relayNumber, !status);
+    digitalWrite(ptr->relayNumber, status);
 #endif
 }
 
