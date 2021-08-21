@@ -1,5 +1,5 @@
 <component name="CopyrightManager">
-  <settings>
+  <settings default="hgardenpi">
     <module2copyright>
       <element module="All" copyright="hgardenpi" />
     </module2copyright>
