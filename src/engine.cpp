@@ -197,7 +197,6 @@ namespace hgardenpi
 
             //enable broker loop
             mqttClient->loop();
-
         }
 
         static void onMqttClientMessageCallback(const uint8_t *data, int len)

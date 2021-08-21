@@ -38,6 +38,11 @@ namespace hgardenpi
          */
         class RelayModule4Channel final : public RelayModule
         {
+
+            int in1;
+            int in2;
+            int in3;
+            int in4;
         public:
             /**
              * Create new instance of
@@ -47,6 +52,7 @@ namespace hgardenpi
              * @param in4 pin of relay 1
              */
             RelayModule4Channel(int in1, int in2, int in3, int in4) noexcept;
+            ~RelayModule4Channel() override;
 
             void setRelay(const Station::Ptr &ptr, bool status) const override;
 

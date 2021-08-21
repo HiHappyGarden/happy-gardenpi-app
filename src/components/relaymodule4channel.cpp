@@ -37,13 +37,26 @@ using namespace std;
 
 using hgardenpi::v1::RelayModule4Channel;
 
-RelayModule4Channel::RelayModule4Channel(int in1, int in2, int in3, int in4) noexcept
+RelayModule4Channel::RelayModule4Channel(int in1, int in2, int in3, int in4) noexcept : in1(in1), in2(in2), in3(in3), in4(in4)
 {
     pinMode(in1, OUTPUT);
     pinMode(in2, OUTPUT);
     pinMode(in3, OUTPUT);
     pinMode(in4, OUTPUT);
+    digitalWrite(in1, HIGH);
+    digitalWrite(in2, HIGH);
+    digitalWrite(in3, HIGH);
+    digitalWrite(in4, HIGH);
 }
+
+hgardenpi::v1::RelayModule4Channel::~RelayModule4Channel()
+{
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, LOW);
+    digitalWrite(in3, LOW);
+    digitalWrite(in4, LOW);
+}
+
 
 void RelayModule4Channel::setRelay(const Station::Ptr &ptr, bool status) const
 {
@@ -52,12 +65,12 @@ void RelayModule4Channel::setRelay(const Station::Ptr &ptr, bool status) const
         throw runtime_error("pin: " + to_string(ptr->relayNumber) + " not allowed");
     }
 
-#if HGARDENPI_TEST > 0
+#if HGARDENPI_TEST > 1
     digitalWrite(IN1, status);
-    cout << "Station: " << ptr->name << " pin: " << to_string(ptr->relayNumber) << " status: " << to_string(status) << endl;
 #else
-    digitalWrite(ptr->relayNumber, status);
+    digitalWrite(ptr->relayNumber, !status);
 #endif
 }
+
 
 
