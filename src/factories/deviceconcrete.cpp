@@ -88,24 +88,32 @@ namespace hgardenpi
             //initialize WiringPI
             wiringPiSetup();
 
+            int wiringPiMajor;
+            int wiringPiMinor;
+            wiringPiVersion(&wiringPiMajor, &wiringPiMinor);
+            logService->write(LOG_INFO, "wiringPiVersion: %d %d", wiringPiMajor, wiringPiMinor);
+
+            //display instance
             display = new(nothrow) LCD1602(LCD1602::LCD_RS,
                                            LCD1602::LCD_E,
                                            LCD1602::LCD_D4,
                                            LCD1602::LCD_D5,
-                                                LCD1602::LCD_D6,
-                                                LCD1602::LCD_D7,
-                                                LCD1602::LCD_CONTRAST);
+                                           LCD1602::LCD_D6,
+                                           LCD1602::LCD_D7,
+                                           LCD1602::LCD_CONTRAST);
             if (!display)
             {
                 throw runtime_error("no memory for display");
             }
 
+            //button instance
             button = new(nothrow) ButtonConcrete(ButtonConcrete::PIN);
             if (!button)
             {
                 throw runtime_error("no memory for button");
             }
 
+            //relay instance
             relayModule = new(nothrow) RelayModule4Channel(RelayModule4Channel::IN1,
                                                            RelayModule4Channel::IN2,
                                                            RelayModule4Channel::IN3,
