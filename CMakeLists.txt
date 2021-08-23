@@ -56,7 +56,6 @@ link_directories("${RASPBIAN_ROOTFS}/usr/lib")
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/3thparty/happy-gardenpi-protocol)
 
 add_executable(hgardenpi
-#        3thparty/happy-gardenpi-protocol/src/protocol.cpp
         src/clients/mqttclientmosquitto.cpp
         src/clients/mqttclientmosquitto.hpp
         src/clients/mqttclient.hpp
