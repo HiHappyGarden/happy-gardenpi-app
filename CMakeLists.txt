@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-PROJECT(hgardenpi VERSION "0.50.0" LANGUAGES CXX C)
+PROJECT(hgardenpi VERSION "0.51.0" LANGUAGES CXX C)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -latomic")
@@ -23,10 +23,10 @@ set(TEST 1)
 
 include(FetchContent)
 
-message(STATUS " start json download")
+message(STATUS " start nlohmann_json download")
 FetchContent_Declare(json
         GIT_REPOSITORY https://github.com/ArthurSonzogni/nlohmann_json_cmake_fetchcontent
-        GIT_TAG v3.9.1)
+        GIT_TAG v3.10.0)
 FetchContent_GetProperties(json)
 if (NOT json_POPULATED)
     FetchContent_Populate(json)
@@ -47,14 +47,16 @@ FetchContent_MakeAvailable(SQLiteCpp)
 #        )
 #FetchContent_MakeAvailable(date_src)
 
-
+#add_subdirectory (3thparty/happy-gardenpi-protocol)
 configure_file(config.h.in ../src/config.h)
+include_directories("3thparty/happy-gardenpi-protocol/include")
 include_directories("${RASPBIAN_ROOTFS}/usr/local/include")
 include_directories("${RASPBIAN_ROOTFS}/usr/include")
 link_directories("${RASPBIAN_ROOTFS}/usr/local/lib")
 link_directories("${RASPBIAN_ROOTFS}/usr/lib")
 
 add_executable(hgardenpi
+        3thparty/happy-gardenpi-protocol/src/protocol.cpp
         src/clients/mqttclientmosquitto.cpp
         src/clients/mqttclientmosquitto.hpp
         src/clients/mqttclient.hpp
