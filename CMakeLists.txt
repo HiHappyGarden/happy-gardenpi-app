@@ -47,16 +47,16 @@ FetchContent_MakeAvailable(SQLiteCpp)
 #        )
 #FetchContent_MakeAvailable(date_src)
 
-#add_subdirectory (3thparty/happy-gardenpi-protocol)
 configure_file(config.h.in ../src/config.h)
-include_directories("3thparty/happy-gardenpi-protocol/include")
 include_directories("${RASPBIAN_ROOTFS}/usr/local/include")
 include_directories("${RASPBIAN_ROOTFS}/usr/include")
 link_directories("${RASPBIAN_ROOTFS}/usr/local/lib")
 link_directories("${RASPBIAN_ROOTFS}/usr/lib")
 
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/3thparty/happy-gardenpi-protocol)
+
 add_executable(hgardenpi
-        3thparty/happy-gardenpi-protocol/src/protocol.cpp
+#        3thparty/happy-gardenpi-protocol/src/protocol.cpp
         src/clients/mqttclientmosquitto.cpp
         src/clients/mqttclientmosquitto.hpp
         src/clients/mqttclient.hpp
@@ -130,5 +130,5 @@ target_link_libraries(hgardenpi
         sqlite3
         dl
         nlohmann_json::nlohmann_json
-#        date::date
+        hgardenpi_protocol
         )
