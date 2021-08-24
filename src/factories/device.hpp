@@ -88,6 +88,12 @@ namespace hgardenpi
             virtual void printOnDisplay(const string &txt, bool enableFormat) const noexcept = 0;
 
             /**
+             * If set false break the default display visualization
+             * @param printOnDisplayInternalInfo false break the default display visualization, true permit to show default display visualization
+             */
+            virtual void setPrintOnDisplayInternalInfo(bool printOnDisplayInternalInfo) noexcept = 0;
+
+            /**
              * @brief Get display instance
              * @return display instance
              */

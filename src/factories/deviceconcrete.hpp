@@ -52,6 +52,7 @@ namespace hgardenpi
             Button *button = nullptr;
             const RelayModule *relayModule = nullptr;
 
+
         public:
             DeviceConcrete() = default;
             ~DeviceConcrete() noexcept override;
@@ -106,7 +107,10 @@ namespace hgardenpi
              * @param txt to show
              * @param enableFormat enable center formation
              */
-            void printOnDisplay(const string &txt, bool enableFormat) const noexcept override;
+            inline void printOnDisplay(const string &txt, bool enableFormat) const noexcept override
+            {
+                printOnDisplay(txt, enableFormat, false);
+            }
 
             /**
              * @brief Get display instance
@@ -136,6 +140,15 @@ namespace hgardenpi
             }
 
             /**
+             * If set false break the default display visualization
+             * @param printOnDisplayInternalInfo false break the default display visualization, true permit to show default display visualization
+             */
+            inline void setPrintOnDisplayInternalInfo(bool printOnDisplayInternalInfo) noexcept override
+            {
+               this->printOnDisplayInternalInfo = printOnDisplayInternalInfo;
+            }
+
+            /**
              * @brief Return the name of object
              *
              * @return std::string name of object
@@ -146,6 +159,16 @@ namespace hgardenpi
             }
 
         private:
+
+            mutable bool printOnDisplayInternalInfo;
+
+            /**
+             * @brief Print on system display
+             * @param txt to show
+             * @param enableFormat enable center formation
+             * @param internal only for internal purpose
+             */
+            void printOnDisplay(const string &txt, bool enableFormat, bool internal) const noexcept;
 
             /**
              * Show mac address and ip to display

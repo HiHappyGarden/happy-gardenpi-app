@@ -31,12 +31,15 @@
 #include "utilities/databaseutils.hpp"
 #include "clients/mqttclientmosquitto.hpp"
 #include "components/relaymodule.hpp"
+#include "components/display.hpp"
 #include "threadengine.hpp"
 
 namespace hgardenpi
 {
     inline namespace v1
     {
+
+        static string firstWaterSupplyTitle = "";
 
         /**
          * @brief Event triggered when MqttClient message arrive
@@ -203,7 +206,7 @@ namespace hgardenpi
             // start
             Station::Ptr station = Station::Ptr(new Station{
                 .id = 0,
-                .name = "shot station",
+                .name = "manual ",
                 .description = "... none",
                 .wateringTime = 5,
                 .weight = 10
@@ -214,18 +217,22 @@ namespace hgardenpi
             if ("station1" == str)
             {
                 station->relayNumber = RelayModule::IN1;
+                station->name += "1";
             }
             else if ("station2" == str)
             {
                 station->relayNumber = RelayModule::IN2;
+                station->name += "2";
             }
             else if ("station3" == str)
             {
                 station->relayNumber = RelayModule::IN3;
+                station->name += "3";
             }
             else if ("station4" == str)
             {
                 station->relayNumber = RelayModule::IN4;
+                station->name += "4";
             }
 
             system->getScheduler()->shot(station);
@@ -239,7 +246,17 @@ namespace hgardenpi
             //start station and log
             try
             {
+                //start water supply
                 device->getRelayModule()->setRelay(station, true);
+
+                //turn on contrast display
+                device->getDisplay()->setContrastTurnOn(true);
+
+                //turn off interna display info
+                device->setPrintOnDisplayInternalInfo(false);
+
+                //print info water supply
+                device->printOnDisplay(_(("Water supply|" + station->name).c_str()), true);
                 system->getLogService()->write(LOG_INFO,"Start station: %s", station->name.c_str());
             }
             catch (const exception &e)
@@ -258,6 +275,9 @@ namespace hgardenpi
             try
             {
                 device->getRelayModule()->setRelay(station, false);
+                device->getDisplay()->setContrastTurnOn(false);
+                device->setPrintOnDisplayInternalInfo(true);
+                device->getDisplay()->clear();
                 system->getLogService()->write(LOG_INFO, "End station: %s", station->name.c_str());
             }
             catch (const exception &e)
