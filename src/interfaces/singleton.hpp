@@ -72,7 +72,7 @@ namespace hgardenpi
              */
             static T *getInstance() noexcept
             {
-                call_once(once, []()
+                call_once(once, []
                           { instance.reset(new (std::nothrow) T); });
                 return instance.get();
             }
@@ -87,7 +87,7 @@ namespace hgardenpi
             template <typename... Args>
             static T *getInstance(Args &&...args) noexcept
             {
-                call_once(once, [&]()
+                call_once(once, [&]
                           { instance.reset(new (std::nothrow) T(forward<Args>(args)...)); });
                 return instance.get();
             }

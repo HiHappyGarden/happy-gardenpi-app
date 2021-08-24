@@ -68,6 +68,9 @@ add_executable(hgardenpi
         src/components/relaymodule.hpp
         src/components/relaymodule4channel.cpp
         src/components/relaymodule4channel.hpp
+        src/factories/communication.hpp
+        src/factories/communicationconcrete.cpp
+        src/factories/communicationconcrete.hpp
         src/factories/device.hpp
         src/factories/deviceconcrete.cpp
         src/factories/deviceconcrete.hpp

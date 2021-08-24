@@ -131,28 +131,28 @@ namespace hgardenpi
         void DeviceConcrete::start()
         {
             //set contrast management when click on button
-            button->setInternalOnClick([&]
+            button->setInternalOnClick([&]() noexcept
             {
                 turnOnContrastDisplayFor();
+
+                printOnDisplayStandardInfo();
             });
 
             //set display loop
             if (threadPool)
             {
-                threadPool->enqueue([&]
+                threadPool->enqueue([&]() noexcept
                 {
-                    turnOnContrastDisplayFor(Time::DISPLAY_SHORT_TICK);
+                    turnOnContrastDisplayFor();
 
                     printOnDisplay("Happy|Garden PI", true);
 
                     threadSleep(Time::DISPLAY_SHORT_TICK);
 
-                    turnOnContrastDisplayFor(Time::DISPLAY_CONTRAST_TICK);
+                    turnOnContrastDisplayFor();
 
-                    while (wiringPiRunningThread)
-                    {
-                        printOnDisplayStandardInfo();
-                    }
+                    printOnDisplayStandardInfo();
+
                 });
             }
 

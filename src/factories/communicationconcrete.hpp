@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2021 Happy GardenPI
+// Copyright (c) 2021. Happy GardenPI
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -19,48 +19,33 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+//
 
-#include <iostream>
+//
+// Created by Antonio Salsi on 24/08/21.
+//
 
-#include "engine.hpp"
+#pragma once
 
-int main(int argc, char *argv[]) try
+#include "communication.hpp"
+
+namespace hgardenpi
 {
 
+    inline namespace v1
+    {
 
-
-    setlocale(LC_ALL, "");
-    bindtextdomain(HGARDENPI_NAME, "./locale");
-    textdomain(HGARDENPI_NAME);
-
-
-        //initialize Happy GardenPI
-        hgardenpi::initialize();
-
-        //start loop
-        hgardenpi::start();
-
-        return EXIT_SUCCESS;
+        /**
+         * @brief Abstract factory for communication system
+         *
+         */
+        class CommunicationConcrete : public Object
+        {
+        public:
+            CommunicationConcrete() = default;
+            ~CommunicationConcrete() noexcept override;
+        };
     }
-catch (const std::exception &e)
-{
-    std::cerr << "catch exception: " << e.what() << std::endl;
-    hgardenpi::Engine::getInstance()
-            ->getFactory()
-            ->getSystem()
-            ->getLogService()
-            ->write(LOG_ERR, "catch exception: %s", e.what());
-
-    hgardenpi::Engine::getInstance()
-            ->getFactory()
-            ->getSystem()
-            ->getLogService()
-            ->write(LOG_ERR, "exit failure");
-
-    return EXIT_FAILURE;
 }
-catch (...)
-{
-    std::cerr << "unhandled exception" << std::endl;
-    return EXIT_FAILURE;
-}
+
+
