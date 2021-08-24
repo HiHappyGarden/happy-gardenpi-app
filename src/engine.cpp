@@ -27,6 +27,7 @@
 #include <SQLiteCpp/Database.h>
 
 #include "constants.hpp"
+#include "factories/factoryconcrete.hpp"
 #include "utilities/databaseutils.hpp"
 #include "clients/mqttclientmosquitto.hpp"
 #include "components/relaymodule.hpp"
@@ -65,12 +66,6 @@ namespace hgardenpi
                 delete factory;
                 factory = nullptr;
             }
-
-            if (mqttClient)
-            {
-                delete mqttClient;
-                mqttClient = nullptr;
-            }
             if (aggregationDao)
             {
                 delete aggregationDao;
@@ -88,6 +83,7 @@ namespace hgardenpi
             //get pointers of system and device
             auto system = const_cast<System *>(Engine::getInstance()->factory->getSystem());
             auto device = const_cast<Device *>(Engine::getInstance()->factory->getDevice());
+            auto communication = const_cast<Communication *>(Engine::getInstance()->factory->getCommunication());
 
             //init system
             system->initialize();
@@ -95,6 +91,10 @@ namespace hgardenpi
             //init device
             device->setLogService(system->getLogService());
             device->initialize();
+
+            //init communication
+            communication->setInfos(device->getInfo()->serial, system->getConfigInfo());
+            communication->initialize();
 
             //initialize threadPool
             system->initializeThreadPool(device->getInfo()->cpu);
@@ -149,18 +149,8 @@ namespace hgardenpi
 
 
             //initialize mosquittopp
-            Engine::getInstance()->mqttClient = new (nothrow) MQTTClientMosquitto(device->getInfo()->serial,
-                                                                        system->getConfigInfo()->broker.host,
-                                                                        system->getConfigInfo()->broker.user,
-                                                                        system->getConfigInfo()->broker.passwd,
-                                                                        system->getConfigInfo()->broker.port
-            );
-            if(!Engine::getInstance()->mqttClient)
-            {
-                throw runtime_error("no memory for mqttClient");
-            }
-            Engine::getInstance()->mqttClient->setLogService(system->getLogService());
-            Engine::getInstance()->mqttClient->initialize();
+            communication->getMqttClient()->setLogService(system->getLogService());
+            communication->getMqttClient()->initialize();
 
         }
 
@@ -169,7 +159,7 @@ namespace hgardenpi
             //get pointers of all element
             auto system = const_cast<System *>(Engine::getInstance()->factory->getSystem());
             auto device = const_cast<Device *>(Engine::getInstance()->factory->getDevice());
-            auto mqttClient = Engine::getInstance()->mqttClient;
+            auto communication = const_cast<Communication *>(Engine::getInstance()->factory->getCommunication());
             auto aggregationDao = Engine::getInstance()->aggregationDao;
             auto stationDao = Engine::getInstance()->stationDao;
 
@@ -183,20 +173,20 @@ namespace hgardenpi
             system->getScheduler()->initialize();
 
             //set all callback
-            mqttClient->setOnMessageCallback(&onMqttClientMessageCallback);
+            communication->getMqttClient()->setOnMessageCallback(&onMqttClientMessageCallback);
             system->getScheduler()->setScheduleStart(&onSchedulerEventStart);
             system->getScheduler()->setScheduleEnd(&onSchedulerEventEnd);
 
             //start all
             device->start(); //keep this position
             system->start(); //keep this position
-            mqttClient->start();
+            communication->start();
 
             //write stat service on log
             system->getLogService()->write(LOG_INFO, _("service ready"));
 
             //enable broker loop
-            mqttClient->loop();
+            communication->getMqttClient()->loop();
         }
 
         static void onMqttClientMessageCallback(const uint8_t *data, int len)

@@ -28,6 +28,7 @@
 #pragma once
 
 #include "communication.hpp"
+#include "../clients/mqttclient.hpp"
 
 namespace hgardenpi
 {
@@ -36,14 +37,68 @@ namespace hgardenpi
     {
 
         /**
-         * @brief Abstract factory for communication system
-         *
+         * @brief Concrete implementation of communication factory
          */
-        class CommunicationConcrete : public Object
+        class CommunicationConcrete final : public Communication
         {
+            string serial;
+            ConfigInfo::Ptr info;
+
+            MQTTClient *mqttClient = nullptr;
         public:
             CommunicationConcrete() = default;
-            ~CommunicationConcrete() noexcept override;
+            inline ~CommunicationConcrete() noexcept override
+            {
+                if (mqttClient)
+                {
+                    delete mqttClient;
+                    mqttClient = nullptr;
+                }
+            }
+
+            /**
+             * @brief Before all call this function fo initialize the project
+             *
+             * @exception runtime_error when hardware requisites mismatch
+             */
+            void initialize() override;
+
+            /**
+             * @brief Start main look and scheduler
+             * @exception runtime_error when hardware requisites mismatch
+             */
+            void start() override;
+
+            /**
+             * @brief Get the Mqtt Client object
+             *
+             * @return const MQTTClient* mqtt client instance
+             */
+            [[nodiscard]] inline MQTTClient *getMqttClient() const noexcept override
+            {
+                return mqttClient;
+            }
+
+            /**
+             * Set infos for initialize components
+             * @param serial HW serial
+             * @param info Configuration info
+             */
+            inline void setInfos(const string &serial, const ConfigInfo::Ptr &info) noexcept override
+            {
+                this->serial = serial;
+                this->info = info;
+            }
+
+            /**
+             * @brief Return the name of object
+             *
+             * @return std::string name of object
+             */
+            inline string toString() noexcept override
+            {
+                return typeid(*this).name();
+            }
         };
     }
 }

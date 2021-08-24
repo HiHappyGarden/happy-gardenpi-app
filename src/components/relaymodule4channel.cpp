@@ -51,10 +51,10 @@ RelayModule4Channel::RelayModule4Channel(int in1, int in2, int in3, int in4) noe
 
 hgardenpi::v1::RelayModule4Channel::~RelayModule4Channel()
 {
-    digitalWrite(in1, HIGH);
-    digitalWrite(in2, HIGH);
-    digitalWrite(in3, HIGH);
-    digitalWrite(in4, HIGH);
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, LOW);
+    digitalWrite(in3, LOW);
+    digitalWrite(in4, LOW);
 }
 
 
