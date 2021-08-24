@@ -24,8 +24,6 @@
 
 #include "interfaces/singleton.hpp"
 #include "factories/factory.hpp"
-#include "factories/factoryconcrete.hpp"
-#include "clients/mqttclient.hpp"
 #include "daos/aggregationdao.hpp"
 #include "daos/stationdao.hpp"
 
@@ -44,7 +42,7 @@ namespace hgardenpi
             friend void start();
 
             Factory *factory = nullptr;
-            MQTTClient *mqttClient = nullptr;
+
 
             AggregationDAO *aggregationDao = nullptr;
             StationDAO *stationDao = nullptr;
@@ -55,16 +53,6 @@ namespace hgardenpi
             Engine();
             ~Engine() noexcept override;
             HGARDENPI_NO_COPY_NO_MOVE(Engine)
-
-            /**
-             * @brief Get the Mqtt Client object
-             * 
-             * @return const MQTTClient* mqtt client instance
-             */
-            [[nodiscard]] inline const MQTTClient *getMqttClient() const noexcept
-            {
-                return mqttClient;
-            }
 
             /**
              * @brief Get the Mqtt Client object

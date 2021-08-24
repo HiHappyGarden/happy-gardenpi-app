@@ -27,7 +27,12 @@
 
 #pragma once
 
+#include <string>
+
 #include "../interfaces/object.hpp"
+#include "../interfaces/initializable.hpp"
+#include "../interfaces/startable.hpp"
+#include "../pods/configinfo.hpp"
 
 namespace hgardenpi
 {
@@ -35,18 +40,34 @@ namespace hgardenpi
     inline namespace v1
     {
 
+        class MQTTClient;
+
         /**
          * @brief Abstract factory for communication system
          *
          */
-        class Communication : public Object
-                {
+        class Communication : public Object, public Initializable, public Startable
+        {
 
-                public:
-                    Communication() = default;
-                    virtual ~Communication() = default;
-                    HGARDENPI_NO_COPY_NO_MOVE(Communication)
-                };
+        public:
+            Communication() = default;
+
+            virtual ~Communication() = default;
+            HGARDENPI_NO_COPY_NO_MOVE(Communication)
+
+            /**
+             * Set infos for initialize components
+             * @param serial hw serial
+             * @param info configutaion info
+             */
+            virtual void setInfos(const std::string &serial, const ConfigInfo::Ptr &info) noexcept = 0;
+
+            /**
+             * @brief Get the Mqtt Client object
+             * @return const MQTTClient* mqtt client instance
+             */
+            virtual MQTTClient *getMqttClient() const noexcept = 0;
+        };
 
     }
 }

@@ -153,6 +153,7 @@ namespace hgardenpi
 
                     printOnDisplayStandardInfo();
 
+                    display->clear();
                 });
             }
 

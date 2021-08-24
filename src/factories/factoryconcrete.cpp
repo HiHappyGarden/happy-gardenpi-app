@@ -27,13 +27,14 @@ using namespace std;
 
 #include "systemconcrete.hpp"
 #include "deviceconcrete.hpp"
+#include "communicationconcrete.hpp"
 
 namespace hgardenpi
 {
 
     inline namespace v1
     {
-        FactoryConcrete::FactoryConcrete() : system(new (nothrow) SystemConcrete), device(new (nothrow) DeviceConcrete)
+        FactoryConcrete::FactoryConcrete() : system(new (nothrow) SystemConcrete), device(new (nothrow) DeviceConcrete), communication(new (nothrow) CommunicationConcrete)
         {
             if (!system)
             {
@@ -42,6 +43,10 @@ namespace hgardenpi
             if (!device)
             {
                 throw runtime_error("no memory for DeviceConcrete");
+            }
+            if (!communication)
+            {
+                throw runtime_error("no memory for CommunicationConcrete");
             }
         }
 

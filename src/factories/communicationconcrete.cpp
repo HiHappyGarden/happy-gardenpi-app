@@ -27,9 +27,25 @@
 
 #include "communicationconcrete.hpp"
 
+#include "../clients/mqttclientmosquitto.hpp"
+
 using hgardenpi::CommunicationConcrete;
 
-CommunicationConcrete::~CommunicationConcrete() noexcept
+void CommunicationConcrete::initialize()
 {
+    mqttClient = new (nothrow) MQTTClientMosquitto(serial,
+                                                   info->broker.host,
+                                                   info->broker.user,
+                                                   info->broker.passwd,
+                                                   info->broker.port
+    );
+    if(!mqttClient)
+    {
+        throw runtime_error("no memory for mqttClient");
+    }
+}
 
+void CommunicationConcrete::start()
+{
+    mqttClient->start();
 }

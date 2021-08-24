@@ -24,6 +24,7 @@
 
 #include "device.hpp"
 #include "system.hpp"
+#include "communication.hpp"
 
 namespace hgardenpi
 {
@@ -46,16 +47,23 @@ namespace hgardenpi
             /**
              * @brief Get the Device object
              * 
-             * @return const Device* 
+             * @return const Device *
              */
             [[nodiscard]] virtual const Device *getDevice() const noexcept = 0;
 
             /**
              * @brief Get the System object
              * 
-             * @return const Device* 
+             * @return const Device *
              */
             [[nodiscard]] virtual const System *getSystem() const noexcept = 0;
+
+            /**
+             * @brief Get the Communication object
+             *
+             * @return const Communication *
+             */
+            [[nodiscard]] virtual const Communication *getCommunication() const noexcept = 0;
         };
 
     }

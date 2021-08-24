@@ -39,6 +39,7 @@ namespace hgardenpi
 
             Device *device = nullptr;
             System *system = nullptr;
+            Communication *communication = nullptr;
 
         public:
             FactoryConcrete();
@@ -62,6 +63,16 @@ namespace hgardenpi
             [[nodiscard]] inline const System *getSystem() const noexcept override
             {
                 return system;
+            }
+
+            /**
+             * @brief Get the Communication object
+             *
+             * @return const Communication *
+             */
+            [[nodiscard]] const Communication *getCommunication() const noexcept override
+            {
+                return communication;
             }
 
             /**
