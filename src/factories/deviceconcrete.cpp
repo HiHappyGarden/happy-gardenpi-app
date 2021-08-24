@@ -156,8 +156,6 @@ namespace hgardenpi
                     display->clear();
                 });
             }
-
-
         }
 
         inline float DeviceConcrete::getCPUTemperature() const
@@ -170,8 +168,12 @@ namespace hgardenpi
             return deviceInfo;
         }
 
-        void DeviceConcrete::printOnDisplay(const string &txt, bool enableFormat) const noexcept
+        void DeviceConcrete::printOnDisplay(const string &txt, bool enableFormat, bool internal) const noexcept
         {
+            if (!internal)
+            {
+                printOnDisplayInternalInfo = false;
+            }
             display->print("");
             if (!enableFormat)
             {
@@ -220,23 +222,24 @@ namespace hgardenpi
 
         void DeviceConcrete::printOnDisplayStandardInfo() const noexcept
         {
+            printOnDisplayInternalInfo = true;
 
             printOnDisplay("MAC ADDRESS|" + getWlan0MAC(), true);
 
-            threadSleep(Time::DISPLAY_TICK);
+            threadSleep(Time::DISPLAY_TICK, printOnDisplayInternalInfo);
 
             auto &&ip = getWlan0IP();
 
             printOnDisplay(_("IP ADDRESS|") + (ip != "0:0:0:0" ? ip : _("not connected")), true);
 
-            threadSleep(Time::DISPLAY_TICK);
+            threadSleep(Time::DISPLAY_TICK, printOnDisplayInternalInfo);
 
             stringstream ss;
             ss << setprecision(2) << getCPUTemperature();
 
             printOnDisplay(_("INTERNAL TEMP|") + ss.str() + "C", true);
 
-            threadSleep(Time::DISPLAY_TICK);
+            threadSleep(Time::DISPLAY_TICK, printOnDisplayInternalInfo);
 
         }
 
@@ -253,7 +256,10 @@ namespace hgardenpi
                 {
                     display->setContrastTurnOn(true);
                     threadSleep(wait);
-                    display->setContrastTurnOn(false);
+                    if (printOnDisplayInternalInfo)
+                    {
+                        display->setContrastTurnOn(false);
+                    }
                     contrastDisplayClicked = false;
                 });
             }
