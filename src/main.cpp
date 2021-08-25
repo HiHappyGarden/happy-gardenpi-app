@@ -27,8 +27,6 @@
 int main(int argc, char *argv[]) try
 {
 
-
-
     setlocale(LC_ALL, "");
     bindtextdomain(HGARDENPI_NAME, "./locale");
     textdomain(HGARDENPI_NAME);

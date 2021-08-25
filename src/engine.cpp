@@ -30,7 +30,7 @@
 #include "factories/factoryconcrete.hpp"
 #include "utilities/databaseutils.hpp"
 #include "clients/mqttclientmosquitto.hpp"
-#include "components/relaymodule.hpp"
+#include "components/relaymodule4channel.hpp"
 #include "components/display.hpp"
 #include "threadengine.hpp"
 
@@ -216,22 +216,22 @@ namespace hgardenpi
             memcpy(&str[0], data, len);
             if ("station1" == str)
             {
-                station->relayNumber = RelayModule::IN1;
+                station->relayNumber = RelayModule4Channel::IN1;
                 station->name += "1";
             }
             else if ("station2" == str)
             {
-                station->relayNumber = RelayModule::IN2;
+                station->relayNumber = RelayModule4Channel::IN2;
                 station->name += "2";
             }
             else if ("station3" == str)
             {
-                station->relayNumber = RelayModule::IN3;
+                station->relayNumber = RelayModule4Channel::IN3;
                 station->name += "3";
             }
             else if ("station4" == str)
             {
-                station->relayNumber = RelayModule::IN4;
+                station->relayNumber = RelayModule4Channel::IN4;
                 station->name += "4";
             }
 

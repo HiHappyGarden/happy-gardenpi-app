@@ -45,6 +45,9 @@ namespace hgardenpi
         {
         public:
 
+            /**
+             * @brief WiringPi pins
+             */
             enum WiringPiPin : int
             {
                 PIN = 8, // GPIO 3

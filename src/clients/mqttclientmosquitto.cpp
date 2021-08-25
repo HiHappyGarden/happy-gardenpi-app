@@ -175,6 +175,19 @@ namespace hgardenpi
             initalizated = true;
         }
 
+        void MQTTClientMosquitto::publish(const Head::Ptr &package)
+        {
+            publish(reinterpret_cast<const uint8_t *>(package.get()), package->length + sizeof (Package));
+        }
+
+        void MQTTClientMosquitto::publish(const uint8_t *package, int size)
+        {
+            if (mosquitto_publish(mosq, nullptr, topic.c_str(), size, reinterpret_cast<const void *>(package), 0, 0) != MOSQ_ERR_SUCCESS)
+            {
+                throw runtime_error("mosquitto_publish() error");
+            }
+        }
+
 
     }
 
