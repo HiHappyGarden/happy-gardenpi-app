@@ -49,7 +49,9 @@ namespace hgardenpi
             int contrastTurnOn = true;
 
         public:
-
+            /**
+             * @brief WiringPi pins
+             */
             enum WiringPiPin : int
             {
                 LCD_RS = 25,      //Register select pin // GPIO 25

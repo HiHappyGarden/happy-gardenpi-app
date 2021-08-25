@@ -45,6 +45,17 @@ namespace hgardenpi
             int in4;
         public:
             /**
+             * @brief WiringPi pins
+             */
+            enum WiringPiPin : int
+            {
+                IN1 = 6, //GPIO 22
+                IN2 = 10, //GPIO 24
+                IN3 = 11, //GPIO 26
+                IN4 = 31, //GPIO 28
+            };
+
+            /**
              * Create new instance of
              * @param in1 pin of relay 1
              * @param in2 pin of relay 2
@@ -52,6 +63,7 @@ namespace hgardenpi
              * @param in4 pin of relay 1
              */
             RelayModule4Channel(int in1, int in2, int in3, int in4) noexcept;
+
             ~RelayModule4Channel() override;
 
             void setRelay(const Station::Ptr &ptr, bool status) const override;
@@ -67,7 +79,7 @@ namespace hgardenpi
 
         private:
 
-            static constexpr WiringPiPin wiringPiPinAll[] {IN1, IN2, IN3, IN4};
+            static constexpr WiringPiPin wiringPiPinAll[]{IN1, IN2, IN3, IN4};
 
         };
     }

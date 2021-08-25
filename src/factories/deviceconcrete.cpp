@@ -91,7 +91,7 @@ namespace hgardenpi
             int wiringPiMajor;
             int wiringPiMinor;
             wiringPiVersion(&wiringPiMajor, &wiringPiMinor);
-            logService->write(LOG_INFO, "wiringPiVersion: %d %d", wiringPiMajor, wiringPiMinor);
+            logService->write(LOG_INFO, "wiringPiVersion: %d.%d", wiringPiMajor, wiringPiMinor);
 
             //display instance
             display = new(nothrow) LCD1602(LCD1602::LCD_RS,

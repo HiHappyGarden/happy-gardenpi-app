@@ -24,16 +24,20 @@
 
 #include <string>
 #include <functional>
+#include <hgardenpi-protocol/head.hpp>
 
 #include "../interfaces/loggable.hpp"
 #include "../interfaces/startable.hpp"
 #include "../interfaces/initializable.hpp"
+
+
 
 namespace hgardenpi
 {
     inline namespace v1
     {
         using namespace std;
+        using namespace protocol;
 
         /**
          * @brief Generic MQTT Client for connect to mosquitto
@@ -65,6 +69,21 @@ namespace hgardenpi
              * @param onMessageCallback 
              */
             virtual void setOnMessageCallback(MessageCallback &&onMessageCallback) = 0;
+
+            /**
+             * Publish package
+             * @param head pointer package
+             * @exception runtime_error when hardware requisites mismatch
+             */
+            virtual void publish(const Head::Ptr &head) = 0;
+
+            /**
+             * Publish package
+             * @param package pointer data
+             * @param size length of msg
+             * @exception runtime_error when hardware requisites mismatch
+             */
+            virtual void publish(const uint8_t *package, int size) = 0;
         };
     }
 

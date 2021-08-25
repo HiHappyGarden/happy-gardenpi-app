@@ -25,8 +25,12 @@
 #include <functional>
 #include <iostream>
 
+#include <hgardenpi-protocol/packages/package.hpp>
+using namespace hgardenpi::protocol;
+
 #include "../constants.hpp"
 #include "mqttclient.hpp"
+
 
 struct mosquitto;
 struct mosquitto_message;
@@ -117,6 +121,20 @@ namespace hgardenpi
              */
             void start() override;
 
+            /**
+             * Publish package
+             * @param package pointer
+             * @exception runtime_error when hardware requisites mismatch
+             */
+            void publish(const Head::Ptr &package) override;
+
+            /**
+             * Publish package
+             * @param package pointer data
+             * @param size length of msg
+             * @exception runtime_error when hardware requisites mismatch
+             */
+            void publish(const uint8_t *package, int size) override;
         };
     }
 }

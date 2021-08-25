@@ -41,15 +41,6 @@ namespace hgardenpi
         class RelayModule : public Object
         {
         public:
-            enum WiringPiPin : int
-            {
-                IN1 = 6, //GPIO 22
-                IN2 = 10, //GPIO 24
-                IN3 = 11, //GPIO 26
-                IN4 = 31, //GPIO 28
-            };
-
-
             RelayModule() = default;
             virtual ~RelayModule() = default;
 
