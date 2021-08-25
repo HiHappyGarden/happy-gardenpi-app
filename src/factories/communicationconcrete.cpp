@@ -33,19 +33,19 @@ using hgardenpi::CommunicationConcrete;
 
 void CommunicationConcrete::initialize()
 {
-    mqttClient = new (nothrow) MQTTClientMosquitto(serial,
-                                                   info->broker.host,
-                                                   info->broker.user,
-                                                   info->broker.passwd,
-                                                   info->broker.port
+    mqttRx = new (nothrow) MQTTClientMosquitto(serial,
+                                               info->broker.host,
+                                               info->broker.user,
+                                               info->broker.passwd,
+                                               info->broker.port
     );
-    if(!mqttClient)
+    if(!mqttRx)
     {
-        throw runtime_error("no memory for mqttClient");
+        throw runtime_error("no memory for mqttRx");
     }
 }
 
 void CommunicationConcrete::start()
 {
-    mqttClient->start();
+    mqttRx->start();
 }

@@ -152,8 +152,8 @@ namespace hgardenpi
 
 
             //initialize mosquittopp
-            communication->getMqttClient()->setLogService(system->getLogService());
-            communication->getMqttClient()->initialize();
+            communication->getMqttRx()->setLogService(system->getLogService());
+            communication->getMqttRx()->initialize();
 
         }
 
@@ -176,7 +176,7 @@ namespace hgardenpi
             system->getScheduler()->initialize();
 
             //set all callback
-            communication->getMqttClient()->setOnMessageCallback(&onMqttClientMessageCallback);
+            communication->getMqttRx()->setOnMessageCallback(&onMqttClientMessageCallback);
             system->getScheduler()->setScheduleStart(&onSchedulerEventStart);
             system->getScheduler()->setScheduleEnd(&onSchedulerEventEnd);
 
@@ -189,7 +189,7 @@ namespace hgardenpi
             system->getLogService()->write(LOG_INFO, _("service ready"));
 
             //enable broker loop
-            communication->getMqttClient()->loop();
+            communication->getMqttRx()->loop();
         }
 
         static void onMqttClientMessageCallback(const uint8_t *data, int len)
