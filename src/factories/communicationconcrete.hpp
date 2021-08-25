@@ -44,15 +44,15 @@ namespace hgardenpi
             string serial;
             ConfigInfo::Ptr info;
 
-            MQTTClient *mqttClient = nullptr;
+            MQTTClient *mqttRx = nullptr;
         public:
             CommunicationConcrete() = default;
             inline ~CommunicationConcrete() noexcept override
             {
-                if (mqttClient)
+                if (mqttRx)
                 {
-                    delete mqttClient;
-                    mqttClient = nullptr;
+                    delete mqttRx;
+                    mqttRx = nullptr;
                 }
             }
 
@@ -70,13 +70,13 @@ namespace hgardenpi
             void start() override;
 
             /**
-             * @brief Get the Mqtt Client object
+             * @brief Get the Mqtt Client Rx object
              *
              * @return const MQTTClient* mqtt client instance
              */
-            [[nodiscard]] inline MQTTClient *getMqttClient() const noexcept override
+            [[nodiscard]] inline MQTTClient *getMqttRx() const noexcept override
             {
-                return mqttClient;
+                return mqttRx;
             }
 
             /**

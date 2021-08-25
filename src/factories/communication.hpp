@@ -63,10 +63,10 @@ namespace hgardenpi
             virtual void setInfos(const std::string &serial, const ConfigInfo::Ptr &info) noexcept = 0;
 
             /**
-             * @brief Get the Mqtt Client object
+             * @brief Get the Mqtt Client Rx object
              * @return const MQTTClient* mqtt client instance
              */
-            virtual MQTTClient *getMqttClient() const noexcept = 0;
+            virtual MQTTClient *getMqttRx() const noexcept = 0;
         };
 
     }
