@@ -147,7 +147,6 @@ namespace hgardenpi
 
         void MQTTClientMosquitto::loop()
         {
-
             while(mosquitto_loop(mosq, 0, 1) == MOSQ_ERR_SUCCESS && wiringPiRunningThread)
             {
                 threadSleep(Time::TICK);
@@ -190,8 +189,6 @@ namespace hgardenpi
                 throw runtime_error(err);
             }
         }
-
-
     }
 
 }
