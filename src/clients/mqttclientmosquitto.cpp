@@ -120,8 +120,7 @@ namespace hgardenpi
 
                 //set username and passwd
                 logService->write(LOG_INFO, "broker %s: %s", "user", user.c_str());
-                int rc = mosquitto_username_pw_set(mosq, user.c_str(), passwd.c_str());
-                if (rc != MOSQ_ERR_SUCCESS)
+                if (int rc = mosquitto_username_pw_set(mosq, user.c_str(), passwd.c_str()); rc != MOSQ_ERR_SUCCESS)
                 {
                     string err("set user and password: ");
                     err.append(mosquitto_strerror(rc));
@@ -134,7 +133,7 @@ namespace hgardenpi
 
                 //connect
                 logService->write(LOG_INFO, "broker %s: %s:%d", "host", host.c_str(), port);
-                if (mosquitto_connect(mosq, host.c_str(), port, keepAlive) != MOSQ_ERR_SUCCESS)
+                if (int rc = mosquitto_connect(mosq, host.c_str(), port, keepAlive); rc != MOSQ_ERR_SUCCESS)
                 {
                     string err("connection: ");
                     err.append(mosquitto_strerror(rc));
@@ -167,10 +166,12 @@ namespace hgardenpi
 
         void MQTTClientMosquitto::initialize()
         {
-            //initialize mosquittopp
-            if (mosquitto_lib_init() != MOSQ_ERR_SUCCESS)
+            //initialize mosquitto
+            if (int rc = mosquitto_lib_init(); rc != MOSQ_ERR_SUCCESS)
             {
-                throw runtime_error("mosquitto_lib_init() error");
+                string err("mosquitto_lib_init() error: ");
+                err.append(mosquitto_strerror(rc));
+                throw runtime_error(err);
             }
             initalizated = true;
         }
@@ -182,9 +183,11 @@ namespace hgardenpi
 
         void MQTTClientMosquitto::publish(const uint8_t *package, int size)
         {
-            if (mosquitto_publish(mosq, nullptr, topic.c_str(), size, reinterpret_cast<const void *>(package), 0, 0) != MOSQ_ERR_SUCCESS)
+            if (int rc = mosquitto_publish(mosq, nullptr, topic.c_str(), size, reinterpret_cast<const void *>(package), 0, 0); rc != MOSQ_ERR_SUCCESS)
             {
-                throw runtime_error("mosquitto_publish() error");
+                string err("mosquitto_publish() error: ");
+                err.append(mosquitto_strerror(rc));
+                throw runtime_error(err);
             }
         }
 
