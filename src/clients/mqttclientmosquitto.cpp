@@ -166,7 +166,7 @@ namespace hgardenpi
         void MQTTClientMosquitto::initialize()
         {
             //initialize mosquitto
-            if (int rc = mosquitto_lib_init(); rc != MOSQ_ERR_SUCCESS)
+            if (int rc = mosquitto_lib_init() != MOSQ_ERR_SUCCESS)
             {
                 string err("mosquitto_lib_init() error: ");
                 err.append(mosquitto_strerror(rc));
@@ -182,7 +182,7 @@ namespace hgardenpi
 
         void MQTTClientMosquitto::publish(const uint8_t *package, int size)
         {
-            if (int rc = mosquitto_publish(mosq, nullptr, topic.c_str(), size, reinterpret_cast<const void *>(package), 0, 0); rc != MOSQ_ERR_SUCCESS)
+            if (int rc = mosquitto_publish(mosq, nullptr, topic.c_str(), size, reinterpret_cast<const void *>(package), 0, 0) != MOSQ_ERR_SUCCESS)
             {
                 string err("mosquitto_publish() error: ");
                 err.append(mosquitto_strerror(rc));
