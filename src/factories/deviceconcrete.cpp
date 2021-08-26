@@ -153,7 +153,6 @@ namespace hgardenpi
 
                     printOnDisplayStandardInfo();
 
-                    display->clear();
                 });
             }
         }
@@ -174,6 +173,7 @@ namespace hgardenpi
             {
                 printOnDisplayInternalInfo = false;
             }
+            display->clear();
             display->print("");
             if (!enableFormat)
             {

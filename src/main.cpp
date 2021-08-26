@@ -32,14 +32,14 @@ int main(int argc, char *argv[]) try
     textdomain(HGARDENPI_NAME);
 
 
-        //initialize Happy GardenPI
-        hgardenpi::initialize();
+    //initialize Happy GardenPI
+    hgardenpi::initialize();
 
-        //start loop
-        hgardenpi::start();
+    //start loop
+    hgardenpi::start();
 
-        return EXIT_SUCCESS;
-    }
+    return EXIT_SUCCESS;
+}
 catch (const std::exception &e)
 {
     std::cerr << "catch exception: " << e.what() << std::endl;
