@@ -238,52 +238,55 @@ namespace hgardenpi
             system->getScheduler()->shot(station);
         }
 
-        static void onSchedulerEventStart(const Station::Ptr &station)
+        static void onSchedulerEventStart(const Station::Ptr &station) try
+        {
+            auto system = const_cast<System *>(Engine::getInstance()->getFactory()->getSystem());
+            auto device = const_cast<Device *>(Engine::getInstance()->getFactory()->getDevice());
+            
+            //start water supply
+            device->getRelayModule()->setRelay(station, true);
+
+            //turn on contrast display
+            device->getDisplay()->setContrastTurnOn(true);
+
+            //turn off interna display info capability
+            device->setPrintOnDisplayInternalInfo(false);
+
+            //print info water supply
+            device->printOnDisplay(_(("Water supply|" + station->name).c_str()), true);
+            system->getLogService()->write(LOG_INFO,"Start station: %s", station->name.c_str());
+        }
+        catch (const exception &e)
+        {
+            const_cast<System *>(Engine::getInstance()->getFactory()->getSystem())->getLogService()->write(LOG_WARNING,"exception on start station: %s what: %s", station->name.c_str(), e.what());
+        }
+
+
+
+        static void onSchedulerEventEnd(const Station::Ptr &station) try
         {
             auto system = const_cast<System *>(Engine::getInstance()->getFactory()->getSystem());
             auto device = const_cast<Device *>(Engine::getInstance()->getFactory()->getDevice());
 
-            //start station and log
-            try
-            {
-                //start water supply
-                device->getRelayModule()->setRelay(station, true);
+            //end water supply
+            device->getRelayModule()->setRelay(station, false);
 
-                //turn on contrast display
-                device->getDisplay()->setContrastTurnOn(true);
+            //turn off contrast display
+            device->getDisplay()->setContrastTurnOn(false);
 
-                //turn off interna display info
-                device->setPrintOnDisplayInternalInfo(false);
+            //turn on interna display info capability
+            device->setPrintOnDisplayInternalInfo(true);
 
-                //print info water supply
-                device->printOnDisplay(_(("Water supply|" + station->name).c_str()), true);
-                system->getLogService()->write(LOG_INFO,"Start station: %s", station->name.c_str());
-            }
-            catch (const exception &e)
-            {
-                system->getLogService()->write(LOG_WARNING,"exception on start station: %s what: %s", station->name.c_str(), e.what());
-            }
+            //clear display
+            device->getDisplay()->clear();
 
+            //log end
+            system->getLogService()->write(LOG_INFO, "End station: %s", station->name.c_str());
         }
-
-        static void onSchedulerEventEnd(const Station::Ptr &station)
+        catch (const exception &e)
         {
-            auto system = const_cast<System *>(Engine::getInstance()->getFactory()->getSystem());
-            auto device = const_cast<Device *>(Engine::getInstance()->getFactory()->getDevice());
-
-            //end station and log
-            try
-            {
-                device->getRelayModule()->setRelay(station, false);
-                device->getDisplay()->setContrastTurnOn(false);
-                device->setPrintOnDisplayInternalInfo(true);
-                device->getDisplay()->clear();
-                system->getLogService()->write(LOG_INFO, "End station: %s", station->name.c_str());
-            }
-            catch (const exception &e)
-            {
-                system->getLogService()->write(LOG_WARNING,"exception on end station: %s what: %s", station->name.c_str(), e.what());
-            }
+            const_cast<System *>(Engine::getInstance()->getFactory()->getSystem())->getLogService()->write(LOG_WARNING,"exception on end station: %s what: %s", station->name.c_str(), e.what());
         }
+
     }
 }
