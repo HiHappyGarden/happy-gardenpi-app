@@ -25,10 +25,13 @@
 #include <syslog.h>
 
 #include <SQLiteCpp/Database.h>
+#include <hgardenpi-protocol/protocol.hpp>
+#include <hgardenpi-protocol/packages/synchro.hpp>
 
 #include "constants.hpp"
 #include "factories/factoryconcrete.hpp"
 #include "utilities/databaseutils.hpp"
+#include "utilities/stringutils.hpp"
 #include "clients/mqttclientmosquitto.hpp"
 #include "components/relaymodule4channel.hpp"
 #include "components/display.hpp"
@@ -196,11 +199,19 @@ namespace hgardenpi
         {
             auto system = const_cast<System *>(Engine::getInstance()->getFactory()->getSystem());
 
-            if (!data)
+            if (len == 0 || data == nullptr)
             {
                 system->getLogService()->write(LOG_WARNING,"wrong message length 0");
                 return;
             }
+
+            cout << stringHexToString(data, len) << endl;
+
+            auto package = protocol::decode(data);
+
+            const uint8_t *s = reinterpret_cast<uint8_t *>(package->payload);
+
+            cout << s << endl;
 
             //todo: protocol communication to implement
             // start
@@ -242,7 +253,7 @@ namespace hgardenpi
         {
             auto system = const_cast<System *>(Engine::getInstance()->getFactory()->getSystem());
             auto device = const_cast<Device *>(Engine::getInstance()->getFactory()->getDevice());
-            
+
             //start water supply
             device->getRelayModule()->setRelay(station, true);
 
@@ -260,7 +271,6 @@ namespace hgardenpi
         {
             const_cast<System *>(Engine::getInstance()->getFactory()->getSystem())->getLogService()->write(LOG_WARNING,"exception on start station: %s what: %s", station->name.c_str(), e.what());
         }
-
 
 
         static void onSchedulerEventEnd(const Station::Ptr &station) try
