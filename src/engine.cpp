@@ -27,11 +27,14 @@
 #include <SQLiteCpp/Database.h>
 #include <hgardenpi-protocol/protocol.hpp>
 #include <hgardenpi-protocol/packages/synchro.hpp>
+#include <hgardenpi-protocol/utilities/stringutils.hpp>
+using namespace hgardenpi::protocol;
+
 
 #include "constants.hpp"
 #include "factories/factoryconcrete.hpp"
 #include "utilities/databaseutils.hpp"
-#include "utilities/stringutils.hpp"
+
 #include "clients/mqttclientmosquitto.hpp"
 #include "components/relaymodule4channel.hpp"
 #include "components/display.hpp"

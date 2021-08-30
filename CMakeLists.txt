@@ -114,8 +114,6 @@ add_executable(hgardenpi
         src/services/schedulerconcrete.hpp
         src/utilities/databaseutils.cpp
         src/utilities/databaseutils.hpp
-        src/utilities/stringutils.cpp
-        src/utilities/stringutils.hpp
         src/constants.hpp
         src/engine.cpp
         src/engine.hpp
