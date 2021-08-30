@@ -27,7 +27,9 @@
 
 #include "threadengine.hpp"
 
-#include "utilities/stringutils.hpp"
+#include <hgardenpi-protocol/utilities/stringutils.hpp>
+using namespace hgardenpi::protocol;
+
 
 
 namespace hgardenpi
