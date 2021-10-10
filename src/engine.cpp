@@ -209,12 +209,19 @@ namespace hgardenpi
             }
 
             cout << stringHexToString(data, len) << endl;
+            try
+            {
+                auto package = protocol::decode(data);
 
-            auto package = protocol::decode(data);
+                const uint8_t *s = reinterpret_cast<uint8_t *>(package->payload);
 
-            const uint8_t *s = reinterpret_cast<uint8_t *>(package->payload);
+                cout << s << endl;
+            }
+            catch (const runtime_error &e)
+            {
+                cerr << e.what() << endl;
+            }
 
-            cout << s << endl;
 
             //todo: protocol communication to implement
             // start
