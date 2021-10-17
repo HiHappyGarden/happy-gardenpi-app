@@ -25,6 +25,7 @@
 #include <cstdint>
 #include <functional>
 #include <vector>
+#include <string>
 
 #include "../constants.hpp"
 

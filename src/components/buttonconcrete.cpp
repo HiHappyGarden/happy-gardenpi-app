@@ -29,6 +29,8 @@
 
 #include <wiringPi.h>
 
+#include <stdexcept>
+
 using namespace std;
 
 
