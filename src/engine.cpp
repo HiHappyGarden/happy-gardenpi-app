@@ -211,11 +211,18 @@ namespace hgardenpi
             cout << stringHexToString(data, len) << endl;
             try
             {
-                auto package = protocol::decode(data);
+                auto head = protocol::decode(data);
 
-                const uint8_t *s = reinterpret_cast<uint8_t *>(package->payload);
+                if (auto *ptr = dynamic_cast<Synchro *>(head->deserialize()))
+                {
+                    cout << ptr->getSerial() << endl;
 
-                cout << s << endl;
+                    delete ptr;
+                }
+
+                //const uint8_t *s = reinterpret_cast<uint8_t *>(package->payload);
+
+                //cout << s << endl;
             }
             catch (const runtime_error &e)
             {
