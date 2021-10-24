@@ -32,6 +32,7 @@
 #include "../interfaces/object.hpp"
 #include "../interfaces/initializable.hpp"
 #include "../interfaces/startable.hpp"
+#include "../interfaces/loopable.hpp"
 #include "../pods/configinfo.hpp"
 
 namespace hgardenpi
@@ -41,12 +42,13 @@ namespace hgardenpi
     {
 
         class MQTTClient;
+        class LogService;
 
         /**
          * @brief Abstract factory for communication system
          *
          */
-        class Communication : public Object, public Initializable, public Startable
+        class Communication : public Object, public Initializable, public Startable, public Loopable
         {
 
         public:
@@ -63,10 +65,17 @@ namespace hgardenpi
             virtual void setInfos(const std::string &serial, const ConfigInfo::Ptr &info) noexcept = 0;
 
             /**
+             * @brief Set the Log Service object
+             * @param logService instance
+             */
+            virtual void setLogService(const LogService *) noexcept = 0;
+
+            /**
              * @brief Get the Mqtt Client Rx object
              * @return const MQTTClient* mqtt client instance
              */
-            virtual MQTTClient *getMqttRx() const noexcept = 0;
+//            virtual MQTTClient *getMqttRx() const noexcept = 0;
+
         };
 
     }

@@ -27,12 +27,31 @@
 
 #include "communicationconcrete.hpp"
 
-#include "../clients/mqttclientmosquitto.hpp"
+#include <hgardenpi-protocol/protocol.hpp>
+#include <hgardenpi-protocol/utilities/stringutils.hpp>
+#include <hgardenpi-protocol/packages/synchro.hpp>
+#include <iostream>
+using namespace std;
 
-using hgardenpi::CommunicationConcrete;
+#include "../clients/mqttclientmosquitto.hpp"
+#include "../services/logservice.hpp"
+
+
+
+using namespace hgardenpi;
+
+static CommunicationConcrete *self;
+static LogService *logService;
+
+/**
+* @brief Event triggered when MqttClient message arrive
+* @param data message data
+*/
+static void onMqttClientMessageCallback(const uint8_t *data, int len);
 
 void CommunicationConcrete::initialize()
 {
+    self = this;
     mqttRx = new (nothrow) MQTTClientMosquitto(serial,
                                                info->broker.host,
                                                info->broker.user,
@@ -43,9 +62,58 @@ void CommunicationConcrete::initialize()
     {
         throw runtime_error("no memory for mqttRx");
     }
+    int major = 0, minor = 0, patch = 0;
+    protocol::getVersion(major, minor, patch);
+
+    logService->write(LOG_INFO, "happy-gardenpi-protocol version: %d.%d.%d", major, minor, patch);
+
+    mqttRx->setLogService(logService);
+
+    mqttRx->setOnMessageCallback(&onMqttClientMessageCallback);
+
+    mqttRx->initialize();
 }
 
 void CommunicationConcrete::start()
 {
     mqttRx->start();
+}
+
+inline void CommunicationConcrete::setLogService(const LogService *logService) noexcept
+{
+    ::logService = const_cast<LogService *>(logService);
+}
+
+
+void onMqttClientMessageCallback(const uint8_t *data, int len)
+{
+
+    if (len == 0 || data == nullptr)
+    {
+        logService->write(LOG_WARNING,"wrong message length 0");
+        return;
+    }
+
+    cout << stringHexToString(data, len) << endl;
+    try
+    {
+        auto head = protocol::decode(data);
+
+        if (auto *ptr = dynamic_cast<Synchro *>(head->deserialize()))
+        {
+            cout << ptr->getSerial() << endl;
+
+            delete ptr;
+        }
+
+        //const uint8_t *s = reinterpret_cast<uint8_t *>(package->payload);
+
+        //cout << s << endl;
+    }
+    catch (const runtime_error &e)
+    {
+        cerr << e.what() << endl;
+    }
+
+
 }

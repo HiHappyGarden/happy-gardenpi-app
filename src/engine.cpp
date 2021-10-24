@@ -25,8 +25,6 @@
 #include <syslog.h>
 
 #include <SQLiteCpp/Database.h>
-#include <hgardenpi-protocol/protocol.hpp>
-#include <hgardenpi-protocol/packages/synchro.hpp>
 #include <hgardenpi-protocol/utilities/stringutils.hpp>
 using namespace hgardenpi::protocol;
 
@@ -35,7 +33,6 @@ using namespace hgardenpi::protocol;
 #include "factories/factoryconcrete.hpp"
 #include "utilities/databaseutils.hpp"
 
-#include "clients/mqttclientmosquitto.hpp"
 #include "components/relaymodule4channel.hpp"
 #include "components/display.hpp"
 #include "threadengine.hpp"
@@ -51,13 +48,14 @@ namespace hgardenpi
          * @brief Event triggered when MqttClient message arrive
          * @param data message data
          */
-        static void onMqttClientMessageCallback(const uint8_t *data, int len);
+        //static void onMqttClientMessageCallback(const uint8_t *data, int len);
 
         static void onSchedulerEventStart(const Station::Ptr &station);
 
         static void onSchedulerEventEnd(const Station::Ptr &station);
 
-        Engine::Engine() : factory(new (nothrow) FactoryConcrete)
+        Engine::Engine()
+        : factory(new (nothrow) FactoryConcrete)
         {
             //initialize factory and all sub factory
             if (!factory) {
@@ -103,6 +101,7 @@ namespace hgardenpi
 
             //init communication
             communication->setInfos(device->getInfo()->serial, system->getConfigInfo());
+            communication->setLogService(system->getLogService());
             communication->initialize();
 
             //initialize threadPool
@@ -156,11 +155,8 @@ namespace hgardenpi
                 throw runtime_error("no memory for stationDao");
             }
 
-
-            //initialize mosquittopp
-            communication->getMqttRx()->setLogService(system->getLogService());
-            communication->getMqttRx()->initialize();
-
+            //initialize mosquitto rx
+            //communication->getMqttRx()->initialize();
         }
 
         void start()
@@ -173,7 +169,7 @@ namespace hgardenpi
             auto stationDao = Engine::getInstance()->stationDao;
 
             //retrieve all active aggregations and set to scheduler
-            auto && aggregations = aggregationDao->getList();
+            auto &&aggregations = aggregationDao->getList();
             for (auto &&aggregation : aggregations)
             {
                 aggregation->stations = move(stationDao->getList(aggregation));
@@ -182,7 +178,7 @@ namespace hgardenpi
             system->getScheduler()->initialize();
 
             //set all callback
-            communication->getMqttRx()->setOnMessageCallback(&onMqttClientMessageCallback);
+            //communication->getMqttRx()->setOnMessageCallback(&onMqttClientMessageCallback);
             system->getScheduler()->setScheduleStart(&onSchedulerEventStart);
             system->getScheduler()->setScheduleEnd(&onSchedulerEventEnd);
 
@@ -195,76 +191,76 @@ namespace hgardenpi
             system->getLogService()->write(LOG_INFO, _("service ready"));
 
             //enable broker loop
-            communication->getMqttRx()->loop();
+            communication->loop();
         }
 
-        static void onMqttClientMessageCallback(const uint8_t *data, int len)
-        {
-            auto system = const_cast<System *>(Engine::getInstance()->getFactory()->getSystem());
-
-            if (len == 0 || data == nullptr)
-            {
-                system->getLogService()->write(LOG_WARNING,"wrong message length 0");
-                return;
-            }
-
-            cout << stringHexToString(data, len) << endl;
-            try
-            {
-                auto head = protocol::decode(data);
-
-                if (auto *ptr = dynamic_cast<Synchro *>(head->deserialize()))
-                {
-                    cout << ptr->getSerial() << endl;
-
-                    delete ptr;
-                }
-
-                //const uint8_t *s = reinterpret_cast<uint8_t *>(package->payload);
-
-                //cout << s << endl;
-            }
-            catch (const runtime_error &e)
-            {
-                cerr << e.what() << endl;
-            }
-
-
-            //todo: protocol communication to implement
-            // start
-            Station::Ptr station = Station::Ptr(new Station{
-                .id = 0,
-                .name = "manual ",
-                .description = "... none",
-                .wateringTime = 5,
-                .weight = 10
-            });
-
-            string str(len, '\0');
-            memcpy(&str[0], data, len);
-            if ("station1" == str)
-            {
-                station->relayNumber = RelayModule4Channel::IN1;
-                station->name += "1";
-            }
-            else if ("station2" == str)
-            {
-                station->relayNumber = RelayModule4Channel::IN2;
-                station->name += "2";
-            }
-            else if ("station3" == str)
-            {
-                station->relayNumber = RelayModule4Channel::IN3;
-                station->name += "3";
-            }
-            else if ("station4" == str)
-            {
-                station->relayNumber = RelayModule4Channel::IN4;
-                station->name += "4";
-            }
-
-            system->getScheduler()->shot(station);
-        }
+//        static void onMqttClientMessageCallback(const uint8_t *data, int len)
+//        {
+//            auto system = const_cast<System *>(Engine::getInstance()->getFactory()->getSystem());
+//
+//            if (len == 0 || data == nullptr)
+//            {
+//                system->getLogService()->write(LOG_WARNING,"wrong message length 0");
+//                return;
+//            }
+//
+//            cout << stringHexToString(data, len) << endl;
+//            try
+//            {
+//                auto head = protocol::decode(data);
+//
+//                if (auto *ptr = dynamic_cast<Synchro *>(head->deserialize()))
+//                {
+//                    cout << ptr->getSerial() << endl;
+//
+//                    delete ptr;
+//                }
+//
+//                //const uint8_t *s = reinterpret_cast<uint8_t *>(package->payload);
+//
+//                //cout << s << endl;
+//            }
+//            catch (const runtime_error &e)
+//            {
+//                cerr << e.what() << endl;
+//            }
+//
+//
+//            //todo: protocol communication to implement
+//            // start
+//            Station::Ptr station = Station::Ptr(new Station{
+//                .id = 0,
+//                .name = "manual ",
+//                .description = "... none",
+//                .wateringTime = 5,
+//                .weight = 10
+//            });
+//
+//            string str(len, '\0');
+//            memcpy(&str[0], data, len);
+//            if ("station1" == str)
+//            {
+//                station->relayNumber = RelayModule4Channel::IN1;
+//                station->name += "1";
+//            }
+//            else if ("station2" == str)
+//            {
+//                station->relayNumber = RelayModule4Channel::IN2;
+//                station->name += "2";
+//            }
+//            else if ("station3" == str)
+//            {
+//                station->relayNumber = RelayModule4Channel::IN3;
+//                station->name += "3";
+//            }
+//            else if ("station4" == str)
+//            {
+//                station->relayNumber = RelayModule4Channel::IN4;
+//                station->name += "4";
+//            }
+//
+//            system->getScheduler()->shot(station);
+//        }
 
         static void onSchedulerEventStart(const Station::Ptr &station) try
         {

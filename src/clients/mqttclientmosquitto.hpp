@@ -85,7 +85,7 @@ namespace hgardenpi
              * @param port host
              * @param keepAlive keep alive connection timeout
              */
-            MQTTClientMosquitto(const string &serial, const string &&host, const string &&user, const string &&passwd, uint16_t port = MQTTClientMosquitto::PORT, uint16_t keepAlive = MQTTClientMosquitto::KEEP_ALIVE) : MQTTClientMosquitto(serial, host, user, passwd, port, keepAlive)
+            inline MQTTClientMosquitto(const string &serial, const string &&host, const string &&user, const string &&passwd, uint16_t port = MQTTClientMosquitto::PORT, uint16_t keepAlive = MQTTClientMosquitto::KEEP_ALIVE) : MQTTClientMosquitto(serial, host, user, passwd, port, keepAlive)
             {
             }
 
