@@ -20,51 +20,32 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "factoryconcrete.hpp"
+#pragma once
 
-#include <stdexcept>
-using namespace std;
+#include <syslog.h>
 
-#include "systemconcrete.hpp"
-#include "deviceconcrete.hpp"
-#include "communicationconcrete.hpp"
+#include "../services/logservice.hpp"
 
 namespace hgardenpi
 {
 
     inline namespace v1
     {
-        FactoryConcrete::FactoryConcrete()
-        : system(new (nothrow) SystemConcrete)
-        , device(new (nothrow) DeviceConcrete)
-        , communication(new (nothrow) CommunicationConcrete)
-        {
-            if (!system)
-            {
-                throw runtime_error("no memory for SystemConcrete");
-            }
-            if (!device)
-            {
-                throw runtime_error("no memory for DeviceConcrete");
-            }
-            if (!communication)
-            {
-                throw runtime_error("no memory for CommunicationConcrete");
-            }
-        }
 
-        inline FactoryConcrete::~FactoryConcrete() noexcept
+        /**
+         * @brief Abstract class for set Loopable to obj
+         * 
+         */
+        class Loopable
         {
-            if (system)
-            {
-                delete system;
-                system = nullptr;
-            }
-            if (device)
-            {
-                delete device;
-                device = nullptr;
-            }
-        }
+        public:
+            virtual ~Loopable() = default;
+
+            /**
+             * @brief Enable loop
+             */
+            virtual void loop() noexcept = 0;
+        };
+
     }
 }

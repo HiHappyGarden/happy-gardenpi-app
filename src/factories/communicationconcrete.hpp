@@ -44,7 +44,9 @@ namespace hgardenpi
             string serial;
             ConfigInfo::Ptr info;
 
+
             MQTTClient *mqttRx = nullptr;
+
         public:
             CommunicationConcrete() = default;
             inline ~CommunicationConcrete() noexcept override
@@ -88,6 +90,20 @@ namespace hgardenpi
             {
                 this->serial = serial;
                 this->info = info;
+            }
+
+            /**
+             * @brief Set log
+             * @param logService instance
+             */
+            void setLogService(const LogService *logService) noexcept override;
+
+            /**
+             * @brief Enable loop
+             */
+            inline void loop() noexcept override
+            {
+                mqttRx->loop();
             }
 
             /**

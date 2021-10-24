@@ -71,6 +71,7 @@ namespace hgardenpi
              * @param ...
              */
             virtual void write(uint8_t level, const char *msg, ...) const noexcept = 0;
+
         };
 
     }
