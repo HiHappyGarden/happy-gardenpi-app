@@ -135,6 +135,16 @@ namespace hgardenpi
              * @exception runtime_error when hardware requisites mismatch
              */
             void publish(const uint8_t *package, int size) override;
+
+            /**
+             * Publish package
+             * @param buffer Buffer data
+             * @param size length of msg
+             * @exception runtime_error when hardware requisites mismatch
+             */
+            inline void publish(const Buffer &buffer) override {
+                publish(buffer.first.get(), buffer.second);
+            }
         };
     }
 }

@@ -28,92 +28,61 @@
 #include "communicationconcrete.hpp"
 
 #include <hgardenpi-protocol/protocol.hpp>
-#include <hgardenpi-protocol/utilities/stringutils.hpp>
-#include <hgardenpi-protocol/packages/synchro.hpp>
-#include <iostream>
-using namespace std;
 
 #include "../clients/mqttclientmosquitto.hpp"
-#include "../services/logservice.hpp"
 
 
-
-using namespace hgardenpi;
-
-static CommunicationConcrete *self;
-static LogService *logService;
-
-/**
-* @brief Event triggered when MqttClient message arrive
-* @param data message data
-*/
-static void onMqttClientMessageCallback(const uint8_t *data, int len);
-
-void CommunicationConcrete::initialize()
+namespace hgardenpi
 {
-    self = this;
-    mqttRx = new (nothrow) MQTTClientMosquitto(serial,
-                                               info->broker.host,
-                                               info->broker.user,
-                                               info->broker.passwd,
-                                               info->broker.port
-    );
-    if(!mqttRx)
+    inline namespace v1
     {
-        throw runtime_error("no memory for mqttRx");
-    }
-    int major = 0, minor = 0, patch = 0;
-    protocol::getVersion(major, minor, patch);
 
-    logService->write(LOG_INFO, "happy-gardenpi-protocol version: %d.%d.%d", major, minor, patch);
-
-    mqttRx->setLogService(logService);
-
-    mqttRx->setOnMessageCallback(&onMqttClientMessageCallback);
-
-    mqttRx->initialize();
-}
-
-void CommunicationConcrete::start()
-{
-    mqttRx->start();
-}
-
-inline void CommunicationConcrete::setLogService(const LogService *logService) noexcept
-{
-    ::logService = const_cast<LogService *>(logService);
-}
-
-
-void onMqttClientMessageCallback(const uint8_t *data, int len)
-{
-
-    if (len == 0 || data == nullptr)
-    {
-        logService->write(LOG_WARNING,"wrong message length 0");
-        return;
-    }
-
-    cout << stringHexToString(data, len) << endl;
-    try
-    {
-        auto head = protocol::decode(data);
-
-        if (auto *ptr = dynamic_cast<Synchro *>(head->deserialize()))
+        void CommunicationConcrete::initialize()
         {
-            cout << ptr->getSerial() << endl;
+            mqttClient = new(nothrow) MQTTClientMosquitto(serial,
+                                                          info->broker.host,
+                                                          info->broker.user,
+                                                          info->broker.passwd,
+                                                          info->broker.port
+            );
+            if (!mqttClient)
+            {
+                throw runtime_error("no memory for mqttRx");
+            }
 
-            delete ptr;
+            //print protocol version
+            int major = 0, minor = 0, patch = 0;
+            protocol::getVersion(major, minor, patch);
+            logService->write(LOG_INFO, "happy-gardenpi-protocol version: %d.%d.%d", major, minor, patch);
+
+            mqttClient->setLogService(logService);
+
+
+
+            //management of request from client
+            mqttClient->setOnMessageCallback(clientEngine);
+
+            clientEngine.setInfos(serial);
+
+            //send response to client
+            clientEngine.setSendBackData([&](auto sendData)
+            {
+                mqttClient->publish(sendData);
+            });
+
+            //initialize mqtt client
+            mqttClient->initialize();
         }
 
-        //const uint8_t *s = reinterpret_cast<uint8_t *>(package->payload);
+        void CommunicationConcrete::start()
+        {
+            mqttClient->start();
+        }
 
-        //cout << s << endl;
+        inline void CommunicationConcrete::setLogService(const LogService *logService) noexcept
+        {
+            this->logService = const_cast<LogService *>(logService);
+            clientEngine.setLogService(logService);
+        }
     }
-    catch (const runtime_error &e)
-    {
-        cerr << e.what() << endl;
-    }
-
-
 }

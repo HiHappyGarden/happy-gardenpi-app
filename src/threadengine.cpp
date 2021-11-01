@@ -119,6 +119,18 @@ namespace hgardenpi
             }
         }
 
+
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "LoopDoesntUseConditionVariableInspection"
+        void threadLoop(bool conditions) noexcept
+        {
+            while ( wiringPiRunningThread && conditions)
+            {
+                this_thread::sleep_for(chrono::milliseconds(TICK));
+            }
+        }
+#pragma clang diagnostic pop
+
         vector<long> threadGetChildPid(long exclude)
         {
 

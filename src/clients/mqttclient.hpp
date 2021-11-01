@@ -79,11 +79,19 @@ namespace hgardenpi
 
             /**
              * Publish package
-             * @param package pointer data
+             * @param package Pointer data
              * @param size length of msg
              * @exception runtime_error when hardware requisites mismatch
              */
             virtual void publish(const uint8_t *package, int size) = 0;
+
+            /**
+             * Publish package
+             * @param package Buffer data
+             * @param size length of msg
+             * @exception runtime_error when hardware requisites mismatch
+             */
+            virtual void publish(const Buffer &) = 0;
         };
     }
 

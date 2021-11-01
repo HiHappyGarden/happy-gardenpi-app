@@ -115,6 +115,8 @@ add_executable(hgardenpi
         src/utilities/databaseutils.cpp
         src/utilities/databaseutils.hpp
         src/constants.hpp
+        src/clientengine.cpp
+        src/clientengine.hpp
         src/engine.cpp
         src/engine.hpp
         src/main.cpp

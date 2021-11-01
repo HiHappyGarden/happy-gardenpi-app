@@ -50,7 +50,7 @@ namespace hgardenpi
 
                 //cycle aggregation for create a queue of stations to handle
                 {
-                    lock_guard<mutex>(self->m);
+                    //lock_guard<mutex>(self->m);
 
 #if HGARDENPI_TEST > 0
                     //test

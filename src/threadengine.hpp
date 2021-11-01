@@ -150,6 +150,12 @@ namespace hgardenpi
         }
 
         /**
+         * @brief Infinite loop, only for debug
+         * @param conditions add a external conditions for interrupt the loop, true enable loop
+         */
+        [[maybe_unused]] void threadLoop(bool conditions = true) noexcept;
+
+        /**
          * @brief Sleep a thread for by constant
          * @param millis to sleep
          * @param conditions add a external conditions for interrupt the loop, true enable loop
