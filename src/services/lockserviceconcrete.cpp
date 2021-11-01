@@ -35,7 +35,6 @@ using hgardenpi::v1::LockServiceConcrete;
 
 bool LockServiceConcrete::lock() noexcept
 {
-
     ifstream lockFileCheck(configInfo->fileLock);
     if (!lockFileCheck.good())
     {

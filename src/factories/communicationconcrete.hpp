@@ -29,32 +29,44 @@
 
 #include "communication.hpp"
 #include "../clients/mqttclient.hpp"
+#include "../clientengine.hpp"
+
+#include <map>
 
 namespace hgardenpi
 {
 
     inline namespace v1
     {
+//        /**
+//        * @brief Event triggered when MqttClient message arrive
+//        * @param data message data
+//        */
+//        void onMqttClientMessageCallback(const uint8_t *data, int len);
 
         /**
          * @brief Concrete implementation of communication factory
          */
         class CommunicationConcrete final : public Communication
         {
+
             string serial;
             ConfigInfo::Ptr info;
 
+            LogService *logService;
+            MQTTClient *mqttClient = nullptr;
+            ClientEngine::ClientsConnected clientsConnected;
+            ClientEngine clientEngine;
 
-            MQTTClient *mqttRx = nullptr;
-
+//            friend void onMqttClientMessageCallback(const uint8_t *data, int len);
         public:
-            CommunicationConcrete() = default;
+            inline CommunicationConcrete() : clientEngine(clientsConnected) {}
             inline ~CommunicationConcrete() noexcept override
             {
-                if (mqttRx)
+                if (mqttClient)
                 {
-                    delete mqttRx;
-                    mqttRx = nullptr;
+                    delete mqttClient;
+                    mqttClient = nullptr;
                 }
             }
 
@@ -71,15 +83,15 @@ namespace hgardenpi
              */
             void start() override;
 
-            /**
-             * @brief Get the Mqtt Client Rx object
-             *
-             * @return const MQTTClient* mqtt client instance
-             */
-            [[nodiscard]] inline MQTTClient *getMqttRx() const noexcept override
-            {
-                return mqttRx;
-            }
+//            /**
+//             * @brief Get the Mqtt Client Rx object
+//             *
+//             * @return const MQTTClient* mqtt client instance
+//             */
+//            [[nodiscard]] inline MQTTClient *getMqttRx() const noexcept override
+//            {
+//                return mqttRx;
+//            }
 
             /**
              * Set infos for initialize components
@@ -103,7 +115,7 @@ namespace hgardenpi
              */
             inline void loop() noexcept override
             {
-                mqttRx->loop();
+                mqttClient->loop();
             }
 
             /**

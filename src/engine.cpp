@@ -41,15 +41,6 @@ namespace hgardenpi
 {
     inline namespace v1
     {
-
-        static string firstWaterSupplyTitle = "";
-
-        /**
-         * @brief Event triggered when MqttClient message arrive
-         * @param data message data
-         */
-        //static void onMqttClientMessageCallback(const uint8_t *data, int len);
-
         static void onSchedulerEventStart(const Station::Ptr &station);
 
         static void onSchedulerEventEnd(const Station::Ptr &station);
@@ -155,8 +146,6 @@ namespace hgardenpi
                 throw runtime_error("no memory for stationDao");
             }
 
-            //initialize mosquitto rx
-            //communication->getMqttRx()->initialize();
         }
 
         void start()
