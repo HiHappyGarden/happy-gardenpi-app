@@ -41,6 +41,7 @@ namespace hgardenpi
         using std::map;
 
         class LogService;
+        class MQTTClient;
 
         /**
          * @brief Class for managing connection between server and clients
@@ -52,7 +53,7 @@ namespace hgardenpi
             /**
              * @brief Facility class for manage client connection
              */
-            struct ClientConnected final
+            struct ClientConnected final //TODO: maybe move on communication.hpp
             {
 
                 uint8_t id = 0;
@@ -65,10 +66,13 @@ namespace hgardenpi
                  */
                 Package::Ptr last = nullptr;
                 /**
+                 * @brief communication client instance
+                 */
+                MQTTClient *clientCommunication = nullptr;
+                /**
                  * @brief time to last package send
                  */
                 time_t lastConnection = 0;
-
                 /**
                  * @brief update lastConnection time
                  */
@@ -80,46 +84,32 @@ namespace hgardenpi
             /**
              * @brief type for managing clients connections
              */
-            typedef map<uint8_t, ClientConnected> ClientsConnected;
+            typedef map<uint8_t, ClientConnected> ClientsConnected; //TODO: maybe move on communication.hpp
 
             /**
              * @brief type to define responses to client
              */
-            using SendBackData = std::function<void (const Buffer &)>;
+            using SendBackData = std::function<void (ClientConnected &, const Buffer &)>;
         private:
             ClientsConnected &clientsConnected;
-            LogService *logService = nullptr;
             SendBackData sendBackData;
-            string serial;
         public:
-            explicit inline ClientEngine(ClientsConnected &clientsConnected) : clientsConnected(clientsConnected) {}
+            explicit inline ClientEngine(ClientsConnected &clientsConnected, const SendBackData &sendBackData)
+            : clientsConnected(clientsConnected)
+            , sendBackData(sendBackData)
+            {}
 
             /**
              * @brief Set log
              * @param logService instance
              */
-            inline void setLogService(const LogService *logService) noexcept
-            {
-                this->logService = const_cast<LogService *>(logService);
-            }
-
-            /**
-             * @brief Set callback
-             * @param sendBackData
-             */
-            void setSendBackData(const SendBackData &sendBackData) noexcept
-            {
-                ClientEngine::sendBackData = sendBackData;
-            }
+            void setLogService(const LogService *logService) noexcept;
 
             /**
              * Set infos for initialize components
              * @param serial hw serial
              */
-            inline void setInfos(const string &serial) noexcept
-            {
-                ClientEngine::serial = serial;
-            }
+            void setInfos(const string &serial) noexcept;
 
             /**
              * @brief functor for callback when any data in from client

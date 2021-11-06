@@ -20,12 +20,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "schedulerconcrete.hpp"
+#include "scheduler.hpp"
 
 #include <iostream>
 
-#include "../config.h"
-#include "../threadengine.hpp"
+#include "config.h"
+#include "threadengine.hpp"
 
 using Schedule = hgardenpi::v1::Aggregation::Schedule;
 
@@ -34,8 +34,7 @@ namespace hgardenpi
     inline namespace v1
     {
 
-
-        static SchedulerConcrete *self = nullptr;
+        static Scheduler *self = nullptr;
 
         static bool loopRun = false;
 
@@ -72,7 +71,7 @@ namespace hgardenpi
                         auto &&aggregation = self->scheduledAggregations.front();
                         auto &schedule = aggregation->schedule;
 
-                        //check if the aggregation is scheduled now fot hours and minutes, if NOT_SET enter every loop
+                        //check if the aggregation is scheduled now for hours and minutes, if NOT_SET enter every loop
                         //fill queue scheduledStations with the station to schedule
                         if ( (now->tm_hour == schedule.hour || schedule.hour == Schedule::NOT_SET) && (now->tm_min == schedule.minute || schedule.minute == Schedule::NOT_SET))
                         {
@@ -122,7 +121,7 @@ namespace hgardenpi
 
                     //cycle all scheduledStations event for watering a station of garden
                     {
-                        unique_lock<mutex> ul(self->m);
+                        //unique_lock<mutex> ul(self->m);
 
                         while (!self->scheduledStations.empty() && wiringPiRunningThread)
                         {
@@ -136,8 +135,11 @@ namespace hgardenpi
                             self->onScheduleStart(station);
 
                             // sleep whit station's watering time
-                            threadSleep(station->wateringTime * 5'00);
-
+#if HGARDENPI_TEST > 0
+                            threadSleep(station->wateringTime * 5 * ONE_SECOND);
+#else
+                            threadSleep(station->wateringTime * 60 *  ONE_SECOND);
+#endif
                             // end event
                             self->onScheduleEnd(station);
 
@@ -167,12 +169,12 @@ namespace hgardenpi
             }
         }
 
-        SchedulerConcrete::SchedulerConcrete(ThreadPool *threadPool) : threadPool(threadPool)
+        Scheduler::Scheduler(ThreadPool *threadPool) : threadPool(threadPool)
         {
             self = this;
         }
 
-        SchedulerConcrete::~SchedulerConcrete()
+        Scheduler::~Scheduler()
         {
             if (loopRun)
             {
@@ -180,7 +182,7 @@ namespace hgardenpi
             }
         }
 
-        void SchedulerConcrete::initialize()
+        void Scheduler::initialize()
         {
             if (scheduledAggregations.empty())
             {
@@ -193,14 +195,14 @@ namespace hgardenpi
             }
         }
 
-        void SchedulerConcrete::start()
+        void Scheduler::start()
         {
             loopRun = true;
             loopThread =  move(threadPool->enqueue(&run));
         }
 
 
-        void SchedulerConcrete::stop()
+        void Scheduler::stop()
         {
             lock_guard<mutex> lg(m);
             loopRun = false;
@@ -210,7 +212,7 @@ namespace hgardenpi
         }
 
 
-        void SchedulerConcrete::schedule(Aggregation::Ptr &ptr)
+        void Scheduler::schedule(Aggregation::Ptr &ptr)
         {
             lock_guard<mutex> lg(m);
             for (auto &&it : aggregations)
@@ -224,7 +226,7 @@ namespace hgardenpi
             aggregations.push_back(ptr);
         }
 
-        void SchedulerConcrete::shot(const Station::Ptr &ptr)
+        void Scheduler::shot(const Station::Ptr &ptr)
         {
             lock_guard<mutex> lg(m);
             scheduledStations.push(ptr);

@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2021 Happy GardenPI
+// Copyright (c) 2021-2021. Happy GardenPI
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -19,6 +19,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
+//
 
 #pragma once
 
@@ -26,9 +27,14 @@
 #include <functional>
 #include <queue>
 
-#include "scheduler.hpp"
-#include "../threadengine.hpp"
-#include "../constants.hpp"
+#include "interfaces/initializable.hpp"
+#include "interfaces/startable.hpp"
+#include "interfaces/stoppable.hpp"
+#include "interfaces/object.hpp"
+#include "pods/aggregation.hpp"
+#include "threadengine.hpp"
+#include "constants.hpp"
+
 
 
 namespace hgardenpi
@@ -40,8 +46,20 @@ namespace hgardenpi
         /**
          * @brief Scheduler for scheduling action, inside of this run a loop every one second
          */
-        class SchedulerConcrete final : public Scheduler
+        class Scheduler final : public Initializable, public Startable, public Stoppable, public Object
         {
+        public:
+            /**
+             * @brief Prototype of callback on schedule start event
+             */
+            using OnScheduleStart = std::function<void(const Station::Ptr &)>;
+
+            /**
+             * @brief Prototype of callback on schedule end event
+             */
+            using OnScheduleEnd = std::function<void(const Station::Ptr &)>;
+
+        private:
             mutable mutex m;
 
             ThreadPool *threadPool = nullptr;
@@ -72,8 +90,8 @@ namespace hgardenpi
             /**
              * @brief Create a new instance
              */
-            explicit SchedulerConcrete(ThreadPool *threadPool);
-            ~SchedulerConcrete() override;
+            explicit Scheduler(ThreadPool *threadPool);
+            ~Scheduler() override;
 
             /**
              * @brief Initialize internal data
@@ -97,20 +115,20 @@ namespace hgardenpi
              * @param ptr of aggregation
              * @throw runtime_error when there some problem in aggregation
              */
-            void schedule(Aggregation::Ptr &ptr) override;
+            void schedule(Aggregation::Ptr &ptr);
 
             /**
              * @brief Shot one time an station triggered from user
              * @param ptr of station
              * @throw runtime_error when there some problem in station
              */
-            void shot(const Station::Ptr &ptr) override;
+            void shot(const Station::Ptr &ptr);
 
             /**
              * @brief Set callback on start scheduledStations event
              * @param onScheduleStart on start event
              */
-            inline void setScheduleStart(OnScheduleStart onScheduleStart) noexcept override
+            inline void setScheduleStart(OnScheduleStart onScheduleStart) noexcept
             {
                 this->onScheduleStart = move(onScheduleStart);
             }
@@ -119,7 +137,7 @@ namespace hgardenpi
              * @brief Set callback on end scheduledStations event
              * @param onScheduleEnd on start event
              */
-            inline void setScheduleEnd(OnScheduleEnd onScheduleEnd) noexcept override
+            inline void setScheduleEnd(OnScheduleEnd onScheduleEnd) noexcept
             {
                 this->onScheduleEnd = move(onScheduleEnd);
             }
@@ -128,7 +146,7 @@ namespace hgardenpi
              * Check a schedule is in execution
              * @return reference to inExecution, true if it's in execution
              */
-            [[maybe_unused]] inline const atomic_bool &isInExecution() const noexcept override
+            [[maybe_unused]] inline const atomic_bool &isInExecution() const noexcept
             {
                 return inExecution;
             }

@@ -28,6 +28,8 @@
 #include "communicationconcrete.hpp"
 
 #include <hgardenpi-protocol/protocol.hpp>
+#include <hgardenpi-protocol/packages/synchro.hpp>
+using namespace hgardenpi::protocol;
 
 #include "../clients/mqttclientmosquitto.hpp"
 
@@ -36,6 +38,25 @@ namespace hgardenpi
 {
     inline namespace v1
     {
+        CommunicationConcrete::CommunicationConcrete() noexcept
+                : clientEngine(
+                clientsConnected
+                , [&](auto clientConnected, auto sendData)//send back data to client
+                {
+
+                    if (clientConnected.clientCommunication)
+                    {
+//                        clientConnected.syn->getSerial();
+//                        clientConnected.clientCommunication = new(nothrow) MQTTClientMosquitto(clientConnected.syn->getSerial(),
+//                                                                      info->broker.host,
+//                                                                      info->broker.user,
+//                                                                      info->broker.passwd,
+//                                                                      info->broker.port);
+                    }
+
+                    mqttClient->publish(sendData);
+                })
+        {}
 
         void CommunicationConcrete::initialize()
         {
@@ -43,8 +64,7 @@ namespace hgardenpi
                                                           info->broker.host,
                                                           info->broker.user,
                                                           info->broker.passwd,
-                                                          info->broker.port
-            );
+                                                          info->broker.port);
             if (!mqttClient)
             {
                 throw runtime_error("no memory for mqttRx");
@@ -57,24 +77,14 @@ namespace hgardenpi
 
             mqttClient->setLogService(logService);
 
-
-
             //management of request from client
             mqttClient->setOnMessageCallback(clientEngine);
-
-            clientEngine.setInfos(serial);
-
-            //send response to client
-            clientEngine.setSendBackData([&](auto sendData)
-            {
-                mqttClient->publish(sendData);
-            });
 
             //initialize mqtt client
             mqttClient->initialize();
         }
 
-        void CommunicationConcrete::start()
+        inline void CommunicationConcrete::start()
         {
             mqttClient->start();
         }

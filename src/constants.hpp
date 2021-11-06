@@ -53,8 +53,8 @@ namespace hgardenpi
             DISPLAY_TICK = 6'000,
             DISPLAY_SHORT_TICK = DISPLAY_TICK / 3,
             DISPLAY_CONTRAST_TICK = DISPLAY_TICK * 3,
-            TICK = 200,
-            SCHEDULER_TICK = 1'000,
+            TICK = 50,
+            SCHEDULER_TICK = 200,
             SCHEDULER_NETX_TICK = 2'000,
         };
 
@@ -101,6 +101,11 @@ namespace hgardenpi
          * @brief raspberry pi zero hw
          */
         const constexpr inline char *HW_V1 = "BCM2835";
+
+        /**
+         * @brief une second
+         */
+        const constexpr inline uint16_t ONE_SECOND = 1'000;
 
     }
 }

@@ -34,10 +34,31 @@ using namespace std;
 #include "services/logservice.hpp"
 using namespace hgardenpi::protocol;
 
+#include "clients/mqttclientmosquitto.hpp"
+
 namespace hgardenpi
 {
     inline namespace v1
     {
+        static const LogService *logService = nullptr;
+        static string serial;
+
+        void ClientEngine::setLogService(const LogService *logService) noexcept
+        {
+            if (hgardenpi::v1::logService == nullptr)
+            {
+                hgardenpi::v1::logService = logService;
+            }
+        }
+
+        inline void ClientEngine::setInfos(const string &serial) noexcept
+        {
+            if (hgardenpi::v1::serial.empty())
+            {
+                hgardenpi::v1::serial = serial;
+            }
+        }
+
         void ClientEngine::operator()(const uint8_t *data, int len) noexcept try
         {
             //check if message is not null
@@ -75,7 +96,7 @@ namespace hgardenpi
 
                         auto dataToSend = encode(&back, ACK);
 
-                        sendBackData(dataToSend[0]);
+                        sendBackData(clientsConnected[head->id], dataToSend[0]);
                     }
 
 
@@ -93,6 +114,6 @@ namespace hgardenpi
         {
             logService->write(LOG_ERR, "ClientEngine generic error");
         }
+
     }
 }
-

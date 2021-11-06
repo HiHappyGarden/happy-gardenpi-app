@@ -32,7 +32,7 @@ using std::runtime_error;
 #include <sys/syscall.h>
 
 #include "../threadengine.hpp"
-#include "../services/schedulerconcrete.hpp"
+#include "../scheduler.hpp"
 
 namespace hgardenpi
 {
@@ -134,7 +134,7 @@ namespace hgardenpi
             {
                 throw runtime_error("threadPool not initialized");
             }
-            scheduler = new (nothrow) SchedulerConcrete(threadPool);
+            scheduler = new (nothrow) Scheduler(threadPool);
             if (!scheduler)
             {
                 throw runtime_error("no memory for scheduler");
