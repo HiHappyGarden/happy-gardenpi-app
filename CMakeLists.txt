@@ -109,9 +109,6 @@ add_executable(hgardenpi
         src/services/logservice.hpp
         src/services/logserviceconcrete.cpp
         src/services/logserviceconcrete.hpp
-        src/services/scheduler.hpp
-        src/services/schedulerconcrete.cpp
-        src/services/schedulerconcrete.hpp
         src/utilities/databaseutils.cpp
         src/utilities/databaseutils.hpp
         src/constants.hpp
@@ -120,6 +117,8 @@ add_executable(hgardenpi
         src/engine.cpp
         src/engine.hpp
         src/main.cpp
+        src/scheduler.cpp
+        src/scheduler.hpp
         src/threadengine.cpp
         src/threadengine.hpp)
 

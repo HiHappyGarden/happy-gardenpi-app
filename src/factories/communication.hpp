@@ -50,7 +50,6 @@ namespace hgardenpi
          */
         class Communication : public Object, public Initializable, public Startable, public Loopable
         {
-
         public:
             Communication() = default;
 

@@ -25,10 +25,10 @@
 #include "../services/configserviceconcrete.hpp"
 #include "../services/lockservice.hpp"
 #include "../services/logservice.hpp"
-#include "../services/scheduler.hpp"
 #include "../interfaces/initializable.hpp"
 #include "../interfaces/startable.hpp"
 #include "../interfaces/closeable.hpp"
+#include "../scheduler.hpp"
 
 namespace hgardenpi
 {

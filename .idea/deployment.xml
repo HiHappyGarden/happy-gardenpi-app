@@ -10,6 +10,7 @@
           <excludedPaths>
             <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-passy-ubuntu-cross" />
             <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-passy-ubuntu" />
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-passy-raspberrypi0" />
             <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-release-passy-raspberrypi" />
             <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-passy-raspberrypi" />
           </excludedPaths>
@@ -24,6 +25,18 @@
             <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-passy-ubuntu-cross" />
             <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-passy-ubuntu" />
             <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug" />
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-passy-raspberrypi" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+      <paths name="passy-raspberrypi0 (ef384149-6a5a-444f-ae3f-9650d9572a62)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/tmp.7EQg1vzqWZ" local="$PROJECT_DIR$" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-passy-raspberrypi0" />
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-release-passy-raspberrypi" />
             <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-passy-raspberrypi" />
           </excludedPaths>
         </serverdata>

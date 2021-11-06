@@ -58,15 +58,20 @@ namespace hgardenpi
             ClientEngine::ClientsConnected clientsConnected;
             ClientEngine clientEngine;
 
-//            friend void onMqttClientMessageCallback(const uint8_t *data, int len);
         public:
-            inline CommunicationConcrete() : clientEngine(clientsConnected) {}
+            CommunicationConcrete() noexcept;
             inline ~CommunicationConcrete() noexcept override
             {
                 if (mqttClient)
                 {
                     delete mqttClient;
                     mqttClient = nullptr;
+                }
+                for (auto &&[_, value] : clientsConnected) {
+                    if (value.clientCommunication)
+                    {
+                        delete value.clientCommunication;
+                    }
                 }
             }
 
