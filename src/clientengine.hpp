@@ -41,8 +41,6 @@ namespace hgardenpi
         using std::map;
 
         class LogService;
-        class MQTTClient;
-
         /**
          * @brief Class for managing connection between server and clients
          * @note for this class not need solid paradigm
@@ -66,10 +64,6 @@ namespace hgardenpi
                  */
                 Package::Ptr last = nullptr;
                 /**
-                 * @brief communication client instance
-                 */
-                MQTTClient *clientCommunication = nullptr;
-                /**
                  * @brief time to last package send
                  */
                 time_t lastConnection = 0;
@@ -89,7 +83,7 @@ namespace hgardenpi
             /**
              * @brief type to define responses to client
              */
-            using SendBackData = std::function<void (ClientConnected &, const Buffer &)>;
+            using SendBackData = std::function<void (const Buffer &)>;
         private:
             ClientsConnected &clientsConnected;
             SendBackData sendBackData;
