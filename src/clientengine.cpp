@@ -78,6 +78,11 @@ namespace hgardenpi
                 if (auto *ptr = dynamic_cast<Synchro *>(head->deserialize()))
                 {
 
+                    if (serial == ptr->getSerial())
+                    {
+                        return;
+                    }
+
                     //check if client it's already connected
                     ClientsConnected::iterator it = clientsConnected.find(head->id);
                     if(it == clientsConnected.end())
@@ -96,7 +101,7 @@ namespace hgardenpi
 
                         auto dataToSend = encode(&back, ACK);
 
-                        sendBackData(clientsConnected[head->id], dataToSend[0]);
+                        sendBackData(dataToSend[0]);
                     }
 
 

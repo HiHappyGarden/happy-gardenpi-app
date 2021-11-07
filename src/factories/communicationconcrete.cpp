@@ -28,7 +28,6 @@
 #include "communicationconcrete.hpp"
 
 #include <hgardenpi-protocol/protocol.hpp>
-#include <hgardenpi-protocol/packages/synchro.hpp>
 using namespace hgardenpi::protocol;
 
 #include "../clients/mqttclientmosquitto.hpp"
@@ -41,19 +40,8 @@ namespace hgardenpi
         CommunicationConcrete::CommunicationConcrete() noexcept
                 : clientEngine(
                 clientsConnected
-                , [&](auto clientConnected, auto sendData)//send back data to client
+                , [&](auto sendData)//send back data to client
                 {
-
-                    if (clientConnected.clientCommunication)
-                    {
-//                        clientConnected.syn->getSerial();
-//                        clientConnected.clientCommunication = new(nothrow) MQTTClientMosquitto(clientConnected.syn->getSerial(),
-//                                                                      info->broker.host,
-//                                                                      info->broker.user,
-//                                                                      info->broker.passwd,
-//                                                                      info->broker.port);
-                    }
-
                     mqttClient->publish(sendData);
                 })
         {}

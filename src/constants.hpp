@@ -107,5 +107,10 @@ namespace hgardenpi
          */
         const constexpr inline uint16_t ONE_SECOND = 1'000;
 
+        /**
+         * @brief number of thread for pool
+         */
+        const constexpr inline uint8_t NUMBER_OF_THREAD = 6;
+
     }
 }

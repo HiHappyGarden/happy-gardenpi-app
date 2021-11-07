@@ -96,7 +96,8 @@ namespace hgardenpi
             communication->initialize();
 
             //initialize threadPool
-            system->initializeThreadPool(device->getInfo()->cpu);
+            //system->initializeThreadPool(device->getInfo()->cpu);
+            system->initializeThreadPool(NUMBER_OF_THREAD);
 
             //set threadPool to device
             device->setThreadPool(system->getThreadPool());

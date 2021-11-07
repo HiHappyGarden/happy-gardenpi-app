@@ -38,11 +38,6 @@ namespace hgardenpi
 
     inline namespace v1
     {
-//        /**
-//        * @brief Event triggered when MqttClient message arrive
-//        * @param data message data
-//        */
-//        void onMqttClientMessageCallback(const uint8_t *data, int len);
 
         /**
          * @brief Concrete implementation of communication factory
@@ -66,12 +61,6 @@ namespace hgardenpi
                 {
                     delete mqttClient;
                     mqttClient = nullptr;
-                }
-                for (auto &&[_, value] : clientsConnected) {
-                    if (value.clientCommunication)
-                    {
-                        delete value.clientCommunication;
-                    }
                 }
             }
 
