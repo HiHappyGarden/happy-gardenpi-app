@@ -15,7 +15,7 @@ set(BROKER_PASSWD "hgardenpi")
 set(DB_FILE "./hgardenpi.db")
 
 #test macro
-set(TEST 1)
+set(TEST 2)
 
 #date param
 #set(BUILD_TZ_LIB ON)

@@ -36,6 +36,9 @@ using namespace hgardenpi::protocol;
 
 #include "clients/mqttclientmosquitto.hpp"
 
+#include <hgardenpi-protocol/utilities/stringutils.hpp>
+using hgardenpi::protocol::stringHexToString;
+
 namespace hgardenpi
 {
     inline namespace v1
@@ -51,7 +54,7 @@ namespace hgardenpi
             }
         }
 
-        inline void ClientEngine::setInfos(const string &serial) noexcept
+        void ClientEngine::setInfos(const string &serial) noexcept
         {
             if (hgardenpi::v1::serial.empty())
             {
@@ -67,6 +70,8 @@ namespace hgardenpi
                 logService->write(LOG_WARNING, "wrong message length 0");
                 return;
             }
+
+            cout << stringHexToString(data, len) << endl;
 
             //decode message
             auto head = protocol::decode(data);
@@ -100,8 +105,8 @@ namespace hgardenpi
                         back.setSerial(serial);
 
                         auto dataToSend = encode(&back, ACK);
-
                         sendBackData(dataToSend[0]);
+
                     }
 
 
