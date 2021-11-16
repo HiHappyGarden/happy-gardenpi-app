@@ -38,17 +38,17 @@ namespace hgardenpi
         using std::string;
         using std::vector;
 
-        /**
-         * @brief Levelo of logging
-         */
-        enum class LogLevel {
-            TRACE,
-            DBG,
-            INFO,
-            WARN,
-            ERROR,
-            FATAL
-        };
+//        /**
+//         * @brief Levelo of logging
+//         */
+//        enum class LogLevel {
+//            TRACE,
+//            DBG,
+//            INFO,
+//            WARN,
+//            ERROR,
+//            FATAL
+//        };
 
         /**
          * @brief Abstract LogService to write log

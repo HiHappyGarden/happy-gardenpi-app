@@ -45,6 +45,7 @@ namespace hgardenpi
     {
         static const LogService *logService = nullptr;
         static string serial;
+        static ConfigInfo::Ptr info = nullptr;
 
         void ClientEngine::setLogService(const LogService *logService) noexcept
         {
@@ -54,11 +55,12 @@ namespace hgardenpi
             }
         }
 
-        void ClientEngine::setInfos(const string &serial) noexcept
+        void ClientEngine::setInfos(const string &serial, const ConfigInfo::Ptr &info) noexcept
         {
-            if (hgardenpi::v1::serial.empty())
+            if (hgardenpi::serial.empty())
             {
-                hgardenpi::v1::serial = serial;
+                hgardenpi::serial = serial;
+                hgardenpi::info = info;
             }
         }
 
@@ -83,8 +85,11 @@ namespace hgardenpi
                 if (auto *ptr = dynamic_cast<Synchro *>(head->deserialize()))
                 {
 
-                    if (serial == ptr->getSerial())
+                    auto &&serial = ptr->getSerial();
+                    if (serial.empty())
                     {
+                        logService->write(LOG_WARNING, "unable start connection with client, serial not found");
+                        //TODO: error response
                         return;
                     }
 
@@ -94,21 +99,35 @@ namespace hgardenpi
                     {
                         //first connection
 
-                        clientsConnected[head->id] = ClientConnected{
+                        //create new instance off client reference
+                        clientsConnected[head->id] = ClientConnected {
                                 .id = head->id,
                                 .syn = Synchro::Ptr(ptr),
                                 .last = Synchro::Ptr(ptr),
-                                .lastConnection = time(0)
+                                .lastConnection = time(0),
+                                .mqttClientTX = new(nothrow) MQTTClientMosquitto(serial,
+                                    info->broker.host,
+                                    info->broker.user,
+                                    info->broker.passwd,
+                                    info->broker.port)
                         };
+                        if (!clientsConnected[head->id].mqttClientTX)
+                        {
+                            throw runtime_error("no memory for mqttClientTX");
+                        }
+                        string msg("start communication with client: ");
+                        msg += serial;
+                        logService->write(LOG_INFO, msg.c_str());
 
+                        //respond to client
                         Synchro back;
-                        back.setSerial(serial);
+                        back.setSerial(hgardenpi::serial);
 
-                        auto dataToSend = encode(&back, ACK);
-                        sendBackData(dataToSend[0]);
+                        auto dataToSend = encode(&back, ACK);;
+
+                        clientsConnected[head->id].mqttClientTX->publish(dataToSend[0]);
 
                     }
-
 
                     cout << ptr->getSerial() << endl;
 
