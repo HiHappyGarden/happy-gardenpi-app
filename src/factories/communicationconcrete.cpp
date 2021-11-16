@@ -32,6 +32,9 @@ using namespace hgardenpi::protocol;
 
 #include "../clients/mqttclientmosquitto.hpp"
 
+#if HGARDENPI_TEST > 0
+#include <hgardenpi-protocol/utilities/stringutils.hpp>
+#endif
 
 namespace hgardenpi
 {
@@ -42,6 +45,10 @@ namespace hgardenpi
                 clientsConnected
                 , [&](auto sendData)//send back data to client
                 {
+
+#if HGARDENPI_TEST > 0
+                    cout << "sendData: " << protocol::stringHexToString(sendData.first.get(), sendData.second) << endl;
+#endif
                     mqttClient->publish(sendData);
                 })
         {}
@@ -62,6 +69,8 @@ namespace hgardenpi
             int major = 0, minor = 0, patch = 0;
             protocol::getVersion(major, minor, patch);
             logService->write(LOG_INFO, "happy-gardenpi-protocol version: %d.%d.%d", major, minor, patch);
+
+            clientEngine.setInfos(serial);
 
             mqttClient->setLogService(logService);
 

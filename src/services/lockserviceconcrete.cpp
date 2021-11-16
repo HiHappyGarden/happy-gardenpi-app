@@ -36,14 +36,21 @@ using hgardenpi::v1::LockServiceConcrete;
 bool LockServiceConcrete::lock() noexcept
 {
     ifstream lockFileCheck(configInfo->fileLock);
+
+#if HGARDENPI_TEST > 0
+        return false;
+#else
+    //check if exist pid file
     if (!lockFileCheck.good())
     {
         ofstream lockFile(configInfo->fileLock);
         lockFile << std::to_string(getpid()) << endl;
         lockFile.close();
         lockFileCheck.close();
-        return false;
+        return true;
     }
+#endif
+
 
     string line;
     while (getline(lockFileCheck, line))
