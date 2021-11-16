@@ -41,28 +41,19 @@ namespace hgardenpi
     inline namespace v1
     {
         CommunicationConcrete::CommunicationConcrete() noexcept
-                : clientEngine(
-                clientsConnected
-                , [&](auto sendData)//send back data to client
-                {
-
-#if HGARDENPI_TEST > 0
-                    cout << "sendData: " << protocol::stringHexToString(sendData.first.get(), sendData.second) << endl;
-#endif
-                    mqttClient->publish(sendData);
-                })
+                : clientEngine(clientsConnected)
         {}
 
         void CommunicationConcrete::initialize()
         {
-            mqttClient = new(nothrow) MQTTClientMosquitto(serial,
-                                                          info->broker.host,
-                                                          info->broker.user,
-                                                          info->broker.passwd,
-                                                          info->broker.port);
-            if (!mqttClient)
+            mqttClientRX = new(nothrow) MQTTClientMosquitto(serial,
+                                                            info->broker.host,
+                                                            info->broker.user,
+                                                            info->broker.passwd,
+                                                            info->broker.port);
+            if (!mqttClientRX)
             {
-                throw runtime_error("no memory for mqttRx");
+                throw runtime_error("no memory for mqttClientRX");
             }
 
             //print protocol version
@@ -70,20 +61,20 @@ namespace hgardenpi
             protocol::getVersion(major, minor, patch);
             logService->write(LOG_INFO, "happy-gardenpi-protocol version: %d.%d.%d", major, minor, patch);
 
-            clientEngine.setInfos(serial);
+            clientEngine.setInfos(serial, info);
 
-            mqttClient->setLogService(logService);
+            mqttClientRX->setLogService(logService);
 
             //management of request from client
-            mqttClient->setOnMessageCallback(clientEngine);
+            mqttClientRX->setOnMessageCallback(clientEngine);
 
             //initialize mqtt client
-            mqttClient->initialize();
+            mqttClientRX->initialize();
         }
 
         inline void CommunicationConcrete::start()
         {
-            mqttClient->start();
+            mqttClientRX->start();
         }
 
         inline void CommunicationConcrete::setLogService(const LogService *logService) noexcept

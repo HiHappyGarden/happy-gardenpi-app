@@ -112,5 +112,10 @@ namespace hgardenpi
          */
         const constexpr inline uint8_t NUMBER_OF_THREAD = 6;
 
+        /**
+         * @brief Base topic
+         */
+        const constexpr inline char *BASE_TOPIC = "/HappyGardenPI/";
+
     }
 }

@@ -49,7 +49,7 @@ namespace hgardenpi
             ConfigInfo::Ptr info;
 
             LogService *logService;
-            MQTTClient *mqttClient = nullptr;
+            MQTTClient *mqttClientRX = nullptr;
             ClientEngine::ClientsConnected clientsConnected;
             ClientEngine clientEngine;
 
@@ -57,10 +57,17 @@ namespace hgardenpi
             CommunicationConcrete() noexcept;
             inline ~CommunicationConcrete() noexcept override
             {
-                if (mqttClient)
+                if (mqttClientRX)
                 {
-                    delete mqttClient;
-                    mqttClient = nullptr;
+                    delete mqttClientRX;
+                    mqttClientRX = nullptr;
+                }
+                for (auto &&[key, value] : clientsConnected)
+                {
+                    if(value.mqttClientTX)
+                    {
+                        delete value.mqttClientTX;
+                    }
                 }
             }
 
@@ -109,7 +116,7 @@ namespace hgardenpi
              */
             inline void loop() noexcept override
             {
-                mqttClient->loop();
+                mqttClientRX->loop();
             }
 
             /**

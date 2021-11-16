@@ -30,7 +30,8 @@
 #include <hgardenpi-protocol/protocol.hpp>
 #include <hgardenpi-protocol/packages/synchro.hpp>
 #include <map>
-#include <functional>
+
+#include "pods/configinfo.hpp"
 
 namespace hgardenpi
 {
@@ -40,7 +41,9 @@ namespace hgardenpi
         using namespace hgardenpi::protocol;
         using std::map;
 
+
         class LogService;
+        class MQTTClient;
         /**
          * @brief Class for managing connection between server and clients
          * @note for this class not need solid paradigm
@@ -68,6 +71,10 @@ namespace hgardenpi
                  */
                 time_t lastConnection = 0;
                 /**
+                 * @brief MQTTClient to communicate with client
+                 */
+                MQTTClient *mqttClientTX = nullptr;
+                /**
                  * @brief update lastConnection time
                  */
                 inline void updateLastConnection() noexcept {
@@ -80,17 +87,11 @@ namespace hgardenpi
              */
             typedef map<uint8_t, ClientConnected> ClientsConnected; //TODO: maybe move on communication.hpp
 
-            /**
-             * @brief type to define responses to client
-             */
-            using SendBackData = std::function<void (const Buffer &)>;
         private:
             ClientsConnected &clientsConnected;
-            SendBackData sendBackData;
         public:
-            explicit inline ClientEngine(ClientsConnected &clientsConnected, const SendBackData &sendBackData)
+            explicit inline ClientEngine(ClientsConnected &clientsConnected)
             : clientsConnected(clientsConnected)
-            , sendBackData(sendBackData)
             {}
 
             /**
@@ -102,8 +103,9 @@ namespace hgardenpi
             /**
              * Set infos for initialize components
              * @param serial hw serial
+             * @param info Configuration info
              */
-            void setInfos(const string &serial) noexcept;
+            void setInfos(const string &serial, const ConfigInfo::Ptr &info) noexcept;
 
             /**
              * @brief functor for callback when any data in from client

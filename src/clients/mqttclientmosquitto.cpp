@@ -40,7 +40,7 @@ namespace hgardenpi
         static LogService *logService = nullptr;
 
         MQTTClientMosquitto::MQTTClientMosquitto(const string &serial, const string &host, const string &user, const string &passwd, uint16_t port, uint16_t keepAlive)
-            : topic(move("/HappyGardenPI/" + serial)),
+            : topic(move(BASE_TOPIC + serial)),
               host(host),
               port(port),
               keepAlive(keepAlive),
