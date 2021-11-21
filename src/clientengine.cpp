@@ -111,10 +111,15 @@ namespace hgardenpi
                                     info->broker.passwd,
                                     info->broker.port)
                         };
-                        if (!clientsConnected[head->id].mqttClientTX)
+                        auto mqttClientTX = clientsConnected[head->id].mqttClientTX;
+                        if (!mqttClientTX)
                         {
                             throw runtime_error("no memory for mqttClientTX");
                         }
+
+                        mqttClientTX->initialize();
+                        mqttClientTX->start();
+
                         string msg("start communication with client: ");
                         msg += serial;
                         logService->write(LOG_INFO, msg.c_str());
@@ -125,7 +130,11 @@ namespace hgardenpi
 
                         auto dataToSend = encode(&back, ACK);;
 
-                        clientsConnected[head->id].mqttClientTX->publish(dataToSend[0]);
+                        logService->write(LOG_INFO, "publish topic: %s msg: %s"
+                                          , mqttClientTX->getTopic().c_str()
+                                          , stringHexToString(dataToSend[0].first.get(), dataToSend[0].second).c_str()
+                                          );
+                        mqttClientTX->publish(dataToSend[0]);
 
                     }
 

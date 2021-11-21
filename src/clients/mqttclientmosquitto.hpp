@@ -60,7 +60,7 @@ namespace hgardenpi
 
             string id;
 
-            bool initalizated = false;
+            static bool initalizated;
         public:
 
             /**
@@ -144,6 +144,15 @@ namespace hgardenpi
              */
             inline void publish(const Buffer &buffer) override {
                 publish(buffer.first.get(), buffer.second);
+            }
+
+            /**
+             * @brief Get topic value
+             * @return reference to topic
+             */
+            inline const string & getTopic() const noexcept override
+            {
+                return topic;
             }
         };
     }

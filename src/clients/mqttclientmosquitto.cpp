@@ -39,6 +39,8 @@ namespace hgardenpi
 
         static LogService *logService = nullptr;
 
+        bool MQTTClientMosquitto::initalizated = false;
+
         MQTTClientMosquitto::MQTTClientMosquitto(const string &serial, const string &host, const string &user, const string &passwd, uint16_t port, uint16_t keepAlive)
             : topic(move(BASE_TOPIC + serial)),
               host(host),
@@ -165,6 +167,11 @@ namespace hgardenpi
 
         void MQTTClientMosquitto::initialize()
         {
+            if (MQTTClientMosquitto::initalizated)
+            {
+                return;
+            }
+
             //initialize mosquitto
             if (int rc = mosquitto_lib_init() != MOSQ_ERR_SUCCESS)
             {
