@@ -43,6 +43,7 @@ namespace hgardenpi
          * @brief Class for configuration reading from json file
          *
          */
+         //TODO: Remove this interface
         class ConfigService
         {
 

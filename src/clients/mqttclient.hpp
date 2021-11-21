@@ -92,6 +92,12 @@ namespace hgardenpi
              * @exception runtime_error when hardware requisites mismatch
              */
             virtual void publish(const Buffer &) = 0;
+
+            /**
+             * @brief Get topic value
+             * @return reference to topic
+             */
+            virtual const string & getTopic() const noexcept = 0;
         };
     }
 

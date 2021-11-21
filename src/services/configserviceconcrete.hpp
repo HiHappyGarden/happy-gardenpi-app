@@ -41,6 +41,7 @@ namespace hgardenpi
          * @brief Class for configuration reading from json file
          * 
          */
+        //TODO: Remove this
         class ConfigServiceConcrete final :  public ConfigService, public Object
         {
 
