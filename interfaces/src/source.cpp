@@ -17,7 +17,7 @@
  *
  ***************************************************************************/
 
-#include "hh-garden-if/header.hpp"
+#include "hhg-intf/header.hpp"
 
 namespace hhg::intf
 {

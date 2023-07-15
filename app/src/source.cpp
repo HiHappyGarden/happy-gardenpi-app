@@ -17,9 +17,9 @@
  *
  ***************************************************************************/
 
-#include "hh-garden-if/header.hpp"
+#include "hhg-app/header.hpp"
 
-namespace hhg::intf
+namespace hhg::app
 {
 inline namespace v1
 {

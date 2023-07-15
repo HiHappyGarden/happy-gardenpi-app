@@ -1,7 +1,7 @@
 /***************************************************************************
  *
- * Hi Happy Garden Interfaces
- * Copyright (C) 2023  Antonio Salsi <passy.linux@zresa.it>
+ * PROJECT
+ * Copyright (C) 202X  Antonio Salsi <passy.linux@zresa.it>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,13 +17,14 @@
  *
  ***************************************************************************/
 
-#ifndef HHGARDEN_APP_CONFIG_H
-#define HHGARDEN_APP_CONFIG_H
+#pragma once
 
-#define HHGARDEN_APP_NAME "hhg-intf"
-#define HHGARDEN_APP_VER "0.52.0"
-#define HHGARDEN_APP_VER_MAJOR 0
-#define HHGARDEN_APP_VER_MINOR 52
-#define HHGARDEN_APP_VER_PATCH 0
 
-#endif // HHGARDEN_APP_CONFIG_H
+namespace hhg::app
+{
+inline namespace v1
+{
+
+}
+}
+

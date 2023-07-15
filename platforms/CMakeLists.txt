@@ -4,7 +4,7 @@ if (CMAKE_VERSION VERSION_GREATER_EQUAL "3.24.0")
     cmake_policy(SET CMP0135 NEW)
 endif()
 
-PROJECT(hhg-platforms VERSION "0.52.0" LANGUAGES CXX C)
+PROJECT(hhg-platforms LANGUAGES CXX C)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -13,13 +13,13 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
 
 
-include_directories(inc)
+include_directories(generic/inc)
 
-file(GLOB_RECURSE HI_HAPPY_GARDEN_PLATFORMS_SOURCES CONFIGURE_DEPENDS "src/*.cpp" "src/*.c")
-file(GLOB_RECURSE HI_HAPPY_GARDEN_PLATFORMS_INCLUDE CONFIGURE_DEPENDS "inc/*.hpp" "inc/*.h")
+file(GLOB_RECURSE HI_HAPPY_GARDEN_PLATFORMS_SOURCES CONFIGURE_DEPENDS "generic/src/*.cpp" "generic/src/*.c")
+file(GLOB_RECURSE HI_HAPPY_GARDEN_PLATFORMS_INCLUDE CONFIGURE_DEPENDS "generic/inc/*.hpp" "generic/inc/*.h")
 
 
-configure_file(config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/inc/hhg-app/config.h)
+configure_file(config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/generic/inc/hhg-platform/config.h)
 
 add_library(${PROJECT_NAME} STATIC ${HI_HAPPY_GARDEN_PLATFORMS_SOURCES} ${HI_HAPPY_GARDEN_PLATFORMS_INCLUDE})
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/inc)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}generic//inc)
