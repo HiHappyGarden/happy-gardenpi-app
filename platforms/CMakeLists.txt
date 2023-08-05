@@ -18,8 +18,8 @@ endif()
 
 
 if(LINUX)
-    message(STATUS " -- Platform Linux")
-    include_directories(generic/linux/inc)
+    message(STATUS "Platform Linux")
+    include_directories(linux/inc)
 
     file(GLOB_RECURSE HI_HAPPY_GARDEN_PLATFORMS_SOURCES CONFIGURE_DEPENDS "linux/src/*.cpp" "linux/src/*.c")
     file(GLOB_RECURSE HI_HAPPY_GARDEN_PLATFORMS_INCLUDE CONFIGURE_DEPENDS "linux/inc/hhg-platform/*.hpp" "inc/hhg-platform/*.h")
