@@ -18,7 +18,10 @@
  ***************************************************************************/
 
 
-#include <hhg-platform/hardware.hpp>
+#include "hhg-platform/hardware.hpp"
+#include "hhg-app/appmain.hpp"
+#include "osal/osal.hpp"
+
 
 
 #include <stdio.h>
@@ -39,7 +42,16 @@ void pippo()
 
 int main(int argc, char* argv[]) try
 {
-    hhg::intf::hardware&& h = hhg::platform::hardware();
+    os::error* error = nullptr;
+
+    hhg::intf::hardware&& hardware = hhg::platform::hardware();
+    hhg::app::app_main app_main;
+
+    hardware.init(&error);
+
+    app_main.init(&error);
+
+    os::start_main_loop();
 
 }
 catch(const int& e)

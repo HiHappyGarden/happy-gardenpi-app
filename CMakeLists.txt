@@ -30,6 +30,7 @@ configure_file(config.h.in ../app/src/inc/config.h)
 add_executable(${PROJECT_NAME} src/main.cpp)
 
 target_link_libraries(${PROJECT_NAME}
+    hhg-app
     hhg-intf
     osal
     hhg-platforms
