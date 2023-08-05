@@ -1,7 +1,7 @@
 /***************************************************************************
  *
- * PROJECT
- * Copyright (C) 202X  Antonio Salsi <passy.linux@zresa.it>
+ * Hi Happy Garden Interfaces
+ * Copyright (C) 2023  Antonio Salsi <passy.linux@zresa.it>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,32 +17,30 @@
  *
  ***************************************************************************/
 
+#include "hhg-platform/hardware.hpp"
 
-#include <hhg-platform/hardware.hpp>
-
-
-#include <stdio.h>
-
-namespace hhgarden
+namespace hhg::platform
 {
 inline namespace v1
 {
 
-}
-}
-
-
-void pippo()
+hardware::hardware()
 {
-    throw 1;
-}
-
-int main(int argc, char* argv[]) try
-{
-    hhg::intf::hardware&& h = hhg::platform::hardware();
 
 }
-catch(const int& e)
+
+hardware::~hardware()
 {
-    printf("error %d\n", e);
+
 }
+
+bool hardware::init(error **)
+{
+
+    return true;
+}
+
+
+}
+}
+

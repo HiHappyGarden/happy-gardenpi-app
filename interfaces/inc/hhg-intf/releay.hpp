@@ -1,7 +1,7 @@
 /***************************************************************************
  *
- * Hi Happy Garden Interfaces
- * Copyright (C) 2023  Antonio Salsi <passy.linux@zresa.it>
+ * PROJECT
+ * Copyright (C) 202X  Antonio Salsi <passy.linux@zresa.it>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,11 +19,39 @@
 
 #pragma once
 
+#include <stdint.h>>
+
+namespace osal
+{
+inline namespace v1
+{
+class error;
+}
+}
 
 namespace hhg::intf
 {
 inline namespace v1
 {
 
+class releay
+{
+public:
+    static uint8_t count_output() OS_NOEXCEPT;
+
+    static const releay& get_output(uint8_t) OS_NOEXCEPT;
+
+protected:
+    virtual ~releay() OS_NOEXCEPT = default;
+
+    virtual bool init(class osal::error**) OS_NOEXCEPT = 0;
+
+    virtual void set_value(bool) OS_NOEXCEPT = 0;
+
+    virtual bool get_value() const OS_NOEXCEPT = 0;
+
+};
+
 }
 }
+

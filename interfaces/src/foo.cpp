@@ -17,13 +17,13 @@
  *
  ***************************************************************************/
 
-#pragma once
-
+#include <stdint.h>
 
 namespace hhg::intf
 {
 inline namespace v1
 {
+uint8_t foo = 0;
+}
+}
 
-}
-}

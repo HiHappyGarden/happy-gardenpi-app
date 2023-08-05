@@ -17,13 +17,33 @@
  *
  ***************************************************************************/
 
-#include "hhg-platform/header.hpp"
+#pragma once
+
+namespace osal
+{
+inline namespace v1
+{
+class error;
+}
+}
+
 
 namespace hhg::intf
 {
 inline namespace v1
 {
 
-}
-}
+class button
+{
+protected:
+    using on_click = void (*)();
 
+    virtual ~button() OS_NOEXCEPT = default;
+
+    virtual bool init(class osal::error**) OS_NOEXCEPT = 0;
+
+    virtual void set_on_click(on_click) const OS_NOEXCEPT = 0;
+};
+
+}
+}
