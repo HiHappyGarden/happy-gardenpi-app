@@ -17,13 +17,28 @@
  *
  ***************************************************************************/
 
-#include "hhg-intf/header.hpp"
+#pragma once
+#include "osal/osal.hpp"
+#include "hhg-intf/hardware.hpp"
 
-namespace hhg::intf
+namespace hhg::platform
 {
 inline namespace v1
 {
 
-}
-}
+using osal::error;
 
+class hardware : public hhg::intf::hardware
+{
+public:
+    hardware();
+    OS_NO_MOE_NO_COPY(hardware);
+
+    ~hardware();
+
+    bool init(class error**) OS_NOEXCEPT override;
+
+};
+
+}
+}

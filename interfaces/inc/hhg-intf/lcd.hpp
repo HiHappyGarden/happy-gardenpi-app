@@ -17,32 +17,30 @@
  *
  ***************************************************************************/
 
+#pragma once
 
-#include <hhg-platform/hardware.hpp>
+namespace osal
+{
+inline namespace v1
+{
+class error;
+}
+}
 
 
-#include <stdio.h>
-
-namespace hhgarden
+namespace hhg::intf
 {
 inline namespace v1
 {
 
-}
-}
-
-
-void pippo()
+class lcd
 {
-    throw 1;
+protected:
+    virtual ~lcd() OS_NOEXCEPT = default;
+
+    virtual bool init(class osal::error**) OS_NOEXCEPT = 0;
+};
+
+}
 }
 
-int main(int argc, char* argv[]) try
-{
-    hhg::intf::hardware&& h = hhg::platform::hardware();
-
-}
-catch(const int& e)
-{
-    printf("error %d\n", e);
-}

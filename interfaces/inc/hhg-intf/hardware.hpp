@@ -1,7 +1,7 @@
 /***************************************************************************
  *
- * Hi Happy Garden Interfaces
- * Copyright (C) 2023  Antonio Salsi <passy.linux@zresa.it>
+ * PROJECT
+ * Copyright (C) 202X  Antonio Salsi <passy.linux@zresa.it>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,9 +17,30 @@
  *
  ***************************************************************************/
 
-#ifndef HHGARDEN_PLATFORM_CONFIG_H
-#define HHGARDEN_PLATFORM_CONFIG_H
+#pragma once
 
-#define HHGARDEN_PLATFORM_NAME "hhg-platforms"
+namespace osal
+{
+inline namespace v1
+{
+class error;
+}
+}
 
-#endif // HHGARDEN_PLATFORM_CONFIG_H
+namespace hhg::intf
+{
+inline namespace v1
+{
+
+class hardware
+{
+protected:
+    virtual ~hardware() OS_NOEXCEPT = default;
+
+    virtual bool init(class osal::error**) OS_NOEXCEPT = 0;
+
+};
+
+}
+}
+
