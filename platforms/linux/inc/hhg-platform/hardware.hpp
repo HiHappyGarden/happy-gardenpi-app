@@ -26,17 +26,42 @@ namespace hhg::platform
 inline namespace v1
 {
 
-using osal::error;
+using os::error;
+
+enum class hhgd_type : uint8_t
+{
+    HHGD_LED_GREEN,
+    HHGD_LED_RED,
+    HHGD_RELAY_IN1,
+    HHGD_RELAY_IN2,
+    HHGD_RELAY_IN3,
+    HHGD_RELAY_IN4,
+    HHGD_BUTTON_NEXT,
+    HHGD_BUTTON_BEFORE,
+    HHGD_LCD,
+    HHGD_NONE,
+};
+
+enum class error_code
+{
+    HHGD_NO_DRIVER = 10,
+    HHGD_NO_REGISTRATION,
+};
+
+
+constexpr const uint8_t SIGETX = 10;
+constexpr const char HHGD_PATH[] = "/dev/hhgd";
 
 class hardware : public hhg::intf::hardware
 {
+    int32_t fd = -1;
 public:
-    hardware();
+    hardware() = default;
     OS_NO_MOE_NO_COPY(hardware);
 
-    ~hardware();
+    ~hardware() OS_NOEXCEPT;
 
-    bool init(class error**) OS_NOEXCEPT override;
+    bool init(class error** error) OS_NOEXCEPT override;
 
 };
 

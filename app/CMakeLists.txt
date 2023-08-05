@@ -15,6 +15,21 @@ set(CMAKE_C_EXTENSIONS ON)
 
 include_directories(inc)
 
+if(UNIX AND NOT APPLE)
+    set(LINUX TRUE)
+endif()
+
+include_directories(../osal/inc)
+include_directories(../interfaces/inc)
+
+if(LINUX)
+    include_directories(../osal/src/unix)
+
+    configure_file(config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/linux/inc/hhg-platform/config.h)
+else()
+    message(ERROR " -- Platform not suppoted")
+endif()
+
 file(GLOB_RECURSE HI_HAPPY_GARDEN_APP_SOURCES CONFIGURE_DEPENDS "src/*.cpp" "src/*.c")
 file(GLOB_RECURSE HI_HAPPY_GARDEN_APP_INCLUDE CONFIGURE_DEPENDS "inc/*.hpp" "inc/*.h")
 

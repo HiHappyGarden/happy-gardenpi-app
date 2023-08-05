@@ -19,23 +19,84 @@
 
 #include "hhg-platform/hardware.hpp"
 
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/ioctl.h>
+#include <signal.h>
+#include <errno.h>
+
+#define REGISTER_APP _IOW('a','a',uint32_t*)
+
 namespace hhg::platform
 {
 inline namespace v1
 {
 
-hardware::hardware()
+namespace
 {
-
+void ctrl_c_handler(int n, siginfo_t *info, void *unused) OS_NOEXCEPT
+{
+    if (n == SIGINT)
+    {
+        printf("\nrecieved ctrl-c\n");
+    }
 }
 
-hardware::~hardware()
+void sig_event_handler(int n, siginfo_t *info, void *unused) OS_NOEXCEPT
 {
-
+    if (n == SIGETX)
+    {
+        printf ("Received signal from kernel : Value =  %u\n", info->si_int);
+    }
+}
 }
 
-bool hardware::init(error **)
+
+hardware::~hardware() OS_NOEXCEPT
 {
+    if(fd >= 0)
+    {
+        close(fd);
+    }
+}
+
+bool hardware::init(error **error) OS_NOEXCEPT
+{
+    int32_t number;
+    struct sigaction act;
+
+//    /* install custom signal handler */
+//    sigemptyset (&act.sa_mask);
+//    act.sa_flags = (SA_SIGINFO | SA_RESETHAND);
+//    act.sa_sigaction = ctrl_c_handler;
+//    sigaction (SIGINT, &act, NULL);
+
+    /* install custom signal handler */
+    sigemptyset(&act.sa_mask);
+    act.sa_flags = (SA_SIGINFO | SA_RESTART);
+    act.sa_sigaction = sig_event_handler;
+    sigaction(SIGETX, &act, NULL);
+
+
+    fd = open(HHGD_PATH, O_RDWR);
+    if(fd < 0)
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD("No find hhgd drive", static_cast<uint8_t>(error_code::HHGD_NO_DRIVER));
+        }
+        return false;
+    }
+
+    if (ioctl(fd, REGISTER_APP, &number))
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD("Not possible register ioctl", static_cast<uint8_t>(error_code::HHGD_NO_REGISTRATION));
+        }
+        close(fd);
+        return false;
+    }
 
     return true;
 }

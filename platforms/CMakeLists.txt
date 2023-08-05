@@ -40,3 +40,4 @@ endif()
 
 add_library(${PROJECT_NAME} STATIC ${HI_HAPPY_GARDEN_PLATFORMS_SOURCES} ${HI_HAPPY_GARDEN_PLATFORMS_INCLUDE})
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/linux/inc) #to fix
+target_link_libraries(${PROJECT_NAME} osal)

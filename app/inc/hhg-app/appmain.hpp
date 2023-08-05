@@ -19,11 +19,23 @@
 
 #pragma once
 
+#include "osal/osal.hpp"
 
 namespace hhg::app
 {
 inline namespace v1
 {
+
+class app_main final
+{
+public:
+    app_main() OS_NOEXCEPT;
+    OS_NO_MOE_NO_COPY(app_main);
+
+    ~app_main() OS_NOEXCEPT;
+
+    bool init(class os::error**) OS_NOEXCEPT;
+};
 
 }
 }

@@ -38,7 +38,7 @@ class lcd
 protected:
     virtual ~lcd() OS_NOEXCEPT = default;
 
-    virtual bool init(class osal::error**) OS_NOEXCEPT = 0;
+    virtual bool init(class os::error**) OS_NOEXCEPT = 0;
 };
 
 }

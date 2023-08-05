@@ -17,13 +17,9 @@
  *
  ***************************************************************************/
 
-#include "hhg-app/header.hpp"
+#ifndef HHGARDEN_APP_CONFIG_H
+#define HHGARDEN_APP_CONFIG_H
 
-namespace hhg::app
-{
-inline namespace v1
-{
+#define HHGARDEN_APP_NAME "hhg-app"
 
-}
-}
-
+#endif // HHGARDEN_APP_CONFIG_H
