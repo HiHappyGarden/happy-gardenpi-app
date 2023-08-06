@@ -45,7 +45,7 @@ int main(int argc, char* argv[]) try
     {
         if(error)
         {
-            os::printf_stack_error(error);
+            os::printf_stack_error(APP_TAG, error);
             delete error;
         }
         os::stop_main_loop();
@@ -57,7 +57,7 @@ int main(int argc, char* argv[]) try
     {
         if(error)
         {
-            os::printf_stack_error(error);
+            os::printf_stack_error(APP_TAG, error);
             delete error;
         }
         os::stop_main_loop();
@@ -69,7 +69,7 @@ int main(int argc, char* argv[]) try
     {
         if(error)
         {
-            os::printf_stack_error(error);
+            os::printf_stack_error(APP_TAG, error);
             delete error;
         }
         os::stop_main_loop();
