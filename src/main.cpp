@@ -26,18 +26,11 @@
 
 #include <stdio.h>
 
-namespace hhgarden
-{
-inline namespace v1
+namespace
 {
 
-}
-}
+constexpr const char APP_TAG[] = "MAIN";
 
-
-void pippo()
-{
-    throw 1;
 }
 
 int main(int argc, char* argv[]) try
@@ -47,14 +40,47 @@ int main(int argc, char* argv[]) try
     hhg::intf::hardware&& hardware = hhg::platform::hardware();
     hhg::app::app_main app_main;
 
-    hardware.init(&error);
+    OS_LOG_DEBUG(APP_TAG, "Start hardware");
+    if(!hardware.init(&error))
+    {
+        if(error)
+        {
+            os::printf_stack_error(error);
+            delete error;
+        }
+        os::stop_main_loop();
+        exit(1);
+    }
 
-    app_main.init(&error);
+    OS_LOG_DEBUG(APP_TAG, "Start app_main");
+    if(!app_main.init(&error))
+    {
+        if(error)
+        {
+            os::printf_stack_error(error);
+            delete error;
+        }
+        os::stop_main_loop();
+        exit(1);
+    }
+
+    OS_LOG_DEBUG(APP_TAG, "Start fsm");
+    if(!app_main.fsm_start(&error))
+    {
+        if(error)
+        {
+            os::printf_stack_error(error);
+            delete error;
+        }
+        os::stop_main_loop();
+        exit(1);
+    }
 
     os::start_main_loop();
 
+    return 0;
 }
-catch(const int& e)
+catch(...)
 {
-    printf("error %d\n", e);
+    fprintf(stderr, "Unknown failure occurred. Possible memory corruption");
 }
