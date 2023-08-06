@@ -25,7 +25,7 @@ include_directories(../interfaces/inc)
 if(LINUX)
     include_directories(../osal/src/unix)
 
-    configure_file(config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/linux/inc/hhg-platform/config.h)
+    configure_file(config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/inc/hhg-app/config.h)
 else()
     message(ERROR " -- Platform not suppoted")
 endif()

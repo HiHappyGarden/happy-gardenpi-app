@@ -34,19 +34,14 @@ inline namespace v1
 
 namespace
 {
-//void ctrl_c_handler(int n, siginfo_t *info, void *unused) OS_NOEXCEPT
-//{
-//    if (n == SIGINT)
-//    {
-//        printf("\nrecieved ctrl-c\n");
-//    }
-//}
+
+constexpr const char APP_TAG[] = "HARDWARE";
 
 void sig_event_handler(int n, siginfo_t *info, void *unused) OS_NOEXCEPT
 {
     if (n == SIGETX)
     {
-        printf ("Received signal from kernel : Value =  %u\n", info->si_int);
+        printf (" Received signal from kernel : Value =  %u\n", info->si_int);
     }
 }
 }
@@ -83,7 +78,7 @@ bool hardware::init(error **error) OS_NOEXCEPT
     {
         if(error)
         {
-            *error = OS_ERROR_BUILD("No find hhgd drive", static_cast<uint8_t>(error_code::HHGD_NO_DRIVER));
+            *error = OS_ERROR_BUILD(" No find hhgd driver", static_cast<uint8_t>(error_code::HHGD_NO_DRIVER), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
         }
         return false;
     }
@@ -92,7 +87,7 @@ bool hardware::init(error **error) OS_NOEXCEPT
     {
         if(error)
         {
-            *error = OS_ERROR_BUILD("Not possible register ioctl", static_cast<uint8_t>(error_code::HHGD_NO_REGISTRATION));
+            *error = OS_ERROR_BUILD(" Not possible register ioctl", static_cast<uint8_t>(error_code::HHGD_NO_REGISTRATION), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
         }
         close(fd);
         return false;
