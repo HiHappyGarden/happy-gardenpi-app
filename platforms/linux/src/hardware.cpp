@@ -34,13 +34,13 @@ inline namespace v1
 
 namespace
 {
-void ctrl_c_handler(int n, siginfo_t *info, void *unused) OS_NOEXCEPT
-{
-    if (n == SIGINT)
-    {
-        printf("\nrecieved ctrl-c\n");
-    }
-}
+//void ctrl_c_handler(int n, siginfo_t *info, void *unused) OS_NOEXCEPT
+//{
+//    if (n == SIGINT)
+//    {
+//        printf("\nrecieved ctrl-c\n");
+//    }
+//}
 
 void sig_event_handler(int n, siginfo_t *info, void *unused) OS_NOEXCEPT
 {

@@ -57,7 +57,7 @@ class hardware : public hhg::intf::hardware
     int32_t fd = -1;
 public:
     hardware() = default;
-    OS_NO_MOE_NO_COPY(hardware);
+    OS_NO_COPY_NO_MOVE(hardware);
 
     ~hardware() OS_NOEXCEPT;
 

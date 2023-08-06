@@ -30,11 +30,13 @@ class app_main final
 {
 public:
     app_main() OS_NOEXCEPT;
-    OS_NO_MOE_NO_COPY(app_main);
+    OS_NO_COPY_NO_MOVE(app_main)
 
     ~app_main() OS_NOEXCEPT;
 
     bool init(class os::error**) OS_NOEXCEPT;
+
+    bool fsm_start(class os::error**) OS_NOEXCEPT;
 };
 
 }

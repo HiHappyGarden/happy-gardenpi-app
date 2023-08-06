@@ -35,9 +35,14 @@ app_main::~app_main() OS_NOEXCEPT
 
 }
 
-bool app_main::init(os::error **)
+bool app_main::init(os::error **) OS_NOEXCEPT
 {
 
+    return true;
+}
+
+bool app_main::fsm_start(osal::error **) OS_NOEXCEPT
+{
     return true;
 }
 
