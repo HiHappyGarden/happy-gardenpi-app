@@ -17,40 +17,32 @@
  *
  ***************************************************************************/
 
-#pragma once
+#include "hhg-platform/button.hpp"
+#include "hhg-platform/types.hpp"
+#include "osal/osal.hpp"
 
-#include <stdint.h>>
-
-namespace osal
-{
-inline namespace v1
-{
-class error;
-}
-}
-
-namespace hhg::intf
+namespace hhg::platform
 {
 inline namespace v1
 {
 
-class releay
+bool button::init(osal::error** error) OS_NOEXCEPT
 {
-public:
-    static uint8_t count_output() OS_NOEXCEPT;
+    if(fd == -1)
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD(" Fd not init", static_cast<uint8_t>(error_code::HHGD_INIT), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+        return false;
+    }
+    return true;
+}
 
-    static const releay& get_output(uint8_t) OS_NOEXCEPT;
-
-protected:
-    virtual ~releay() OS_NOEXCEPT = default;
-
-    virtual bool init(class osal::error**) OS_NOEXCEPT = 0;
-
-    virtual void set_value(bool) OS_NOEXCEPT = 0;
-
-    virtual bool get_value() const OS_NOEXCEPT = 0;
-
-};
+void button::set_on_click(hhg::intf::button::on_click on_click) OS_NOEXCEPT
+{
+    this->on_click = on_click;
+}
 
 }
 }

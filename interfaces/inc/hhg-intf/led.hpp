@@ -37,7 +37,7 @@ class led
 protected:
     virtual ~led() OS_NOEXCEPT = default;
 
-    virtual bool init(class os::error**) OS_NOEXCEPT = 0;
+    virtual bool init(class osal::error**) OS_NOEXCEPT = 0;
 
     virtual void set_value(bool) OS_NOEXCEPT = 0;
 

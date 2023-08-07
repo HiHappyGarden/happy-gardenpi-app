@@ -40,9 +40,9 @@ protected:
 
     virtual ~button() OS_NOEXCEPT = default;
 
-    virtual bool init(class os::error**) OS_NOEXCEPT = 0;
+    virtual bool init(class osal::error**) OS_NOEXCEPT = 0;
 
-    virtual void set_on_click(on_click) const OS_NOEXCEPT = 0;
+    virtual void set_on_click(on_click) OS_NOEXCEPT = 0;
 };
 
 }
