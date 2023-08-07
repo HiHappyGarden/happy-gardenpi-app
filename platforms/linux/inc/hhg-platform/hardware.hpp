@@ -18,45 +18,29 @@
  ***************************************************************************/
 
 #pragma once
-#include "osal/osal.hpp"
 #include "hhg-intf/hardware.hpp"
+#include "osal/osal.hpp"
+
+#include <signal.h>
 
 namespace hhg::platform
 {
 inline namespace v1
 {
 
+class button;
+
 using os::error;
-
-enum class hhgd_type : uint8_t
-{
-    HHGD_LED_GREEN,
-    HHGD_LED_RED,
-    HHGD_RELAY_IN1,
-    HHGD_RELAY_IN2,
-    HHGD_RELAY_IN3,
-    HHGD_RELAY_IN4,
-    HHGD_BUTTON_NEXT,
-    HHGD_BUTTON_BEFORE,
-    HHGD_LCD,
-    HHGD_NONE,
-};
-
-enum class error_code
-{
-    HHGD_NO_DRIVER = 10,
-    HHGD_NO_REGISTRATION,
-};
-
-
-constexpr const uint8_t SIGETX = 10;
-constexpr const char HHGD_PATH[] = "/dev/hhgd";
 
 class hardware : public hhg::intf::hardware
 {
-    int32_t fd = -1;
+    int32_t fd{-1};
+    button* button_next{nullptr};
+    button* button_before{nullptr};
+
+    friend void sig_event_handler(int n, siginfo_t *info, void *unused) OS_NOEXCEPT;
 public:
-    hardware() = default;
+    hardware() OS_NOEXCEPT;
     OS_NO_COPY_NO_MOVE(hardware);
 
     ~hardware() OS_NOEXCEPT;

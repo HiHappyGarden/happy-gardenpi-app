@@ -38,7 +38,7 @@ protected:
     virtual ~hardware() OS_NOEXCEPT = default;
 
 public:
-    virtual bool init(class os::error**) OS_NOEXCEPT = 0;
+    virtual bool init(class osal::error**) OS_NOEXCEPT = 0;
 
 };
 

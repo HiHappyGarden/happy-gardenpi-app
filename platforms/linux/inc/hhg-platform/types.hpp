@@ -1,7 +1,7 @@
 /***************************************************************************
  *
- * PROJECT
- * Copyright (C) 202X  Antonio Salsi <passy.linux@zresa.it>
+ * Hi Happy Garden Interfaces
+ * Copyright (C) 2023  Antonio Salsi <passy.linux@zresa.it>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,40 +18,39 @@
  ***************************************************************************/
 
 #pragma once
+#include <stdint.h>
 
-#include <stdint.h>>
-
-namespace osal
-{
-inline namespace v1
-{
-class error;
-}
-}
-
-namespace hhg::intf
+namespace hhg::platform
 {
 inline namespace v1
 {
 
-class releay
+enum class hhgd_type : int
 {
-public:
-    static uint8_t count_output() OS_NOEXCEPT;
+    HHGD_LED_GREEN,
+    HHGD_LED_RED,
+    HHGD_RELAY_IN1,
+    HHGD_RELAY_IN2,
+    HHGD_RELAY_IN3,
+    HHGD_RELAY_IN4,
+    HHGD_BUTTON_NEXT,
+    HHGD_BUTTON_BEFORE,
+    HHGD_LCD,
+    HHGD_NONE,
+};
 
-    static const releay& get_output(uint8_t) OS_NOEXCEPT;
-
-protected:
-    virtual ~releay() OS_NOEXCEPT = default;
-
-    virtual bool init(class osal::error**) OS_NOEXCEPT = 0;
-
-    virtual void set_value(bool) OS_NOEXCEPT = 0;
-
-    virtual bool get_value() const OS_NOEXCEPT = 0;
+enum class error_code : uint16_t
+{
+    HHGD_INIT,
+    HHGD_NO_HEAP,
+    HHGD_HARDWARE_NO_DRIVER = 100,
+    HHGD_HARDWARE_REGISTRATION,
 
 };
 
-}
-}
 
+constexpr const uint8_t SIGETX = 10;
+constexpr const char HHGD_PATH[] = "/dev/hhgd";
+
+}
+}

@@ -18,37 +18,30 @@
  ***************************************************************************/
 
 #pragma once
+#include "hhg-intf/button.hpp"
 
-#include <stdint.h>>
+#include <stdint.h>
+#include <signal.h>
 
-namespace osal
-{
-inline namespace v1
-{
-class error;
-}
-}
-
-namespace hhg::intf
+namespace hhg::platform
 {
 inline namespace v1
 {
 
-class releay
+
+class button final : public hhg::intf::button
 {
+    const int32_t& fd;
+    hhg::intf::button::on_click on_click{nullptr};
+
+    friend void sig_event_handler(int n, siginfo_t *info, void *unused) OS_NOEXCEPT;
 public:
-    static uint8_t count_output() OS_NOEXCEPT;
+    explicit inline button(const int32_t& fd) : fd(fd) OS_NOEXCEPT {}
 
-    static const releay& get_output(uint8_t) OS_NOEXCEPT;
 
-protected:
-    virtual ~releay() OS_NOEXCEPT = default;
+    bool init(class osal::error** error) OS_NOEXCEPT override;
 
-    virtual bool init(class osal::error**) OS_NOEXCEPT = 0;
-
-    virtual void set_value(bool) OS_NOEXCEPT = 0;
-
-    virtual bool get_value() const OS_NOEXCEPT = 0;
+    void set_on_click(hhg::intf::button::on_click on_click) OS_NOEXCEPT override;
 
 };
 

@@ -13,16 +13,18 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  IfNot, see <http://www.gnu.org/licenses/>.
  *
  ***************************************************************************/
 
 #include "hhg-platform/hardware.hpp"
+#include "hhg-platform/types.hpp"
+#include "hhg-platform/button.hpp"
+
 
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
-#include <signal.h>
 #include <errno.h>
 
 #define REGISTER_APP _IOW('a','a',uint32_t*)
@@ -34,21 +36,65 @@ inline namespace v1
 
 namespace
 {
-
+hardware* me = nullptr;
 constexpr const char APP_TAG[] = "HARDWARE";
+}
 
 void sig_event_handler(int n, siginfo_t *info, void *unused) OS_NOEXCEPT
 {
     if (n == SIGETX)
     {
-        printf (" Received signal from kernel : Value =  %u\n", info->si_int);
+        if (n == SIGETX)
+        {
+            hhgd_type type{info->si_int};
+
+            os::set_check_main_loop(info->si_int);
+            switch (type)
+            {
+            case hhgd_type::HHGD_BUTTON_NEXT:
+                OS_LOG_DEBUG(APP_TAG, "Handled HHGD_BUTTON_NEXT");
+
+                if(me && me->button_next && me->button_next->on_click)
+                {
+                    me->button_next->on_click();
+                }
+
+                break;
+            case hhgd_type::HHGD_BUTTON_BEFORE:
+                OS_LOG_DEBUG(APP_TAG, "Handled HHGD_BUTTON_BEFORE");
+
+                if(me && me->button_before && me->button_before->on_click)
+                {
+                    me->button_before->on_click();
+                }
+
+                break;
+            default:
+                OS_LOG_WARNING(APP_TAG, "No handled signal value =  %u\n", info->si_int);
+                break;
+            }
+        }
     }
 }
-}
 
+
+
+hardware::hardware() OS_NOEXCEPT
+{
+    me = this;
+}
 
 hardware::~hardware() OS_NOEXCEPT
 {
+    if(button_next)
+    {
+        delete button_next;
+    }
+    if(button_before)
+    {
+        delete button_before;
+    }
+
     if(fd >= 0)
     {
         close(fd);
@@ -78,7 +124,7 @@ bool hardware::init(error **error) OS_NOEXCEPT
     {
         if(error)
         {
-            *error = OS_ERROR_BUILD(" No find hhgd driver", static_cast<uint8_t>(error_code::HHGD_NO_DRIVER), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+            *error = OS_ERROR_BUILD(strerror(errno), static_cast<uint8_t>(error_code::HHGD_HARDWARE_NO_DRIVER), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
         }
         return false;
     }
@@ -87,11 +133,53 @@ bool hardware::init(error **error) OS_NOEXCEPT
     {
         if(error)
         {
-            *error = OS_ERROR_BUILD(" Not possible register ioctl", static_cast<uint8_t>(error_code::HHGD_NO_REGISTRATION), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+            *error = OS_ERROR_BUILD(strerror(errno), static_cast<uint8_t>(error_code::HHGD_HARDWARE_REGISTRATION), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
         }
         close(fd);
         return false;
     }
+
+    OS_LOG_INFO(APP_TAG, "Init button_next");
+    button_next = new button(fd);
+    if(button_next == nullptr)
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD("No heap for button_next", static_cast<uint8_t>(error_code::HHGD_NO_HEAP), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+        return false;
+    }
+
+    if(!button_next->init(error))
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD("No init button_next", static_cast<uint8_t>(error_code::HHGD_NO_HEAP), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+        return false;
+    }
+
+    OS_LOG_INFO(APP_TAG, "Init button_before");
+    button_before = new button(fd);
+    if(button_before == nullptr)
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD("No heap for button_before", static_cast<uint8_t>(error_code::HHGD_NO_HEAP), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+        return false;
+    }
+
+    if(!button_before->init(error))
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD("No init button_before", static_cast<uint8_t>(error_code::HHGD_NO_HEAP), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+        return false;
+    }
+
+
 
     return true;
 }
