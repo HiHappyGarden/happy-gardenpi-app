@@ -51,8 +51,8 @@ void sig_event_handler(int n, siginfo_t *info, void *unused) OS_NOEXCEPT
             os::set_check_main_loop(info->si_int);
             switch (type)
             {
-            case hhgd_type::HHGD_BUTTON_NEXT:
-                OS_LOG_DEBUG(APP_TAG, "Handled HHGD_BUTTON_NEXT");
+            case hhgd_type::BUTTON_NEXT:
+                OS_LOG_DEBUG(APP_TAG, "Handled BUTTON_NEXT");
 
                 if(me && me->button_next && me->button_next->on_click)
                 {
@@ -60,8 +60,8 @@ void sig_event_handler(int n, siginfo_t *info, void *unused) OS_NOEXCEPT
                 }
 
                 break;
-            case hhgd_type::HHGD_BUTTON_BEFORE:
-                OS_LOG_DEBUG(APP_TAG, "Handled HHGD_BUTTON_BEFORE");
+            case hhgd_type::BUTTON_BEFORE:
+                OS_LOG_DEBUG(APP_TAG, "Handled BUTTON_BEFORE");
 
                 if(me && me->button_before && me->button_before->on_click)
                 {
@@ -124,7 +124,7 @@ bool hardware::init(error **error) OS_NOEXCEPT
     {
         if(error)
         {
-            *error = OS_ERROR_BUILD(strerror(errno), static_cast<uint8_t>(error_code::HHGD_HARDWARE_NO_DRIVER), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+            *error = OS_ERROR_BUILD(strerror(errno), static_cast<uint8_t>(error_code::HARDWARE_NO_DRIVER), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
         }
         return false;
     }
@@ -133,7 +133,7 @@ bool hardware::init(error **error) OS_NOEXCEPT
     {
         if(error)
         {
-            *error = OS_ERROR_BUILD(strerror(errno), static_cast<uint8_t>(error_code::HHGD_HARDWARE_REGISTRATION), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+            *error = OS_ERROR_BUILD(strerror(errno), static_cast<uint8_t>(error_code::HARDWARE_REGISTRATION), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
         }
         close(fd);
         return false;
@@ -145,7 +145,7 @@ bool hardware::init(error **error) OS_NOEXCEPT
     {
         if(error)
         {
-            *error = OS_ERROR_BUILD("No heap for button_next", static_cast<uint8_t>(error_code::HHGD_NO_HEAP), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+            *error = OS_ERROR_BUILD("No heap for button_next", static_cast<uint8_t>(error_code::NO_HEAP), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
         }
         return false;
     }
@@ -154,7 +154,7 @@ bool hardware::init(error **error) OS_NOEXCEPT
     {
         if(error)
         {
-            *error = OS_ERROR_BUILD("No init button_next", static_cast<uint8_t>(error_code::HHGD_NO_HEAP), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+            *error = OS_ERROR_BUILD("No init button_next", static_cast<uint8_t>(error_code::NO_HEAP), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
         }
         return false;
     }
@@ -165,7 +165,7 @@ bool hardware::init(error **error) OS_NOEXCEPT
     {
         if(error)
         {
-            *error = OS_ERROR_BUILD("No heap for button_before", static_cast<uint8_t>(error_code::HHGD_NO_HEAP), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+            *error = OS_ERROR_BUILD("No heap for button_before", static_cast<uint8_t>(error_code::NO_HEAP), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
         }
         return false;
     }
@@ -174,7 +174,7 @@ bool hardware::init(error **error) OS_NOEXCEPT
     {
         if(error)
         {
-            *error = OS_ERROR_BUILD("No init button_before", static_cast<uint8_t>(error_code::HHGD_NO_HEAP), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+            *error = OS_ERROR_BUILD("No init button_before", static_cast<uint8_t>(error_code::NO_HEAP), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
         }
         return false;
     }
