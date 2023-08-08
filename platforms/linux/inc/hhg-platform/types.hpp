@@ -27,24 +27,24 @@ inline namespace v1
 
 enum class hhgd_type : int
 {
-    HHGD_LED_GREEN,
-    HHGD_LED_RED,
-    HHGD_RELAY_IN1,
-    HHGD_RELAY_IN2,
-    HHGD_RELAY_IN3,
-    HHGD_RELAY_IN4,
-    HHGD_BUTTON_NEXT,
-    HHGD_BUTTON_BEFORE,
-    HHGD_LCD,
-    HHGD_NONE,
+    LED_GREEN,
+    LED_RED,
+    RELAY_IN1,
+    RELAY_IN2,
+    RELAY_IN3,
+    RELAY_IN4,
+    BUTTON_NEXT,
+    BUTTON_BEFORE,
+    LCD,
+    NONE,
 };
 
 enum class error_code : uint16_t
 {
-    HHGD_INIT,
-    HHGD_NO_HEAP,
-    HHGD_HARDWARE_NO_DRIVER = 100,
-    HHGD_HARDWARE_REGISTRATION,
+    INIT,
+    NO_HEAP,
+    HARDWARE_NO_DRIVER = 100,
+    HARDWARE_REGISTRATION,
 
 };
 
