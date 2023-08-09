@@ -46,12 +46,12 @@ void sig_event_handler(int n, siginfo_t *info, void *unused) OS_NOEXCEPT
     {
         if (n == SIGETX)
         {
-            hhgd_type type{info->si_int};
+            enum type type{info->si_int};
 
             os::set_check_main_loop(info->si_int);
             switch (type)
             {
-            case hhgd_type::BUTTON_NEXT:
+            case type::BUTTON_NEXT:
                 OS_LOG_DEBUG(APP_TAG, "Handled BUTTON_NEXT");
 
                 if(me && me->button_next && me->button_next->on_click)
@@ -60,7 +60,7 @@ void sig_event_handler(int n, siginfo_t *info, void *unused) OS_NOEXCEPT
                 }
 
                 break;
-            case hhgd_type::BUTTON_BEFORE:
+            case type::BUTTON_BEFORE:
                 OS_LOG_DEBUG(APP_TAG, "Handled BUTTON_BEFORE");
 
                 if(me && me->button_before && me->button_before->on_click)
@@ -140,7 +140,7 @@ bool hardware::init(error **error) OS_NOEXCEPT
     }
 
     OS_LOG_INFO(APP_TAG, "Init button_next");
-    button_next = new button(fd);
+    button_next = new button(fd, type::BUTTON_NEXT);
     if(button_next == nullptr)
     {
         if(error)
@@ -160,7 +160,7 @@ bool hardware::init(error **error) OS_NOEXCEPT
     }
 
     OS_LOG_INFO(APP_TAG, "Init button_before");
-    button_before = new button(fd);
+    button_before = new button(fd, type::BUTTON_BEFORE);
     if(button_before == nullptr)
     {
         if(error)
@@ -178,8 +178,6 @@ bool hardware::init(error **error) OS_NOEXCEPT
         }
         return false;
     }
-
-
 
     return true;
 }

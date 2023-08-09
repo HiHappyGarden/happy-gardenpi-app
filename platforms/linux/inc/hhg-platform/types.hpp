@@ -25,7 +25,7 @@ namespace hhg::platform
 inline namespace v1
 {
 
-enum class hhgd_type : int
+enum class type : uint32_t
 {
     LED_GREEN,
     LED_RED,
@@ -45,7 +45,14 @@ enum class error_code : uint16_t
     NO_HEAP,
     HARDWARE_NO_DRIVER = 100,
     HARDWARE_REGISTRATION,
+    HARDWARE_IOCL,
 
+};
+
+enum class action : uint8_t
+{
+    READ = 0x40,
+    WRITE = 0x80,
 };
 
 
