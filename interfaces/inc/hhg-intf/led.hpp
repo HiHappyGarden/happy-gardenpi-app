@@ -1,7 +1,7 @@
 /***************************************************************************
  *
- * PROJECT
- * Copyright (C) 202X  Antonio Salsi <passy.linux@zresa.it>
+ * Hi Happy Garden
+ * Copyright (C) 2023  Antonio Salsi <passy.linux@zresa.it>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,9 +39,9 @@ protected:
 
     virtual bool init(class osal::error**) OS_NOEXCEPT = 0;
 
-    virtual void set_value(bool) OS_NOEXCEPT = 0;
+    virtual void set_status(bool, osal::error** error) const OS_NOEXCEPT = 0;
 
-    virtual bool get_value() const OS_NOEXCEPT = 0;
+    virtual bool get_status(osal::error** error) const OS_NOEXCEPT = 0;
 
 
 };

@@ -18,36 +18,29 @@
  ***************************************************************************/
 
 #pragma once
-#include "hhg-intf/button.hpp"
+#include "hhg-intf/led.hpp"
 #include "hhg-platform/types.hpp"
 #include "osal/osal.hpp"
-
-#include <stdint.h>
-#include <signal.h>
 
 namespace hhg::platform
 {
 inline namespace v1
 {
 
-
-class button final : public hhg::intf::button
+class led final : hhg::intf::led
 {
     const int32_t& fd;
     enum type type;
-
-    hhg::intf::button::on_click on_click{nullptr};
-
-    friend void sig_event_handler(int n, siginfo_t *info, void *unused) OS_NOEXCEPT;
 public:
-    inline button(const int32_t& fd, enum type type) : fd(fd), type(type) OS_NOEXCEPT {}
-    OS_NO_COPY_NO_MOVE(button);
+    inline led(const int32_t& fd, enum type type) : fd(fd), type(type) OS_NOEXCEPT {}
+    OS_NO_COPY_NO_MOVE(led);
 
     bool init(class osal::error** error) OS_NOEXCEPT override;
 
-    void set_on_click(hhg::intf::button::on_click on_click) OS_NOEXCEPT override;
+    void set_status(bool status, osal::error** error) const OS_NOEXCEPT override;
 
-    bool get_status(os::error** error) const OS_NOEXCEPT override;
+    bool get_status(osal::error** error) const OS_NOEXCEPT override;
+
 };
 
 }
