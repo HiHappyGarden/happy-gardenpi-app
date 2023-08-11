@@ -39,7 +39,7 @@ bool button::init(osal::error** error) OS_NOEXCEPT
     {
         if(error)
         {
-            *error = OS_ERROR_BUILD(" Fd not init", static_cast<uint8_t>(error_code::INIT), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+            *error = OS_ERROR_BUILD("Fd not init", static_cast<uint8_t>(error_code::INIT), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
         }
         return false;
     }

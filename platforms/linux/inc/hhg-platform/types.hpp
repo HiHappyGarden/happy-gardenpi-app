@@ -37,6 +37,7 @@ enum class type : uint32_t
     BUTTON_BEFORE,
     LCD,
     NONE,
+    MASK = 0x0F,
 };
 
 enum class error_code : uint16_t
@@ -46,7 +47,6 @@ enum class error_code : uint16_t
     HARDWARE_NO_DRIVER = 100,
     HARDWARE_REGISTRATION,
     HARDWARE_IOCL,
-
 };
 
 enum class action : uint8_t

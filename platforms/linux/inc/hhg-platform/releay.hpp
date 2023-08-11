@@ -18,34 +18,31 @@
  ***************************************************************************/
 
 #pragma once
+#include "hhg-intf/releay.hpp"
+#include "hhg-platform/types.hpp"
+#include "osal/osal.hpp"
 
-#include <stdint.h>
-
-namespace osal
-{
-inline namespace v1
-{
-class error;
-}
-}
-
-namespace hhg::intf
+namespace hhg::platform
 {
 inline namespace v1
 {
 
-class releay
+class releay final : public hhg::intf::releay
 {
-protected:
-    virtual ~releay() OS_NOEXCEPT = default;
 
-    virtual bool init(class osal::error**) OS_NOEXCEPT = 0;
+    const int32_t& fd;
+    enum type type;
 
-    virtual void set_status(uint8_t idx, bool, class osal::error**) const OS_NOEXCEPT = 0;
+public:
+    inline releay(const int32_t& fd) : fd(fd) {}
 
-    virtual bool get_status(uint8_t idx, class osal::error**) const OS_NOEXCEPT = 0;
+    bool init(osal::error **) override  OS_NOEXCEPT;
 
-    virtual uint8_t count_output() OS_NOEXCEPT = 0;
+    void set_status(uint8_t idx, bool status, class osal::error** error) const override OS_NOEXCEPT;
+
+    bool get_status(uint8_t idx, class osal::error** error) const override  OS_NOEXCEPT;
+
+    uint8_t count_output() override  OS_NOEXCEPT;
 };
 
 }

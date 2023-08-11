@@ -34,6 +34,8 @@ using os::error;
 
 class hardware : public hhg::intf::hardware
 {
+    static constexpr inline const char VERSION[] = "";
+
     int32_t fd{-1};
     button* button_next{nullptr};
     button* button_before{nullptr};
@@ -47,6 +49,11 @@ public:
 
     bool init(class error** error) OS_NOEXCEPT override;
 
+    const char* get_info() OS_NOEXCEPT override;
+
+    const char* get_version() OS_NOEXCEPT override;
+
+    int16_t get_temperature(error **error) OS_NOEXCEPT override;
 };
 
 }
