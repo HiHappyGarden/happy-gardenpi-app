@@ -18,6 +18,8 @@
  ***************************************************************************/
 
 #pragma once
+#include <stdint.h>
+
 
 namespace osal
 {
@@ -40,6 +42,11 @@ protected:
 public:
     virtual bool init(class osal::error**) OS_NOEXCEPT = 0;
 
+    virtual const char* get_info() OS_NOEXCEPT = 0;
+
+    virtual const char* get_version() OS_NOEXCEPT = 0;
+
+    virtual int16_t get_temperature(class osal::error**) OS_NOEXCEPT = 0;
 };
 
 }

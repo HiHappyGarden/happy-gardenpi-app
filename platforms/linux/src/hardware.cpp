@@ -46,7 +46,7 @@ void sig_event_handler(int n, siginfo_t *info, void *unused) OS_NOEXCEPT
     {
         if (n == SIGETX)
         {
-            enum type type{info->si_int};
+            enum type type{static_cast<uint8_t>(info->si_int)};
 
             os::set_check_main_loop(info->si_int);
             switch (type)
@@ -180,6 +180,36 @@ bool hardware::init(error **error) OS_NOEXCEPT
     }
 
     return true;
+}
+
+const char *hardware::get_info() OS_NOEXCEPT
+{
+    return "";
+}
+
+const char *hardware::get_version() OS_NOEXCEPT
+{
+    return "";
+}
+
+int16_t hardware::get_temperature(class osal::error** error)
+{
+    int32_t fd = open("/sys/class/thermal/thermal_zone0/temp", 0);
+    if (fd == -1)
+    {
+        perror("/sys/class/thermal/thermal_zone0/temp");
+        if(error)
+        {
+            *error = OS_ERROR_BUILD(strerror(errno), static_cast<uint8_t>(error_code::NO_HEAP), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+        return 0;
+    }
+
+
+
+    close(fd);
+
+    return 1;
 }
 
 

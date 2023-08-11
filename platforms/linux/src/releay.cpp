@@ -1,7 +1,7 @@
 /***************************************************************************
  *
- * Hi Happy Garden
- * Copyright (C) 2023  Antonio Salsi <passy.linux@zresa.it>
+ * PROJECT
+ * Copyright (C) 202X  Antonio Salsi <passy.linux@zresa.it>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,9 +17,8 @@
  *
  ***************************************************************************/
 
-#pragma once
+#include "hhg-platform/releay.hpp"
 
-#include "hhg-platform/led.hpp"
 #include <sys/ioctl.h>
 
 namespace hhg::platform
@@ -27,13 +26,8 @@ namespace hhg::platform
 inline namespace v1
 {
 
-namespace
-{
-constexpr const char APP_TAG[] = "LED";
-}
 
-
-bool led::init(class osal::error** error) OS_NOEXCEPT
+bool releay::init(osal::error **error)
 {
     if(fd == -1)
     {
@@ -46,21 +40,24 @@ bool led::init(class osal::error** error) OS_NOEXCEPT
     return true;
 }
 
-void led::set_status(bool status, osal::error** error) const OS_NOEXCEPT
+void releay::set_status(uint8_t idx, bool status, osal::error **error) const
 {
-    if(ioctl(fd, static_cast<uint8_t>(type) | static_cast<uint8_t>(action::WRITE), &status) < 0)
+
+    if(ioctl(fd,  (idx & static_cast<uint8_t>(type::MASK)) | static_cast<uint8_t>(action::WRITE), &status) < 0)
     {
         if(error)
         {
             *error = OS_ERROR_BUILD("ioctl() fail", static_cast<uint8_t>(error_code::HARDWARE_IOCL), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
         }
     }
+
 }
 
-bool led::get_status(osal::error** error) const OS_NOEXCEPT
+bool releay::get_status(uint8_t idx, osal::error **error) const
 {
+
     uint32_t status = 0;
-    if(ioctl(fd, static_cast<uint8_t>(type) | static_cast<uint8_t>(action::READ), &status) < 0)
+    if(ioctl(fd, (idx & static_cast<uint8_t>(type::MASK)) | static_cast<uint8_t>(action::READ), &status) < 0)
     {
         if(error)
         {
@@ -70,6 +67,11 @@ bool led::get_status(osal::error** error) const OS_NOEXCEPT
     }
 
     return status;
+}
+
+uint8_t releay::count_output() OS_NOEXCEPT
+{
+    return 4;
 }
 
 }
