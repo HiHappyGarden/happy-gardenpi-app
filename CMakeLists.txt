@@ -24,6 +24,7 @@ subdirs(interfaces)
 subdirs(osal)
 subdirs(platforms)
 
+file(GLOB_RECURSE HI_HAPPY_GARDEN_TEST CONFIGURE_DEPENDS "test/*.cpp" "test/*.hpp")
 
 configure_file(config.h.in ../app/src/inc/config.h)
 
@@ -36,3 +37,15 @@ target_link_libraries(${PROJECT_NAME}
     hhg-platforms
     dl
     )
+
+add_executable("${PROJECT_NAME}_test" ${HI_HAPPY_GARDEN_TEST})
+
+target_link_libraries("${PROJECT_NAME}_test"
+                        osal
+                        hhg-app
+                        hhg-platforms
+                        dl
+                        GTest::gtest
+                        GTest::gtest_main
+                        )
+

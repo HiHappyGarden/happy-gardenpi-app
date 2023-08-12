@@ -17,39 +17,34 @@
  *
  ***************************************************************************/
 
-#pragma once
+#include "hhg-platform/lcd.hpp"
 #include "osal/osal.hpp"
 
-#include <stdint.h>
+#include <sys/ioctl.h>
 
-
-namespace osal
-{
-inline namespace v1
-{
-class error;
-}
-}
-
-namespace hhg::intf
+namespace hhg::platform
 {
 inline namespace v1
 {
 
-class hardware
+namespace
 {
-protected:
-    virtual ~hardware() OS_NOEXCEPT = default;
+constexpr const char APP_TAG[] = "BUTTON";
+}
 
-public:
-    virtual bool init(class osal::error**) OS_NOEXCEPT = 0;
 
-    virtual const os::string<128>& get_info() OS_NOEXCEPT = 0;
-
-    virtual const os::string<128>& get_version() OS_NOEXCEPT = 0;
-
-    virtual int32_t get_temperature(class osal::error**) OS_NOEXCEPT = 0;
-};
+bool lcd::init(osal::error** error) OS_NOEXCEPT
+{
+    if(fd == -1)
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD("Fd not init", static_cast<uint8_t>(error_code::INIT), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+        return false;
+    }
+    return true;
+}
 
 }
 }

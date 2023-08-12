@@ -31,6 +31,7 @@ namespace
 
 constexpr const char APP_TAG[] = "MAIN";
 
+
 }
 
 int main(int argc, char* argv[]) try
@@ -51,6 +52,8 @@ int main(int argc, char* argv[]) try
         os::stop_main_loop();
         exit(1);
     }
+
+    printf("-->%d", hardware.get_temperature(&error));
 
     OS_LOG_INFO(APP_TAG, "Start app_main");
     if(!app_main.init(&error))

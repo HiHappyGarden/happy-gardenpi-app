@@ -1,6 +1,6 @@
 /***************************************************************************
  *
- * Hi Happy Garden Interfaces
+ * Hi Happy Garden
  * Copyright (C) 2023  Antonio Salsi <passy.linux@zresa.it>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,9 +18,11 @@
  ***************************************************************************/
 
 #pragma once
-#include "hhg-intf/hardware.hpp"
+#include "hhg-intf/lcd.hpp"
+#include "hhg-platform/types.hpp"
+#include "osal/osal.hpp"
 
-
+#include <stdint.h>
 #include <signal.h>
 
 namespace hhg::platform
@@ -28,42 +30,20 @@ namespace hhg::platform
 inline namespace v1
 {
 
-class button;
-class lcd;
-class led;
-class releay;
 
-
-using os::error;
-using os::string;
-
-class hardware : public hhg::intf::hardware
+class lcd final : public hhg::intf::lcd
 {
-    static constexpr inline const char VERSION[] = "";
-
-    int32_t fd{-1};
-    button* button_next{nullptr};
-    button* button_before{nullptr};
-    class lcd* lcd{nullptr};
-    led* led_green{nullptr};
-    led* led_red{nullptr};
-    class releay* releay{nullptr};
+    const int32_t& fd;
+    enum type const type = type::LCD;
 
     friend void sig_event_handler(int n, siginfo_t *info, void *unused) OS_NOEXCEPT;
 public:
-    hardware() OS_NOEXCEPT;
-    OS_NO_COPY_NO_MOVE(hardware);
+    inline lcd(const int32_t& fd) : fd(fd) OS_NOEXCEPT {}
+    OS_NO_COPY_NO_MOVE(lcd);
 
-    ~hardware() OS_NOEXCEPT;
-
-    bool init(class error** error) OS_NOEXCEPT override;
-
-    const os::string<128>& get_info() OS_NOEXCEPT override;
-
-    const os::string<128>& get_version() OS_NOEXCEPT override;
-
-    int32_t get_temperature(error **error) OS_NOEXCEPT override;
+    bool init(class osal::error** error) OS_NOEXCEPT override;
 };
 
 }
 }
+
