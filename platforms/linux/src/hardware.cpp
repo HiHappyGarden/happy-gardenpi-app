@@ -20,6 +20,9 @@
 #include "hhg-platform/hardware.hpp"
 #include "hhg-platform/types.hpp"
 #include "hhg-platform/button.hpp"
+#include "hhg-platform/lcd.hpp"
+#include "hhg-platform/led.hpp"
+#include "hhg-platform/releay.hpp"
 
 
 #include <unistd.h>
@@ -36,8 +39,12 @@ inline namespace v1
 
 namespace
 {
+
+
+
+
 hardware* me = nullptr;
-constexpr const char APP_TAG[] = "HARDWARE";
+constexpr inline const char APP_TAG[] = "HARDWARE";
 }
 
 void sig_event_handler(int n, siginfo_t *info, void *unused) OS_NOEXCEPT
@@ -179,20 +186,132 @@ bool hardware::init(error **error) OS_NOEXCEPT
         return false;
     }
 
+    OS_LOG_INFO(APP_TAG, "Init lcd");
+    lcd = new class lcd(fd);
+    if(lcd == nullptr)
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD("No heap for lcd", static_cast<uint8_t>(error_code::NO_HEAP), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+        return false;
+    }
+
+    if(!lcd->init(error))
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD("No init lcd", static_cast<uint8_t>(error_code::NO_HEAP), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+        return false;
+    }
+
+    OS_LOG_INFO(APP_TAG, "Init led_green");
+    led_green = new led(fd, type::LED_GREEN);
+    if(led_green == nullptr)
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD("No heap for led_green", static_cast<uint8_t>(error_code::NO_HEAP), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+        return false;
+    }
+
+    if(!led_green->init(error))
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD("No init led_green", static_cast<uint8_t>(error_code::NO_HEAP), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+        return false;
+    }
+
+    OS_LOG_INFO(APP_TAG, "Init led_green");
+    led_red = new led(fd, type::LED_RED);
+    if(led_red == nullptr)
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD("No heap for led_red", static_cast<uint8_t>(error_code::NO_HEAP), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+        return false;
+    }
+
+    if(!led_red->init(error))
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD("No init led_red", static_cast<uint8_t>(error_code::NO_HEAP), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+        return false;
+    }
+
+    OS_LOG_INFO(APP_TAG, "Init releay");
+    releay = new class releay(fd);
+    if(releay == nullptr)
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD("No heap for releay", static_cast<uint8_t>(error_code::NO_HEAP), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+        return false;
+    }
+
+    if(!releay->init(error))
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD("No init releay", static_cast<uint8_t>(error_code::NO_HEAP), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+        return false;
+    }
+
     return true;
 }
 
-const char *hardware::get_info() OS_NOEXCEPT
+const os::string<128>& hardware::get_info() OS_NOEXCEPT
 {
-    return "";
+    static string<128> info;
+
+    auto file = fopen("etc/os-release", "r");
+    if(file)
+    {
+        char data_file[128];
+
+        fseek(file, 0, SEEK_SET);
+        ssize_t bytes = ftell(file);
+        fseek(file, 0, SEEK_END);
+
+        fread(data_file, sizeof(data_file), 1, file);
+
+        if(char* start =strstr(data_file, "NAME=\""); start)
+        {
+            if(const char* end =strstr(data_file, "\""); end)
+            {
+                uint8_t i = 0;
+                for(; start < end; start++)
+                {
+                    info[i] = start[0];
+                }
+            }
+        }
+
+        fclose(file);
+    }
+
+
+
+    return info;
 }
 
-const char *hardware::get_version() OS_NOEXCEPT
+const os::string<128>& hardware::get_version() OS_NOEXCEPT
 {
-    return "";
+    static string<128> version;
+    version += "0.10.0";
+    return version;
 }
 
-int16_t hardware::get_temperature(class osal::error** error)
+int32_t hardware::get_temperature(class osal::error** error)
 {
     int32_t fd = open("/sys/class/thermal/thermal_zone0/temp", 0);
     if (fd == -1)
@@ -206,11 +325,17 @@ int16_t hardware::get_temperature(class osal::error** error)
     }
 
 
+    char buff[16];
+    memset(buff, '\0', sizeof(buff));
+    read(fd, buff, sizeof(buff));
+
+    int32_t ret = strtol(buff, nullptr, 10);
 
     close(fd);
 
-    return 1;
+    return ret / 1000;
 }
+
 
 
 }
