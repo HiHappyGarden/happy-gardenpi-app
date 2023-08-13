@@ -43,11 +43,11 @@ public:
 
     bool init(class os::error** error) OS_NOEXCEPT override;
 
-    void set_text(const string<34>& str, os::error** error) const OS_NOEXCEPT override;
+    void set_text(const string<HHGARDEN_LCD_MSG_SIZE>& str, os::error** error) const OS_NOEXCEPT override;
 
-    void set_text(const char (&buff) [34], os::error** error) const OS_NOEXCEPT override;
+    void set_text(const char (&buff) [HHGARDEN_LCD_MSG_SIZE], os::error** error) const OS_NOEXCEPT override;
 
-    string<34> get_text(os::error** error) const OS_NOEXCEPT override;
+    string<HHGARDEN_LCD_MSG_SIZE> get_text(os::error** error) const OS_NOEXCEPT override;
 };
 
 }

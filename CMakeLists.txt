@@ -12,6 +12,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS ON)
+set(LCD_MSG_SIZE 34)
 add_definitions(-DOS_NOEXCEPT=)
 
 add_compile_options(-fno-rtti)
@@ -19,16 +20,23 @@ add_compile_options(-fexceptions)
 
 set(OS_NOEXCEPT "")
 
+configure_file(config.h.in "${PROJECT_SOURCE_DIR}/inc/config.h")
+
 subdirs(app)
 subdirs(interfaces)
 subdirs(osal)
 subdirs(platforms)
 
+include_directories(inc)
+
+file(GLOB_RECURSE HI_HAPPY_GARDEN_SOURCES CONFIGURE_DEPENDS "src/*.cpp" "src/*.c")
+file(GLOB_RECURSE HI_HAPPY_GARDEN_INCLUDES CONFIGURE_DEPENDS "inc/*.hpp" "inc/*.h")
 file(GLOB_RECURSE HI_HAPPY_GARDEN_TEST CONFIGURE_DEPENDS "test/*.cpp" "test/*.hpp")
 
-configure_file(config.h.in ../app/src/inc/config.h)
+message(STATUS "PROJECT_SOURCE_DIR=${PROJECT_SOURCE_DIR}")
+message(STATUS "CMAKE_CURRENT_BINARY_DIR=${CMAKE_CURRENT_BINARY_DIR}")
 
-add_executable(${PROJECT_NAME} src/main.cpp)
+add_executable(${PROJECT_NAME} ${HI_HAPPY_GARDEN_SOURCES} ${HI_HAPPY_GARDEN_INCLUDES})
 
 target_link_libraries(${PROJECT_NAME}
     hhg-app

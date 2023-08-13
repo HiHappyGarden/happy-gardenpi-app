@@ -27,10 +27,7 @@ if(LINUX)
     include_directories(../osal/src/unix)
 
     file(GLOB_RECURSE HI_HAPPY_GARDEN_PLATFORMS_SOURCES CONFIGURE_DEPENDS "linux/src/*.cpp" "linux/src/*.c")
-    file(GLOB_RECURSE HI_HAPPY_GARDEN_PLATFORMS_INCLUDE CONFIGURE_DEPENDS "linux/inc/hhg-platform/*.hpp" "inc/hhg-platform/*.h")
-
-    configure_file(config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/linux/inc/hhg-platform/config.h)
-
+    file(GLOB_RECURSE HI_HAPPY_GARDEN_PLATFORMS_INCLUDES CONFIGURE_DEPENDS "linux/inc/hhg-platform/*.hpp" "inc/hhg-platform/*.h")
 
 else()
     message(ERROR " -- Platform not suppoted")
@@ -38,6 +35,6 @@ endif()
 
 
 
-add_library(${PROJECT_NAME} STATIC ${HI_HAPPY_GARDEN_PLATFORMS_SOURCES} ${HI_HAPPY_GARDEN_PLATFORMS_INCLUDE})
+add_library(${PROJECT_NAME} STATIC ${HI_HAPPY_GARDEN_PLATFORMS_SOURCES} ${HI_HAPPY_GARDEN_PLATFORMS_INCLUDES})
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/linux/inc) #to fix
 target_link_libraries(${PROJECT_NAME} osal)

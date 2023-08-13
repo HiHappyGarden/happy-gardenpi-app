@@ -17,9 +17,14 @@
  *
  ***************************************************************************/
 
-#ifndef HHGARDEN_PLATFORM_CONFIG_H
-#define HHGARDEN_PLATFORM_CONFIG_H
+#ifndef HHGARDEN_CONFIG_H
+#define HHGARDEN_CONFIG_H
 
-#define HHGARDEN_PLATFORM_NAME "@PROJECT_NAME@"
+#define HHGARDEN_NAME "hi-happy-garden"
+#define HHGARDEN_VER "0.52.0"
+#define HHGARDEN_VER_MAJOR 0
+#define HHGARDEN_VER_MINOR 52
+#define HHGARDEN_VER_PATCH 0
+#define HHGARDEN_LCD_MSG_SIZE (34)
 
-#endif // HHGARDEN_PLATFORM_CONFIG_H
+#endif // HHGARDEN_CONFIG_H
