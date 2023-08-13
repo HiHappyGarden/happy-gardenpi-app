@@ -39,7 +39,8 @@ app_main::~app_main() OS_NOEXCEPT
 
 bool app_main::init(class error** error) OS_NOEXCEPT
 {
-    //hardware.getLcd()->set_text("ciao", error);
+    lcd_msg.clear();
+    hardware.getLcd()->set_text(lcd_msg, error);
 
     return true;
 }
