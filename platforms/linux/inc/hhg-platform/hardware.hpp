@@ -28,26 +28,20 @@ namespace hhg::platform
 inline namespace v1
 {
 
-class button;
-class lcd;
-class led;
-class releay;
-
-
 using os::error;
 using os::string;
+namespace intf = hhg::intf;
 
 class hardware : public hhg::intf::hardware
 {
-    static constexpr inline const char VERSION[] = "";
-
     int32_t fd{-1};
-    button* button_next{nullptr};
-    button* button_before{nullptr};
-    class lcd* lcd{nullptr};
-    led* led_green{nullptr};
-    led* led_red{nullptr};
-    class releay* releay{nullptr};
+
+    intf::button* button_next{nullptr};
+    intf::button* button_before{nullptr};
+    intf::lcd* lcd{nullptr};
+    intf::led* led_green{nullptr};
+    intf::led* led_red{nullptr};
+    intf::releay* releay{nullptr};
 
     friend void sig_event_handler(int n, siginfo_t *info, void *unused) OS_NOEXCEPT;
 public:
@@ -63,6 +57,36 @@ public:
     const os::string<128>& get_version() OS_NOEXCEPT override;
 
     int32_t get_temperature(error **error) OS_NOEXCEPT override;
+
+    inline intf::button* get_button_next() const OS_NOEXCEPT override
+    {
+        return button_next;
+    }
+
+    inline intf::button* get_button_before() const OS_NOEXCEPT override
+    {
+        return button_before;
+    }
+
+    inline intf::lcd* getLcd() const OS_NOEXCEPT override
+    {
+        return lcd;
+    }
+
+    inline intf::led* get_led_green() const OS_NOEXCEPT override
+    {
+        return led_green;
+    }
+
+    inline intf::led* get_led_red() const OS_NOEXCEPT override
+    {
+        return led_red;
+    }
+
+    inline intf::releay* get_releay() const OS_NOEXCEPT override
+    {
+        return releay;
+    }
 };
 
 }

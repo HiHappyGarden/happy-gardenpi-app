@@ -37,7 +37,7 @@ inline namespace v1
 
 class releay
 {
-protected:
+public:
     virtual ~releay() OS_NOEXCEPT = default;
 
     virtual bool init(class os::error**) OS_NOEXCEPT = 0;

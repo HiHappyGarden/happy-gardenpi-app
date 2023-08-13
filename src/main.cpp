@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) try
     os::error* error = nullptr;
 
     hhg::intf::hardware&& hardware = hhg::platform::hardware();
-    hhg::app::app_main app_main;
+    hhg::app::app_main app_main(hardware);
 
     OS_LOG_INFO(APP_TAG, "Start hardware");
     if(!hardware.init(&error))
@@ -52,8 +52,6 @@ int main(int argc, char* argv[]) try
         os::stop_main_loop();
         exit(1);
     }
-
-    printf("-->%s\n", hardware.get_info().c_str());
 
     OS_LOG_INFO(APP_TAG, "Start app_main");
     if(!app_main.init(&error))

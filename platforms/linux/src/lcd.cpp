@@ -48,17 +48,37 @@ bool lcd::init(os::error** error) OS_NOEXCEPT
 
 void lcd::set_text(const string<34>& str, os::error** error) const OS_NOEXCEPT
 {
-
+    char buff[34];
+    memset(buff, '\0', sizeof(buff));
+    strncpy(buff, str.c_str(), sizeof(buff) - 1);
+    this->set_text(buff, error);
 }
 
 void lcd::set_text(const char (&buff) [34], os::error** error) const OS_NOEXCEPT
 {
-
+    if(ioctl(fd, static_cast<uint8_t>(type::LCD) | static_cast<uint8_t>(action::WRITE), &buff) < 0)
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD("ioctl() fail", static_cast<uint8_t>(error_code::HARDWARE_IOCL), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+    }
 }
 
 string<34> lcd::get_text(os::error** error) const OS_NOEXCEPT
 {
-    return {};
+
+    char buff[34];
+    if(ioctl(fd, static_cast<uint8_t>(type::LCD) | static_cast<uint8_t>(action::READ), buff) < 0)
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD("ioctl() fail", static_cast<uint8_t>(error_code::HARDWARE_IOCL), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+        return {};
+    }
+
+    return {buff};
 }
 
 }

@@ -15,6 +15,7 @@ add_definitions(-DOS_NOEXCEPT=)
 
 include_directories(inc)
 include_directories(../osal/inc)
+include_directories(../osal/src/unix)
 
 file(GLOB_RECURSE HI_HAPPY_GARDEN_INTERFACES_SOURCES CONFIGURE_DEPENDS "src/*.cpp" "src/*.c")
 file(GLOB_RECURSE HI_HAPPY_GARDEN_INTERFACES_INCLUDE CONFIGURE_DEPENDS "inc/*.hpp" "inc/*.h")
