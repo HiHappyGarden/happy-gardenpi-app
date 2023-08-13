@@ -273,25 +273,26 @@ const os::string<128>& hardware::get_info() OS_NOEXCEPT
 {
     static string<128> info;
 
-    auto file = fopen("etc/os-release", "r");
+    auto file = fopen("/etc/os-release", "r");
     if(file)
     {
         char data_file[128];
 
-        fseek(file, 0, SEEK_SET);
-        ssize_t bytes = ftell(file);
         fseek(file, 0, SEEK_END);
+        ssize_t bytes = ftell(file);
+        fseek(file, 0, SEEK_SET);
 
         fread(data_file, sizeof(data_file), 1, file);
 
-        if(char* start =strstr(data_file, "NAME=\""); start)
+        const char token[] = "NAME=\"";
+        if(char* start =strstr(data_file, token); start)
         {
-            if(const char* end =strstr(data_file, "\""); end)
+            start += strlen(token);
+            if(const char* end =strstr(start, "\""); end)
             {
-                uint8_t i = 0;
                 for(; start < end; start++)
                 {
-                    info[i] = start[0];
+                    info += start[0];
                 }
             }
         }
@@ -300,6 +301,38 @@ const os::string<128>& hardware::get_info() OS_NOEXCEPT
     }
 
 
+    /* Open the command for reading. */
+    file = popen("/sbin/modinfo hhgd", "r");
+    if (file == NULL)
+    {
+        char row[257];
+        memset(row, '\0', sizeof(row));
+
+        info += " - hhgd ";
+
+        /* Read the output a line at a time - output it. */
+        while (fgets(row, sizeof(row), file) != NULL)
+        {
+            const char token[] = "version:";
+            if(char* start =strstr(row, token); start)
+            {
+                start += strlen(token);
+                if(const char* end =strstr(start, "\n"); end)
+                {
+                    for(; start < end; start++)
+                    {
+                        if(start[0] != ' ')
+                        {
+                            info += start[0];
+                        }
+                    }
+                }
+            }
+        }
+
+        /* close */
+        pclose(file);
+    }
 
     return info;
 }
@@ -311,7 +344,7 @@ const os::string<128>& hardware::get_version() OS_NOEXCEPT
     return version;
 }
 
-int32_t hardware::get_temperature(class osal::error** error)
+int32_t hardware::get_temperature(class os::error** error)
 {
     int32_t fd = open("/sys/class/thermal/thermal_zone0/temp", 0);
     if (fd == -1)

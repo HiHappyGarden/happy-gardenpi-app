@@ -35,11 +35,11 @@ public:
     inline led(const int32_t& fd, enum type type) : fd(fd), type(type) OS_NOEXCEPT {}
     OS_NO_COPY_NO_MOVE(led);
 
-    bool init(class osal::error** error) OS_NOEXCEPT override;
+    bool init(class os::error** error) OS_NOEXCEPT override;
 
-    void set_status(bool status, osal::error** error) const OS_NOEXCEPT override;
+    void set_status(bool status, os::error** error) const OS_NOEXCEPT override;
 
-    bool get_status(osal::error** error) const OS_NOEXCEPT override;
+    bool get_status(os::error** error) const OS_NOEXCEPT override;
 
 };
 

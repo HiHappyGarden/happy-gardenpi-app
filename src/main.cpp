@@ -53,7 +53,7 @@ int main(int argc, char* argv[]) try
         exit(1);
     }
 
-    printf("-->%d", hardware.get_temperature(&error));
+    printf("-->%s\n", hardware.get_info().c_str());
 
     OS_LOG_INFO(APP_TAG, "Start app_main");
     if(!app_main.init(&error))

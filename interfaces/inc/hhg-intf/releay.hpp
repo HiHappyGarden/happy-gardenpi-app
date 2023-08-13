@@ -28,6 +28,7 @@ inline namespace v1
 class error;
 }
 }
+namespace os = osal;
 
 namespace hhg::intf
 {
@@ -39,11 +40,11 @@ class releay
 protected:
     virtual ~releay() OS_NOEXCEPT = default;
 
-    virtual bool init(class osal::error**) OS_NOEXCEPT = 0;
+    virtual bool init(class os::error**) OS_NOEXCEPT = 0;
 
-    virtual void set_status(uint8_t idx, bool, class osal::error**) const OS_NOEXCEPT = 0;
+    virtual void set_status(uint8_t idx, bool, class os::error**) const OS_NOEXCEPT = 0;
 
-    virtual bool get_status(uint8_t idx, class osal::error**) const OS_NOEXCEPT = 0;
+    virtual bool get_status(uint8_t idx, class os::error**) const OS_NOEXCEPT = 0;
 
     virtual uint8_t count_output() OS_NOEXCEPT = 0;
 };

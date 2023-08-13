@@ -18,14 +18,7 @@
  ***************************************************************************/
 
 #pragma once
-
-namespace osal
-{
-inline namespace v1
-{
-class error;
-}
-}
+#include "osal/osal.hpp"
 
 
 namespace hhg::intf
@@ -38,7 +31,13 @@ class lcd
 protected:
     virtual ~lcd() OS_NOEXCEPT = default;
 
-    virtual bool init(class osal::error**) OS_NOEXCEPT = 0;
+    virtual bool init(class os::error**) OS_NOEXCEPT = 0;
+
+    virtual void set_text(const os::string<34>& string, os::error** error) const OS_NOEXCEPT = 0;
+
+    virtual void set_text(const char (&buff) [34], os::error** error) const OS_NOEXCEPT = 0;
+
+    virtual os::string<34> get_text(os::error** error) const OS_NOEXCEPT = 0;
 };
 
 }

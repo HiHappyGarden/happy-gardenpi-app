@@ -33,7 +33,7 @@ constexpr const char APP_TAG[] = "BUTTON";
 }
 
 
-bool lcd::init(osal::error** error) OS_NOEXCEPT
+bool lcd::init(os::error** error) OS_NOEXCEPT
 {
     if(fd == -1)
     {
@@ -44,6 +44,21 @@ bool lcd::init(osal::error** error) OS_NOEXCEPT
         return false;
     }
     return true;
+}
+
+void lcd::set_text(const string<34>& str, os::error** error) const OS_NOEXCEPT
+{
+
+}
+
+void lcd::set_text(const char (&buff) [34], os::error** error) const OS_NOEXCEPT
+{
+
+}
+
+string<34> lcd::get_text(os::error** error) const OS_NOEXCEPT
+{
+    return {};
 }
 
 }
