@@ -18,7 +18,7 @@
  ***************************************************************************/
 
 #pragma once
-
+#include "config.h"
 #include "osal/osal.hpp"
 
 namespace hhg::intf
@@ -40,6 +40,9 @@ using namespace os;
 class app_main final
 {
     const hhg::intf::hardware& hardware;
+
+    os::string<HHGARDEN_LCD_MSG_SIZE> lcd_msg;
+
 public:
     explicit app_main(const hhg::intf::hardware& hardware) OS_NOEXCEPT;
     OS_NO_COPY_NO_MOVE(app_main)

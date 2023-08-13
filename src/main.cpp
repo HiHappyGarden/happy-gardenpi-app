@@ -41,7 +41,7 @@ int main(int argc, char* argv[]) try
     hhg::intf::hardware&& hardware = hhg::platform::hardware();
     hhg::app::app_main app_main(hardware);
 
-    OS_LOG_INFO(APP_TAG, "Start hardware");
+    OS_LOG_INFO(APP_TAG, "Init hardware");
     if(!hardware.init(&error))
     {
         if(error)
@@ -53,7 +53,7 @@ int main(int argc, char* argv[]) try
         exit(1);
     }
 
-    OS_LOG_INFO(APP_TAG, "Start app_main");
+    OS_LOG_INFO(APP_TAG, "Init app_main");
     if(!app_main.init(&error))
     {
         if(error)

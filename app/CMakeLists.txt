@@ -24,17 +24,13 @@ include_directories(../interfaces/inc)
 
 if(LINUX)
     include_directories(../osal/src/unix)
-
-    configure_file(config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/inc/hhg-app/config.h)
 else()
     message(ERROR " -- Platform not suppoted")
 endif()
 
 file(GLOB_RECURSE HI_HAPPY_GARDEN_APP_SOURCES CONFIGURE_DEPENDS "src/*.cpp" "src/*.c")
-file(GLOB_RECURSE HI_HAPPY_GARDEN_APP_INCLUDE CONFIGURE_DEPENDS "inc/*.hpp" "inc/*.h")
+file(GLOB_RECURSE HI_HAPPY_GARDEN_APP_INCLUDES CONFIGURE_DEPENDS "inc/*.hpp" "inc/*.h")
 
 
-configure_file(config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/inc/hhg-app/config.h)
-
-add_library(${PROJECT_NAME} STATIC ${HI_HAPPY_GARDEN_APP_SOURCES} ${HI_HAPPY_GARDEN_APP_INCLUDE})
+add_library(${PROJECT_NAME} STATIC ${HI_HAPPY_GARDEN_APP_SOURCES} ${HI_HAPPY_GARDEN_APP_INCLUDES})
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/inc)

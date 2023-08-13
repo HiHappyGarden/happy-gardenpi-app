@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #pragma once
+#include "config.h"
 #include "osal/osal.hpp"
 
 
@@ -33,11 +34,11 @@ public:
 
     virtual bool init(class os::error**) OS_NOEXCEPT = 0;
 
-    virtual void set_text(const os::string<34>& string, os::error** error) const OS_NOEXCEPT = 0;
+    virtual void set_text(const os::string<HHGARDEN_LCD_MSG_SIZE>& string, os::error** error) const OS_NOEXCEPT = 0;
 
-    virtual void set_text(const char (&buff) [34], os::error** error) const OS_NOEXCEPT = 0;
+    virtual void set_text(const char (&buff) [HHGARDEN_LCD_MSG_SIZE], os::error** error) const OS_NOEXCEPT = 0;
 
-    virtual os::string<34> get_text(os::error** error) const OS_NOEXCEPT = 0;
+    virtual os::string<HHGARDEN_LCD_MSG_SIZE> get_text(os::error** error) const OS_NOEXCEPT = 0;
 };
 
 }
