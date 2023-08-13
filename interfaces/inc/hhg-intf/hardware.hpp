@@ -22,15 +22,6 @@
 
 #include <stdint.h>
 
-
-namespace osal
-{
-inline namespace v1
-{
-class error;
-}
-}
-
 namespace hhg::intf
 {
 inline namespace v1
@@ -42,13 +33,13 @@ protected:
     virtual ~hardware() OS_NOEXCEPT = default;
 
 public:
-    virtual bool init(class osal::error**) OS_NOEXCEPT = 0;
+    virtual bool init(class os::error**) OS_NOEXCEPT = 0;
 
     virtual const os::string<128>& get_info() OS_NOEXCEPT = 0;
 
     virtual const os::string<128>& get_version() OS_NOEXCEPT = 0;
 
-    virtual int32_t get_temperature(class osal::error**) OS_NOEXCEPT = 0;
+    virtual int32_t get_temperature(class os::error**) OS_NOEXCEPT = 0;
 };
 
 }

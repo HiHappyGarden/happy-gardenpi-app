@@ -33,7 +33,7 @@ constexpr const char APP_TAG[] = "LED";
 }
 
 
-bool led::init(class osal::error** error) OS_NOEXCEPT
+bool led::init(class os::error** error) OS_NOEXCEPT
 {
     if(fd == -1)
     {
@@ -46,7 +46,7 @@ bool led::init(class osal::error** error) OS_NOEXCEPT
     return true;
 }
 
-void led::set_status(bool status, osal::error** error) const OS_NOEXCEPT
+void led::set_status(bool status, os::error** error) const OS_NOEXCEPT
 {
     if(ioctl(fd, static_cast<uint8_t>(type) | static_cast<uint8_t>(action::WRITE), &status) < 0)
     {
@@ -57,7 +57,7 @@ void led::set_status(bool status, osal::error** error) const OS_NOEXCEPT
     }
 }
 
-bool led::get_status(osal::error** error) const OS_NOEXCEPT
+bool led::get_status(os::error** error) const OS_NOEXCEPT
 {
     uint32_t status = 0;
     if(ioctl(fd, static_cast<uint8_t>(type) | static_cast<uint8_t>(action::READ), &status) < 0)

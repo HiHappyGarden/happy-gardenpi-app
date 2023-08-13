@@ -43,7 +43,7 @@ public:
     inline button(const int32_t& fd, enum type type) : fd(fd), type(type) OS_NOEXCEPT {}
     OS_NO_COPY_NO_MOVE(button);
 
-    bool init(class osal::error** error) OS_NOEXCEPT override;
+    bool init(class os::error** error) OS_NOEXCEPT override;
 
     void set_on_click(hhg::intf::button::on_click on_click) OS_NOEXCEPT override;
 

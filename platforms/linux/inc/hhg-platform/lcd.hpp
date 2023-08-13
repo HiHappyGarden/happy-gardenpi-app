@@ -20,7 +20,6 @@
 #pragma once
 #include "hhg-intf/lcd.hpp"
 #include "hhg-platform/types.hpp"
-#include "osal/osal.hpp"
 
 #include <stdint.h>
 #include <signal.h>
@@ -30,6 +29,7 @@ namespace hhg::platform
 inline namespace v1
 {
 
+using os::string;
 
 class lcd final : public hhg::intf::lcd
 {
@@ -41,7 +41,13 @@ public:
     inline lcd(const int32_t& fd) : fd(fd) OS_NOEXCEPT {}
     OS_NO_COPY_NO_MOVE(lcd);
 
-    bool init(class osal::error** error) OS_NOEXCEPT override;
+    bool init(class os::error** error) OS_NOEXCEPT override;
+
+    void set_text(const string<34>& str, os::error** error) const OS_NOEXCEPT override;
+
+    void set_text(const char (&buff) [34], os::error** error) const OS_NOEXCEPT override;
+
+    string<34> get_text(os::error** error) const OS_NOEXCEPT override;
 };
 
 }
