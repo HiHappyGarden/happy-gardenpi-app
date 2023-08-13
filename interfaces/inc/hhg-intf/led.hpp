@@ -35,7 +35,7 @@ inline namespace v1
 
 class led
 {
-protected:
+public:
     virtual ~led() OS_NOEXCEPT = default;
 
     virtual bool init(class os::error**) OS_NOEXCEPT = 0;

@@ -23,7 +23,7 @@
 #include "hhg-platform/lcd.hpp"
 #include "hhg-platform/led.hpp"
 #include "hhg-platform/releay.hpp"
-
+#include "osal/osal.hpp"
 
 #include <unistd.h>
 #include <fcntl.h>
@@ -37,12 +37,10 @@ namespace hhg::platform
 inline namespace v1
 {
 
+using namespace hhg::platform;
+
 namespace
 {
-
-
-
-
 hardware* me = nullptr;
 constexpr inline const char APP_TAG[] = "HARDWARE";
 }
@@ -61,18 +59,19 @@ void sig_event_handler(int n, siginfo_t *info, void *unused) OS_NOEXCEPT
             case type::BUTTON_NEXT:
                 OS_LOG_DEBUG(APP_TAG, "Handled BUTTON_NEXT");
 
-                if(me && me->button_next && me->button_next->on_click)
+
+                if(me && me->button_next && dynamic_cast<button*>(me->button_next)->on_click)
                 {
-                    me->button_next->on_click();
+                    dynamic_cast<button*>(me->button_next)->on_click();
                 }
 
                 break;
             case type::BUTTON_BEFORE:
                 OS_LOG_DEBUG(APP_TAG, "Handled BUTTON_BEFORE");
 
-                if(me && me->button_before && me->button_before->on_click)
+                if(me && me->button_before && dynamic_cast<button*>(me->button_before)->on_click)
                 {
-                    me->button_before->on_click();
+                    dynamic_cast<button*>(me->button_before)->on_click();
                 }
 
                 break;
@@ -83,8 +82,6 @@ void sig_event_handler(int n, siginfo_t *info, void *unused) OS_NOEXCEPT
         }
     }
 }
-
-
 
 hardware::hardware() OS_NOEXCEPT
 {
@@ -101,7 +98,22 @@ hardware::~hardware() OS_NOEXCEPT
     {
         delete button_before;
     }
-
+    if(lcd)
+    {
+        delete lcd;
+    }
+    if(led_green)
+    {
+        delete led_green;
+    }
+    if(led_red)
+    {
+        delete led_red;
+    }
+    if(releay)
+    {
+        delete releay;
+    }
     if(fd >= 0)
     {
         close(fd);
@@ -207,7 +219,7 @@ bool hardware::init(error **error) OS_NOEXCEPT
     }
 
     OS_LOG_INFO(APP_TAG, "Init led_green");
-    led_green = new led(fd, type::LED_GREEN);
+    led_green = new hhg::platform::led(fd, type::LED_GREEN);
     if(led_green == nullptr)
     {
         if(error)
@@ -227,7 +239,7 @@ bool hardware::init(error **error) OS_NOEXCEPT
     }
 
     OS_LOG_INFO(APP_TAG, "Init led_green");
-    led_red = new led(fd, type::LED_RED);
+    led_red = new hhg::platform::led(fd, type::LED_RED);
     if(led_red == nullptr)
     {
         if(error)

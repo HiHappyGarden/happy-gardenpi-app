@@ -36,7 +36,7 @@ inline namespace v1
 
 class button
 {
-protected:
+public:
     using on_click = void (*)();
 
     virtual ~button() OS_NOEXCEPT = default;

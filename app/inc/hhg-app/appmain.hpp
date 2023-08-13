@@ -21,22 +21,34 @@
 
 #include "osal/osal.hpp"
 
+namespace hhg::intf
+{
+inline namespace v1
+{
+class hardware;
+}
+}
+
+
 namespace hhg::app
 {
 inline namespace v1
 {
 
+using namespace os;
+
 class app_main final
 {
+    const hhg::intf::hardware& hardware;
 public:
-    app_main() OS_NOEXCEPT;
+    explicit app_main(const hhg::intf::hardware& hardware) OS_NOEXCEPT;
     OS_NO_COPY_NO_MOVE(app_main)
 
     ~app_main() OS_NOEXCEPT;
 
-    bool init(class os::error**) OS_NOEXCEPT;
+    bool init(class error** error) OS_NOEXCEPT;
 
-    bool fsm_start(class os::error**) OS_NOEXCEPT;
+    bool fsm_start(class error** error) OS_NOEXCEPT;
 };
 
 }

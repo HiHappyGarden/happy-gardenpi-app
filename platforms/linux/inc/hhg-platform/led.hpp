@@ -27,7 +27,7 @@ namespace hhg::platform
 inline namespace v1
 {
 
-class led final : hhg::intf::led
+class led final : public hhg::intf::led
 {
     const int32_t& fd;
     enum type type;

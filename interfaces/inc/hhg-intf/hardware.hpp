@@ -18,8 +18,11 @@
  ***************************************************************************/
 
 #pragma once
-#include "osal/osal.hpp"
 
+#include "hhg-intf/button.hpp"
+#include "hhg-intf/lcd.hpp"
+#include "hhg-intf/led.hpp"
+#include "hhg-intf/releay.hpp"
 #include <stdint.h>
 
 namespace hhg::intf
@@ -40,6 +43,18 @@ public:
     virtual const os::string<128>& get_version() OS_NOEXCEPT = 0;
 
     virtual int32_t get_temperature(class os::error**) OS_NOEXCEPT = 0;
+
+    virtual button* get_button_next() const OS_NOEXCEPT = 0;
+
+    virtual button* get_button_before() const OS_NOEXCEPT = 0;
+
+    virtual class lcd* getLcd() const OS_NOEXCEPT = 0;
+
+    virtual led* get_led_green() const OS_NOEXCEPT = 0;
+
+    virtual led* get_led_red() const OS_NOEXCEPT = 0;
+
+    virtual class releay* get_releay() const OS_NOEXCEPT = 0;
 };
 
 }
