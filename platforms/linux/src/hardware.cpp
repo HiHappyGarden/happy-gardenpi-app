@@ -24,6 +24,7 @@
 #include "hhg-platform/led.hpp"
 #include "hhg-platform/releay.hpp"
 #include "osal/osal.hpp"
+#include "errors.hpp"
 
 #include <unistd.h>
 #include <fcntl.h>
@@ -122,8 +123,8 @@ hardware::~hardware() OS_NOEXCEPT
 
 bool hardware::init(error **error) OS_NOEXCEPT
 {
-    int32_t number;
-    struct sigaction act;
+    int32_t number = 0;
+    struct sigaction act{0};
 
 //    /* install custom signal handler */
 //    sigemptyset (&act.sa_mask);
