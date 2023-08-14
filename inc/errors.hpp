@@ -1,7 +1,7 @@
 /***************************************************************************
  *
- * Hi Happy Garden Interfaces
- * Copyright (C) 2023  Antonio Salsi <passy.linux@zresa.it>
+ * PROJECT
+ * Copyright (C) 202X  Antonio Salsi <passy.linux@zresa.it>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,35 +20,21 @@
 #pragma once
 #include <stdint.h>
 
-namespace hhg::platform
+namespace hhg
 {
 inline namespace v1
 {
 
-enum class type : uint32_t
+enum class error_code : uint16_t
 {
-    LED_GREEN,
-    LED_RED,
-    RELAY_IN1,
-    RELAY_IN2,
-    RELAY_IN3,
-    RELAY_IN4,
-    BUTTON_NEXT,
-    BUTTON_BEFORE,
-    LCD,
-    NONE,
-    MASK = 0x0F,
-};
-
-enum class action : uint8_t
-{
-    READ = 0x40,
-    WRITE = 0x80,
+    INIT,
+    NO_HEAP,
+    HARDWARE_NO_DRIVER = 100,
+    HARDWARE_REGISTRATION,
+    HARDWARE_IOCL,
 };
 
 
-constexpr const uint8_t SIGETX = 10;
-constexpr const char HHGD_PATH[] = "/dev/hhgd";
+}
+}
 
-}
-}

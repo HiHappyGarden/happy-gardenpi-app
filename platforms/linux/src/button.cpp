@@ -19,6 +19,7 @@
 
 #include "hhg-platform/button.hpp"
 #include "osal/osal.hpp"
+#include "errors.hpp"
 
 #include <sys/ioctl.h>
 

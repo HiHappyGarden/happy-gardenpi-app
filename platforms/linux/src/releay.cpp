@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "hhg-platform/releay.hpp"
+#include "errors.hpp"
 
 #include <sys/ioctl.h>
 

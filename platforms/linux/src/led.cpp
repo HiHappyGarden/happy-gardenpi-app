@@ -20,6 +20,8 @@
 #pragma once
 
 #include "hhg-platform/led.hpp"
+#include "errors.hpp"
+
 #include <sys/ioctl.h>
 
 namespace hhg::platform

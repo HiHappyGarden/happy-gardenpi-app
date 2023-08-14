@@ -19,6 +19,7 @@
 
 #include "hhg-platform/lcd.hpp"
 #include "osal/osal.hpp"
+#include "errors.hpp"
 
 #include <sys/ioctl.h>
 
