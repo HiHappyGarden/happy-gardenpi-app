@@ -26,6 +26,7 @@ inline namespace v1
 {
 
 using os::string;
+using os::unique_ptr;
 
 enum class status
 {
@@ -68,7 +69,7 @@ struct station final
     /**
      * @brief status of station
      */
-    status status;
+    enum status status;
 };
 
 struct zone
@@ -113,7 +114,7 @@ struct zone
     /**
      * @brief status of station
      */
-    status status = status::ACTIVE;
+    enum status status = status::ACTIVE;
 
     /**
      * @brief number of station
@@ -123,16 +124,7 @@ struct zone
     /**
      * @brief number of station
      */
-    station* stations = nullptr;
-
-    inline ~zone() OS_NOEXCEPT
-    {
-        if(stations)
-        {
-            delete[] stations;
-            stations = nullptr;
-        }
-    }
+    unique_ptr<station> stations;
 };
 
 }
