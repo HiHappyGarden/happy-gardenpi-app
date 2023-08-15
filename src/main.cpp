@@ -22,8 +22,6 @@
 #include "hhg-app/appmain.hpp"
 #include "osal/osal.hpp"
 
-
-
 #include <stdio.h>
 
 namespace

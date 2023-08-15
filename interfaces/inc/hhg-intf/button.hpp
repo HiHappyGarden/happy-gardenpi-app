@@ -19,15 +19,7 @@
 
 #pragma once
 
-namespace osal
-{
-inline namespace v1
-{
-class error;
-}
-}
-namespace os = osal;
-
+#include "osal/osal.hpp"
 
 namespace hhg::intf
 {

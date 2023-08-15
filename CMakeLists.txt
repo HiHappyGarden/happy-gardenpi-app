@@ -12,11 +12,12 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS ON)
-set(LCD_MSG_SIZE 34)
-add_definitions(-DOS_NOEXCEPT=)
-
 add_compile_options(-fno-rtti)
 add_compile_options(-fexceptions)
+
+set(LCD_MSG_SIZE 34)
+
+
 
 set(OS_NOEXCEPT "")
 

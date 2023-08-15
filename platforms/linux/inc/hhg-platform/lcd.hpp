@@ -38,7 +38,7 @@ class lcd final : public hhg::intf::lcd
 
     friend void sig_event_handler(int n, siginfo_t *info, void *unused) OS_NOEXCEPT;
 public:
-    inline lcd(const int32_t& fd) : fd(fd) OS_NOEXCEPT {}
+    inline lcd(const int32_t& fd) OS_NOEXCEPT : fd(fd)  {}
     OS_NO_COPY_NO_MOVE(lcd);
 
     bool init(class os::error** error) OS_NOEXCEPT override;

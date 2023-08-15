@@ -32,7 +32,7 @@ class led final : public hhg::intf::led
     const int32_t& fd;
     enum type type;
 public:
-    inline led(const int32_t& fd, enum type type) : fd(fd), type(type) OS_NOEXCEPT {}
+    inline led(const int32_t& fd, enum type type) OS_NOEXCEPT : fd(fd), type(type)  {}
     OS_NO_COPY_NO_MOVE(led);
 
     bool init(class os::error** error) OS_NOEXCEPT override;

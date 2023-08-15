@@ -40,7 +40,7 @@ class button final : public hhg::intf::button
 
     friend void sig_event_handler(int n, siginfo_t *info, void *unused) OS_NOEXCEPT;
 public:
-    inline button(const int32_t& fd, enum type type) : fd(fd), type(type) OS_NOEXCEPT {}
+    inline button(const int32_t& fd, enum type type) OS_NOEXCEPT : fd(fd), type(type)  {}
     OS_NO_COPY_NO_MOVE(button);
 
     bool init(class os::error** error) OS_NOEXCEPT override;
