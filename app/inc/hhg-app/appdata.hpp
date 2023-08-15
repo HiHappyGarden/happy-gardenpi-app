@@ -124,7 +124,7 @@ struct zone
     /**
      * @brief number of station
      */
-    unique_ptr<station> stations;
+    unique_ptr<station []> stations;
 };
 
 }
