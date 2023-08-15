@@ -28,7 +28,7 @@ inline namespace v1
 {
 
 
-bool releay::init(osal::error **error)
+bool releay::init(osal::error **error) OS_NOEXCEPT
 {
     if(fd == -1)
     {
@@ -41,7 +41,7 @@ bool releay::init(osal::error **error)
     return true;
 }
 
-void releay::set_status(uint8_t idx, bool status, osal::error **error) const
+void releay::set_status(uint8_t idx, bool status, osal::error **error) const OS_NOEXCEPT
 {
 
     if(ioctl(fd,  (idx & static_cast<uint8_t>(type::MASK)) | static_cast<uint8_t>(action::WRITE), &status) < 0)
@@ -54,7 +54,7 @@ void releay::set_status(uint8_t idx, bool status, osal::error **error) const
 
 }
 
-bool releay::get_status(uint8_t idx, osal::error **error) const
+bool releay::get_status(uint8_t idx, osal::error **error) const OS_NOEXCEPT
 {
 
     uint32_t status = 0;

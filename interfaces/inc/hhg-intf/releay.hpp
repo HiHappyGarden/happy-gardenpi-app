@@ -19,16 +19,10 @@
 
 #pragma once
 
+#include "osal/osal.hpp"
+
 #include <stdint.h>
 
-namespace osal
-{
-inline namespace v1
-{
-class error;
-}
-}
-namespace os = osal;
 
 namespace hhg::intf
 {

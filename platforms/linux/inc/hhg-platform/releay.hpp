@@ -36,13 +36,13 @@ class releay final : public hhg::intf::releay
 public:
     inline releay(const int32_t& fd) : fd(fd) {}
 
-    bool init(os::error **) override  OS_NOEXCEPT;
+    bool init(os::error **)  OS_NOEXCEPT override;
 
-    void set_status(uint8_t idx, bool status, class os::error** error) const override OS_NOEXCEPT;
+    void set_status(uint8_t idx, bool status, class os::error** error) const OS_NOEXCEPT override;
 
-    bool get_status(uint8_t idx, class os::error** error) const override  OS_NOEXCEPT;
+    bool get_status(uint8_t idx, class os::error** error) const OS_NOEXCEPT override;
 
-    uint8_t count_output() override  OS_NOEXCEPT;
+    uint8_t count_output() OS_NOEXCEPT override;
 };
 
 }

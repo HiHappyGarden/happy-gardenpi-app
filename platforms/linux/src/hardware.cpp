@@ -357,7 +357,7 @@ const os::string<128>& hardware::get_version() OS_NOEXCEPT
     return version;
 }
 
-int32_t hardware::get_temperature(class os::error** error)
+int32_t hardware::get_temperature(class os::error** error) OS_NOEXCEPT
 {
     int32_t fd = open("/sys/class/thermal/thermal_zone0/temp", 0);
     if (fd == -1)

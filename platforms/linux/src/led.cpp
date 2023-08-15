@@ -17,8 +17,6 @@
  *
  ***************************************************************************/
 
-#pragma once
-
 #include "hhg-platform/led.hpp"
 #include "errors.hpp"
 
