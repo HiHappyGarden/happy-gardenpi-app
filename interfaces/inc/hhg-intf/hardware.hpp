@@ -48,13 +48,13 @@ public:
 
     virtual button* get_button_before() const OS_NOEXCEPT = 0;
 
-    virtual class lcd* getLcd() const OS_NOEXCEPT = 0;
+    virtual lcd* getLcd() const OS_NOEXCEPT = 0;
 
     virtual led* get_led_green() const OS_NOEXCEPT = 0;
 
     virtual led* get_led_red() const OS_NOEXCEPT = 0;
 
-    virtual class releay* get_releay() const OS_NOEXCEPT = 0;
+    virtual releay* get_releay() const OS_NOEXCEPT = 0;
 };
 
 }
