@@ -61,19 +61,19 @@ void sig_event_handler(int n, siginfo_t *info, void *unused) OS_NOEXCEPT
                 OS_LOG_DEBUG(APP_TAG, "Handled BUTTON_NEXT");
 
 
-                if(me && me->button_next && dynamic_cast<button*>(me->button_next)->on_click)
-                {
-                    dynamic_cast<button*>(me->button_next)->on_click();
-                }
+//                if(me && me->button_next && dynamic_cast<button*>(me->button_next)->on_click)
+//                {
+//                    dynamic_cast<button*>(me->button_next)->on_click();
+//                }
 
                 break;
             case type::BUTTON_BEFORE:
                 OS_LOG_DEBUG(APP_TAG, "Handled BUTTON_BEFORE");
 
-                if(me && me->button_before && dynamic_cast<button*>(me->button_before)->on_click)
-                {
-                    dynamic_cast<button*>(me->button_before)->on_click();
-                }
+//                if(me && me->button_before && dynamic_cast<button*>(me->button_before)->on_click)
+//                {
+//                    dynamic_cast<button*>(me->button_before)->on_click();
+//                }
 
                 break;
             default:
@@ -91,30 +91,6 @@ hardware::hardware() OS_NOEXCEPT
 
 hardware::~hardware() OS_NOEXCEPT
 {
-    if(button_next)
-    {
-        delete button_next;
-    }
-    if(button_before)
-    {
-        delete button_before;
-    }
-    if(lcd)
-    {
-        delete lcd;
-    }
-    if(led_green)
-    {
-        delete led_green;
-    }
-    if(led_red)
-    {
-        delete led_red;
-    }
-    if(releay)
-    {
-        delete releay;
-    }
     if(fd >= 0)
     {
         close(fd);
@@ -161,7 +137,7 @@ bool hardware::init(error **error) OS_NOEXCEPT
 
     OS_LOG_INFO(APP_TAG, "Init button_next");
     button_next = new button(fd, type::BUTTON_NEXT);
-    if(button_next == nullptr)
+    if(button_next.is_null())
     {
         if(error)
         {
@@ -181,7 +157,7 @@ bool hardware::init(error **error) OS_NOEXCEPT
 
     OS_LOG_INFO(APP_TAG, "Init button_before");
     button_before = new button(fd, type::BUTTON_BEFORE);
-    if(button_before == nullptr)
+    if(button_before.is_null())
     {
         if(error)
         {
@@ -201,7 +177,7 @@ bool hardware::init(error **error) OS_NOEXCEPT
 
     OS_LOG_INFO(APP_TAG, "Init lcd");
     lcd = new class lcd(fd);
-    if(lcd == nullptr)
+    if(lcd.is_null())
     {
         if(error)
         {
@@ -221,7 +197,7 @@ bool hardware::init(error **error) OS_NOEXCEPT
 
     OS_LOG_INFO(APP_TAG, "Init led_green");
     led_green = new hhg::platform::led(fd, type::LED_GREEN);
-    if(led_green == nullptr)
+    if(led_green.is_null())
     {
         if(error)
         {
@@ -241,7 +217,7 @@ bool hardware::init(error **error) OS_NOEXCEPT
 
     OS_LOG_INFO(APP_TAG, "Init led_green");
     led_red = new hhg::platform::led(fd, type::LED_RED);
-    if(led_red == nullptr)
+    if(led_red.is_null())
     {
         if(error)
         {
@@ -261,7 +237,7 @@ bool hardware::init(error **error) OS_NOEXCEPT
 
     OS_LOG_INFO(APP_TAG, "Init releay");
     releay = new class releay(fd);
-    if(releay == nullptr)
+    if(releay.is_null())
     {
         if(error)
         {

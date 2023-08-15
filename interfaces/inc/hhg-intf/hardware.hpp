@@ -44,17 +44,17 @@ public:
 
     virtual int32_t get_temperature(class os::error**) OS_NOEXCEPT = 0;
 
-    virtual button* get_button_next() const OS_NOEXCEPT = 0;
+    virtual const os::unique_ptr<button>& get_button_next() const OS_NOEXCEPT = 0;
 
-    virtual button* get_button_before() const OS_NOEXCEPT = 0;
+    virtual const os::unique_ptr<button>& get_button_before() const OS_NOEXCEPT = 0;
 
-    virtual lcd* getLcd() const OS_NOEXCEPT = 0;
+    virtual const os::unique_ptr<lcd>& getLcd() const OS_NOEXCEPT = 0;
 
-    virtual led* get_led_green() const OS_NOEXCEPT = 0;
+    virtual const os::unique_ptr<led>& get_led_green() const OS_NOEXCEPT = 0;
 
-    virtual led* get_led_red() const OS_NOEXCEPT = 0;
+    virtual const os::unique_ptr<led>& get_led_red() const OS_NOEXCEPT = 0;
 
-    virtual releay* get_releay() const OS_NOEXCEPT = 0;
+    virtual const os::unique_ptr<releay>& get_releay() const OS_NOEXCEPT = 0;
 };
 
 }

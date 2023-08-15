@@ -36,12 +36,12 @@ class hardware : public hhg::intf::hardware
 {
     int32_t fd{-1};
 
-    intf::button* button_next{nullptr};
-    intf::button* button_before{nullptr};
-    intf::lcd* lcd{nullptr};
-    intf::led* led_green{nullptr};
-    intf::led* led_red{nullptr};
-    intf::releay* releay{nullptr};
+    os::unique_ptr<intf::button> button_next{nullptr};
+    os::unique_ptr<intf::button> button_before{nullptr};
+    os::unique_ptr<intf::lcd> lcd{nullptr};
+    os::unique_ptr<intf::led> led_green{nullptr};
+    os::unique_ptr<intf::led> led_red{nullptr};
+    os::unique_ptr<intf::releay> releay{nullptr};
 
     friend void sig_event_handler(int n, siginfo_t *info, void *unused) OS_NOEXCEPT;
 public:
@@ -58,32 +58,32 @@ public:
 
     int32_t get_temperature(error **error) OS_NOEXCEPT override;
 
-    inline intf::button* get_button_next() const OS_NOEXCEPT override
+    inline const os::unique_ptr<intf::button>& get_button_next() const OS_NOEXCEPT override
     {
         return button_next;
     }
 
-    inline intf::button* get_button_before() const OS_NOEXCEPT override
+    inline const os::unique_ptr<intf::button>& get_button_before() const OS_NOEXCEPT override
     {
         return button_before;
     }
 
-    inline intf::lcd* getLcd() const OS_NOEXCEPT override
+    inline const os::unique_ptr<intf::lcd>& getLcd() const OS_NOEXCEPT override
     {
         return lcd;
     }
 
-    inline intf::led* get_led_green() const OS_NOEXCEPT override
+    inline const os::unique_ptr<intf::led>& get_led_green() const OS_NOEXCEPT override
     {
         return led_green;
     }
 
-    inline intf::led* get_led_red() const OS_NOEXCEPT override
+    inline const os::unique_ptr<intf::led>& get_led_red() const OS_NOEXCEPT override
     {
         return led_red;
     }
 
-    inline intf::releay* get_releay() const OS_NOEXCEPT override
+    inline const os::unique_ptr<intf::releay>& get_releay() const OS_NOEXCEPT override
     {
         return releay;
     }
