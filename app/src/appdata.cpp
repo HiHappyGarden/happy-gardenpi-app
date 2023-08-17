@@ -1,7 +1,7 @@
 /***************************************************************************
  *
- * PROJECT
- * Copyright (C) 202X  Antonio Salsi <passy.linux@zresa.it>
+ * Hi Happy Garden Interfaces
+ * Copyright (C) 2023  Antonio Salsi <passy.linux@zresa.it>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "hhg-app/appdata.hpp"
+#include "cJSON.h"
 
 namespace hhg::app
 {

@@ -1,7 +1,7 @@
 /***************************************************************************
  *
- * PROJECT
- * Copyright (C) 202X  Antonio Salsi <passy.linux@zresa.it>
+ * Hi Happy Garden Interfaces
+ * Copyright (C) 2023  Antonio Salsi <passy.linux@zresa.it>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,6 +40,7 @@ enum class status
  */
 struct station final
 {
+    using ptr = unique_ptr<station>;
 
     /**
     * @brief name of station
@@ -74,6 +75,27 @@ struct station final
 
 struct zone
 {
+    using ptr = unique_ptr<zone>;
+
+    /**
+     * @brief status of station
+     */
+    enum status status = status::ACTIVE;
+
+    /**
+     * @brief number of station
+     */
+    uint8_t stations_size = 0;
+
+    /**
+     * @brief number of station
+     */
+    unique_ptr<station []> stations;
+};
+
+struct schedule
+{
+
     static inline const constexpr uint8_t NOT_SET = 0xFF;
 
     /**
@@ -119,13 +141,15 @@ struct zone
     /**
      * @brief number of station
      */
-    uint8_t stations_size = 0;
+    uint8_t zones_size = 0;
 
     /**
      * @brief number of station
      */
-    unique_ptr<station []> stations;
+    unique_ptr<zone []> zones;
 };
+
+
 
 }
 }

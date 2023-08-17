@@ -29,6 +29,8 @@ enum class error_code : uint16_t
 {
     INIT,
     NO_HEAP,
+    NO_WRITE,
+    NO_READ,
     HARDWARE_NO_DRIVER = 100,
     HARDWARE_REGISTRATION,
     HARDWARE_IOCL,

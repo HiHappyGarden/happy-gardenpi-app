@@ -27,12 +27,13 @@ namespace hhg::intf
 inline namespace v1
 {
 
-class lcd
+struct  lcd
 {
-public:
+    using ptr = os::unique_ptr<lcd>;
+
     virtual ~lcd() OS_NOEXCEPT = default;
 
-    virtual bool init(class os::error**) OS_NOEXCEPT = 0;
+    virtual bool init(os::error** error) OS_NOEXCEPT = 0;
 
     virtual void set_text(const os::string<HHGARDEN_LCD_MSG_SIZE>& string, os::error** error) const OS_NOEXCEPT = 0;
 

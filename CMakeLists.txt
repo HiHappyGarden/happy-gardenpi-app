@@ -12,21 +12,25 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS ON)
-add_compile_options(-fno-rtti)
-add_compile_options(-fexceptions)
+add_compile_options("$<$<STREQUAL:$<TARGET_PROPERTY:LINKER_LANGUAGE>,CXX>:-fno-rtti>")
+add_compile_options("$<$<STREQUAL:$<TARGET_PROPERTY:LINKER_LANGUAGE>,CXX>:-fexceptions>")
 
 set(LCD_MSG_SIZE 34)
-
-
-
-set(OS_NOEXCEPT "")
-
+if(UNIX AND NOT APPLE)
+    set(LINUX TRUE)
+    set(FILE_PATH_DATA "data.json")
+    set(FILE_PATH_CONF "conf.json")
+endif()
 configure_file(config.h.in "${PROJECT_SOURCE_DIR}/inc/config.h")
+
 
 subdirs(app)
 subdirs(interfaces)
 subdirs(osal)
 subdirs(platforms)
+
+
+
 
 include_directories(inc)
 
@@ -35,7 +39,7 @@ file(GLOB_RECURSE HI_HAPPY_GARDEN_INCLUDES CONFIGURE_DEPENDS "inc/*.hpp" "inc/*.
 file(GLOB_RECURSE HI_HAPPY_GARDEN_TEST CONFIGURE_DEPENDS "test/*.cpp" "test/*.hpp")
 
 message(STATUS "PROJECT_SOURCE_DIR=${PROJECT_SOURCE_DIR}")
-message(STATUS "CMAKE_CURRENT_BINARY_DIR=${CMAKE_CURRENT_BINARY_DIR}")
+message(STATUS "CMAKE_BINARY_DIR=${CMAKE_BINARY_DIR}")
 
 add_executable(${PROJECT_NAME} ${HI_HAPPY_GARDEN_SOURCES} ${HI_HAPPY_GARDEN_INCLUDES})
 

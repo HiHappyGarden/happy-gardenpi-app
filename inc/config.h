@@ -22,9 +22,11 @@
 
 #define HHGARDEN_NAME "hi-happy-garden"
 #define HHGARDEN_VER "0.52.0"
-#define HHGARDEN_VER_MAJOR 0
-#define HHGARDEN_VER_MINOR 52
-#define HHGARDEN_VER_PATCH 0
+#define HHGARDEN_VER_MAJOR (0)
+#define HHGARDEN_VER_MINOR (52)
+#define HHGARDEN_VER_PATCH (0)
 #define HHGARDEN_LCD_MSG_SIZE (34)
+#define HHGARDEN_FILE_PATH_DATA "data.json"
+#define HHGARDEN_FILE_PATH_CONF "conf.json"
 
 #endif // HHGARDEN_CONFIG_H

@@ -23,6 +23,7 @@
 #include "hhg-intf/lcd.hpp"
 #include "hhg-intf/led.hpp"
 #include "hhg-intf/releay.hpp"
+#include "hhg-intf/data.hpp"
 #include <stdint.h>
 
 namespace hhg::intf
@@ -36,25 +37,27 @@ protected:
     virtual ~hardware() OS_NOEXCEPT = default;
 
 public:
-    virtual bool init(class os::error**) OS_NOEXCEPT = 0;
+    virtual bool init(os::error** error) OS_NOEXCEPT = 0;
 
     virtual const os::string<128>& get_info() OS_NOEXCEPT = 0;
 
     virtual const os::string<128>& get_version() OS_NOEXCEPT = 0;
 
-    virtual int32_t get_temperature(class os::error**) OS_NOEXCEPT = 0;
+    virtual int32_t get_temperature(os::error** error) OS_NOEXCEPT = 0;
 
-    virtual const os::unique_ptr<button>& get_button_next() const OS_NOEXCEPT = 0;
+    virtual const button::ptr& get_button_next() const OS_NOEXCEPT = 0;
 
-    virtual const os::unique_ptr<button>& get_button_before() const OS_NOEXCEPT = 0;
+    virtual const button::ptr& get_button_before() const OS_NOEXCEPT = 0;
 
-    virtual const os::unique_ptr<lcd>& getLcd() const OS_NOEXCEPT = 0;
+    virtual const lcd::ptr& getLcd() const OS_NOEXCEPT = 0;
 
-    virtual const os::unique_ptr<led>& get_led_green() const OS_NOEXCEPT = 0;
+    virtual const led::ptr& get_led_green() const OS_NOEXCEPT = 0;
 
-    virtual const os::unique_ptr<led>& get_led_red() const OS_NOEXCEPT = 0;
+    virtual const led::ptr& get_led_red() const OS_NOEXCEPT = 0;
 
-    virtual const os::unique_ptr<releay>& get_releay() const OS_NOEXCEPT = 0;
+    virtual const releay::ptr& get_releay() const OS_NOEXCEPT = 0;
+
+    virtual const data::ptr& get_data() const OS_NOEXCEPT = 0;
 };
 
 }
