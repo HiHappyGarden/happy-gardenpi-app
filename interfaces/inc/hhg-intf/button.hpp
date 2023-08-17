@@ -26,14 +26,15 @@ namespace hhg::intf
 inline namespace v1
 {
 
-class button
+struct button
 {
-public:
+    using ptr = os::unique_ptr<button>;
+
     using on_click = void (*)();
 
     virtual ~button() OS_NOEXCEPT = default;
 
-    virtual bool init(class os::error**) OS_NOEXCEPT = 0;
+    virtual bool init(os::error** error) OS_NOEXCEPT = 0;
 
     virtual void set_on_click(on_click) OS_NOEXCEPT = 0;
 

@@ -29,16 +29,17 @@ namespace hhg::intf
 inline namespace v1
 {
 
-class releay
+struct releay
 {
-public:
+    using ptr = os::unique_ptr<releay>;
+
     virtual ~releay() OS_NOEXCEPT = default;
 
-    virtual bool init(class os::error**) OS_NOEXCEPT = 0;
+    virtual bool init(class os::error** error) OS_NOEXCEPT = 0;
 
-    virtual void set_status(uint8_t idx, bool, class os::error**) const OS_NOEXCEPT = 0;
+    virtual void set_status(uint8_t idx, bool, class os::error** error) const OS_NOEXCEPT = 0;
 
-    virtual bool get_status(uint8_t idx, class os::error**) const OS_NOEXCEPT = 0;
+    virtual bool get_status(uint8_t idx, class os::error** error) const OS_NOEXCEPT = 0;
 
     virtual uint8_t count_output() OS_NOEXCEPT = 0;
 };

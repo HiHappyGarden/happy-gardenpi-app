@@ -1,6 +1,6 @@
 /***************************************************************************
  *
- * Hi Happy Garden
+ * Hi Happy Garden Interfaces
  * Copyright (C) 2023  Antonio Salsi <passy.linux@zresa.it>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,30 +17,29 @@
  *
  ***************************************************************************/
 
-#pragma once
 
-#include "osal/osal.hpp"
+#include "hhg-intf/data.hpp"
 
-namespace hhg::intf
+namespace hhg::platform
 {
 inline namespace v1
 {
 
-struct led
+using namespace os;
+
+class data final : public hhg::intf::data
 {
-    using ptr = os::unique_ptr<led>;
+public:
 
-    virtual ~led() OS_NOEXCEPT = default;
+    bool read_data(string<FILE_SIZE>& data_json, os::error** error) const OS_NOEXCEPT override;
 
-    virtual bool init(os::error** error) OS_NOEXCEPT = 0;
+    bool read_conf(string<FILE_SIZE>& data_conf, os::error** error) const OS_NOEXCEPT override;
 
-    virtual void set_status(bool, os::error** error) const OS_NOEXCEPT = 0;
+    bool write_data(const string<FILE_SIZE>& data_json, error** error) const OS_NOEXCEPT override;
 
-    virtual bool get_status(os::error** error) const OS_NOEXCEPT = 0;
-
-
+    bool write_conf(const string<FILE_SIZE>& data_conf, error** error) const OS_NOEXCEPT override;
 };
 
-}
-}
 
+}
+}

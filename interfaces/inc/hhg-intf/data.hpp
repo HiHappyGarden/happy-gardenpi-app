@@ -1,6 +1,6 @@
 /***************************************************************************
  *
- * Hi Happy Garden
+ * Hi Happy Garden Interfaces
  * Copyright (C) 2023  Antonio Salsi <passy.linux@zresa.it>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,21 +26,22 @@ namespace hhg::intf
 inline namespace v1
 {
 
-struct led
+struct data
 {
-    using ptr = os::unique_ptr<led>;
+    using ptr = os::unique_ptr<data>;
 
-    virtual ~led() OS_NOEXCEPT = default;
+    static constexpr const uint16_t FILE_SIZE = 2048;
 
-    virtual bool init(os::error** error) OS_NOEXCEPT = 0;
+    virtual ~data() OS_NOEXCEPT = default;
 
-    virtual void set_status(bool, os::error** error) const OS_NOEXCEPT = 0;
+    virtual bool read_data(os::string<FILE_SIZE>& data_json, os::error** error) const OS_NOEXCEPT = 0;
 
-    virtual bool get_status(os::error** error) const OS_NOEXCEPT = 0;
+    virtual bool read_conf(os::string<FILE_SIZE>& data_conf, os::error** error) const OS_NOEXCEPT = 0;
 
+    virtual bool write_data(const os::string<FILE_SIZE>& data_json, os::error** error) const OS_NOEXCEPT = 0;
 
+    virtual bool write_conf(const os::string<FILE_SIZE>& data_conf, os::error** error) const OS_NOEXCEPT = 0;
 };
 
 }
 }
-

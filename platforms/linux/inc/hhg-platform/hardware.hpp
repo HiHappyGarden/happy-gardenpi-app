@@ -36,12 +36,15 @@ class hardware : public hhg::intf::hardware
 {
     int32_t fd{-1};
 
-    os::unique_ptr<intf::button> button_next{nullptr};
-    os::unique_ptr<intf::button> button_before{nullptr};
-    os::unique_ptr<intf::lcd> lcd{nullptr};
-    os::unique_ptr<intf::led> led_green{nullptr};
-    os::unique_ptr<intf::led> led_red{nullptr};
-    os::unique_ptr<intf::releay> releay{nullptr};
+    intf::button::ptr   button_next{nullptr};
+    intf::button::ptr   button_before{nullptr};
+    intf::lcd::ptr      lcd{nullptr};
+    intf::led::ptr      led_green{nullptr};
+    intf::led::ptr      led_red{nullptr};
+    intf::releay::ptr   releay{nullptr};
+
+    intf::data::ptr     data;
+
 
     friend void sig_event_handler(int n, siginfo_t *info, void *unused) OS_NOEXCEPT;
 public:
@@ -52,40 +55,45 @@ public:
 
     bool init(class error** error) OS_NOEXCEPT override;
 
-    const os::string<128>& get_info() OS_NOEXCEPT override;
+    const string<128>& get_info() OS_NOEXCEPT override;
 
-    const os::string<128>& get_version() OS_NOEXCEPT override;
+    const string<128>& get_version() OS_NOEXCEPT override;
 
     int32_t get_temperature(error **error) OS_NOEXCEPT override;
 
-    inline const os::unique_ptr<intf::button>& get_button_next() const OS_NOEXCEPT override
+    inline const intf::button::ptr& get_button_next() const OS_NOEXCEPT override
     {
         return button_next;
     }
 
-    inline const os::unique_ptr<intf::button>& get_button_before() const OS_NOEXCEPT override
+    inline const intf::button::ptr& get_button_before() const OS_NOEXCEPT override
     {
         return button_before;
     }
 
-    inline const os::unique_ptr<intf::lcd>& getLcd() const OS_NOEXCEPT override
+    inline const intf::lcd::ptr& getLcd() const OS_NOEXCEPT override
     {
         return lcd;
     }
 
-    inline const os::unique_ptr<intf::led>& get_led_green() const OS_NOEXCEPT override
+    inline const intf::led::ptr& get_led_green() const OS_NOEXCEPT override
     {
         return led_green;
     }
 
-    inline const os::unique_ptr<intf::led>& get_led_red() const OS_NOEXCEPT override
+    inline const intf::led::ptr& get_led_red() const OS_NOEXCEPT override
     {
         return led_red;
     }
 
-    inline const os::unique_ptr<intf::releay>& get_releay() const OS_NOEXCEPT override
+    inline const intf::releay::ptr& get_releay() const OS_NOEXCEPT override
     {
         return releay;
+    }
+
+    inline const intf::data::ptr& get_data() const OS_NOEXCEPT override
+    {
+        return data;
     }
 };
 
