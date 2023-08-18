@@ -35,6 +35,7 @@ class releay final : public hhg::intf::releay
 
 public:
     inline releay(const int32_t& fd) : fd(fd) {}
+    OS_NO_COPY_NO_MOVE(releay);
 
     bool init(os::error **)  OS_NOEXCEPT override;
 
