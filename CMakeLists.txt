@@ -51,6 +51,8 @@ target_link_libraries(${PROJECT_NAME}
     dl
     )
 
+enable_testing()
+
 add_executable("${PROJECT_NAME}_test" ${HI_HAPPY_GARDEN_TEST})
 
 target_link_libraries("${PROJECT_NAME}_test"
@@ -62,3 +64,4 @@ target_link_libraries("${PROJECT_NAME}_test"
                         GTest::gtest_main
                         )
 
+add_test("${PROJECT_NAME}_gtest" "${PROJECT_NAME}_test")
