@@ -29,6 +29,7 @@ inline namespace v1
 
 using os::string;
 using os::unique_ptr;
+using os::error;
 namespace intf = hhg::intf;
 
 enum class status
@@ -43,6 +44,9 @@ enum class status
  */
 struct zone final
 {
+
+    using ptr = unique_ptr<zone>;
+
     /**
     * @brief name of station
     */
@@ -76,6 +80,8 @@ struct zone final
 
 struct schedule final
 {
+
+    using ptr = unique_ptr<schedule>;
 
     static inline const constexpr uint16_t NOT_SET = 0xFFFF;
 
@@ -159,9 +165,9 @@ public:
     inline explicit app_data(const intf::hardware& hardware) OS_NOEXCEPT : hardware(hardware) {};
     OS_NO_COPY_NO_MOVE(app_data)
 
-    bool load(os::error **error) const OS_NOEXCEPT;
+    bool load(error **error) OS_NOEXCEPT;
 
-    bool save(os::error **error) const OS_NOEXCEPT;
+    bool save(error **error) const OS_NOEXCEPT;
 
 
 };

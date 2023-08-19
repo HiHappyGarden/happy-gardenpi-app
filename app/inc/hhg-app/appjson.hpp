@@ -20,14 +20,25 @@
 #pragma once
 
 #include "osal/osal.hpp"
+#include "hhg-app/appdata.hpp"
+#include "hhg-intf/data.hpp"
+
+#include "config.h"
 
 
 
-namespace project
+namespace hhg::app
 {
 inline namespace v1
 {
 
+using os::error;
+using os::string;
+namespace intf = hhg::intf;
+
+bool parse_data(const string<intf::data::FILE_SIZE>& json, schedule (&schedules)[HHGARDEN_SCHEDULES_SIZE], class error** error);
+
+string<intf::data::FILE_SIZE> print_data(const schedule (&schedules)[HHGARDEN_SCHEDULES_SIZE], class error** error);
 
 
 }
