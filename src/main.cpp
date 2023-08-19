@@ -29,7 +29,6 @@ namespace
 
 constexpr const char APP_TAG[] = "MAIN";
 
-
 }
 
 int main(int argc, char* argv[]) try

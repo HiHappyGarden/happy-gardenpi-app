@@ -23,6 +23,7 @@
 #include "osal/osal.hpp"
 #include "errors.hpp"
 
+
 #include <unistd.h>
 
 namespace hhg::app
@@ -46,11 +47,13 @@ bool app_main::init(os::error** error) OS_NOEXCEPT
 {
 
     lcd_msg.clear();
-    if(hardware.getLcd()->set_text(lcd_msg, error); *error != nullptr)
+    if(hardware.get_lcd()->set_text(lcd_msg, error); *error != nullptr)
     {
         *error = OS_ERROR_BUILD(*error, "Lcd set_text() fail", static_cast<uint8_t>(error_code::INIT), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
         return false;
     }
+
+    app_data.load(error);
 
     return true;
 }

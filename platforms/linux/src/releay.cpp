@@ -70,7 +70,7 @@ bool releay::get_status(uint8_t idx, osal::error **error) const OS_NOEXCEPT
     return status;
 }
 
-uint8_t releay::count_output() OS_NOEXCEPT
+uint8_t releay::count_output() const OS_NOEXCEPT
 {
     return 4;
 }

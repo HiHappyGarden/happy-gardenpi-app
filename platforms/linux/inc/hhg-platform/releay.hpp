@@ -43,7 +43,7 @@ public:
 
     bool get_status(uint8_t idx, class os::error** error) const OS_NOEXCEPT override;
 
-    uint8_t count_output() OS_NOEXCEPT override;
+    uint8_t count_output() const  OS_NOEXCEPT override;
 };
 
 }

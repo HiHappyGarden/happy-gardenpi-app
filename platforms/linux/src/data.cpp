@@ -31,6 +31,28 @@ namespace hhg::platform
 inline namespace v1
 {
 
+bool data::exist_data() const OS_NOEXCEPT
+{
+    FILE* file = fopen(HHGARDEN_FILE_PATH_DATA, "r");
+    if(file)
+    {
+        fclose(file);
+        return true;
+    }
+    return false;
+}
+
+bool data::exist_conf() const OS_NOEXCEPT
+{
+    FILE* file = fopen(HHGARDEN_FILE_PATH_CONF, "r");
+    if(file)
+    {
+        fclose(file);
+        return true;
+    }
+    return false;
+}
+
 bool data::read_data(string<FILE_SIZE>& data_json, class error **error) const OS_NOEXCEPT
 {
     FILE* file = fopen(HHGARDEN_FILE_PATH_DATA, "r");

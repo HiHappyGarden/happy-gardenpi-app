@@ -32,6 +32,11 @@ class data final : public hhg::intf::data
 public:
     data() = default;
     OS_NO_COPY_NO_MOVE(data);
+
+    bool exist_data() const OS_NOEXCEPT override;
+
+    bool exist_conf() const OS_NOEXCEPT override;
+
     bool read_data(string<FILE_SIZE>& data_json, os::error** error) const OS_NOEXCEPT override;
 
     bool read_conf(string<FILE_SIZE>& data_conf, os::error** error) const OS_NOEXCEPT override;

@@ -41,7 +41,7 @@ struct releay
 
     virtual bool get_status(uint8_t idx, class os::error** error) const OS_NOEXCEPT = 0;
 
-    virtual uint8_t count_output() OS_NOEXCEPT = 0;
+    virtual uint8_t count_output() const OS_NOEXCEPT = 0;
 };
 
 }

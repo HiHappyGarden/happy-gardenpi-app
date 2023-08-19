@@ -17,59 +17,15 @@
  *
  ***************************************************************************/
 
+#include "hhg-app/appjson.hpp"
 #include "hhg-app/appdata.hpp"
-#include "hhg-intf/data.hpp"
-#include "cJSON.h"
 
 namespace hhg::app
 {
 inline namespace v1
 {
 
-namespace
-{
 
-constexpr const char APP_TAG[] = "APP DATA";
-
-}
-
-bool app_data::load(os::error **error) const OS_NOEXCEPT
-{
-    if(hardware.get_data()->exist_data())
-    {
-        os::string<intf::data::FILE_SIZE>data;
-        if(!hardware.get_data()->read_data(data, error))
-        {
-            return false;
-        }
-
-
-
-
-        return true;
-    }
-
-    if(hardware.get_data()->exist_conf())
-    {
-        os::string<intf::data::FILE_SIZE>data;
-        if(!hardware.get_data()->read_conf(data, error))
-        {
-            return false;
-        }
-
-
-
-        return true;
-    }
-
-    return false;
-}
-
-bool app_data::save(os::error **error) const OS_NOEXCEPT
-{
-
-    return true;
-}
 
 }
 }
