@@ -23,6 +23,7 @@
 #include "hhg-platform/lcd.hpp"
 #include "hhg-platform/led.hpp"
 #include "hhg-platform/releay.hpp"
+#include "hhg-platform/data.hpp"
 #include "osal/osal.hpp"
 #include "errors.hpp"
 
@@ -251,6 +252,17 @@ bool hardware::init(error **error) OS_NOEXCEPT
         if(error)
         {
             *error = OS_ERROR_BUILD("No init releay", static_cast<uint8_t>(error_code::NO_HEAP), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+        return false;
+    }
+
+    OS_LOG_INFO(APP_TAG, "Init data");
+    data = new class data;
+    if(data.is_null())
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD("No heap for data", static_cast<uint8_t>(error_code::NO_HEAP), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
         }
         return false;
     }
