@@ -19,6 +19,7 @@
 
 #pragma once
 #include "osal/osal.hpp"
+#include "hhg-intf/hardware.hpp"
 
 namespace hhg::app
 {
@@ -27,6 +28,7 @@ inline namespace v1
 
 using os::string;
 using os::unique_ptr;
+namespace intf = hhg::intf;
 
 enum class status
 {
@@ -78,17 +80,27 @@ struct zone
     using ptr = unique_ptr<zone>;
 
     /**
-     * @brief status of station
+    * @brief name of zone
+    */
+    string<32> name;
+
+    /**
+    * @brief description of zone
+    */
+    string<128> description;
+
+    /**
+     * @brief status of zone
      */
     enum status status = status::ACTIVE;
 
     /**
-     * @brief number of station
+     * @brief number of zone
      */
     uint8_t stations_size = 0;
 
     /**
-     * @brief number of station
+     * @brief number of zone
      */
     unique_ptr<station []> stations;
 };
@@ -125,7 +137,6 @@ struct schedule
             uint8_t sun: 1;
         };
         uint8_t data;
-
     }days;
 
     /**
@@ -149,7 +160,19 @@ struct schedule
     unique_ptr<zone []> zones;
 };
 
+class app_data final
+{
+    const intf::hardware& hardware;
+public:
+    explicit inline app_data(const intf::hardware& hardware) OS_NOEXCEPT : hardware(hardware) {}
+    OS_NO_COPY_NO_MOVE(app_data)
 
+    bool load(class error **error) const  OS_NOEXCEPT;
+
+    bool save(class error **error) const OS_NOEXCEPT;
+
+
+};
 
 }
 }
