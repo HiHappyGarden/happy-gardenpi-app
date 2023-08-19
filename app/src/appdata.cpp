@@ -25,6 +25,18 @@ namespace hhg::app
 inline namespace v1
 {
 
+bool app_data::load(error **error) const OS_NOEXCEPT
+{
+
+    return true;
+}
+
+bool app_data::save(error **error) const OS_NOEXCEPT
+{
+
+    return true;
+}
+
 }
 }
 

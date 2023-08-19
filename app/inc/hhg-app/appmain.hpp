@@ -20,6 +20,7 @@
 #pragma once
 #include "config.h"
 #include "osal/osal.hpp"
+#include "hhg-app/appdata.hpp"
 
 namespace hhg::intf
 {
@@ -35,23 +36,28 @@ namespace hhg::app
 inline namespace v1
 {
 
+namespace intf = hhg::intf;
+
+
 using namespace os;
 
 class app_main final
 {
-    const hhg::intf::hardware& hardware;
+    const intf::hardware& hardware;
+
+    class app_data app_data;
 
     os::string<HHGARDEN_LCD_MSG_SIZE> lcd_msg;
 
 public:
-    explicit app_main(const hhg::intf::hardware& hardware) OS_NOEXCEPT;
+    explicit app_main(const intf::hardware& hardware) OS_NOEXCEPT;
     OS_NO_COPY_NO_MOVE(app_main)
 
     ~app_main() OS_NOEXCEPT;
 
-    bool init(class error** error) OS_NOEXCEPT;
+    bool init(os::error** error) OS_NOEXCEPT;
 
-    bool fsm_start(class error** error) OS_NOEXCEPT;
+    bool fsm_start(os::error** error) OS_NOEXCEPT;
 };
 
 }

@@ -30,7 +30,9 @@ namespace hhg::app
 inline namespace v1
 {
 
-app_main::app_main(const hhg::intf::hardware& hardware) OS_NOEXCEPT : hardware(hardware)
+app_main::app_main(const intf::hardware& hardware) OS_NOEXCEPT
+    : hardware(hardware)
+    , app_data(hardware)
 {
 
 }
@@ -40,7 +42,7 @@ app_main::~app_main() OS_NOEXCEPT
 
 }
 
-bool app_main::init(class error** error) OS_NOEXCEPT
+bool app_main::init(os::error** error) OS_NOEXCEPT
 {
 
     lcd_msg.clear();
@@ -50,12 +52,10 @@ bool app_main::init(class error** error) OS_NOEXCEPT
         return false;
     }
 
-
-
     return true;
 }
 
-bool app_main::fsm_start(class error** error) OS_NOEXCEPT
+bool app_main::fsm_start(os::error** error) OS_NOEXCEPT
 {
     return true;
 }
