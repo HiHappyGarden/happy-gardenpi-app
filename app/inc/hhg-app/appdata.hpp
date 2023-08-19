@@ -18,8 +18,9 @@
  ***************************************************************************/
 
 #pragma once
-#include "osal/osal.hpp"
 #include "hhg-intf/hardware.hpp"
+#include "osal/osal.hpp"
+#include "config.h"
 
 namespace hhg::app
 {
@@ -40,10 +41,8 @@ enum class status
 /**
  * @brief pod who describe a irrigation station
  */
-struct station final
+struct zone final
 {
-    using ptr = unique_ptr<station>;
-
     /**
     * @brief name of station
     */
@@ -75,40 +74,10 @@ struct station final
     enum status status;
 };
 
-struct zone
-{
-    using ptr = unique_ptr<zone>;
-
-    /**
-    * @brief name of zone
-    */
-    string<32> name;
-
-    /**
-    * @brief description of zone
-    */
-    string<128> description;
-
-    /**
-     * @brief status of zone
-     */
-    enum status status = status::ACTIVE;
-
-    /**
-     * @brief number of zone
-     */
-    uint8_t stations_size = 0;
-
-    /**
-     * @brief number of zone
-     */
-    unique_ptr<station []> stations;
-};
-
-struct schedule
+struct schedule final
 {
 
-    static inline const constexpr uint8_t NOT_SET = 0xFF;
+    static inline const constexpr uint16_t NOT_SET = 0xFFFF;
 
     /**
     * @brief minute, values allowed 0 - 59
@@ -136,8 +105,32 @@ struct schedule
             uint8_t sat: 1;
             uint8_t sun: 1;
         };
-        uint8_t data;
+        uint8_t data = static_cast<uint8_t>(NOT_SET);
     }days;
+
+    /**
+    * @brief months, values allowed 0x01 - 0xFFF or NOT_SET
+    */
+    union
+    {
+        struct
+        {
+
+            uint8_t jan: 1;
+            uint8_t feb: 1;
+            uint8_t mar: 1;
+            uint8_t apr: 1;
+            uint8_t may: 1;
+            uint8_t jun: 1;
+            uint8_t jul: 1;
+            uint8_t aug: 1;
+            uint8_t sep: 1;
+            uint8_t oct: 1;
+            uint8_t nov: 1;
+            uint8_t dec: 1;
+        };
+        uint16_t data = NOT_SET;
+    }months;
 
     /**
      * @brief brief description of aggregation
@@ -152,24 +145,23 @@ struct schedule
     /**
      * @brief number of station
      */
-    uint8_t zones_size = 0;
-
-    /**
-     * @brief number of station
-     */
-    unique_ptr<zone []> zones;
+    zone zones[HHGARDEN_ZONES_SIZE];
 };
 
 class app_data final
 {
     const intf::hardware& hardware;
+
+    schedule schedules[HHGARDEN_SCHEDULES_SIZE];
+
+    bool init = false;
 public:
-    explicit inline app_data(const intf::hardware& hardware) OS_NOEXCEPT : hardware(hardware) {}
+    inline explicit app_data(const intf::hardware& hardware) OS_NOEXCEPT : hardware(hardware) {};
     OS_NO_COPY_NO_MOVE(app_data)
 
-    bool load(class error **error) const  OS_NOEXCEPT;
+    bool load(os::error **error) const OS_NOEXCEPT;
 
-    bool save(class error **error) const OS_NOEXCEPT;
+    bool save(os::error **error) const OS_NOEXCEPT;
 
 
 };

@@ -49,7 +49,7 @@ public:
 
     virtual const button::ptr& get_button_before() const OS_NOEXCEPT = 0;
 
-    virtual const lcd::ptr& getLcd() const OS_NOEXCEPT = 0;
+    virtual const lcd::ptr& get_lcd() const OS_NOEXCEPT = 0;
 
     virtual const led::ptr& get_led_green() const OS_NOEXCEPT = 0;
 

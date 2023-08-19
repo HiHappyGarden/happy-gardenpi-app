@@ -71,7 +71,7 @@ public:
         return button_before;
     }
 
-    inline const intf::lcd::ptr& getLcd() const OS_NOEXCEPT override
+    inline const intf::lcd::ptr& get_lcd() const OS_NOEXCEPT override
     {
         return lcd;
     }

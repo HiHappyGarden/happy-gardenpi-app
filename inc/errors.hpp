@@ -28,6 +28,7 @@ inline namespace v1
 enum class error_code : uint16_t
 {
     INIT,
+    CONF_PARAM_MISMATCH,
     NO_HEAP,
     NO_WRITE,
     NO_READ,

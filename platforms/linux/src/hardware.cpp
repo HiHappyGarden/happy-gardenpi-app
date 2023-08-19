@@ -255,6 +255,15 @@ bool hardware::init(error **error) OS_NOEXCEPT
         return false;
     }
 
+
+    if( releay->count_output() != HHGARDEN_ZONES_SIZE)
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD("zones_size != HHGARDEN_ZONES_SIZE", static_cast<uint8_t>(error_code::CONF_PARAM_MISMATCH), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+    }
+
     return true;
 }
 
