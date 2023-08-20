@@ -54,7 +54,7 @@ class app_main final
     state   fsm_old_state;
     uint8_t fsm_errors      = 0;
     event   fsm_events;
-    bool   fsm_run         = true;
+    bool    fsm_run         = true;
 
     thread fsm_thread{"fst", FSM_THREAD_PRIORITY, FSM_THREAD_HEAP, fsm_thread_fn};
 public:
