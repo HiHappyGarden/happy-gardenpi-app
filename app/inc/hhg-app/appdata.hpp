@@ -39,6 +39,21 @@ enum class status
     RUN
 };
 
+struct conf final
+{
+    union
+    {
+        struct
+        {
+            uint8_t version : 4;
+            uint8_t marker : 4;
+        };
+        uint8_t data; //marker last 2 bit to 1 0xC0
+    }header;
+
+    string<16> serial;
+};
+
 /**
  * @brief pod who describe a irrigation station
  */
@@ -60,22 +75,22 @@ struct zone final
     /**
     * @brief relay number association
     */
-    uint8_t relay_number;
+    uint8_t relay_number = 0;
 
     /**
     * @brief watering time in minutes
     */
-    uint watering_time;
+    uint watering_time = 0;
 
     /**
     * @brief for manage order of execution lighter is first then weightier
     */
-    uint16_t weight;
+    uint16_t weight = 0;
 
     /**
      * @brief status of station
      */
-    enum status status;
+    enum status status = status::ACTIVE;
 };
 
 struct schedule final
@@ -158,16 +173,23 @@ class app_data final
 {
     const intf::hardware& hardware;
 
+    struct conf conf;
     schedule schedules[HHGARDEN_SCHEDULES_SIZE];
 
     bool init = false;
 public:
-    inline explicit app_data(const intf::hardware& hardware) OS_NOEXCEPT : hardware(hardware) {};
+    inline explicit app_data(const intf::hardware& hardware) OS_NOEXCEPT
+        : hardware(hardware)
+    {
+        conf.header.data = HHGARDEN_HEADER;
+    };
     OS_NO_COPY_NO_MOVE(app_data)
 
     bool load(error **error) OS_NOEXCEPT;
 
-    bool save(error **error) const OS_NOEXCEPT;
+    bool save_data(error **error) const OS_NOEXCEPT;
+
+    bool save_conf(error **error) const OS_NOEXCEPT;
 
 
 };

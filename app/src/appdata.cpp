@@ -36,43 +36,114 @@ constexpr const char APP_TAG[] = "APP DATA";
 
 bool app_data::load(error **error) OS_NOEXCEPT
 {
-    if(!hardware.get_data()->exist_data())
     {
-        OS_LOG_INFO(APP_TAG, "No data to load");
-        if(!save(error))
+        if(!hardware.get_data()->exist_conf())
         {
-            *error = OS_ERROR_BUILD(*error, "save() fail", static_cast<uint8_t>(error_code::NO_WRITE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+            OS_LOG_WARNING(APP_TAG, "No conf to load write default");
+            if(!save_conf(error))
+            {
+                *error = OS_ERROR_BUILD(*error, "save() fail", static_cast<uint8_t>(error_code::NO_WRITE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+                return false;
+            }
+            return true;
+        }
+
+        os::string<intf::data::FILE_SIZE>data;
+        if(!hardware.get_data()->read_conf(data, error))
+        {
+            if(error)
+            {
+                *error = OS_ERROR_BUILD(*error, "read_data() fail", static_cast<uint8_t>(error_code::NO_READ), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+            }
             return false;
         }
-        return true;
-    }
 
-    os::string<intf::data::FILE_SIZE>data;
-    if(!hardware.get_data()->read_data(data, error))
-    {
-        if(error)
+        string<intf::data::FILE_SIZE> json;
+        if(!parse(json, schedules, error))
         {
-            *error = OS_ERROR_BUILD(*error, "read_data() fail", static_cast<uint8_t>(error_code::NO_READ), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+            *error = OS_ERROR_BUILD(*error, "read_data() fail", static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+            return false;
         }
-        return false;
     }
 
-    string<intf::data::FILE_SIZE> json;
-    if(!parse_data(json, schedules, error))
+    if(conf.header.marker != 0xC0)
     {
-        *error = OS_ERROR_BUILD(*error, "read_data() fail", static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
-        return false;
+        {
+            *error = OS_ERROR_BUILD(*error, "wrong marker", static_cast<uint8_t>(error_code::INIT), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+            return false;
+        }
     }
 
+    switch (conf.header.version)
+    {
+    case 1:
+
+        break;
+    default:
+        break;
+    }
+
+
+    {
+        if(!hardware.get_data()->exist_data())
+        {
+            OS_LOG_WARNING(APP_TAG, "No data to load write default");
+            if(!save_data(error))
+            {
+                *error = OS_ERROR_BUILD(*error, "save() fail", static_cast<uint8_t>(error_code::NO_WRITE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+                return false;
+            }
+            return true;
+        }
+
+        os::string<intf::data::FILE_SIZE>data;
+        if(!hardware.get_data()->read_data(data, error))
+        {
+            if(error)
+            {
+                *error = OS_ERROR_BUILD(*error, "read_data() fail", static_cast<uint8_t>(error_code::NO_READ), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+            }
+            return false;
+        }
+
+        string<intf::data::FILE_SIZE> json;
+        if(!parse(json, schedules, error))
+        {
+            *error = OS_ERROR_BUILD(*error, "read_data() fail", static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+            return false;
+        }
+    }
 
     return false;
 }
 
-bool app_data::save(error **error) const OS_NOEXCEPT
+bool app_data::save_conf(error **error) const OS_NOEXCEPT
 {
 
-    string<intf::data::FILE_SIZE>&& json = print_data(schedules, error);
-    if(error)
+    string<intf::data::FILE_SIZE>&& json = print(conf, error);
+    if(error && *error)
+    {
+        *error = OS_ERROR_BUILD(*error, "read_data() fail", static_cast<uint8_t>(error_code::JSON_PRINT), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        return false;
+    }
+
+    if(!hardware.get_data()->write_conf(json, error))
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD(*error, "read_data() fail", static_cast<uint8_t>(error_code::NO_WRITE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+        return false;
+    }
+
+    return true;
+}
+
+bool app_data::save_data(error **error) const OS_NOEXCEPT
+{
+
+    string<intf::data::FILE_SIZE>&& json = print(schedules, error);
+    if(error && *error)
     {
         *error = OS_ERROR_BUILD(*error, "read_data() fail", static_cast<uint8_t>(error_code::JSON_PRINT), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
         return false;
