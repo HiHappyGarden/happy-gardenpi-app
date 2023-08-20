@@ -30,14 +30,101 @@ inline namespace v1
 
 bool parse(const string<intf::data::FILE_SIZE> &json, class conf &conf, error **error)
 {
+    auto root = cJSON_Parse(json.c_str());
+    if (root == nullptr)
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+        return false;
+    }
+
+    auto header = cJSON_GetObjectItemCaseSensitive(root, "header");
+    if (cJSON_IsInvalid(header) || !cJSON_IsNumber(header))
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+        cJSON_Delete(root);
+        return false;
+    }
+    conf.header.data = header->valueint;
+
+    auto serial = cJSON_GetObjectItemCaseSensitive(root, "serial");
+    if (cJSON_IsInvalid(serial) || !cJSON_IsString(serial))
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+        cJSON_Delete(root);
+        return false;
+    }
+    conf.serial = header->valuestring;
+
+    cJSON_Delete(root);
 
     return true;
 }
 
 string<intf::data::FILE_SIZE> print(const class conf &conf, error **error)
 {
+    string<intf::data::FILE_SIZE> ret;
 
-    return {};
+    auto root = cJSON_CreateObject();
+    if (root == nullptr)
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+        return {};
+    }
+
+    auto header = cJSON_AddNumberToObject(root, "header", conf.header.data);
+    if (header == nullptr)
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+        cJSON_Delete(root);
+        return {};
+    }
+
+    auto serial = cJSON_AddStringToObject(root, "serial", conf.serial.c_str());
+    if (serial == nullptr)
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+        cJSON_Delete(root);
+        return {};
+    }
+
+
+    char* string = cJSON_PrintUnformatted(root);
+    if(string == nullptr)
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+        cJSON_Delete(root);
+        return {};
+    }
+
+
+    ret += string;
+
+    free(string);
+
+    cJSON_Delete(root);
+
+    return ret;
 }
 
 
@@ -227,7 +314,7 @@ bool parse(const string<intf::data::FILE_SIZE>& json, schedule (&schedules)[HHGA
         schedule_count++;
     }
 
-
+    cJSON_Delete(root);
 
     return false;
 }
@@ -256,6 +343,7 @@ string<intf::data::FILE_SIZE> print(const schedule (&schedules)[HHGARDEN_SCHEDUL
             {
                 *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
             }
+            cJSON_Delete(root);
             return {};
         }
         cJSON_AddItemToArray(root, schedule);
@@ -267,6 +355,7 @@ string<intf::data::FILE_SIZE> print(const schedule (&schedules)[HHGARDEN_SCHEDUL
             {
                 *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
             }
+            cJSON_Delete(root);
             return {};
         }
 
@@ -277,6 +366,7 @@ string<intf::data::FILE_SIZE> print(const schedule (&schedules)[HHGARDEN_SCHEDUL
             {
                 *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
             }
+            cJSON_Delete(root);
             return {};
         }
 
@@ -288,6 +378,7 @@ string<intf::data::FILE_SIZE> print(const schedule (&schedules)[HHGARDEN_SCHEDUL
             {
                 *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
             }
+            cJSON_Delete(root);
             return {};
         }
 
@@ -298,6 +389,7 @@ string<intf::data::FILE_SIZE> print(const schedule (&schedules)[HHGARDEN_SCHEDUL
             {
                 *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
             }
+            cJSON_Delete(root);
             return {};
         }
 
@@ -309,6 +401,7 @@ string<intf::data::FILE_SIZE> print(const schedule (&schedules)[HHGARDEN_SCHEDUL
             {
                 *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
             }
+            cJSON_Delete(root);
             return {};
         }
 
@@ -319,6 +412,7 @@ string<intf::data::FILE_SIZE> print(const schedule (&schedules)[HHGARDEN_SCHEDUL
             {
                 *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
             }
+            cJSON_Delete(root);
             return {};
         }
 
@@ -332,6 +426,7 @@ string<intf::data::FILE_SIZE> print(const schedule (&schedules)[HHGARDEN_SCHEDUL
                 {
                     *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
                 }
+                cJSON_Delete(root);
                 return {};
             }
             cJSON_AddItemToArray(schedule, zone);
@@ -343,6 +438,7 @@ string<intf::data::FILE_SIZE> print(const schedule (&schedules)[HHGARDEN_SCHEDUL
                 {
                     *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
                 }
+                cJSON_Delete(root);
                 return {};
             }
 
@@ -353,6 +449,7 @@ string<intf::data::FILE_SIZE> print(const schedule (&schedules)[HHGARDEN_SCHEDUL
                 {
                     *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
                 }
+                cJSON_Delete(root);
                 return {};
             }
 
@@ -363,6 +460,7 @@ string<intf::data::FILE_SIZE> print(const schedule (&schedules)[HHGARDEN_SCHEDUL
                 {
                     *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
                 }
+                cJSON_Delete(root);
                 return {};
             }
 
@@ -373,6 +471,7 @@ string<intf::data::FILE_SIZE> print(const schedule (&schedules)[HHGARDEN_SCHEDUL
                 {
                     *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
                 }
+                cJSON_Delete(root);
                 return {};
             }
 
@@ -383,6 +482,7 @@ string<intf::data::FILE_SIZE> print(const schedule (&schedules)[HHGARDEN_SCHEDUL
                 {
                     *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
                 }
+                cJSON_Delete(root);
                 return {};
             }
 
@@ -393,6 +493,7 @@ string<intf::data::FILE_SIZE> print(const schedule (&schedules)[HHGARDEN_SCHEDUL
                 {
                     *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
                 }
+                cJSON_Delete(root);
                 return {};
             }
 
@@ -407,6 +508,7 @@ string<intf::data::FILE_SIZE> print(const schedule (&schedules)[HHGARDEN_SCHEDUL
         {
             *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
         }
+        cJSON_Delete(root);
         return {};
     }
 
@@ -414,6 +516,8 @@ string<intf::data::FILE_SIZE> print(const schedule (&schedules)[HHGARDEN_SCHEDUL
     ret += string;
 
     free(string);
+
+    cJSON_Delete(root);
 
     return ret;
 }
