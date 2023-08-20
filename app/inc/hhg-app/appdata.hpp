@@ -164,6 +164,11 @@ struct schedule final
     enum status status = status::ACTIVE;
 
     /**
+     * @brief zones_len count number of zone configurated
+     */
+    uint8_t zones_len = 0;
+
+    /**
      * @brief number of station
      */
     zone zones[HHGARDEN_ZONES_SIZE];
@@ -174,16 +179,36 @@ class app_data final
     const intf::hardware& hardware;
 
     struct conf conf;
+
+    int32_t schedules_len = 0;
     schedule schedules[HHGARDEN_SCHEDULES_SIZE];
 
     bool init = false;
 public:
+
+    static inline schedule const EMPTY{};
+
     inline explicit app_data(const intf::hardware& hardware) OS_NOEXCEPT
         : hardware(hardware)
     {
         conf.header.data = HHGARDEN_HEADER;
     };
     OS_NO_COPY_NO_MOVE(app_data)
+
+    inline void set_serial(const string<16>& serial) OS_NOEXCEPT
+    {
+        conf.serial = serial;
+    }
+
+    schedule const& get_schedule(uint8_t idx) OS_NOEXCEPT;
+
+    int32_t add_schedule(const schedule& schedule) OS_NOEXCEPT;
+
+    bool modify_schedule(uint8_t idx, const schedule& schedule) OS_NOEXCEPT;
+
+    bool remove_schedule(uint8_t idx) OS_NOEXCEPT;
+
+    int32_t add_zone(uint8_t schedule_idx, const zone& zone) OS_NOEXCEPT;
 
     bool load(error **error) OS_NOEXCEPT;
 

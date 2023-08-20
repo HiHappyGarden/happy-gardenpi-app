@@ -22,6 +22,9 @@
 #include "hhg-intf/data.hpp"
 #include "errors.hpp"
 
+#include <stdlib.h>
+#include <string.h>
+
 namespace hhg::app
 {
 inline namespace v1
@@ -32,6 +35,56 @@ namespace
 
 constexpr const char APP_TAG[] = "APP DATA";
 
+}
+
+schedule const& app_data::get_schedule(uint8_t idx) OS_NOEXCEPT
+{
+    if(idx >= schedules_len)
+    {
+        return EMPTY;
+    }
+
+    return schedules[idx];
+}
+
+int32_t app_data::add_schedule(const schedule& schedule) OS_NOEXCEPT
+{
+    if(schedules_len + 1 > HHGARDEN_SCHEDULES_SIZE)
+    {
+        return -1;
+    }
+
+    memcpy(&schedules[schedules_len], &schedule, sizeof(class schedule));
+
+    uint8_t ret = schedules_len;
+
+    schedules_len++;
+
+    return ret;
+}
+
+bool app_data::modify_schedule(uint8_t idx, const schedule& schedule) OS_NOEXCEPT
+{
+    if(idx >= schedules_len)
+    {
+        return false;
+    }
+
+    memcpy(&schedules[schedules_len - 1], &schedule, sizeof(class schedule));
+
+    return true;
+}
+
+bool app_data::remove_schedule(uint8_t idx) OS_NOEXCEPT
+{
+    if(idx >= schedules_len)
+    {
+        return false;
+    }
+
+    memset(&schedules[schedules_len - 1], 0, sizeof(schedule));
+
+    return true;
 }
 
 bool app_data::load(error **error) OS_NOEXCEPT

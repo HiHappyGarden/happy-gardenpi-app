@@ -83,8 +83,7 @@ string<intf::data::FILE_SIZE> print(const class conf &conf, error **error)
         return {};
     }
 
-    auto header = cJSON_AddNumberToObject(root, "header", conf.header.data);
-    if (header == nullptr)
+    if (cJSON_AddNumberToObject(root, "header", conf.header.data) == nullptr)
     {
         if(error)
         {
@@ -94,8 +93,7 @@ string<intf::data::FILE_SIZE> print(const class conf &conf, error **error)
         return {};
     }
 
-    auto serial = cJSON_AddStringToObject(root, "serial", conf.serial.c_str());
-    if (serial == nullptr)
+    if (cJSON_AddStringToObject(root, "serial", conf.serial.c_str()) == nullptr)
     {
         if(error)
         {
@@ -217,6 +215,19 @@ bool parse(const string<intf::data::FILE_SIZE>& json, schedule (&schedules)[HHGA
             return false;
         }
         schedules[schedule_count].status = hhg::app::status{status->valueint};
+
+        auto zones_len = cJSON_GetObjectItemCaseSensitive(schedule_it, "zones_len");
+        if (cJSON_IsInvalid(zones_len) || !cJSON_IsNumber(zones_len))
+        {
+            if(error)
+            {
+                *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+            }
+            cJSON_Delete(root);
+            return false;
+        }
+        schedules[schedule_count].zones_len= zones_len->valueint;
+
 
         auto zones = cJSON_GetObjectItemCaseSensitive(schedule_it, "zones");
         if (cJSON_IsInvalid(zones) || !cJSON_IsArray(minute))
@@ -348,8 +359,7 @@ string<intf::data::FILE_SIZE> print(const schedule (&schedules)[HHGARDEN_SCHEDUL
         }
         cJSON_AddItemToArray(root, schedule);
 
-        auto minute = cJSON_AddNumberToObject(schedule, "minute", schedule_it.minute);
-        if (minute == nullptr)
+        if (cJSON_AddNumberToObject(schedule, "minute", schedule_it.minute) == nullptr)
         {
             if(error)
             {
@@ -359,8 +369,37 @@ string<intf::data::FILE_SIZE> print(const schedule (&schedules)[HHGARDEN_SCHEDUL
             return {};
         }
 
-        auto hour = cJSON_AddNumberToObject(schedule, "hour", schedule_it.hour);
-        if (hour == nullptr)
+        if (cJSON_AddNumberToObject(schedule, "hour", schedule_it.hour) == nullptr)
+        {
+            if(error)
+            {
+                *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+            }
+            cJSON_Delete(root);
+            return {};
+        }
+
+        if (cJSON_AddNumberToObject(schedule, "days", schedule_it.days.data) == nullptr)
+        {
+            if(error)
+            {
+                *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+            }
+            cJSON_Delete(root);
+            return {};
+        }
+
+        if (cJSON_AddNumberToObject(schedule, "months", schedule_it.months.data) == nullptr)
+        {
+            if(error)
+            {
+                *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+            }
+            cJSON_Delete(root);
+            return {};
+        }
+
+        if (cJSON_AddStringToObject(schedule, "description", schedule_it.description.c_str()) == nullptr)
         {
             if(error)
             {
@@ -371,19 +410,7 @@ string<intf::data::FILE_SIZE> print(const schedule (&schedules)[HHGARDEN_SCHEDUL
         }
 
 
-        auto days = cJSON_AddNumberToObject(schedule, "days", schedule_it.days.data);
-        if (days == nullptr)
-        {
-            if(error)
-            {
-                *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
-            }
-            cJSON_Delete(root);
-            return {};
-        }
-
-        auto months = cJSON_AddNumberToObject(schedule, "months", schedule_it.months.data);
-        if (months == nullptr)
+        if (cJSON_AddNumberToObject(schedule, "status", static_cast<uint8_t>(schedule_it.status)) == nullptr)
         {
             if(error)
             {
@@ -394,19 +421,7 @@ string<intf::data::FILE_SIZE> print(const schedule (&schedules)[HHGARDEN_SCHEDUL
         }
 
 
-        auto description = cJSON_AddStringToObject(schedule, "description", schedule_it.description.c_str());
-        if (description == nullptr)
-        {
-            if(error)
-            {
-                *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
-            }
-            cJSON_Delete(root);
-            return {};
-        }
-
-        auto status = cJSON_AddNumberToObject(schedule, "status", static_cast<uint8_t>(schedule_it.status));
-        if (status == nullptr)
+        if (cJSON_AddNumberToObject(schedule, "status", static_cast<uint8_t>(schedule_it.zones_len)) == nullptr)
         {
             if(error)
             {
@@ -431,8 +446,7 @@ string<intf::data::FILE_SIZE> print(const schedule (&schedules)[HHGARDEN_SCHEDUL
             }
             cJSON_AddItemToArray(schedule, zone);
 
-            auto name = cJSON_AddStringToObject(zone, "name", zone_it.description.c_str());
-            if (name == nullptr)
+            if (cJSON_AddStringToObject(zone, "name", zone_it.description.c_str()) == nullptr)
             {
                 if(error)
                 {
@@ -442,8 +456,7 @@ string<intf::data::FILE_SIZE> print(const schedule (&schedules)[HHGARDEN_SCHEDUL
                 return {};
             }
 
-            auto description = cJSON_AddStringToObject(zone, "description", zone_it.description.c_str());
-            if (description == nullptr)
+            if (cJSON_AddStringToObject(zone, "description", zone_it.description.c_str()) == nullptr)
             {
                 if(error)
                 {
@@ -453,8 +466,7 @@ string<intf::data::FILE_SIZE> print(const schedule (&schedules)[HHGARDEN_SCHEDUL
                 return {};
             }
 
-            auto relay_number = cJSON_AddNumberToObject(zone, "relay_number", zone_it.relay_number);
-            if (relay_number == nullptr)
+            if (cJSON_AddNumberToObject(zone, "relay_number", zone_it.relay_number) == nullptr)
             {
                 if(error)
                 {
@@ -464,8 +476,7 @@ string<intf::data::FILE_SIZE> print(const schedule (&schedules)[HHGARDEN_SCHEDUL
                 return {};
             }
 
-            auto watering_time = cJSON_AddNumberToObject(zone, "watering_time", zone_it.watering_time);
-            if (watering_time == nullptr)
+            if (cJSON_AddNumberToObject(zone, "watering_time", zone_it.watering_time) == nullptr)
             {
                 if(error)
                 {
@@ -475,8 +486,7 @@ string<intf::data::FILE_SIZE> print(const schedule (&schedules)[HHGARDEN_SCHEDUL
                 return {};
             }
 
-            auto weight = cJSON_AddNumberToObject(zone, "weight", zone_it.weight);
-            if (weight == nullptr)
+            if (cJSON_AddNumberToObject(zone, "weight", zone_it.weight) == nullptr)
             {
                 if(error)
                 {
@@ -486,8 +496,7 @@ string<intf::data::FILE_SIZE> print(const schedule (&schedules)[HHGARDEN_SCHEDUL
                 return {};
             }
 
-            auto status = cJSON_AddNumberToObject(zone, "status", static_cast<uint8_t>(zone_it.status));
-            if (status == nullptr)
+            if (cJSON_AddNumberToObject(zone, "status", static_cast<uint8_t>(zone_it.status)) == nullptr)
             {
                 if(error)
                 {

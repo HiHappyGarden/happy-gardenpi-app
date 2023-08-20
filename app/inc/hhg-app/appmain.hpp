@@ -22,42 +22,53 @@
 #include "osal/osal.hpp"
 #include "hhg-app/appdata.hpp"
 
-namespace hhg::intf
-{
-inline namespace v1
-{
-class hardware;
-}
-}
-
 
 namespace hhg::app
 {
 inline namespace v1
 {
 
-namespace intf = hhg::intf;
+constexpr const uint8_t FSM_THREAD_PRIORITY = 4;
+constexpr const uint16_t FSM_THREAD_HEAP = 4'096;
 
 
 using namespace os;
+namespace intf = hhg::intf;
 
 class app_main final
 {
-    const intf::hardware& hardware;
 
+    enum state
+    {
+        INIT = 0x01
+    };
+
+
+
+    const intf::hardware& hardware;
     class app_data app_data;
 
-    os::string<HHGARDEN_LCD_MSG_SIZE> lcd_msg;
+    string<HHGARDEN_LCD_MSG_SIZE> lcd_msg;
 
+    state   fsm_state       = INIT;
+    state   fsm_old_state;
+    uint8_t fsm_errors      = 0;
+    event   fsm_events;
+    bool   fsm_run         = true;
+
+    thread fsm_thread{"fst", FSM_THREAD_PRIORITY, FSM_THREAD_HEAP, fsm_thread_fn};
 public:
     explicit app_main(const intf::hardware& hardware) OS_NOEXCEPT;
     OS_NO_COPY_NO_MOVE(app_main)
 
     ~app_main() OS_NOEXCEPT;
 
-    bool init(os::error** error) OS_NOEXCEPT;
+    bool init(error** error) OS_NOEXCEPT;
 
-    bool fsm_start(os::error** error) OS_NOEXCEPT;
+    bool fsm_start(error** error) OS_NOEXCEPT;
+
+private:
+    static void* fsm_thread_fn(void* arg);
 };
 
 }

@@ -31,6 +31,14 @@ namespace hhg::app
 inline namespace v1
 {
 
+namespace
+{
+
+constexpr const char APP_TAG[] = "APP MAIN";
+
+}
+
+
 app_main::app_main(const intf::hardware& hardware) OS_NOEXCEPT
     : hardware(hardware)
     , app_data(hardware)
@@ -43,7 +51,7 @@ app_main::~app_main() OS_NOEXCEPT
 
 }
 
-bool app_main::init(os::error** error) OS_NOEXCEPT
+bool app_main::init(error** error) OS_NOEXCEPT
 {
 
     lcd_msg.clear();
@@ -56,6 +64,7 @@ bool app_main::init(os::error** error) OS_NOEXCEPT
         return false;
     }
 
+    OS_LOG_INFO(APP_TAG, "Load data and conf");
     if(!app_data.load(error))
     {
         if(error)
@@ -65,12 +74,34 @@ bool app_main::init(os::error** error) OS_NOEXCEPT
         return false;
     }
 
+    fsm_events.set(INIT);
+
+
+
     return true;
 }
 
-bool app_main::fsm_start(os::error** error) OS_NOEXCEPT
+bool app_main::fsm_start(error** error) OS_NOEXCEPT
 {
     return true;
+}
+
+void *app_main::fsm_thread_fn(void *arg)
+{
+
+    while (fsm_run)
+    {
+        switch (fsm_state) {
+        case INIT:
+
+            break;
+        default:
+            break;
+        }
+
+
+    }
+
 }
 
 }
