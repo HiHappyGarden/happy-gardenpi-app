@@ -36,10 +36,13 @@ using os::error;
 using os::string;
 namespace intf = hhg::intf;
 
-bool parse_data(const string<intf::data::FILE_SIZE>& json, schedule (&schedules)[HHGARDEN_SCHEDULES_SIZE], class error** error);
+bool parse(const string<intf::data::FILE_SIZE>& json, class conf& conf, class error** error);
 
-string<intf::data::FILE_SIZE> print_data(const schedule (&schedules)[HHGARDEN_SCHEDULES_SIZE], class error** error);
+string<intf::data::FILE_SIZE> print(const class conf& conf, class error** error);
 
+bool parse(const string<intf::data::FILE_SIZE>& json, schedule (&schedules)[HHGARDEN_SCHEDULES_SIZE], class error** error);
+
+string<intf::data::FILE_SIZE> print(const schedule (&schedules)[HHGARDEN_SCHEDULES_SIZE], class error** error);
 
 }
 }

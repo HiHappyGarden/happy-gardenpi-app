@@ -28,6 +28,7 @@
 #define HHGARDEN_LCD_MSG_SIZE (34)
 #define HHGARDEN_SCHEDULES_SIZE (8)
 #define HHGARDEN_ZONES_SIZE (4)
+#define HHGARDEN_HEADER (0xC1)
 #define HHGARDEN_FILE_PATH_DATA "data.json"
 #define HHGARDEN_FILE_PATH_CONF "conf.json"
 

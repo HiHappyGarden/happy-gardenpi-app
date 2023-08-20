@@ -28,7 +28,20 @@ namespace hhg::app
 inline namespace v1
 {
 
-bool parse_data(const string<intf::data::FILE_SIZE>& json, schedule (&schedules)[HHGARDEN_SCHEDULES_SIZE], class error** error)
+bool parse(const string<intf::data::FILE_SIZE> &json, class conf &conf, error **error)
+{
+
+    return true;
+}
+
+string<intf::data::FILE_SIZE> print(const class conf &conf, error **error)
+{
+
+    return {};
+}
+
+
+bool parse(const string<intf::data::FILE_SIZE>& json, schedule (&schedules)[HHGARDEN_SCHEDULES_SIZE], class error** error)
 {
 
     auto root = cJSON_Parse(json.c_str());
@@ -219,7 +232,7 @@ bool parse_data(const string<intf::data::FILE_SIZE>& json, schedule (&schedules)
     return false;
 }
 
-string<intf::data::FILE_SIZE> print_data(const schedule (&schedules)[HHGARDEN_SCHEDULES_SIZE], class error** error)
+string<intf::data::FILE_SIZE> print(const schedule (&schedules)[HHGARDEN_SCHEDULES_SIZE], class error** error)
 {
     string<intf::data::FILE_SIZE> ret;
 
@@ -387,11 +400,16 @@ string<intf::data::FILE_SIZE> print_data(const schedule (&schedules)[HHGARDEN_SC
 
     }
 
-    char* string = cJSON_Print(root);
-    if(error)
+    char* string = cJSON_PrintUnformatted(root);
+    if(string == nullptr)
     {
-        *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        if(error)
+        {
+            *error = OS_ERROR_BUILD(cJSON_GetErrorPtr(), static_cast<uint8_t>(error_code::JSON_PARSE), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+        return {};
     }
+
 
     ret += string;
 
@@ -399,6 +417,8 @@ string<intf::data::FILE_SIZE> print_data(const schedule (&schedules)[HHGARDEN_SC
 
     return ret;
 }
+
+
 
 
 }

@@ -18,6 +18,7 @@ add_compile_options("$<$<STREQUAL:$<TARGET_PROPERTY:LINKER_LANGUAGE>,CXX>:-fexce
 set(LCD_MSG_SIZE 34)
 set(SCHEDULES_SIZE 8)
 set(ZONES_SIZE 4)
+set(HEADER 0xC1)
 if(UNIX AND NOT APPLE)
     set(LINUX TRUE)
     set(FILE_PATH_DATA "data.json")

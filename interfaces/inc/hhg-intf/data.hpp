@@ -30,7 +30,7 @@ struct data
 {
     using ptr = os::unique_ptr<data>;
 
-    static constexpr const uint16_t FILE_SIZE = 2048;
+    static constexpr const uint16_t FILE_SIZE = 0x1000;
 
     virtual ~data() OS_NOEXCEPT = default;
 
