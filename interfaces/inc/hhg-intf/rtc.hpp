@@ -18,27 +18,25 @@
  ***************************************************************************/
 
 #pragma once
-#include "hhg-intf/led.hpp"
-#include "hhg-platform/types.hpp"
 
-namespace hhg::platform
+#include "osal/osal.hpp"
+
+#include <time.h>
+
+namespace hhg::intf
 {
 inline namespace v1
 {
 
-class led final : public hhg::intf::led
+struct rtc
 {
-    const int32_t& fd;
-    enum type type;
-public:
-    inline led(const int32_t& fd, enum type type) OS_NOEXCEPT : fd(fd), type(type)  {}
-    OS_NO_COPY_NO_MOVE(led);
+    using ptr = os::unique_ptr<rtc>;
 
-    bool init(class os::error** error) OS_NOEXCEPT override;
+    ~rtc() = default;
 
-    void set_status(bool status, os::error** error) const OS_NOEXCEPT override;
+    virtual bool set_time(time_t unixtime) OS_NOEXCEPT = 0;
 
-    bool get_status(os::error** error) const OS_NOEXCEPT override;
+    virtual time_t get_time() const OS_NOEXCEPT = 0;
 
 };
 

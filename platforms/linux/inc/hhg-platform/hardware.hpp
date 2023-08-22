@@ -42,6 +42,7 @@ class hardware : public hhg::intf::hardware
     intf::led::ptr      led_green{nullptr};
     intf::led::ptr      led_red{nullptr};
     intf::releay::ptr   releay{nullptr};
+    intf::rtc::ptr      rtc{nullptr};
 
     intf::data::ptr     data;
 
@@ -90,6 +91,12 @@ public:
     {
         return releay;
     }
+
+    inline const intf::rtc::ptr& get_rtc() const OS_NOEXCEPT override
+    {
+        return rtc;
+    }
+
 
     inline const intf::data::ptr& get_data() const OS_NOEXCEPT override
     {

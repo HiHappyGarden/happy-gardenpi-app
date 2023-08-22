@@ -20,7 +20,6 @@
 #pragma once
 #include "hhg-intf/button.hpp"
 #include "hhg-platform/types.hpp"
-#include "osal/osal.hpp"
 
 #include <stdint.h>
 #include <signal.h>

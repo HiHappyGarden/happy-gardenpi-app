@@ -19,7 +19,6 @@
 
 #include "config.h"
 #include "hhg-platform/data.hpp"
-#include "osal/osal.hpp"
 #include "errors.hpp"
 #include "errno.h"
 
