@@ -17,30 +17,24 @@
  *
  ***************************************************************************/
 
-#pragma once
-#include "hhg-intf/led.hpp"
-#include "hhg-platform/types.hpp"
+#include "hhg-platform/rtc.hpp"
+
 
 namespace hhg::platform
 {
 inline namespace v1
 {
 
-class led final : public hhg::intf::led
+inline bool rtc::set_time(time_t unixtime) noexcept
 {
-    const int32_t& fd;
-    enum type type;
-public:
-    inline led(const int32_t& fd, enum type type) OS_NOEXCEPT : fd(fd), type(type)  {}
-    OS_NO_COPY_NO_MOVE(led);
+    return true;
+}
 
-    bool init(class os::error** error) OS_NOEXCEPT override;
+inline time_t rtc::get_time() const noexcept
+{
+    return time(nullptr);
+}
 
-    void set_status(bool status, os::error** error) const OS_NOEXCEPT override;
-
-    bool get_status(os::error** error) const OS_NOEXCEPT override;
-
-};
 
 }
 }

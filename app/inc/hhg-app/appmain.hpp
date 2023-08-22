@@ -28,22 +28,37 @@ namespace hhg::app
 inline namespace v1
 {
 
-constexpr const uint8_t FSM_THREAD_PRIORITY = 4;
-constexpr const uint16_t FSM_THREAD_HEAP = 4'096;
-
 
 using namespace os;
 namespace intf = hhg::intf;
 
+void* fsm_thread_fn(void* arg);
+void on_click_button_next();
+void on_click_button_before();
+
 class app_main final
 {
-
+public:
     enum state
     {
-        INIT = 0x01
+        INIT        = 0x01,
+        READ_HW     = 0x02,
+        CHECK_DATA  = 0x04,
+        MAIN        = 0x08,
+        START_ZONE  = 0x10,
+        STOP_ZONE   = 0x20,
+        RESET       = 0x40,
+        ALL         = 0x7F
     };
 
+    static constexpr inline const uint16_t MAIN_SLEEP = 100;
+    static constexpr inline const uint16_t ERROR_SLEEP = 1'000;
+    static constexpr inline const uint8_t FSM_THREAD_PRIORITY = 4;
+    static constexpr inline const uint16_t FSM_THREAD_HEAP = 4'096;
+    static constexpr inline const uint8_t FSM_MAX_ERROR = 5;
 
+private:
+    static inline bool already_instanced = false;
 
     const intf::hardware& hardware;
     class app_data app_data;
@@ -56,7 +71,11 @@ class app_main final
     event   fsm_events;
     bool    fsm_run         = true;
 
-    thread fsm_thread{"fst", FSM_THREAD_PRIORITY, FSM_THREAD_HEAP, fsm_thread_fn};
+    thread fsm_thread{"fsm thread", FSM_THREAD_PRIORITY, FSM_THREAD_HEAP, fsm_thread_fn};
+
+    friend void* fsm_thread_fn(void* arg);
+    friend void on_click_button_next();
+    friend void on_click_button_before();
 public:
     explicit app_main(const intf::hardware& hardware) OS_NOEXCEPT;
     OS_NO_COPY_NO_MOVE(app_main)
@@ -67,8 +86,7 @@ public:
 
     bool fsm_start(error** error) OS_NOEXCEPT;
 
-private:
-    static void* fsm_thread_fn(void* arg);
+
 };
 
 }

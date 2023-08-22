@@ -23,6 +23,7 @@
 #include "hhg-intf/lcd.hpp"
 #include "hhg-intf/led.hpp"
 #include "hhg-intf/releay.hpp"
+#include "hhg-intf/rtc.hpp"
 #include "hhg-intf/data.hpp"
 #include <stdint.h>
 
@@ -56,6 +57,8 @@ public:
     virtual const led::ptr& get_led_red() const OS_NOEXCEPT = 0;
 
     virtual const releay::ptr& get_releay() const OS_NOEXCEPT = 0;
+
+    virtual const rtc::ptr& get_rtc() const OS_NOEXCEPT = 0;
 
     virtual const data::ptr& get_data() const OS_NOEXCEPT = 0;
 };
