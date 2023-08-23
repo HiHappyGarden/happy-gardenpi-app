@@ -23,6 +23,7 @@
 #include "hhg-platform/lcd.hpp"
 #include "hhg-platform/led.hpp"
 #include "hhg-platform/releay.hpp"
+#include "hhg-platform/rtc.hpp"
 #include "hhg-platform/data.hpp"
 #include "osal/osal.hpp"
 #include "errors.hpp"
@@ -51,36 +52,32 @@ void sig_event_handler(int n, siginfo_t *info, void *unused) OS_NOEXCEPT
 {
     if (n == SIGETX)
     {
-        if (n == SIGETX)
+        enum type type{static_cast<uint8_t>(info->si_int)};
+
+        os::set_check_main_loop(info->si_int);
+        switch (type)
         {
-            enum type type{static_cast<uint8_t>(info->si_int)};
+        case type::BUTTON_NEXT:
+            OS_LOG_DEBUG(APP_TAG, "Handled BUTTON_NEXT");
 
-            os::set_check_main_loop(info->si_int);
-            switch (type)
+            if(me && me->button_next && dynamic_cast<button*>(me->button_next.get())->on_click)
             {
-            case type::BUTTON_NEXT:
-                OS_LOG_DEBUG(APP_TAG, "Handled BUTTON_NEXT");
-
-
-//                if(me && me->button_next && dynamic_cast<button*>(me->button_next)->on_click)
-//                {
-//                    dynamic_cast<button*>(me->button_next)->on_click();
-//                }
-
-                break;
-            case type::BUTTON_BEFORE:
-                OS_LOG_DEBUG(APP_TAG, "Handled BUTTON_BEFORE");
-
-//                if(me && me->button_before && dynamic_cast<button*>(me->button_before)->on_click)
-//                {
-//                    dynamic_cast<button*>(me->button_before)->on_click();
-//                }
-
-                break;
-            default:
-                OS_LOG_WARNING(APP_TAG, "No handled signal value =  %u\n", info->si_int);
-                break;
+                dynamic_cast<button*>(me->button_next.get())->on_click();
             }
+
+            break;
+        case type::BUTTON_BEFORE:
+            OS_LOG_DEBUG(APP_TAG, "Handled BUTTON_BEFORE");
+
+            if(me && me->button_before && dynamic_cast<button*>(me->button_before.get())->on_click)
+            {
+                dynamic_cast<button*>(me->button_before.get())->on_click();
+            }
+
+            break;
+        default:
+            OS_LOG_WARNING(APP_TAG, "No handled signal value =  %u\n", info->si_int);
+            break;
         }
     }
 }
@@ -255,6 +252,19 @@ bool hardware::init(error **error) OS_NOEXCEPT
         }
         return false;
     }
+
+    OS_LOG_INFO(APP_TAG, "Init rtc");
+
+    rtc = new class rtc;
+    if(rtc.is_null())
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD("No heap for data", static_cast<uint8_t>(error_code::NO_HEAP), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+        }
+        return false;
+    }
+
 
     OS_LOG_INFO(APP_TAG, "Init data");
     data = new class data;

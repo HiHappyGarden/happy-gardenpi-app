@@ -47,7 +47,7 @@ int main(int argc, char* argv[]) try
             delete error;
         }
         os::stop_main_loop();
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     OS_LOG_INFO(APP_TAG, "Init app_main");
@@ -59,7 +59,7 @@ int main(int argc, char* argv[]) try
             delete error;
         }
         os::stop_main_loop();
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     OS_LOG_INFO(APP_TAG, "Start fsm");
@@ -71,12 +71,12 @@ int main(int argc, char* argv[]) try
             delete error;
         }
         os::stop_main_loop();
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     os::start_main_loop();
 
-    return 0;
+    return EXIT_FAILURE;
 }
 catch(...)
 {

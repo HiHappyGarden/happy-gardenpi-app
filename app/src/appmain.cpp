@@ -38,20 +38,27 @@ constexpr const char APP_TAG[] = "APP MAIN";
 
 app_main* me = nullptr;
 
-bool check_error_counter(uint8_t& error, enum app_main::state& state, enum app_main::state& old_state, uint8_t error_max)
+bool __attribute__((nonnull (1))) check_error_counter(os::error** error, uint8_t& count_error, enum app_main::state& state, enum app_main::state& old_state, uint8_t error_max)
 {
-    if(error >= error_max)
+    if(*error)
     {
-        old_state = state;
-        state = app_main::RESET;
-        error = 0;
-        return false;
+        os::printf_stack_error(APP_TAG, *error);
+        delete *error;
+        *error = nullptr;
+        if(count_error >= error_max)
+        {
+            old_state = state;
+            state = app_main::RESET;
+            count_error = 0;
+            return false;
+        }
+        else
+        {
+            count_error++;
+            return true;
+        }
     }
-    else
-    {
-        error++;
-        return true;
-    }
+    return true;
 }
 
 }
@@ -147,60 +154,31 @@ void *fsm_thread_fn(void *arg)
         {
             case app_main::INIT:
             {
+                OS_LOG_INFO(APP_TAG, "fsm INIT");
                 me->fsm_events.clear(app_main::ALL);
 
                 os::error* error= nullptr;
                 count_error = 0;
 
                 me->hardware.get_led_green()->set_status(false, &error);
-                if(error)
+                if(!check_error_counter(&error, count_error, me->fsm_state, me->fsm_old_state, HHGARDEN_FSM_ERROR_MAX))
                 {
-                    os::printf_stack_error(APP_TAG, error);
-                    delete error;
-                    error = nullptr;
-                    if(!check_error_counter(count_error, me->fsm_state, me->fsm_old_state, app_main::FSM_MAX_ERROR))
-                    {
-                         os::tick_from_us(ms_to_us(app_main::ERROR_SLEEP));
-                    }
-                    else
-                    {
-                         os::tick_from_us(ms_to_us(app_main::ERROR_SLEEP / 2));
-                    }
+                    tick_sleep(HHGARDEN_FSM_ERROR_SLEEP);
                 }
 
+
                 me->hardware.get_led_red()->set_status(false, &error);
-                if(error)
+                if(!check_error_counter(&error, count_error, me->fsm_state, me->fsm_old_state, HHGARDEN_FSM_ERROR_MAX))
                 {
-                    error++;
-                    os::printf_stack_error(APP_TAG, error);
-                    delete error;
-                    error = nullptr;
-                    if(!check_error_counter(count_error, me->fsm_state, me->fsm_old_state, app_main::FSM_MAX_ERROR))
-                    {
-                         os::tick_from_us(ms_to_us(app_main::ERROR_SLEEP));
-                    }
-                    else
-                    {
-                         os::tick_from_us(ms_to_us(app_main::ERROR_SLEEP / 2));
-                    }
+                    tick_sleep(HHGARDEN_FSM_ERROR_SLEEP);
                 }
 
                 for(uint8_t i = 0; i < HHGARDEN_ZONES_SIZE; i++)
                 {
                     me->hardware.get_releay()->set_status(i, false, &error);
-                    if(error)
+                    if(!check_error_counter(&error, count_error, me->fsm_state, me->fsm_old_state, HHGARDEN_FSM_ERROR_MAX))
                     {
-                        os::printf_stack_error(APP_TAG, error);
-                        delete error;
-                        error = nullptr;
-                        if(!check_error_counter(count_error, me->fsm_state, me->fsm_old_state, app_main::FSM_MAX_ERROR))
-                        {
-                            os::tick_from_us(ms_to_us(app_main::ERROR_SLEEP));
-                        }
-                        else
-                        {
-                            os::tick_from_us(ms_to_us(app_main::ERROR_SLEEP / 2));
-                        }
+                        tick_sleep(HHGARDEN_FSM_ERROR_SLEEP);
                     }
                 }
 
@@ -212,7 +190,45 @@ void *fsm_thread_fn(void *arg)
             }
             case app_main::READ_HW:
             {
+                OS_LOG_INFO(APP_TAG, "fsm READ_HW");
                 me->fsm_events.clear(app_main::READ_HW);
+
+                os::error* error= nullptr;
+
+                if(me->hardware.get_led_green()->get_status(&error))
+                {
+                    error = OS_ERROR_BUILD("led_green status fail", static_cast<uint8_t>(error_code::FSM_HW_CHECK), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+                }
+
+                if(!check_error_counter(&error, count_error, me->fsm_state, me->fsm_old_state, HHGARDEN_FSM_ERROR_MAX))
+                {
+                    tick_sleep(HHGARDEN_FSM_ERROR_SLEEP);
+                }
+
+
+                if(me->hardware.get_led_red()->get_status(&error))
+                {
+                    error = OS_ERROR_BUILD("led_red status fail", static_cast<uint8_t>(error_code::FSM_HW_CHECK), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+                }
+
+                if(!check_error_counter(&error, count_error, me->fsm_state, me->fsm_old_state, HHGARDEN_FSM_ERROR_MAX))
+                {
+                    tick_sleep(HHGARDEN_FSM_ERROR_SLEEP);
+                }
+
+                for(uint8_t i = 0; i < HHGARDEN_ZONES_SIZE; i++)
+                {
+                    if(me->hardware.get_releay()->get_status(i, &error))
+                    {
+                        error = OS_ERROR_BUILD("led_red status fail", static_cast<uint8_t>(error_code::FSM_HW_CHECK), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+                    }
+
+                    if(!check_error_counter(&error, count_error, me->fsm_state, me->fsm_old_state, HHGARDEN_FSM_ERROR_MAX))
+                    {
+                        tick_sleep(HHGARDEN_FSM_ERROR_SLEEP);
+                    }
+                }
+
 
                 me->fsm_old_state = me->fsm_state;
                 me->fsm_state = app_main::CHECK_DATA;
@@ -221,7 +237,10 @@ void *fsm_thread_fn(void *arg)
             }
             case app_main::CHECK_DATA:
             {
+                OS_LOG_INFO(APP_TAG, "fsm CHECK_DATA");
                 me->fsm_events.clear(app_main::CHECK_DATA);
+
+                //todo check if there some data to process, add/remoce zone ecc..
 
                 me->fsm_old_state = me->fsm_state;
                 me->fsm_state = app_main::MAIN;
@@ -230,28 +249,36 @@ void *fsm_thread_fn(void *arg)
             }
             case app_main::MAIN:
             {
+                OS_LOG_INFO(APP_TAG, "fsm MAIN");
 
+
+                tick_sleep(HHGARDEN_FSM_MAIN_SLEEP * 10);
                 me->fsm_events.set(app_main::MAIN);
                 break;
             }
             case app_main::START_ZONE:
             {
-
+                OS_LOG_INFO(APP_TAG, "fsm START_ZONE");
                 break;
             }
             case app_main::STOP_ZONE:
             {
-
+                OS_LOG_INFO(APP_TAG, "fsm STOP_ZONE");
                 break;
             }
             case app_main::RESET:
             {
-
+                OS_LOG_INFO(APP_TAG, "fsm RESET");
                 break;
             }
+            default:
+                OS_LOG_FATAL(APP_TAG, "Un handled status");
+                me->fsm_run = false;
+                stop_main_loop();
+                break;
         }
 
-        os::tick_from_us(ms_to_us(app_main::MAIN_SLEEP));
+        tick_sleep(HHGARDEN_FSM_MAIN_SLEEP);
     }
 
     app_main::already_instanced = false;
