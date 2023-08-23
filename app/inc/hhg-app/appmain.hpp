@@ -51,12 +51,6 @@ public:
         ALL         = 0x7F
     };
 
-    static constexpr inline const uint16_t MAIN_SLEEP = 100;
-    static constexpr inline const uint16_t ERROR_SLEEP = 1'000;
-    static constexpr inline const uint8_t FSM_THREAD_PRIORITY = 4;
-    static constexpr inline const uint16_t FSM_THREAD_HEAP = 4'096;
-    static constexpr inline const uint8_t FSM_MAX_ERROR = 5;
-
 private:
     static inline bool already_instanced = false;
 
@@ -71,7 +65,7 @@ private:
     event   fsm_events;
     bool    fsm_run         = true;
 
-    thread fsm_thread{"fsm thread", FSM_THREAD_PRIORITY, FSM_THREAD_HEAP, fsm_thread_fn};
+    thread fsm_thread{"fsm thread", HHGARDEN_FSM_THREAD_PRIORITY, HHGARDEN_FSM_THREAD_HEAP, fsm_thread_fn};
 
     friend void* fsm_thread_fn(void* arg);
     friend void on_click_button_next();
