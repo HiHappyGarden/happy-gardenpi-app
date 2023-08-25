@@ -51,6 +51,15 @@ public:
         ALL         = 0x7F
     };
 
+    struct fsm
+    {
+        enum state   state       = INIT;
+        enum state   old_state;
+        uint8_t      errors      = 0;
+        event        events;
+        bool         run         = true;
+    };
+
 private:
     static inline bool already_instanced = false;
 
@@ -59,11 +68,8 @@ private:
 
     string<HHGARDEN_LCD_MSG_SIZE> lcd_msg;
 
-    state   fsm_state       = INIT;
-    state   fsm_old_state;
-    uint8_t fsm_errors      = 0;
-    event   fsm_events;
-    bool    fsm_run         = true;
+    struct fsm fsm;
+
 
     thread fsm_thread{"fsm thread", HHGARDEN_FSM_THREAD_PRIORITY, HHGARDEN_FSM_THREAD_HEAP, fsm_thread_fn};
 
