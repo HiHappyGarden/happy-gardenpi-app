@@ -29,15 +29,19 @@ inline namespace v1
 
 class app_main_fsm
 {
+    const intf::hardware& hardware;
     struct app_main::fsm& fsm;
+
+    bool check_error_counter(error **error) OS_NOEXCEPT;
 public:
+    using ptr = unique_ptr<app_main_fsm>;
 
-    explicit app_main_fsm(struct app_main::fsm& fsm);
+    inline app_main_fsm(struct app_main::fsm& fsm, intf::hardware& hardware) OS_NOEXCEPT : fsm(fsm), hardware(hardware) {}
+
+    bool init(error **error) OS_NOEXCEPT;
+
+    bool read_hw(error **error) OS_NOEXCEPT;
 };
-
-
-bool __attribute__((nonnull (1))) check_error_counter(os::error** error, uint8_t& count_error, enum app_main::state& state, enum app_main::state& old_state, uint8_t error_max);
-
 
 }
 }
