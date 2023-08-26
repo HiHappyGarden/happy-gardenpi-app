@@ -28,29 +28,98 @@ inline namespace v1
 
 namespace
 {
-constexpr const char APP_TAG[] = "APP MAIN";
+constexpr const char APP_TAG[] = "APP MAIN FSM";
 }
 
-bool check_error_counter(os::error** error, uint8_t& count_error, enum app_main::state& state, enum app_main::state& old_state, uint8_t error_max)
+
+bool app_main_fsm::check_error_counter(error **error) OS_NOEXCEPT
 {
     if(*error)
     {
         os::printf_stack_error(APP_TAG, *error);
-        delete *error;
-        *error = nullptr;
-        if(count_error >= error_max)
+    }
+    if(fsm.errors >= HHGARDEN_FSM_ERROR_MAX)
+    {
+        fsm.old_state = fsm.state;
+        fsm.state = app_main::RESET;
+        fsm.errors = 0;
+        return false;
+    }
+    else
+    {
+        fsm.state = fsm.old_state;
+        fsm.errors++;
+        return true;
+    }
+    return true;
+}
+
+bool app_main_fsm::init(error **error) OS_NOEXCEPT
+{
+
+    hardware.get_led_green()->set_status(false, error);
+    if(error && !check_error_counter(error))
+    {
+        tick_sleep(HHGARDEN_FSM_ERROR_SLEEP);
+        return false;
+    }
+
+
+    hardware.get_led_red()->set_status(false, error);
+    if(error && !check_error_counter(error))
+    {
+        tick_sleep(HHGARDEN_FSM_ERROR_SLEEP);
+        return false;
+    }
+
+    for(uint8_t i = 0; i < HHGARDEN_ZONES_SIZE; i++)
+    {
+        hardware.get_releay()->set_status(i, false, error);
+        if(error && !check_error_counter(error))
         {
-            old_state = state;
-            state = app_main::RESET;
-            count_error = 0;
+            tick_sleep(HHGARDEN_FSM_ERROR_SLEEP);
             return false;
         }
-        else
-        {
-            count_error++;
-            return true;
-        }
     }
+    return true;
+}
+
+bool app_main_fsm::read_hw(error **error) OS_NOEXCEPT
+{
+//    if(hardware.get_led_green()->get_status(&error))
+//    {
+//        error = OS_ERROR_BUILD("led_green status fail", static_cast<uint8_t>(error_code::FSM_HW_CHECK), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+//    }
+
+//    if(!check_error_counter(&error, count_error, me->fsm.state, me->fsm.old_state, HHGARDEN_FSM_ERROR_MAX))
+//    {
+//        tick_sleep(HHGARDEN_FSM_ERROR_SLEEP);
+//    }
+
+
+//    if(me->hardware.get_led_red()->get_status(&error))
+//    {
+//        error = OS_ERROR_BUILD("led_red status fail", static_cast<uint8_t>(error_code::FSM_HW_CHECK), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+//    }
+
+//    if(!check_error_counter(&error, count_error, me->fsm.state, me->fsm.old_state, HHGARDEN_FSM_ERROR_MAX))
+//    {
+//        tick_sleep(HHGARDEN_FSM_ERROR_SLEEP);
+//    }
+
+//    for(uint8_t i = 0; i < HHGARDEN_ZONES_SIZE; i++)
+//    {
+//        if(me->hardware.get_releay()->get_status(i, &error))
+//        {
+//            error = OS_ERROR_BUILD("led_red status fail", static_cast<uint8_t>(error_code::FSM_HW_CHECK), os::get_file_name(__FILE__), __FUNCTION__, __LINE__);
+//        }
+
+//        if(!check_error_counter(&error, count_error, me->fsm.state, me->fsm.old_state, HHGARDEN_FSM_ERROR_MAX))
+//        {
+//            tick_sleep(HHGARDEN_FSM_ERROR_SLEEP);
+//        }
+//    }
+
     return true;
 }
 

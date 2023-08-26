@@ -36,6 +36,8 @@ void* fsm_thread_fn(void* arg);
 void on_click_button_next();
 void on_click_button_before();
 
+class app_main_fsm;
+
 class app_main final
 {
 public:
@@ -65,10 +67,12 @@ private:
 
     const intf::hardware& hardware;
     class app_data app_data;
+    struct fsm fsm;
+    unique_ptr<class app_main_fsm> app_main_fsm;
 
     string<HHGARDEN_LCD_MSG_SIZE> lcd_msg;
 
-    struct fsm fsm;
+
 
 
     thread fsm_thread{"fsm thread", HHGARDEN_FSM_THREAD_PRIORITY, HHGARDEN_FSM_THREAD_HEAP, fsm_thread_fn};
@@ -77,7 +81,7 @@ private:
     friend void on_click_button_next();
     friend void on_click_button_before();
 public:
-    explicit app_main(const intf::hardware& hardware) OS_NOEXCEPT;
+    explicit app_main(intf::hardware& hardware) OS_NOEXCEPT;
     OS_NO_COPY_NO_MOVE(app_main)
 
     ~app_main() OS_NOEXCEPT;
