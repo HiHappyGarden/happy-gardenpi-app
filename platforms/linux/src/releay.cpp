@@ -1,6 +1,6 @@
 /***************************************************************************
  *
- * PROJECT
+ * Hi Happy Garden
  * Copyright (C) 202X  Antonio Salsi <passy.linux@zresa.it>
  *
  * This program is free software: you can redistribute it and/or modify
