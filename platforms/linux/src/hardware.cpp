@@ -1,6 +1,6 @@
 /***************************************************************************
  *
- * Hi Happy Garden Interfaces
+ * Hi Happy Garden
  * Copyright (C) 2023  Antonio Salsi <passy.linux@zresa.it>
  *
  * This program is free software: you can redistribute it and/or modify
