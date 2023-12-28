@@ -17,3 +17,5 @@ cmake-*
 docs
 
 valgrind-out.txt
+
+Debug
