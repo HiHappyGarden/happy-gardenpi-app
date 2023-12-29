@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "hhg/main.h"
+#include "osal/osal.hpp"
 
 
 #ifdef STM32G474xx
@@ -28,4 +29,5 @@ int main(int argc, char* argv[])
 {
 
 
+	return static_cast<int>(os::exit::OK);
 }
