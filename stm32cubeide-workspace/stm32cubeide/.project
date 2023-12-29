@@ -30,4 +30,21 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>inc</name>
+			<type>2</type>
+			<locationURI>$%7BPARENT-2-PROJECT_LOC%7D/inc</locationURI>
+		</link>
+		<link>
+			<name>osal</name>
+			<type>2</type>
+			<location>/home/antoniosalsi/projects/hi-happy-garden-app/osal</location>
+		</link>
+		<link>
+			<name>src</name>
+			<type>2</type>
+			<locationURI>$%7BPARENT-2-PROJECT_LOC%7D/src</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
