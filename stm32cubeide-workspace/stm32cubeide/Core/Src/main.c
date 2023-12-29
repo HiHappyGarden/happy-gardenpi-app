@@ -20,12 +20,11 @@
 #include "main.h"
 #include "cmsis_os.h"
 
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
 #include "hhg/main.h"
 
 #include <stdlib.h>
-
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
 
@@ -148,7 +147,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-//	    if(HAL_UART_Transmit(&hlpuart1, (uint8_t*)msg, sizeof(msg), 1000)!= HAL_OK)
+//	    if(HAL_UART_Transmit(&hlpuart1, (uint8_t*)"ciao", 5, 1000)!= HAL_OK)
 //	    {
 //	      /* Transfer error in transmission process */
 //	      Error_Handler();

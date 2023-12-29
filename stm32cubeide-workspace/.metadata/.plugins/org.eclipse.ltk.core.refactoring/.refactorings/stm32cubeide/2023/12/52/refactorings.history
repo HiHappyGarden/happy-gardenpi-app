@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;stm32cubeide/hi-happy-garden-app.ioc&apos; to &apos;stm32cubeide.ioc&apos;" description="Rename resource &apos;hi-happy-garden-app.ioc&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="hi-happy-garden-app.ioc" name="stm32cubeide.ioc" stamp="1703885975415" updateReferences="true"/>
+</session>

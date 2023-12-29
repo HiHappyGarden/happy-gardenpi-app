@@ -1,28 +1,14 @@
-14:43:40 **** Incremental Build of configuration Debug for project stm32cubeide ****
+22:57:34 **** Incremental Build of configuration Debug for project stm32cubeide ****
 make -j16 all 
-arm-none-eabi-g++ "/home/antoniosalsi/projects/hi-happy-garden-app/src/hhgmain.cpp" -mcpu=cortex-m4 -std=c++17 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G474xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I"/home/antoniosalsi/projects/hi-happy-garden-app/inc" -I"/home/antoniosalsi/projects/hi-happy-garden-app/osal/inc" -I"/home/antoniosalsi/projects/hi-happy-garden-app/osal/src/freertos" -I"/home/antoniosalsi/projects/hi-happy-garden-app/hhg-app/inc" -I"/home/antoniosalsi/projects/hi-happy-garden-app/hhg-drivers/inc" -I"/home/antoniosalsi/projects/hi-happy-garden-app/stm32cubeide-workspace/stm32cubeide/cJSON" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"src/hhgmain.d" -MT"src/hhgmain.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "src/hhgmain.o"
-/home/antoniosalsi/projects/hi-happy-garden-app/src/hhgmain.cpp: In function 'int hhg_main()':
-/home/antoniosalsi/projects/hi-happy-garden-app/src/hhgmain.cpp:180:13: warning: unused variable 'i' [-Wunused-variable]
-  180 |         int i = sizeof(schedule);
-      |             ^
-/home/antoniosalsi/projects/hi-happy-garden-app/src/hhgmain.cpp:181:13: warning: unused variable 't' [-Wunused-variable]
-  181 |         int t = sizeof(test_size);
-      |             ^
-arm-none-eabi-g++ -o "stm32cubeide.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/antoniosalsi/projects/hi-happy-garden-app/stm32cubeide-workspace/stm32cubeide/STM32G474RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="stm32cubeide.map" -Wl,--gc-sections -nodefaultlibs -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
-Finished building target: stm32cubeide.elf
- 
 arm-none-eabi-size  stm32cubeide.elf 
-arm-none-eabi-objdump -h -S stm32cubeide.elf  > "stm32cubeide.list"
    text	   data	    bss	    dec	    hex	filename
-  32116	    116	   8764	  40996	   a024	stm32cubeide.elf
+  30352	    108	  16000	  46460	   b57c	stm32cubeide.elf
 Finished building: default.size.stdout
  
-Finished building: stm32cubeide.list
- 
-14:43:45 **** Incremental Build of configuration Debug for project stm32cubeide ****
+22:57:36 **** Incremental Build of configuration Debug for project stm32cubeide ****
 make -j16 all 
 arm-none-eabi-size  stm32cubeide.elf 
    text	   data	    bss	    dec	    hex	filename
-  32116	    116	   8764	  40996	   a024	stm32cubeide.elf
+  30352	    108	  16000	  46460	   b57c	stm32cubeide.elf
 Finished building: default.size.stdout
  
