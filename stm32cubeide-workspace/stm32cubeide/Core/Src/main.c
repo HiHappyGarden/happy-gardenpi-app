@@ -20,6 +20,10 @@
 #include "main.h"
 #include "cmsis_os.h"
 
+#include "hhg/main.h"
+
+#include <stdlib.h>
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -27,7 +31,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-static char msg[] = "Test\n";
+
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -144,14 +148,14 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	    if(HAL_UART_Transmit(&hlpuart1, (uint8_t*)msg, sizeof(msg), 1000)!= HAL_OK)
-	    {
-	      /* Transfer error in transmission process */
-	      Error_Handler();
-	    }
-
-	    //BSP_LED_Toggle(LED2);
-	    HAL_Delay(1000);
+//	    if(HAL_UART_Transmit(&hlpuart1, (uint8_t*)msg, sizeof(msg), 1000)!= HAL_OK)
+//	    {
+//	      /* Transfer error in transmission process */
+//	      Error_Handler();
+//	    }
+//
+//	    //BSP_LED_Toggle(LED2);
+//	    HAL_Delay(1000);
   }
   /* USER CODE END 3 */
 }
@@ -303,11 +307,16 @@ static void MX_GPIO_Init(void)
 void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN 5 */
+	  if(hhg_main() == EXIT_FAILURE)
+	  {
+		  int i =0;
+	  }
+	  vTaskDelete(NULL);
   /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
+//  for(;;)
+//  {
+//    osDelay(1);
+//  }
   /* USER CODE END 5 */
 }
 

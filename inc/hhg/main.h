@@ -26,7 +26,7 @@ extern "C" {
 
 #ifdef STM32G474xx
 
-int hhg_main(int argc, char* argv[]);
+int hhg_main(void);
 
 #endif
 
