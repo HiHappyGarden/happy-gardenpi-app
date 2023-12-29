@@ -17,14 +17,18 @@
  *
  ***************************************************************************/
 
-#ifndef _HEADER_H_
-#define _HEADER_H_
+#ifndef _HHG_MAIN_H_
+#define _HHG_MAIN_H_
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+#ifdef STM32G474xx
 
+int hhg_main(int argc, char* argv[]);
+
+#endif
 
 #ifdef __cplusplus
 }

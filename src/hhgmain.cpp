@@ -17,13 +17,15 @@
  *
  ***************************************************************************/
 
-#include "header.hpp"
+#include "hhg/main.h"
 
-namespace project
+
+#ifdef STM32G474xx
+int hhg_main(int argc, char* argv[])
+#else
+int main(int argc, char* argv[])
+#endif
 {
-inline namespace v1
-{
+
 
 }
-}
-
