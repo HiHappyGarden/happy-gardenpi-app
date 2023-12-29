@@ -3,6 +3,7 @@
 	<name>hi-happy-garden-app</name>
 	<comment></comment>
 	<projects>
+		<project>hi-happy-garden-app</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -31,6 +32,21 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
 	<linkedResources>
+		<link>
+			<name>cJSON</name>
+			<type>2</type>
+			<locationURI>$%7BPROJECT_LOC%7D/cJSON</locationURI>
+		</link>
+		<link>
+			<name>hhg-app</name>
+			<type>2</type>
+			<locationURI>$%7BPARENT-2-PROJECT_LOC%7D/hhg-app</locationURI>
+		</link>
+		<link>
+			<name>hhg-drivers</name>
+			<type>2</type>
+			<locationURI>$%7BPARENT-2-PROJECT_LOC%7D/hhg-drivers</locationURI>
+		</link>
 		<link>
 			<name>inc</name>
 			<type>2</type>
