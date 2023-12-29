@@ -1,0 +1,198 @@
+!SESSION 2023-12-29 14:30:05.752 -----------------------------------------------
+eclipse.buildId=Version 1.14.0
+java.version=17.0.8.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2023-12-29 14:30:08.353
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2023-12-29 14:30:08.353
+!MESSAGE Log4j2 initialized with config file /home/antoniosalsi/projects/hi-happy-garden-app/stm32cubeide-workspace/.metadata/.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2023-12-29 14:30:09.699
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2023-12-29 14:30:41.815
+!MESSAGE Indexed 'stm32cubeide' (53 sources, 404 headers) in 6.31 sec: 36,948 declarations; 121,345 references; 3 unresolved inclusions; 262 syntax errors; 1,037 unresolved names (0.65%)
+
+!ENTRY org.eclipse.core.resources 4 77 2023-12-29 14:30:42.386
+!MESSAGE Invalid project description.
+!SUBENTRY 1 unknown 0 0 2023-12-29 14:30:42.386
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2023-12-29 14:30:42.386
+!MESSAGE /home/antoniosalsi/projects/hi-happy-garden-app/stm32cubeide-workspace/stm32cubeide overlaps the location of another project: 'stm32cubeide'
+
+!ENTRY com.st.stm32cube.common.projectcreation 4 0 2023-12-29 14:30:42.386
+!MESSAGE Project is null
+
+!ENTRY org.eclipse.core.resources 4 77 2023-12-29 14:32:18.586
+!MESSAGE Invalid project description.
+!SUBENTRY 1 unknown 0 0 2023-12-29 14:32:18.586
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2023-12-29 14:32:18.586
+!MESSAGE /home/antoniosalsi/projects/hi-happy-garden-app/stm32cubeide-workspace/stm32cubeide overlaps the location of another project: 'stm32cubeide'
+
+!ENTRY com.st.stm32cube.common.projectcreation 4 0 2023-12-29 14:32:18.586
+!MESSAGE Project is null
+
+!ENTRY org.eclipse.core.resources 4 77 2023-12-29 14:32:21.352
+!MESSAGE Invalid project description.
+!SUBENTRY 1 unknown 0 0 2023-12-29 14:32:21.352
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2023-12-29 14:32:21.352
+!MESSAGE /home/antoniosalsi/projects/hi-happy-garden-app/stm32cubeide-workspace/stm32cubeide overlaps the location of another project: 'stm32cubeide'
+
+!ENTRY com.st.stm32cube.common.projectcreation 4 0 2023-12-29 14:32:21.352
+!MESSAGE Project is null
+
+!ENTRY org.eclipse.core.resources 4 77 2023-12-29 14:32:21.490
+!MESSAGE Invalid project description.
+!SUBENTRY 1 unknown 0 0 2023-12-29 14:32:21.490
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2023-12-29 14:32:21.490
+!MESSAGE /home/antoniosalsi/projects/hi-happy-garden-app/stm32cubeide-workspace/stm32cubeide overlaps the location of another project: 'stm32cubeide'
+
+!ENTRY com.st.stm32cube.common.projectcreation 4 0 2023-12-29 14:32:21.490
+!MESSAGE Project is null
+
+!ENTRY org.eclipse.core.resources 4 77 2023-12-29 14:36:16.561
+!MESSAGE Invalid project description.
+!SUBENTRY 1 unknown 0 0 2023-12-29 14:36:16.561
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2023-12-29 14:36:16.561
+!MESSAGE /home/antoniosalsi/projects/hi-happy-garden-app/stm32cubeide-workspace/stm32cubeide overlaps the location of another project: 'stm32cubeide'
+
+!ENTRY com.st.stm32cube.common.projectcreation 4 0 2023-12-29 14:36:16.562
+!MESSAGE Project is null
+
+!ENTRY org.eclipse.core.resources 4 77 2023-12-29 14:37:35.535
+!MESSAGE Invalid project description.
+!SUBENTRY 1 unknown 0 0 2023-12-29 14:37:35.535
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2023-12-29 14:37:35.535
+!MESSAGE /home/antoniosalsi/projects/hi-happy-garden-app/stm32cubeide-workspace/stm32cubeide overlaps the location of another project: 'stm32cubeide'
+
+!ENTRY com.st.stm32cube.common.projectcreation 4 0 2023-12-29 14:37:35.535
+!MESSAGE Project is null
+
+!ENTRY org.eclipse.core.resources 4 77 2023-12-29 14:38:13.986
+!MESSAGE Invalid project description.
+!SUBENTRY 1 unknown 0 0 2023-12-29 14:38:13.986
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2023-12-29 14:38:13.986
+!MESSAGE /home/antoniosalsi/projects/hi-happy-garden-app/stm32cubeide-workspace/stm32cubeide overlaps the location of another project: 'stm32cubeide'
+
+!ENTRY com.st.stm32cube.common.projectcreation 4 0 2023-12-29 14:38:13.986
+!MESSAGE Project is null
+
+!ENTRY org.eclipse.core.resources 4 77 2023-12-29 14:38:30.692
+!MESSAGE Invalid project description.
+!SUBENTRY 1 unknown 0 0 2023-12-29 14:38:30.692
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2023-12-29 14:38:30.692
+!MESSAGE /home/antoniosalsi/projects/hi-happy-garden-app/stm32cubeide-workspace/stm32cubeide overlaps the location of another project: 'stm32cubeide'
+
+!ENTRY com.st.stm32cube.common.projectcreation 4 0 2023-12-29 14:38:30.692
+!MESSAGE Project is null
+
+!ENTRY org.eclipse.core.resources 4 77 2023-12-29 14:38:38.521
+!MESSAGE Invalid project description.
+!SUBENTRY 1 unknown 0 0 2023-12-29 14:38:38.521
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2023-12-29 14:38:38.521
+!MESSAGE /home/antoniosalsi/projects/hi-happy-garden-app/stm32cubeide-workspace/stm32cubeide overlaps the location of another project: 'stm32cubeide'
+
+!ENTRY com.st.stm32cube.common.projectcreation 4 0 2023-12-29 14:38:38.521
+!MESSAGE Project is null
+
+!ENTRY org.eclipse.core.resources 4 77 2023-12-29 14:39:03.306
+!MESSAGE Invalid project description.
+!SUBENTRY 1 unknown 0 0 2023-12-29 14:39:03.306
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2023-12-29 14:39:03.306
+!MESSAGE /home/antoniosalsi/projects/hi-happy-garden-app/stm32cubeide-workspace/stm32cubeide overlaps the location of another project: 'stm32cubeide'
+
+!ENTRY com.st.stm32cube.common.projectcreation 4 0 2023-12-29 14:39:03.306
+!MESSAGE Project is null
+
+!ENTRY org.eclipse.core.resources 4 77 2023-12-29 14:39:10.217
+!MESSAGE Invalid project description.
+!SUBENTRY 1 unknown 0 0 2023-12-29 14:39:10.217
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2023-12-29 14:39:10.217
+!MESSAGE /home/antoniosalsi/projects/hi-happy-garden-app/stm32cubeide-workspace/stm32cubeide overlaps the location of another project: 'stm32cubeide'
+
+!ENTRY com.st.stm32cube.common.projectcreation 4 0 2023-12-29 14:39:10.217
+!MESSAGE Project is null
+
+!ENTRY org.eclipse.core.resources 4 77 2023-12-29 14:39:10.324
+!MESSAGE Invalid project description.
+!SUBENTRY 1 unknown 0 0 2023-12-29 14:39:10.324
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2023-12-29 14:39:10.324
+!MESSAGE /home/antoniosalsi/projects/hi-happy-garden-app/stm32cubeide-workspace/stm32cubeide overlaps the location of another project: 'stm32cubeide'
+
+!ENTRY com.st.stm32cube.common.projectcreation 4 0 2023-12-29 14:39:10.324
+!MESSAGE Project is null
+
+!ENTRY org.eclipse.core.resources 4 77 2023-12-29 14:40:37.410
+!MESSAGE Invalid project description.
+!SUBENTRY 1 unknown 0 0 2023-12-29 14:40:37.410
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2023-12-29 14:40:37.410
+!MESSAGE /home/antoniosalsi/projects/hi-happy-garden-app/stm32cubeide-workspace/stm32cubeide overlaps the location of another project: 'stm32cubeide'
+
+!ENTRY com.st.stm32cube.common.projectcreation 4 0 2023-12-29 14:40:37.410
+!MESSAGE Project is null
+
+!ENTRY org.eclipse.core.resources 4 77 2023-12-29 14:40:37.504
+!MESSAGE Invalid project description.
+!SUBENTRY 1 unknown 0 0 2023-12-29 14:40:37.504
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2023-12-29 14:40:37.504
+!MESSAGE /home/antoniosalsi/projects/hi-happy-garden-app/stm32cubeide-workspace/stm32cubeide overlaps the location of another project: 'stm32cubeide'
+
+!ENTRY com.st.stm32cube.common.projectcreation 4 0 2023-12-29 14:40:37.504
+!MESSAGE Project is null
+
+!ENTRY org.eclipse.core.resources 4 77 2023-12-29 14:43:15.856
+!MESSAGE Invalid project description.
+!SUBENTRY 1 unknown 0 0 2023-12-29 14:43:15.856
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2023-12-29 14:43:15.856
+!MESSAGE /home/antoniosalsi/projects/hi-happy-garden-app/stm32cubeide-workspace/stm32cubeide overlaps the location of another project: 'stm32cubeide'
+
+!ENTRY com.st.stm32cube.common.projectcreation 4 0 2023-12-29 14:43:15.856
+!MESSAGE Project is null
+
+!ENTRY org.eclipse.core.resources 4 77 2023-12-29 14:43:40.088
+!MESSAGE Invalid project description.
+!SUBENTRY 1 unknown 0 0 2023-12-29 14:43:40.088
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2023-12-29 14:43:40.088
+!MESSAGE /home/antoniosalsi/projects/hi-happy-garden-app/stm32cubeide-workspace/stm32cubeide overlaps the location of another project: 'stm32cubeide'
+
+!ENTRY com.st.stm32cube.common.projectcreation 4 0 2023-12-29 14:43:40.088
+!MESSAGE Project is null
+
+!ENTRY org.eclipse.core.resources 4 77 2023-12-29 14:43:45.759
+!MESSAGE Invalid project description.
+!SUBENTRY 1 unknown 0 0 2023-12-29 14:43:45.759
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2023-12-29 14:43:45.759
+!MESSAGE /home/antoniosalsi/projects/hi-happy-garden-app/stm32cubeide-workspace/stm32cubeide overlaps the location of another project: 'stm32cubeide'
+
+!ENTRY com.st.stm32cube.common.projectcreation 4 0 2023-12-29 14:43:45.759
+!MESSAGE Project is null
+
+!ENTRY org.eclipse.core.resources 4 77 2023-12-29 14:43:45.862
+!MESSAGE Invalid project description.
+!SUBENTRY 1 unknown 0 0 2023-12-29 14:43:45.862
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2023-12-29 14:43:45.862
+!MESSAGE /home/antoniosalsi/projects/hi-happy-garden-app/stm32cubeide-workspace/stm32cubeide overlaps the location of another project: 'stm32cubeide'
+
+!ENTRY com.st.stm32cube.common.projectcreation 4 0 2023-12-29 14:43:45.863
+!MESSAGE Project is null
