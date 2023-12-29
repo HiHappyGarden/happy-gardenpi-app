@@ -20,7 +20,6 @@
 #pragma once
 #include "hhg/config.h"
 #include "osal/osal.hpp"
-#include "hhg-app/appdata.hpp"
 
 
 namespace hhg::app
@@ -28,70 +27,6 @@ namespace hhg::app
 inline namespace v1
 {
 
-
-using namespace os;
-namespace intf = hhg::intf;
-
-void* fsm_thread_fn(void* arg);
-void on_click_button_next();
-void on_click_button_before();
-
-class app_main_fsm;
-
-class app_main final
-{
-public:
-    enum state
-    {
-        INIT        = 0x01,
-        READ_HW     = 0x02,
-        CHECK_DATA  = 0x04,
-        MAIN        = 0x08,
-        START_ZONE  = 0x10,
-        STOP_ZONE   = 0x20,
-        RESET       = 0x40,
-        ALL         = 0x7F
-    };
-
-    struct fsm
-    {
-        enum state   state       = INIT;
-        enum state   old_state;
-        uint8_t      errors      = 0;
-        event        events;
-        bool         run         = true;
-    };
-
-private:
-    static inline bool already_instanced = false;
-
-    const intf::hardware& hardware;
-    class app_data app_data;
-    struct fsm fsm;
-    unique_ptr<class app_main_fsm> app_main_fsm;
-
-    string<HHGARDEN_LCD_MSG_SIZE> lcd_msg;
-
-
-
-
-    thread fsm_thread{"fsm thread", HHGARDEN_FSM_THREAD_PRIORITY, HHGARDEN_FSM_THREAD_HEAP, fsm_thread_fn};
-
-    friend void* fsm_thread_fn(void* arg);
-    friend void on_click_button_next();
-    friend void on_click_button_before();
-public:
-    explicit app_main(intf::hardware& hardware) OS_NOEXCEPT;
-    OS_NO_COPY_NO_MOVE(app_main)
-
-    ~app_main() OS_NOEXCEPT;
-
-    bool init(error** error) OS_NOEXCEPT;
-
-    bool fsm_start(error** error) OS_NOEXCEPT;
-
-
-};
 
 }
 }
