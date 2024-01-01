@@ -1,7 +1,7 @@
 /***************************************************************************
  *
- * PROJECT
- * Copyright (C) 202X  Antonio Salsi <passy.linux@zresa.it>
+ * Hi Happy Garden
+ * Copyright (C) 2023/2024  Antonio Salsi <passy.linux@zresa.it>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,12 +17,46 @@
  *
  ***************************************************************************/
 
-#include "hhg-driver/foo.hpp"
+#include "hhg-driver/hardware.hpp"
+#include "stm32g4xx/driver-lpuart.h"
+using namespace os;
 
-namespace project
+namespace hhg::driver
 {
 inline namespace v1
 {
+
+os::exit hardware::init(os::error** error) OS_NOEXCEPT
+{
+
+	if(driver_lpuart_init() == EXIT_FAILURE)
+	{
+		if(error)
+		{
+	        *error = OS_ERROR_BUILD("driver_lpuart_init() fail.", error_type::OS_EFAULT);
+	        OS_ERROR_PTR_SET_POSITION(*error);
+		}
+		return exit::KO;
+	}
+
+	return exit::OK;
+}
+
+const string<128>& hardware::get_info() OS_NOEXCEPT
+{
+	static string<128> ret;
+
+	return ret;
+}
+
+
+const string<128>& hardware::get_version() OS_NOEXCEPT
+{
+	static string<128> ret;
+
+	return ret;
+}
+
 
 }
 }

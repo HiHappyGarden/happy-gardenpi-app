@@ -23,8 +23,12 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "hhg/main.h"
+#include "stm32g4xx/driver-lpuart.h"
+#include "stm32g4xx_nucleo.h"
+
 
 #include <stdlib.h>
+#define RX_BUFFER_SIZE                      10
 
 /* USER CODE END Includes */
 
@@ -55,6 +59,18 @@ const osThreadAttr_t defaultTask_attributes = {
 };
 /* USER CODE BEGIN PV */
 
+/* Buffer used for transmission */
+//uint8_t aTxStartMessage[] = "\n\r ****UART-Hyperterminal TXRX communication (TX based on HAL polling API, RX based on IT LL API) ****\n\r Enter characters using keyboard ...\n\r";
+//uint8_t ubSizeToSend = sizeof(aTxStartMessage);
+//
+///* Buffer used for reception */
+//uint8_t aRXBufferA[RX_BUFFER_SIZE];
+//uint8_t aRXBufferB[RX_BUFFER_SIZE];
+//__IO uint32_t uwNbReceivedChars = 0;
+//__IO uint32_t uwBufferReadyIndication = 0;
+//uint8_t *pBufferReadyForUser;
+//uint8_t *pBufferReadyForReception;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -69,7 +85,7 @@ void StartDefaultTask(void *argument);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+extern void osal_us_sleep(uint64_t us);
 /* USER CODE END 0 */
 
 /**
@@ -102,6 +118,14 @@ int main(void)
   MX_GPIO_Init();
   MX_LPUART1_UART_Init();
   /* USER CODE BEGIN 2 */
+  BSP_LED_Init(LED2);
+  driver_lpuart_register(&hlpuart1);
+
+//  pBufferReadyForReception = aRXBufferA;
+//  pBufferReadyForUser      = aRXBufferB;
+//  uwNbReceivedChars = 0;
+//  uwBufferReadyIndication = 0;
+
 
   /* USER CODE END 2 */
 
@@ -144,17 +168,41 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
+//    /* USART IRQ handler is not anymore routed to HAL_UART_IRQHandler() function
+//       and is now based on LL API functions use.
+//       Therefore, use of HAL IT based services is no more possible : use TX HAL polling services */
+//    if(HAL_UART_Transmit(&hlpuart1, (uint8_t*)aTxStartMessage, ubSizeToSend, 1000)!= HAL_OK)
+//    {
+//      /* Transfer error in transmission process */
+//      Error_Handler();
+//    }
+//
+//    /* Checks if Buffer full indication has been set */
+//    if (uwBufferReadyIndication != 0)
+//    {
+//      /* Reset indication */
+//      uwBufferReadyIndication = 0;
+//
+//      /* USART IRQ handler is not anymore routed to HAL_UART_IRQHandler() function
+//         and is now based on LL API functions use.
+//         Therefore, use of HAL IT based services is no more possible : use TX HAL polling services */
+//      if(HAL_UART_Transmit(&hlpuart1, (uint8_t*)pBufferReadyForUser, RX_BUFFER_SIZE, 1000)!= HAL_OK)
+//      {
+//        /* Transfer error in transmission process */
+//        Error_Handler();
+//      }
+//
+//      /* Toggle LED2 */
+//      BSP_LED_Toggle(LED2);
+//    }
+//
+//    /* Manage temporisation between TX buffer sendings */
+//    HAL_Delay(500);
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-//	    if(HAL_UART_Transmit(&hlpuart1, (uint8_t*)"ciao", 5, 1000)!= HAL_OK)
-//	    {
-//	      /* Transfer error in transmission process */
-//	      Error_Handler();
-//	    }
-//
-//	    //BSP_LED_Toggle(LED2);
-//	    HAL_Delay(1000);
   }
   /* USER CODE END 3 */
 }
@@ -224,7 +272,7 @@ static void MX_LPUART1_UART_Init(void)
   hlpuart1.Init.BaudRate = 115200;
   hlpuart1.Init.WordLength = UART_WORDLENGTH_8B;
   hlpuart1.Init.StopBits = UART_STOPBITS_1;
-  hlpuart1.Init.Parity = UART_PARITY_NONE;
+  hlpuart1.Init.Parity = UART_PARITY_ODD;
   hlpuart1.Init.Mode = UART_MODE_TX_RX;
   hlpuart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
   hlpuart1.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
@@ -351,6 +399,8 @@ void Error_Handler(void)
   __disable_irq();
   while (1)
   {
+	  BSP_LED_Toggle(LED2);
+	  osal_us_sleep(250 * 1000);
   }
   /* USER CODE END Error_Handler_Debug */
 }

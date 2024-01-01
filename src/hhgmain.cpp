@@ -1,7 +1,7 @@
 /***************************************************************************
  *
- * PROJECT
- * Copyright (C) 202X  Antonio Salsi <passy.linux@zresa.it>
+ * Hi Happy Garden
+ * Copyright (C) 2023/2024  Antonio Salsi <passy.linux@zresa.it>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,40 +18,36 @@
  ***************************************************************************/
 
 #include "hhg/main.h"
+#include "hhg-driver/hardware.hpp"
+#include "hhg-app/appmain.hpp"
 #include "osal/osal.hpp"
-using namespace os;
 
-#include <stdint.h>
-#include "stm32g4xx_hal.h"
-
-extern UART_HandleTypeDef hlpuart1;
+extern "C" uint8_t driver_lpuart_transmit(const uint8_t* data, uint16_t size);
 
 namespace
 {
-os::thread test{"test", 4, 2048, [](auto args) -> void*
-{
 
-	string test = "ciao\n";
+constexpr const char APP_TAG[] = "MAIN";
 
-	while(1)
+os::thread test_thread{
+	"test thread"
+	, 3
+	, 1024
+	, [](auto) -> void*
 	{
 
-		for(uint8_t i = 0; i < test.length(); i++)
-		{
-			if(HAL_UART_Transmit(&hlpuart1, (uint8_t*)&test[i], 1, 1000)!= HAL_OK)
-			{
-			  /* Transfer error in transmission process */
+		using namespace os;
 
-			}
+		const uint8_t msg[] = "ciao sono antonio\r\n";
+
+		while(true)
+		{
+			driver_lpuart_transmit(msg, sizeof(msg) - 1);
+			os::us_sleep(1_s);
 		}
 
-
-
-		os::us_sleep(500_ms);
-	}
-
-	return nullptr;
-}};
+		return nullptr;
+	}};
 
 }
 
@@ -62,7 +58,62 @@ int main(int argc, char* argv[])
 #endif
 {
 
-	test.create();
+    os::error* error = nullptr;
+
+    hhg::intf::hardware&& hardware = hhg::driver::hardware();
+    hhg::app::app_main app_main(hardware);
+
+    OS_LOG_INFO(APP_TAG, "Init hardware");
+    if(hardware.init(&error) == os::exit::KO)
+    {
+        if(error)
+        {
+            os::printf_stack_error(APP_TAG, error);
+            delete error;
+        }
+        return static_cast<int>(os::exit::KO);
+    }
+
+
+    test_thread.create(nullptr, &error);
+    if(error)
+    {
+        os::printf_stack_error(APP_TAG, error);
+        delete error;
+        return static_cast<int>(os::exit::KO);
+    }
+
+
+
+//    OS_LOG_INFO(APP_TAG, "Init app_main");
+//    if(app_main.init(&error) == os::exit::KO)
+//    {
+//        if(error)
+//        {
+//            os::printf_stack_error(APP_TAG, error);
+//            delete error;
+//        }
+//        os::stop_main_loop();
+//        exit(EXIT_FAILURE);
+//    }
+//
+//    OS_LOG_INFO(APP_TAG, "Start fsm");
+//    if(pp_main.fsm_start(&error)  == os::exit::KO)
+//    {
+//        if(error)
+//        {
+//            os::printf_stack_error(APP_TAG, error);
+//            delete error;
+//        }
+//        os::stop_main_loop();
+//        exit(EXIT_FAILURE);
+//    }
+#ifndef STM32G474xx
+    os::start_main_loop();
+#endif
+
 
 	return static_cast<int>(os::exit::OK);
 }
+
+
