@@ -22,6 +22,8 @@
 #include "stm32g4xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "stm32g4xx_ll_usart.h"
+#include "stm32g4xx/driver-lpuart.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -194,7 +196,38 @@ void EXTI15_10_IRQHandler(void)
 void LPUART1_IRQHandler(void)
 {
   /* USER CODE BEGIN LPUART1_IRQn 0 */
+  /* Customize process using LL interface to improve the performance (exhaustive feature management not handled) */
 
+  /* Check RXNE flag value in ISR register */
+  if(LL_USART_IsActiveFlag_RXNE(LPUART1) && LL_USART_IsEnabledIT_RXNE(LPUART1))
+  {
+    /* RXNE flag will be cleared by reading of RDR register (done in call) */
+    /* Call function in charge of handling Character reception */
+    driver_lpuart_rx_callback();
+  }
+
+  if(LL_USART_IsEnabledIT_TXE(LPUART1) && LL_USART_IsActiveFlag_TXE(LPUART1))
+  {
+    /* TXE flag will be automatically cleared when writing new data in TDR register */
+
+    /* Call function in charge of handling empty DR => will lead to transmission of next character */
+    driver_lpuart_tx_callback();
+  }
+
+  if(LL_USART_IsEnabledIT_TC(LPUART1) && LL_USART_IsActiveFlag_TC(LPUART1))
+  {
+    /* Clear TC flag */
+    LL_USART_ClearFlag_TC(LPUART1);
+    /* Call function in charge of handling end of transmission of sent character
+       and prepare next character transmission */
+    driver_lpuart_tx_complete_callback();
+  }
+
+  if(LL_USART_IsEnabledIT_ERROR(LPUART1) && LL_USART_IsActiveFlag_NE(LPUART1))
+  {
+    /* Call Error function */
+    driver_lpuart_error_callback();
+  }
   /* USER CODE END LPUART1_IRQn 0 */
   HAL_UART_IRQHandler(&hlpuart1);
   /* USER CODE BEGIN LPUART1_IRQn 1 */

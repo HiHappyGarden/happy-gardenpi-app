@@ -33,9 +33,19 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>bsp</name>
+			<type>2</type>
+			<location>/home/antoniosalsi/projects/hi-happy-garden-app/stm32cubeide-workspace/stm32cubeide/bsp</location>
+		</link>
+		<link>
 			<name>cJSON</name>
 			<type>2</type>
 			<locationURI>$%7BPROJECT_LOC%7D/cJSON</locationURI>
+		</link>
+		<link>
+			<name>conf</name>
+			<type>2</type>
+			<location>/home/antoniosalsi/projects/hi-happy-garden-app/stm32cubeide-workspace/stm32cubeide/conf</location>
 		</link>
 		<link>
 			<name>hhg-app</name>
@@ -43,9 +53,14 @@
 			<locationURI>$%7BPARENT-2-PROJECT_LOC%7D/hhg-app</locationURI>
 		</link>
 		<link>
-			<name>hhg-drivers</name>
+			<name>hhg-driver</name>
 			<type>2</type>
 			<locationURI>$%7BPARENT-2-PROJECT_LOC%7D/hhg-drivers</locationURI>
+		</link>
+		<link>
+			<name>hhg-intf</name>
+			<type>2</type>
+			<locationURI>PARENT-2-PROJECT_LOC/hhg-intf</locationURI>
 		</link>
 		<link>
 			<name>inc</name>
@@ -63,4 +78,14 @@
 			<locationURI>$%7BPARENT-2-PROJECT_LOC%7D/src</locationURI>
 		</link>
 	</linkedResources>
+	<filteredResources>
+		<filter>
+			<id>1704148426360</id>
+			<name>bsp/STM32G4xx_Nucleo/_htmresc</name>
+			<type>6</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+			</matcher>
+		</filter>
+	</filteredResources>
 </projectDescription>

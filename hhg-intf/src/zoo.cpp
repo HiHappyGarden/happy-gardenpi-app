@@ -17,13 +17,13 @@
  *
  ***************************************************************************/
 
-#pragma once
-
 
 namespace project
 {
 inline namespace v1
 {
+
+	void zoo() {}
 
 }
 }

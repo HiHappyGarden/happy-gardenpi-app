@@ -1,7 +1,7 @@
 /***************************************************************************
  *
  * Hi Happy Garden
- * Copyright (C) 2023  Antonio Salsi <passy.linux@zresa.it>
+ * Copyright (C) 2023/2024 Antonio Salsi <passy.linux@zresa.it>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,26 @@ namespace
 constexpr const char APP_TAG[] = "APP MAIN";
 
 }
+
+app_main::app_main(intf::hardware& hardware) OS_NOEXCEPT
+: hardware(hardware)
+{
+
+}
+
+app_main::~app_main() OS_NOEXCEPT = default;
+
+os::exit app_main::init(error** error) OS_NOEXCEPT
+{
+
+	return os::exit::OK;
+}
+
+os::exit app_main::fsm_start(error** error) OS_NOEXCEPT
+{
+	return os::exit::OK;
+}
+
 
 }
 }
