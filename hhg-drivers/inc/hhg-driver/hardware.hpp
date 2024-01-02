@@ -21,18 +21,27 @@
 #pragma once
 
 #include "hhg-intf/hardware.hpp"
+#include "hhg-intf/io.hpp"
 
 namespace hhg::driver
 {
 inline namespace v1
 {
 
+using io_ptr = hhg::intf::io::ptr;
+
 class hardware final : public hhg::intf::hardware
 {
+	io_ptr io;
 public:
-	hardware() = default;
+	hardware() OS_NOEXCEPT;
 	~hardware() = default;
 	OS_NO_COPY_NO_MOVE(hardware)
+
+	inline const io_ptr& get_io() const OS_NOEXCEPT
+	{
+		return io;
+	}
 
     os::exit init(os::error** error) override OS_NOEXCEPT;
 

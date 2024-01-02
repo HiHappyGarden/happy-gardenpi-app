@@ -21,20 +21,19 @@
 #pragma once
 
 #include "osal/osal.hpp"
+#include "hhg-intf/initializable.hpp"
 
 namespace hhg::intf
 {
 inline namespace v1
 {
 
-class hardware
+class hardware : public initializable
 {
 protected:
     virtual ~hardware() OS_NOEXCEPT = default;
 
 public:
-    virtual os::exit init(os::error** error) OS_NOEXCEPT = 0;
-
     virtual const os::string<128>& get_info() OS_NOEXCEPT = 0;
 
     virtual const os::string<128>& get_version() OS_NOEXCEPT = 0;

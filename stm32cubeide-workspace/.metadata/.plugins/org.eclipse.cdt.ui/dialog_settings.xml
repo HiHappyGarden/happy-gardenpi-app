@@ -19,7 +19,7 @@
 	<section name="org.eclipse.cdt.ui.text.hover.CMacroExpansionExploration">
 	</section>
 	<section name="CResourceRenameRefactoringInputPage">
-		<item key="updateReferences" value="true"/>
+		<item key="updateReferences" value="false"/>
 	</section>
 	<section name="OptionalMessageDialog.hide.">
 		<item key="askReindex.detail" value="0"/>

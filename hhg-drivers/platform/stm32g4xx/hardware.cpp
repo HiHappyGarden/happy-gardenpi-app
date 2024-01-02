@@ -19,6 +19,7 @@
 
 #include "hhg-driver/hardware.hpp"
 #include "stm32g4xx/driver-lpuart.h"
+#include "stm32g4xx/io.hpp"
 using namespace os;
 
 #include "stm32g4xx_hal.h"
@@ -34,9 +35,23 @@ namespace hhg::driver
 inline namespace v1
 {
 
-os::exit hardware::init(os::error** error) OS_NOEXCEPT
+namespace
 {
 
+constexpr const char APP_TAG[] = "HARDWARE";
+
+}
+
+
+hardware::hardware() OS_NOEXCEPT
+: io(new hhg::driver::io)
+{
+
+}
+
+os::exit hardware::init(os::error** error) OS_NOEXCEPT
+{
+	OS_LOG_INFO(APP_TAG, "Init PLUART");
 	if(driver_lpuart_init() == EXIT_FAILURE)
 	{
 		if(error)
@@ -46,6 +61,19 @@ os::exit hardware::init(os::error** error) OS_NOEXCEPT
 		}
 		return exit::KO;
 	}
+	OS_LOG_INFO(APP_TAG, "Init PLUART - OK");
+
+	OS_LOG_INFO(APP_TAG, "Init IO");
+	if(io->init(error) == exit::KO)
+	{
+		if(error)
+		{
+	        *error = OS_ERROR_BUILD("io::init() fail.", error_type::OS_EFAULT);
+	        OS_ERROR_PTR_SET_POSITION(*error);
+		}
+		return exit::KO;
+	}
+	OS_LOG_INFO(APP_TAG, "Init IO - OK");
 
 	return exit::OK;
 }
