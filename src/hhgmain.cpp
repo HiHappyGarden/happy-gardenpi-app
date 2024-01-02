@@ -38,11 +38,12 @@ os::thread test_thread{
 
 		using namespace os;
 
-		const uint8_t msg[] = "ciao sono antonio\r\n";
+//		const uint8_t msg[] = "ciao\r\n";
 
 		while(true)
 		{
-			driver_lpuart_transmit(msg, sizeof(msg) - 1);
+//			driver_lpuart_transmit(msg, sizeof(msg) - 1);
+			OS_LOG_DEBUG("--->", "printf");
 			os::us_sleep(1_s);
 		}
 

@@ -21,6 +21,14 @@
 #include "stm32g4xx/driver-lpuart.h"
 using namespace os;
 
+#include "stm32g4xx_hal.h"
+
+extern "C" uint64_t osal_system_current_time_millis()
+{
+	return HAL_GetTick();
+}
+
+
 namespace hhg::driver
 {
 inline namespace v1
