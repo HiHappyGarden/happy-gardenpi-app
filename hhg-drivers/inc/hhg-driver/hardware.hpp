@@ -34,7 +34,7 @@ class hardware final : public hhg::intf::hardware
 {
 	io_ptr io;
 public:
-	hardware() OS_NOEXCEPT;
+	explicit hardware(os::error** error) OS_NOEXCEPT;
 	~hardware() = default;
 	OS_NO_COPY_NO_MOVE(hardware)
 

@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="system_current_time_millis"/>
+		<item key="selection" value="on_rx_callback"/>
 		<item key="wrap" value="false"/>
 		<item key="casesensitive" value="true"/>
 		<item key="wholeword" value="true"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="on_rx_callback"/>
+			<item value="os::"/>
+			<item value="driver_lpuart_on_rx_callback"/>
 			<item value="system_current_time_millis"/>
 			<item value="|%s &quot;,"/>
 			<item value="&quot;%lu - "/>
@@ -20,11 +23,9 @@
 			<item value="uwRxIndex"/>
 			<item value="LL_USART_"/>
 			<item value="_Enable"/>
-			<item value="hhg_"/>
-			<item value="BSP_LED_Init(LED2);"/>
-			<item value="_TC("/>
 		</list>
 		<list key="replacehistory">
+			<item value=""/>
 			<item value="|%s: &quot;,"/>
 			<item value="&quot;%lu|"/>
 			<item value="|%s &quot;"/>

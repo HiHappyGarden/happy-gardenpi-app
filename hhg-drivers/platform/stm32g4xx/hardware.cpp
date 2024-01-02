@@ -19,7 +19,7 @@
 
 #include "hhg-driver/hardware.hpp"
 #include "stm32g4xx/driver-lpuart.h"
-#include "stm32g4xx/io.hpp"
+#include "stm32g4xx/stm32_io.hpp"
 using namespace os;
 
 #include "stm32g4xx_hal.h"
@@ -43,10 +43,14 @@ constexpr const char APP_TAG[] = "HARDWARE";
 }
 
 
-hardware::hardware() OS_NOEXCEPT
-: io(new hhg::driver::io)
+hardware::hardware(os::error** error) OS_NOEXCEPT
+: io(new hhg::driver::stm32_io)
 {
-
+	if(error == nullptr)
+	{
+        *error = OS_ERROR_BUILD("io(new hhg::driver::stm32_io) no mem.", error_type::OS_ENOMEM);
+        OS_ERROR_PTR_SET_POSITION(*error);
+	}
 }
 
 os::exit hardware::init(os::error** error) OS_NOEXCEPT

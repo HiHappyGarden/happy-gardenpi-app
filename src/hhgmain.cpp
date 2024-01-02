@@ -61,7 +61,13 @@ int main(int argc, char* argv[])
 
     os::error* error = nullptr;
 
-    hhg::intf::hardware&& hardware = hhg::driver::hardware();
+    hhg::intf::hardware&& hardware = hhg::driver::hardware(&error);
+    if(error)
+	{
+		os::printf_stack_error(APP_TAG, error);
+		delete error;
+		return static_cast<int>(os::exit::KO);
+	}
     hhg::app::app_main app_main(hardware);
 
     OS_LOG_INFO(APP_TAG, "Init hardware");
