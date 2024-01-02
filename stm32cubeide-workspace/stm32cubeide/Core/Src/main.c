@@ -28,7 +28,6 @@
 
 
 #include <stdlib.h>
-#define RX_BUFFER_SIZE                      10
 
 /* USER CODE END Includes */
 
@@ -44,7 +43,13 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
+#ifdef __GNUC__
+/* With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf
+   set to 'Yes') calls __io_putchar() */
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#else
+#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#endif /* __GNUC__ */
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -58,18 +63,6 @@ const osThreadAttr_t defaultTask_attributes = {
   .stack_size = 128 * 4
 };
 /* USER CODE BEGIN PV */
-
-/* Buffer used for transmission */
-//uint8_t aTxStartMessage[] = "\n\r ****UART-Hyperterminal TXRX communication (TX based on HAL polling API, RX based on IT LL API) ****\n\r Enter characters using keyboard ...\n\r";
-//uint8_t ubSizeToSend = sizeof(aTxStartMessage);
-//
-///* Buffer used for reception */
-//uint8_t aRXBufferA[RX_BUFFER_SIZE];
-//uint8_t aRXBufferB[RX_BUFFER_SIZE];
-//__IO uint32_t uwNbReceivedChars = 0;
-//__IO uint32_t uwBufferReadyIndication = 0;
-//uint8_t *pBufferReadyForUser;
-//uint8_t *pBufferReadyForReception;
 
 /* USER CODE END PV */
 
@@ -121,12 +114,6 @@ int main(void)
   BSP_LED_Init(LED2);
   driver_lpuart_register(&hlpuart1);
 
-//  pBufferReadyForReception = aRXBufferA;
-//  pBufferReadyForUser      = aRXBufferB;
-//  uwNbReceivedChars = 0;
-//  uwBufferReadyIndication = 0;
-
-
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -168,38 +155,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
-//    /* USART IRQ handler is not anymore routed to HAL_UART_IRQHandler() function
-//       and is now based on LL API functions use.
-//       Therefore, use of HAL IT based services is no more possible : use TX HAL polling services */
-//    if(HAL_UART_Transmit(&hlpuart1, (uint8_t*)aTxStartMessage, ubSizeToSend, 1000)!= HAL_OK)
-//    {
-//      /* Transfer error in transmission process */
-//      Error_Handler();
-//    }
-//
-//    /* Checks if Buffer full indication has been set */
-//    if (uwBufferReadyIndication != 0)
-//    {
-//      /* Reset indication */
-//      uwBufferReadyIndication = 0;
-//
-//      /* USART IRQ handler is not anymore routed to HAL_UART_IRQHandler() function
-//         and is now based on LL API functions use.
-//         Therefore, use of HAL IT based services is no more possible : use TX HAL polling services */
-//      if(HAL_UART_Transmit(&hlpuart1, (uint8_t*)pBufferReadyForUser, RX_BUFFER_SIZE, 1000)!= HAL_OK)
-//      {
-//        /* Transfer error in transmission process */
-//        Error_Handler();
-//      }
-//
-//      /* Toggle LED2 */
-//      BSP_LED_Toggle(LED2);
-//    }
-//
-//    /* Manage temporisation between TX buffer sendings */
-//    HAL_Delay(500);
-
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -341,7 +296,21 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+/**
+  * @brief  Retargets the C library printf function to the USART.
+  * @param  None
+  * @retval None
+  */
+PUTCHAR_PROTOTYPE
+{
+  /* Place your implementation of fputc here */
+  /* e.g. write a character to the USART1 and Loop until the end of transmission */
+  //HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
+	driver_lpuart_transmit((uint8_t *)&ch, 1);
 
+
+  return ch;
+}
 /* USER CODE END 4 */
 
 /* USER CODE BEGIN Header_StartDefaultTask */
@@ -354,16 +323,11 @@ static void MX_GPIO_Init(void)
 void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN 5 */
-	  if(hhg_main() == EXIT_FAILURE)
-	  {
-		  int i =0;
-	  }
-	  vTaskDelete(NULL);
-  /* Infinite loop */
-//  for(;;)
-//  {
-//    osDelay(1);
-//  }
+	if(hhg_main() == EXIT_FAILURE)
+	{
+		Error_Handler();
+	}
+	vTaskDelete(NULL);
   /* USER CODE END 5 */
 }
 

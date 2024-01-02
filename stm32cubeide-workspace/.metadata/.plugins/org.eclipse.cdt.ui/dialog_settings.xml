@@ -12,7 +12,7 @@
 	<item key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_y" value="0"/>
 	<item key="org.eclipse.cdt.ui.codeformatter.create_profile_dialog.open_edit" value="true"/>
 	<item key="org.eclipse.cdt.uiformatter_page.white_space.c_view.option" value="126"/>
-	<item key="LastUsedHeaderTemplate" value="Default C header template"/>
+	<item key="LastUsedHeaderTemplate" value="Default C++ header template"/>
 	<item key="LastUsedSourceTemplate" value="Default C source template"/>
 	<section name="completion_proposal_size">
 	</section>
@@ -65,5 +65,22 @@
 	<section name="org.eclipse.cdt.ui.text.hover.CMacroExpansionExploration.internal">
 		<item key="size.width" value="576"/>
 		<item key="size.height" value="180"/>
+	</section>
+	<section name="org.eclipse.cdt.internal.ui.typehierarchy.OpenTypeInHierarchyActionSettings">
+		<item key="show_namespaces" value="false"/>
+		<item key="show_classes" value="true"/>
+		<item key="show_structs" value="true"/>
+		<item key="show_typedefs" value="true"/>
+		<item key="show_enums" value="true"/>
+		<item key="show_unions" value="true"/>
+		<item key="show_functions" value="false"/>
+		<item key="show_variables" value="false"/>
+		<item key="show_enumerators" value="false"/>
+		<item key="show_macros" value="false"/>
+		<item key="show_lowlevel" value="true"/>
+		<item key="x" value="852"/>
+		<item key="y" value="130"/>
+		<item key="width" value="558"/>
+		<item key="height" value="902"/>
 	</section>
 </section>

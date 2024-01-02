@@ -26,13 +26,11 @@
 
 extern void Error_Handler(void);
 extern void osal_us_sleep(uint64_t us);
+extern uint64_t osal_ms_to_us(uint32_t millis);
 
+static driver_lpuart_on_rx_callback on_rx_callback = NULL;
 static UART_HandleTypeDef* hlpuart1 = NULL;
-
-static __IO bool  ubTxComplete = false;
-static __IO bool ubRxComplete = false;
-
-
+static __IO bool tx_busy = false;
 
 uint8_t driver_lpuart_init(void)
 {
@@ -40,58 +38,10 @@ uint8_t driver_lpuart_init(void)
 	  /* Any data received will be stored "aRxBuffer" buffer : the number max of
 	     data received is RXBUFFERSIZE */
 	  /* Enable RXNE and Error interrupts */
-	  LL_USART_EnableIT_RXNE(LPUART1);
-	  LL_USART_EnableIT_ERROR(LPUART1);
+	LL_USART_EnableIT_RXNE(LPUART1);
+	LL_USART_EnableIT_ERROR(LPUART1);
 
 	return EXIT_SUCCESS;
-}
-
-uint8_t driver_lpuart_transmit(const uint8_t* data, uint16_t size)
-{
-
-	  /*## Start the transmission process (using LL) *##########################*/
-	  /* While the UART in reception process, user can transmit data from "aTxStartMessage" buffer */
-	  /* Start USART transmission : Will initiate TXE interrupt after TDR register is empty */
-	  //LL_USART_TransmitData8(LPUART1, data[uwTxIndex++]);
-
-	  /* Enable TXE interrupt */
-//	  LL_USART_EnableIT_TXE(LPUART1);
-
-	  /*## Wait for the end of the transfer ###################################*/
-	  /* USART IRQ handler is not anymore routed to HAL_UART_IRQHandler() function
-	     and is now based on LL API functions use.
-	     Therefore, use of HAL IT based services is no more possible. */
-	  /*  Once TX transfer is completed, LED2 will toggle.
-	      Then, when RX transfer is completed, LED2 will turn On. */
-//	  while (!ubTxComplete)
-//	  {
-//		  osal_us_sleep(1000);
-//	  }
-
-//	  while (!ubRxComplete)
-//	  {
-//	  }
-
-//	  BSP_LED_On(LED2); /* stop blink and keeps ON */
-
-	  /*## Send the received Buffer ###########################################*/
-	  /* Even if use of HAL IT based services is no more possible, use of HAL Polling based services
-	     (as Transmit in polling mode) is still possible. */
-//	  if(HAL_UART_Transmit(hlpuart1, (uint8_t*)aRxBuffer, DRIVER_LPUART_RXBUFFERSIZE, 1000)!= HAL_OK)
-//	  {
-//	    /* Transfer error in transmission process */
-//	    Error_Handler();
-//	  }
-
-	  /*## Send the End Message ###############################################*/
-	  //if(HAL_UART_TRANSMIT(HLPUART1, (UINT8_T*)ATXENDMESSAGE, DRIVER_LPUART_RXBUFFERSIZE, 1000)!= HAL_OK)
-	  if(HAL_UART_Transmit(hlpuart1, data, size, 10)!= HAL_OK)
-	  {
-	    /* Transfer error in transmission process */
-	    Error_Handler();
-	  }
-
-	  return EXIT_SUCCESS;
 }
 
 inline void driver_lpuart_register(UART_HandleTypeDef* _hlpuart1)
@@ -99,60 +49,62 @@ inline void driver_lpuart_register(UART_HandleTypeDef* _hlpuart1)
 	hlpuart1 = _hlpuart1;
 }
 
+void driver_lpuart_register_rx_callback(driver_lpuart_on_rx_callback _on_rx_callback)
+{
+	on_rx_callback = _on_rx_callback;
+}
+
+uint8_t driver_lpuart_transmit(const uint8_t* data, uint16_t size)
+{
+	/* Enable TXE interrupt */
+	LL_USART_EnableIT_TXE(LPUART1);
+
+	while (tx_busy)
+	{
+		osal_us_sleep(osal_ms_to_us(10));
+	}
+	tx_busy = true;
+
+	if(HAL_UART_Transmit(hlpuart1, data, size, 0xFFFF)!= HAL_OK)
+	{
+		/* Transfer error in transmission process */
+		return EXIT_FAILURE;
+	}
+
+	return EXIT_SUCCESS;
+}
+
 /**
   * @brief  Rx Transfer completed callback
-  * @note   This example shows a simple way to report end of IT Rx transfer, and
-  *         you can add your own implementation.
   * @retval None
   */
 void driver_lpuart_rx_callback(void)
 {
-//  /* Read Received character. RXNE flag is cleared by reading of RDR register */
-//  aRxBuffer[uwRxIndex++] = LL_USART_ReceiveData8(LPUART1);
-//
-//  /* Check if reception is completed (expected nb of bytes has been received) */
-//  if (uwRxIndex == DRIVER_LPUART_RXBUFFERSIZE)
-//  {
-//    /* Set Reception complete boolean to 1 */
-//    ubRxComplete = true;
-//  }
+	uint8_t b = LL_USART_ReceiveData8(LPUART1);
+	if(on_rx_callback)
+	{
+		on_rx_callback(b);
+	}
 }
 
-/**
-  * @brief  Function called for achieving next TX Byte sending
-  * @retval None
-  */
+
 void driver_lpuart_tx_callback(void)
 {
-//  if(uwTxIndex == (ubSizeToSend - 1))
-//  {
-//    /* Disable TXE interrupt */
-//    LL_USART_DisableIT_TXE(LPUART1);
-//
-//    /* Enable TC interrupt */
-//    LL_USART_EnableIT_TC(LPUART1);
-//  }
-//
-//  /* Fill TDR with a new char */
-//  LL_USART_TransmitData8(LPUART1, aTxStartMessage[uwTxIndex++]);
+	/* Disable TXE interrupt */
+	LL_USART_DisableIT_TXE(LPUART1);
+
+	/* Enable TC interrupt */
+	LL_USART_EnableIT_TC(LPUART1);
 }
 
-/**
-  * @brief  Function called at completion of last byte transmission
-  * @retval None
-  */
+
 void driver_lpuart_tx_complete_callback(void)
 {
-//  if(uwTxIndex == sizeof(aTxStartMessage))
-//  {
-//    uwTxIndex = 0;
-//
-//    /* Disable TC interrupt */
-//    LL_USART_DisableIT_TC(LPUART1);
-//
-//    /* Set Tx complete boolean to 1 */
-//    ubTxComplete = true;
-//  }
+	/* Disable TC interrupt */
+	LL_USART_DisableIT_TC(LPUART1);
+
+	/* Set Tx complete boolean to 1 */
+	tx_busy = false;
 }
 
 void driver_lpuart_error_callback(void)
