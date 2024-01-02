@@ -26,7 +26,6 @@
 
 extern void Error_Handler(void);
 extern void osal_us_sleep(uint64_t us);
-extern uint64_t osal_ms_to_us(uint32_t millis);
 
 static driver_lpuart_on_rx_callback on_rx_callback = NULL;
 static UART_HandleTypeDef* hlpuart1 = NULL;
@@ -44,7 +43,7 @@ uint8_t driver_lpuart_init(void)
 	return EXIT_SUCCESS;
 }
 
-inline void driver_lpuart_register(UART_HandleTypeDef* _hlpuart1)
+void driver_lpuart_register(UART_HandleTypeDef* _hlpuart1)
 {
 	hlpuart1 = _hlpuart1;
 }
@@ -59,10 +58,7 @@ uint8_t driver_lpuart_transmit(const uint8_t* data, uint16_t size)
 	/* Enable TXE interrupt */
 	LL_USART_EnableIT_TXE(LPUART1);
 
-	while (tx_busy)
-	{
-		osal_us_sleep(osal_ms_to_us(10));
-	}
+	while (tx_busy);
 	tx_busy = true;
 
 	if(HAL_UART_Transmit(hlpuart1, data, size, 0xFFFF)!= HAL_OK)

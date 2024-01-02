@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="printf_log"/>
+		<item key="selection" value="system_current_time_millis"/>
 		<item key="wrap" value="false"/>
 		<item key="casesensitive" value="true"/>
 		<item key="wholeword" value="true"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="system_current_time_millis"/>
+			<item value="|%s &quot;,"/>
+			<item value="&quot;%lu - "/>
+			<item value="|%s|&quot;"/>
 			<item value="OS_LOG_PRINTF"/>
 			<item value="printf"/>
 			<item value="hhg"/>
@@ -19,12 +23,11 @@
 			<item value="hhg_"/>
 			<item value="BSP_LED_Init(LED2);"/>
 			<item value="_TC("/>
-			<item value="uwTxIndex"/>
-			<item value="UartHandle"/>
-			<item value="ubSizeToSend"/>
-			<item value="UART_TXEmpty_Callback"/>
 		</list>
 		<list key="replacehistory">
+			<item value="|%s: &quot;,"/>
+			<item value="&quot;%lu|"/>
+			<item value="|%s &quot;"/>
 			<item value="printf_log"/>
 		</list>
 	</section>
