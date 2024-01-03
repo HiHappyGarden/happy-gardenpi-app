@@ -43,7 +43,7 @@ constexpr const char APP_TAG[] = "HARDWARE";
 }
 
 
-hardware::hardware(os::error** error) OS_NOEXCEPT
+hardware::hardware(class error** error) OS_NOEXCEPT
 : io(new hhg::driver::stm32_io)
 {
 	if(error == nullptr)
@@ -53,7 +53,7 @@ hardware::hardware(os::error** error) OS_NOEXCEPT
 	}
 }
 
-os::exit hardware::init(os::error** error) OS_NOEXCEPT
+os::exit hardware::init(error** error) OS_NOEXCEPT
 {
 	OS_LOG_INFO(APP_TAG, "Init PLUART");
 	if(driver_lpuart_init() == EXIT_FAILURE)

@@ -32,7 +32,7 @@ constexpr const char APP_TAG[] = "APP MAIN";
 
 }
 
-app_main::app_main(intf::hardware& hardware) OS_NOEXCEPT
+app_main::app_main(driver::hardware& hardware) OS_NOEXCEPT
 : hardware(hardware)
 {
 
@@ -40,13 +40,13 @@ app_main::app_main(intf::hardware& hardware) OS_NOEXCEPT
 
 app_main::~app_main() OS_NOEXCEPT = default;
 
-os::exit app_main::init(error** error) OS_NOEXCEPT
+os::exit app_main::init(class os::error** error) OS_NOEXCEPT
 {
 
 	return os::exit::OK;
 }
 
-os::exit app_main::fsm_start(error** error) OS_NOEXCEPT
+os::exit app_main::fsm_start(class os::error** error) OS_NOEXCEPT
 {
 	return os::exit::OK;
 }

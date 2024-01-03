@@ -20,7 +20,6 @@
 
 #pragma once
 
-#include "hhg-intf/hardware.hpp"
 #include "hhg-intf/io.hpp"
 
 namespace hhg::driver
