@@ -22,17 +22,32 @@
 
 #include "osal/osal.hpp"
 
-namespace hhg::intf
+#include "../hhg-iface/initializable.hpp"
+
+namespace hhg::iface
 {
 inline namespace v1
 {
 
-class startable
+struct io_on_read
+{
+	virtual ~io_on_read() = default;
+
+	virtual void on_read(const uint8_t data[], uint16_t size) const = 0;
+};
+
+class io : public initializable
 {
 public:
-    virtual ~startable() = default;
+	using ptr = os::unique_ptr<hhg::iface::io>;
 
-    virtual os::exit start(os::error** error) OS_NOEXCEPT = 0;
+	using on_read = void (io_on_read::*)(const uint8_t data[], uint16_t size);
+
+    virtual ~io() = default;
+
+    virtual void set_on_read(io_on_read*, on_read) OS_NOEXCEPT = 0;
+
+    virtual os::exit write(const uint8_t data[], uint16_t size) const OS_NOEXCEPT = 0;
 };
 
 }

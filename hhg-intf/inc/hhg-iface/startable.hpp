@@ -22,17 +22,17 @@
 
 #include "osal/osal.hpp"
 
-namespace hhg::intf
+namespace hhg::iface
 {
 inline namespace v1
 {
 
-class initializable
+class startable
 {
 public:
-    virtual ~initializable() = default;
+    virtual ~startable() = default;
 
-    virtual os::exit init(os::error** error) OS_NOEXCEPT = 0;
+    virtual os::exit start(os::error** error) OS_NOEXCEPT = 0;
 };
 
 }

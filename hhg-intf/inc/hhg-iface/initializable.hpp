@@ -21,25 +21,18 @@
 #pragma once
 
 #include "osal/osal.hpp"
-#include "hhg-intf/initializable.hpp"
 
-namespace hhg::intf
+namespace hhg::iface
 {
 inline namespace v1
 {
 
-class io : public initializable
+class initializable
 {
 public:
-	using ptr = os::unique_ptr<hhg::intf::io>;
+    virtual ~initializable() = default;
 
-	using on_read = void (*)(const uint8_t data[], uint16_t size);
-
-    virtual ~io() = default;
-
-    virtual void set_on_read(on_read) OS_NOEXCEPT = 0;
-
-    virtual os::exit write(const uint8_t data[], uint16_t size) const OS_NOEXCEPT = 0;
+    virtual os::exit init(os::error** error) OS_NOEXCEPT = 0;
 };
 
 }

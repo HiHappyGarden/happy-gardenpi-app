@@ -20,17 +20,17 @@
 
 #pragma once
 
-#include "hhg-intf/initializable.hpp"
-#include "hhg-intf/io.hpp"
+#include "hhg-iface/initializable.hpp"
+#include "hhg-iface/io.hpp"
 
 namespace hhg::driver
 {
 inline namespace v1
 {
 
-using io_ptr = hhg::intf::io::ptr;
+using io_ptr = hhg::iface::io::ptr;
 
-class hardware final : public hhg::intf::initializable
+class hardware final : public hhg::iface::initializable
 {
 	io_ptr io;
 public:

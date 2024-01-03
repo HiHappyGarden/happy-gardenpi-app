@@ -21,7 +21,7 @@
 #include "hhg/config.h"
 #include "osal/osal.hpp"
 #include "hhg-driver/hardware.hpp"
-#include "hhg-intf/initializable.hpp"
+#include "hhg-iface/initializable.hpp"
 
 namespace hhg::app
 {
@@ -30,7 +30,7 @@ inline namespace v1
 
 class app_main_fsm;
 
-class app_main final : public hhg::intf::initializable
+class app_main final : public hhg::iface::initializable
 {
 public:
     enum state
