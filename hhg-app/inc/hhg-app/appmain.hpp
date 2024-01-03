@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #pragma once
+#include <hhg-app/appparser.hpp>
 #include "hhg/config.h"
 #include "osal/osal.hpp"
 #include "hhg-driver/hardware.hpp"
@@ -48,10 +49,13 @@ public:
         bool         run         = true;
     };
 
+
+
 private:
     static inline bool already_instanced = false;
 
     const driver::hardware& hardware;
+    const hhg::app::app_parser app_parser;
 //    class app_data app_data;
 //    struct fsm fsm;
 //    unique_ptr<class app_main_fsm> app_main_fsm;

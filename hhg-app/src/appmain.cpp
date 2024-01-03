@@ -34,6 +34,7 @@ constexpr const char APP_TAG[] = "APP MAIN";
 
 app_main::app_main(driver::hardware& hardware) OS_NOEXCEPT
 : hardware(hardware)
+, app_parser(hardware.get_io())
 {
 
 }
@@ -42,6 +43,8 @@ app_main::~app_main() OS_NOEXCEPT = default;
 
 os::exit app_main::init(class os::error** error) OS_NOEXCEPT
 {
+	hardware.get_io()->set_on_read(&app_parser, &hhg::iface::io_on_read::on_read);
+
 
 	return os::exit::OK;
 }

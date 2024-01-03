@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<item key="org.eclipse.cdt.utils.ui.controls.FileListControl" value=" -lc"/>
-	<item key="org.eclipse.cdt.uiformatter_page.white_space.c_view.inner" value="125"/>
+	<item key="org.eclipse.cdt.uiformatter_page.white_space.c_view.inner" value="132"/>
 	<item key="org.eclipse.cdt.uiformatter_page.white_space_tab_page.node" value="0"/>
 	<item key="org.eclipse.cdt.uiformatter_page.line_wrapping_tab_page.last_category_index" value="4"/>
 	<item key="formatter_page.modify_dialog_tab_page.last_focus_index" value="-1"/>
-	<item key="org.eclipse.cdt.uiformatter_pagemodify_dialog.last_focus" value="7"/>
+	<item key="org.eclipse.cdt.uiformatter_pagemodify_dialog.last_focus" value="3"/>
 	<item key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_width" value="1693"/>
-	<item key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_height" value="1202"/>
-	<item key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_x" value="285"/>
-	<item key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_y" value="0"/>
+	<item key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_height" value="1117"/>
+	<item key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_x" value="2652"/>
+	<item key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_y" value="175"/>
 	<item key="org.eclipse.cdt.ui.codeformatter.create_profile_dialog.open_edit" value="true"/>
 	<item key="org.eclipse.cdt.uiformatter_page.white_space.c_view.option" value="126"/>
 	<item key="LastUsedHeaderTemplate" value="Default C++ header template"/>
@@ -19,7 +19,7 @@
 	<section name="org.eclipse.cdt.ui.text.hover.CMacroExpansionExploration">
 	</section>
 	<section name="CResourceRenameRefactoringInputPage">
-		<item key="updateReferences" value="false"/>
+		<item key="updateReferences" value="true"/>
 	</section>
 	<section name="OptionalMessageDialog.hide.">
 		<item key="askReindex.detail" value="0"/>
@@ -27,7 +27,7 @@
 	<section name="NewClassWizardPage">
 		<item key="namespaceSelected" value="false"/>
 		<item key="testFileSelected" value="false"/>
-		<item key="finalSelected" value="false"/>
+		<item key="finalSelected" value="true"/>
 		<item key="stubImpl0" value="DEFINITION"/>
 		<item key="stubSelected0" value="true"/>
 		<item key="stubVirtual1" value="true"/>

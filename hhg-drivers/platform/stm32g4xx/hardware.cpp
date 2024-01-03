@@ -46,7 +46,7 @@ constexpr const char APP_TAG[] = "HARDWARE";
 hardware::hardware(class error** error) OS_NOEXCEPT
 : io(new hhg::driver::stm32_io)
 {
-	if(error == nullptr)
+	if(io.get() == nullptr && error)
 	{
         *error = OS_ERROR_BUILD("io(new hhg::driver::stm32_io) no mem.", error_type::OS_ENOMEM);
         OS_ERROR_PTR_SET_POSITION(*error);

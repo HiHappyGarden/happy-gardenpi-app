@@ -30,7 +30,7 @@ inline namespace v1
 
 class stm32_io final : public hhg::iface::io
 {
-	hhg::iface::io_on_read* obj = nullptr;
+	const hhg::iface::io_on_read* obj = nullptr;
 	on_read on_read_callback = nullptr;
 
 	static inline stm32_io* singleton = nullptr;
@@ -40,7 +40,7 @@ public:
 		LPUART
 	}source;
 
-	stm32_io();
+	stm32_io() OS_NOEXCEPT;
 	~stm32_io() OS_NOEXCEPT override;
 	OS_NO_COPY_NO_MOVE(stm32_io)
 
@@ -51,7 +51,7 @@ public:
 
 	os::exit init(os::error** error) OS_NOEXCEPT override;
 
-	void set_on_read(hhg::iface::io_on_read* obj, on_read on_read_callback) OS_NOEXCEPT override;
+	void set_on_read(const hhg::iface::io_on_read* obj, on_read on_read_callback) OS_NOEXCEPT override;
 
     os::exit write(const uint8_t data[], uint16_t size) const OS_NOEXCEPT override;
 

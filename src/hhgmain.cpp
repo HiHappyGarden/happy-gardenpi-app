@@ -47,6 +47,9 @@ os::thread test_thread{
 		return nullptr;
 	}};
 
+hhg::driver::hardware hw{nullptr};
+hhg::app::app_main app_main{hw};
+
 }
 
 #ifdef STM32G474xx
@@ -58,17 +61,8 @@ int main(int argc, char* argv[])
 
     os::error* error = nullptr;
 
-    hhg::driver::hardware hardware(&error);
-    if(error)
-	{
-		os::printf_stack_error(APP_TAG, error);
-		delete error;
-		return static_cast<int>(os::exit::KO);
-	}
-    hhg::app::app_main app_main(hardware);
-
     OS_LOG_INFO(APP_TAG, "Init hardware");
-    if(hardware.init(&error) == os::exit::KO)
+    if(hw.init(&error) == os::exit::KO)
     {
         if(error)
         {
@@ -78,29 +72,29 @@ int main(int argc, char* argv[])
         return static_cast<int>(os::exit::KO);
     }
 
-
-    test_thread.create(nullptr, &error);
-    if(error)
+    OS_LOG_INFO(APP_TAG, "Init app_main");
+    if(app_main.init(&error) == os::exit::KO)
     {
-        os::printf_stack_error(APP_TAG, error);
-        delete error;
-        return static_cast<int>(os::exit::KO);
+        if(error)
+        {
+            os::printf_stack_error(APP_TAG, error);
+            delete error;
+        }
+        os::stop_main_loop();
+        exit(EXIT_FAILURE);
     }
 
-
-
-//    OS_LOG_INFO(APP_TAG, "Init app_main");
-//    if(app_main.init(&error) == os::exit::KO)
-//    {
-//        if(error)
-//        {
-//            os::printf_stack_error(APP_TAG, error);
-//            delete error;
-//        }
-//        os::stop_main_loop();
-//        exit(EXIT_FAILURE);
-//    }
 //
+//    test_thread.create(nullptr, &error);
+//    if(error)
+//    {
+//        os::printf_stack_error(APP_TAG, error);
+//        delete error;
+//        return static_cast<int>(os::exit::KO);
+//    }
+
+
+
 //    OS_LOG_INFO(APP_TAG, "Start fsm");
 //    if(pp_main.fsm_start(&error)  == os::exit::KO)
 //    {
