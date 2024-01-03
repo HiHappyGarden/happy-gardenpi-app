@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include "hhg-intf/hardware.hpp"
+#include "hhg-intf/initializable.hpp"
 #include "hhg-intf/io.hpp"
 
 namespace hhg::driver
@@ -30,11 +30,11 @@ inline namespace v1
 
 using io_ptr = hhg::intf::io::ptr;
 
-class hardware final : public hhg::intf::hardware
+class hardware final : public hhg::intf::initializable
 {
 	io_ptr io;
 public:
-	explicit hardware(os::error** error) OS_NOEXCEPT;
+	explicit hardware(class os::error** error) OS_NOEXCEPT;
 	~hardware() = default;
 	OS_NO_COPY_NO_MOVE(hardware)
 
@@ -45,9 +45,9 @@ public:
 
     os::exit init(os::error** error) override OS_NOEXCEPT;
 
-    const os::string<128>& get_info() override OS_NOEXCEPT;
+    const os::string<128>& get_info() OS_NOEXCEPT;
 
-    const os::string<128>& get_version() override OS_NOEXCEPT;
+    const os::string<128>& get_version() OS_NOEXCEPT;
 };
 
 }

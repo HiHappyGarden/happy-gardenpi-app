@@ -61,7 +61,7 @@ int main(int argc, char* argv[])
 
     os::error* error = nullptr;
 
-    hhg::intf::hardware&& hardware = hhg::driver::hardware(&error);
+    hhg::driver::hardware hardware(&error);
     if(error)
 	{
 		os::printf_stack_error(APP_TAG, error);

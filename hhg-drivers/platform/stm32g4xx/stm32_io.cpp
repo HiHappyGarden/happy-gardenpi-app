@@ -1,9 +1,21 @@
-/*
- * io.cpp
+/***************************************************************************
  *
- *  Created on: Jan 2, 2024
- *      Author: antoniosalsi
- */
+ * Hi Happy Garden
+ * Copyright (C) 2023/2024  Antonio Salsi <passy.linux@zresa.it>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ ***************************************************************************/
 
 #include "stm32g4xx/stm32_io.hpp"
 #include "stm32g4xx/driver-lpuart.h"
@@ -34,13 +46,15 @@ os::exit stm32_io::init(error** error) OS_NOEXCEPT
 		return exit::KO;
 	}
 	singleton = this;
-	driver_lpuart_register_rx_callback([](auto ch)
+	driver_lpuart_register_rx_callback([](uint8_t ch)
 	{
-		if(singleton->on_read_callback)
+
+		if(stm32_io::singleton && stm32_io::singleton->on_read_callback)
 		{
-			singleton->source = LPUART;
-			singleton->on_read_callback(&ch, 1);
+			stm32_io::singleton->source = stm32_io::LPUART;
+			stm32_io::singleton->on_read_callback(&ch, 1);
 		}
+
 	});
 
 	return exit::OK;

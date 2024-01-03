@@ -20,7 +20,8 @@
 #pragma once
 #include "hhg/config.h"
 #include "osal/osal.hpp"
-#include "hhg-intf/hardware.hpp"
+#include "hhg-driver/hardware.hpp"
+#include "hhg-intf/initializable.hpp"
 
 namespace hhg::app
 {
@@ -29,7 +30,7 @@ inline namespace v1
 
 class app_main_fsm;
 
-class app_main final
+class app_main final : public hhg::intf::initializable
 {
 public:
     enum state
@@ -50,7 +51,7 @@ public:
 private:
     static inline bool already_instanced = false;
 
-    const intf::hardware& hardware;
+    const driver::hardware& hardware;
 //    class app_data app_data;
 //    struct fsm fsm;
 //    unique_ptr<class app_main_fsm> app_main_fsm;
@@ -66,14 +67,14 @@ private:
 //    friend void on_click_button_next();
 //    friend void on_click_button_before();
 public:
-    explicit app_main(intf::hardware& hardware) OS_NOEXCEPT;
+    explicit app_main(driver::hardware& hardware) OS_NOEXCEPT;
     OS_NO_COPY_NO_MOVE(app_main)
 
     ~app_main() OS_NOEXCEPT;
 
-    os::exit init(class error** error) OS_NOEXCEPT;
+    os::exit init(class os::error** error) OS_NOEXCEPT override;
 
-    os::exit fsm_start(class error** error) OS_NOEXCEPT;
+    os::exit fsm_start(class os::error** error) OS_NOEXCEPT;
 
 
 };
