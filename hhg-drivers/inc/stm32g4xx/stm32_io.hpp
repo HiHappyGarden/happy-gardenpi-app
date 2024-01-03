@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include "hhg-intf/io.hpp"
+#include "hhg-iface/io.hpp"
 
 namespace hhg::driver
 {
@@ -28,8 +28,9 @@ inline namespace v1
 {
 
 
-class stm32_io final : public hhg::intf::io
+class stm32_io final : public hhg::iface::io
 {
+	hhg::iface::io_on_read* obj = nullptr;
 	on_read on_read_callback = nullptr;
 
 	static inline stm32_io* singleton = nullptr;
@@ -50,7 +51,7 @@ public:
 
 	os::exit init(os::error** error) OS_NOEXCEPT override;
 
-	void set_on_read(on_read on_read_callback) OS_NOEXCEPT override;
+	void set_on_read(hhg::iface::io_on_read* obj, on_read on_read_callback) OS_NOEXCEPT override;
 
     os::exit write(const uint8_t data[], uint16_t size) const OS_NOEXCEPT override;
 

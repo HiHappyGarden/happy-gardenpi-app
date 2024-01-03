@@ -58,7 +58,7 @@
 			<locationURI>$%7BPARENT-2-PROJECT_LOC%7D/hhg-drivers</locationURI>
 		</link>
 		<link>
-			<name>hhg-intf</name>
+			<name>hhg-iface</name>
 			<type>2</type>
 			<locationURI>PARENT-2-PROJECT_LOC/hhg-intf</locationURI>
 		</link>

@@ -18,6 +18,8 @@
  ***************************************************************************/
 
 #include "stm32g4xx/stm32_io.hpp"
+using hhg::iface::io_on_read;
+
 #include "stm32g4xx/driver-lpuart.h"
 using namespace os;
 
@@ -49,10 +51,10 @@ os::exit stm32_io::init(error** error) OS_NOEXCEPT
 	driver_lpuart_register_rx_callback([](uint8_t ch)
 	{
 
-		if(stm32_io::singleton && stm32_io::singleton->on_read_callback)
+		if(stm32_io::singleton && singleton->obj && stm32_io::singleton->on_read_callback)
 		{
 			stm32_io::singleton->source = stm32_io::LPUART;
-			stm32_io::singleton->on_read_callback(&ch, 1);
+			(singleton->obj->*singleton->on_read_callback)(&ch, 1);
 		}
 
 	});
@@ -61,8 +63,9 @@ os::exit stm32_io::init(error** error) OS_NOEXCEPT
 }
 
 
-inline void stm32_io::set_on_read(on_read on_read_callback) OS_NOEXCEPT
+inline void stm32_io::set_on_read(io_on_read* obj, on_read on_read_callback) OS_NOEXCEPT
 {
+	this->obj = obj;
 	this->on_read_callback = on_read_callback;
 }
 
