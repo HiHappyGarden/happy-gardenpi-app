@@ -29,7 +29,7 @@ inline namespace v1
 {
 
 
-stm32_io::stm32_io() = default;
+stm32_io::stm32_io() OS_NOEXCEPT = default;
 
 stm32_io::~stm32_io()
 {
@@ -63,7 +63,7 @@ os::exit stm32_io::init(error** error) OS_NOEXCEPT
 }
 
 
-inline void stm32_io::set_on_read(io_on_read* obj, on_read on_read_callback) OS_NOEXCEPT
+inline void stm32_io::set_on_read(const io_on_read* obj, on_read on_read_callback) OS_NOEXCEPT
 {
 	this->obj = obj;
 	this->on_read_callback = on_read_callback;

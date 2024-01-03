@@ -33,7 +33,7 @@ struct io_on_read
 {
 	virtual ~io_on_read() = default;
 
-	virtual void on_read(const uint8_t data[], uint16_t size) const = 0;
+	virtual void on_read(const uint8_t data[], uint16_t size) const OS_NOEXCEPT = 0;
 };
 
 class io : public initializable
@@ -41,11 +41,11 @@ class io : public initializable
 public:
 	using ptr = os::unique_ptr<hhg::iface::io>;
 
-	using on_read = void (io_on_read::*)(const uint8_t data[], uint16_t size);
+	using on_read = void (io_on_read::*)(const uint8_t data[], uint16_t size) const OS_NOEXCEPT;
 
     virtual ~io() = default;
 
-    virtual void set_on_read(io_on_read*, on_read) OS_NOEXCEPT = 0;
+    virtual void set_on_read(const io_on_read*, on_read) OS_NOEXCEPT = 0;
 
     virtual os::exit write(const uint8_t data[], uint16_t size) const OS_NOEXCEPT = 0;
 };

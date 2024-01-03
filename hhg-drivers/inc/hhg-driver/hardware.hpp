@@ -43,7 +43,7 @@ public:
 		return io;
 	}
 
-    os::exit init(os::error** error) override OS_NOEXCEPT;
+    os::exit init(os::error** error) OS_NOEXCEPT override;
 
     const os::string<128>& get_info() OS_NOEXCEPT;
 

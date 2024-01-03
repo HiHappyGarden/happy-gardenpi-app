@@ -45,6 +45,7 @@ org.eclipse.cdt.ui.formatterprofiles=<?xml version\="1.0" encoding\="UTF-8" stan
 org.eclipse.cdt.ui.formatterprofiles.version=1
 org.eclipse.cdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates><template autoinsert\="false" context\="org.eclipse.cdt.core.cxxHeader.contenttype_context" deleted\="false" description\="Default template for newly created C++ header files" enabled\="true" id\="org.eclipse.cdt.ui.text.codetemplates.cppheaderfile" name\="Default C++ header template">${filecomment}\n\#pragma once\n\n${includes}\n\n${namespace_begin}\n\n${declarations}\n\n${namespace_end}\n\n</template><template autoinsert\="false" context\="org.eclipse.cdt.ui.text.codetemplates.namespace_context" deleted\="false" description\="Beginning of namespace declaration" enabled\="true" id\="org.eclipse.cdt.ui.text.codetemplates.namespace_begin" name\="namespace_begin">namespace ${namespace_name} \n{</template></templates>
 org.eclipse.cdt.ui.text.templates.custom=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
+scalability.detect=false
 sourceHoverBackgroundColor=255,255,255
 spelling_locale_initialized=true
 useAnnotationsPrefPage=true
