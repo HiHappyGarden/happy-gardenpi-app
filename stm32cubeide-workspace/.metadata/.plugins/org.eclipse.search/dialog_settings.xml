@@ -35,7 +35,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="hhg::intf"/>
+			<item key="textPattern" value="on_rx"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.hpp"/>
@@ -54,10 +54,11 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="using namespace"/>
+			<item key="textPattern" value="transmit"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*"/>
+				<item value="*.hpp"/>
+				<item value="*.cpp"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -66,10 +67,11 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="set_on_read"/>
+			<item key="textPattern" value="on_read"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*"/>
+				<item value="*.hpp"/>
+				<item value="*.cpp"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -78,10 +80,11 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="error_type"/>
+			<item key="textPattern" value="hhg::intf"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*"/>
+				<item value="*.hpp"/>
+				<item value="*.cpp"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -90,7 +93,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="HAL_GetTick"/>
+			<item key="textPattern" value="using namespace"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -102,7 +105,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="OS_LOG_PRINTF"/>
+			<item key="textPattern" value="set_on_read"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -114,7 +117,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="printf"/>
+			<item key="textPattern" value="error_type"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -126,7 +129,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="driver_lpuart_tx_complete_callback"/>
+			<item key="textPattern" value="HAL_GetTick"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -138,7 +141,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="UART_CharTransmitComplete_Callback"/>
+			<item key="textPattern" value="OS_LOG_PRINTF"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -150,7 +153,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="UART_TXEmpty_Callback"/>
+			<item key="textPattern" value="printf"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -162,7 +165,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="EXCLUE_CHECK_FOR_STACK_OVERFLOW"/>
+			<item key="textPattern" value="driver_lpuart_tx_complete_callback"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -174,7 +177,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="vApplicationStackOverflowHook"/>
+			<item key="textPattern" value="UART_CharTransmitComplete_Callback"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -191,6 +194,8 @@
 	</section>
 	<section name="ReplaceDialog2">
 		<list key="replace_with">
+			<item value="on_receive"/>
+			<item value="on_rx"/>
 			<item value="hhg::iface"/>
 			<item value="Copyright (C) 2023/2024 Antonio Salsi &lt;passy.linux@zresa.it&gt;"/>
 		</list>

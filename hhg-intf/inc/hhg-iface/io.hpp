@@ -29,11 +29,11 @@ namespace hhg::iface
 inline namespace v1
 {
 
-struct io_on_read
+struct io_on_receive
 {
-	virtual ~io_on_read() = default;
+	virtual ~io_on_receive() = default;
 
-	virtual void on_read(const uint8_t data[], uint16_t size) const OS_NOEXCEPT = 0;
+	virtual void on_receive(const uint8_t data[], uint16_t size) const OS_NOEXCEPT = 0;
 };
 
 class io : public initializable
@@ -41,13 +41,13 @@ class io : public initializable
 public:
 	using ptr = os::unique_ptr<hhg::iface::io>;
 
-	using on_read = void (io_on_read::*)(const uint8_t data[], uint16_t size) const OS_NOEXCEPT;
+	using on_receive = void (io_on_receive::*)(const uint8_t data[], uint16_t size) const OS_NOEXCEPT;
 
     virtual ~io() = default;
 
-    virtual void set_on_read(const io_on_read*, on_read) OS_NOEXCEPT = 0;
+    virtual void set_on_receive(const io_on_receive*, on_receive) OS_NOEXCEPT = 0;
 
-    virtual os::exit write(const uint8_t data[], uint16_t size) const OS_NOEXCEPT = 0;
+    virtual os::exit transmit(const uint8_t data[], uint16_t size) const OS_NOEXCEPT = 0;
 };
 
 }

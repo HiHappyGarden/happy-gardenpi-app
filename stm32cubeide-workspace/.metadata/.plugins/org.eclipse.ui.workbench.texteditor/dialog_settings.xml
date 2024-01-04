@@ -8,6 +8,7 @@
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="on_read"/>
 			<item value="on_read_callback"/>
 			<item value="on_rx_callback"/>
 			<item value="os::"/>
@@ -22,7 +23,6 @@
 			<item value="tx_busy"/>
 			<item value="ubTxComplete"/>
 			<item value="uwRxIndex"/>
-			<item value="LL_USART_"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>
