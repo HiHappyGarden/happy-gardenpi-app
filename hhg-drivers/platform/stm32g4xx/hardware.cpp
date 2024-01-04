@@ -20,6 +20,8 @@
 #include <stm32g4xx/stm32-io.hpp>
 #include "hhg-driver/hardware.hpp"
 #include "stm32g4xx/driver-lpuart.h"
+#include "stm32g4xx/stm32-freertos.hpp"
+
 using namespace os;
 
 #include "stm32g4xx_hal.h"

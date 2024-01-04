@@ -63,6 +63,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/hhg-intf</locationURI>
 		</link>
 		<link>
+			<name>hhg-parser</name>
+			<type>2</type>
+			<location>/home/antoniosalsi/projects/hi-happy-garden-app/hhg-parser</location>
+		</link>
+		<link>
 			<name>inc</name>
 			<type>2</type>
 			<locationURI>$%7BPARENT-2-PROJECT_LOC%7D/inc</locationURI>

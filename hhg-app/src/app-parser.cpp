@@ -85,7 +85,11 @@ void* app_parser_thread_handler(void* arg) OS_NOEXCEPT
 
 			auto start = buffer.find(app_parser::STARTER_CHAR);
 			auto end = buffer.find("\r\n");
-			if (end)
+			if (end == nullptr)
+			{
+				end  = buffer.find("\r");
+			}
+			if (end == nullptr)
 			{
 				end  = buffer.find("\n");
 			}
@@ -93,7 +97,7 @@ void* app_parser_thread_handler(void* arg) OS_NOEXCEPT
 			if (start && end)
 			{
 
-
+				int i = 0;
 
 			}
 		}
