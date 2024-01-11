@@ -17,7 +17,8 @@
  *
  ***************************************************************************/
 
-#include <hhg-app/app-parser.hpp>
+#include "hhg-app/app-parser.hpp"
+#include "hhg-app/app-parser-commands.hpp"
 using namespace os;
 
 namespace hhg::app
@@ -25,9 +26,17 @@ namespace hhg::app
 inline namespace v1
 {
 
+namespace
+{
+
+constexpr char APP_TAG[] = "APP-PARSER";
+
+}
+
 app_parser::app_parser(const hhg::iface::io::ptr& io, class os::error** error) OS_NOEXCEPT
 : error(nullptr)
 , io(io)
+, parser(get_commands(), get_commands_size())
 {
 	if(singleton)
 	{
@@ -75,6 +84,7 @@ void app_parser::on_receive(const uint8_t data[], uint16_t size) const OS_NOEXCE
 void* app_parser_thread_handler(void* arg) OS_NOEXCEPT
 {
 	string<app_parser::singleton->BUFFER_SIZE> buffer;
+	string<app_parser::singleton->RET_SIZE> ret;
 
 	while(app_parser::singleton->run)
 	{
@@ -96,9 +106,21 @@ void* app_parser_thread_handler(void* arg) OS_NOEXCEPT
 
 			if (start && end)
 			{
-
-				int i = 0;
-
+				error* error = nullptr;
+				if(app_parser::singleton->parser.execute(buffer.strstr(buffer.c_str() - start, end - start - 1).c_str(), ret.c_str(), ret.size(), &error) == exit::OK)
+				{
+					ret += app_parser::NEW_LINE;
+					app_parser::singleton->io->transmit(reinterpret_cast<const uint8_t*>(ret.c_str()), ret.length());;
+				}
+				else
+				{
+					app_parser::singleton->io->transmit(app_parser::KO, sizeof(app_parser::KO) - 1);
+					if(error)
+					{
+						printf_stack_error(APP_TAG, error);
+					}
+				}
+				ret.clear();
 			}
 		}
 	}

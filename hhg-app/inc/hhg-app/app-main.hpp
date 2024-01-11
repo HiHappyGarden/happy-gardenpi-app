@@ -19,7 +19,7 @@
 
 #pragma once
 #include <hhg-app/app-parser.hpp>
-#include "hhg/config.h"
+//#include "hhg/config.h"
 #include "osal/osal.hpp"
 #include "hhg-driver/hardware.hpp"
 #include "hhg-iface/initializable.hpp"

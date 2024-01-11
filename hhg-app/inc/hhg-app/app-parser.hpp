@@ -21,6 +21,7 @@
 #pragma once
 
 #include "hhg-iface/io.hpp"
+#include "hhg-parser/parser.hpp"
 
 namespace hhg::app
 {
@@ -34,13 +35,17 @@ class app_parser final : public hhg::iface::io_on_receive
 	friend void* app_parser_thread_handler(void* arg) OS_NOEXCEPT;
 
 	static constexpr const uint16_t BUFFER_SIZE = 512;
-	static constexpr const char STARTER_CHAR[] = "#";
+	static constexpr const uint16_t RET_SIZE = 256;
+	static constexpr const char STARTER_CHAR[] = "^";
+	static constexpr const uint8_t KO[] = "KO\r\n";
+	static constexpr const char NEW_LINE[] = "\r\n";
 
 
 	class os::error** error = nullptr;
 
 
 	const hhg::iface::io::ptr& io;
+	const hhg::parser::parser parser;
 
 	os::thread thread {
 		"app_parser thread"
