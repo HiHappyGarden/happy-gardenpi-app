@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="on_read_callback"/>
+		<item key="selection" value="new "/>
 		<item key="wrap" value="false"/>
 		<item key="casesensitive" value="true"/>
 		<item key="wholeword" value="true"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="hhg-parser/parser.hpp"/>
+			<item value="HHG_PARSER_FORMAT_INT"/>
+			<item value="new "/>
 			<item value="on_read"/>
 			<item value="on_read_callback"/>
 			<item value="on_rx_callback"/>
@@ -20,9 +23,6 @@
 			<item value="OS_LOG_PRINTF"/>
 			<item value="printf"/>
 			<item value="hhg"/>
-			<item value="tx_busy"/>
-			<item value="ubTxComplete"/>
-			<item value="uwRxIndex"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>
