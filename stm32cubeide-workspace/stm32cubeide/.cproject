@@ -131,9 +131,9 @@
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="hhg-app"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="hhg-driver"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="hhg-iface"/>
-						<entry excluding="osal/|test/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="hhg-parser"/>
+						<entry excluding="osal/|test/|config/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="hhg-parser"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="inc"/>
-						<entry excluding="test/|src/unix/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="osal"/>
+						<entry excluding="test/|src/unix/|config/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="osal"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
