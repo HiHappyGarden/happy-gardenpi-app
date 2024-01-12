@@ -120,6 +120,7 @@ void* app_parser_thread_handler(void* arg) OS_NOEXCEPT
 						printf_stack_error(APP_TAG, error);
 					}
 				}
+				buffer.clear();
 				ret.clear();
 			}
 		}

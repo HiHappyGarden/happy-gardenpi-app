@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="new "/>
+		<item key="selection" value="str_terminator"/>
 		<item key="wrap" value="false"/>
-		<item key="casesensitive" value="true"/>
-		<item key="wholeword" value="true"/>
+		<item key="casesensitive" value="false"/>
+		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="str_terminator"/>
+			<item value="#ifndef OS_"/>
+			<item value="error**"/>
+			<item value="error"/>
+			<item value="HHGARDEN_"/>
 			<item value="hhg-parser/parser.hpp"/>
 			<item value="HHG_PARSER_FORMAT_INT"/>
 			<item value="new "/>
@@ -18,13 +23,11 @@
 			<item value="driver_lpuart_on_rx_callback"/>
 			<item value="system_current_time_millis"/>
 			<item value="|%s &quot;,"/>
-			<item value="&quot;%lu - "/>
-			<item value="|%s|&quot;"/>
-			<item value="OS_LOG_PRINTF"/>
-			<item value="printf"/>
-			<item value="hhg"/>
 		</list>
 		<list key="replacehistory">
+			<item value="os::error**"/>
+			<item value="os::error"/>
+			<item value="HHG_"/>
 			<item value=""/>
 			<item value="|%s: &quot;,"/>
 			<item value="&quot;%lu|"/>
