@@ -22,7 +22,7 @@
 
 #include "osal/osal.hpp"
 
-#include "../hhg-iface/initializable.hpp"
+#include "hhg-iface/initializable.hpp"
 
 namespace hhg::iface
 {
