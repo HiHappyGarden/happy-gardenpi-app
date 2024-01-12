@@ -35,19 +35,18 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="strtol"/>
+			<item key="textPattern" value="printf_stack_error"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.hpp"/>
-				<item value="*.cpp"/>
+				<item value="*"/>
 			</list>
 			<list key="workingSets">
 			</list>
 		</section>
 		<section name="EXTENSIONS">
-			<item key="0" value="*.cpp, *.hpp"/>
-			<item key="1" value="*.hpp, *.cpp"/>
-			<item key="2" value="*"/>
+			<item key="0" value="*"/>
+			<item key="1" value="*.cpp, *.hpp"/>
+			<item key="2" value="*.hpp, *.cpp"/>
 			<item key="3" value="Copyright (C) 2023/2024 Antonio Salsi &lt;passy.linux@zresa.it&gt;"/>
 			<item key="4" value=""/>
 		</section>
@@ -55,11 +54,10 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="char* ptr"/>
+			<item key="textPattern" value="&quot;\r\n&quot;"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.cpp"/>
-				<item value="*.hpp"/>
+				<item value="*"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -68,11 +66,10 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="endptr"/>
+			<item key="textPattern" value="#ifndef OS_"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.cpp"/>
-				<item value="*.hpp"/>
+				<item value="*"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -81,11 +78,10 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="end_ptr"/>
+			<item key="textPattern" value="* Copyright (C) 202X  Antonio Salsi &lt;passy.linux@zresa.it&gt;"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.cpp"/>
-				<item value="*.hpp"/>
+				<item value="*"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -94,7 +90,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="hhg-parser/parser.hpp"/>
+			<item key="textPattern" value=" \* Copyright (C) 202X  Antonio Salsi &lt;passy.linux@zresa.it&gt;"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.cpp"/>
@@ -107,7 +103,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="/parser.hpp"/>
+			<item key="textPattern" value="strtol"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.hpp"/>
@@ -120,7 +116,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="parser.hpp"/>
+			<item key="textPattern" value="char* ptr"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.cpp"/>
@@ -133,7 +129,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="new"/>
+			<item key="textPattern" value="endptr"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.cpp"/>
@@ -146,7 +142,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="single"/>
+			<item key="textPattern" value="end_ptr"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.cpp"/>
@@ -159,11 +155,11 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="OS_ERROR_BUILD"/>
+			<item key="textPattern" value="hhg-parser/parser.hpp"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.hpp"/>
 				<item value="*.cpp"/>
+				<item value="*.hpp"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -172,7 +168,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="singletone"/>
+			<item key="textPattern" value="/parser.hpp"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.hpp"/>
@@ -185,11 +181,11 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="on_rx"/>
+			<item key="textPattern" value="parser.hpp"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.hpp"/>
 				<item value="*.cpp"/>
+				<item value="*.hpp"/>
 			</list>
 			<list key="workingSets">
 			</list>
