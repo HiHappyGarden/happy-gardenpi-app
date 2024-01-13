@@ -35,7 +35,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="printf_stack_error"/>
+			<item key="textPattern" value="HAL_StatusTypeDef"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -45,19 +45,20 @@
 		</section>
 		<section name="EXTENSIONS">
 			<item key="0" value="*"/>
-			<item key="1" value="*.cpp, *.hpp"/>
-			<item key="2" value="*.hpp, *.cpp"/>
-			<item key="3" value="Copyright (C) 2023/2024 Antonio Salsi &lt;passy.linux@zresa.it&gt;"/>
-			<item key="4" value=""/>
+			<item key="1" value="*.cpp"/>
+			<item key="2" value="*.cpp, *.hpp"/>
+			<item key="3" value="*.hpp, *.cpp"/>
+			<item key="4" value="Copyright (C) 2023/2024 Antonio Salsi &lt;passy.linux@zresa.it&gt;"/>
+			<item key="5" value=""/>
 		</section>
 		<section name="HISTORY1">
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;\r\n&quot;"/>
+			<item key="textPattern" value="new "/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*"/>
+				<item value="*.cpp"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -66,7 +67,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="#ifndef OS_"/>
+			<item key="textPattern" value="driver_lpuart"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -78,7 +79,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="* Copyright (C) 202X  Antonio Salsi &lt;passy.linux@zresa.it&gt;"/>
+			<item key="textPattern" value="printf_stack_error"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -87,6 +88,42 @@
 			</list>
 		</section>
 		<section name="HISTORY4">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="&quot;\r\n&quot;"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY5">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="#ifndef OS_"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY6">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="* Copyright (C) 202X  Antonio Salsi &lt;passy.linux@zresa.it&gt;"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY7">
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
@@ -99,7 +136,7 @@
 			<list key="workingSets">
 			</list>
 		</section>
-		<section name="HISTORY5">
+		<section name="HISTORY8">
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
@@ -112,7 +149,7 @@
 			<list key="workingSets">
 			</list>
 		</section>
-		<section name="HISTORY6">
+		<section name="HISTORY9">
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
@@ -125,7 +162,7 @@
 			<list key="workingSets">
 			</list>
 		</section>
-		<section name="HISTORY7">
+		<section name="HISTORY10">
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
@@ -138,50 +175,11 @@
 			<list key="workingSets">
 			</list>
 		</section>
-		<section name="HISTORY8">
-			<item key="ignoreCase" value="true"/>
-			<item key="isRegExSearch" value="false"/>
-			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="end_ptr"/>
-			<item key="scope" value="0"/>
-			<list key="fileNamePatterns">
-				<item value="*.cpp"/>
-				<item value="*.hpp"/>
-			</list>
-			<list key="workingSets">
-			</list>
-		</section>
-		<section name="HISTORY9">
-			<item key="ignoreCase" value="true"/>
-			<item key="isRegExSearch" value="false"/>
-			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="hhg-parser/parser.hpp"/>
-			<item key="scope" value="0"/>
-			<list key="fileNamePatterns">
-				<item value="*.cpp"/>
-				<item value="*.hpp"/>
-			</list>
-			<list key="workingSets">
-			</list>
-		</section>
-		<section name="HISTORY10">
-			<item key="ignoreCase" value="true"/>
-			<item key="isRegExSearch" value="false"/>
-			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="/parser.hpp"/>
-			<item key="scope" value="0"/>
-			<list key="fileNamePatterns">
-				<item value="*.hpp"/>
-				<item value="*.cpp"/>
-			</list>
-			<list key="workingSets">
-			</list>
-		</section>
 		<section name="HISTORY11">
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="parser.hpp"/>
+			<item key="textPattern" value="end_ptr"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.cpp"/>

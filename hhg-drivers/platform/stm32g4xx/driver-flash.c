@@ -18,45 +18,5 @@
  ***************************************************************************/
 
 
-#pragma once
+#include "stm32g4xx/driver-flash.h"
 
-#include "hhg-iface/initializable.hpp"
-#include "hhg-iface/io.hpp"
-#include "hhg-iface/fsio.hpp"
-
-namespace hhg::driver
-{
-inline namespace v1
-{
-
-using io_ptr = hhg::iface::io::ptr;
-using fsio_ptr = hhg::iface::fsio::ptr;
-
-class hardware final : public hhg::iface::initializable
-{
-	const io_ptr io;
-	const fsio_ptr fsio;
-public:
-	explicit hardware(class os::error** error) OS_NOEXCEPT;
-	~hardware() = default;
-	OS_NO_COPY_NO_MOVE(hardware)
-
-	inline const io_ptr& get_io() const OS_NOEXCEPT
-	{
-		return io;
-	}
-
-	inline const fsio_ptr& get_fsio() const OS_NOEXCEPT
-	{
-		return fsio;
-	}
-
-    os::exit init(os::error** error) OS_NOEXCEPT override;
-
-    const os::string<128>& get_info() OS_NOEXCEPT;
-
-    const os::string<128>& get_version() OS_NOEXCEPT;
-};
-
-}
-}
