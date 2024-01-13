@@ -31,7 +31,8 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "stm32g4xx_hal_def.h"
+#include "stm32g4xx_hal_flash.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

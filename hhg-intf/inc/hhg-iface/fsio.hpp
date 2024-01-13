@@ -20,42 +20,34 @@
 
 #pragma once
 
-#include "hhg-iface/initializable.hpp"
-#include "hhg-iface/io.hpp"
-#include "hhg-iface/fsio.hpp"
+#include "osal/osal.hpp"
 
-namespace hhg::driver
+#include "hhg-iface/initializable.hpp"
+
+#include <stdint.h>
+
+namespace hhg::iface
 {
 inline namespace v1
 {
 
-using io_ptr = hhg::iface::io::ptr;
-using fsio_ptr = hhg::iface::fsio::ptr;
-
-class hardware final : public hhg::iface::initializable
+enum class data_type : uint8_t
 {
-	io_ptr io;
-	fsio_ptr fsio;
+	CONFIG,
+	DATA
+};
+
+class fsio : public initializable
+{
 public:
-	explicit hardware(class os::error** error) OS_NOEXCEPT;
-	~hardware() = default;
-	OS_NO_COPY_NO_MOVE(hardware)
+	using ptr = os::unique_ptr<hhg::iface::fsio>;
 
-	inline const io_ptr& get_io() const OS_NOEXCEPT
-	{
-		return io;
-	}
+	virtual ~fsio() = default;
 
-	inline const fsio_ptr& get_fsio() const OS_NOEXCEPT
-	{
-		return fsio;
-	}
+	virtual os::exit write(data_type type, const uint8_t data[], size_t size, os::error** error) const OS_NOEXCEPT = 0;
 
-    os::exit init(os::error** error) OS_NOEXCEPT override;
+	virtual os::exit read(data_type type, uint8_t data[], size_t size, os::error** error) const OS_NOEXCEPT = 0;
 
-    const os::string<128>& get_info() OS_NOEXCEPT;
-
-    const os::string<128>& get_version() OS_NOEXCEPT;
 };
 
 }
