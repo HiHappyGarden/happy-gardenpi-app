@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value=""/>
+		<item key="selection" value="TOKEN_MAX"/>
 		<item key="wrap" value="false"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="TOKEN_MAX"/>
 			<item value="HHG_PARSER_ARGS_MAX == -1 ||"/>
 			<item value="str_terminator"/>
 			<item value="#ifndef OS_"/>
@@ -22,7 +23,6 @@
 			<item value="on_rx_callback"/>
 			<item value="os::"/>
 			<item value="driver_lpuart_on_rx_callback"/>
-			<item value="system_current_time_millis"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>
