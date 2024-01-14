@@ -309,6 +309,8 @@ public:
 		DATA = 10 * FLASH_PAGE_SIZE
 	};
 
+	static uint64_t const check_data;
+
 	stm32_fsio(uint32_t start_flash_address, uint32_t end_flash_address) OS_NOEXCEPT;
 	virtual ~stm32_fsio();
 
@@ -320,6 +322,7 @@ public:
 
 private:
 	static uint32_t get_page(uint32_t address) OS_NOEXCEPT;
+	os::pair<uint32_t, uint32_t> get_start_and_end_addresses(iface::v1::data_type type, size_t size, os::error** error) const OS_NOEXCEPT;
 };
 
 }

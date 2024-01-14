@@ -12,8 +12,8 @@
 	<item key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_y" value="175"/>
 	<item key="org.eclipse.cdt.ui.codeformatter.create_profile_dialog.open_edit" value="true"/>
 	<item key="org.eclipse.cdt.uiformatter_page.white_space.c_view.option" value="126"/>
-	<item key="LastUsedHeaderTemplate" value="Default C header template"/>
-	<item key="LastUsedSourceTemplate" value="Default C source template"/>
+	<item key="LastUsedHeaderTemplate" value="Default C++ header template"/>
+	<item key="LastUsedSourceTemplate" value="Default C++ source template"/>
 	<section name="completion_proposal_size">
 	</section>
 	<section name="org.eclipse.cdt.ui.text.hover.CMacroExpansionExploration">
@@ -22,7 +22,7 @@
 		<item key="updateReferences" value="true"/>
 	</section>
 	<section name="OptionalMessageDialog.hide.">
-		<item key="askReindex.detail" value="1"/>
+		<item key="askReindex.detail" value="0"/>
 	</section>
 	<section name="NewClassWizardPage">
 		<item key="namespaceSelected" value="true"/>

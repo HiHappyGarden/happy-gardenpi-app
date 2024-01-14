@@ -18,7 +18,7 @@
  ***************************************************************************/
 
 #include <hhg-app/app-main.hpp>
-
+using namespace os;
 
 namespace hhg::app
 {
