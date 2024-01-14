@@ -17,9 +17,11 @@
  *
  ***************************************************************************/
 
-#include <hhg-app/app-main.hpp>
+#include "hhg-app/app-main.hpp"
 #include "hhg/main.h"
 #include "hhg-driver/hardware.hpp"
+#include "hhg-driver/os-config.hpp"
+#include "hhg-utils/hhg-utils.hpp"
 #include "osal/osal.hpp"
 
 extern "C" uint8_t driver_lpuart_transmit(const uint8_t* data, uint16_t size);
@@ -31,7 +33,7 @@ constexpr const char APP_TAG[] = "MAIN";
 
 os::thread test_thread{
 	"test thread"
-	, 3
+	, hhg::driver::NORMAL
 	, 1024
 	, [](auto) -> void*
 	{
@@ -40,7 +42,10 @@ os::thread test_thread{
 
 		while(true)
 		{
-			OS_LOG_DEBUG("--->", "printf");
+
+			//auto i = hhg::utils::random_number(1, 1000);
+
+			OS_LOG_DEBUG("--->", "1");
 			os::us_sleep(1_s);
 		}
 
@@ -84,11 +89,11 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
-//
+
 //    test_thread.create(nullptr, &error);
 //    if(error)
 //    {
-//        os::printf_stack_error(APP_TAG, error);
+//
 //        delete error;
 //        return static_cast<int>(os::exit::KO);
 //    }

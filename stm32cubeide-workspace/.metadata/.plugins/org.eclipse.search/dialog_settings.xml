@@ -35,7 +35,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="ADDR_FLASH_PAGE_127"/>
+			<item key="textPattern" value="&lt;hhg"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -55,7 +55,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="HAL_StatusTypeDef"/>
+			<item key="textPattern" value="osThreadNew"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -67,10 +67,10 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="new "/>
+			<item key="textPattern" value="xTaskCreate"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.cpp"/>
+				<item value="*"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -79,7 +79,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="driver_lpuart"/>
+			<item key="textPattern" value="configMAX_PRIORITIES"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -91,7 +91,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="printf_stack_error"/>
+			<item key="textPattern" value="priority"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -103,7 +103,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;\r\n&quot;"/>
+			<item key="textPattern" value="thread"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -115,7 +115,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="#ifndef OS_"/>
+			<item key="textPattern" value="crc"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -127,7 +127,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="* Copyright (C) 202X  Antonio Salsi &lt;passy.linux@zresa.it&gt;"/>
+			<item key="textPattern" value="ADDR_FLASH_PAGE_127"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -139,11 +139,10 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value=" \* Copyright (C) 202X  Antonio Salsi &lt;passy.linux@zresa.it&gt;"/>
+			<item key="textPattern" value="HAL_StatusTypeDef"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.cpp"/>
-				<item value="*.hpp"/>
+				<item value="*"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -152,10 +151,9 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="strtol"/>
+			<item key="textPattern" value="new "/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.hpp"/>
 				<item value="*.cpp"/>
 			</list>
 			<list key="workingSets">
@@ -165,11 +163,10 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="char* ptr"/>
+			<item key="textPattern" value="driver_lpuart"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.cpp"/>
-				<item value="*.hpp"/>
+				<item value="*"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -178,11 +175,10 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="endptr"/>
+			<item key="textPattern" value="printf_stack_error"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.cpp"/>
-				<item value="*.hpp"/>
+				<item value="*"/>
 			</list>
 			<list key="workingSets">
 			</list>

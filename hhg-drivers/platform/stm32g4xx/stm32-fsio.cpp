@@ -35,14 +35,8 @@ namespace hhg::driver
 namespace v1
 {
 
-namespace
-{
-enum class test_status {FAILED = 0, PASSED = !FAILED} ;
 
-__IO test_status MemoryProgramStatus = test_status::PASSED;
-
-}
-
+uint64_t const stm32_fsio::check_data = 0x0102030404030201;
 
 stm32_fsio::stm32_fsio(uint32_t start_flash_address, uint32_t end_flash_address) OS_NOEXCEPT
 : start_flash_address(start_flash_address)
@@ -51,7 +45,12 @@ stm32_fsio::stm32_fsio(uint32_t start_flash_address, uint32_t end_flash_address)
 
 }
 
-stm32_fsio::~stm32_fsio() = default;
+stm32_fsio::~stm32_fsio()
+{
+	/* Lock the Flash to disable the flash control register access (recommended
+	  to protect the FLASH memory against possible unwanted operation) *********/
+	HAL_FLASH_Lock();
+}
 
 os::exit stm32_fsio::init(error** error) OS_NOEXCEPT
 {
@@ -115,170 +114,90 @@ os::exit stm32_fsio::init(error** error) OS_NOEXCEPT
 
 os::exit stm32_fsio::write(data_type type, const uint8_t data[], size_t size, error** error) const OS_NOEXCEPT
 {
+	auto&& [start_address, end_address] = get_start_and_end_addresses(type, size, error);
 
-	uint32_t address = 0;
-	uint32_t page_error = 0;
+	if(start_address == 0 && end_address == 0)
+	{
+		return exit::KO;
+	}
 
-	uint32_t start_page = 0;
-	uint32_t end_page = 0;
+	uint32_t start_page = get_page(start_address);
+	uint32_t end_page   = get_page(end_address);
 
 	FLASH_EraseInitTypeDef erase_init_struct;
 
-	switch(type)
+	uint32_t bytes_writed = 0;
+	uint32_t page_error = 0;
+
+	/* The desired pages are not write protected */
+	/* Fill EraseInit structure************************************************/
+	erase_init_struct.TypeErase   = FLASH_TYPEERASE_PAGES;
+	erase_init_struct.Banks       = FLASH_BANK_1;
+	erase_init_struct.Page        = start_page;
+	erase_init_struct.NbPages     = end_page - start_page + 1;
+
+
+	if (HAL_FLASHEx_Erase(&erase_init_struct, &page_error) != HAL_OK)
 	{
-	case data_type::CONFIG:
-		start_page = get_page(start_flash_address);
-		end_page   = get_page(start_flash_address + (max_size::CONFIG));
-		if(size > max_size::CONFIG)
-		{
-			if(error)
-			{
-				*error = OS_ERROR_BUILD("Data too much bigger than CONFIG area.", error_type::OS_EMSGSIZE);
-				OS_ERROR_PTR_SET_POSITION(*error);
-			}
-			return exit::KO;
-		}
-		break;
-	case data_type::DATA:
-		start_page = get_page(start_flash_address + (max_size::CONFIG));
-		end_page   = get_page(end_flash_address);
-		if(size > max_size::DATA)
-		{
-			if(error)
-			{
-				*error = OS_ERROR_BUILD("Data too much bigger than DATA area.", error_type::OS_EMSGSIZE);
-				OS_ERROR_PTR_SET_POSITION(*error);
-			}
-			return exit::KO;
-		}
-		break;
-	}
-
-
-	/* The selected pages are write protected *******************************/
-	if (((options_bytes_struct1.WRPStartOffset  <= start_page) && (options_bytes_struct1.WRPEndOffset  >= end_page)) ||
-	   ((options_bytes_struct2.WRPStartOffset <= start_page) && (options_bytes_struct2.WRPEndOffset >= end_page)))
-	{
-		/* The desired pages are write protected */
-		/* Check that it is not allowed to write in this page */
-		address = start_flash_address;
-		if (HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, address, DATA_64) != HAL_OK)
-		{
-			/* Error returned during programming. */
-			/* Check that WRPERR flag is well set */
-			if ((HAL_FLASH_GetError() & HAL_FLASH_ERROR_WRP) != 0)
-			{
-				MemoryProgramStatus = test_status::FAILED;
-			}
-			else
-			{
-				/* Another error occurred.
-				User can add here some code to deal with this error */
-				if(error)
-				{
-					*error = OS_ERROR_BUILD("Another error occurred.", error_type::OS_EIO);
-					OS_ERROR_PTR_SET_POSITION(*error);
-				}
-				return exit::KO;
-			}
-		}
-		else
-		{
-			/* Write operation is successful. Should not occur
-			User can add here some code to deal with this error */
-			if(error)
-			{
-				*error = OS_ERROR_BUILD("Write operation is successful. Should not occur.", error_type::OS_EIO);
-				OS_ERROR_PTR_SET_POSITION(*error);
-			}
-			return exit::KO;
-		}
-	}
-	else
-	{
-		/* The desired pages are not write protected */
-		/* Fill EraseInit structure************************************************/
-		erase_init_struct.TypeErase   = FLASH_TYPEERASE_PAGES;
-		erase_init_struct.Banks       = FLASH_BANK_1;
-		erase_init_struct.Page        = start_page;
-		erase_init_struct.NbPages     = end_page - start_page + 1;
-
-		if (HAL_FLASHEx_Erase(&erase_init_struct, &page_error) != HAL_OK)
-		{
-			/*
-			Error occurred while page erase.
-			User can add here some code to deal with this error.
-			PageError will contain the faulty page and then to know the code error on this page,
-			user can call function 'HAL_FLASH_GetError()'
-			*/
-			if(error)
-			{
-				*error = OS_ERROR_BUILD("Error occurred while page erase.", error_type::OS_EIO);
-				OS_ERROR_PTR_SET_POSITION(*error);
-			}
-			return exit::KO;
-		}
-
-		/* FLASH Word program of DATA_32 at addresses defined by FLASH_USER_START_ADDR and FLASH_USER_END_ADDR */
-		address = start_flash_address;
-		while (address < end_flash_address)
-		{
-			if (HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, address, DATA_64) == HAL_OK)
-			{
-				address = address + 8;
-			}
-			else
-			{
-				/* Error occurred while writing data in Flash memory.
-				User can add here some code to deal with this error */
-				if(error)
-				{
-					*error = OS_ERROR_BUILD("Error occurred while writing data in Flash memory.", error_type::OS_EIO);
-					OS_ERROR_PTR_SET_POSITION(*error);
-				}
-				return exit::KO;
-			}
-		}
-
-		/* Check the correctness of written data */
-		address = start_flash_address;
-
-		while (address < end_flash_address)
-		{
-			if((*(__IO uint32_t*) address) != DATA_32)
-			{
-				MemoryProgramStatus = test_status::FAILED;
-			}
-			address += 4;
-		}
-	}
-
-	/* Lock the Flash to disable the flash control register access (recommended
-	  to protect the FLASH memory against possible unwanted operation) *********/
-	HAL_FLASH_Lock();
-
-	/*Check if there is an issue to program data*/
-	if (MemoryProgramStatus == test_status::PASSED)
-	{
-	 /* No error detected. Switch on LED2*/
-	   return exit::OK;
-	}
-	else
-	{
+		/*
+		Error occurred while page erase.
+		User can add here some code to deal with this error.
+		PageError will contain the faulty page and then to know the code error on this page,
+		user can call function 'HAL_FLASH_GetError()'
+		*/
 		if(error)
 		{
-			*error = OS_ERROR_BUILD("Fail to check if there is an issue to program data", error_type::OS_EIO);
+			*error = OS_ERROR_BUILD("Error occurred while page erase.", error_type::OS_EIO);
 			OS_ERROR_PTR_SET_POSITION(*error);
 		}
 		return exit::KO;
 	}
 
 
+	while(bytes_writed < size)
+	{
+		uint64_t byte_to_write = 0;
+		uint8_t i = 0;
+		for(; i < 8 && (bytes_writed + i) < size; i++) //bigendiam +-
+		{
+			uint8_t byte = (data[i + bytes_writed]);
+			byte_to_write |= (byte << i);
+		}
+		if (HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, start_address + bytes_writed, byte_to_write) == HAL_OK)
+		{
+			bytes_writed += i;
+		}
+		else
+		{
+			/* Error occurred while writing data in Flash memory.
+			User can add here some code to deal with this error */
+			if(error)
+			{
+				*error = OS_ERROR_BUILD("Error occurred while writing data in Flash memory.", error_type::OS_EIO);
+				OS_ERROR_PTR_SET_POSITION(*error);
+			}
+			return exit::KO;
+		}
+	}
+
 	return exit::OK;
 }
 
 os::exit stm32_fsio::read(data_type type, uint8_t data[], size_t size, error** error) const OS_NOEXCEPT
 {
+    /* Check the correctness of written data */
+	auto&& [start_address, end_address] = get_start_and_end_addresses(type, size, error);
+
+	if(start_address == 0 && end_address == 0)
+	{
+		return exit::KO;
+	}
+
+	if( (start_address + size) > end_address)
+	{
+		size = end_address - start_address;
+	}
+	memcpy(data, reinterpret_cast<const uint32_t*>(start_address), size);
 
 	return exit::OK;
 }
@@ -304,6 +223,44 @@ uint32_t stm32_fsio::get_page(uint32_t address) OS_NOEXCEPT
   }
 
   return page;
+}
+
+pair<uint32_t, uint32_t> stm32_fsio::get_start_and_end_addresses(iface::v1::data_type type, size_t size, error** error) const OS_NOEXCEPT
+{
+	uint32_t start_address = 0;
+	uint32_t end_address = 0;
+
+	switch(type)
+	{
+	case data_type::CONFIG:
+		start_address = start_flash_address;
+		end_address = start_flash_address + (max_size::CONFIG);
+		if(size > max_size::CONFIG)
+		{
+			if(error)
+			{
+				*error = OS_ERROR_BUILD("Data too much bigger than CONFIG area.", error_type::OS_EMSGSIZE);
+				OS_ERROR_PTR_SET_POSITION(*error);
+			}
+			return {0, 0};
+		}
+		break;
+	case data_type::DATA:
+		start_address = start_flash_address + (max_size::CONFIG);
+		end_address   = end_flash_address;
+		if(size > max_size::DATA)
+		{
+			if(error)
+			{
+				*error = OS_ERROR_BUILD("Data too much bigger than DATA area.", error_type::OS_EMSGSIZE);
+				OS_ERROR_PTR_SET_POSITION(*error);
+			}
+			return {0, 0};
+		}
+		break;
+	}
+
+	return {start_address, end_address};
 }
 
 } /* namespace driver */
