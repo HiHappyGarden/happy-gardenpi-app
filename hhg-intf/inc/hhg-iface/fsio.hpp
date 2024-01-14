@@ -34,7 +34,7 @@ inline namespace v1
 enum class data_type : uint8_t
 {
 	CONFIG,
-	DATA
+	DATA,
 };
 
 class fsio : public initializable

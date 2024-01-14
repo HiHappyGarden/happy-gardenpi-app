@@ -19,9 +19,9 @@
 
 
 #include "stm32g4xx/stm32-fsio.hpp"
+#include "stm32g4xx/stm32-freertos.hpp"
 using namespace hhg::iface;
 using namespace os;
-
 
 
 
@@ -63,10 +63,6 @@ os::exit stm32_fsio::init(error** error) OS_NOEXCEPT
 
 	/* Unlock the Options Bytes *************************************************/
 	HAL_FLASH_OB_Unlock();
-
-	/* Get the number of the start and end pages */
-	start_page = get_page(start_flash_address);
-	end_page   = get_page(end_flash_address);
 
 	options_bytes_struct1.WRPArea  = OB_WRPAREA_BANK1_AREAA;
 	options_bytes_struct2.WRPArea = OB_WRPAREA_BANK1_AREAB;
@@ -122,6 +118,42 @@ os::exit stm32_fsio::write(data_type type, const uint8_t data[], size_t size, er
 
 	uint32_t address = 0;
 	uint32_t page_error = 0;
+
+	uint32_t start_page = 0;
+	uint32_t end_page = 0;
+
+	FLASH_EraseInitTypeDef erase_init_struct;
+
+	switch(type)
+	{
+	case data_type::CONFIG:
+		start_page = get_page(start_flash_address);
+		end_page   = get_page(start_flash_address + (max_size::CONFIG));
+		if(size > max_size::CONFIG)
+		{
+			if(error)
+			{
+				*error = OS_ERROR_BUILD("Data too much bigger than CONFIG area.", error_type::OS_EMSGSIZE);
+				OS_ERROR_PTR_SET_POSITION(*error);
+			}
+			return exit::KO;
+		}
+		break;
+	case data_type::DATA:
+		start_page = get_page(start_flash_address + (max_size::CONFIG));
+		end_page   = get_page(end_flash_address);
+		if(size > max_size::DATA)
+		{
+			if(error)
+			{
+				*error = OS_ERROR_BUILD("Data too much bigger than DATA area.", error_type::OS_EMSGSIZE);
+				OS_ERROR_PTR_SET_POSITION(*error);
+			}
+			return exit::KO;
+		}
+		break;
+	}
+
 
 	/* The selected pages are write protected *******************************/
 	if (((options_bytes_struct1.WRPStartOffset  <= start_page) && (options_bytes_struct1.WRPEndOffset  >= end_page)) ||
