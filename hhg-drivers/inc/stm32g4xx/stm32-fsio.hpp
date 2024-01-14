@@ -295,17 +295,20 @@ enum class addr_flash : uint32_t
 
 class stm32_fsio final : public iface::v1::fsio
 {
-	mutable uint32_t start_page = 0;
-	mutable uint32_t end_page = 0;
 	uint32_t start_flash_address = 0;
 	uint32_t end_flash_address = 0;
-
-	mutable FLASH_EraseInitTypeDef erase_init_struct;
 
 	/*Variable used to handle the Options Bytes*/
 	mutable FLASH_OBProgramInitTypeDef options_bytes_struct1;
 	mutable FLASH_OBProgramInitTypeDef options_bytes_struct2;
 public:
+
+	enum max_size
+	{
+		CONFIG = 5 * FLASH_PAGE_SIZE,
+		DATA = 10 * FLASH_PAGE_SIZE
+	};
+
 	stm32_fsio(uint32_t start_flash_address, uint32_t end_flash_address) OS_NOEXCEPT;
 	virtual ~stm32_fsio();
 

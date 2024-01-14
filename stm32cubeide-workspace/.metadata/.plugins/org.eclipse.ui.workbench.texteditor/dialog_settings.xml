@@ -1,30 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="TOKEN_MAX"/>
+		<item key="selection" value="options_bytes_struct2"/>
 		<item key="wrap" value="false"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="options_bytes_struct2"/>
+			<item value="erase_init_struct"/>
+			<item value="DATA_32"/>
+			<item value="type::KO"/>
+			<item value="exit::KO"/>
+			<item value="writ"/>
+			<item value="wri"/>
+			<item value="EndPage"/>
+			<item value="StartPage"/>
+			<item value="FLASH_USER_START_ADDR"/>
+			<item value="ADDR_FLASH_PAGE_4 "/>
 			<item value="TOKEN_MAX"/>
 			<item value="HHG_PARSER_ARGS_MAX == -1 ||"/>
 			<item value="str_terminator"/>
 			<item value="#ifndef OS_"/>
-			<item value="error**"/>
-			<item value="error"/>
-			<item value="HHGARDEN_"/>
-			<item value="hhg-parser/parser.hpp"/>
-			<item value="HHG_PARSER_FORMAT_INT"/>
-			<item value="new "/>
-			<item value="on_read"/>
-			<item value="on_read_callback"/>
-			<item value="on_rx_callback"/>
-			<item value="os::"/>
-			<item value="driver_lpuart_on_rx_callback"/>
 		</list>
 		<list key="replacehistory">
+			<item value="exit::KO"/>
+			<item value="end_page"/>
+			<item value="start_page"/>
 			<item value=""/>
 			<item value="os::error**"/>
 			<item value="os::error"/>
@@ -36,8 +39,8 @@
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="704"/>
-		<item key="DIALOG_Y_ORIGIN" value="582"/>
+		<item key="DIALOG_X_ORIGIN" value="1341"/>
+		<item key="DIALOG_Y_ORIGIN" value="538"/>
 		<item key="DIALOG_WIDTH" value="453"/>
 		<item key="DIALOG_HEIGHT" value="462"/>
 		<item key="DIALOG_FONT_NAME" value="1|Verdana|13.0|0|GTK|1|"/>

@@ -49,7 +49,7 @@ constexpr const char APP_TAG[] = "HARDWARE";
 
 hardware::hardware(class error** error) OS_NOEXCEPT
 : io(new hhg::driver::stm32_io)
-, fsio(new hhg::driver::stm32_fsio(static_cast<uint32_t>(addr_flash::PAGE_117), static_cast<uint32_t>(addr_flash::PAGE_127) + FLASH_PAGE_SIZE - 1 ))
+, fsio(new hhg::driver::stm32_fsio(static_cast<uint32_t>(addr_flash::PAGE_112), static_cast<uint32_t>(addr_flash::PAGE_127) + FLASH_PAGE_SIZE - 1 ))
 {
 	if(io.get() == nullptr && error)
 	{
@@ -105,8 +105,10 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
 	OS_LOG_INFO(APP_TAG, "Init FS IO - OK");
 
 
-	uint8_t i = 3;
-	fsio->write(data_type::CONFIG, &i, 1, error);
+	uint8_t i[] = "ciao sono antonio e mi piace molto la pappa";
+	fsio->write(data_type::CONFIG, i, sizeof(i) - 1, error);
+
+
 
 	return exit::OK;
 }
