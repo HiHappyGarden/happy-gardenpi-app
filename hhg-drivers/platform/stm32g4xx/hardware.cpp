@@ -104,15 +104,17 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
 	}
 	OS_LOG_INFO(APP_TAG, "Init FS IO - OK");
 
+//
+//	uint8_t test[] = "ciao mi chiamo antonio salsi";
+//	fsio->write(data_type::CONFIG, test, sizeof(test) - 1, error);
+//
+//	memset(test, '\0', sizeof(test));
+//
+//	fsio->read(data_type::CONFIG, test, sizeof(test) - 1, error);
+//
+//	OS_LOG_DEBUG(APP_TAG, "%s", test);
 
-	uint8_t test[] = "ciao mi chiamo antonio salsi";
-	fsio->write(data_type::CONFIG, test, sizeof(test) - 1, error);
 
-	memset(test, '\0', sizeof(test));
-
-	fsio->read(data_type::CONFIG, test, sizeof(test) - 1, error);
-
-	OS_LOG_DEBUG(APP_TAG, "%s", test);
 
 
 	return exit::OK;
