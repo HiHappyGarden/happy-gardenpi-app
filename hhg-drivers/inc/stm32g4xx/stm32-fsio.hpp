@@ -33,6 +33,7 @@ namespace v1
 
 enum class addr_flash : uint32_t
 {
+	//bank 1
     PAGE_0 = ((uint32_t)0x08000000), /* Base @ of Page 0, 2 Kbytes */
     PAGE_1 = ((uint32_t)0x08000800), /* Base @ of Page 1, 2 Kbytes */
     PAGE_2 = ((uint32_t)0x08001000), /* Base @ of Page 2, 2 Kbytes */
@@ -161,6 +162,8 @@ enum class addr_flash : uint32_t
     PAGE_125 = ((uint32_t)0x0803E800), /* Base @ of Page 125, 2 Kbytes */
     PAGE_126 = ((uint32_t)0x0803F000), /* Base @ of Page 126, 2 Kbytes */
     PAGE_127 = ((uint32_t)0x0803F800), /* Base @ of Page 127, 2 Kbytes */
+
+	//bank 2
     PAGE_128 = ((uint32_t)0x08040000), /* Base @ of Page 128, 2 Kbytes */
     PAGE_129 = ((uint32_t)0x08040800), /* Base @ of Page 129, 2 Kbytes */
     PAGE_130 = ((uint32_t)0x08041000), /* Base @ of Page 130, 2 Kbytes */
@@ -321,8 +324,14 @@ public:
 	os::exit read(iface::v1::data_type type, uint8_t data[], size_t size, os::error** error) const OS_NOEXCEPT override;
 
 private:
+	struct meta_address
+	{
+		uint32_t address = 0;
+		uint32_t bank = FLASH_BANK_1;
+	};
+
 	static uint32_t get_page(uint32_t address) OS_NOEXCEPT;
-	os::pair<uint32_t, uint32_t> get_start_and_end_addresses(iface::v1::data_type type, size_t size, os::error** error) const OS_NOEXCEPT;
+	os::pair<meta_address, meta_address> get_start_and_end_addresses(iface::v1::data_type type, size_t size, os::error** error) const OS_NOEXCEPT;
 };
 
 }
