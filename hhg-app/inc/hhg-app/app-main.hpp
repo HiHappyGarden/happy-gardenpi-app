@@ -18,10 +18,11 @@
  ***************************************************************************/
 
 #pragma once
-#include "hhg-app/app-parser.hpp"
-#include "osal/osal.hpp"
-#include "hhg-driver/hardware.hpp"
 #include "hhg-iface/initializable.hpp"
+#include "hhg-driver/hardware.hpp"
+#include "osal/osal.hpp"
+#include "hhg-app/app-config.hpp"
+#include "hhg-app/app-parser.hpp"
 
 namespace hhg::app
 {
@@ -54,21 +55,10 @@ private:
     static inline bool already_instanced = false;
 
     const driver::hardware& hardware;
+    hhg::app::app_config app_config;
     const hhg::app::app_parser app_parser;
-//    class app_data app_data;
-//    struct fsm fsm;
-//    unique_ptr<class app_main_fsm> app_main_fsm;
-
-//    string<HHGARDEN_LCD_MSG_SIZE> lcd_msg;
 
 
-
-
-//    thread fsm_thread{"fsm thread", HHGARDEN_FSM_THREAD_PRIORITY, HHGARDEN_FSM_THREAD_HEAP, fsm_thread_fn};
-//
-//    friend void* fsm_thread_fn(void* arg);
-//    friend void on_click_button_next();
-//    friend void on_click_button_before();
 public:
     explicit app_main(driver::hardware& hardware) OS_NOEXCEPT;
     OS_NO_COPY_NO_MOVE(app_main)

@@ -20,6 +20,8 @@
 #include <hhg-app/app-main.hpp>
 using namespace os;
 
+#include "hhg-app/app-parser-commands.hpp"
+
 namespace hhg::app
 {
 inline namespace v1
@@ -34,6 +36,7 @@ constexpr const char APP_TAG[] = "APP MAIN";
 
 app_main::app_main(driver::hardware& hardware) OS_NOEXCEPT
 : hardware(hardware)
+, app_config(hardware.get_fsio())
 , app_parser(hardware.get_io())
 {
 
@@ -44,6 +47,20 @@ app_main::~app_main() OS_NOEXCEPT = default;
 os::exit app_main::init(class os::error** error) OS_NOEXCEPT
 {
 	hardware.get_io()->set_on_receive(&app_parser, &hhg::iface::io_on_receive::on_receive);
+
+	OS_LOG_INFO(APP_TAG, "Init APP CONFIG");
+	if(app_config.init(error) == exit::KO)
+	{
+		if(error)
+		{
+			*error = OS_ERROR_BUILD("app_config::init() fail.", error_type::OS_EFAULT);
+			OS_ERROR_PTR_SET_POSITION(*error);
+		}
+		return exit::KO;
+	}
+	OS_LOG_INFO(APP_TAG, "Init APP CONFIG - OK");
+	set_app_config(app_config);
+
 
 
 	return os::exit::OK;

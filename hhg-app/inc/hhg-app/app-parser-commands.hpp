@@ -27,10 +27,14 @@ namespace hhg::app
 inline namespace v1
 {
 
+class app_config;
+
 using namespace hhg::parser;
 
-entry* get_commands();
-size_t get_commands_size();
+void set_app_config(app_config& app_config) OS_NOEXCEPT;
+
+entry* get_commands() OS_NOEXCEPT;
+size_t get_commands_size() OS_NOEXCEPT;
 
 }
 }
