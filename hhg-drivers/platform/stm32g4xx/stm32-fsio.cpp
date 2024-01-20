@@ -35,7 +35,6 @@ namespace hhg::driver
 namespace v1
 {
 
-
 uint64_t const stm32_fsio::check_data = 0x0102030404030201;
 
 stm32_fsio::stm32_fsio(uint32_t start_flash_address, uint32_t end_flash_address) OS_NOEXCEPT
@@ -116,13 +115,13 @@ os::exit stm32_fsio::write(data_type type, const uint8_t data[], size_t size, er
 {
 	auto&& [start_address, end_address] = get_start_and_end_addresses(type, size, error);
 
-	if(start_address == 0 && end_address == 0)
+	if(start_address.address == 0 && end_address.address == 0)
 	{
 		return exit::KO;
 	}
 
-	uint32_t start_page = get_page(start_address);
-	uint32_t end_page   = get_page(end_address);
+	uint32_t start_page = get_page(start_address.address);
+	uint32_t end_page   = get_page(end_address.address);
 
 	FLASH_EraseInitTypeDef erase_init_struct;
 
@@ -161,9 +160,9 @@ os::exit stm32_fsio::write(data_type type, const uint8_t data[], size_t size, er
 		for(; i < 8 && (bytes_writed + i) < size; i++) //bigendiam +-
 		{
 			uint8_t byte = (data[i + bytes_writed]);
-			byte_to_write |= (byte << i);
+			byte_to_write |= (static_cast<uint64_t>(byte) << (i * 8));
 		}
-		if (HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, start_address + bytes_writed, byte_to_write) == HAL_OK)
+		if (HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, start_address.address + bytes_writed, byte_to_write) == HAL_OK)
 		{
 			bytes_writed += i;
 		}
@@ -188,16 +187,16 @@ os::exit stm32_fsio::read(data_type type, uint8_t data[], size_t size, error** e
     /* Check the correctness of written data */
 	auto&& [start_address, end_address] = get_start_and_end_addresses(type, size, error);
 
-	if(start_address == 0 && end_address == 0)
+	if(start_address.address == 0 && end_address.address == 0)
 	{
 		return exit::KO;
 	}
 
-	if( (start_address + size) > end_address)
+	if( (start_address.address + size) > end_address.address)
 	{
-		size = end_address - start_address;
+		size = end_address.address - start_address.address;
 	}
-	memcpy(data, reinterpret_cast<const uint32_t*>(start_address), size);
+	memcpy(data, reinterpret_cast<const uint32_t*>(start_address.address), size);
 
 	return exit::OK;
 }
@@ -225,7 +224,7 @@ uint32_t stm32_fsio::get_page(uint32_t address) OS_NOEXCEPT
   return page;
 }
 
-pair<uint32_t, uint32_t> stm32_fsio::get_start_and_end_addresses(iface::v1::data_type type, size_t size, error** error) const OS_NOEXCEPT
+pair<stm32_fsio::meta_address, stm32_fsio::meta_address> stm32_fsio::get_start_and_end_addresses(iface::v1::data_type type, size_t size, error** error) const OS_NOEXCEPT
 {
 	uint32_t start_address = 0;
 	uint32_t end_address = 0;
@@ -242,7 +241,7 @@ pair<uint32_t, uint32_t> stm32_fsio::get_start_and_end_addresses(iface::v1::data
 				*error = OS_ERROR_BUILD("Data too much bigger than CONFIG area.", error_type::OS_EMSGSIZE);
 				OS_ERROR_PTR_SET_POSITION(*error);
 			}
-			return {0, 0};
+			return {{}, {}};
 		}
 		break;
 	case data_type::DATA:
@@ -255,12 +254,36 @@ pair<uint32_t, uint32_t> stm32_fsio::get_start_and_end_addresses(iface::v1::data
 				*error = OS_ERROR_BUILD("Data too much bigger than DATA area.", error_type::OS_EMSGSIZE);
 				OS_ERROR_PTR_SET_POSITION(*error);
 			}
-			return {0, 0};
+			return {{}, {}};
 		}
 		break;
 	}
 
-	return {start_address, end_address};
+	meta_address start;
+	if(start_address >= static_cast<uint32_t>(addr_flash::PAGE_1) && start_address <= static_cast<uint32_t>(addr_flash::PAGE_127))
+	{
+		start.bank = FLASH_BANK_1;
+
+	}
+	else if(start_address >= static_cast<uint32_t>(addr_flash::PAGE_128) && start_address <= static_cast<uint32_t>(addr_flash::PAGE_255))
+	{
+		start.bank = FLASH_BANK_2;
+	}
+	start.address = start_address;
+
+	meta_address end;
+	if(end_address >= static_cast<uint32_t>(addr_flash::PAGE_1) && end_address <= static_cast<uint32_t>(addr_flash::PAGE_127))
+	{
+		end.bank = FLASH_BANK_1;
+
+	}
+	else if(end_address >= static_cast<uint32_t>(addr_flash::PAGE_128) && end_address <= static_cast<uint32_t>(addr_flash::PAGE_255))
+	{
+		end.bank = FLASH_BANK_2;
+	}
+	end.address = end_address;
+
+	return {start, end};
 }
 
 } /* namespace driver */
