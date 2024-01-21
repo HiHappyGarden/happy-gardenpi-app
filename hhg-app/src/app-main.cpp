@@ -46,7 +46,11 @@ app_main::~app_main() OS_NOEXCEPT = default;
 
 os::exit app_main::init(class os::error** error) OS_NOEXCEPT
 {
+	OS_LOG_INFO(APP_TAG, "Init APP PARSER");
 	hardware.get_io()->set_on_receive(&app_parser, &hhg::iface::io_on_receive::on_receive);
+	set_app_parser(app_parser);
+	OS_LOG_INFO(APP_TAG, "Init APP PARSER - OK");
+
 
 	OS_LOG_INFO(APP_TAG, "Init APP CONFIG");
 	if(app_config.init(error) == exit::KO)
@@ -58,8 +62,9 @@ os::exit app_main::init(class os::error** error) OS_NOEXCEPT
 		}
 		return exit::KO;
 	}
-	OS_LOG_INFO(APP_TAG, "Init APP CONFIG - OK");
 	set_app_config(app_config);
+	OS_LOG_INFO(APP_TAG, "Init APP CONFIG - OK");
+
 
 
 

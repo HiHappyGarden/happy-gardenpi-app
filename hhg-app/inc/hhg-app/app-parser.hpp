@@ -69,6 +69,11 @@ public:
 	~app_parser() OS_NOEXCEPT;
 	OS_NO_COPY_NO_MOVE(app_parser)
 
+	inline const hhg::parser::parser& get_parser() const OS_NOEXCEPT
+	{
+		return parser;
+	}
+
 	void on_receive(const uint8_t data[], uint16_t size) const OS_NOEXCEPT override;
 
 

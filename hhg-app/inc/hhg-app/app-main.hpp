@@ -56,7 +56,7 @@ private:
 
     const driver::hardware& hardware;
     hhg::app::app_config app_config;
-    const hhg::app::app_parser app_parser;
+    hhg::app::app_parser app_parser;
 
 
 public:

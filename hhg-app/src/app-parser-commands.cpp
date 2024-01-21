@@ -18,7 +18,9 @@
  ***************************************************************************/
 
 
+
 #include "hhg-app/app-parser-commands.hpp"
+#include "hhg-app/app-parser.hpp"
 #include "hhg-app/app-config.hpp"
 using namespace osal;
 
@@ -30,7 +32,10 @@ inline namespace v1
 namespace
 {
 
+
+
 class app_config* _app_config = nullptr;
+class parser* parser = nullptr;
 
 entry commands_config[] =
 {
@@ -50,7 +55,8 @@ constexpr const size_t commands_user_size = sizeof(commands_user) / sizeof(comma
 entry commands[] =
 {
 
-		{.key = "^VER", .func  = new method(_app_config, &app_config::get_version), .description = "Get version"},
+		//{.key = "^VER", .func  = new method(_app_config, &app_config::get_version), .description = "Get version"},
+		{.key = "^VER", .description = "Get version"},
 		{.key = "^CONF", .next = commands_config, .next_size = commands_config_size, .description = "Configuration menu"},
 		{.key = "^USR", .next = commands_user, .next_size = commands_user_size, .description = "User menu"}
 
@@ -59,9 +65,20 @@ constexpr const size_t commands_size = sizeof(commands) / sizeof(commands[0]);
 
 }
 
+void set_app_parser(class app_parser& app_parser) OS_NOEXCEPT
+{
+	parser = const_cast<class parser*>(&app_parser.get_parser());
+}
+
+
 void set_app_config(class app_config& app_config) OS_NOEXCEPT
 {
 	hhg::app::_app_config = &app_config;
+
+	error* error = nullptr;
+	char key[] = "^VER";
+	parser->set(key, new method(_app_config, &app_config::get_version), &error);
+
 }
 
 entry* get_commands() OS_NOEXCEPT

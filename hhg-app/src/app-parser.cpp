@@ -123,6 +123,12 @@ void* app_parser_thread_handler(void* arg) OS_NOEXCEPT
 				buffer.clear();
 				ret.clear();
 			}
+			else if (start == nullptr && end)
+			{
+				app_parser::singleton->io->transmit(app_parser::KO, sizeof(app_parser::KO) - 1);
+				buffer.clear();
+				ret.clear();
+			}
 		}
 	}
 

@@ -31,6 +31,8 @@ class app_config;
 
 using namespace hhg::parser;
 
+void set_app_parser(class app_parser& app_parser) OS_NOEXCEPT;
+
 void set_app_config(app_config& app_config) OS_NOEXCEPT;
 
 entry* get_commands() OS_NOEXCEPT;
