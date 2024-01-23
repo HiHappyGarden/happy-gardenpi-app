@@ -62,7 +62,15 @@ os::exit app_main::init(class os::error** error) OS_NOEXCEPT
 		}
 		return exit::KO;
 	}
-	set_app_config(app_config);
+	if(set_app_config(app_config, error) == exit::KO)
+	{
+		if(error)
+		{
+			*error = OS_ERROR_BUILD("set_app_config() fail.", error_type::OS_EFAULT);
+			OS_ERROR_PTR_SET_POSITION(*error);
+		}
+		return exit::KO;
+	}
 	OS_LOG_INFO(APP_TAG, "Init APP CONFIG - OK");
 
 
