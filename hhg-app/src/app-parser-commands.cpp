@@ -32,9 +32,6 @@ inline namespace v1
 namespace
 {
 
-
-
-class app_config* _app_config = nullptr;
 class parser* parser = nullptr;
 
 entry commands_config[] =
@@ -45,21 +42,18 @@ constexpr const size_t commands_config_size = sizeof(commands_config) / sizeof(c
 
 entry commands_user[] =
 {
-		{.key = "1", .func  = new method(_app_config, &app_config::get_serial), .description = "Get serial"},
-		{.key = "2", .func  = new method(_app_config, &app_config::set_serial), .description = "Set serial"},
-		{.key = "3", .func  = new method(_app_config, &app_config::get_descr), .description = "Get description"},
-		{.key = "4", .func  = new method(_app_config, &app_config::set_descr), .description = "Set description"},
+		{.key = "1", .description = "Get serial"},
+		{.key = "2", .description = "Set serial"},
+		{.key = "3", .description = "Get description"},
+		{.key = "4", .description = "Set description"},
 };
 constexpr const size_t commands_user_size = sizeof(commands_user) / sizeof(commands_user[0]);
 
 entry commands[] =
 {
-
-		//{.key = "^VER", .func  = new method(_app_config, &app_config::get_version), .description = "Get version"},
 		{.key = "^VER", .description = "Get version"},
 		{.key = "^CONF", .next = commands_config, .next_size = commands_config_size, .description = "Configuration menu"},
 		{.key = "^USR", .next = commands_user, .next_size = commands_user_size, .description = "User menu"}
-
 };
 constexpr const size_t commands_size = sizeof(commands) / sizeof(commands[0]);
 
@@ -71,13 +65,35 @@ void set_app_parser(class app_parser& app_parser) OS_NOEXCEPT
 }
 
 
-void set_app_config(class app_config& app_config) OS_NOEXCEPT
+os::exit set_app_config(class app_config& app_config, error** error) OS_NOEXCEPT
 {
-	hhg::app::_app_config = &app_config;
+	string<16> key;
 
-	error* error = nullptr;
-	char key[] = "^VER";
-	parser->set(key, new method(_app_config, &app_config::get_version), &error);
+	key = "^VER";
+	if(parser->set(key.c_str(), new method(&app_config, &app_config::get_version), error) == exit::KO)
+	{
+		return exit::KO;
+	}
+	key = "^USR 1";
+	if(parser->set(key.c_str(), new method(&app_config, &app_config::get_serial), error) == exit::KO)
+	{
+		return exit::KO;
+	}
+	key = "^USR 2";
+	if(parser->set(key.c_str(), new method(&app_config, &app_config::set_serial), error) == exit::KO)
+	{
+		return exit::KO;
+	}
+	key = "^USR 3";
+	if(parser->set(key.c_str(), new method(&app_config, &app_config::get_descr), error) == exit::KO)
+	{
+		return exit::KO;
+	}
+	key = "^USR 4";
+	if(parser->set(key.c_str(), new method(&app_config, &app_config::set_descr), error) == exit::KO)
+	{
+		return exit::KO;
+	}
 
 }
 

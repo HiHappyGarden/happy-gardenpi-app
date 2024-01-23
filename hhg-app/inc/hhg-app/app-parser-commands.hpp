@@ -33,7 +33,7 @@ using namespace hhg::parser;
 
 void set_app_parser(class app_parser& app_parser) OS_NOEXCEPT;
 
-void set_app_config(app_config& app_config) OS_NOEXCEPT;
+os::exit set_app_config(app_config& app_config, os::error** error = nullptr) OS_NOEXCEPT;
 
 entry* get_commands() OS_NOEXCEPT;
 size_t get_commands_size() OS_NOEXCEPT;
