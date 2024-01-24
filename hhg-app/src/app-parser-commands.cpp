@@ -29,10 +29,13 @@ namespace hhg::app
 inline namespace v1
 {
 
+static class app_config* app_config = nullptr;
+
 namespace
 {
 
 class parser* parser = nullptr;
+
 
 entry commands_config[] =
 {
@@ -46,6 +49,21 @@ entry commands_user[] =
 		{.key = "2", .description = "Set serial"},
 		{.key = "3", .description = "Get description"},
 		{.key = "4", .description = "Set description"},
+		{.key = "STORE"
+		, .custom_func = [](auto data, auto entry, auto error)
+		{
+			auto ret = app_config->store(error);
+			if(ret == exit::OK)
+			{
+				strncpy(data.ret_buffer, "OK", data.ret_buffer_len);
+			}
+			else
+			{
+				strncpy(data.ret_buffer, "KO", data.ret_buffer_len);
+			}
+			return ret;
+		}
+		, .description = "Store config"},
 };
 constexpr const size_t commands_user_size = sizeof(commands_user) / sizeof(commands_user[0]);
 
@@ -98,6 +116,8 @@ os::exit set_app_config(class app_config& app_config, error** error) OS_NOEXCEPT
 	{
 		return exit::KO;
 	}
+
+	hhg::app::app_config = &app_config;
 
 	return exit::OK;
 }

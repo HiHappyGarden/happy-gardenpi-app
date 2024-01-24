@@ -95,5 +95,10 @@ const char* app_config::get_version() const OS_NOEXCEPT
 	return ret.c_str();
 }
 
+os::exit app_config::store(os::error** error) const OS_NOEXCEPT
+{
+	return fsio->write(data_type::CONFIG, reinterpret_cast<const uint8_t *>(&config), sizeof(config), error);
+}
+
 } /* namespace driver */
 } /* namespace hhg */
