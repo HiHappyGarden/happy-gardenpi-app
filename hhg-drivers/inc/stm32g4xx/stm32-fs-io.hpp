@@ -21,13 +21,13 @@
 
 #pragma once
 
-#include "hhg-iface/fsio.hpp"
+#include "hhg-iface/fs-io.hpp"
 #include "stm32g4xx.h"
 #include "stm32g4xx_hal_flash.h"
 
 namespace hhg::driver
 {
-namespace v1
+inline namespace v1
 {
 
 
@@ -296,7 +296,7 @@ enum class addr_flash : uint32_t
 
 
 
-class stm32_fsio final : public iface::v1::fsio
+class stm32_fsio final : public iface::v1::fs_io
 {
 	uint32_t start_flash_address = 0;
 	uint32_t end_flash_address = 0;

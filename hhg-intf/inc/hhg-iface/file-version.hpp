@@ -1,7 +1,7 @@
 /***************************************************************************
  *
  * Hi Happy Garden
- * Copyright (C) 2023/2024 Antonio Salsi <passy.linux@zresa.it>
+ * Copyright (C) 2023/2024  Antonio Salsi <passy.linux@zresa.it>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,32 +17,20 @@
  *
  ***************************************************************************/
 
-#include "hhg-utils/hhg-utils.hpp"
-#include "stm32g4xx_hal.h"
+#pragma once
 
-#include <stdlib.h>
-#include <stdint.h>
-#include <time.h>
-
-namespace hhg::utils
+namespace hhg::iface
 {
 inline namespace v1
 {
 
-extern "C" CRC_HandleTypeDef hcrc;
-extern "C" uint32_t HAL_CRC_Calculate(CRC_HandleTypeDef *hcrc, uint32_t pBuffer[], uint32_t BufferLength);
 
-
-int32_t random_number(int32_t min, int32_t max) OS_NOEXCEPT
+struct alignas(64) file_version
 {
-    srand(time(NULL));
-    return (rand() % (max - min + 1)) + min;
-}
-
-int32_t crc32(uint8_t buffer[], uint32_t buffer_len) OS_NOEXCEPT
-{
-	return HAL_CRC_Calculate(&hcrc, reinterpret_cast<uint32_t*>(buffer), buffer_len);
-}
+	uint32_t magic;
+	uint8_t version;
+};
 
 }
 }
+
