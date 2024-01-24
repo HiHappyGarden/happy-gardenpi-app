@@ -28,5 +28,7 @@ inline namespace v1
 
 int32_t random_number(int32_t min, int32_t max) OS_NOEXCEPT;
 
+int32_t crc32(uint8_t buffer[], uint32_t buffer_len) OS_NOEXCEPT;
+
 }
 }

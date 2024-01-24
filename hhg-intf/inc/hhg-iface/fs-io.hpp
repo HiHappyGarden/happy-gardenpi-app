@@ -37,12 +37,12 @@ enum class data_type : uint8_t
 	DATA,
 };
 
-class fsio : public initializable
+class fs_io : public initializable
 {
 public:
-	using ptr = os::unique_ptr<hhg::iface::fsio>;
+	using ptr = os::unique_ptr<hhg::iface::fs_io>;
 
-	virtual ~fsio() = default;
+	virtual ~fs_io() = default;
 
 	virtual os::exit write(data_type type, const uint8_t data[], size_t size, os::error** error) const OS_NOEXCEPT = 0;
 

@@ -20,9 +20,9 @@
 
 #pragma once
 
+#include "hhg-iface/fs-io.hpp"
 #include "hhg-iface/initializable.hpp"
 #include "hhg-iface/io.hpp"
-#include "hhg-iface/fsio.hpp"
 
 namespace hhg::driver
 {
@@ -30,7 +30,7 @@ inline namespace v1
 {
 
 using io_ptr = hhg::iface::io::ptr;
-using fsio_ptr = hhg::iface::fsio::ptr;
+using fsio_ptr = hhg::iface::fs_io::ptr;
 
 class hardware final : public hhg::iface::initializable
 {

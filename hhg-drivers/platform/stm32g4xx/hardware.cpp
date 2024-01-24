@@ -17,11 +17,11 @@
  *
  ***************************************************************************/
 
+#include <stm32g4xx/stm32-fs-io.hpp>
 #include "stm32g4xx/stm32-io.hpp"
 #include "hhg-driver/hardware.hpp"
 #include "stm32g4xx/driver-lpuart.h"
 #include "stm32g4xx/stm32-freertos.hpp"
-#include "stm32g4xx/stm32-fsio.hpp"
 using namespace os;
 using namespace hhg::iface;
 
@@ -83,9 +83,9 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
 	OS_LOG_INFO(APP_TAG, "Init IO");
 	if(io->init(error) == exit::KO)
 	{
-		if(error)
+		if(error && *error)
 		{
-	        *error = OS_ERROR_BUILD("io::init() fail.", error_type::OS_EFAULT);
+	        *error = OS_ERROR_APPEND(*error, "io::init() fail.", error_type::OS_EFAULT);
 	        OS_ERROR_PTR_SET_POSITION(*error);
 		}
 		return exit::KO;
@@ -95,9 +95,9 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
 	OS_LOG_INFO(APP_TAG, "Init FS IO");
 	if(fsio->init(error) == exit::KO)
 	{
-		if(error)
+		if(error && *error)
 		{
-	        *error = OS_ERROR_BUILD("fsio::init() fail.", error_type::OS_EFAULT);
+	        *error = OS_ERROR_APPEND(*error, "fsio::init() fail.", error_type::OS_EFAULT);
 	        OS_ERROR_PTR_SET_POSITION(*error);
 		}
 		return exit::KO;

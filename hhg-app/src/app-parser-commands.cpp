@@ -39,39 +39,39 @@ class parser* parser = nullptr;
 
 entry commands_config[] =
 {
-	//{.key = "1", .func  = new method(_app_config, get_serial),  .description = "Get serial"},
+	{.key = "1", .description = "Get serial"},
+	{.key = "2", .description = "Set serial"},
+	{.key = "3", .description = "Get description"},
+	{.key = "4", .description = "Set description"},
+	{.key = "STORE"
+	, .custom_func = [](auto data, auto entry, auto error)
+	{
+		auto ret = app_config->store(error);
+		if(ret == exit::OK)
+		{
+			strncpy(data.ret_buffer, "OK", data.ret_buffer_len);
+		}
+		else
+		{
+			strncpy(data.ret_buffer, "KO", data.ret_buffer_len);
+		}
+		return ret;
+	}
+	, .description = "Store config"},
 };
 constexpr const size_t commands_config_size = sizeof(commands_config) / sizeof(commands_config[0]);
 
 entry commands_user[] =
 {
-		{.key = "1", .description = "Get serial"},
-		{.key = "2", .description = "Set serial"},
-		{.key = "3", .description = "Get description"},
-		{.key = "4", .description = "Set description"},
-		{.key = "STORE"
-		, .custom_func = [](auto data, auto entry, auto error)
-		{
-			auto ret = app_config->store(error);
-			if(ret == exit::OK)
-			{
-				strncpy(data.ret_buffer, "OK", data.ret_buffer_len);
-			}
-			else
-			{
-				strncpy(data.ret_buffer, "KO", data.ret_buffer_len);
-			}
-			return ret;
-		}
-		, .description = "Store config"},
+
 };
 constexpr const size_t commands_user_size = sizeof(commands_user) / sizeof(commands_user[0]);
 
 entry commands[] =
 {
-		{.key = "^VER", .description = "Get version"},
-		{.key = "^CONF", .next = commands_config, .next_size = commands_config_size, .description = "Configuration menu"},
-		{.key = "^USR", .next = commands_user, .next_size = commands_user_size, .description = "User menu"}
+	{.key = "^VER", .description = "Get version"},
+	{.key = "^CONF", .next = commands_config, .next_size = commands_config_size, .description = "Configuration menu"},
+	{.key = "^USR", .next = commands_user, .next_size = commands_user_size, .description = "User menu"}
 };
 constexpr const size_t commands_size = sizeof(commands) / sizeof(commands[0]);
 
@@ -93,25 +93,25 @@ os::exit set_app_config(class app_config& app_config, error** error) OS_NOEXCEPT
 		return exit::KO;
 	}
 
-	key = "^USR 1";
+	key = "^CONF 1";
 	if(parser->set(key.c_str(), new method(&app_config, &app_config::get_serial), error) == exit::KO)
 	{
 		return exit::KO;
 	}
 
-	key = "^USR 2";
+	key = "^CONF 2";
 	if(parser->set(key.c_str(), new method(&app_config, &app_config::set_serial), error) == exit::KO)
 	{
 		return exit::KO;
 	}
 
-	key = "^USR 3";
+	key = "^CONF 3";
 	if(parser->set(key.c_str(), new method(&app_config, &app_config::get_descr), error) == exit::KO)
 	{
 		return exit::KO;
 	}
 
-	key = "^USR 4";
+	key = "^CONF 4";
 	if(parser->set(key.c_str(), new method(&app_config, &app_config::set_descr), error) == exit::KO)
 	{
 		return exit::KO;
