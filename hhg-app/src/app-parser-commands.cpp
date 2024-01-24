@@ -74,27 +74,32 @@ os::exit set_app_config(class app_config& app_config, error** error) OS_NOEXCEPT
 	{
 		return exit::KO;
 	}
+
 	key = "^USR 1";
 	if(parser->set(key.c_str(), new method(&app_config, &app_config::get_serial), error) == exit::KO)
 	{
 		return exit::KO;
 	}
+
 	key = "^USR 2";
 	if(parser->set(key.c_str(), new method(&app_config, &app_config::set_serial), error) == exit::KO)
 	{
 		return exit::KO;
 	}
+
 	key = "^USR 3";
 	if(parser->set(key.c_str(), new method(&app_config, &app_config::get_descr), error) == exit::KO)
 	{
 		return exit::KO;
 	}
+
 	key = "^USR 4";
 	if(parser->set(key.c_str(), new method(&app_config, &app_config::set_descr), error) == exit::KO)
 	{
 		return exit::KO;
 	}
 
+	return exit::OK;
 }
 
 entry* get_commands() OS_NOEXCEPT
