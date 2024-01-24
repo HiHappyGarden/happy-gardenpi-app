@@ -65,6 +65,9 @@ public:
 	os::exit set_descr(const char descr[]) OS_NOEXCEPT;
 
 	const char* get_version() const OS_NOEXCEPT;
+
+	os::exit store(os::error** error) const OS_NOEXCEPT;
+
 };
 
 }
