@@ -41,7 +41,7 @@
 		<item key="stubSelected4" value="false"/>
 		<item key="stubImpl5" value="DELETED"/>
 		<item key="stubSelected5" value="false"/>
-		<item key="namespace" value="hhg::driver"/>
+		<item key="namespace" value="hhg::iface"/>
 	</section>
 	<section name="org.eclipse.cdt.internal.ui.preferences.EditTemplateDialog_dialogBounds">
 		<item key="DIALOG_X_ORIGIN" value="702"/>

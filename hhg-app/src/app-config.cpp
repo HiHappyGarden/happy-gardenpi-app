@@ -48,7 +48,7 @@ app_config::app_config(const fs_io::ptr& fsio) OS_NOEXCEPT
 
 app_config::~app_config() = default;
 
-inline os::exit app_config::init(os::error** error) OS_NOEXCEPT
+inline os::exit app_config::init(error** error) OS_NOEXCEPT
 {
 	return load(nullptr, error);
 }
@@ -99,13 +99,13 @@ const char* app_config::get_version() const OS_NOEXCEPT
 	return ret.c_str();
 }
 
-os::exit app_config::store(os::error** error) const OS_NOEXCEPT
+os::exit app_config::store(error** error) const OS_NOEXCEPT
 {
 	config.crc = crc32(reinterpret_cast<uint8_t *>(&config), sizeof(config));
 	return fsio->write(data_type::CONFIG, reinterpret_cast<const uint8_t *>(&config), sizeof(config), error);
 }
 
-os::exit app_config::load(app_config::on_vesrion_change on_vesrion_change, os::error** error) OS_NOEXCEPT
+os::exit app_config::load(app_config::on_vesrion_change on_vesrion_change, error** error) OS_NOEXCEPT
 {
 	class config local_config;
 
@@ -149,7 +149,7 @@ os::exit app_config::load(app_config::on_vesrion_change on_vesrion_change, os::e
 	return exit::OK;
 }
 
-os::exit app_config::load_defaut(os::error** error) OS_NOEXCEPT
+os::exit app_config::load_defaut(error** error) OS_NOEXCEPT
 {
 	config.serial = "default";
 	config.descr = "descr default";
