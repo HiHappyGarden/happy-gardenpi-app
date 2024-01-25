@@ -21,16 +21,14 @@
 #define HHG_CONFIG_H
 
 #define HHG_NAME "hi-happy-garden"
-#define HHG_VER "0.52.0"
+#define HHG_VER "0.60.0"
 #define HHG_VER_MAJOR (0)
-#define HHG_VER_MINOR (52)
+#define HHG_VER_MINOR (60)
 #define HHG_VER_PATCH (0)
 #define HHG_LCD_MSG_SIZE (34)
-#define HHG_SCHEDULES_SIZE (8)
+#define HHG_SCHEDULES_SIZE (4)
 #define HHG_ZONES_SIZE (4)
 #define HHG_HEADER (0xC1)
-#define HHG_FILE_PATH_DATA "data.json"
-#define HHG_FILE_PATH_CONF "conf.json"
 #define HHG_FSM_MAIN_SLEEP (100)
 #define HHG_FSM_ERROR_SLEEP (1000)
 #define HHG_FSM_ERROR_MAX (5)
