@@ -25,6 +25,8 @@ using hhg::iface::data_type;
 #include "hhg-utils/hhg-utils.hpp"
 using hhg::utils::crc32;
 
+#include "hhg-config.h"
+
 namespace hhg::app
 {
 inline namespace v1

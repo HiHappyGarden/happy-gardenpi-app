@@ -50,17 +50,22 @@ inline os::exit app_data::init(os::error** error) OS_NOEXCEPT
 	return load(nullptr, error);
 }
 
+void app_data::reset() OS_NOEXCEPT
+{
+	data = {};
+}
+
 os::exit app_data::store(os::error** error) const OS_NOEXCEPT
 {
 	data.crc = crc32(reinterpret_cast<uint8_t *>(&data), sizeof(data));
-	return fsio->write(data_type::CONFIG, reinterpret_cast<const uint8_t *>(&data), sizeof(data), error);
+	return fsio->write(data_type::DATA, reinterpret_cast<const uint8_t *>(&data), sizeof(data), error);
 }
 
 os::exit app_data::load(app_data::on_vesrion_change on_vesrion_change, os::error** error) OS_NOEXCEPT
 {
 	class data local_data;
 
-	if(fsio->read(data_type::CONFIG, reinterpret_cast<uint8_t *>(&local_data), sizeof(local_data), error) == exit::KO)
+	if(fsio->read(data_type::DATA, reinterpret_cast<uint8_t *>(&local_data), sizeof(local_data), error) == exit::KO)
 	{
 		return exit::KO;
 	}
@@ -102,7 +107,7 @@ os::exit app_data::load(app_data::on_vesrion_change on_vesrion_change, os::error
 
 os::exit app_data::load_defaut(os::error** error) OS_NOEXCEPT
 {
-
+	reset();
 	return store(error);
 }
 

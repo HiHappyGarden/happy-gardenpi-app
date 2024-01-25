@@ -22,6 +22,7 @@
 #include "hhg-driver/hardware.hpp"
 #include "osal/osal.hpp"
 #include "hhg-app/app-config.hpp"
+#include "hhg-app/app-data.hpp"
 #include "hhg-app/app-parser.hpp"
 
 namespace hhg::app
@@ -56,6 +57,7 @@ private:
 
     const driver::hardware& hardware;
     hhg::app::app_config app_config;
+    hhg::app::app_data app_data;
     hhg::app::app_parser app_parser;
 
 

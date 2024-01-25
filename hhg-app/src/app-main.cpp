@@ -37,6 +37,7 @@ constexpr const char APP_TAG[] = "APP MAIN";
 app_main::app_main(driver::hardware& hardware) OS_NOEXCEPT
 : hardware(hardware)
 , app_config(hardware.get_fsio())
+, app_data(hardware.get_fsio())
 , app_parser(hardware.get_io())
 {
 
@@ -82,6 +83,24 @@ os::exit app_main::init(class os::error** error) OS_NOEXCEPT
 		}
 	}
 	OS_LOG_INFO(APP_TAG, "Init APP CONFIG - OK");
+
+
+	OS_LOG_INFO(APP_TAG, "Init APP DATA");
+	if(app_data.init(error) == exit::KO)
+	{
+		OS_LOG_WARNING(APP_TAG, "Impossible load data, reset");
+		app_data.reset();
+	}
+	if(set_app_data(app_data, error) == exit::KO)
+	{
+		if(error)
+		{
+			*error = OS_ERROR_BUILD("set_app_data() fail.", error_type::OS_EFAULT);
+			OS_ERROR_PTR_SET_POSITION(*error);
+		}
+		return exit::KO;
+	}
+	OS_LOG_INFO(APP_TAG, "Init APP DATA - OK");
 
 	return os::exit::OK;
 }

@@ -30,6 +30,7 @@ inline namespace v1
 {
 
 static class app_config* app_config = nullptr;
+static class app_data* app_data= nullptr;
 
 namespace
 {
@@ -118,6 +119,14 @@ os::exit set_app_config(class app_config& app_config, error** error) OS_NOEXCEPT
 	}
 
 	hhg::app::app_config = &app_config;
+
+	return exit::OK;
+}
+
+os::exit set_app_data(class app_data& app_data, error** error) OS_NOEXCEPT
+{
+
+	hhg::app::app_data = &app_data;
 
 	return exit::OK;
 }
