@@ -19,11 +19,13 @@
 
 #pragma once
 
+#ifdef INCLUDE_HHG_CONFIG
+#include "hhg-config.h"
+#endif
+
 #include "hhg-iface/fs-io.hpp"
 #include "hhg-iface/initializable.hpp"
 #include "hhg-iface/file-version.hpp"
-
-#include "hhg-config.h"
 
 #include <stdint.h>
 
@@ -168,7 +170,7 @@ class app_data final : public hhg::iface::initializable
 
 	const hhg::iface::fs_io::ptr& fsio;
 
-	mutable struct alignas(64) data final : public hhg::iface::file_version
+	mutable struct alignas(2) data final : public hhg::iface::file_version
 	{
 		inline data() : file_version{MAIGC, VERSION} {}
 		schedule schedules[HHG_SCHEDULES_SIZE];

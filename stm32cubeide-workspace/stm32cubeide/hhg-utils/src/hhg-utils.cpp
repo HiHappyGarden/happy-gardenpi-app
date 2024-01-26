@@ -35,8 +35,9 @@ extern "C" uint32_t HAL_CRC_Calculate(CRC_HandleTypeDef *hcrc, uint32_t pBuffer[
 
 int32_t random_number(int32_t min, int32_t max) OS_NOEXCEPT
 {
-    srand(time(NULL));
-    return (rand() % (max - min + 1)) + min;
+//    srand(time(NULL));
+//    return (rand() % (max - min + 1)) + min;
+	return 0;
 }
 
 int32_t crc32(uint8_t buffer[], uint32_t buffer_len) OS_NOEXCEPT

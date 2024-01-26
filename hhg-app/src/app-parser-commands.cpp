@@ -50,7 +50,7 @@ entry commands_config[] =
 		auto ret = app_config->store(error);
 		if(ret == exit::OK)
 		{
-			strncpy(data.ret_buffer, "OK", data.ret_buffer_len);
+			strncpy(data.ret_buffer, "", data.ret_buffer_len);
 		}
 		else
 		{

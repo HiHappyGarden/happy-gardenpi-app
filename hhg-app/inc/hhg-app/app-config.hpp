@@ -42,7 +42,7 @@ class app_config final : public hhg::iface::initializable
 	uint8_t const version_minor;
 	uint8_t const version_patch;
 
-	mutable struct alignas(64) config final : public hhg::iface::file_version
+	mutable struct alignas(2) config final : public hhg::iface::file_version
 	{
 		inline config() : file_version{MAIGC, VERSION} {}
 		os::string<16> 	serial;
