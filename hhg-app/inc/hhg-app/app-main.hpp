@@ -60,7 +60,7 @@ private:
     hhg::app::app_data app_data;
     hhg::app::app_parser app_parser;
 
-
+//    os::
 public:
     explicit app_main(driver::hardware& hardware) OS_NOEXCEPT;
     OS_NO_COPY_NO_MOVE(app_main)

@@ -22,7 +22,7 @@
 		<item key="updateReferences" value="true"/>
 	</section>
 	<section name="OptionalMessageDialog.hide.">
-		<item key="askReindex.detail" value="0"/>
+		<item key="askReindex.detail" value="1"/>
 	</section>
 	<section name="NewClassWizardPage">
 		<item key="namespaceSelected" value="true"/>
