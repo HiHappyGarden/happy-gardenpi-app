@@ -30,5 +30,10 @@ int32_t random_number(int32_t min, int32_t max) OS_NOEXCEPT;
 
 int32_t crc32(uint8_t buffer[], uint32_t buffer_len) OS_NOEXCEPT;
 
+os::exit to_hex(char* dest, size_t dest_len, const uint8_t* values, size_t val_len) OS_NOEXCEPT;
+
+os::exit from_hex(uint8_t* dest, size_t dest_len, const char* values, size_t val_len) OS_NOEXCEPT;
+
+
 }
 }

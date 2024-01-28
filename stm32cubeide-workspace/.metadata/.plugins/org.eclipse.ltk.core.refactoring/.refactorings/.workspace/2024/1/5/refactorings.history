@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete 2 resources" deleteContents="false" description="Delete 2 resources" element1="/stm32cubeide/hhg-driver/inc/stm32g4xx/stm32-rtc.h" element2="/stm32cubeide/hhg-driver/platform/stm32g4xx/stm32-rtc.c" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="2" stamp="1706437725687"/>
+</session>

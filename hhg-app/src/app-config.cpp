@@ -18,7 +18,7 @@
  ***************************************************************************/
 
 #include "hhg-app/app-config.hpp"
-using namespace osal;
+using namespace os;
 using hhg::iface::fs_io;
 using hhg::iface::data_type;
 

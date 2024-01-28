@@ -18,6 +18,8 @@
  ***************************************************************************/
 
 #include "hhg-utils/hhg-utils.hpp"
+using namespace os;
+
 #include "stm32g4xx_hal.h"
 
 #include <stdlib.h>
@@ -43,6 +45,55 @@ int32_t random_number(int32_t min, int32_t max) OS_NOEXCEPT
 int32_t crc32(uint8_t buffer[], uint32_t buffer_len) OS_NOEXCEPT
 {
 	return HAL_CRC_Calculate(&hcrc, reinterpret_cast<uint32_t*>(buffer), buffer_len);
+}
+
+os::exit to_hex(char* dest, size_t dest_len, const uint8_t* values, size_t val_len) OS_NOEXCEPT
+{
+	if(dest == nullptr || values == nullptr)
+	{
+		return exit::KO;
+	}
+    if(dest_len < (val_len*2+1))
+    {
+    	return exit::KO;
+    }
+
+    memset(dest, '\0', dest_len);
+    while(val_len--)
+    {
+        sprintf(dest, "%02X", *values);
+        dest += 2;
+        ++values;
+    }
+    return exit::OK;
+}
+
+os::exit from_hex(uint8_t* dest, size_t dest_len, const char* values, size_t val_len) OS_NOEXCEPT
+{
+	if(dest == nullptr || values == nullptr)
+	{
+		return exit::KO;
+	}
+
+//	memset(dest, '\0', dest_len);
+//    char buf[3];
+//    size_t i;
+//    int value;
+//    for (i = 0; i < count && *src; i++)
+//    {
+//        buf[0] = *src++;
+//        buf[1] = '\0';
+//        if (*src)
+//        {
+//            buf[1] = *src++;
+//            buf[2] = '\0';
+//        }
+//        if (sscanf(buf, "%x", &value) != 1)
+//            break;
+//        dest[i] = value;
+//    }
+//    return i;
+    return exit::OK;
 }
 
 }

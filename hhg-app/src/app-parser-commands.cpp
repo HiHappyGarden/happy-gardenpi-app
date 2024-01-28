@@ -22,7 +22,9 @@
 #include "hhg-app/app-parser-commands.hpp"
 #include "hhg-app/app-parser.hpp"
 #include "hhg-app/app-config.hpp"
-using namespace osal;
+#include "hhg-driver/time.hpp"
+#include "hhg-utils/hhg-utils.hpp"
+using namespace os;
 
 namespace hhg::app
 {
@@ -36,6 +38,27 @@ namespace
 {
 
 class parser* parser = nullptr;
+
+entry commands_rtc[] =
+{
+	{.key = "1"
+	, .custom_func = [](auto data, auto entry, auto error)
+	{
+		string<10> date_time_str;
+
+
+
+		return exit::OK;
+	}
+	, .description = "Get RTC"},
+	{.key = "2"
+	, .custom_func = [](auto data, auto entry, auto error)
+	{
+		return exit::OK;
+	}
+	, .description = "Set RTC"},
+};
+constexpr const size_t commands_rtc_size = sizeof(commands_rtc) / sizeof(commands_rtc[0]);
 
 
 entry commands_config[] =
@@ -71,6 +94,7 @@ constexpr const size_t commands_user_size = sizeof(commands_user) / sizeof(comma
 entry commands[] =
 {
 	{.key = "^VER", .description = "Get version"},
+	{.key = "^RTC", .next = commands_rtc, .next_size = commands_rtc_size, .description = "Rtc menu"},
 	{.key = "^CONF", .next = commands_config, .next_size = commands_config_size, .description = "Configuration menu"},
 	{.key = "^USR", .next = commands_user, .next_size = commands_user_size, .description = "User menu"}
 };

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;stm32cubeide/hhg-driver/platform/stm32g4xx/stm32-rtc&apos; to &apos;stm32-rtc.c&apos;" description="Rename resource &apos;stm32-rtc&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="hhg-driver/platform/stm32g4xx/stm32-rtc" name="stm32-rtc.c" stamp="1706437371831" updateReferences="true"/>
+</session>
