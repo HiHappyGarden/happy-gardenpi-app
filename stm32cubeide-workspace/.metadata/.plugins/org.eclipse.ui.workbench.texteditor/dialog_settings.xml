@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="os::"/>
+		<item key="selection" value="driver_lpuart_tx_callback"/>
 		<item key="wrap" value="false"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="driver_lpuart_tx_callback"/>
+			<item value="driver_lpuart_transmit"/>
+			<item value="LOWEST"/>
+			<item value="local_data"/>
+			<item value="INCLUDE"/>
 			<item value="os::"/>
 			<item value="app_config"/>
 			<item value="data_type"/>
@@ -18,13 +23,9 @@
 			<item value="crc"/>
 			<item value="deleter"/>
 			<item value="regis"/>
-			<item value="regi"/>
-			<item value="printf_stack_error"/>
-			<item value="get_start_and_end_addresses"/>
-			<item value="MemoryProgramStatus"/>
-			<item value="priori"/>
 		</list>
 		<list key="replacehistory">
+			<item value="data"/>
 			<item value="app_data"/>
 			<item value="data_io"/>
 			<item value="exit::KO"/>
@@ -41,10 +42,10 @@
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="1341"/>
-		<item key="DIALOG_Y_ORIGIN" value="538"/>
+		<item key="DIALOG_X_ORIGIN" value="870"/>
+		<item key="DIALOG_Y_ORIGIN" value="474"/>
 		<item key="DIALOG_WIDTH" value="453"/>
-		<item key="DIALOG_HEIGHT" value="462"/>
+		<item key="DIALOG_HEIGHT" value="608"/>
 		<item key="DIALOG_FONT_NAME" value="1|Verdana|13.0|0|GTK|1|"/>
 	</section>
 </section>

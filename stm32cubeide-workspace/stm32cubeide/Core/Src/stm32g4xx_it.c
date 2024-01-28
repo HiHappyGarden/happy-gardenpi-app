@@ -23,6 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "stm32g4xx_ll_usart.h"
+#include "stm32g4xx_nucleo.h"
 #include "stm32g4xx/driver-lpuart.h"
 /* USER CODE END Includes */
 
@@ -78,6 +79,8 @@ void NMI_Handler(void)
   /* USER CODE BEGIN NonMaskableInt_IRQn 1 */
    while (1)
   {
+		BSP_LED_Toggle(LED2);
+		HAL_Delay(250);
   }
   /* USER CODE END NonMaskableInt_IRQn 1 */
 }
@@ -93,6 +96,8 @@ void HardFault_Handler(void)
   while (1)
   {
     /* USER CODE BEGIN W1_HardFault_IRQn 0 */
+		BSP_LED_Toggle(LED2);
+		HAL_Delay(250);
     /* USER CODE END W1_HardFault_IRQn 0 */
   }
 }
@@ -108,6 +113,8 @@ void MemManage_Handler(void)
   while (1)
   {
     /* USER CODE BEGIN W1_MemoryManagement_IRQn 0 */
+		BSP_LED_Toggle(LED2);
+		HAL_Delay(250);
     /* USER CODE END W1_MemoryManagement_IRQn 0 */
   }
 }
@@ -123,6 +130,8 @@ void BusFault_Handler(void)
   while (1)
   {
     /* USER CODE BEGIN W1_BusFault_IRQn 0 */
+		BSP_LED_Toggle(LED2);
+		HAL_Delay(250);
     /* USER CODE END W1_BusFault_IRQn 0 */
   }
 }
@@ -138,6 +147,8 @@ void UsageFault_Handler(void)
   while (1)
   {
     /* USER CODE BEGIN W1_UsageFault_IRQn 0 */
+		BSP_LED_Toggle(LED2);
+		HAL_Delay(250);
     /* USER CODE END W1_UsageFault_IRQn 0 */
   }
 }
@@ -150,6 +161,8 @@ void DebugMon_Handler(void)
   /* USER CODE BEGIN DebugMonitor_IRQn 0 */
 
   /* USER CODE END DebugMonitor_IRQn 0 */
+	BSP_LED_Toggle(LED2);
+	HAL_Delay(250);
   /* USER CODE BEGIN DebugMonitor_IRQn 1 */
 
   /* USER CODE END DebugMonitor_IRQn 1 */
