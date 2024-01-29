@@ -12,7 +12,7 @@
 	<item key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_y" value="175"/>
 	<item key="org.eclipse.cdt.ui.codeformatter.create_profile_dialog.open_edit" value="true"/>
 	<item key="org.eclipse.cdt.uiformatter_page.white_space.c_view.option" value="126"/>
-	<item key="LastUsedHeaderTemplate" value="Default C++ header template"/>
+	<item key="LastUsedHeaderTemplate" value="Default C header template"/>
 	<item key="LastUsedSourceTemplate" value="Default C++ source template"/>
 	<section name="completion_proposal_size">
 	</section>
@@ -41,7 +41,7 @@
 		<item key="stubSelected4" value="false"/>
 		<item key="stubImpl5" value="DELETED"/>
 		<item key="stubSelected5" value="false"/>
-		<item key="namespace" value="hhg::app"/>
+		<item key="namespace" value="hhg::driver"/>
 	</section>
 	<section name="org.eclipse.cdt.internal.ui.preferences.EditTemplateDialog_dialogBounds">
 		<item key="DIALOG_X_ORIGIN" value="702"/>

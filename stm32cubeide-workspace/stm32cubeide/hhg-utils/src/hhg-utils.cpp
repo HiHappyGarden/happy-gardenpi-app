@@ -75,24 +75,23 @@ os::exit from_hex(uint8_t* dest, size_t dest_len, const char* values, size_t val
 		return exit::KO;
 	}
 
-//	memset(dest, '\0', dest_len);
-//    char buf[3];
-//    size_t i;
-//    int value;
-//    for (i = 0; i < count && *src; i++)
-//    {
-//        buf[0] = *src++;
-//        buf[1] = '\0';
-//        if (*src)
-//        {
-//            buf[1] = *src++;
-//            buf[2] = '\0';
-//        }
-//        if (sscanf(buf, "%x", &value) != 1)
-//            break;
-//        dest[i] = value;
-//    }
-//    return i;
+	memset(dest, '\0', dest_len);
+    char buf[3];
+    size_t i;
+    int value;
+    for (i = 0; i < val_len && *values; i++)
+    {
+        buf[0] = *values++;
+        buf[1] = '\0';
+        if (*values)
+        {
+            buf[1] = *values++;
+            buf[2] = '\0';
+        }
+        if (sscanf(buf, "%x", &value) != 1)
+            break;
+        dest[i] = value;
+    }
     return exit::OK;
 }
 
