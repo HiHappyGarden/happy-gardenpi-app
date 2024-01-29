@@ -23,6 +23,7 @@
 #include "hhg-iface/fs-io.hpp"
 #include "hhg-iface/initializable.hpp"
 #include "hhg-iface/io.hpp"
+#include "hhg-iface/time.hpp"
 
 namespace hhg::driver
 {
@@ -31,11 +32,13 @@ inline namespace v1
 
 using io_ptr = hhg::iface::io::ptr;
 using fsio_ptr = hhg::iface::fs_io::ptr;
+using time_ptr = hhg::iface::time::ptr;
 
 class hardware final : public hhg::iface::initializable
 {
 	const io_ptr io;
 	const fsio_ptr fsio;
+	const time_ptr time;
 public:
 	explicit hardware(class os::error** error) OS_NOEXCEPT;
 	~hardware() = default;
@@ -49,6 +52,11 @@ public:
 	inline const fsio_ptr& get_fsio() const OS_NOEXCEPT
 	{
 		return fsio;
+	}
+
+	inline const time_ptr& get_time() const OS_NOEXCEPT
+	{
+		return time;
 	}
 
     os::exit init(os::error** error) OS_NOEXCEPT override;

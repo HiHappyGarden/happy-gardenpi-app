@@ -22,6 +22,14 @@
 
 #include "hhg-parser/parser.hpp"
 
+namespace hhg::iface
+{
+inline namespace v1
+{
+class time;
+}
+}
+
 namespace hhg::app
 {
 inline namespace v1
@@ -36,6 +44,8 @@ void set_app_parser(class app_parser& app_parser) OS_NOEXCEPT;
 os::exit set_app_config(class app_config& app_config, os::error** error = nullptr) OS_NOEXCEPT;
 
 os::exit set_app_data(class app_data& app_data, os::error** error) OS_NOEXCEPT;
+
+void set_time(class hhg::iface::time* time) OS_NOEXCEPT;
 
 entry* get_commands() OS_NOEXCEPT;
 size_t get_commands_size() OS_NOEXCEPT;

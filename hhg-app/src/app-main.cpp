@@ -19,6 +19,7 @@
 
 #include <hhg-app/app-main.hpp>
 using namespace os;
+using hhg::iface::time;
 
 #include "hhg-app/app-parser-commands.hpp"
 
@@ -119,6 +120,10 @@ os::exit app_main::init(class os::error** error) OS_NOEXCEPT
 		return exit::KO;
 	}
 	OS_LOG_INFO(APP_TAG, "Init APP DATA - OK");
+
+	OS_LOG_INFO(APP_TAG, "Set timer to parser");
+	set_time(const_cast<class time*>(hardware.get_time().get()));
+
 
 	return os::exit::OK;
 }

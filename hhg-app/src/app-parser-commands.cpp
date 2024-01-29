@@ -22,8 +22,10 @@
 #include "hhg-app/app-parser-commands.hpp"
 #include "hhg-app/app-parser.hpp"
 #include "hhg-app/app-config.hpp"
-#include "hhg-driver/time.hpp"
-#include "hhg-utils/hhg-utils.hpp"
+#include "hhg-iface/time.hpp"
+using hhg::iface::time;
+
+
 using namespace os;
 
 namespace hhg::app
@@ -32,7 +34,8 @@ inline namespace v1
 {
 
 static class app_config* app_config = nullptr;
-static class app_data* app_data= nullptr;
+static class app_data* app_data = nullptr;
+static class time* time = nullptr;
 
 namespace
 {
@@ -44,9 +47,7 @@ entry commands_rtc[] =
 	{.key = "1"
 	, .custom_func = [](auto data, auto entry, auto error)
 	{
-		string<10> date_time_str;
-
-
+		snprintf(data.ret_buffer, data.ret_buffer_len, "%llu", time->get_timestamp(error));
 
 		return exit::OK;
 	}
@@ -54,6 +55,7 @@ entry commands_rtc[] =
 	{.key = "2"
 	, .custom_func = [](auto data, auto entry, auto error)
 	{
+
 		return exit::OK;
 	}
 	, .description = "Set RTC"},
@@ -154,6 +156,12 @@ os::exit set_app_data(class app_data& app_data, error** error) OS_NOEXCEPT
 
 	return exit::OK;
 }
+
+void set_time(class time* time) OS_NOEXCEPT
+{
+	hhg::app::time = time;
+}
+
 
 entry* get_commands() OS_NOEXCEPT
 {
