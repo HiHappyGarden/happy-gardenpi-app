@@ -121,8 +121,8 @@ os::exit app_main::init(class os::error** error) OS_NOEXCEPT
 	}
 	OS_LOG_INFO(APP_TAG, "Init APP DATA - OK");
 
-	OS_LOG_INFO(APP_TAG, "Set timer to parser");
-	set_time(const_cast<class time*>(hardware.get_time().get()));
+//	OS_LOG_INFO(APP_TAG, "Set timer to parser");
+//	set_time(const_cast<class time*>(hardware.get_time().get()));
 
 
 	return os::exit::OK;

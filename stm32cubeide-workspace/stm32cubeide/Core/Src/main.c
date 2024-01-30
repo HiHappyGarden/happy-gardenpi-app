@@ -437,7 +437,9 @@ void StartDefaultTask(void *argument)
 	{
 		Error_Handler();
 	}
+
 	vTaskDelete(NULL);
+
   /* USER CODE END 5 */
 }
 
