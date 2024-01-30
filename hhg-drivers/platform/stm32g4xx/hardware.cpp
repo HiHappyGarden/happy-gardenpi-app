@@ -51,6 +51,7 @@ constexpr const char APP_TAG[] = "HARDWARE";
 hardware::hardware(class error** error) OS_NOEXCEPT
 : io(new hhg::driver::stm32_io)
 , fsio(new hhg::driver::stm32_fsio(static_cast<uint32_t>(addr_flash::PAGE_112), static_cast<uint32_t>(addr_flash::PAGE_127) + FLASH_PAGE_SIZE - 1 ))
+, time(new hhg::driver::stm32_time)
 {
 	if(io.get() == nullptr && error)
 	{
@@ -62,6 +63,13 @@ hardware::hardware(class error** error) OS_NOEXCEPT
 	if(fsio.get() == nullptr && error)
 	{
         *error = OS_ERROR_BUILD("io(new hhg::driver::stm32_fsio) no mem.", error_type::OS_ENOMEM);
+        OS_ERROR_PTR_SET_POSITION(*error);
+        return;
+	}
+
+	if(time.get() == nullptr && error)
+	{
+        *error = OS_ERROR_BUILD("io(new hhg::driver::stm32_timer) no mem.", error_type::OS_ENOMEM);
         OS_ERROR_PTR_SET_POSITION(*error);
         return;
 	}
