@@ -35,7 +35,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="#include &lt;stm32g4xx/stm32-fs-io.hpp&gt;"/>
+			<item key="textPattern" value="os::thread"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -55,7 +55,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="using namespace osal;"/>
+			<item key="textPattern" value="set_app_parser"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -67,7 +67,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="using namespace os;"/>
+			<item key="textPattern" value="#include &lt;stm32g4xx/stm32-fs-io.hpp&gt;"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -79,7 +79,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="LL_RTC_ClearFlag_RS"/>
+			<item key="textPattern" value="using namespace osal;"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -91,7 +91,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="driver_lpuart_tx_callback"/>
+			<item key="textPattern" value="using namespace os;"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -103,7 +103,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="driver_lpuart_transmit"/>
+			<item key="textPattern" value="LL_RTC_ClearFlag_RS"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -115,7 +115,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="LL_RTC_Init"/>
+			<item key="textPattern" value="driver_lpuart_tx_callback"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -127,7 +127,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="hardf"/>
+			<item key="textPattern" value="driver_lpuart_transmit"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -136,6 +136,30 @@
 			</list>
 		</section>
 		<section name="HISTORY8">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="LL_RTC_Init"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY9">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="hardf"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY10">
 			<item key="ignoreCase" value="false"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
@@ -147,35 +171,11 @@
 			<list key="workingSets">
 			</list>
 		</section>
-		<section name="HISTORY9">
+		<section name="HISTORY11">
 			<item key="ignoreCase" value="false"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
 			<item key="textPattern" value="INCLUDE_"/>
-			<item key="scope" value="0"/>
-			<list key="fileNamePatterns">
-				<item value="*"/>
-			</list>
-			<list key="workingSets">
-			</list>
-		</section>
-		<section name="HISTORY10">
-			<item key="ignoreCase" value="true"/>
-			<item key="isRegExSearch" value="false"/>
-			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="INCLUDE"/>
-			<item key="scope" value="0"/>
-			<list key="fileNamePatterns">
-				<item value="*"/>
-			</list>
-			<list key="workingSets">
-			</list>
-		</section>
-		<section name="HISTORY11">
-			<item key="ignoreCase" value="true"/>
-			<item key="isRegExSearch" value="false"/>
-			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="hhg-config.h"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>

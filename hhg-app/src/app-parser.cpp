@@ -49,6 +49,17 @@ app_parser::app_parser(const hhg::iface::io::ptr& io, class os::error** error) O
 	}
 
 	singleton = this;
+}
+
+
+app_parser::~app_parser() OS_NOEXCEPT
+{
+	singleton = nullptr;
+	run = false;
+}
+
+os::exit app_parser::init(class error** error) OS_NOEXCEPT
+{
 
 	if(!run)
 	{
@@ -61,17 +72,10 @@ app_parser::app_parser(const hhg::iface::io::ptr& io, class os::error** error) O
 			*error = OS_ERROR_BUILD("Thread already run", error_type::OS_EFAULT);
 	        OS_ERROR_PTR_SET_POSITION(*error);
 		}
-		return;
+		return exit::KO;
 	}
+	return run ? exit::OK : exit::KO;
 }
-
-
-app_parser::~app_parser() OS_NOEXCEPT
-{
-	singleton = nullptr;
-	run = false;
-}
-
 
 void app_parser::on_receive(const uint8_t data[], uint16_t size) const OS_NOEXCEPT
 {

@@ -21,7 +21,9 @@
 #pragma once
 
 #include "hhg-iface/io.hpp"
+#include "hhg-iface/initializable.hpp"
 #include "hhg-parser/parser.hpp"
+#include "hhg-driver/os-config.hpp"
 
 namespace hhg::app
 {
@@ -30,7 +32,7 @@ inline namespace v1
 
 void* app_parser_thread_handler(void* arg) OS_NOEXCEPT;
 
-class app_parser final : public hhg::iface::io_on_receive
+class app_parser final : public hhg::iface::io_on_receive, public hhg::iface::initializable
 {
 	friend void* app_parser_thread_handler(void* arg) OS_NOEXCEPT;
 
@@ -49,8 +51,8 @@ class app_parser final : public hhg::iface::io_on_receive
 
 	os::thread thread {
 		"app_parser thread"
-		, 4
-		, 1024
+		, hhg::driver::NORMAL
+		, 1'024 * 2
 		, app_parser_thread_handler
 	};
 
@@ -68,6 +70,8 @@ public:
 	explicit app_parser(const hhg::iface::io::ptr& io, class os::error** error = nullptr) OS_NOEXCEPT;
 	~app_parser() OS_NOEXCEPT;
 	OS_NO_COPY_NO_MOVE(app_parser)
+
+	os::exit init(os::error** error) OS_NOEXCEPT override;
 
 	inline const hhg::parser::parser& get_parser() const OS_NOEXCEPT
 	{

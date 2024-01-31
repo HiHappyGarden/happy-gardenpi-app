@@ -36,11 +36,12 @@ inline namespace v1
 static class app_config* app_config = nullptr;
 static class app_data* app_data = nullptr;
 static class time* time = nullptr;
+static class parser* parser = nullptr;
 
 namespace
 {
 
-class parser* parser = nullptr;
+
 
 entry commands_rtc[] =
 {
@@ -114,6 +115,8 @@ os::exit set_app_config(class app_config& app_config, error** error) OS_NOEXCEPT
 {
 	string<16> key;
 
+	hhg::app::app_config = &app_config;
+
 	key = "^VER";
 	if(parser->set(key.c_str(), new method(&app_config, &app_config::get_version), error) == exit::KO)
 	{
@@ -143,8 +146,6 @@ os::exit set_app_config(class app_config& app_config, error** error) OS_NOEXCEPT
 	{
 		return exit::KO;
 	}
-
-	hhg::app::app_config = &app_config;
 
 	return exit::OK;
 }
