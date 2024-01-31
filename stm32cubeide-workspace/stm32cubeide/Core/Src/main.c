@@ -153,6 +153,7 @@ int main(void)
 
   /* USER CODE BEGIN RTOS_EVENTS */
   /* add events, ... */
+
   /* USER CODE END RTOS_EVENTS */
 
   /* Start scheduler */
@@ -161,6 +162,8 @@ int main(void)
   /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
+
   while (1)
   {
     /* USER CODE END WHILE */
@@ -439,7 +442,6 @@ void StartDefaultTask(void *argument)
 	}
 
 	vTaskDelete(NULL);
-
   /* USER CODE END 5 */
 }
 

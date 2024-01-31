@@ -52,9 +52,6 @@ os::thread test_thread{
 		return nullptr;
 	}};
 
-hhg::driver::hardware hw{nullptr};
-hhg::app::app_main app_main{hw};
-
 }
 
 #ifdef STM32G474xx
@@ -63,6 +60,8 @@ int hhg_main(void)
 int main(int argc, char* argv[])
 #endif
 {
+	hhg::driver::hardware hw{nullptr};
+	hhg::app::app_main app_main{hw};
 
     os::error* error = nullptr;
 
