@@ -51,10 +51,10 @@ os::exit stm32_io::init(error** error) OS_NOEXCEPT
 	driver_lpuart_register_rx_callback([](uint8_t ch)
 	{
 
-		if(stm32_io::singleton && singleton->obj && stm32_io::singleton->on_receive_callback)
+		if(stm32_io::singleton && stm32_io::singleton->obj && stm32_io::singleton->on_receive_callback)
 		{
 			stm32_io::singleton->source = stm32_io::LPUART;
-			(singleton->obj->*singleton->on_receive_callback)(&ch, 1);
+			(stm32_io::singleton->obj->*stm32_io::singleton->on_receive_callback)(&ch, 1);
 		}
 
 	});

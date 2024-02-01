@@ -32,7 +32,7 @@ inline namespace v1
 
 void* app_parser_thread_handler(void* arg) OS_NOEXCEPT;
 
-class app_parser final : public hhg::iface::io_on_receive, public hhg::iface::initializable
+class app_parser final : public hhg::iface::initializable, public hhg::iface::io_on_receive
 {
 	friend void* app_parser_thread_handler(void* arg) OS_NOEXCEPT;
 
