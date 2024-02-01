@@ -58,7 +58,16 @@ uint8_t driver_lpuart_transmit(const uint8_t* data, uint16_t size)
 	/* Enable TXE interrupt */
 	LL_USART_EnableIT_TXE(LPUART1);
 
-	while (tx_busy);
+	int32_t timer = 250;
+	while (tx_busy)
+	{
+		timer -= 10;
+		HAL_Delay(10);
+		if(timer <= 0)
+		{
+			tx_busy = false;
+		}
+	}
 	tx_busy = true;
 
 	if(HAL_UART_Transmit(hlpuart1, data, size, 0xFFFF)!= HAL_OK)
