@@ -70,7 +70,7 @@ uint8_t driver_lpuart_transmit(const uint8_t* data, uint16_t size)
 	}
 	tx_busy = true;
 
-	if(HAL_UART_Transmit(hlpuart1, data, size, 0xFFFF)!= HAL_OK)
+	if(HAL_UART_Transmit(hlpuart1, data, size, 100)!= HAL_OK)
 	{
 		/* Transfer error in transmission process */
 		return EXIT_FAILURE;

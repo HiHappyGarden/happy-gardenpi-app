@@ -44,10 +44,7 @@ app_main::app_main(driver::hardware& hardware) OS_NOEXCEPT
 
 }
 
-app_main::~app_main() OS_NOEXCEPT
-		{
-	auto u =0;
-		}
+app_main::~app_main() OS_NOEXCEPT = default;
 
 os::exit app_main::init(class os::error** error) OS_NOEXCEPT
 {

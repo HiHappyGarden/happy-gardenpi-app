@@ -441,11 +441,11 @@ void StartDefaultTask(void *argument)
 		Error_Handler();
 	}
 
-	while(1)
-	{
-		vTaskDelay(250 / portTICK_PERIOD_MS);
-	}
-//	vTaskDelete(NULL);
+//	while(1)
+//	{
+//		vTaskDelay(250 / portTICK_PERIOD_MS);
+//	}
+	vTaskDelete(NULL);
   /* USER CODE END 5 */
 }
 
