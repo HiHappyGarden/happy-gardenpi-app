@@ -19,7 +19,6 @@
 
 
 #include "stm32g4xx/stm32-fs-io.hpp"
-#include "stm32g4xx/stm32-freertos.hpp"
 using namespace hhg::iface;
 using namespace os;
 

@@ -57,7 +57,7 @@ os::exit app_main::init(class os::error** error) OS_NOEXCEPT
 	}
 	set_app_parser(app_parser);
 	OS_LOG_INFO(APP_TAG, "Init APP PARSER - OK");
-//
+
 	OS_LOG_INFO(APP_TAG, "Init APP CONFIG");
 	if(app_config.init(error) == exit::KO)
 	{
@@ -89,43 +89,43 @@ os::exit app_main::init(class os::error** error) OS_NOEXCEPT
 	OS_LOG_INFO(APP_TAG, "Init APP CONFIG - OK");
 
 
-//	OS_LOG_INFO(APP_TAG, "Init APP DATA");
-//	if(app_data.init(error) == exit::KO)
-//	{
-//		if(error && *error)
-//		{
-//			printf_stack_error(APP_TAG, *error);
-//			delete (*error);
-//			*error = nullptr;
-//		}
-//		OS_LOG_WARNING(APP_TAG, "Impossible load data, reset");
-//		app_data.reset();
-//
-//		OS_LOG_WARNING(APP_TAG, "Store default data");
-//		if(app_data.store(error) == exit::KO)
-//		{
-//			if(error)
-//			{
-//				*error = OS_ERROR_BUILD("set_app_config() fail.", error_type::OS_EFAULT);
-//				OS_ERROR_PTR_SET_POSITION(*error);
-//			}
-//			return exit::KO;
-//		}
-//		OS_LOG_WARNING(APP_TAG, "Store default data - OK");
-//	}
-//	if(set_app_data(app_data, error) == exit::KO)
-//	{
-//		if(error)
-//		{
-//			*error = OS_ERROR_BUILD("set_app_data() fail.", error_type::OS_EFAULT);
-//			OS_ERROR_PTR_SET_POSITION(*error);
-//		}
-//		return exit::KO;
-//	}
-//	OS_LOG_INFO(APP_TAG, "Init APP DATA - OK");
+	OS_LOG_INFO(APP_TAG, "Init APP DATA");
+	if(app_data.init(error) == exit::KO)
+	{
+		if(error && *error)
+		{
+			printf_stack_error(APP_TAG, *error);
+			delete (*error);
+			*error = nullptr;
+		}
+		OS_LOG_WARNING(APP_TAG, "Impossible load data, reset");
+		app_data.reset();
 
-//	OS_LOG_INFO(APP_TAG, "Set timer to parser");
-//	set_time(const_cast<class time*>(hardware.get_time().get()));
+		OS_LOG_WARNING(APP_TAG, "Store default data");
+		if(app_data.store(error) == exit::KO)
+		{
+			if(error)
+			{
+				*error = OS_ERROR_BUILD("set_app_config() fail.", error_type::OS_EFAULT);
+				OS_ERROR_PTR_SET_POSITION(*error);
+			}
+			return exit::KO;
+		}
+		OS_LOG_WARNING(APP_TAG, "Store default data - OK");
+	}
+	if(set_app_data(app_data, error) == exit::KO)
+	{
+		if(error)
+		{
+			*error = OS_ERROR_BUILD("set_app_data() fail.", error_type::OS_EFAULT);
+			OS_ERROR_PTR_SET_POSITION(*error);
+		}
+		return exit::KO;
+	}
+	OS_LOG_INFO(APP_TAG, "Init APP DATA - OK");
+
+	OS_LOG_INFO(APP_TAG, "Set timer to parser");
+	set_time(const_cast<class time*>(hardware.get_time().get()));
 
 
 	return os::exit::OK;

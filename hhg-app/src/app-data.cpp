@@ -18,12 +18,14 @@
  ***************************************************************************/
 
 #include "hhg-app/app-data.hpp"
-using namespace os;
 using hhg::iface::fs_io;
 using hhg::iface::data_type;
 
 #include "hhg-utils/hhg-utils.hpp"
 using hhg::utils::crc32;
+
+#include "osal/osal.hpp"
+using namespace os;
 
 namespace hhg::app
 {
@@ -61,19 +63,30 @@ os::exit app_data::store(os::error** error) const OS_NOEXCEPT
 	return fsio->write(data_type::DATA, reinterpret_cast<const uint8_t *>(&data), sizeof(data), error);
 }
 
+
 os::exit app_data::load(app_data::on_vesrion_change on_vesrion_change, os::error** error) OS_NOEXCEPT
 {
-	class data local_data;
+	auto local_data = static_cast<class data*>(os_malloc(sizeof(class data)));
+	if(local_data == nullptr)
+	{
+		if(error)
+		{
+			*error = OS_ERROR_BUILD("app_config::load() out of memory.", error_type::OS_ENOMEM);
+			OS_ERROR_PTR_SET_POSITION(*error);
+		}
+		return exit::KO;
+	}
 
-	if(fsio->read(data_type::DATA, reinterpret_cast<uint8_t *>(&local_data), sizeof(local_data), error) == exit::KO)
+
+	if(fsio->read(data_type::DATA, reinterpret_cast<uint8_t *>(local_data), sizeof(class data), error) == exit::KO)
 	{
 		return exit::KO;
 	}
 
-	uint32_t original_crc = local_data.crc;
-	local_data.crc = MAIGC;
-	uint32_t crc = crc32(reinterpret_cast<uint8_t *>(&local_data), sizeof(local_data));
-	local_data.crc = original_crc;
+	uint32_t original_crc = local_data->crc;
+	local_data->crc = MAIGC;
+	uint32_t crc = crc32(reinterpret_cast<uint8_t *>(local_data), sizeof(class data));
+	local_data->crc = original_crc;
 
 	if(crc != original_crc)
 	{
@@ -85,7 +98,7 @@ os::exit app_data::load(app_data::on_vesrion_change on_vesrion_change, os::error
 		return exit::KO;
 	}
 
-	if(local_data.magic != MAIGC)
+	if(local_data->magic != MAIGC)
 	{
 		if(error)
 		{
@@ -97,10 +110,12 @@ os::exit app_data::load(app_data::on_vesrion_change on_vesrion_change, os::error
 
 	if(on_vesrion_change)
 	{
-		on_vesrion_change(local_data.version);
+		on_vesrion_change(local_data->version);
 	}
 
-	data = local_data;
+	data = *local_data;
+
+	os_free(local_data);
 
 	return exit::OK;
 }

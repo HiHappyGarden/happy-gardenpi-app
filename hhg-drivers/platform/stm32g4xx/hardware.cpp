@@ -21,7 +21,6 @@
 #include "stm32g4xx/driver-lpuart.h"
 #include "stm32g4xx/stm32-fs-io.hpp"
 #include "stm32g4xx/stm32-io.hpp"
-#include "stm32g4xx/stm32-freertos.hpp"
 #include "stm32g4xx/stm32-time.hpp"
 using namespace os;
 using namespace hhg::iface;

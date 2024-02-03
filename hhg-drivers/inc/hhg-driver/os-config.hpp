@@ -33,6 +33,8 @@ extern uint32_t const HIGH;
 extern uint32_t const HIGHEST;
 extern uint32_t const REALTIME;
 
+extern char const TIME_T_STR[];
+
 }
 }
 
