@@ -32,6 +32,8 @@ uint32_t const HIGH = osPriorityAboveNormal;
 uint32_t const HIGHEST = osPriorityHigh;
 uint32_t const REALTIME = osPriorityRealtime;
 
+char const TIME_T_STR[] = "%lu";
+
 }
 }
 

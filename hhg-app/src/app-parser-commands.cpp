@@ -24,6 +24,7 @@
 #include "hhg-app/app-config.hpp"
 #include "hhg-iface/time.hpp"
 using hhg::iface::time;
+using namespace hhg::driver;
 
 
 using namespace os;
@@ -48,7 +49,8 @@ entry commands_rtc[] =
 	{.key = "1"
 	, .custom_func = [](auto data, auto entry, auto error)
 	{
-		snprintf(data.ret_buffer, data.ret_buffer_len, "%llu", time->get_timestamp(error));
+		auto t = time->get_timestamp(error);
+		sprintf(data.ret_buffer,  TIME_T_STR, t);
 
 		return exit::OK;
 	}
@@ -140,7 +142,6 @@ os::exit set_app_config(class app_config& app_config, error** error) OS_NOEXCEPT
 	{
 		return exit::KO;
 	}
-
 	key = "^CONF 4";
 	if(parser->set(key.c_str(), new method(&app_config, &app_config::set_descr), error) == exit::KO)
 	{
