@@ -31,7 +31,6 @@ inline namespace v1
 
 class stm32_time final : public hhg::iface::time
 {
-
 public:
 	stm32_time();
 	~stm32_time();
@@ -39,13 +38,9 @@ public:
 
 	os::exit set_timestamp(time_t timestamp, os::error **error = nullptr) OS_NOEXCEPT override;
 
-	::tm get_time(os::error **error = nullptr) const OS_NOEXCEPT override;
+	::tm get_date_time(os::error **error = nullptr) const OS_NOEXCEPT override;
 
-	inline time_t get_timestamp(os::error **error = nullptr) const OS_NOEXCEPT override
-	{
-		tm&& ret = get_time(error);
-		return mktime(&ret);
-	}
+	os::string<32> get_date_time(const char[] = FORMAT, os::error **error = nullptr) const OS_NOEXCEPT override;
 
 	bool wait_for_synchro(uint64_t timeout = os::ms_to_us(1'000)) const OS_NOEXCEPT override;
 

@@ -37,6 +37,7 @@ class time
 
 public:
 
+	static constexpr char FORMAT[] = "%Y/%m/%d %H:%M:%S";
 	static constexpr time_t TIMESTAMP_2000 = 946688400;
 
 	using ptr = os::unique_ptr<hhg::iface::time>;
@@ -45,13 +46,16 @@ public:
 
 	virtual os::exit set_timestamp(time_t timestamp, os::error **error = nullptr) OS_NOEXCEPT = 0;
 
-	virtual ::tm get_time(os::error **error = nullptr) const OS_NOEXCEPT = 0;
+	virtual ::tm get_date_time(os::error **error = nullptr) const OS_NOEXCEPT = 0;
 
 	virtual inline time_t get_timestamp(os::error **error = nullptr) const OS_NOEXCEPT
 	{
-		tm&& ret = get_time(error);
+		tm&& ret = get_date_time(error);
 		return mktime(&ret);
 	}
+
+
+	virtual os::string<32> get_date_time(const char format[] = FORMAT, os::error **error = nullptr) const OS_NOEXCEPT = 0;
 
 	virtual bool wait_for_synchro(uint64_t timeout = os::ms_to_us(1'000)) const OS_NOEXCEPT { return true; };
 
