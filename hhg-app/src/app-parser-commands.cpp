@@ -26,6 +26,7 @@
 using hhg::iface::time;
 using namespace hhg::driver;
 
+#include <errno.h>
 
 using namespace os;
 
@@ -49,7 +50,7 @@ entry commands_rtc[] =
 	{.key = "1"
 	, .custom_func = [](auto data, auto entry, auto error)
 	{
-		auto t = time->get_timestamp(error);
+		auto t = time->get_timestamp(error) + time::TIMESTAMP_2000;
 		sprintf(data.ret_buffer,  TIME_T_STR, t);
 
 		return exit::OK;
@@ -58,6 +59,22 @@ entry commands_rtc[] =
 	{.key = "2"
 	, .custom_func = [](auto data, auto entry, auto error)
 	{
+
+		char* ptr = nullptr;
+		time_t t = strtoll(data.tokens[2].start, &ptr, 10);
+		if (ptr == data.tokens[2].start || *ptr != '\0' || ((t== LONG_MIN || t == LONG_MAX) && errno == ERANGE))
+		{
+	        if(error)
+	        {
+	            *error = OS_ERROR_BUILD("Convention string to time_t fail", error_type::OS_EINVAL);
+	            OS_ERROR_PTR_SET_POSITION(*error);
+	        }
+			return exit::KO;
+		}
+
+		t -= time::TIMESTAMP_2000;
+
+		time->set_timestamp(t, error);
 
 		return exit::OK;
 	}
@@ -163,7 +180,6 @@ void set_time(class time* time) OS_NOEXCEPT
 {
 	hhg::app::time = time;
 }
-
 
 entry* get_commands() OS_NOEXCEPT
 {

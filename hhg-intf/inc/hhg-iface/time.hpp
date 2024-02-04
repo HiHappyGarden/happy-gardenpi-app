@@ -36,6 +36,9 @@ class time
 {
 
 public:
+
+	static constexpr time_t TIMESTAMP_2000 = 946688400;
+
 	using ptr = os::unique_ptr<hhg::iface::time>;
 
 	virtual ~time() = default;

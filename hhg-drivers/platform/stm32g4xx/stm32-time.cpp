@@ -31,6 +31,7 @@ namespace hhg::driver
 inline namespace v1
 {
 
+
 stm32_time::stm32_time() = default;
 stm32_time::~stm32_time() = default;
 
@@ -57,7 +58,7 @@ os::exit stm32_time::set_timestamp(time_t timestamp, os::error **error) OS_NOEXC
         }
 		return exit::KO;
 	}
-	local_date.Year = ts.tm_year - 100; //start 2000
+	local_date.Year = ts.tm_year - 2000; //start 2000
 	local_date.Month = ts.tm_mon + 1;
 	local_date.WeekDay = ts.tm_wday + 1;
 	local_date.Date = ts.tm_mday;
@@ -78,8 +79,6 @@ os::exit stm32_time::set_timestamp(time_t timestamp, os::error **error) OS_NOEXC
 {
 	RTC_TimeTypeDef local_time = {0};
 	RTC_DateTypeDef local_date = {0};
-
-
 
 	if(HAL_RTC_GetTime(&hrtc, &local_time, RTC_FORMAT_BCD) != HAL_OK)
 	{
@@ -107,7 +106,7 @@ os::exit stm32_time::set_timestamp(time_t timestamp, os::error **error) OS_NOEXC
 		.tm_hour = local_time.Hours,
 		.tm_mday = local_date.Date,
 		.tm_mon = local_date.Month - 1,
-		.tm_year = local_date.Year + 100,
+		.tm_year = local_date.Year + 2000,
 		.tm_wday = local_date.WeekDay - 1
 	};
 }
@@ -136,3 +135,5 @@ bool stm32_time::wait_for_synchro(uint64_t timeout) const OS_NOEXCEPT
 
 } /* namespace driver */
 } /* namespace hhg */
+
+
