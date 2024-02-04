@@ -75,7 +75,7 @@ os::exit stm32_time::set_timestamp(time_t timestamp, os::error **error) OS_NOEXC
 	return exit::OK;
 }
 
-::tm stm32_time::get_time(os::error **error) const OS_NOEXCEPT
+::tm stm32_time::get_date_time(os::error **error) const OS_NOEXCEPT
 {
 	RTC_TimeTypeDef local_time = {0};
 	RTC_DateTypeDef local_date = {0};
@@ -109,6 +109,19 @@ os::exit stm32_time::set_timestamp(time_t timestamp, os::error **error) OS_NOEXC
 		.tm_year = local_date.Year + 2000,
 		.tm_wday = local_date.WeekDay - 1
 	};
+}
+
+string<32> stm32_time::get_date_time(const char format[], os::error **error) const OS_NOEXCEPT
+{
+	string<32> ret;
+
+	auto now = get_date_time(error);
+
+	strftime(ret.c_str(), ret.size(), format, &now);
+
+	ret.length();
+
+	return ret;
 }
 
 bool stm32_time::wait_for_synchro(uint64_t timeout) const OS_NOEXCEPT
