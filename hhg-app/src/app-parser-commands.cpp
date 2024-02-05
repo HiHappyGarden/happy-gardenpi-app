@@ -76,7 +76,6 @@ entry commands_rtc[] =
 
 		time->set_timestamp(t, error);
 
-		OS_LOG_INFO("--->", "%s", time->get_date_time(time::FORMAT, error));
 
 		snprintf(data.ret_buffer, data.ret_buffer_len, "%s", hhg::parser::parser::OK);
 
