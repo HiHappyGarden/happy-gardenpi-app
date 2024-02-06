@@ -60,10 +60,16 @@ int hhg_main(void)
 int main(int argc, char* argv[])
 #endif
 {
-	static hhg::driver::hardware hw{nullptr};
-	static hhg::app::app_main app_main{hw};
 
-    os::error* error = nullptr;
+	os::error* error = nullptr;
+
+	static hhg::driver::hardware hw{nullptr};
+	static hhg::app::app_main app_main{hw, &error};
+	if(error)
+	{
+		os::printf_stack_error(APP_TAG, error);
+		delete error;
+	}
 
     OS_LOG_INFO(APP_TAG, "Init hardware");
     if(hw.init(&error) == os::exit::KO)
@@ -88,6 +94,18 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
 
+    OS_LOG_INFO(APP_TAG, "Start FSM app_main");
+    if(app_main.fsm_start(&error) == os::exit::KO)
+    {
+        if(error)
+        {
+            os::printf_stack_error(APP_TAG, error);
+            delete error;
+        }
+        os::stop_main_loop();
+        exit(EXIT_FAILURE);
+    }
+    OS_LOG_INFO(APP_TAG, "Start FSM app_main - OK");
 
     test_thread.create(nullptr, &error);
     if(error)
@@ -96,6 +114,8 @@ int main(int argc, char* argv[])
         delete error;
         return static_cast<int>(os::exit::KO);
     }
+
+
 
 
 #ifndef STM32G474xx

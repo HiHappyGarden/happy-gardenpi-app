@@ -33,7 +33,7 @@ constexpr char APP_TAG[] = "APP-PARSER";
 
 }
 
-app_parser::app_parser(const hhg::iface::io::ptr& io, class os::error** error) OS_NOEXCEPT
+app_parser::app_parser(const hhg::iface::io::ptr& io, class error** error) OS_NOEXCEPT
 : error(nullptr)
 , io(io)
 , parser(get_commands(), get_commands_size())
