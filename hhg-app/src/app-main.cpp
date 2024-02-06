@@ -18,7 +18,6 @@
  ***************************************************************************/
 
 #include <hhg-app/app-main.hpp>
-using namespace os;
 using hhg::iface::time;
 
 #include "hhg-app/app-parser-commands.hpp"
@@ -33,15 +32,99 @@ namespace
 
 constexpr const char APP_TAG[] = "APP MAIN";
 
+string<32> state_to_string(app_main::state state)
+{
+	string<32> ret;
+	switch (state)
+	{
+		case app_main::NONE:
+			ret = "NONE";
+			break;
+		case app_main::INIT:
+			ret = "INIT";
+			break;
+	}
+	return ret;
 }
 
-app_main::app_main(driver::hardware& hardware) OS_NOEXCEPT
+}
+
+void* fsm_thread_handler(void* arg)
+{
+	if(arg == nullptr)
+	{
+		app_main::singleton->fsm.run = false;
+	}
+
+	error** error = static_cast<os::error**>(arg);
+	time_t timer = 0;
+
+	while(app_main::singleton->fsm.run)
+	{
+		time_t&& now = app_main::singleton->hardware.get_time()->get_timestamp(error);
+
+		switch (app_main::singleton->fsm.state)
+		{
+			case app_main::NONE:
+			{
+
+				if(timer ==  0 && now > 0)
+				{
+
+					app_main::singleton->fsm.state = app_main::INIT;
+					app_main::singleton->fsm.old_state = app_main::NONE;
+					OS_LOG_INFO(APP_TAG, "state:%s - OK", state_to_string(app_main::singleton->fsm.state));
+				}
+				else
+				{
+					if(timer == 0)
+					{
+						tm date_time_default;
+						app_main::singleton->hardware.get_time()->set_timestamp(mktime(&date_time_default), error);
+						timer = 1_s;
+						OS_LOG_WARNING(APP_TAG, "state:%s - timestamp not valid", state_to_string(app_main::singleton->fsm.state));
+					}
+					else
+					{
+						timer -= app_main::FSM_SLEEP;
+					}
+				}
+
+				break;
+			}
+			case app_main::INIT:
+			{
+				break;
+			}
+			default:
+			{
+				break;
+			}
+		}
+		us_sleep(app_main::FSM_SLEEP);
+	}
+
+	return nullptr;
+}
+
+
+app_main::app_main(driver::hardware& hardware, class error** error) OS_NOEXCEPT
 : hardware(hardware)
 , app_config(hardware.get_fsio())
 , app_data(hardware.get_fsio())
 , app_parser(hardware.get_io())
 {
+	if(singleton)
+	{
+		if(error)
+		{
+	        *error = OS_ERROR_BUILD("Only one instance at a time", error_type::OS_EFAULT);
+	        OS_ERROR_PTR_SET_POSITION(*error);
+		}
+		return;
+	}
 
+	singleton = this;
 }
 
 app_main::~app_main() OS_NOEXCEPT = default;
@@ -133,7 +216,7 @@ os::exit app_main::init(class os::error** error) OS_NOEXCEPT
 
 os::exit app_main::fsm_start(class os::error** error) OS_NOEXCEPT
 {
-	return os::exit::OK;
+	return fsm_thread.create(error, error);
 }
 
 

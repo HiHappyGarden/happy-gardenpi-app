@@ -29,8 +29,10 @@ namespace hhg::app
 {
 inline namespace v1
 {
+using namespace os;
 
-class app_main_fsm;
+
+void* fsm_thread_handler(void* arg);
 
 class app_main final : public hhg::iface::initializable
 {
@@ -41,34 +43,37 @@ public:
         INIT        = 0x01
     };
 
-    struct fsm
-    {
-        enum state   state       = INIT;
-        enum state   old_state 	 = NONE;
-        uint8_t      errors      = 0;
-        os::event        events;
-        bool         run         = true;
-    };
-
-
-
 private:
-    static inline bool already_instanced = false;
+    static inline app_main* singleton = nullptr;
+    static constexpr uint64_t FSM_SLEEP = 100_ms;
 
     const driver::hardware& hardware;
     hhg::app::app_config app_config;
     hhg::app::app_data app_data;
     hhg::app::app_parser app_parser;
 
+	thread fsm_thread{"fsm thread", hhg::driver::HIGH, 1024 * 2, fsm_thread_handler};
+
+    struct fsm
+    {
+        enum state   state       = state::NONE;
+        enum state   old_state 	 = state::NONE;
+        uint8_t      errors      = 0;
+        event    events;
+        bool         run         = true;
+    }fsm;
+
+
+	friend void* fsm_thread_handler(void* arg);
 public:
-    explicit app_main(driver::hardware& hardware) OS_NOEXCEPT;
+    explicit app_main(driver::hardware& hardware, error** error) OS_NOEXCEPT;
     OS_NO_COPY_NO_MOVE(app_main)
 
     ~app_main() OS_NOEXCEPT;
 
-    os::exit init(class os::error** error) OS_NOEXCEPT override;
+    os::exit init(class error** error) OS_NOEXCEPT override;
 
-    os::exit fsm_start(class os::error** error) OS_NOEXCEPT;
+    os::exit fsm_start(class error** error) OS_NOEXCEPT;
 
 
 };
