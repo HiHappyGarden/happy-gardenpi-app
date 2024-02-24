@@ -38,7 +38,7 @@ class app_parser final : public hhg::iface::initializable, public hhg::iface::io
 
 	static constexpr const uint16_t BUFFER_SIZE = 512;
 	static constexpr const uint16_t RET_SIZE = 256;
-	static constexpr const char STARTER_CHAR[] = "^";
+	static constexpr const char STARTER_CHAR[] = "$";
 	static constexpr const uint8_t KO[] = "KO\r\n";
 	static constexpr const char NEW_LINE[] = "\r\n";
 
