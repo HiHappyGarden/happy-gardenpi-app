@@ -66,6 +66,7 @@ uint8_t driver_lpuart_transmit(const uint8_t* data, uint16_t size)
 		if(timer <= 0)
 		{
 			tx_busy = false;
+			LL_USART_DisableIT_TXE(LPUART1);
 		}
 	}
 	tx_busy = true;
@@ -73,6 +74,8 @@ uint8_t driver_lpuart_transmit(const uint8_t* data, uint16_t size)
 	if(HAL_UART_Transmit(hlpuart1, data, size, 50) != HAL_OK)
 	{
 		/* Transfer error in transmission process */
+		tx_busy = false;
+		LL_USART_DisableIT_TXE(LPUART1);
 		return EXIT_FAILURE;
 	}
 
