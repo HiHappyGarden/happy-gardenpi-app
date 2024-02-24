@@ -42,12 +42,23 @@ class app_config final : public hhg::iface::initializable
 	uint8_t const version_minor;
 	uint8_t const version_patch;
 
+	struct alignas(2) user final
+	{
+
+		static constexpr uint8_t MAX_USERS = 2;
+
+		os::string<128> email;
+		os::string<64> passwd;
+
+	};
+
 	mutable struct alignas(2) config final : public hhg::iface::file_version
 	{
 		inline config() : file_version{MAIGC, VERSION} {}
 		os::string<16> 	serial;
 		os::string<128> descr;
 		uint32_t crc = MAIGC;
+		user users[user::MAX_USERS];
 	} config;
 
 public:
