@@ -47,8 +47,7 @@ namespace
 
 entry commands_rtc[] =
 {
-	{.key = "1"
-	, .custom_func = [](auto data, auto entry, auto error)
+	{.key = "1", .custom_func = [](auto data, auto entry, auto error)
 	{
 		auto t = time->get_timestamp(error) + time::TIMESTAMP_2000;
 		sprintf(data.ret_buffer,  TIME_T_STR, t);
@@ -56,8 +55,7 @@ entry commands_rtc[] =
 		return exit::OK;
 	}
 	, .description = "Get RTC"},
-	{.key = "2"
-	, .custom_func = [](auto data, auto entry, auto error)
+	{.key = "2", .custom_func = [](auto data, auto entry, auto error)
 	{
 
 		char* ptr = nullptr;
@@ -92,8 +90,7 @@ entry commands_config[] =
 	{.key = "2", .description = "Set serial"},
 	{.key = "3", .description = "Get description"},
 	{.key = "4", .description = "Set description"},
-	{.key = "STORE"
-	, .custom_func = [](auto data, auto entry, auto error)
+	{.key = "STORE", .custom_func = [](auto data, auto entry, auto error)
 	{
 		auto ret = app_config->store(error);
 		if(ret == exit::OK)
@@ -116,12 +113,21 @@ entry commands_user[] =
 };
 constexpr const size_t commands_user_size = sizeof(commands_user) / sizeof(commands_user[0]);
 
+entry commands_log[] =
+{
+		{.key = "1", .func = new function{set_enable_log}, .description = "Set enable log"},
+		{.key = "2", .func = new function{set_level_log}, .description = "Set log level"}
+};
+constexpr const size_t commands_log_size = sizeof(commands_log) / sizeof(commands_log[0]);
+
 entry commands[] =
 {
-	{.key = "^VER", .description = "Get version"},
-	{.key = "^RTC", .next = commands_rtc, .next_size = commands_rtc_size, .description = "Rtc menu"},
-	{.key = "^CONF", .next = commands_config, .next_size = commands_config_size, .description = "Configuration menu"},
-	{.key = "^USR", .next = commands_user, .next_size = commands_user_size, .description = "User menu"}
+	{.key = "$VER", .description = "Get version"},
+	{.key = "$RTC", .next = commands_rtc, .next_size = commands_rtc_size, .description = "Rtc menu"},
+	{.key = "$CONF", .next = commands_config, .next_size = commands_config_size, .description = "Configuration menu"},
+	{.key = "$USR", .next = commands_user, .next_size = commands_user_size, .description = "User menu"},
+	{.key = "$LOG", .next = commands_log, .next_size = commands_log_size, .description = "Log menu"}
+
 };
 constexpr const size_t commands_size = sizeof(commands) / sizeof(commands[0]);
 
@@ -139,30 +145,31 @@ os::exit set_app_config(class app_config& app_config, error** error) OS_NOEXCEPT
 
 	hhg::app::app_config = &app_config;
 
-	key = "^VER";
+	key = "$VER";
 	if(parser->set(key.c_str(), new method(&app_config, &app_config::get_version), error) == exit::KO)
 	{
 		return exit::KO;
 	}
 
-	key = "^CONF 1";
+	key = "$CONF 1";
 	if(parser->set(key.c_str(), new method(&app_config, &app_config::get_serial), error) == exit::KO)
 	{
 		return exit::KO;
 	}
 
-	key = "^CONF 2";
+	key = "$CONF 2";
 	if(parser->set(key.c_str(), new method(&app_config, &app_config::set_serial), error) == exit::KO)
 	{
 		return exit::KO;
 	}
 
-	key = "^CONF 3";
+	key = "$CONF 3";
 	if(parser->set(key.c_str(), new method(&app_config, &app_config::get_descr), error) == exit::KO)
 	{
 		return exit::KO;
 	}
-	key = "^CONF 4";
+
+	key = "$CONF 4";
 	if(parser->set(key.c_str(), new method(&app_config, &app_config::set_descr), error) == exit::KO)
 	{
 		return exit::KO;
