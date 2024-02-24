@@ -54,6 +54,7 @@ void* fsm_thread_handler(void* arg)
 	if(arg == nullptr)
 	{
 		app_main::singleton->fsm.run = false;
+		OS_LOG_INFO(APP_TAG, "Arg nullptr");
 	}
 
 	error** error = static_cast<os::error**>(arg);
@@ -103,6 +104,9 @@ void* fsm_thread_handler(void* arg)
 		}
 		us_sleep(app_main::FSM_SLEEP);
 	}
+
+	app_main::singleton->fsm_thread.exit();
+	OS_LOG_DEBUG(APP_TAG, "Exit thread");
 
 	return nullptr;
 }
