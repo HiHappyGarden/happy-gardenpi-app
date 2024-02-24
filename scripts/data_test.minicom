@@ -1,0 +1,4 @@
+
+send $LOG 1 0
+send $RTC 2 1708812676
+send $LOG 1 1
