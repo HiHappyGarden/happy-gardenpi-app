@@ -46,6 +46,12 @@ string<32> state_to_string(app_main::state state)
 		case app_main::CHECK_ZONE:
 			ret = "CHECK_ZONE";
 			break;
+		case app_main::EXECUTE_ZONE:
+			ret = "EXECUTE_ZONE";
+			break;
+		case app_main::SINCH_TIMESTAMP:
+			ret = "SINCH_TIMESTAMP";
+			break;
 		case app_main::ERROR:
 			ret = "ERROR";
 			break;
@@ -108,7 +114,6 @@ void* fsm_thread_handler(void* arg)
 					{
 						generic_timer -= app_main::FSM_SLEEP;
 					}
-					now = 0;
 				}
 				break;
 			}
@@ -128,24 +133,36 @@ void* fsm_thread_handler(void* arg)
 			}
 			case app_main::CHECK_ZONE:
 			{
-				OS_LOG_DEBUG(APP_TAG, "HW check");
-				app_main::singleton->fsm.events.set(app_main::CHECK_ZONE);
-				app_main::singleton->fsm.old_state = app_main::CHECK_ZONE;
-
 				if(generic_timer <= 0)
 				{
-					zone current_zone;
-					if(app_main::singleton->app_data.get_zone(now, current_zone))
+					OS_LOG_DEBUG(APP_TAG, "Check zones");
+					app_main::singleton->fsm.events.set(app_main::CHECK_ZONE);
+					app_main::singleton->fsm.old_state = app_main::CHECK_ZONE;
+
+					schedule current_schedule;
+					if(app_main::singleton->app_data.get_schedule(now, current_schedule))
 					{
 						OS_LOG_DEBUG(APP_TAG, "");
+						current_schedule.status = status::RUN;
 						//TODO:
 						//app_main::singleton->fsm.state = app_main::INIT;
 					}
+					generic_timer = 1_s;
 				}
 				else
 				{
-					generic_timer = 1_s;
+					generic_timer -= app_main::FSM_SLEEP;
 				}
+				break;
+			}
+			case app_main::EXECUTE_ZONE:
+			{
+
+				break;
+			}
+			case app_main::SINCH_TIMESTAMP:
+			{
+
 				break;
 			}
 			default:
