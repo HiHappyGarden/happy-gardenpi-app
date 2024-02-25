@@ -58,39 +58,38 @@ void* fsm_thread_handler(void* arg)
 	}
 
 	error** error = static_cast<os::error**>(arg);
-	time_t timer = 0;
+	time_t&& now = app_main::singleton->hardware.get_time()->get_timestamp(error);
+
+	time_t generic_timer = 0;
 
 	while(app_main::singleton->fsm.run)
 	{
-		time_t&& now = app_main::singleton->hardware.get_time()->get_timestamp(error);
+
 
 		switch (app_main::singleton->fsm.state)
 		{
 			case app_main::NONE:
 			{
-
-				if(timer ==  0 && now > 0)
+				if(now > 0)
 				{
-
 					app_main::singleton->fsm.state = app_main::INIT;
 					app_main::singleton->fsm.old_state = app_main::NONE;
 					OS_LOG_INFO(APP_TAG, "state:%s - OK", state_to_string(app_main::singleton->fsm.state));
 				}
 				else
 				{
-					if(timer == 0)
+					now = app_main::singleton->hardware.get_time()->get_timestamp(error);
+					if(generic_timer == 0)
 					{
-						tm date_time_default;
-						app_main::singleton->hardware.get_time()->set_timestamp(mktime(&date_time_default), error);
-						timer = 1_s;
-						OS_LOG_WARNING(APP_TAG, "state:%s - timestamp not valid", state_to_string(app_main::singleton->fsm.state));
+						OS_LOG_WARNING(APP_TAG, "Waiting to set timestamp");
+						generic_timer = 1_s;
 					}
 					else
 					{
-						timer -= app_main::FSM_SLEEP;
+						generic_timer -= app_main::FSM_SLEEP;
 					}
-				}
 
+				}
 				break;
 			}
 			case app_main::INIT:
@@ -103,6 +102,7 @@ void* fsm_thread_handler(void* arg)
 			}
 		}
 		us_sleep(app_main::FSM_SLEEP);
+		now += app_main::FSM_SLEEP;
 	}
 
 	app_main::singleton->fsm_thread.exit();
