@@ -39,12 +39,13 @@ class app_main final : public hhg::iface::initializable
 public:
     enum state
     {
-    	NONE        = 0x00,
-        INIT        = (1 << 0),
-		CHECK_ZONE  = (1 << 1),
+    	NONE         	= 0x00,
+        INIT         	= (1 << 0),
+		CHECK_ZONE   	= (1 << 1),
+		EXECUTE_ZONE 	= (1 << 2),
+		SINCH_TIMESTAMP = (1 << 3),
 
-
-		ERROR  		= (1 << 7)
+		ERROR  		 	= (1 << 7)
 
     };
 

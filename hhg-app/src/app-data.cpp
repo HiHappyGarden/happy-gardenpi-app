@@ -128,11 +128,32 @@ os::exit app_data::load_defaut(os::error** error) OS_NOEXCEPT
 	return store(error);
 }
 
-bool app_data::get_zone(time_t timestamp, struct zone& zone) OS_NOEXCEPT
+bool app_data::get_schedule(time_t timestamp, struct schedule& schedule) OS_NOEXCEPT
 {
-	tm* ts = gmtime(&timestamp);
+	tm* now = gmtime(&timestamp);
 
-	zone = {};
+	for(uint8_t idx_schedule = 0; idx_schedule < HHG_SCHEDULES_SIZE; idx_schedule++)
+	{
+		auto&& current_schedule = data.schedules[idx_schedule];
+		if(current_schedule.status != status::ACTIVE)
+		{
+			continue;
+		}
+
+		if( (current_schedule.hour == static_cast<uint8_t>(schedule::NOT_SET) && current_schedule.minute == static_cast<uint8_t>(schedule::NOT_SET)) || current_schedule.hour == static_cast<uint8_t>(schedule::NOT_SET) )
+		{
+			continue;
+		}
+
+		if( (current_schedule.hour == now->tm_hour && current_schedule.minute == now->tm_min)
+			|| (current_schedule.hour == now->tm_hour && current_schedule.minute == static_cast<uint8_t>(schedule::NOT_SET) && now->tm_min == 0)
+		)
+		{
+
+			schedule = current_schedule;
+			return true;
+		}
+	}
 
 	return false;
 }

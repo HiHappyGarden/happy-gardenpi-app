@@ -67,9 +67,9 @@ struct zone final
     uint8_t relay_number = 0;
 
     /**
-    * @brief watering time in minutes
+    * @brief watering time in minutes less then 1 minute it's an error
     */
-    uint8_t watering_time = 0;
+    uint8_t watering_time = 1;
 
     /**
     * @brief for manage order of execution lighter is first then weightier
@@ -92,12 +92,12 @@ struct schedule final
     /**
     * @brief minute, values allowed 0 - 59
     */
-    uint8_t minute = 0; //0 - 59 or NOT_SET
+    uint8_t minute = static_cast<uint8_t>(NOT_SET); //0 - 59 or NOT_SET
 
     /**
     * @brief minute, values allowed 0 - 23 or NOT_SET
     */
-    uint8_t hour = 0; //0 - 23 or NOT_SET
+    uint8_t hour = static_cast<uint8_t>(NOT_SET); //0 - 23 or NOT_SET
 
     /**
     * @brief days, values allowed 0x01 - 0x7F or NOT_SET
@@ -194,7 +194,7 @@ public:
 
 	os::exit load_defaut(os::error** error) OS_NOEXCEPT;
 
-	bool get_zone(time_t timestamp, struct zone& zone) OS_NOEXCEPT;
+	bool get_schedule(time_t timestamp, struct schedule& schedule) OS_NOEXCEPT;
 };
 
 }
