@@ -49,7 +49,8 @@ entry commands_rtc[] =
 {
 	{.key = "1", .custom_func = [](auto data, auto entry, auto error)
 	{
-		auto t = time->get_timestamp(error) + time::TIMESTAMP_2000;
+		//auto t = time->get_timestamp(error) + time::TIMESTAMP_2000;
+		auto t = time->get_timestamp(error);
 		sprintf(data.ret_buffer,  TIME_T_STR, t);
 
 		return exit::OK;
@@ -70,7 +71,7 @@ entry commands_rtc[] =
 			return exit::KO;
 		}
 
-		t -= time::TIMESTAMP_2000;
+//		t -= time::TIMESTAMP_2000;
 
 		time->set_timestamp(t, error);
 
@@ -80,6 +81,14 @@ entry commands_rtc[] =
 		return exit::OK;
 	}
 	, .description = "Set RTC"},
+	{.key = "3", .custom_func = [](auto data, auto entry, auto error)
+	{
+		auto&& date_time = time->get_date_time(time::FORMAT, error);
+		strncpy(data.ret_buffer, date_time.c_str(), data.ret_buffer_len);
+
+		return exit::OK;
+	}
+	, .description = "Get RTC readable format"}
 };
 constexpr const size_t commands_rtc_size = sizeof(commands_rtc) / sizeof(commands_rtc[0]);
 

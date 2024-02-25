@@ -32,6 +32,8 @@ inline namespace v1
 class stm32_time final : public hhg::iface::time
 {
 public:
+	static constexpr time_t TIMESTAMP_2000 = 946688400;
+
 	stm32_time();
 	~stm32_time();
 	OS_NO_COPY_NO_MOVE(stm32_time)
