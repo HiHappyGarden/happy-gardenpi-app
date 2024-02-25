@@ -40,12 +40,18 @@ public:
     enum state
     {
     	NONE        = 0x00,
-        INIT        = 0x01
+        INIT        = (1 << 0),
+		CHECK_ZONE  = (1 << 1),
+
+
+		ERROR  		= (1 << 7)
+
     };
 
 private:
     static inline app_main* singleton = nullptr;
     static constexpr uint64_t FSM_SLEEP = 100_ms;
+    static constexpr time_t TIMESTAMP_2020 = 1577880000;
 
     const driver::hardware& hardware;
     hhg::app::app_config app_config;
@@ -54,12 +60,15 @@ private:
 
 	thread fsm_thread{"fsm thread", hhg::driver::HIGH, 1024 * 2, fsm_thread_handler};
 
+
     struct fsm
     {
+		static constexpr uint8_t MAX_ERROR = 5;
+
         enum state   state       = state::NONE;
         enum state   old_state 	 = state::NONE;
         uint8_t      errors      = 0;
-        event    events;
+        event    	 events;
         bool         run         = true;
     }fsm;
 
@@ -75,6 +84,9 @@ public:
 
     os::exit fsm_start(class error** error) OS_NOEXCEPT;
 
+private:
+
+    os::exit handle_error() OS_NOEXCEPT;
 
 };
 

@@ -49,7 +49,6 @@ entry commands_rtc[] =
 {
 	{.key = "1", .custom_func = [](auto data, auto entry, auto error)
 	{
-		//auto t = time->get_timestamp(error) + time::TIMESTAMP_2000;
 		auto t = time->get_timestamp(error);
 		sprintf(data.ret_buffer,  TIME_T_STR, t);
 
@@ -70,8 +69,6 @@ entry commands_rtc[] =
 	        }
 			return exit::KO;
 		}
-
-//		t -= time::TIMESTAMP_2000;
 
 		time->set_timestamp(t, error);
 
