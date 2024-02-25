@@ -43,6 +43,12 @@ string<32> state_to_string(app_main::state state)
 		case app_main::INIT:
 			ret = "INIT";
 			break;
+		case app_main::CHECK_ZONE:
+			ret = "CHECK_ZONE";
+			break;
+		case app_main::ERROR:
+			ret = "ERROR";
+			break;
 	}
 	return ret;
 }
@@ -60,25 +66,39 @@ void* fsm_thread_handler(void* arg)
 	error** error = static_cast<os::error**>(arg);
 	time_t&& now = app_main::singleton->hardware.get_time()->get_timestamp(error);
 
-	time_t generic_timer = 0;
+	int32_t generic_timer = 0;
 
 	while(app_main::singleton->fsm.run)
 	{
-
-
 		switch (app_main::singleton->fsm.state)
 		{
 			case app_main::NONE:
 			{
-				if(now > 0)
+				if(now > app_main::TIMESTAMP_2020)
 				{
+					auto&& date_time = app_main::singleton->hardware.get_time()->get_date_time(time::FORMAT, error);
+			        if(*error)
+			        {
+			            os::printf_stack_error(APP_TAG, *error);
+			            delete *error;
+			            app_main::singleton->handle_error();
+			        }
+
+			        app_main::singleton->fsm.errors = 0;
+					OS_LOG_INFO(APP_TAG, "Date time:%s state:%s - OK", date_time.c_str(), state_to_string(app_main::singleton->fsm.state));
 					app_main::singleton->fsm.state = app_main::INIT;
 					app_main::singleton->fsm.old_state = app_main::NONE;
-					OS_LOG_INFO(APP_TAG, "state:%s - OK", state_to_string(app_main::singleton->fsm.state));
 				}
 				else
 				{
 					now = app_main::singleton->hardware.get_time()->get_timestamp(error);
+			        if(*error)
+			        {
+			            os::printf_stack_error(APP_TAG, *error);
+			            delete *error;
+			            app_main::singleton->handle_error();
+			        }
+
 					if(generic_timer == 0)
 					{
 						OS_LOG_WARNING(APP_TAG, "Waiting to set timestamp");
@@ -88,12 +108,44 @@ void* fsm_thread_handler(void* arg)
 					{
 						generic_timer -= app_main::FSM_SLEEP;
 					}
-
+					now = 0;
 				}
 				break;
 			}
 			case app_main::INIT:
 			{
+				OS_LOG_DEBUG(APP_TAG, "HW check");
+				app_main::singleton->fsm.events.set(app_main::INIT);
+
+				//TODO: hw check
+				generic_timer = 0;
+
+				app_main::singleton->fsm.errors = 0;
+				OS_LOG_INFO(APP_TAG, "state:%s - OK", state_to_string(app_main::singleton->fsm.state));
+				app_main::singleton->fsm.state = app_main::CHECK_ZONE;
+				app_main::singleton->fsm.old_state = app_main::INIT;
+				break;
+			}
+			case app_main::CHECK_ZONE:
+			{
+				OS_LOG_DEBUG(APP_TAG, "HW check");
+				app_main::singleton->fsm.events.set(app_main::CHECK_ZONE);
+				app_main::singleton->fsm.old_state = app_main::CHECK_ZONE;
+
+				if(generic_timer <= 0)
+				{
+					zone current_zone;
+					if(app_main::singleton->app_data.get_zone(now, current_zone))
+					{
+						OS_LOG_DEBUG(APP_TAG, "");
+						//TODO:
+						//app_main::singleton->fsm.state = app_main::INIT;
+					}
+				}
+				else
+				{
+					generic_timer = 1_s;
+				}
 				break;
 			}
 			default:
@@ -223,6 +275,20 @@ os::exit app_main::fsm_start(class os::error** error) OS_NOEXCEPT
 	return fsm_thread.create(error, error);
 }
 
+os::exit app_main::handle_error() OS_NOEXCEPT
+{
+	if(fsm.errors < fsm::MAX_ERROR)
+	{
+		fsm.errors++;
+		return exit::OK;
+	}
+	else
+	{
+		fsm.old_state = fsm.state;
+		fsm.state = ERROR;
+		return exit::KO;
+	}
+}
 
 }
 }

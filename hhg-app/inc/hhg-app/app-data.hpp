@@ -27,6 +27,7 @@
 #include "hhg-iface/initializable.hpp"
 #include "hhg-iface/file-version.hpp"
 
+#include <time.h>
 #include <stdint.h>
 
 namespace hhg::app
@@ -35,7 +36,7 @@ inline namespace v1
 {
 
 
-enum class status
+enum class status : uint8_t
 {
     UNACTIVE,
     ACTIVE,
@@ -78,7 +79,7 @@ struct zone final
     /**
      * @brief status of station
      */
-    enum status status = status::ACTIVE;
+    enum status status = status::UNACTIVE;
 };
 
 struct schedule final
@@ -105,7 +106,6 @@ struct schedule final
     {
         struct
         {
-
             uint8_t mon: 1;
             uint8_t tue: 1;
             uint8_t wen: 1;
@@ -124,7 +124,6 @@ struct schedule final
     {
         struct
         {
-
             uint8_t jan: 1;
             uint8_t feb: 1;
             uint8_t mar: 1;
@@ -149,7 +148,7 @@ struct schedule final
     /**
      * @brief status of station
      */
-    enum status status = status::ACTIVE;
+    enum status status = status::UNACTIVE;
 
     /**
      * @brief zones_len count number of zone configurated
@@ -194,6 +193,8 @@ public:
 	os::exit load(app_data::on_vesrion_change on_vesrion_change, os::error** error) OS_NOEXCEPT;
 
 	os::exit load_defaut(os::error** error) OS_NOEXCEPT;
+
+	bool get_zone(time_t timestamp, struct zone& zone) OS_NOEXCEPT;
 };
 
 }

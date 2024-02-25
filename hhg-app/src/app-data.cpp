@@ -27,6 +27,8 @@ using hhg::utils::crc32;
 #include "osal/osal.hpp"
 using namespace os;
 
+#include <time.h>
+
 namespace hhg::app
 {
 inline namespace v1
@@ -124,6 +126,15 @@ os::exit app_data::load_defaut(os::error** error) OS_NOEXCEPT
 {
 	reset();
 	return store(error);
+}
+
+bool app_data::get_zone(time_t timestamp, struct zone& zone) OS_NOEXCEPT
+{
+	tm* ts = gmtime(&timestamp);
+
+	zone = {};
+
+	return false;
 }
 
 } /* namespace driver */
