@@ -38,7 +38,6 @@ class time
 public:
 
 	static constexpr char FORMAT[] = "%Y/%m/%d %H:%M:%S";
-	static constexpr time_t TIMESTAMP_2000 = 946688400;
 
 	using ptr = os::unique_ptr<hhg::iface::time>;
 

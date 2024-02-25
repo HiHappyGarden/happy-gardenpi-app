@@ -58,7 +58,7 @@ os::exit stm32_time::set_timestamp(time_t timestamp, os::error **error) OS_NOEXC
         }
 		return exit::KO;
 	}
-	local_date.Year = ts.tm_year + 130; //start 1900
+	local_date.Year = ts.tm_year - 100; //start 1900
 	local_date.Month = ts.tm_mon + 1;
 	local_date.WeekDay = ts.tm_wday + 1;
 	local_date.Date = ts.tm_mday;
@@ -106,7 +106,7 @@ os::exit stm32_time::set_timestamp(time_t timestamp, os::error **error) OS_NOEXC
 		.tm_hour = local_time.Hours - 1,
 		.tm_mday = local_date.Date,
 		.tm_mon = local_date.Month - 1,
-		.tm_year = local_date.Year - 130,
+		.tm_year = local_date.Year + 100,
 		.tm_wday = local_date.WeekDay - 1
 	};
 }
