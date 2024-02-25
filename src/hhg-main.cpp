@@ -61,7 +61,7 @@ int main(int argc, char* argv[])
 #endif
 {
 
-	os::error* error = nullptr;
+	static os::error* error = nullptr;
 
 	static hhg::driver::hardware hw{nullptr};
 	static hhg::app::app_main app_main{hw, &error};
