@@ -195,6 +195,10 @@ public:
 	os::exit load_defaut(os::error** error) OS_NOEXCEPT;
 
 	bool get_schedule(time_t timestamp, struct schedule& schedule) OS_NOEXCEPT;
+
+private:
+	uint8_t get_bit_day(const tm* now) const OS_NOEXCEPT;
+
 };
 
 }
