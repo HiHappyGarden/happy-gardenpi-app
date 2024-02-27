@@ -149,13 +149,52 @@ bool app_data::get_schedule(time_t timestamp, struct schedule& schedule) OS_NOEX
 			|| (current_schedule.hour == now->tm_hour && current_schedule.minute == static_cast<uint8_t>(schedule::NOT_SET) && now->tm_min == 0)
 		)
 		{
+			if(
+					(current_schedule.days.data == static_cast<uint8_t>(schedule::NOT_SET) && current_schedule.months.data == schedule::NOT_SET)
+					|| (current_schedule.days.data & get_bit_day(now) && current_schedule.months.data == schedule::NOT_SET)
+					|| (current_schedule.days.data == static_cast<uint8_t>(schedule::NOT_SET) && current_schedule.months.data & (1 << now->tm_mon))
+					|| (current_schedule.days.data == now->tm_mday && current_schedule.months.data == now->tm_mon)
 
-			schedule = current_schedule;
-			return true;
+			)
+			{
+				schedule = current_schedule;
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 	}
 
 	return false;
+}
+
+uint8_t app_data::get_bit_day(const tm* now) const OS_NOEXCEPT
+{
+	if(now == nullptr)
+	{
+		return static_cast<uint8_t>(schedule::NOT_SET);
+	}
+
+	switch(now->tm_mday)
+	{
+		case 0: //sun
+			return (1 << 6);
+		case 1: //mon
+			return (1 << 0);
+		case 2: //tue
+			return (1 << 1);
+		case 3: //wen
+			return (1 << 2);
+		case 4: //thu
+			return (1 << 3);
+		case 5: //fri
+			return (1 << 4);
+		case 6: //sat
+			return (1 << 5);
+	}
+	return static_cast<uint8_t>(schedule::NOT_SET);
 }
 
 } /* namespace driver */

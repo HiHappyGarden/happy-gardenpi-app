@@ -29,7 +29,7 @@ inline namespace v1
 
 namespace
 {
-
+constexpr const uint16_t ONE_SEC_IN_MILLIS = 1'000;
 constexpr const char APP_TAG[] = "APP MAIN";
 
 string<32> state_to_string(app_main::state state)
@@ -70,7 +70,7 @@ void* fsm_thread_handler(void* arg)
 	}
 
 	error** error = static_cast<os::error**>(arg);
-	time_t&& now = app_main::singleton->hardware.get_time()->get_timestamp(error);
+	time_t&& now_in_millis = app_main::singleton->hardware.get_time()->get_timestamp(error) * ONE_SEC_IN_MILLIS;
 
 	int32_t generic_timer = 0;
 
@@ -80,7 +80,7 @@ void* fsm_thread_handler(void* arg)
 		{
 			case app_main::NONE:
 			{
-				if(now > app_main::TIMESTAMP_2020)
+				if(now_in_millis > app_main::TIMESTAMP_2020 * ONE_SEC_IN_MILLIS)
 				{
 					auto&& date_time = app_main::singleton->hardware.get_time()->get_date_time(time::FORMAT, error);
 			        if(*error)
@@ -97,7 +97,7 @@ void* fsm_thread_handler(void* arg)
 				}
 				else
 				{
-					now = app_main::singleton->hardware.get_time()->get_timestamp(error);
+					now_in_millis = app_main::singleton->hardware.get_time()->get_timestamp(error) * ONE_SEC_IN_MILLIS;
 			        if(*error)
 			        {
 			            os::printf_stack_error(APP_TAG, *error);
@@ -108,7 +108,7 @@ void* fsm_thread_handler(void* arg)
 					if(generic_timer == 0)
 					{
 						OS_LOG_WARNING(APP_TAG, "Waiting to set timestamp");
-						generic_timer = 1_s;
+						generic_timer = ONE_SEC_IN_MILLIS;
 					}
 					else
 					{
@@ -140,14 +140,14 @@ void* fsm_thread_handler(void* arg)
 					app_main::singleton->fsm.old_state = app_main::CHECK_ZONE;
 
 					schedule current_schedule;
-					if(app_main::singleton->app_data.get_schedule(now, current_schedule))
+					if(app_main::singleton->app_data.get_schedule(now_in_millis / ONE_SEC_IN_MILLIS, current_schedule))
 					{
 						OS_LOG_DEBUG(APP_TAG, "");
 						current_schedule.status = status::RUN;
 						//TODO:
 						//app_main::singleton->fsm.state = app_main::INIT;
 					}
-					generic_timer = 1_s;
+					generic_timer = ONE_SEC_IN_MILLIS;
 				}
 				else
 				{
@@ -170,8 +170,8 @@ void* fsm_thread_handler(void* arg)
 				break;
 			}
 		}
-		us_sleep(app_main::FSM_SLEEP);
-		now += app_main::FSM_SLEEP;
+		us_sleep(ms_to_us(app_main::FSM_SLEEP));
+		now_in_millis += app_main::FSM_SLEEP;
 	}
 
 	app_main::singleton->fsm_thread.exit();

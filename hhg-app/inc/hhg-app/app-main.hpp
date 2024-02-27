@@ -51,8 +51,8 @@ public:
 
 private:
     static inline app_main* singleton = nullptr;
-    static constexpr uint64_t FSM_SLEEP = 100_ms;
-    static constexpr time_t TIMESTAMP_2020 = 1577880000;
+    static constexpr uint64_t FSM_SLEEP = 100;
+	static constexpr time_t TIMESTAMP_2020 = 1'577'880'000;
 
     const driver::hardware& hardware;
     hhg::app::app_config app_config;
