@@ -115,7 +115,7 @@ string<32> stm32_time::get_date_time(const char format[], os::error **error) con
 {
 	string<32> ret;
 
-	auto now = get_date_time(error);
+	auto&& now = get_date_time(error);
 
 	strftime(ret.c_str(), ret.size(), format, &now);
 

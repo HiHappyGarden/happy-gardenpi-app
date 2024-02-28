@@ -27,6 +27,8 @@ using hhg::utils::crc32;
 #include "osal/osal.hpp"
 using namespace os;
 
+#include "cJSON.h"
+
 #include <time.h>
 
 namespace hhg::app
@@ -168,6 +170,87 @@ bool app_data::get_schedule(time_t timestamp, struct schedule& schedule) OS_NOEX
 	}
 
 	return false;
+}
+
+os::exit app_data::set_schedule(const char json_str[]) OS_NOEXCEPT
+{
+
+	return exit::OK;
+}
+
+os::exit app_data::set_zone(const char json_str[]) OS_NOEXCEPT
+{
+    if(json_str == NULL)
+    {
+        OS_LOG_ERROR(APP_TAG, "json_str nullptr");
+        return exit::KO;
+    }
+
+	cJSON* json_root = cJSON_Parse(json_str);
+	if (cJSON_IsInvalid(json_root) || !cJSON_IsObject(json_root))
+	{
+		cJSON_Delete(json_root);
+		OS_LOG_ERROR(APP_TAG, "Unable read json json_root");
+		return exit::KO;
+	}
+
+	const cJSON* name = nullptr;
+    if (cJSON_IsInvalid(name) || !cJSON_IsString(name))
+    {
+        cJSON_Delete(json_root);
+        OS_LOG_ERROR(APP_TAG, "Unable read name");
+        return exit::KO;
+    }
+
+	const cJSON* description = nullptr;
+    if (cJSON_IsInvalid(description) || !cJSON_IsString(description))
+    {
+        cJSON_Delete(json_root);
+        OS_LOG_ERROR(APP_TAG, "Unable read description");
+        return exit::KO;
+    }
+
+	const cJSON* relay_number = nullptr;
+    if (cJSON_IsInvalid(relay_number) || !cJSON_IsNumber(relay_number))
+    {
+        cJSON_Delete(json_root);
+        OS_LOG_ERROR(APP_TAG, "Unable read relay_number");
+    }
+
+	const cJSON* watering_time = nullptr;
+	if (cJSON_IsInvalid(watering_time) || !cJSON_IsNumber(watering_time))
+	{
+		cJSON_Delete(json_root);
+		OS_LOG_ERROR(APP_TAG, "Unable read relay_number");
+	}
+
+	const cJSON* weight = nullptr;
+	if (cJSON_IsInvalid(weight) || !cJSON_IsNumber(weight))
+	{
+		cJSON_Delete(json_root);
+		OS_LOG_ERROR(APP_TAG, "Unable read weight");
+	}
+
+	const cJSON* status = nullptr;
+	if (cJSON_IsInvalid(status) || !cJSON_IsNumber(status))
+	{
+		cJSON_Delete(json_root);
+		OS_LOG_ERROR(APP_TAG, "Unable read status");
+	}
+
+
+
+	return exit::OK;
+}
+
+char* app_data::get_schedule() OS_NOEXCEPT
+{
+	return nullptr;
+}
+
+char* app_data::get_zone() OS_NOEXCEPT
+{
+	return nullptr;
 }
 
 uint8_t app_data::get_bit_day(const tm* now) const OS_NOEXCEPT
