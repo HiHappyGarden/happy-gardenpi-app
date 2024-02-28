@@ -196,6 +196,14 @@ public:
 
 	bool get_schedule(time_t timestamp, struct schedule& schedule) OS_NOEXCEPT;
 
+	os::exit set_schedule(const char[]) OS_NOEXCEPT;
+
+	os::exit set_zone(const char[]) OS_NOEXCEPT;
+
+	char* get_schedule() OS_NOEXCEPT;
+
+	char* get_zone() OS_NOEXCEPT;
+
 private:
 	uint8_t get_bit_day(const tm* now) const OS_NOEXCEPT;
 

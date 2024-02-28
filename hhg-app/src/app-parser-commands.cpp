@@ -22,6 +22,7 @@
 #include "hhg-app/app-parser-commands.hpp"
 #include "hhg-app/app-parser.hpp"
 #include "hhg-app/app-config.hpp"
+#include "hhg-app/app-data.hpp"
 #include "hhg-iface/time.hpp"
 using hhg::iface::time;
 using namespace hhg::driver;
@@ -113,6 +114,15 @@ entry commands_config[] =
 };
 constexpr const size_t commands_config_size = sizeof(commands_config) / sizeof(commands_config[0]);
 
+entry commands_data[] =
+{
+	{.key = "1", .description = "Get scheduler"},
+	{.key = "2", .description = "Set scheduler"},
+	{.key = "3", .description = "Get zone"},
+	{.key = "4", .description = "Set zone"},
+};
+constexpr const size_t commands_data_size = sizeof(commands_data) / sizeof(commands_data[0]);
+
 entry commands_user[] =
 {
 
@@ -131,6 +141,7 @@ entry commands[] =
 	{.key = "$VER", .description = "Get version"},
 	{.key = "$RTC", .next = commands_rtc, .next_size = commands_rtc_size, .description = "Rtc menu"},
 	{.key = "$CONF", .next = commands_config, .next_size = commands_config_size, .description = "Configuration menu"},
+	{.key = "$DATA", .next = commands_data, .next_size = commands_data_size, .description = "Data menu"},
 	{.key = "$USR", .next = commands_user, .next_size = commands_user_size, .description = "User menu"},
 	{.key = "$LOG", .next = commands_log, .next_size = commands_log_size, .description = "Log menu"}
 
@@ -186,8 +197,33 @@ os::exit set_app_config(class app_config& app_config, error** error) OS_NOEXCEPT
 
 os::exit set_app_data(class app_data& app_data, error** error) OS_NOEXCEPT
 {
+	string<16> key;
 
 	hhg::app::app_data = &app_data;
+
+	key = "$DATA 1";
+	if(parser->set(key.c_str(), new method<struct app_data, char*>(&app_data, &app_data::get_schedule), error) == exit::KO)
+	{
+		return exit::KO;
+	}
+
+	key = "$DATA 2";
+	if(parser->set(key.c_str(), new method(&app_data, &app_data::set_schedule), error) == exit::KO)
+	{
+		return exit::KO;
+	}
+
+	key = "$DATA 3";
+	if(parser->set(key.c_str(), new method(&app_data, &app_data::get_zone), error) == exit::KO)
+	{
+		return exit::KO;
+	}
+
+	key = "$DATA 4";
+	if(parser->set(key.c_str(), new method(&app_data, &app_data::set_zone), error) == exit::KO)
+	{
+		return exit::KO;
+	}
 
 	return exit::OK;
 }
