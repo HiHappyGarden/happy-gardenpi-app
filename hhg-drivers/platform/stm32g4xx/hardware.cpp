@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "hhg-driver/hardware.hpp"
+#include "hhg-driver/os-config.hpp"
 #include "stm32g4xx/driver-lpuart.h"
 #include "stm32g4xx/stm32-fs-io.hpp"
 #include "stm32g4xx/stm32-io.hpp"
@@ -25,6 +26,7 @@
 using namespace os;
 using namespace hhg::iface;
 
+#include "hhg-driver/LiquidCrystal_I2C.h"
 
 
 #include "stm32g4xx_hal.h"
@@ -73,9 +75,16 @@ hardware::hardware(class error** error) OS_NOEXCEPT
         return;
 	}
 }
-
+extern "C" I2C_HandleTypeDef hi2c1;
 os::exit hardware::init(error** error) OS_NOEXCEPT
 {
+	OS_LOG_INFO(APP_TAG, "Init OS Config");
+	if(os_config_init() == os::exit::KO)
+	{
+		return exit::KO;
+	}
+	OS_LOG_INFO(APP_TAG, "Init OS Config - OK");
+
 	OS_LOG_INFO(APP_TAG, "Init PLUART");
 	if(driver_lpuart_init() == EXIT_FAILURE)
 	{
@@ -112,6 +121,7 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
 	}
 	OS_LOG_INFO(APP_TAG, "Init FS IO - OK");
 
+
 //
 //	uint8_t test[] = "ciao mi chiamo antonio salsi";
 //	fsio->write(data_type::CONFIG, test, sizeof(test) - 1, error);
@@ -121,8 +131,17 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
 //	fsio->read(data_type::CONFIG, test, sizeof(test) - 1, error);
 //
 //	OS_LOG_DEBUG(APP_TAG, "%s", test);
+//	uint8_t _data = 0x40;
+//	HAL_StatusTypeDef ret = HAL_I2C_Master_Transmit(&hi2c1, 0x27, &_data, 1, HAL_MAX_DELAY);
 
 
+//
+//	int i =0;
+	//LiquidCrystal_I2C lcd(0x27, 20, 4);
+//
+//	lcd.init();
+//
+//	lcd.printstr("ciao");
 
 
 	return exit::OK;

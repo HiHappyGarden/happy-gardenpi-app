@@ -174,6 +174,103 @@ bool app_data::get_schedule(time_t timestamp, struct schedule& schedule) OS_NOEX
 
 os::exit app_data::set_schedule(const char json_str[]) OS_NOEXCEPT
 {
+    if(json_str == NULL)
+    {
+        OS_LOG_ERROR(APP_TAG, "json_str nullptr");
+        return exit::KO;
+    }
+
+	cJSON* json_root = cJSON_Parse(json_str);
+	if (cJSON_IsInvalid(json_root) || !cJSON_IsObject(json_root))
+	{
+		cJSON_Delete(json_root);
+		OS_LOG_ERROR(APP_TAG, "Unable read json json_root");
+		return exit::KO;
+	}
+
+	const cJSON* id = nullptr;
+    if (cJSON_IsInvalid(id) || !cJSON_IsNumber(id))
+    {
+        cJSON_Delete(json_root);
+        OS_LOG_ERROR(APP_TAG, "Unable read id");
+        return exit::KO;
+    }
+
+
+	const cJSON* minute = nullptr;
+    if (cJSON_IsInvalid(minute) || !cJSON_IsNumber(minute))
+    {
+        cJSON_Delete(json_root);
+        OS_LOG_ERROR(APP_TAG, "Unable read minute");
+        return exit::KO;
+    }
+
+	const cJSON* hour = nullptr;
+    if (cJSON_IsInvalid(hour) || !cJSON_IsNumber(hour))
+    {
+        cJSON_Delete(json_root);
+        OS_LOG_ERROR(APP_TAG, "Unable read hour");
+        return exit::KO;
+    }
+
+	const cJSON* days = nullptr;
+    if (cJSON_IsInvalid(days) || !cJSON_IsNumber(days))
+    {
+        cJSON_Delete(json_root);
+        OS_LOG_ERROR(APP_TAG, "Unable read days");
+        return exit::KO;
+    }
+
+	const cJSON* months = nullptr;
+    if (cJSON_IsInvalid(months) || !cJSON_IsNumber(months))
+    {
+        cJSON_Delete(json_root);
+        OS_LOG_ERROR(APP_TAG, "Unable read months");
+        return exit::KO;
+    }
+
+	const cJSON* description = nullptr;
+    if (cJSON_IsInvalid(description) || !cJSON_IsString(description))
+    {
+        cJSON_Delete(json_root);
+        OS_LOG_ERROR(APP_TAG, "Unable read description");
+        return exit::KO;
+    }
+
+	const cJSON* status = nullptr;
+	if (cJSON_IsInvalid(status) || !cJSON_IsNumber(status))
+	{
+		cJSON_Delete(json_root);
+		OS_LOG_ERROR(APP_TAG, "Unable read status");
+		return exit::KO;
+	}
+
+	uint8_t	idx = id->valueint;
+	if(idx >= HHG_SCHEDULES_SIZE)
+	{
+		OS_LOG_ERROR(APP_TAG, "Out of max scheduling index");
+		return exit::KO;
+	}
+
+	schedule& s = data.schedules[idx];
+
+	s.minute = minute->valueint;
+	s.hour = hour->valueint;
+	s.days.data = days->valueint;
+	s.months.data = months->valueint;
+	s.description = days->valuestring;
+	s.status = static_cast<enum status>(status->valueint);
+
+	error* error = nullptr;
+	if(store(&error) == exit::KO)
+	{
+		if(error)
+		{
+            os::printf_stack_error(APP_TAG, error);
+            delete error;
+		}
+		return exit::KO;
+	}
 
 	return exit::OK;
 }
@@ -194,11 +291,19 @@ os::exit app_data::set_zone(const char json_str[]) OS_NOEXCEPT
 		return exit::KO;
 	}
 
-	const cJSON* name = nullptr;
-    if (cJSON_IsInvalid(name) || !cJSON_IsString(name))
+	const cJSON* id = nullptr;
+    if (cJSON_IsInvalid(id) || !cJSON_IsNumber(id))
     {
         cJSON_Delete(json_root);
-        OS_LOG_ERROR(APP_TAG, "Unable read name");
+        OS_LOG_ERROR(APP_TAG, "Unable read id");
+        return exit::KO;
+    }
+
+	const cJSON* id_schedule = nullptr;
+    if (cJSON_IsInvalid(id) || !cJSON_IsNumber(id))
+    {
+        cJSON_Delete(json_root);
+        OS_LOG_ERROR(APP_TAG, "Unable read id");
         return exit::KO;
     }
 
@@ -215,6 +320,7 @@ os::exit app_data::set_zone(const char json_str[]) OS_NOEXCEPT
     {
         cJSON_Delete(json_root);
         OS_LOG_ERROR(APP_TAG, "Unable read relay_number");
+        return exit::KO;
     }
 
 	const cJSON* watering_time = nullptr;
@@ -222,6 +328,7 @@ os::exit app_data::set_zone(const char json_str[]) OS_NOEXCEPT
 	{
 		cJSON_Delete(json_root);
 		OS_LOG_ERROR(APP_TAG, "Unable read relay_number");
+		return exit::KO;
 	}
 
 	const cJSON* weight = nullptr;
@@ -229,6 +336,7 @@ os::exit app_data::set_zone(const char json_str[]) OS_NOEXCEPT
 	{
 		cJSON_Delete(json_root);
 		OS_LOG_ERROR(APP_TAG, "Unable read weight");
+		return exit::KO;
 	}
 
 	const cJSON* status = nullptr;
@@ -236,21 +344,180 @@ os::exit app_data::set_zone(const char json_str[]) OS_NOEXCEPT
 	{
 		cJSON_Delete(json_root);
 		OS_LOG_ERROR(APP_TAG, "Unable read status");
+		return exit::KO;
 	}
 
+	if(id_schedule->valueint >= HHG_SCHEDULES_SIZE)
+	{
+		OS_LOG_ERROR(APP_TAG, "Out of max scheduling index");
+		return exit::KO;
+	}
 
+	schedule& s = data.schedules[id_schedule->valueint];
+
+	uint8_t	idx = id->valueint;
+
+	if(idx > s.zones_len && idx >= HHG_ZONES_SIZE)
+	{
+		OS_LOG_ERROR(APP_TAG, "Out of max zoning index");
+		return exit::KO;
+	}
+
+	if(id->valueint == s.zones_len)
+	{
+		s.zones_len++;
+	}
+
+	s.zones[idx].description = description->valuestring;
+	s.zones[idx].relay_number = relay_number->valueint;
+	s.zones[idx].weight = weight->valueint;
+	s.zones[idx].status = static_cast<enum status>(status->valueint);
+
+	error* error = nullptr;
+	if(store(&error) == exit::KO)
+	{
+		if(error)
+		{
+            os::printf_stack_error(APP_TAG, error);
+            delete error;
+		}
+		return exit::KO;
+	}
 
 	return exit::OK;
 }
 
-char* app_data::get_schedule() OS_NOEXCEPT
+char* app_data::get_schedule(uint8_t id) OS_NOEXCEPT
 {
-	return nullptr;
+	if(id >= HHG_SCHEDULES_SIZE)
+	{
+		OS_LOG_ERROR(APP_TAG, "Out of max scheduling index");
+		return nullptr;
+	}
+
+    cJSON* root = cJSON_CreateObject();
+    if (root == NULL)
+    {
+    	OS_LOG_ERROR(APP_TAG, "Malloc fail for root");
+        return nullptr;
+    }
+
+    if (cJSON_AddNumberToObject(root, "minute", data.schedules[id].minute) == nullptr)
+    {
+        cJSON_Delete(root);
+        OS_LOG_ERROR(APP_TAG, "Malloc fail for minute");
+        return nullptr;
+    }
+
+    if (cJSON_AddNumberToObject(root, "hour", data.schedules[id].hour) == nullptr)
+    {
+        cJSON_Delete(root);
+        OS_LOG_ERROR(APP_TAG, "Malloc fail for hour");
+        return nullptr;
+    }
+
+    if (cJSON_AddNumberToObject(root, "days", data.schedules[id].days.data) == nullptr)
+    {
+        cJSON_Delete(root);
+        OS_LOG_ERROR(APP_TAG, "Malloc fail for days");
+        return nullptr;
+    }
+
+    if (cJSON_AddNumberToObject(root, "months", data.schedules[id].months.data) == nullptr)
+    {
+        cJSON_Delete(root);
+        OS_LOG_ERROR(APP_TAG, "Malloc fail for months");
+        return nullptr;
+    }
+
+    if (cJSON_AddStringToObject(root, "description", data.schedules[id].description.c_str()) == nullptr)
+    {
+        cJSON_Delete(root);
+        OS_LOG_ERROR(APP_TAG, "Malloc fail for description");
+        return nullptr;
+    }
+
+    if (cJSON_AddNumberToObject(root, "status", static_cast<uint8_t>(data.schedules[id].status)) == nullptr)
+    {
+        cJSON_Delete(root);
+        OS_LOG_ERROR(APP_TAG, "Malloc fail for status");
+        return nullptr;
+    }
+
+    char* ret = cJSON_PrintUnformatted(root);
+	if(ret == NULL)
+	{
+		cJSON_Delete(root);
+		OS_LOG_ERROR(APP_TAG, "Malloc fail for ret");
+		return nullptr;
+	}
+
+	cJSON_Delete(root);
+
+	return ret;
 }
 
-char* app_data::get_zone() OS_NOEXCEPT
+char* app_data::get_zone(uint8_t id_schedule, uint8_t id) OS_NOEXCEPT
 {
-	return nullptr;
+	if(id >= HHG_ZONES_SIZE)
+	{
+		OS_LOG_ERROR(APP_TAG, "Out of max scheduling index");
+		return nullptr;
+	}
+
+	if(id >= data.schedules[id_schedule].zones_len || id >= HHG_ZONES_SIZE)
+	{
+		OS_LOG_ERROR(APP_TAG, "Out of max zoning index");
+		return nullptr;
+	}
+
+	cJSON* root = cJSON_CreateObject();
+	if (root == NULL)
+	{
+		OS_LOG_ERROR(APP_TAG, "Malloc fail for root");
+		return nullptr;
+	}
+
+
+	if (cJSON_AddStringToObject(root, "description", data.schedules[id_schedule].zones[id].description.c_str()) == nullptr)
+	{
+		cJSON_Delete(root);
+		OS_LOG_ERROR(APP_TAG, "Malloc fail for description");
+		return nullptr;
+	}
+
+	if (cJSON_AddNumberToObject(root, "relay_number", data.schedules[id_schedule].zones[id].relay_number) == nullptr)
+	{
+		cJSON_Delete(root);
+		OS_LOG_ERROR(APP_TAG, "Malloc fail for relay_number");
+		return nullptr;
+	}
+
+	if (cJSON_AddNumberToObject(root, "watering_time", data.schedules[id_schedule].zones[id].watering_time) == nullptr)
+	{
+		cJSON_Delete(root);
+		OS_LOG_ERROR(APP_TAG, "Malloc fail for watering_time");
+		return nullptr;
+	}
+
+	if (cJSON_AddNumberToObject(root, "weight", data.schedules[id_schedule].zones[id].weight) == nullptr)
+	{
+		cJSON_Delete(root);
+		OS_LOG_ERROR(APP_TAG, "Malloc fail for weight");
+		return nullptr;
+	}
+
+	char* ret = cJSON_PrintUnformatted(root);
+	if(ret == NULL)
+	{
+		cJSON_Delete(root);
+		OS_LOG_ERROR(APP_TAG, "Malloc fail for ret");
+		return nullptr;
+	}
+
+	cJSON_Delete(root);
+
+	return ret;
 }
 
 uint8_t app_data::get_bit_day(const tm* now) const OS_NOEXCEPT

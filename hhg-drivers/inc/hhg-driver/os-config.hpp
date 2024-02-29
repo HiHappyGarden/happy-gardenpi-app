@@ -18,6 +18,8 @@
  ***************************************************************************/
 
 #pragma once
+#include "osal/osal.hpp"
+
 
 #include <stdint.h>
 
@@ -34,6 +36,8 @@ extern uint32_t const HIGHEST;
 extern uint32_t const REALTIME;
 
 extern char const TIME_T_STR[];
+
+os::exit os_config_init() OS_NOEXCEPT;
 
 }
 }
