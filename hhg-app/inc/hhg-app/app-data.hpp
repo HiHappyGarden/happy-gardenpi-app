@@ -52,12 +52,7 @@ struct zone final
     using ptr = os::unique_ptr<zone>;
 
     /**
-    * @brief name of station
-    */
-    os::string<32> name;
-
-    /**
-    * @brief description of station
+    * @brief description of zone
     */
     os::string<128> description;
 
@@ -200,9 +195,9 @@ public:
 
 	os::exit set_zone(const char[]) OS_NOEXCEPT;
 
-	char* get_schedule() OS_NOEXCEPT;
+	char* get_schedule(uint8_t id) OS_NOEXCEPT;
 
-	char* get_zone() OS_NOEXCEPT;
+	char* get_zone(uint8_t id_schedule, uint8_t id) OS_NOEXCEPT;
 
 private:
 	uint8_t get_bit_day(const tm* now) const OS_NOEXCEPT;

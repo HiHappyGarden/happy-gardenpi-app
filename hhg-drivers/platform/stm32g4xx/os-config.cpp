@@ -18,7 +18,11 @@
  ***************************************************************************/
 
 #include "hhg-driver/os-config.hpp"
+using namespace os;
+
 #include "cmsis_os2.h"
+#include "cJSON.h"
+
 
 namespace hhg::driver
 {
@@ -33,6 +37,25 @@ uint32_t const HIGHEST = osPriorityHigh;
 uint32_t const REALTIME = osPriorityRealtime;
 
 char const TIME_T_STR[] = "%lu";
+
+cJSON_Hooks cjson_hooks {
+	.malloc_fn = [](auto size)
+	{
+		return pvPortMalloc(size);
+	},
+    .free_fn = [](auto ptr)
+	{
+		vPortFree(ptr);
+	}
+};
+
+os::exit os_config_init() OS_NOEXCEPT
+{
+	cJSON_InitHooks(&cjson_hooks);
+
+
+	return exit::OK;
+}
 
 }
 }

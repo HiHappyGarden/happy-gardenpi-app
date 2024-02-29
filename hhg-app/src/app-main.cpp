@@ -197,6 +197,9 @@ app_main::app_main(driver::hardware& hardware, class error** error) OS_NOEXCEPT
 		return;
 	}
 
+
+
+
 	singleton = this;
 }
 

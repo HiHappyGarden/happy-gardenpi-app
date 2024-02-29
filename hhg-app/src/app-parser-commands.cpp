@@ -28,6 +28,7 @@ using hhg::iface::time;
 using namespace hhg::driver;
 
 #include <errno.h>
+#include <stdint.h>
 
 using namespace os;
 
@@ -116,9 +117,81 @@ constexpr const size_t commands_config_size = sizeof(commands_config) / sizeof(c
 
 entry commands_data[] =
 {
-	{.key = "1", .description = "Get scheduler"},
+	{.key = "1",
+	.custom_func = [](auto data, auto entry, auto error)
+	{
+		char* ptr = nullptr;
+		uint8_t id = strtol(data.tokens[2].start, &ptr, 10);
+		if (ptr == data.tokens[2].start || *ptr != '\0' || ((id == 0 || id == UINT8_MAX) && errno == ERANGE))
+		{
+			if(error)
+			{
+				*error = OS_ERROR_BUILD("Convention string to time_t fail", error_type::OS_EINVAL);
+				OS_ERROR_PTR_SET_POSITION(*error);
+			}
+			return exit::KO;
+		}
+
+
+		auto ret = app_data->get_schedule(id);
+		if(ret)
+		{
+			strncpy(data.ret_buffer, ret, data.ret_buffer_len);
+			delete[] ret;
+			return exit::OK;
+		}
+		else
+		{
+			strncpy(data.ret_buffer, "KO", data.ret_buffer_len);
+			delete[] ret;
+			return exit::KO;
+		}
+	},
+	.description = "Get scheduler"},
 	{.key = "2", .description = "Set scheduler"},
-	{.key = "3", .description = "Get zone"},
+	{.key = "3",
+	.custom_func = [](auto data, auto entry, auto error)
+	{
+		char* ptr = nullptr;
+		uint8_t id_schedule = strtol(data.tokens[2].start, &ptr, 10);
+		if (ptr == data.tokens[2].start || *ptr != '\0' || ((id_schedule == 0 || id_schedule == UINT8_MAX) && errno == ERANGE))
+		{
+			if(error)
+			{
+				*error = OS_ERROR_BUILD("Convention string to time_t fail", error_type::OS_EINVAL);
+				OS_ERROR_PTR_SET_POSITION(*error);
+			}
+			return exit::KO;
+		}
+
+		ptr = nullptr;
+		uint8_t id = strtol(data.tokens[2].start, &ptr, 10);
+		if (ptr == data.tokens[2].start || *ptr != '\0' || ((id == 0 || id == UINT8_MAX) && errno == ERANGE))
+		{
+			if(error)
+			{
+				*error = OS_ERROR_BUILD("Convention string to time_t fail", error_type::OS_EINVAL);
+				OS_ERROR_PTR_SET_POSITION(*error);
+			}
+			return exit::KO;
+		}
+
+		auto ret = app_data->get_zone(id_schedule, id);
+		if(ret)
+		{
+			strncpy(data.ret_buffer, ret, data.ret_buffer_len);
+			delete[] ret;
+			return exit::OK;
+		}
+		else
+		{
+			strncpy(data.ret_buffer, "KO", data.ret_buffer_len);
+			delete[] ret;
+			return exit::KO;
+		}
+
+	},
+    .description = "Get zone"},
 	{.key = "4", .description = "Set zone"},
 };
 constexpr const size_t commands_data_size = sizeof(commands_data) / sizeof(commands_data[0]);
@@ -202,7 +275,7 @@ os::exit set_app_data(class app_data& app_data, error** error) OS_NOEXCEPT
 	hhg::app::app_data = &app_data;
 
 	key = "$DATA 1";
-	if(parser->set(key.c_str(), new method<struct app_data, char*>(&app_data, &app_data::get_schedule), error) == exit::KO)
+	if(parser->set(key.c_str(), new method<struct app_data, char*, uint8_t>(&app_data, &app_data::get_schedule), error) == exit::KO)
 	{
 		return exit::KO;
 	}

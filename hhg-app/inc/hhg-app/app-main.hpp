@@ -60,8 +60,6 @@ private:
     hhg::app::app_parser app_parser;
 
 	thread fsm_thread{"fsm thread", hhg::driver::HIGH, 1024 * 2, fsm_thread_handler};
-
-
     struct fsm
     {
 		static constexpr uint8_t MAX_ERROR = 5;
