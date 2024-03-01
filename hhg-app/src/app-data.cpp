@@ -402,6 +402,13 @@ char* app_data::get_schedule(uint8_t id) OS_NOEXCEPT
         return nullptr;
     }
 
+	if (cJSON_AddNumberToObject(root, "id", id) == nullptr)
+	{
+		cJSON_Delete(root);
+		OS_LOG_ERROR(APP_TAG, "Malloc fail for id");
+		return nullptr;
+	}
+
     if (cJSON_AddNumberToObject(root, "minute", data.schedules[id].minute) == nullptr)
     {
         cJSON_Delete(root);
@@ -478,6 +485,20 @@ char* app_data::get_zone(uint8_t id_schedule, uint8_t id) OS_NOEXCEPT
 		return nullptr;
 	}
 
+	if (cJSON_AddNumberToObject(root, "id_schedule", id_schedule) == nullptr)
+	{
+		cJSON_Delete(root);
+		OS_LOG_ERROR(APP_TAG, "Malloc fail for id_schedule");
+		return nullptr;
+	}
+
+
+	if (cJSON_AddNumberToObject(root, "id", id) == nullptr)
+	{
+		cJSON_Delete(root);
+		OS_LOG_ERROR(APP_TAG, "Malloc fail for id");
+		return nullptr;
+	}
 
 	if (cJSON_AddStringToObject(root, "description", data.schedules[id_schedule].zones[id].description.c_str()) == nullptr)
 	{
