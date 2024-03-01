@@ -23,6 +23,10 @@
 #include "hhg-iface/initializable.hpp"
 #include "hhg-iface/file-version.hpp"
 
+#ifdef INCLUDE_HHG_CONFIG
+#include "hhg-config.h"
+#endif
+
 #include <stdint.h>
 
 namespace hhg::app
@@ -57,6 +61,7 @@ class app_config final : public hhg::iface::initializable
 		inline config() : file_version{MAIGC, VERSION} {}
 		os::string<16> 	serial;
 		os::string<128> descr;
+		uint8_t zones_size = HHG_ZONES_SIZE;
 		uint32_t crc = MAIGC;
 		user users[user::MAX_USERS];
 	} config;
@@ -81,6 +86,11 @@ public:
 	inline const char* get_descr() const OS_NOEXCEPT
 	{
 		return config.descr.c_str();
+	}
+
+	inline uint8_t get_zones_size() const OS_NOEXCEPT
+	{
+		return config.zones_size;
 	}
 
 	os::exit set_descr(const char descr[]) OS_NOEXCEPT;

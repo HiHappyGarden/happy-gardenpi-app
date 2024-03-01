@@ -98,6 +98,7 @@ entry commands_config[] =
 	{.key = "2", .description = "Set serial"},
 	{.key = "3", .description = "Get description"},
 	{.key = "4", .description = "Set description"},
+	{.key = "5", .description = "Get zones size"},
 	{.key = "STORE", .custom_func = [](auto data, auto entry, auto error)
 	{
 		auto ret = app_config->store(error);
@@ -217,7 +218,6 @@ entry commands[] =
 	{.key = "$DATA", .next = commands_data, .next_size = commands_data_size, .description = "Data menu"},
 	{.key = "$USR", .next = commands_user, .next_size = commands_user_size, .description = "User menu"},
 	{.key = "$LOG", .next = commands_log, .next_size = commands_log_size, .description = "Log menu"}
-
 };
 constexpr const size_t commands_size = sizeof(commands) / sizeof(commands[0]);
 
@@ -261,6 +261,12 @@ os::exit set_app_config(class app_config& app_config, error** error) OS_NOEXCEPT
 
 	key = "$CONF 4";
 	if(parser->set(key.c_str(), new method(&app_config, &app_config::set_descr), error) == exit::KO)
+	{
+		return exit::KO;
+	}
+
+	key = "$CONF 5";
+	if(parser->set(key.c_str(), new method(&app_config, &app_config::get_zones_size), error) == exit::KO)
 	{
 		return exit::KO;
 	}
