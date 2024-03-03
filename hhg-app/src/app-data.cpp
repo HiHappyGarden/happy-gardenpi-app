@@ -180,67 +180,67 @@ os::exit app_data::set_schedule(const char json_str[]) OS_NOEXCEPT
         return exit::KO;
     }
 
-	cJSON* json_root = cJSON_Parse(json_str);
-	if (cJSON_IsInvalid(json_root) || !cJSON_IsObject(json_root))
+	cJSON *root = cJSON_Parse(json_str);
+	if (cJSON_IsInvalid(root) || !cJSON_IsObject(root))
 	{
-		cJSON_Delete(json_root);
-		OS_LOG_ERROR(APP_TAG, "Unable read json json_root");
+		cJSON_Delete(root);
+		OS_LOG_ERROR(APP_TAG, "Unable read json root");
 		return exit::KO;
 	}
 
-	const cJSON* id = nullptr;
+	const cJSON *id = cJSON_GetObjectItemCaseSensitive(root, "id");
     if (cJSON_IsInvalid(id) || !cJSON_IsNumber(id))
     {
-        cJSON_Delete(json_root);
+        cJSON_Delete(root);
         OS_LOG_ERROR(APP_TAG, "Unable read id");
         return exit::KO;
     }
 
 
-	const cJSON* minute = nullptr;
+	const cJSON *minute = cJSON_GetObjectItemCaseSensitive(root, "id");
     if (cJSON_IsInvalid(minute) || !cJSON_IsNumber(minute))
     {
-        cJSON_Delete(json_root);
+        cJSON_Delete(root);
         OS_LOG_ERROR(APP_TAG, "Unable read minute");
         return exit::KO;
     }
 
-	const cJSON* hour = nullptr;
+	const cJSON *hour = cJSON_GetObjectItemCaseSensitive(root, "hour");
     if (cJSON_IsInvalid(hour) || !cJSON_IsNumber(hour))
     {
-        cJSON_Delete(json_root);
+        cJSON_Delete(root);
         OS_LOG_ERROR(APP_TAG, "Unable read hour");
         return exit::KO;
     }
 
-	const cJSON* days = nullptr;
+	const cJSON *days = cJSON_GetObjectItemCaseSensitive(root, "days");
     if (cJSON_IsInvalid(days) || !cJSON_IsNumber(days))
     {
-        cJSON_Delete(json_root);
+        cJSON_Delete(root);
         OS_LOG_ERROR(APP_TAG, "Unable read days");
         return exit::KO;
     }
 
-	const cJSON* months = nullptr;
+	const cJSON *months = cJSON_GetObjectItemCaseSensitive(root, "months");
     if (cJSON_IsInvalid(months) || !cJSON_IsNumber(months))
     {
-        cJSON_Delete(json_root);
+        cJSON_Delete(root);
         OS_LOG_ERROR(APP_TAG, "Unable read months");
         return exit::KO;
     }
 
-	const cJSON* description = nullptr;
+	const cJSON *description = cJSON_GetObjectItemCaseSensitive(root, "description");
     if (cJSON_IsInvalid(description) || !cJSON_IsString(description))
     {
-        cJSON_Delete(json_root);
+        cJSON_Delete(root);
         OS_LOG_ERROR(APP_TAG, "Unable read description");
         return exit::KO;
     }
 
-	const cJSON* status = nullptr;
+	const cJSON *status = cJSON_GetObjectItemCaseSensitive(root, "status");
 	if (cJSON_IsInvalid(status) || !cJSON_IsNumber(status))
 	{
-		cJSON_Delete(json_root);
+		cJSON_Delete(root);
 		OS_LOG_ERROR(APP_TAG, "Unable read status");
 		return exit::KO;
 	}
@@ -261,16 +261,16 @@ os::exit app_data::set_schedule(const char json_str[]) OS_NOEXCEPT
 	s.description = days->valuestring;
 	s.status = static_cast<enum status>(status->valueint);
 
-	error* error = nullptr;
-	if(store(&error) == exit::KO)
-	{
-		if(error)
-		{
-            os::printf_stack_error(APP_TAG, error);
-            delete error;
-		}
-		return exit::KO;
-	}
+//	error* error = nullptr;
+//	if(store(&error) == exit::KO)
+//	{
+//		if(error)
+//		{
+//            os::printf_stack_error(APP_TAG, error);
+//            delete error;
+//		}
+//		return exit::KO;
+//	}
 
 	return exit::OK;
 }
@@ -283,66 +283,66 @@ os::exit app_data::set_zone(const char json_str[]) OS_NOEXCEPT
         return exit::KO;
     }
 
-	cJSON* json_root = cJSON_Parse(json_str);
-	if (cJSON_IsInvalid(json_root) || !cJSON_IsObject(json_root))
+	cJSON *root = cJSON_Parse(json_str);
+	if (cJSON_IsInvalid(root) || !cJSON_IsObject(root))
 	{
-		cJSON_Delete(json_root);
-		OS_LOG_ERROR(APP_TAG, "Unable read json json_root");
+		cJSON_Delete(root);
+		OS_LOG_ERROR(APP_TAG, "Unable read json root");
 		return exit::KO;
 	}
 
-	const cJSON* id = nullptr;
+	const cJSON *id = cJSON_GetObjectItemCaseSensitive(root, "id");
     if (cJSON_IsInvalid(id) || !cJSON_IsNumber(id))
     {
-        cJSON_Delete(json_root);
+        cJSON_Delete(root);
         OS_LOG_ERROR(APP_TAG, "Unable read id");
         return exit::KO;
     }
 
-	const cJSON* id_schedule = nullptr;
+	const cJSON *id_schedule = cJSON_GetObjectItemCaseSensitive(root, "id_schedule");
     if (cJSON_IsInvalid(id) || !cJSON_IsNumber(id))
     {
-        cJSON_Delete(json_root);
+        cJSON_Delete(root);
         OS_LOG_ERROR(APP_TAG, "Unable read id");
         return exit::KO;
     }
 
-	const cJSON* description = nullptr;
+	const cJSON *description = cJSON_GetObjectItemCaseSensitive(root, "description");
     if (cJSON_IsInvalid(description) || !cJSON_IsString(description))
     {
-        cJSON_Delete(json_root);
+        cJSON_Delete(root);
         OS_LOG_ERROR(APP_TAG, "Unable read description");
         return exit::KO;
     }
 
-	const cJSON* relay_number = nullptr;
+	const cJSON *relay_number = cJSON_GetObjectItemCaseSensitive(root, "relay_number");
     if (cJSON_IsInvalid(relay_number) || !cJSON_IsNumber(relay_number))
     {
-        cJSON_Delete(json_root);
+        cJSON_Delete(root);
         OS_LOG_ERROR(APP_TAG, "Unable read relay_number");
         return exit::KO;
     }
 
-	const cJSON* watering_time = nullptr;
+	const cJSON *watering_time = cJSON_GetObjectItemCaseSensitive(root, "watering_time");
 	if (cJSON_IsInvalid(watering_time) || !cJSON_IsNumber(watering_time))
 	{
-		cJSON_Delete(json_root);
+		cJSON_Delete(root);
 		OS_LOG_ERROR(APP_TAG, "Unable read relay_number");
 		return exit::KO;
 	}
 
-	const cJSON* weight = nullptr;
+	const cJSON *weight = cJSON_GetObjectItemCaseSensitive(root, "weight");
 	if (cJSON_IsInvalid(weight) || !cJSON_IsNumber(weight))
 	{
-		cJSON_Delete(json_root);
+		cJSON_Delete(root);
 		OS_LOG_ERROR(APP_TAG, "Unable read weight");
 		return exit::KO;
 	}
 
-	const cJSON* status = nullptr;
+	const cJSON *status = cJSON_GetObjectItemCaseSensitive(root, "status");
 	if (cJSON_IsInvalid(status) || !cJSON_IsNumber(status))
 	{
-		cJSON_Delete(json_root);
+		cJSON_Delete(root);
 		OS_LOG_ERROR(APP_TAG, "Unable read status");
 		return exit::KO;
 	}
@@ -373,21 +373,21 @@ os::exit app_data::set_zone(const char json_str[]) OS_NOEXCEPT
 	s.zones[idx].weight = weight->valueint;
 	s.zones[idx].status = static_cast<enum status>(status->valueint);
 
-	error* error = nullptr;
-	if(store(&error) == exit::KO)
-	{
-		if(error)
-		{
-            os::printf_stack_error(APP_TAG, error);
-            delete error;
-		}
-		return exit::KO;
-	}
+//	error* error = nullptr;
+//	if(store(&error) == exit::KO)
+//	{
+//		if(error)
+//		{
+//            os::printf_stack_error(APP_TAG, error);
+//            delete error;
+//		}
+//		return exit::KO;
+//	}
 
 	return exit::OK;
 }
 
-char* app_data::get_schedule(uint8_t id) OS_NOEXCEPT
+char *app_data::get_schedule(uint8_t id) OS_NOEXCEPT
 {
 	if(id >= HHG_SCHEDULES_SIZE)
 	{
@@ -395,7 +395,7 @@ char* app_data::get_schedule(uint8_t id) OS_NOEXCEPT
 		return nullptr;
 	}
 
-    cJSON* root = cJSON_CreateObject();
+    cJSON *root = cJSON_CreateObject();
     if (root == NULL)
     {
     	OS_LOG_ERROR(APP_TAG, "Malloc fail for root");
@@ -451,7 +451,7 @@ char* app_data::get_schedule(uint8_t id) OS_NOEXCEPT
         return nullptr;
     }
 
-    char* ret = cJSON_PrintUnformatted(root);
+    char *ret = cJSON_PrintUnformatted(root);
 	if(ret == NULL)
 	{
 		cJSON_Delete(root);
@@ -464,7 +464,7 @@ char* app_data::get_schedule(uint8_t id) OS_NOEXCEPT
 	return ret;
 }
 
-char* app_data::get_zone(uint8_t id_schedule, uint8_t id) OS_NOEXCEPT
+char *app_data::get_zone(uint8_t id_schedule, uint8_t id) OS_NOEXCEPT
 {
 	if(id >= HHG_ZONES_SIZE)
 	{
@@ -478,7 +478,7 @@ char* app_data::get_zone(uint8_t id_schedule, uint8_t id) OS_NOEXCEPT
 		return nullptr;
 	}
 
-	cJSON* root = cJSON_CreateObject();
+	cJSON *root = cJSON_CreateObject();
 	if (root == NULL)
 	{
 		OS_LOG_ERROR(APP_TAG, "Malloc fail for root");
@@ -528,7 +528,7 @@ char* app_data::get_zone(uint8_t id_schedule, uint8_t id) OS_NOEXCEPT
 		return nullptr;
 	}
 
-	char* ret = cJSON_PrintUnformatted(root);
+	char *ret = cJSON_PrintUnformatted(root);
 	if(ret == NULL)
 	{
 		cJSON_Delete(root);
