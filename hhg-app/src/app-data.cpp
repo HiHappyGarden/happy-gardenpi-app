@@ -63,6 +63,7 @@ void app_data::reset() OS_NOEXCEPT
 
 os::exit app_data::store(os::error** error) const OS_NOEXCEPT
 {
+	data.crc = MAIGC;
 	data.crc = crc32(reinterpret_cast<uint8_t *>(&data), sizeof(data));
 	return fsio->write(data_type::DATA, reinterpret_cast<const uint8_t *>(&data), sizeof(data), error);
 }
@@ -196,7 +197,6 @@ os::exit app_data::set_schedule(const char json_str[]) OS_NOEXCEPT
         return exit::KO;
     }
 
-
 	const cJSON *minute = cJSON_GetObjectItemCaseSensitive(root, "id");
     if (cJSON_IsInvalid(minute) || !cJSON_IsNumber(minute))
     {
@@ -258,19 +258,8 @@ os::exit app_data::set_schedule(const char json_str[]) OS_NOEXCEPT
 	s.hour = hour->valueint;
 	s.days.data = days->valueint;
 	s.months.data = months->valueint;
-	s.description = days->valuestring;
+	s.description = description->valuestring;
 	s.status = static_cast<enum status>(status->valueint);
-
-//	error* error = nullptr;
-//	if(store(&error) == exit::KO)
-//	{
-//		if(error)
-//		{
-//            os::printf_stack_error(APP_TAG, error);
-//            delete error;
-//		}
-//		return exit::KO;
-//	}
 
 	return exit::OK;
 }
@@ -373,17 +362,6 @@ os::exit app_data::set_zone(const char json_str[]) OS_NOEXCEPT
 	s.zones[idx].weight = weight->valueint;
 	s.zones[idx].status = static_cast<enum status>(status->valueint);
 
-//	error* error = nullptr;
-//	if(store(&error) == exit::KO)
-//	{
-//		if(error)
-//		{
-//            os::printf_stack_error(APP_TAG, error);
-//            delete error;
-//		}
-//		return exit::KO;
-//	}
-
 	return exit::OK;
 }
 
@@ -472,7 +450,7 @@ char *app_data::get_zone(uint8_t id_schedule, uint8_t id) OS_NOEXCEPT
 		return nullptr;
 	}
 
-	if(id >= data.schedules[id_schedule].zones_len || id >= HHG_ZONES_SIZE)
+	if(id >= data.schedules[id_schedule].zones_len + 1 || id >= HHG_ZONES_SIZE)
 	{
 		OS_LOG_ERROR(APP_TAG, "Out of max zoning index");
 		return nullptr;
@@ -527,6 +505,14 @@ char *app_data::get_zone(uint8_t id_schedule, uint8_t id) OS_NOEXCEPT
 		OS_LOG_ERROR(APP_TAG, "Malloc fail for weight");
 		return nullptr;
 	}
+
+    if (cJSON_AddNumberToObject(root, "status", static_cast<uint8_t>(data.schedules[id].zones[id].weight)) == nullptr)
+    {
+        cJSON_Delete(root);
+        OS_LOG_ERROR(APP_TAG, "Malloc fail for status");
+        return nullptr;
+    }
+
 
 	char *ret = cJSON_PrintUnformatted(root);
 	if(ret == NULL)
