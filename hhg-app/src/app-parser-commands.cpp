@@ -199,7 +199,7 @@ entry commands_data[] =
 		auto ret = app_data->store(error);
 		if(ret == exit::OK)
 		{
-			strncpy(data.ret_buffer, "", data.ret_buffer_len);
+			strncpy(data.ret_buffer, "OK", data.ret_buffer_len);
 		}
 		else
 		{

@@ -103,6 +103,7 @@ const char* app_config::get_version() const OS_NOEXCEPT
 
 os::exit app_config::store(error** error) const OS_NOEXCEPT
 {
+	config.crc = MAIGC;
 	config.crc = crc32(reinterpret_cast<uint8_t *>(&config), sizeof(config));
 	return fsio->write(data_type::CONFIG, reinterpret_cast<const uint8_t *>(&config), sizeof(config), error);
 }
