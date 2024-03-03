@@ -1,4 +1,8 @@
 
 send $LOG 1 0
 send $RTC 2 1709068081
+send $DATA 2 {"id":0,"minute":0,"hour":17,"days":255,"months":65535,"description":"","status":1} 
+
+
+send $DATA STORE
 send $LOG 1 1

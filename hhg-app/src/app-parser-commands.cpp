@@ -194,6 +194,20 @@ entry commands_data[] =
 	},
     .description = "Get zone"},
 	{.key = "4", .description = "Set zone"},
+	{.key = "STORE", .custom_func = [](auto data, auto entry, auto error)
+	{
+		auto ret = app_data->store(error);
+		if(ret == exit::OK)
+		{
+			strncpy(data.ret_buffer, "", data.ret_buffer_len);
+		}
+		else
+		{
+			strncpy(data.ret_buffer, "KO", data.ret_buffer_len);
+		}
+		return ret;
+	}
+	, .description = "Store data"},
 };
 constexpr const size_t commands_data_size = sizeof(commands_data) / sizeof(commands_data[0]);
 
