@@ -24,8 +24,11 @@
 #include "hhg-utils/hhg-utils.hpp"
 #include "osal/osal.hpp"
 
-extern "C" uint8_t driver_lpuart_transmit(const uint8_t* data, uint16_t size);
 
+#include "stm32g4xx_hal.h"
+
+extern "C" uint8_t driver_lpuart_transmit(const uint8_t* data, uint16_t size);
+extern "C" I2C_HandleTypeDef hi2c1;
 namespace
 {
 
@@ -40,12 +43,18 @@ os::thread test_thread{
 
 		using namespace os;
 
+		bool check = true;
+
 		while(true)
 		{
 
 			//auto i = hhg::utils::random_number(1, 1000);
 
 			OS_LOG_DEBUG("--->", "1");
+
+//			uint8_t _data = check ? 0xFF : 0x00;
+//			HAL_StatusTypeDef ret = HAL_I2C_Master_Transmit(&hi2c1, 0x27, &_data, 1, 100);
+
 			os::us_sleep(1_s);
 		}
 
