@@ -18,6 +18,8 @@
  ***************************************************************************/
 
 #include "hhg-app/app-parser.hpp"
+using hhg::iface::io_source;
+
 #include "hhg-app/app-parser-commands.hpp"
 using namespace os;
 
@@ -77,10 +79,11 @@ os::exit app_parser::init(class error** error) OS_NOEXCEPT
 	return run ? exit::OK : exit::KO;
 }
 
-void app_parser::on_receive(const uint8_t data[], uint16_t size) const OS_NOEXCEPT
+void app_parser::on_receive(io_source source, const uint8_t data[], uint16_t size) const OS_NOEXCEPT
 {
 	if(data)
 	{
+		this->source = source;
 		buffer.send_from_isr(data, size, 10_ms, error);
 	}
 }

@@ -185,7 +185,7 @@ app_main::app_main(driver::hardware& hardware, class error** error) OS_NOEXCEPT
 : hardware(hardware)
 , app_config(hardware.get_fsio())
 , app_data(hardware.get_fsio())
-, app_parser(hardware.get_io())
+, app_parser(hardware.get_uart())
 {
 	if(singleton)
 	{
@@ -208,7 +208,7 @@ app_main::~app_main() OS_NOEXCEPT = default;
 os::exit app_main::init(class os::error** error) OS_NOEXCEPT
 {
 	OS_LOG_INFO(APP_TAG, "Init APP PARSER");
-	hardware.get_io()->set_on_receive(&app_parser, &hhg::iface::io_on_receive::on_receive);
+	hardware.get_uart()->set_on_receive(&app_parser, &hhg::iface::io_on_receive::on_receive);
 
 	if(app_parser.init(error) == exit::KO)
 	{

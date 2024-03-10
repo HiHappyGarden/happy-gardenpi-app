@@ -40,7 +40,7 @@
 		<link>
 			<name>cJSON</name>
 			<type>2</type>
-			<locationURI>$%7BPROJECT_LOC%7D/cJSON</locationURI>
+			<locationURI>$%7BPARENT-2-PROJECT_LOC%7D/cJSON</locationURI>
 		</link>
 		<link>
 			<name>conf</name>

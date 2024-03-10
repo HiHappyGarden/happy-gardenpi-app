@@ -29,11 +29,17 @@ namespace hhg::iface
 inline namespace v1
 {
 
+enum class io_source
+{
+	LPUART,
+	WIFI
+};
+
 struct io_on_receive
 {
 	virtual ~io_on_receive() = default;
 
-	virtual void on_receive(const uint8_t data[], uint16_t size) const OS_NOEXCEPT = 0;
+	virtual void on_receive(io_source io_source, const uint8_t data[], uint16_t size) const OS_NOEXCEPT = 0;
 };
 
 class io : public initializable
@@ -41,7 +47,7 @@ class io : public initializable
 public:
 	using ptr = os::unique_ptr<hhg::iface::io>;
 
-	using on_receive = void (io_on_receive::*)(const uint8_t data[], uint16_t size) const OS_NOEXCEPT;
+	using on_receive = void (io_on_receive::*)(io_source io_source, const uint8_t data[], uint16_t size) const OS_NOEXCEPT;
 
     virtual ~io() = default;
 

@@ -26,7 +26,6 @@
 #include "stm32g4xx/driver-lpuart.h"
 #include "stm32g4xx_nucleo.h"
 
-
 #include <stdlib.h>
 
 /* USER CODE END Includes */
@@ -126,6 +125,15 @@ int main(void)
   BSP_LED_Init(LED2);
   driver_lpuart_register(&hlpuart1);
 
+
+  //HAL_Delay(100);
+
+//  i2cLcd_CreateHandle(&h_lcd, &hi2c1, 0x27 << 1);
+//
+//  i2cLcd_Init(&h_lcd);
+//
+//  i2cLcd_ClearDisplay(&h_lcd);
+
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -161,6 +169,7 @@ int main(void)
   /* USER CODE END RTOS_EVENTS */
 
   /* Start scheduler */
+  HAL_Delay(1000);
   osKernelStart();
 
   /* We should never get here as control is now taken by the scheduler */

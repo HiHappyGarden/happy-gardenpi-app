@@ -43,7 +43,7 @@ os::thread test_thread{
 
 		using namespace os;
 
-		bool check = true;
+		//bool check = true;
 
 		while(true)
 		{
