@@ -36,7 +36,7 @@ using time_ptr = hhg::iface::time::ptr;
 
 class hardware final : public hhg::iface::initializable
 {
-	const io_ptr io;
+	const io_ptr uart;
 	const fsio_ptr fsio;
 	const time_ptr time;
 public:
@@ -44,9 +44,9 @@ public:
 	~hardware() = default;
 	OS_NO_COPY_NO_MOVE(hardware)
 
-	inline const io_ptr& get_io() const OS_NOEXCEPT
+	inline const io_ptr& get_uart() const OS_NOEXCEPT
 	{
-		return io;
+		return uart;
 	}
 
 	inline const fsio_ptr& get_fsio() const OS_NOEXCEPT

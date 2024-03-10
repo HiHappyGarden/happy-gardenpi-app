@@ -21,12 +21,10 @@
 #include "hhg-driver/os-config.hpp"
 #include "stm32g4xx/driver-lpuart.h"
 #include "stm32g4xx/stm32-fs-io.hpp"
-#include "stm32g4xx/stm32-io.hpp"
+#include "stm32g4xx/stm32-lpuart.hpp"
 #include "stm32g4xx/stm32-time.hpp"
 using namespace os;
 using namespace hhg::iface;
-
-#include "hhg-driver/LiquidCrystal_I2C.h"
 
 
 #include "stm32g4xx_hal.h"
@@ -50,11 +48,11 @@ constexpr const char APP_TAG[] = "HARDWARE";
 }
 
 hardware::hardware(class error** error) OS_NOEXCEPT
-: io(new hhg::driver::stm32_io)
+: uart(new hhg::driver::stm32_lpuart)
 , fsio(new hhg::driver::stm32_fsio(static_cast<uint32_t>(addr_flash::PAGE_112), static_cast<uint32_t>(addr_flash::PAGE_127) + FLASH_PAGE_SIZE - 1 ))
 , time(new hhg::driver::stm32_time)
 {
-	if(io.get() == nullptr && error)
+	if(uart.get() == nullptr && error)
 	{
         *error = OS_ERROR_BUILD("io(new hhg::driver::stm32_io) no mem.", error_type::OS_ENOMEM);
         OS_ERROR_PTR_SET_POSITION(*error);
@@ -75,7 +73,7 @@ hardware::hardware(class error** error) OS_NOEXCEPT
         return;
 	}
 }
-extern "C" I2C_HandleTypeDef hi2c1;
+
 os::exit hardware::init(error** error) OS_NOEXCEPT
 {
 	OS_LOG_INFO(APP_TAG, "Init OS Config");
@@ -98,7 +96,7 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
 	OS_LOG_INFO(APP_TAG, "Init PLUART - OK");
 
 	OS_LOG_INFO(APP_TAG, "Init IO");
-	if(io->init(error) == exit::KO)
+	if(uart->init(error) == exit::KO)
 	{
 		if(error && *error)
 		{
@@ -120,28 +118,6 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
 		return exit::KO;
 	}
 	OS_LOG_INFO(APP_TAG, "Init FS IO - OK");
-
-
-//
-//	uint8_t test[] = "ciao mi chiamo antonio salsi";
-//	fsio->write(data_type::CONFIG, test, sizeof(test) - 1, error);
-//
-//	memset(test, '\0', sizeof(test));
-//
-//	fsio->read(data_type::CONFIG, test, sizeof(test) - 1, error);
-//
-//	OS_LOG_DEBUG(APP_TAG, "%s", test);
-//	uint8_t _data = 0x40;
-//	HAL_StatusTypeDef ret = HAL_I2C_Master_Transmit(&hi2c1, 0x27, &_data, 1, HAL_MAX_DELAY);
-
-
-//
-//	int i =0;
-	//LiquidCrystal_I2C lcd(0x27, 20, 4);
-//
-//	lcd.init();
-//
-//	lcd.printstr("ciao");
 
 
 	return exit::OK;

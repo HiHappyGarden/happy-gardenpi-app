@@ -43,6 +43,7 @@ class app_parser final : public hhg::iface::initializable, public hhg::iface::io
 	static constexpr const char NEW_LINE[] = "\r\n";
 
 
+	mutable hhg::iface::io_source source;
 	class os::error** error = nullptr;
 
 
@@ -78,7 +79,12 @@ public:
 		return parser;
 	}
 
-	void on_receive(const uint8_t data[], uint16_t size) const OS_NOEXCEPT override;
+	inline hhg::iface::io_source get_source() const OS_NOEXCEPT
+	{
+		return source;
+	}
+
+	void on_receive(hhg::iface::io_source, const uint8_t data[], uint16_t size) const OS_NOEXCEPT override;
 
 
 };
