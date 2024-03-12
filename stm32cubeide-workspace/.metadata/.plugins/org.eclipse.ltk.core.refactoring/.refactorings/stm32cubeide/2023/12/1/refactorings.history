@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;stm32cubeide/hhg-driver/platform/stm32g4xx/uart.h&apos; to &apos;uart.hpp&apos;" description="Rename resource &apos;uart.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="hhg-driver/platform/stm32g4xx/uart.h" name="uart.hpp" stamp="1704061678213" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;stm32cubeide/osal/inc/osal/iterator&apos; to &apos;iterator.hpp&apos;" description="Rename resource &apos;iterator&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="osal/inc/osal/iterator" name="iterator.hpp" stamp="1704062614056" updateReferences="true"/>
-</session>

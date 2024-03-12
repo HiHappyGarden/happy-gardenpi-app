@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;stm32cubeide/hhg-utils/inc/hhg-utils/hhg-utils.h&apos; to &apos;hhg-utils.hpp&apos;" description="Rename resource &apos;hhg-utils.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="hhg-utils/inc/hhg-utils/hhg-utils.h" name="hhg-utils.hpp" stamp="1705232150363" updateReferences="true"/>
-</session>
