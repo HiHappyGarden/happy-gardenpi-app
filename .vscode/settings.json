@@ -2,5 +2,6 @@
     "files.associations": {
         "*.tcc": "cpp",
         "*.in": "cpp"
-    }
+    },
+    "cmake.sourceDirectory": "/home/antoniosalsi/projects/hi-happy-garden-app/hhg-parser"
 }

@@ -17,3 +17,9 @@ cmake-*
 docs
 
 valgrind-out.txt
+
+Debug
+Release
+*.log
+.history
+org.eclipse.core.resources
