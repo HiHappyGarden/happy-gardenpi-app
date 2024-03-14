@@ -1,7 +1,7 @@
 /***************************************************************************
  *
  * Hi Happy Garden
- * Copyright (C) 2023/2024 Antonio Salsi <passy.linux@zresa.it>
+ * Copyright (C) 2023/2024  Antonio Salsi <passy.linux@zresa.it>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,20 +17,33 @@
  *
  ***************************************************************************/
 
-#ifndef HHG_CONFIG_H
-#define HHG_CONFIG_H
+#include "hhg-driver/os-config.hpp"
+using namespace os;
 
-#define HHG_NAME "@PROJECT_NAME@"
-#define HHG_VER "@PROJECT_VERSION@"
-#define HHG_VER_MAJOR (@PROJECT_VERSION_MAJOR@)
-#define HHG_VER_MINOR (@PROJECT_VERSION_MINOR@)
-#define HHG_VER_PATCH (@PROJECT_VERSION_PATCH@)
+#include "cmsis_os2.h"
 
-#define HHG_SCHEDULES_SIZE (@SCHEDULES_SIZE@)
-#define HHG_ZONES_SIZE (@ZONES_SIZE@)
 
-#define HHG_FSM_MAIN_SLEEP (@FSM_MAIN_SLEEP@)
-#define HHG_FSM_ERROR_SLEEP (@FSM_ERROR_SLEEP@)
-#define HHG_FSM_ERROR_MAX (@FSM_ERROR_MAX@)
+namespace hhg::driver
+{
+inline namespace v1
+{
 
-#endif // HHG_CONFIG_H
+uint32_t const LOWEST = 1;
+uint32_t const LOW = 2;
+uint32_t const NORMAL = 3;
+uint32_t const HIGH = 4;
+uint32_t const HIGHEST = 5;
+uint32_t const REALTIME = 6;
+
+char const TIME_T_STR[] = "%lu";
+
+os::exit os_config_init() OS_NOEXCEPT
+{
+
+	return exit::OK;
+}
+
+}
+}
+
+
