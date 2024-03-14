@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/happy-gardenpi-app.iml" filepath="$PROJECT_DIR$/.idea/happy-gardenpi-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/hi-happy-garden-app.iml" filepath="$PROJECT_DIR$/.idea/hi-happy-garden-app.iml" />
     </modules>
   </component>
 </project>

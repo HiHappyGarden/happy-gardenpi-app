@@ -17,14 +17,20 @@
  *
  ***************************************************************************/
 
-#ifndef OS_CONFIG_H
-#define OS_CONFIG_H
+#ifndef HHG_CONFIG_H
+#define HHG_CONFIG_H
 
-#define OS_NAME "@PROJECT_NAME@"
-#define OS_VER "@PROJECT_VERSION@"
-#define OS_VER_MAJOR (@PROJECT_VERSION_MAJOR@)
-#define OS_VER_MINOR (@PROJECT_VERSION_MINOR@)
-#define OS_VER_PATCH (@PROJECT_VERSION_PATCH@)
-#define OS_LOG_NEW_LINE "@LOG_NEW_LINE@"
+#define HHG_NAME "hi-happy-garden-app"
+#define HHG_VER "0.50.0"
+#define HHG_VER_MAJOR (0)
+#define HHG_VER_MINOR (50)
+#define HHG_VER_PATCH (0)
 
-#endif // OS_CONFIG_H
+#define HHG_SCHEDULES_SIZE (2)
+#define HHG_ZONES_SIZE (4)
+
+#define HHG_FSM_MAIN_SLEEP (100)
+#define HHG_FSM_ERROR_SLEEP (1000)
+#define HHG_FSM_ERROR_MAX (4)
+
+#endif // HHG_CONFIG_H

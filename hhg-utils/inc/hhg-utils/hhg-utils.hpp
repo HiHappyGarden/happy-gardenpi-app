@@ -17,20 +17,23 @@
  *
  ***************************************************************************/
 
+#pragma once
 
-#ifndef HHG_PARSER_CONFIG_H
-#define HHG_PARSER_CONFIG_H
+#include "osal/osal.hpp"
 
-#define HHG_PARSER_NAME "@PROJECT_NAME@"
-#define HHG_PARSER_VER "@PROJECT_VERSION@"
-#define HHG_PARSER_VER_MAJOR (@PROJECT_VERSION_MAJOR@)
-#define HHG_PARSER_VER_MINOR (@PROJECT_VERSION_MINOR@)
-#define HHG_PARSER_VER_PATCH (@PROJECT_VERSION_PATCH@)
-#define HHG_PARSER_FORMAT_SHORT "%d"
-#define HHG_PARSER_FORMAT_INT "%FORMAT_INT"
-#define HHG_PARSER_FORMAT_LONG "@FORMAT_LONG@"
-#define HHG_PARSER_FORMAT_USHORT "%u"
-#define HHG_PARSER_FORMAT_UINT "%@FORMAT_UINT@"
-#define HHG_PARSER_FORMAT_ULONG "%@FORMAT_ULONG@"
+namespace hhg::utils
+{
+inline namespace v1
+{
 
-#endif // HHG_PARSER_CONFIG_H
+int32_t random_number(int32_t min, int32_t max) OS_NOEXCEPT;
+
+int32_t crc32(uint8_t buffer[], uint32_t buffer_len) OS_NOEXCEPT;
+
+os::exit to_hex(char* dest, size_t dest_len, const uint8_t* values, size_t val_len) OS_NOEXCEPT;
+
+os::exit from_hex(uint8_t* dest, size_t dest_len, const char* values, size_t val_len) OS_NOEXCEPT;
+
+
+}
+}
