@@ -3,9 +3,9 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
-  <component name="CMakePresetLoader"><![CDATA[{
-  "useNewFormat": true
-}]]></component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
   <component name="CMakeReloadState">
     <option name="reloaded" value="true" />
   </component>
@@ -52,26 +52,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="029740bc-9460-411a-aa9c-3448b8c57430" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/hi-happy-garden-app.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hhg-drivers/platform/linux/hardware.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/copyright/hgardenpi.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/happy-gardenpi-app.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-config.h.in" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-config.h.in" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-parser" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-parser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-parser-config.h.in" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-drivers/platform/linux/os-config.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-parser/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-parser/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/osal" beforeDir="false" afterPath="$PROJECT_DIR$/osal" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/osal-config.h.in" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/osal/config/osal-config.h" beforeDir="false" afterPath="$PROJECT_DIR$/osal/config/osal-config.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,10 +74,10 @@
     <option name="majorVersion" value="2023" />
     <option name="minorVersion" value="3.1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 2
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="2dhLdKu9687khGjufIdYd85P1ux" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -116,19 +97,20 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "CPPToolchains",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RunManager" selected="CMake Application.hi-happy-garden-app">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="hi-happy-garden-parser_test" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden-app" TARGET_NAME="hi-happy-garden-parser_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="hi-happy-garden-app" RUN_TARGET_NAME="hi-happy-garden-parser_test" TEST_MODE="SUITE_TEST">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
         <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="cJSON_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden-app" TARGET_NAME="cJSON_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="hi-happy-garden-app" RUN_TARGET_NAME="cJSON_test">
@@ -329,7 +311,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1710455450780</updated>
-      <workItem from="1710455452093" duration="2798000" />
+      <workItem from="1710455452093" duration="2993000" />
+      <workItem from="1710541021568" duration="91000" />
     </task>
     <servers />
   </component>
