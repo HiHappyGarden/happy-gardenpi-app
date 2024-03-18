@@ -1,21 +1,18 @@
 {
-    "configurations": [
-        {
-            "name": "Linux",
-            "includePath": [
-                "${workspaceFolder}/src/**",
-                "${workspaceFolder}/3thparty/include/**",
-                "/home/antoniosalsi/raspberrypi/rootfs/usr/include/**",
-                "/home/antoniosalsi/raspberrypi/rootfs/usr/local/include/**",
-                "/home/antoniosalsi/raspberrypi/happy-gardenpi-app/build/_deps/json-src/include/**"
-            ],
-            "defines": [],
-            "compilerPath": "/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-gcc-8.3.0",
-            "cStandard": "c17",
-            "cppStandard": "c++17",
-            "intelliSenseMode": "linux-gcc-arm",
-            "configurationProvider": "ms-vscode.cmake-tools "
-        }
-    ],
-    "version": 4
+  "configurations": [
+    {
+      "name": "Linux",
+      "includePath": [
+        "${workspaceFolder}/**",
+        "${env:PICO_SDK_PATH}/**"
+      ],
+      "defines": [],
+      "compilerPath": "/usr/bin/arm-none-eabi-gcc",
+      "cStandard": "gnu17",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "linux-gcc-arm",
+      "configurationProvider" : "ms-vscode.cmake-tools"
+    }
+  ],
+  "version": 4
 }
