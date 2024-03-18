@@ -1,7 +1,17 @@
 {
-    "files.associations": {
-        "*.tcc": "cpp",
-        "*.in": "cpp"
-    },
-    "cmake.sourceDirectory": "/home/antoniosalsi/projects/hi-happy-garden-app/hhg-parser"
+  "cmake.configureOnOpen": false,
+  "cmake.statusbar.advanced": {
+    "debug" : {
+      "visibility": "hidden"
+              },
+    "launch" : {
+      "visibility": "hidden"
+               },
+    "build" : {
+      "visibility": "hidden"
+               },
+    "buildTarget" : {
+      "visibility": "hidden"
+               },
+     },
 }

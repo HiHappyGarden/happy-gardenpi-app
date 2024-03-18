@@ -1,11 +1,18 @@
 cmake_minimum_required(VERSION 3.16...3.24)
 
+
+option(PICO "Build for Rasberry Pi Pico" ON)
+
+if (PICO)
+	include($ENV{PICO_SDK_PATH}/external/pico_sdk_import.cmake)
+endif()
+
 if (CMAKE_VERSION VERSION_GREATER_EQUAL "3.24.0")
     cmake_policy(SET CMP0135 NEW)
 endif()
 
 
-PROJECT(hi-happy-garden-app VERSION "0.50.0" LANGUAGES CXX C)
+PROJECT(hi-happy-garden-app VERSION "0.50.0" LANGUAGES CXX C ASM)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -32,7 +39,9 @@ file(GLOB_RECURSE HI_HAPPY_GARDEN_UTILS_SOURCES CONFIGURE_DEPENDS "hhg-utils/inc
 if(UNIX)
     file(GLOB_RECURSE HI_HAPPY_GARDEN_DRIVER_INCLUDES CONFIGURE_DEPENDS "hhg-driver/linux/*.hpp" "hhg-driver/linux/*.h")
     file(GLOB_RECURSE HI_HAPPY_GARDEN_DRIVER_SOURCES CONFIGURE_DEPENDS "hhg-driver/platform/linux/*.cpp" "hhg-driver/platform/linux/*.c")
-elseif (PLATFORM EQUAL pico)
+elseif (PICO)
+
+    pico_sdk_init()
 
     add_definitions(-DINCLUDE_HHG_PARSER_CONFIG)
 
@@ -64,6 +73,8 @@ add_subdirectory(osal)
 include_directories(hhg-parser/inc)
 add_subdirectory(hhg-parser)
 
+set(BUILD_SHARED_AND_STATIC_LIBS OFF)
+set(BUILD_SHARED_LIBS OFF)
 include_directories(cJSON)
 add_subdirectory(cJSON)
 
@@ -73,8 +84,18 @@ add_executable(${PROJECT_NAME}
                 ${HI_HAPPY_GARDEN_DRIVER_INCLUDES} ${HI_HAPPY_GARDEN_DRIVER_SOURCES}
                 ${HI_HAPPY_GARDEN_UTILS_INCLUDES} ${HI_HAPPY_GARDEN_UTILS_SOURCES}
 )
+
+if (PICO)
+
 target_link_libraries(${PROJECT_NAME}
+	pico_stdlib
         cjson
         osal
         hi-happy-garden-parser
 )
+
+pico_enable_stdio_uart(${PROJECT_NAME} 1)
+
+pico_add_extra_outputs(${PROJECT_NAME})
+
+endif()
