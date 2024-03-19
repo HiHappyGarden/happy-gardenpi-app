@@ -41,6 +41,43 @@ if(UNIX)
     file(GLOB_RECURSE HI_HAPPY_GARDEN_DRIVER_SOURCES CONFIGURE_DEPENDS "hhg-driver/platform/linux/*.cpp" "hhg-driver/platform/linux/*.c")
 elseif (PICO)
 
+    option(FREERTOS "Enable FreeRTOS layer on OASL" ON)
+
+    include(FetchContent)
+    message(STATUS "Start download FreeRTOS Kernel")
+    FetchContent_Declare( freertos_kernel
+            GIT_REPOSITORY https://github.com/FreeRTOS/FreeRTOS-Kernel.git
+            GIT_TAG        V11.0.1
+    )
+
+    add_library(freertos_config INTERFACE)
+
+    target_include_directories(freertos_config SYSTEM
+            INTERFACE
+            src/freertos/config
+    )
+
+    target_compile_definitions(freertos_config
+            INTERFACE
+            projCOVERAGE_TEST=0
+    )
+
+
+    set( FREERTOS_HEAP "4" CACHE STRING "" FORCE)
+    # Select the native compile PORT
+    set( FREERTOS_PORT "GCC_RP2040" CACHE STRING "" FORCE)
+    # Select the cross-compile PORT
+    #        if (CMAKE_CROSSCOMPILING)
+    #            set(FREERTOS_PORT "GCC_ARM_CA9" CACHE STRING "" FORCE)
+    #        endif()
+    include_directories(${CMAKE_BINARY_DIR}/_deps/freertos_kernel-src/include)
+    include_directories(${CMAKE_BINARY_DIR}/_deps/freertos_kernel-src/portable/ThirdParty/GCC/Posix)
+
+    set(OS_MEM_LAYER 1)
+    set(PLATFORM_LIB "freertos_kernel")
+    FetchContent_MakeAvailable(freertos_kernel)
+    set(PLATFORM_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR}/src/freertos ${CMAKE_CURRENT_SOURCE_DIR}/src/freertos/config)
+    include_directories(${PLATFORM_INCLUDE})
     pico_sdk_init()
 
     add_definitions(-DINCLUDE_HHG_PARSER_CONFIG)
@@ -66,14 +103,13 @@ include_directories(config)
 
 
 include_directories(osal/inc)
-include_directories(osal/src/osal_sys)
-include_directories(osal/src/unix)
+include_directories(osal/src/freertos/osal_sys)
+include_directories(osal/src/freertos)
 add_subdirectory(osal)
 
 include_directories(hhg-parser/inc)
 add_subdirectory(hhg-parser)
 
-set(BUILD_SHARED_AND_STATIC_LIBS OFF)
 set(BUILD_SHARED_LIBS OFF)
 include_directories(cJSON)
 add_subdirectory(cJSON)
