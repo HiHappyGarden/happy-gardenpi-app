@@ -31,10 +31,6 @@ namespace hhg::utils
 inline namespace v1
 {
 
-//extern "C" CRC_HandleTypeDef hcrc;
-//extern "C" uint32_t HAL_CRC_Calculate(CRC_HandleTypeDef *hcrc, uint32_t pBuffer[], uint32_t BufferLength);
-
-
 int32_t random_number(int32_t min, int32_t max) OS_NOEXCEPT
 {
 //    srand(time(NULL));
@@ -44,8 +40,23 @@ int32_t random_number(int32_t min, int32_t max) OS_NOEXCEPT
 
 int32_t crc32(uint8_t buffer[], uint32_t buffer_len) OS_NOEXCEPT
 {
-	//return HAL_CRC_Calculate(&hcrc, reinterpret_cast<uint32_t*>(buffer), buffer_len);
-    return -1;
+    int i, j;
+    unsigned int byte, crc, mask;
+
+    i = 0;
+    crc = 0xFFFFFFFF;
+    while (i < buffer_len)
+    {
+        byte = buffer[i];            // Get next byte.
+        crc = crc ^ byte;
+        for (j = 7; j >= 0; j--)
+        {    // Do eight times.
+            mask = -(crc & 1);
+            crc = (crc >> 1) ^ (0xEDB88320 & mask);
+        }
+        i = i + 1;
+    }
+    return ~crc;
 }
 
 os::exit to_hex(char* dest, size_t dest_len, const uint8_t* values, size_t val_len) OS_NOEXCEPT
