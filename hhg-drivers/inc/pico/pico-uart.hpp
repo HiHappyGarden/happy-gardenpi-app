@@ -20,40 +20,32 @@
 
 #pragma once
 
-#include "osal/osal.hpp"
+#include "hhg-iface/io.hpp"
 
-#include "hhg-iface/initializable.hpp"
-
-namespace hhg::iface
+namespace hhg::driver
 {
 inline namespace v1
 {
 
-enum class io_source
+
+class pico_uart final : public hhg::iface::io
 {
-	UART,
-	WIFI
-};
+	const hhg::iface::io_on_receive* obj = nullptr;
+	on_receive on_receive_callback = nullptr;
 
-struct io_on_receive
-{
-	virtual ~io_on_receive() = default;
+	static inline pico_uart* singleton = nullptr;
 
-	virtual void on_receive(io_source io_source, const uint8_t data[], uint16_t size) const OS_NOEXCEPT = 0;
-};
+    public:
+    pico_uart() OS_NOEXCEPT;
+	~pico_uart() OS_NOEXCEPT override;
+	OS_NO_COPY_NO_MOVE(pico_uart)
 
-class io : public initializable
-{
-public:
-	using ptr = os::unique_ptr<hhg::iface::io>;
+	os::exit init(os::error** error) OS_NOEXCEPT override;
 
-	using on_receive = void (io_on_receive::*)(io_source io_source, const uint8_t data[], uint16_t size) const OS_NOEXCEPT;
+	void set_on_receive(const hhg::iface::io_on_receive* obj, on_receive on_receive_callback) OS_NOEXCEPT override;
 
-    virtual ~io() = default;
+    os::exit transmit(const uint8_t data[], uint16_t size) const OS_NOEXCEPT override;
 
-    virtual void set_on_receive(const io_on_receive*, on_receive) OS_NOEXCEPT = 0;
-
-    virtual os::exit transmit(const uint8_t data[], uint16_t size) const OS_NOEXCEPT = 0;
 };
 
 }

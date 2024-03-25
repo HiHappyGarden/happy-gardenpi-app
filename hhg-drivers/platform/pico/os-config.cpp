@@ -19,10 +19,13 @@
 
 #include "hhg-driver/os-config.hpp"
 using namespace os;
-
+#include "pico/pico-gpio.hpp"
 #include "cJSON.h"
 
 #include <FreeRTOS.h>
+#include <pico/stdlib.h>
+#include <hardware/structs/systick.h>
+#include "hardware/clocks.h"
 
 namespace hhg::driver
 {
@@ -59,11 +62,35 @@ cJSON_Hooks cjson_hooks
 
 os::exit os_config_init() OS_NOEXCEPT
 {
-	cJSON_InitHooks(&cjson_hooks);
+    stdio_init_all();
 
+    cJSON_InitHooks(&cjson_hooks);
+
+    init_gpio();
 
 	return exit::OK;
 }
+
+extern "C" uint64_t osal_system_current_time_millis()
+{
+    return time_us_32();
+}
+
+extern "C" void vApplicationStackOverflowHook(TaskHandle_t task, char *)
+{
+    (void)task;
+
+    system("reboot");
+    for(;;);
+}
+
+extern "C" void vApplicationMallocFailedHook( void )
+{
+    system("reboot");
+    for(;;);
+}
+
+
 
 }
 }

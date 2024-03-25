@@ -34,9 +34,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="029740bc-9460-411a-aa9c-3448b8c57430" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/hhg-drivers/inc/pico/pico-gpio.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hhg-drivers/inc/pico/pico-uart.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hhg-drivers/platform/pico/pico-gpio.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hhg-drivers/platform/pico/pico-uart.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-config/FreeRTOSConfig.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-config/FreeRTOSConfig.h" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-config/pico/FreeRTOSConfig.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-config/hhg-config.h" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-config/pico/hhg-config.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-config/hhg-parser-config.h" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-config/pico/hhg-parser-config.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-drivers/platform/pico/hardware.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-drivers/platform/pico/hardware.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-drivers/platform/pico/os-config.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-drivers/platform/pico/os-config.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-drivers/platform/stm32g4xx/stm32-lpuart.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-drivers/platform/stm32g4xx/stm32-lpuart.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/io.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/io.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +93,7 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "git-widget-placeholder": "raspberry-pico",
-    "last_opened_file_path": "/home/antoniosalsi/pico/pico-clion-starter",
+    "last_opened_file_path": "/home/antoniosalsi/projects/hi-happy-garden-app/hhg-drivers/inc/pico",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -94,15 +105,23 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/hhg-drivers/inc/pico" />
+      <recent name="$PROJECT_DIR$/hhg-drivers/platform/pico" />
       <recent name="$PROJECT_DIR$/hhg-config" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/hhg-config/pico" />
       <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/inc" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunManager" selected="OpenOCD Download &amp; Run.Raspberry Pi Pico W">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ELF2UF2Build" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden-app" TARGET_NAME="hi-happy-garden-app" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden-app" RUN_TARGET_NAME="hi-happy-garden-app">
       <envs>
         <env name="-DFREERTOS" value="ON -DPICO=ON" />
@@ -125,11 +144,6 @@
       </method>
     </configuration>
     <configuration name="PioasmBuild" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden-app" TARGET_NAME="PioasmBuild" CONFIG_NAME="Debug-Cortex M">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -409,7 +423,8 @@
       <workItem from="1711196373406" duration="366000" />
       <workItem from="1711263630040" duration="2048000" />
       <workItem from="1711282968088" duration="5890000" />
-      <workItem from="1711314394204" duration="4593000" />
+      <workItem from="1711314394204" duration="4820000" />
+      <workItem from="1711403268938" duration="4131000" />
     </task>
     <servers />
   </component>
@@ -430,9 +445,9 @@
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/main.cpp</url>
-          <line>94</line>
-          <option name="timeStamp" value="4" />
+          <url>file://$PROJECT_DIR$/hhg-drivers/platform/pico/hardware.cpp</url>
+          <line>43</line>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
