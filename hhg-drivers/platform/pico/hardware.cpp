@@ -19,23 +19,10 @@
 
 #include "hhg-driver/hardware.hpp"
 #include "hhg-driver/os-config.hpp"
-
-#include <pico/stdlib.h>
-#include <pico.h>
-
-#include <FreeRTOS.h>
-#include <task.h>
+#include "pico/pico-uart.hpp"
 
 using namespace os;
 using namespace hhg::iface;
-
-
-
-extern "C" uint64_t osal_system_current_time_millis()
-{
-    return xTaskGetTickCount();
-}
-
 
 namespace hhg::driver
 {
@@ -50,19 +37,17 @@ constexpr const char APP_TAG[] = "HARDWARE";
 }
 
 hardware::hardware(class error** error) OS_NOEXCEPT
-//: uart(new hhg::driver::stm32_lpuart)
+: uart(new hhg::driver::pico_uart)
 //, fsio(new hhg::driver::stm32_fsio(static_cast<uint32_t>(addr_flash::PAGE_112), static_cast<uint32_t>(addr_flash::PAGE_127) + FLASH_PAGE_SIZE - 1 ))
 //, time(new hhg::driver::stm32_time)
 {
-    stdio_init_all();
+	if(uart.get() == nullptr && error)
+	{
+        *error = OS_ERROR_BUILD("io(new hhg::driver::pico_uart) no mem.", error_type::OS_ENOMEM);
+        OS_ERROR_PTR_SET_POSITION(*error);
+        return;
+	}
 
-//	if(uart.get() == nullptr && error)
-//	{
-//        *error = OS_ERROR_BUILD("io(new hhg::driver::stm32_io) no mem.", error_type::OS_ENOMEM);
-//        OS_ERROR_PTR_SET_POSITION(*error);
-//        return;
-//	}
-//
 //	if(fsio.get() == nullptr && error)
 //	{
 //        *error = OS_ERROR_BUILD("io(new hhg::driver::stm32_fsio) no mem.", error_type::OS_ENOMEM);
@@ -80,37 +65,25 @@ hardware::hardware(class error** error) OS_NOEXCEPT
 
 os::exit hardware::init(error** error) OS_NOEXCEPT
 {
-//	OS_LOG_INFO(APP_TAG, "Init OS Config");
-//	if(os_config_init() == os::exit::KO)
-//	{
-//		return exit::KO;
-//	}
-//	OS_LOG_INFO(APP_TAG, "Init OS Config - OK");
-//
-//	OS_LOG_INFO(APP_TAG, "Init PLUART");
-//	if(driver_lpuart_init() == EXIT_FAILURE)
-//	{
-//		if(error)
-//		{
-//	        *error = OS_ERROR_BUILD("driver_lpuart_init() fail.", error_type::OS_EFAULT);
-//	        OS_ERROR_PTR_SET_POSITION(*error);
-//		}
-//		return exit::KO;
-//	}
-//	OS_LOG_INFO(APP_TAG, "Init PLUART - OK");
-//
-//	OS_LOG_INFO(APP_TAG, "Init IO");
-//	if(uart->init(error) == exit::KO)
-//	{
-//		if(error && *error)
-//		{
-//	        *error = OS_ERROR_APPEND(*error, "io::init() fail.", error_type::OS_EFAULT);
-//	        OS_ERROR_PTR_SET_POSITION(*error);
-//		}
-//		return exit::KO;
-//	}
-//	OS_LOG_INFO(APP_TAG, "Init IO - OK");
-//
+	OS_LOG_INFO(APP_TAG, "Init OS Config");
+	if(os_config_init() == os::exit::KO)
+	{
+		return exit::KO;
+	}
+	OS_LOG_INFO(APP_TAG, "Init OS Config - OK");
+
+	OS_LOG_INFO(APP_TAG, "Init UART");
+	if(uart->init(error) == exit::KO)
+	{
+		if(error && *error)
+		{
+	        *error = OS_ERROR_APPEND(*error, "io::init() fail.", error_type::OS_EFAULT);
+	        OS_ERROR_PTR_SET_POSITION(*error);
+		}
+		return exit::KO;
+	}
+	OS_LOG_INFO(APP_TAG, "Init UART - OK");
+
 //	OS_LOG_INFO(APP_TAG, "Init FS IO");
 //	if(fsio->init(error) == exit::KO)
 //	{

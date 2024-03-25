@@ -23,13 +23,14 @@ pico_sdk_init()
 add_definitions(-DINCLUDE_HHG_CONFIG)
 add_definitions(-DPICO)
 add_definitions(-DOS_MEM_LAYER)
-
+add_definitions(-DEXCLUDE_CHECK_FOR_STACK_OVERFLOW)
+add_definitions(-DEXCLUDE_USE_MALLOC_FAILED_HOOK)
 
 include_directories(cJSON)
 include_directories(inc)
 include_directories(osal/inc)
 include_directories(osal/src/freertos)
-include_directories(hhg-config)
+include_directories(hhg-config/pico)
 include_directories(hhg-utils/inc)
 include_directories(hhg-iface/inc)
 include_directories(hhg-drivers/inc)
@@ -59,6 +60,8 @@ add_executable(${PROJECT_NAME}
         ${HHG_DRIVERS_INCLUDES} ${HHG_DRIVERS_SOURCES}
         ${HHG_APP_INCLUDES} ${HHG_APP_SOURCES}
         ${HHG_UTILS_INCLUDES} ${HHG_UTILS_SOURCES}
+        hhg-drivers/inc/pico/pico-gpio.hpp
+        hhg-drivers/platform/pico/pico-gpio.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}

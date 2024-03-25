@@ -54,7 +54,7 @@ os::exit stm32_lpuart::init(error** error) OS_NOEXCEPT
 
 		if(stm32_lpuart::singleton && stm32_lpuart::singleton->obj && stm32_lpuart::singleton->on_receive_callback)
 		{
-			(stm32_lpuart::singleton->obj->*stm32_lpuart::singleton->on_receive_callback)(io_source::LPUART, &ch, 1);
+			(stm32_lpuart::singleton->obj->*stm32_lpuart::singleton->on_receive_callback)(io_source::UART, &ch, 1);
 		}
 
 	});

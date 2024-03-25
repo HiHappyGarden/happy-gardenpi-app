@@ -17,44 +17,23 @@
  *
  ***************************************************************************/
 
-
 #pragma once
 
 #include "osal/osal.hpp"
 
-#include "hhg-iface/initializable.hpp"
+#include <stdint.h>
 
-namespace hhg::iface
+namespace hhg::driver
 {
+
 inline namespace v1
 {
 
-enum class io_source
-{
-	UART,
-	WIFI
-};
+constexpr const uint8_t UART_TX_PIN = 0;
+constexpr const uint8_t UART_RX_PIN = 1;
 
-struct io_on_receive
-{
-	virtual ~io_on_receive() = default;
+os::exit init_gpio();
 
-	virtual void on_receive(io_source io_source, const uint8_t data[], uint16_t size) const OS_NOEXCEPT = 0;
-};
-
-class io : public initializable
-{
-public:
-	using ptr = os::unique_ptr<hhg::iface::io>;
-
-	using on_receive = void (io_on_receive::*)(io_source io_source, const uint8_t data[], uint16_t size) const OS_NOEXCEPT;
-
-    virtual ~io() = default;
-
-    virtual void set_on_receive(const io_on_receive*, on_receive) OS_NOEXCEPT = 0;
-
-    virtual os::exit transmit(const uint8_t data[], uint16_t size) const OS_NOEXCEPT = 0;
-};
 
 }
 }

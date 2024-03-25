@@ -17,44 +17,23 @@
  *
  ***************************************************************************/
 
+#include <pico/pico-gpio.hpp>
+using namespace os;
 
-#pragma once
+#include <hardware/gpio.h>
 
-#include "osal/osal.hpp"
-
-#include "hhg-iface/initializable.hpp"
-
-namespace hhg::iface
+namespace hhg::driver
 {
 inline namespace v1
 {
 
-enum class io_source
+os::exit init_gpio()
 {
-	UART,
-	WIFI
-};
+    gpio_set_function(UART_TX_PIN, GPIO_FUNC_UART);
+    gpio_set_function(UART_RX_PIN, GPIO_FUNC_UART);
 
-struct io_on_receive
-{
-	virtual ~io_on_receive() = default;
-
-	virtual void on_receive(io_source io_source, const uint8_t data[], uint16_t size) const OS_NOEXCEPT = 0;
-};
-
-class io : public initializable
-{
-public:
-	using ptr = os::unique_ptr<hhg::iface::io>;
-
-	using on_receive = void (io_on_receive::*)(io_source io_source, const uint8_t data[], uint16_t size) const OS_NOEXCEPT;
-
-    virtual ~io() = default;
-
-    virtual void set_on_receive(const io_on_receive*, on_receive) OS_NOEXCEPT = 0;
-
-    virtual os::exit transmit(const uint8_t data[], uint16_t size) const OS_NOEXCEPT = 0;
-};
+    return exit::OK;
+}
 
 }
 }
