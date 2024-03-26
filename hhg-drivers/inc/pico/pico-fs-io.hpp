@@ -18,53 +18,41 @@
  ***************************************************************************/
 
 
+
 #pragma once
 
 #include "hhg-iface/fs-io.hpp"
-#include "hhg-iface/initializable.hpp"
-#include "hhg-iface/io.hpp"
-#include "hhg-iface/time.hpp"
+
 
 namespace hhg::driver
 {
 inline namespace v1
 {
 
-using io_ptr = hhg::iface::io::ptr;
-using fsio_ptr = hhg::iface::fs_io::ptr;
-using time_ptr = hhg::iface::time::ptr;
-
-class hardware final : public hhg::iface::initializable
+class pico_fsio final : public iface::v1::fs_io
 {
-    const time_ptr time;
-    const io_ptr uart;
-    const fsio_ptr fsio;
+	uint32_t start_flash_address = 0;
+	uint32_t end_flash_address = 0;
+
 public:
-	explicit hardware(class os::error** error) OS_NOEXCEPT;
-	~hardware() override = default;
-	OS_NO_COPY_NO_MOVE(hardware)
 
-	inline const io_ptr& get_uart() const OS_NOEXCEPT
-	{
-		return uart;
-	}
 
-	inline const fsio_ptr& get_fsio() const OS_NOEXCEPT
-	{
-		return fsio;
-	}
+	static uint64_t const check_data;
 
-	inline const time_ptr& get_time() const OS_NOEXCEPT
-	{
-		return time;
-	}
+	pico_fsio(uint32_t start_flash_address, uint32_t end_flash_address) OS_NOEXCEPT;
+	virtual ~pico_fsio();
 
-    os::exit init(os::error** error) OS_NOEXCEPT override;
+	os::exit init(os::error** error) OS_NOEXCEPT override;
 
-    const os::string<128>& get_info() OS_NOEXCEPT;
+	os::exit write(iface::v1::data_type type, const uint8_t data[], size_t size, os::error** error) const OS_NOEXCEPT override;
 
-    const os::string<128>& get_version() OS_NOEXCEPT;
+	os::exit read(iface::v1::data_type type, uint8_t data[], size_t size, os::error** error) const OS_NOEXCEPT override;
+
+private:
+
+
 };
 
 }
 }
+

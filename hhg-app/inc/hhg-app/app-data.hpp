@@ -176,7 +176,7 @@ public:
 	using on_vesrion_change = void (*)(uint8_t version);
 
 	explicit app_data(const hhg::iface::fs_io::ptr& fsio) OS_NOEXCEPT;
-	~app_data();
+	~app_data() override;
 	OS_NO_COPY_NO_MOVE(app_data)
 
 	os::exit init(os::error** error) OS_NOEXCEPT override;

@@ -21,6 +21,7 @@
 #include "hhg-driver/os-config.hpp"
 #include "pico/pico-uart.hpp"
 #include "pico/pico-time.hpp"
+#include "pico/pico-fs-io.hpp"
 
 using namespace os;
 using namespace hhg::iface;
@@ -38,30 +39,31 @@ constexpr const char APP_TAG[] = "HARDWARE";
 }
 
 hardware::hardware(class error** error) OS_NOEXCEPT
-: uart(new hhg::driver::pico_uart)
-//, fsio(new hhg::driver::stm32_fsio(static_cast<uint32_t>(addr_flash::PAGE_112), static_cast<uint32_t>(addr_flash::PAGE_127) + FLASH_PAGE_SIZE - 1 ))
-, time(new hhg::driver::pico_time)
+: time(new hhg::driver::pico_time)
+, uart(new hhg::driver::pico_uart)
+, fsio(new hhg::driver::pico_fsio(static_cast<uint32_t>(0), static_cast<uint32_t>(0)  ))
 {
-	if(uart.get() == nullptr && error)
+    if(time.get() == nullptr && error)
+    {
+        *error = OS_ERROR_BUILD("io(new hhg::driver::stm32_timer) no mem.", error_type::OS_ENOMEM);
+        OS_ERROR_PTR_SET_POSITION(*error);
+        return;
+    }
+
+    if(uart.get() == nullptr && error)
 	{
         *error = OS_ERROR_BUILD("io(new hhg::driver::pico_uart) no mem.", error_type::OS_ENOMEM);
         OS_ERROR_PTR_SET_POSITION(*error);
         return;
-	}
+    }
 
-//	if(fsio.get() == nullptr && error)
-//	{
-//        *error = OS_ERROR_BUILD("io(new hhg::driver::stm32_fsio) no mem.", error_type::OS_ENOMEM);
-//        OS_ERROR_PTR_SET_POSITION(*error);
-//        return;
-//	}
-//
-	if(time.get() == nullptr && error)
+    if(fsio.get() == nullptr && error)
 	{
-        *error = OS_ERROR_BUILD("io(new hhg::driver::stm32_timer) no mem.", error_type::OS_ENOMEM);
+        *error = OS_ERROR_BUILD("io(new hhg::driver::stm32_fsio) no mem.", error_type::OS_ENOMEM);
         OS_ERROR_PTR_SET_POSITION(*error);
         return;
-	}
+    }
+
 }
 
 os::exit hardware::init(error** error) OS_NOEXCEPT
@@ -107,18 +109,17 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
 	}
 	OS_LOG_INFO(APP_TAG, "Init UART - OK");
 
-//	OS_LOG_INFO(APP_TAG, "Init FS IO");
-//	if(fsio->init(error) == exit::KO)
-//	{
-//		if(error && *error)
-//		{
-//	        *error = OS_ERROR_APPEND(*error, "fsio::init() fail.", error_type::OS_EFAULT);
-//	        OS_ERROR_PTR_SET_POSITION(*error);
-//		}
-//		return exit::KO;
-//	}
-//	OS_LOG_INFO(APP_TAG, "Init FS IO - OK");
-//
+	OS_LOG_INFO(APP_TAG, "Init FS IO");
+	if(fsio->init(error) == exit::KO)
+	{
+		if(error && *error)
+		{
+	        *error = OS_ERROR_APPEND(*error, "fsio::init() fail.", error_type::OS_EFAULT);
+	        OS_ERROR_PTR_SET_POSITION(*error);
+		}
+		return exit::KO;
+	}
+	OS_LOG_INFO(APP_TAG, "Init FS IO - OK");
 
 	return exit::OK;
 }

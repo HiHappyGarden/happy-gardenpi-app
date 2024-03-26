@@ -69,7 +69,7 @@ class app_parser final : public hhg::iface::initializable, public hhg::iface::io
 public:
 
 	explicit app_parser(const hhg::iface::io::ptr& io, class os::error** error = nullptr) OS_NOEXCEPT;
-	~app_parser() OS_NOEXCEPT;
+	~app_parser() override OS_NOEXCEPT;
 	OS_NO_COPY_NO_MOVE(app_parser)
 
 	os::exit init(os::error** error) OS_NOEXCEPT override;

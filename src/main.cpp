@@ -111,35 +111,35 @@ int main(int argc, char* argv[])
          return static_cast<int>(os::exit::KO);
      }
 
-//     OS_LOG_INFO(APP_TAG, "Init app_main");
-//     if(app_main.init(&error) == os::exit::KO)
-//     {
-//         if(error)
-//         {
-//             os::printf_stack_error(APP_TAG, error);
-//             delete error;
-//         }
-//         os::stop_main_loop();
-//         exit(EXIT_FAILURE);
-//     }
+     OS_LOG_INFO(APP_TAG, "Init app_main");
+     if(app_main.init(&error) == os::exit::KO)
+     {
+         if(error)
+         {
+             os::printf_stack_error(APP_TAG, error);
+             delete error;
+         }
+         os::stop_main_loop();
+         exit(EXIT_FAILURE);
+     }
 
-//     OS_LOG_INFO(APP_TAG, "Start FSM app_main");
-//     if(app_main.fsm_start(&error) == os::exit::KO)
-//     {
-//         if(error)
-//         {
-//             os::printf_stack_error(APP_TAG, error);
-//             delete error;
-//         }
-//         os::stop_main_loop();
-//         exit(EXIT_FAILURE);
-//     }
-//     OS_LOG_INFO(APP_TAG, "Start FSM app_main - OK");
+     OS_LOG_INFO(APP_TAG, "Start FSM app_main");
+     if(app_main.fsm_start(&error) == os::exit::KO)
+     {
+         if(error)
+         {
+             os::printf_stack_error(APP_TAG, error);
+             delete error;
+         }
+         os::stop_main_loop();
+         exit(EXIT_FAILURE);
+     }
+     OS_LOG_INFO(APP_TAG, "Start FSM app_main - OK");
 
 //     test_thread.create(nullptr, &error);
 //     if(error)
 //     {
-
+//
 //         delete error;
 //         return static_cast<int>(os::exit::KO);
 //     }
@@ -148,12 +148,6 @@ int main(int argc, char* argv[])
      os::start_main_loop();
  #endif
     return static_cast<int>(os::exit::OK);
-
-//    xTaskCreate(reinterpret_cast<TaskFunction_t>(led_task), "LED_Task", 256, NULL, 1, NULL);
-//    vTaskStartScheduler();
-
-    return 0;
-
 }
 
 
