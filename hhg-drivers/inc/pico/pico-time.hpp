@@ -20,19 +20,38 @@
 
 #pragma once
 
-#include "osal/osal.hpp"
+#include "hhg-iface/time.hpp"
+#include "hhg-iface/initializable.hpp"
 
-namespace hhg::iface
+namespace hhg::driver
 {
 inline namespace v1
 {
 
-struct initializable
-{
-    virtual ~initializable() = default;
 
-    virtual os::exit init(os::error** error) OS_NOEXCEPT = 0;
+
+class pico_time final : public hhg::iface::time_init
+{
+public:
+	static constexpr time_t TIMESTAMP_2000 = 946688400;
+
+	pico_time();
+	~pico_time() override;
+	OS_NO_COPY_NO_MOVE(pico_time)
+
+    os::exit init(os::error** error) OS_NOEXCEPT override;
+
+	os::exit set_timestamp(time_t timestamp, os::error **error = nullptr) OS_NOEXCEPT override;
+
+	::tm get_date_time(os::error **error = nullptr) const OS_NOEXCEPT override;
+
+	os::string<32> get_date_time(const char[] = FORMAT, os::error **error = nullptr) const OS_NOEXCEPT override;
+
+	bool wait_for_synchro(uint64_t timeout = os::ms_to_us(1'000)) const OS_NOEXCEPT override;
+
+
 };
 
-}
-}
+} /* namespace driver */
+} /* namespace hhg */
+

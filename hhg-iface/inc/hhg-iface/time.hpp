@@ -21,6 +21,7 @@
 #pragma once
 
 #include "osal/osal.hpp"
+#include "hhg-iface/initializable.hpp"
 
 
 #include <time.h>
@@ -32,11 +33,8 @@ inline namespace v1
 
 
 
-class time
+struct time
 {
-
-public:
-
 	static constexpr char FORMAT[] = "%Y/%m/%d %H:%M:%S";
 
 	using ptr = os::unique_ptr<hhg::iface::time>;
@@ -57,6 +55,12 @@ public:
 	virtual os::string<32> get_date_time(const char format[] = FORMAT, os::error **error = nullptr) const OS_NOEXCEPT = 0;
 
 	virtual bool wait_for_synchro(uint64_t timeout = os::ms_to_us(1'000)) const OS_NOEXCEPT { return true; };
+
+};
+
+struct time_init : public time, public initializable
+{
+    ~time_init() override = default;
 
 };
 

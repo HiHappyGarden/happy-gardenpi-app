@@ -27,9 +27,8 @@ namespace hhg::iface
 inline namespace v1
 {
 
-class startable
+struct startable
 {
-public:
     virtual ~startable() = default;
 
     virtual os::exit start(os::error** error) OS_NOEXCEPT = 0;
