@@ -64,6 +64,8 @@ add_executable(${PROJECT_NAME}
         hhg-drivers/platform/pico/pico-gpio.cpp
 )
 
+#pico_set_linker_script(${PROJECT_NAME} ${CMAKE_SOURCE_DIR}/pico/memmap_custom.ld)
+
 target_link_libraries(${PROJECT_NAME}
         pico_stdlib
         hardware_rtc
@@ -71,8 +73,7 @@ target_link_libraries(${PROJECT_NAME}
         hi-happy-garden-parser
 )
 
-pico_add_extra_outputs(${PROJECT_NAME})
-
 pico_enable_stdio_uart(${PROJECT_NAME} 1)
 
+pico_add_extra_outputs(${PROJECT_NAME})
 

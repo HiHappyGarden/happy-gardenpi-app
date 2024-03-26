@@ -64,6 +64,8 @@ class app_config final : public hhg::iface::initializable
 		uint8_t zones_size = HHG_ZONES_SIZE;
 		uint32_t crc = MAIGC;
 		user users[user::MAX_USERS];
+        char wifi_ssid[32] {};
+        char wifi_passwd[64] {};
 	} config;
 
 public:
@@ -71,7 +73,7 @@ public:
 	using on_vesrion_change = void (*)(uint8_t version);
 
 	explicit app_config(const hhg::iface::fs_io::ptr& fsio) OS_NOEXCEPT;
-	~app_config();
+	~app_config() override;
 	OS_NO_COPY_NO_MOVE(app_config)
 
 	os::exit init(os::error** error) OS_NOEXCEPT override;

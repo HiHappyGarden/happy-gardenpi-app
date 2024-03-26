@@ -77,7 +77,7 @@ public:
     explicit app_main(driver::hardware& hardware, error** error) OS_NOEXCEPT;
     OS_NO_COPY_NO_MOVE(app_main)
 
-    ~app_main() OS_NOEXCEPT;
+    ~app_main() override OS_NOEXCEPT;
 
     os::exit init(class error** error) OS_NOEXCEPT override;
 
