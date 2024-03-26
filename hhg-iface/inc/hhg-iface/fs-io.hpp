@@ -37,9 +37,8 @@ enum class data_type : uint8_t
 	DATA,
 };
 
-class fs_io : public initializable
+struct fs_io : public initializable
 {
-public:
 	using ptr = os::unique_ptr<hhg::iface::fs_io>;
 
 	virtual ~fs_io() = default;
