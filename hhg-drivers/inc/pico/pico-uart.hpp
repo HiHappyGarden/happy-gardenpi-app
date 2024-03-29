@@ -36,6 +36,13 @@ class pico_uart final : public hhg::iface::io
 	static inline pico_uart* singleton = nullptr;
 
     public:
+
+    enum pin : uint8_t
+    {
+        TX_PIN = 0,
+        RX_PIN = 1
+    };
+
     pico_uart() OS_NOEXCEPT;
 	~pico_uart() OS_NOEXCEPT override;
 	OS_NO_COPY_NO_MOVE(pico_uart)

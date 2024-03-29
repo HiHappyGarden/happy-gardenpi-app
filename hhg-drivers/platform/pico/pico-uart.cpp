@@ -27,13 +27,20 @@ using namespace os;
 #include "pico/stdlib.h"
 #include "hardware/uart.h"
 
-#define UART_ID uart0
+
+
 
 namespace hhg::driver
 {
 inline namespace v1
 {
 
+namespace
+{
+constexpr uint32_t BAUD_RATE = 115200;
+constexpr uint8_t DATA_BITS = 8;
+constexpr uint8_t STOP_BITS = 1;
+}
 
 pico_uart::pico_uart() OS_NOEXCEPT = default;
 
@@ -55,26 +62,14 @@ os::exit pico_uart::init(error** error) OS_NOEXCEPT
 	}
 	singleton = this;
 
-    //    // Use some the various UART functions to send out data
-//    // In a default system, printf will also output via the default UART
-//
-//    // Send out a character without any conversions
-//    uart_putc_raw(UART_ID, 'A');
-//
-//    // Send out a character but do CR/LF conversions
-//    uart_putc(UART_ID, 'B');
-//
-//    // Send out a string, with CR/LF conversions
-//    uart_puts(UART_ID, " Hello, UART!\n");
+    uart_init(uart0, BAUD_RATE);
 
-    int UART_IRQ = UART_ID == uart0 ? UART0_IRQ : UART1_IRQ;
-
-    irq_set_exclusive_handler(UART_IRQ, []
+    irq_set_exclusive_handler(UART0_IRQ, []
     {
 
-        while (uart_is_readable(UART_ID))
+        while (uart_is_readable(uart0))
         {
-            uint8_t ch = uart_getc(UART_ID);
+            uint8_t ch = uart_getc(uart0);
             if(pico_uart::singleton && pico_uart::singleton->obj && pico_uart::singleton->on_receive_callback)
             {
                 (pico_uart::singleton->obj->*pico_uart::singleton->on_receive_callback)(io_source::UART, &ch, 1);
@@ -82,7 +77,12 @@ os::exit pico_uart::init(error** error) OS_NOEXCEPT
         }
 
     });
-    irq_set_enabled(UART_IRQ, true);
+
+    irq_set_enabled(UART0_IRQ, true);
+
+    // Now enable the UART to send interrupts - RX only
+    uart_set_irq_enables(uart0, true, false);
+
 
 	return exit::OK;
 }
@@ -98,7 +98,7 @@ os::exit pico_uart::transmit(const uint8_t data[], uint16_t size) const OS_NOEXC
 {
     for(uint16_t i = 0; i < size; i++)
     {
-        uart_putc(UART_ID, data[i]);
+        uart_putc(uart0, data[i]);
     }
 
 	return exit::OK;
