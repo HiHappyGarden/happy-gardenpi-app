@@ -28,10 +28,7 @@ namespace hhg::driver
 
 inline namespace v1
 {
-
-constexpr const uint8_t UART_TX_PIN = 0;
-constexpr const uint8_t UART_RX_PIN = 1;
-
+    
 os::exit init_gpio();
 
 

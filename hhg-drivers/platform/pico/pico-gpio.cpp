@@ -17,7 +17,8 @@
  *
  ***************************************************************************/
 
-#include <pico/pico-gpio.hpp>
+#include "pico/pico-gpio.hpp"
+#include "pico/pico-uart.hpp"
 using namespace os;
 
 #include <hardware/gpio.h>
@@ -29,8 +30,8 @@ inline namespace v1
 
 os::exit init_gpio()
 {
-    gpio_set_function(UART_TX_PIN, GPIO_FUNC_UART);
-    gpio_set_function(UART_RX_PIN, GPIO_FUNC_UART);
+    gpio_set_function(pico_uart::TX_PIN, GPIO_FUNC_UART);
+    gpio_set_function(pico_uart::RX_PIN, GPIO_FUNC_UART);
 
     return exit::OK;
 }

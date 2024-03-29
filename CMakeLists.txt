@@ -69,6 +69,9 @@ add_executable(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
         pico_stdlib
         hardware_rtc
+        pico_multicore
+        hardware_pio
+        hardware_uart
         freertos
         hi-happy-garden-parser
 )
