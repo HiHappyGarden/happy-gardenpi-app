@@ -63,7 +63,6 @@ public:
 
     const os::string<128>& get_info() OS_NOEXCEPT;
 
-    const os::string<128>& get_version() OS_NOEXCEPT;
 };
 
 }

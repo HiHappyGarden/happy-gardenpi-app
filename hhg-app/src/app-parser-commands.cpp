@@ -99,6 +99,7 @@ entry commands_config[] =
 	{.key = "3", .description = "Get description"},
 	{.key = "4", .description = "Set description"},
 	{.key = "5", .description = "Get zones size"},
+    {.key = "CLEAR", .description = "Clear all"},
 	{.key = "STORE", .custom_func = [](auto data, auto entry, auto error)
 	{
 		auto ret = app_config->store(error);
@@ -194,6 +195,7 @@ entry commands_data[] =
 	},
     .description = "Get zone"},
 	{.key = "4", .description = "Set zone"},
+    {.key = "CLEAR", .description = "Clear all zone"},
 	{.key = "STORE", .custom_func = [](auto data, auto entry, auto error)
 	{
 		auto ret = app_data->store(error);
@@ -227,6 +229,7 @@ constexpr const size_t commands_log_size = sizeof(commands_log) / sizeof(command
 entry commands[] =
 {
 	{.key = "$VER", .description = "Get version"},
+    {.key = "$CLR", .description = "Clear storage"},
 	{.key = "$RTC", .next = commands_rtc, .next_size = commands_rtc_size, .description = "Rtc menu"},
 	{.key = "$CONF", .next = commands_config, .next_size = commands_config_size, .description = "Configuration menu"},
 	{.key = "$DATA", .next = commands_data, .next_size = commands_data_size, .description = "Data menu"},
@@ -285,6 +288,12 @@ os::exit set_app_config(class app_config& app_config, error** error) OS_NOEXCEPT
 		return exit::KO;
 	}
 
+    key = "$CONF CLEAR";
+    if(parser->set(key.c_str(), new method(&app_config, &app_config::clear), error) == exit::KO)
+    {
+        return exit::KO;
+    }
+
 	return exit::OK;
 }
 
@@ -317,6 +326,12 @@ os::exit set_app_data(class app_data& app_data, error** error) OS_NOEXCEPT
 	{
 		return exit::KO;
 	}
+
+    key = "$DATA CLEAR";
+    if(parser->set(key.c_str(), new method(&app_data, &app_data::clear), error) == exit::KO)
+    {
+        return exit::KO;
+    }
 
 	return exit::OK;
 }

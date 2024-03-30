@@ -100,7 +100,6 @@ int main(int argc, char* argv[])
  		delete error;
  	}
 
-     OS_LOG_INFO(APP_TAG, "Init hardware");
      if(hw.init(&error) == os::exit::KO)
      {
          if(error)
@@ -111,7 +110,6 @@ int main(int argc, char* argv[])
          return static_cast<int>(os::exit::KO);
      }
 
-     OS_LOG_INFO(APP_TAG, "Init app_main");
      if(app_main.init(&error) == os::exit::KO)
      {
          if(error)
@@ -134,7 +132,6 @@ int main(int argc, char* argv[])
          os::stop_main_loop();
          exit(EXIT_FAILURE);
      }
-     OS_LOG_INFO(APP_TAG, "Start FSM app_main - OK");
 
 //     test_thread.create(nullptr, &error);
 //     if(error)

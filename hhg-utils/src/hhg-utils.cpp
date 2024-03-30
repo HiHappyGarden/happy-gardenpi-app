@@ -20,25 +20,13 @@
 #include "hhg-utils/hhg-utils.hpp"
 using namespace os;
 
-//#include "stm32g4xx_hal.h"
-
-#include <stdlib.h>
-#include <stdint.h>
-#include <time.h>
 
 namespace hhg::utils
 {
 inline namespace v1
 {
 
-int32_t random_number(int32_t min, int32_t max) OS_NOEXCEPT
-{
-//    srand(time(NULL));
-//    return (rand() % (max - min + 1)) + min;
-	return 0;
-}
-
-int32_t crc32(uint8_t buffer[], uint32_t buffer_len) OS_NOEXCEPT
+int32_t crc32(const uint8_t buffer[], uint32_t buffer_len) OS_NOEXCEPT
 {
     int i, j;
     unsigned int byte, crc, mask;
@@ -59,30 +47,30 @@ int32_t crc32(uint8_t buffer[], uint32_t buffer_len) OS_NOEXCEPT
     return ~crc;
 }
 
-os::exit to_hex(char* dest, size_t dest_len, const uint8_t* values, size_t val_len) OS_NOEXCEPT
+os::exit to_hex(char* dest, size_t dest_len, const uint8_t* src, size_t src_len) OS_NOEXCEPT
 {
-	if(dest == nullptr || values == nullptr)
+	if(dest == nullptr || src == nullptr)
 	{
 		return exit::KO;
 	}
-    if(dest_len < (val_len*2+1))
+    if(dest_len < (src_len * 2 + 1))
     {
     	return exit::KO;
     }
 
     memset(dest, '\0', dest_len);
-    while(val_len--)
+    while(src_len--)
     {
-        sprintf(dest, "%02X", *values);
+        sprintf(dest, "%02X", *src);
         dest += 2;
-        ++values;
+        ++src;
     }
     return exit::OK;
 }
 
-os::exit from_hex(uint8_t* dest, size_t dest_len, const char* values, size_t val_len) OS_NOEXCEPT
+os::exit from_hex(uint8_t* dest, size_t dest_len, const char* src, size_t src_len) OS_NOEXCEPT
 {
-	if(dest == nullptr || values == nullptr)
+	if(dest == nullptr || src == nullptr)
 	{
 		return exit::KO;
 	}
@@ -91,13 +79,13 @@ os::exit from_hex(uint8_t* dest, size_t dest_len, const char* values, size_t val
     char buf[3];
     size_t i;
     int value;
-    for (i = 0; i < val_len && *values; i++)
+    for (i = 0; i < src_len && *src; i++)
     {
-        buf[0] = *values++;
+        buf[0] = *src++;
         buf[1] = '\0';
-        if (*values)
+        if (*src)
         {
-            buf[1] = *values++;
+            buf[1] = *src++;
             buf[2] = '\0';
         }
         if (sscanf(buf, "%x", &value) != 1)
