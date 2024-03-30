@@ -48,7 +48,7 @@ struct io : public initializable
 
 	using on_receive = void (io_on_receive::*)(io_source io_source, const uint8_t data[], uint16_t size) const OS_NOEXCEPT;
 
-    virtual ~io() = default;
+    ~io() override = default;
 
     virtual void set_on_receive(const io_on_receive*, on_receive) OS_NOEXCEPT = 0;
 

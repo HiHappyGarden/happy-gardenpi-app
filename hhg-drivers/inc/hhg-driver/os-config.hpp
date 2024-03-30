@@ -20,7 +20,6 @@
 #pragma once
 #include "osal/osal.hpp"
 
-
 #include <stdint.h>
 
 namespace hhg::driver

@@ -166,7 +166,7 @@ class app_data final : public hhg::iface::initializable
 
 	mutable struct alignas(2) data final : public hhg::iface::file_version
 	{
-		inline data() : file_version{MAIGC, VERSION} {}
+		inline data() OS_NOEXCEPT : file_version{MAIGC, VERSION} {}
 		schedule schedules[HHG_SCHEDULES_SIZE];
 		uint32_t crc = MAIGC;
 	} data;

@@ -220,6 +220,13 @@ os::exit app_main::init(class os::error** error) OS_NOEXCEPT
 	OS_LOG_INFO(APP_TAG, "Init APP CONFIG");
 	if(app_config.init(error) == exit::KO)
 	{
+        if(error && *error)
+        {
+            printf_stack_error(APP_TAG, *error);
+            delete (*error);
+            *error = nullptr;
+        }
+
 		OS_LOG_WARNING(APP_TAG, "Load default config");
 		if(app_config.load_default(error) == exit::KO)
 		{

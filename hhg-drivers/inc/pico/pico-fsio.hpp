@@ -31,14 +31,7 @@ inline namespace v1
 
 class pico_fsio final : public iface::v1::fs_io
 {
-	static constexpr uint32_t start_flash_address = XIP_BASE + PICO_FLASH_SIZE_BYTES - (FLASH_SECTOR_SIZE * 2);
-    static constexpr uint32_t end_flash_address = XIP_BASE + PICO_FLASH_SIZE_BYTES;
-
-    enum class store_offset : uint16_t
-    {
-        CONFIG_OFFSET = 0,
-        DATA_OFFSET = (1u << 11),
-    };
+	static constexpr uint32_t start_store_address = PICO_FLASH_SIZE_BYTES - (FLASH_SECTOR_SIZE);
 
 public:
 
@@ -50,13 +43,17 @@ public:
 
 	os::exit init(os::error** error) OS_NOEXCEPT override;
 
-	os::exit write(iface::v1::data_type type, const uint8_t data[], size_t size, os::error** error) const OS_NOEXCEPT override;
+	os::exit write(iface::v1::data_type type, const uint8_t* data, size_t size, os::error** error) const OS_NOEXCEPT override;
 
-	os::exit read(iface::v1::data_type type, uint8_t data[], size_t size, os::error** error) const OS_NOEXCEPT override;
+	os::exit read(iface::v1::data_type type, uint8_t* data, size_t size, os::error** error) const OS_NOEXCEPT override;
 
     os::exit clear(iface::data_type type, os::error** error) const OS_NOEXCEPT override;
 private:
 
+    static inline uint32_t get_offset(iface::v1::data_type type) OS_NOEXCEPT
+    {
+        return type == iface::v1::data_type::DATA ? FLASH_SECTOR_SIZE / 2 : 0;
+    }
 
 };
 

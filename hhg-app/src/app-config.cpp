@@ -41,9 +41,6 @@ constexpr char APP_TAG[] = "APP CONFIG";
 
 app_config::app_config(const fs_io::ptr& fsio) OS_NOEXCEPT
 : fsio(fsio)
-, version_major(HHG_VER_MAJOR)
-, version_minor(HHG_VER_MINOR)
-, version_patch(HHG_VER_PATCH)
 {
 
 }
@@ -96,7 +93,7 @@ const char* app_config::get_version() const OS_NOEXCEPT
 	static string<16> ret;
 	if(ret.length() == 0)
 	{
-		snprintf(ret.c_str(), ret.size(), "%u.%u.%u", version_major, version_minor, version_patch);
+		snprintf(ret.c_str(), ret.size(), "%s", HHG_VER);
 	}
 	return ret.c_str();
 }
@@ -154,8 +151,9 @@ os::exit app_config::load(app_config::on_vesrion_change on_vesrion_change, error
 
 os::exit app_config::load_default(os::error **error) OS_NOEXCEPT
 {
-	config.serial = "default";
-	config.descr = "descr default";
+    struct config config_default;
+    config_default.descr = "ciao";
+	config = config_default;
 	return store(error);
 }
 

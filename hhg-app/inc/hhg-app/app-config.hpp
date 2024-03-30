@@ -42,10 +42,6 @@ class app_config final : public hhg::iface::initializable
 
 	const hhg::iface::fs_io::ptr& fsio;
 
-	uint8_t const version_major;
-	uint8_t const version_minor;
-	uint8_t const version_patch;
-
 	struct alignas(2) user final
 	{
 
@@ -58,14 +54,15 @@ class app_config final : public hhg::iface::initializable
 
 	mutable struct alignas(2) config final : public hhg::iface::file_version
 	{
-		inline config() : file_version{MAIGC, VERSION} {}
-		os::string<16> 	serial;
+		inline config() OS_NOEXCEPT : file_version{MAIGC, VERSION} {}
+		os::string<16> serial;
 		os::string<128> descr;
 		uint8_t zones_size = HHG_ZONES_SIZE;
-		uint32_t crc = MAIGC;
+        uint8_t users_len = 0;
 		user users[user::MAX_USERS];
-        char wifi_ssid[32] {};
-        char wifi_passwd[64] {};
+        os::string<32> wifi_ssid;
+        os::string<64> wifi_passwd;
+        uint32_t crc = MAIGC;
 	} config;
 
 public:
