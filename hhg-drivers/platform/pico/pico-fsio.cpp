@@ -22,6 +22,9 @@
 using namespace hhg::iface;
 using namespace os;
 
+#include "hhg-utils/hhg-utils.hpp"
+using namespace hhg::utils;
+
 #include <hardware/sync.h>
 #include <hardware/flash.h>
 
@@ -38,36 +41,84 @@ pico_fsio::~pico_fsio() = default;
 
 os::exit pico_fsio::init(error** error) OS_NOEXCEPT
 {
-
-
 	return exit::OK;
 }
 
-os::exit pico_fsio::write(data_type type, const uint8_t data[], size_t size, error** error) const OS_NOEXCEPT
+os::exit pico_fsio::write(data_type type, const uint8_t* data, size_t size, error** error) const OS_NOEXCEPT
 {
-    char old_data[FLASH_SECTOR_SIZE];
+    if(data == nullptr)
+    {
+        if(error && *error)
+        {
+            *error = OS_ERROR_APPEND(*error, "pico_fsio::write() data == null", error_type::OS_ENOENT);
+            OS_ERROR_PTR_SET_POSITION(*error);
+        }
+        return exit::KO;
+    }
 
-    memcpy(old_data, reinterpret_cast<const void *>(start_flash_address), FLASH_SECTOR_SIZE);
+    if(size > FLASH_SECTOR_SIZE / 2)
+    {
+        if(error && *error)
+        {
+            *error = OS_ERROR_APPEND(*error, "pico_fsio::write() too much data to write", error_type::OS_ENOENT);
+            OS_ERROR_PTR_SET_POSITION(*error);
+        }
+        return exit::KO;
+    }
+
+    char data_sector[FLASH_SECTOR_SIZE];
+
+    memcpy(data_sector, reinterpret_cast<const void *>(XIP_BASE + start_store_address), FLASH_SECTOR_SIZE);
+
+    memcpy(data_sector + get_offset(type), data, size);
 
     uint32_t ints = save_and_disable_interrupts();
 
-    flash_range_erase(start_flash_address, FLASH_SECTOR_SIZE);
+    flash_range_erase(start_store_address, FLASH_SECTOR_SIZE);
 
-    //flash_range_program(start_flash_address, data, FLASH_PAGE_SIZE);
+    flash_range_program(start_store_address, reinterpret_cast<const uint8_t *>(data_sector), FLASH_PAGE_SIZE);
 
     restore_interrupts (ints);
 
 	return exit::OK;
 }
 
-os::exit pico_fsio::read(data_type type, uint8_t data[], size_t size, error** error) const OS_NOEXCEPT
+os::exit pico_fsio::read(data_type type, uint8_t* data, size_t size, error** error) const OS_NOEXCEPT
 {
+    if(data == nullptr)
+    {
+        if(error && *error)
+        {
+            *error = OS_ERROR_APPEND(*error, "pico_fsio::read() data == null", error_type::OS_ENOENT);
+            OS_ERROR_PTR_SET_POSITION(*error);
+        }
+        return exit::KO;
+    }
+
+    if(size > FLASH_SECTOR_SIZE / 2)
+    {
+        if(error && *error)
+        {
+            *error = OS_ERROR_APPEND(*error, "pico_fsio::read() too much data to read", error_type::OS_ENOENT);
+            OS_ERROR_PTR_SET_POSITION(*error);
+        }
+        return exit::KO;
+    }
+
+    memcpy(data, reinterpret_cast<const void *>(XIP_BASE + start_store_address + get_offset(type)), size);
 
 	return exit::OK;
 }
 
 os::exit pico_fsio::clear(iface::data_type type, os::error** error) const OS_NOEXCEPT
 {
+
+    uint32_t ints = save_and_disable_interrupts();
+
+    flash_range_erase(start_store_address + get_offset(type), FLASH_SECTOR_SIZE / 2);
+
+    restore_interrupts (ints);
+
     return exit::OK;
 }
 

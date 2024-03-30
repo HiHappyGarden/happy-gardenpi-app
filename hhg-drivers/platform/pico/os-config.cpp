@@ -24,8 +24,38 @@ using namespace os;
 
 #include <FreeRTOS.h>
 #include <pico/stdlib.h>
-#include <hardware/structs/systick.h>
-#include "hardware/clocks.h"
+
+uint64_t FreeRTOSRunTimeTicks;
+
+extern "C" int64_t alarm_callback(alarm_id_t id, void *user_data) {
+
+    FreeRTOSRunTimeTicks++;
+    return 0;
+}
+
+extern "C" void ConfigureTimerForRunTimeStats(void) {
+    FreeRTOSRunTimeTicks = 0;
+    add_alarm_in_us(100, alarm_callback, nullptr, false);
+}
+
+extern "C" uint64_t osal_system_current_time_millis()
+{
+    return time_us_32();
+}
+
+extern "C" void vApplicationStackOverflowHook(TaskHandle_t task, char *)
+{
+    (void)task;
+
+    system("reboot");
+    for(;;);
+}
+
+extern "C" void vApplicationMallocFailedHook( void )
+{
+    system("reboot");
+    for(;;);
+}
 
 namespace hhg::driver
 {
@@ -70,27 +100,6 @@ os::exit os_config_init() OS_NOEXCEPT
 
 	return exit::OK;
 }
-
-extern "C" uint64_t osal_system_current_time_millis()
-{
-    return time_us_32();
-}
-
-extern "C" void vApplicationStackOverflowHook(TaskHandle_t task, char *)
-{
-    (void)task;
-
-    system("reboot");
-    for(;;);
-}
-
-extern "C" void vApplicationMallocFailedHook( void )
-{
-    system("reboot");
-    for(;;);
-}
-
-
 
 }
 }

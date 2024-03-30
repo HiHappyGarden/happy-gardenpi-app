@@ -76,7 +76,7 @@ os::exit app_data::load(app_data::on_vesrion_change on_vesrion_change, os::error
 	{
 		if(error)
 		{
-			*error = OS_ERROR_BUILD("app_config::load() out of memory.", error_type::OS_ENOMEM);
+			*error = OS_ERROR_BUILD("app_data::load() out of memory.", error_type::OS_ENOMEM);
 			OS_ERROR_PTR_SET_POSITION(*error);
 		}
 		return exit::KO;
@@ -97,7 +97,7 @@ os::exit app_data::load(app_data::on_vesrion_change on_vesrion_change, os::error
 	{
 		if(error)
 		{
-			*error = OS_ERROR_BUILD("app_config::load() crc error.", error_type::OS_ERCRC);
+			*error = OS_ERROR_BUILD("app_data::load() crc error.", error_type::OS_ERCRC);
 			OS_ERROR_PTR_SET_POSITION(*error);
 		}
 		return exit::KO;
@@ -107,7 +107,7 @@ os::exit app_data::load(app_data::on_vesrion_change on_vesrion_change, os::error
 	{
 		if(error)
 		{
-			*error = OS_ERROR_BUILD("app_config::load() magic number error.", error_type::OS_EBADF);
+			*error = OS_ERROR_BUILD("app_data::load() magic number error.", error_type::OS_EBADF);
 			OS_ERROR_PTR_SET_POSITION(*error);
 		}
 		return exit::KO;

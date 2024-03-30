@@ -1,6 +1,10 @@
 #ifndef FREERTOS_CONFIG_H
 #define FREERTOS_CONFIG_H
 
+extern uint64_t FreeRTOSRunTimeTicks;               //for clion monitoring
+extern void ConfigureTimerForRunTimeStats(void);    //for clion monitoring
+
+
 /* Use Pico SDK ISR handlers */
 #define vPortSVCHandler         isr_svcall
 #define xPortPendSVHandler      isr_pendsv
@@ -43,8 +47,11 @@
 #define configUSE_DAEMON_TASK_STARTUP_HOOK      0
 
 /* Run time and task stats gathering related definitions. */
-#define configGENERATE_RUN_TIME_STATS           0
-#define configUSE_TRACE_FACILITY                0
+#define configGENERATE_RUN_TIME_STATS           1 //1 for clion monitoring
+#define configUSE_TRACE_FACILITY                1 //1 for clion monitoring
+#define configRECORD_STACK_HIGH_ADDRESS         1 //1 for clion monitoring
+#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS()    ConfigureTimerForRunTimeStats()
+#define portGET_RUN_TIME_COUNTER_VALUE()            FreeRTOSRunTimeTicks
 #define configUSE_STATS_FORMATTING_FUNCTIONS    0
 
 /* Co-routine related definitions. */

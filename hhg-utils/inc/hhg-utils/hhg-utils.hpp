@@ -34,6 +34,7 @@ os::exit to_hex(char* dest, size_t dest_len, const uint8_t* src, size_t src_len)
 
 os::exit from_hex(uint8_t* dest, size_t dest_len, const char* src, size_t src_len) OS_NOEXCEPT;
 
+void print_hex(const uint8_t* buf, size_t len) OS_NOEXCEPT;
 
 }
 }
