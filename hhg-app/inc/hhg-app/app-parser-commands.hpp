@@ -30,6 +30,14 @@ class time;
 }
 }
 
+namespace hhg::driver
+{
+    inline namespace v1
+    {
+        class hardware;
+    }
+}
+
 namespace hhg::app
 {
 inline namespace v1
@@ -48,6 +56,7 @@ os::exit set_app_data(class app_data& app_data, os::error** error) OS_NOEXCEPT;
 void set_time(class hhg::iface::time* time) OS_NOEXCEPT;
 
 entry* get_commands() OS_NOEXCEPT;
+
 size_t get_commands_size() OS_NOEXCEPT;
 
 }

@@ -22,7 +22,7 @@
 #pragma once
 
 #include "hhg-iface/fs-io.hpp"
-
+#include <hardware/flash.h>
 
 namespace hhg::driver
 {
@@ -31,16 +31,22 @@ inline namespace v1
 
 class pico_fsio final : public iface::v1::fs_io
 {
-	uint32_t start_flash_address = 0;
-	uint32_t end_flash_address = 0;
+	static constexpr uint32_t start_flash_address = XIP_BASE + PICO_FLASH_SIZE_BYTES - (FLASH_SECTOR_SIZE * 2);
+    static constexpr uint32_t end_flash_address = XIP_BASE + PICO_FLASH_SIZE_BYTES;
+
+    enum class store_offset : uint16_t
+    {
+        CONFIG_OFFSET = 0,
+        DATA_OFFSET = (1u << 11),
+    };
 
 public:
 
 
 	static uint64_t const check_data;
 
-	pico_fsio(uint32_t start_flash_address, uint32_t end_flash_address) OS_NOEXCEPT;
-	virtual ~pico_fsio();
+	pico_fsio() OS_NOEXCEPT;
+	~pico_fsio() OS_NOEXCEPT override;
 
 	os::exit init(os::error** error) OS_NOEXCEPT override;
 
@@ -48,6 +54,7 @@ public:
 
 	os::exit read(iface::v1::data_type type, uint8_t data[], size_t size, os::error** error) const OS_NOEXCEPT override;
 
+    os::exit clear(iface::data_type type, os::error** error) const OS_NOEXCEPT override;
 private:
 
 

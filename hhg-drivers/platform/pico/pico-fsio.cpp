@@ -18,16 +18,12 @@
  ***************************************************************************/
 
 
-#include "pico/pico-fs-io.hpp"
+#include "pico/pico-fsio.hpp"
 using namespace hhg::iface;
 using namespace os;
 
-
-
-
-#define DATA_32                     ((uint32_t)0x12345678)
-#define DATA_64                     ((uint64_t)0x5f5f6369616f5f5f)
-
+#include <hardware/sync.h>
+#include <hardware/flash.h>
 
 namespace hhg::driver
 {
@@ -36,17 +32,9 @@ namespace v1
 
 uint64_t const pico_fsio::check_data = 0x0102030404030201;
 
-pico_fsio::pico_fsio(uint32_t start_flash_address, uint32_t end_flash_address) OS_NOEXCEPT
-: start_flash_address(start_flash_address)
-, end_flash_address(end_flash_address)
-{
+pico_fsio::pico_fsio() = default;
 
-}
-
-pico_fsio::~pico_fsio()
-{
-
-}
+pico_fsio::~pico_fsio() = default;
 
 os::exit pico_fsio::init(error** error) OS_NOEXCEPT
 {
@@ -57,6 +45,17 @@ os::exit pico_fsio::init(error** error) OS_NOEXCEPT
 
 os::exit pico_fsio::write(data_type type, const uint8_t data[], size_t size, error** error) const OS_NOEXCEPT
 {
+    char old_data[FLASH_SECTOR_SIZE];
+
+    memcpy(old_data, reinterpret_cast<const void *>(start_flash_address), FLASH_SECTOR_SIZE);
+
+    uint32_t ints = save_and_disable_interrupts();
+
+    flash_range_erase(start_flash_address, FLASH_SECTOR_SIZE);
+
+    //flash_range_program(start_flash_address, data, FLASH_PAGE_SIZE);
+
+    restore_interrupts (ints);
 
 	return exit::OK;
 }
@@ -67,6 +66,10 @@ os::exit pico_fsio::read(data_type type, uint8_t data[], size_t size, error** er
 	return exit::OK;
 }
 
+os::exit pico_fsio::clear(iface::data_type type, os::error** error) const OS_NOEXCEPT
+{
+    return exit::OK;
+}
 
 
 

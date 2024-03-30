@@ -221,7 +221,7 @@ os::exit app_main::init(class os::error** error) OS_NOEXCEPT
 	if(app_config.init(error) == exit::KO)
 	{
 		OS_LOG_WARNING(APP_TAG, "Load default config");
-		if(app_config.load_defaut(error) == exit::KO)
+		if(app_config.load_default(error) == exit::KO)
 		{
 			if(error && *error)
 			{
@@ -230,20 +230,16 @@ os::exit app_main::init(class os::error** error) OS_NOEXCEPT
 			}
 			return exit::KO;
 		}
-		OS_LOG_WARNING(APP_TAG, "Load default config - OK");
+		OS_LOG_INFO(APP_TAG, "Load default config - OK");
 	}
 	if(set_app_config(app_config, error) == exit::KO)
 	{
-		OS_LOG_WARNING(APP_TAG, "Load default config");
-		if(app_config.load_defaut(error) == exit::KO)
-		{
-			if(error)
-			{
-				*error = OS_ERROR_BUILD("set_app_config() fail.", error_type::OS_EFAULT);
-				OS_ERROR_PTR_SET_POSITION(*error);
-			}
-			return exit::KO;
-		}
+        if(error && *error)
+        {
+            *error = OS_ERROR_BUILD("set_app_config() fail.", error_type::OS_EFAULT);
+            OS_ERROR_PTR_SET_POSITION(*error);
+        }
+        return exit::KO;
 	}
 	OS_LOG_INFO(APP_TAG, "Init APP CONFIG - OK");
 
@@ -270,7 +266,7 @@ os::exit app_main::init(class os::error** error) OS_NOEXCEPT
 			}
 			return exit::KO;
 		}
-		OS_LOG_WARNING(APP_TAG, "Store default data - OK");
+		OS_LOG_INFO(APP_TAG, "Store default data - OK");
 	}
 	if(set_app_data(app_data, error) == exit::KO)
 	{

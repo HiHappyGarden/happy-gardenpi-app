@@ -125,10 +125,15 @@ os::exit app_data::load(app_data::on_vesrion_change on_vesrion_change, os::error
 	return exit::OK;
 }
 
-os::exit app_data::load_defaut(os::error** error) OS_NOEXCEPT
+os::exit app_data::load_default(os::error** error) OS_NOEXCEPT
 {
 	reset();
 	return store(error);
+}
+
+os::exit app_data::clear(os::error** error) const OS_NOEXCEPT
+{
+    return fsio->clear(data_type::DATA, error);
 }
 
 bool app_data::get_schedule(time_t timestamp, struct schedule& schedule) OS_NOEXCEPT

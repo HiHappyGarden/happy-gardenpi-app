@@ -25,6 +25,11 @@ add_definitions(-DPICO)
 add_definitions(-DOS_MEM_LAYER)
 add_definitions(-DEXCLUDE_CHECK_FOR_STACK_OVERFLOW)
 add_definitions(-DEXCLUDE_USE_MALLOC_FAILED_HOOK)
+#add_definitions(-DconfigNUM_CORES 2)
+#add_definitions(-DconfigTICK_CORE 1)
+#add_definitions(-DconfigRUN_MULTIPLE_PRIORITIES 1)
+#add_definitions(-DconfigUSE_CORE_AFFINITY 1)
+
 
 include_directories(cJSON)
 include_directories(inc)
@@ -53,6 +58,9 @@ file(GLOB_RECURSE HHG_APP_SOURCES CONFIGURE_DEPENDS "hhg-app/src/*.cpp" "hhg-app
 file(GLOB_RECURSE HHG_UTILS_INCLUDES CONFIGURE_DEPENDS "hhg-utils/inc/*.hpp" "hhg-utils/inc/*.h")
 file(GLOB_RECURSE HHG_UTILS_SOURCES CONFIGURE_DEPENDS "hhg-utils/src/*.cpp" "hhg-utils/src/*.c")
 
+message(STATUS "PROJECT_SOURCE_DIR=${PROJECT_SOURCE_DIR}")
+message(STATUS "CMAKE_BINARY_DIR=${CMAKE_BINARY_DIR}")
+
 add_executable(${PROJECT_NAME}
         src/main.cpp
         cJSON/cJSON.h cJSON/cJSON.c cJSON/cJSON_Utils.h cJSON/cJSON_Utils.c
@@ -60,11 +68,7 @@ add_executable(${PROJECT_NAME}
         ${HHG_DRIVERS_INCLUDES} ${HHG_DRIVERS_SOURCES}
         ${HHG_APP_INCLUDES} ${HHG_APP_SOURCES}
         ${HHG_UTILS_INCLUDES} ${HHG_UTILS_SOURCES}
-        hhg-drivers/inc/pico/pico-gpio.hpp
-        hhg-drivers/platform/pico/pico-gpio.cpp
 )
-
-#pico_set_linker_script(${PROJECT_NAME} ${CMAKE_SOURCE_DIR}/pico/memmap_custom.ld)
 
 target_link_libraries(${PROJECT_NAME}
         pico_stdlib
@@ -72,11 +76,14 @@ target_link_libraries(${PROJECT_NAME}
         pico_multicore
         hardware_pio
         hardware_uart
+        hardware_flash
+        hardware_sync
         freertos
         hi-happy-garden-parser
 )
 
 pico_enable_stdio_uart(${PROJECT_NAME} 1)
+pico_enable_stdio_usb(${PROJECT_NAME} 0)
 
 pico_add_extra_outputs(${PROJECT_NAME})
 

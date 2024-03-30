@@ -19,9 +19,12 @@
 
 #include "hhg-driver/hardware.hpp"
 #include "hhg-driver/os-config.hpp"
+#include "hhg-config.h"
 #include "pico/pico-uart.hpp"
 #include "pico/pico-time.hpp"
-#include "pico/pico-fs-io.hpp"
+#include "pico/pico-fsio.hpp"
+
+
 
 using namespace os;
 using namespace hhg::iface;
@@ -41,7 +44,7 @@ constexpr const char APP_TAG[] = "HARDWARE";
 hardware::hardware(class error** error) OS_NOEXCEPT
 : time(new hhg::driver::pico_time)
 , uart(new hhg::driver::pico_uart)
-, fsio(new hhg::driver::pico_fsio(static_cast<uint32_t>(0), static_cast<uint32_t>(0)  ))
+, fsio(new hhg::driver::pico_fsio)
 {
     if(time.get() == nullptr && error)
     {
@@ -68,12 +71,14 @@ hardware::hardware(class error** error) OS_NOEXCEPT
 
 os::exit hardware::init(error** error) OS_NOEXCEPT
 {
-	OS_LOG_INFO(APP_TAG, "Init OS Config");
 	if(os_config_init() == os::exit::KO)
 	{
 		return exit::KO;
 	}
-	OS_LOG_INFO(APP_TAG, "Init OS Config - OK");
+
+    OS_LOG_PRINTF("--------------------------\r\n");
+    OS_LOG_PRINTF("%s %s\r\n", HHG_NAME, HHG_VER);
+    OS_LOG_PRINTF("--------------------------\r\n");
 
     OS_LOG_INFO(APP_TAG, "Init Time");
     auto time_init = reinterpret_cast<hhg::iface::time_init *>(time.get());
@@ -130,15 +135,6 @@ const string<128>& hardware::get_info() OS_NOEXCEPT
 
 	return ret;
 }
-
-
-const string<128>& hardware::get_version() OS_NOEXCEPT
-{
-	static string<128> ret;
-
-	return ret;
-}
-
 
 }
 }

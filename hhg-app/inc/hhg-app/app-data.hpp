@@ -187,7 +187,9 @@ public:
 
 	os::exit load(app_data::on_vesrion_change on_vesrion_change, os::error** error) OS_NOEXCEPT;
 
-	os::exit load_defaut(os::error** error) OS_NOEXCEPT;
+	os::exit load_default(os::error** error) OS_NOEXCEPT;
+
+    os::exit clear(os::error** error) const OS_NOEXCEPT;
 
 	bool get_schedule(time_t timestamp, struct schedule& schedule) OS_NOEXCEPT;
 

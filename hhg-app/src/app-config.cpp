@@ -152,11 +152,16 @@ os::exit app_config::load(app_config::on_vesrion_change on_vesrion_change, error
 	return exit::OK;
 }
 
-os::exit app_config::load_defaut(error** error) OS_NOEXCEPT
+os::exit app_config::load_default(os::error **error) OS_NOEXCEPT
 {
 	config.serial = "default";
 	config.descr = "descr default";
 	return store(error);
+}
+
+os::exit app_config::clear(os::error** error) const OS_NOEXCEPT
+{
+    return fsio->clear(data_type::CONFIG, error);
 }
 
 } /* namespace driver */
