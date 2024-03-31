@@ -68,11 +68,13 @@ os::exit pico_fsio::write(data_type type, const uint8_t* data, size_t size, erro
 
     char data_sector[FLASH_SECTOR_SIZE];
 
+    uint32_t ints = save_and_disable_interrupts();
+
     memcpy(data_sector, reinterpret_cast<const void *>(XIP_BASE + start_store_address), FLASH_SECTOR_SIZE);
 
-    memcpy(data_sector + get_offset(type), data, size);
+    memset(data_sector + get_offset(type), 0xFF, size);
 
-    uint32_t ints = save_and_disable_interrupts();
+    memcpy(data_sector + get_offset(type), data, size);
 
     flash_range_erase(start_store_address, FLASH_SECTOR_SIZE);
 
