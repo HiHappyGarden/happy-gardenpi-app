@@ -76,7 +76,10 @@ os::exit pico_fsio::write(data_type type, const uint8_t* data, size_t size, erro
 
     flash_range_erase(start_store_address, FLASH_SECTOR_SIZE);
 
-    flash_range_program(start_store_address, reinterpret_cast<const uint8_t *>(data_sector), FLASH_PAGE_SIZE);
+    for(uint i = 0; i < FLASH_SECTOR_SIZE / FLASH_PAGE_SIZE; i++)
+    {
+        flash_range_program(start_store_address + (i * FLASH_PAGE_SIZE), reinterpret_cast<const uint8_t *>(data_sector + (i * FLASH_PAGE_SIZE)), FLASH_PAGE_SIZE);
+    }
 
     restore_interrupts (ints);
 
@@ -105,7 +108,11 @@ os::exit pico_fsio::read(data_type type, uint8_t* data, size_t size, error** err
         return exit::KO;
     }
 
+    uint32_t ints = save_and_disable_interrupts();
+
     memcpy(data, reinterpret_cast<const void *>(XIP_BASE + start_store_address + get_offset(type)), size);
+
+    restore_interrupts (ints);
 
 	return exit::OK;
 }
