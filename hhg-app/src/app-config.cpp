@@ -152,7 +152,6 @@ os::exit app_config::load(app_config::on_vesrion_change on_vesrion_change, error
 os::exit app_config::load_default(os::error **error) OS_NOEXCEPT
 {
     struct config config_default;
-    config_default.descr = "ciao";
 	config = config_default;
 	return store(error);
 }
