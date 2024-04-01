@@ -24,6 +24,7 @@
 #include "hhg-iface/initializable.hpp"
 #include "hhg-iface/io.hpp"
 #include "hhg-iface/time.hpp"
+#include "hhg-driver/lcd.hpp"
 
 namespace hhg::driver
 {
@@ -39,6 +40,8 @@ class hardware final : public hhg::iface::initializable
     const time_ptr time;
     const io_ptr uart;
     const fsio_ptr fsio;
+    const io_ptr i2c;
+    //const class lcd lcd;
 public:
 	explicit hardware(class os::error** error) OS_NOEXCEPT;
 	~hardware() override = default;

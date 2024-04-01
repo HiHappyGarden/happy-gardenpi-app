@@ -17,11 +17,9 @@
  *
  ***************************************************************************/
 
-#include <pico/pico-uart.hpp>
+#include "pico/pico-uart.hpp"
 using hhg::iface::io_on_receive;
 using hhg::iface::io_source;
-
-#include "stm32g4xx/driver-lpuart.h"
 using namespace os;
 
 #include "pico/stdlib.h"

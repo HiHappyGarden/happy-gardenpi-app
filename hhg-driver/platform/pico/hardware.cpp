@@ -23,7 +23,7 @@
 #include "pico/pico-uart.hpp"
 #include "pico/pico-time.hpp"
 #include "pico/pico-fsio.hpp"
-
+#include "pico/pico-i2c.hpp"
 
 
 using namespace os;
@@ -45,6 +45,7 @@ hardware::hardware(class error** error) OS_NOEXCEPT
 : time(new hhg::driver::pico_time)
 , uart(new hhg::driver::pico_uart)
 , fsio(new hhg::driver::pico_fsio)
+, i2c(new hhg::driver::pico_i2c)
 {
     if(time.get() == nullptr && error)
     {
@@ -62,11 +63,17 @@ hardware::hardware(class error** error) OS_NOEXCEPT
 
     if(fsio.get() == nullptr && error)
 	{
-        *error = OS_ERROR_BUILD("io(new hhg::driver::stm32_fsio) no mem.", error_type::OS_ENOMEM);
+        *error = OS_ERROR_BUILD("io(new hhg::driver::pico_fsio) no mem.", error_type::OS_ENOMEM);
         OS_ERROR_PTR_SET_POSITION(*error);
         return;
     }
 
+    if(i2c.get() == nullptr && error)
+    {
+        *error = OS_ERROR_BUILD("io(new hhg::driver::pico_i2c) no mem.", error_type::OS_ENOMEM);
+        OS_ERROR_PTR_SET_POSITION(*error);
+        return;
+    }
 }
 
 os::exit hardware::init(error** error) OS_NOEXCEPT
@@ -125,6 +132,18 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
 		return exit::KO;
 	}
 	OS_LOG_INFO(APP_TAG, "Init FS IO - OK");
+
+    OS_LOG_INFO(APP_TAG, "Init I2C");
+    if(fsio->init(error) == exit::KO)
+    {
+        if(error && *error)
+        {
+            *error = OS_ERROR_APPEND(*error, "i2c::init() fail.", error_type::OS_EFAULT);
+            OS_ERROR_PTR_SET_POSITION(*error);
+        }
+        return exit::KO;
+    }
+    OS_LOG_INFO(APP_TAG, "Init I2C - OK");
 
 	return exit::OK;
 }

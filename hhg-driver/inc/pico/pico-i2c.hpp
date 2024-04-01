@@ -17,32 +17,45 @@
  *
  ***************************************************************************/
 
-#include "pico/pico-gpio.hpp"
-#include "pico/pico-uart.hpp"
-#include "pico/pico-i2c.hpp"
-using namespace os;
 
-#include <hardware/gpio.h>
+#pragma once
 
+#include "hhg-iface/io.hpp"
+
+#include <hardware/i2c.h>
 
 namespace hhg::driver
 {
 inline namespace v1
 {
 
-os::exit init_gpio()
+
+class pico_i2c final : public hhg::iface::io
 {
+	const hhg::iface::io_on_receive* obj = nullptr;
+	on_receive on_receive_callback = nullptr;
 
-    gpio_set_function(pico_uart::TX_PIN, GPIO_FUNC_UART);
-    gpio_set_function(pico_uart::RX_PIN, GPIO_FUNC_UART);
+	static inline pico_i2c* singleton = nullptr;
 
-    gpio_set_function(pico_i2c::SDA_PIN, GPIO_FUNC_I2C);
-    gpio_set_function(pico_i2c::SCL_PIN, GPIO_FUNC_I2C);
-    gpio_pull_up(pico_i2c::SDA_PIN);
-    gpio_pull_up(pico_i2c::SCL_PIN);
+    public:
 
-    return exit::OK;
-}
+    enum pin : uint8_t
+    {
+        SDA_PIN = PICO_DEFAULT_I2C_SDA_PIN,
+        SCL_PIN = PICO_DEFAULT_I2C_SCL_PIN
+    };
+
+    pico_i2c() OS_NOEXCEPT;
+	~pico_i2c() OS_NOEXCEPT override;
+	OS_NO_COPY_NO_MOVE(pico_i2c)
+
+	os::exit init(os::error** error) OS_NOEXCEPT override;
+
+	void set_on_receive(const hhg::iface::io_on_receive* obj, on_receive on_receive_callback) OS_NOEXCEPT override;
+
+    os::exit transmit(const uint8_t data[], uint16_t size) const OS_NOEXCEPT override;
+
+};
 
 }
 }
