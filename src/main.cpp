@@ -17,7 +17,9 @@
  *
  ***************************************************************************/
 
-
+#ifdef HHG_NO_MAIN
+#include "main.h"
+#endif
 #include "osal/osal.hpp"
 #include "hhg-driver/os-config.hpp"
 #include "hhg-app/app-main.hpp"
@@ -84,8 +86,11 @@ namespace
 }
 
 
-
+#ifdef HHG_NO_MAIN
+int hhg_main(void)
+#else
 int main(int argc, char* argv[])
+#endif
 {
 
     main_thread.create();
