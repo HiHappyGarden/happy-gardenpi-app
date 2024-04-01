@@ -38,7 +38,7 @@ include_directories(osal/src/freertos)
 include_directories(hhg-config/pico)
 include_directories(hhg-utils/inc)
 include_directories(hhg-iface/inc)
-include_directories(hhg-drivers/inc)
+include_directories(hhg-driver/inc)
 include_directories(hhg-app/inc)
 include_directories(hhg-parser/inc)
 
@@ -49,8 +49,8 @@ add_subdirectory(hhg-parser)
 file(GLOB_RECURSE OSAL_INCLUDES CONFIGURE_DEPENDS "osal/inc/*.hpp" "osal/src/freertos/osal_sys/*.hpp" "osal/src/freertos/config/*.h")
 file(GLOB_RECURSE OSAL_SOURCES CONFIGURE_DEPENDS "osal/src/error.cpp" "osal/src/log.cpp" "osal/src/generics.cpp" "osal/src/freertos/*.cpp")
 
-file(GLOB_RECURSE HHG_DRIVERS_INCLUDES CONFIGURE_DEPENDS "hhg-drivers/inc/hhg-driver/*.hpp" "hhg-drivers/inc/hhg-driver/*.h" "hhg-drivers/inc/pico/*.hpp" "hhg-drivers/inc/pico/*.h")
-file(GLOB_RECURSE HHG_DRIVERS_SOURCES CONFIGURE_DEPENDS "hhg-drivers/platform/pico/*.cpp" "hhg-drivers/platform/pico/*.c")
+file(GLOB_RECURSE HHG_DRIVERS_INCLUDES CONFIGURE_DEPENDS "hhg-driver/inc/hhg-driver/lcd.hpp" "hhg-driver/inc/hhg-driver/*.hpp" "hhg-driver/inc/hhg-driver/*.h" "hhg-driver/inc/pico/*.hpp" "hhg-driver/inc/pico/*.h")
+file(GLOB_RECURSE HHG_DRIVERS_SOURCES CONFIGURE_DEPENDS "hhg-driver/platform/lcd.cpp" "hhg-driver/platform/pico/*.cpp" "hhg-driver/platform/pico/*.c")
 
 file(GLOB_RECURSE HHG_APP_INCLUDES CONFIGURE_DEPENDS "hhg-app/inc/*.hpp" "hhg-app/inc/*.h")
 file(GLOB_RECURSE HHG_APP_SOURCES CONFIGURE_DEPENDS "hhg-app/src/*.cpp" "hhg-app/src/*.c")
@@ -75,6 +75,7 @@ target_link_libraries(${PROJECT_NAME}
         hardware_rtc
         pico_multicore
         hardware_pio
+        hardware_i2c
         hardware_uart
         hardware_flash
         hardware_sync

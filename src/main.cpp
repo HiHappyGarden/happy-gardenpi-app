@@ -19,68 +19,79 @@
 
 
 #include "osal/osal.hpp"
+#include "hhg-driver/os-config.hpp"
 #include "hhg-app/app-main.hpp"
 #include "hhg-driver/hardware.hpp"
 
 namespace
 {
     constexpr const char APP_TAG[] = "MAIN";
+
+    void* main_thread_handler(void* arg);
+
+    os::thread main_thread{"main", hhg::driver::REALTIME, 1'024, main_thread_handler};
+
+    void* main_thread_handler(void* arg)
+    {
+
+        static os::error* error = nullptr;
+
+        static hhg::driver::hardware hw{&error};
+        static hhg::app::app_main app_main{hw, &error};
+        if(error)
+        {
+            os::printf_stack_error(APP_TAG, error);
+            delete error;
+        }
+
+        if(hw.init(&error) == os::exit::KO)
+        {
+            if(error)
+            {
+                os::printf_stack_error(APP_TAG, error);
+                delete error;
+            }
+            return nullptr;
+        }
+
+        if(app_main.init(&error) == os::exit::KO)
+        {
+            if(error)
+            {
+                os::printf_stack_error(APP_TAG, error);
+                delete error;
+            }
+            os::stop_main_loop();
+            exit(EXIT_FAILURE);
+        }
+
+        OS_LOG_INFO(APP_TAG, "Start FSM app_main");
+        if(app_main.fsm_start(&error) == os::exit::KO)
+        {
+            if(error)
+            {
+                os::printf_stack_error(APP_TAG, error);
+                delete error;
+            }
+            os::stop_main_loop();
+            exit(EXIT_FAILURE);
+        }
+
+        main_thread.exit();
+
+        return nullptr;
+    }
 }
 
 
-#ifdef STM32G474xx
-int hhg_main(void)
-#else
+
 int main(int argc, char* argv[])
-#endif
 {
- 	static os::error* error = nullptr;
 
- 	static hhg::driver::hardware hw{&error};
- 	static hhg::app::app_main app_main{hw, &error};
- 	if(error)
- 	{
- 		os::printf_stack_error(APP_TAG, error);
- 		delete error;
- 	}
+    main_thread.create();
 
-     if(hw.init(&error) == os::exit::KO)
-     {
-         if(error)
-         {
-             os::printf_stack_error(APP_TAG, error);
-             delete error;
-         }
-         return static_cast<int>(os::exit::KO);
-     }
+    os::start_main_loop();
 
-     if(app_main.init(&error) == os::exit::KO)
-     {
-         if(error)
-         {
-             os::printf_stack_error(APP_TAG, error);
-             delete error;
-         }
-         os::stop_main_loop();
-         exit(EXIT_FAILURE);
-     }
-
-     OS_LOG_INFO(APP_TAG, "Start FSM app_main");
-     if(app_main.fsm_start(&error) == os::exit::KO)
-     {
-         if(error)
-         {
-             os::printf_stack_error(APP_TAG, error);
-             delete error;
-         }
-         os::stop_main_loop();
-         exit(EXIT_FAILURE);
-     }
-
-
- #ifndef STM32G474xx
-     os::start_main_loop();
- #endif
     return static_cast<int>(os::exit::OK);
 }
 

@@ -22,29 +22,29 @@ using namespace os;
 #include "pico/pico-gpio.hpp"
 #include "cJSON.h"
 
-
-#include <hardware/structs/systick.h>
 #include <FreeRTOS.h>
+#include <timers.h>
 #include <pico/stdlib.h>
 
 uint64_t FreeRTOSRunTimeTicks;
 
-extern "C" int64_t alarm_callback(alarm_id_t id, void *user_data)
+static timer run_time_tick_timer{ 100_ms,
+[] (timer*, void*)-> void*
 {
-
     FreeRTOSRunTimeTicks++;
-    return 0;
-}
+    return nullptr;
+}};
 
 extern "C" void ConfigureTimerForRunTimeStats(void)
 {
     FreeRTOSRunTimeTicks = 0;
-    add_alarm_in_us(100, alarm_callback, nullptr, false);
+    run_time_tick_timer.create();
+    run_time_tick_timer.start();
 }
 
 extern "C" uint64_t osal_system_current_time_millis()
 {
-    return time_us_64();
+    return xTaskGetTickCount();
 }
 
 extern "C" void vApplicationStackOverflowHook(TaskHandle_t task, char *)
@@ -92,18 +92,13 @@ cJSON_Hooks cjson_hooks
 
 }
 
-
-
 os::exit os_config_init() OS_NOEXCEPT
 {
     stdio_init_all();
-//    alarm_pool_init_default();
 
     cJSON_InitHooks(&cjson_hooks);
 
     init_gpio();
-
-
 
 	return exit::OK;
 }
