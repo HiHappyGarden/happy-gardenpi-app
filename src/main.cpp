@@ -17,72 +17,16 @@
  *
  ***************************************************************************/
 
-#include <FreeRTOS.h>
+
 #include "osal/osal.hpp"
- #include "hhg-app/app-main.hpp"
+#include "hhg-app/app-main.hpp"
 #include "hhg-driver/hardware.hpp"
-#include "hhg-driver/os-config.hpp"
-// #include "hhg-utils/hhg-utils.hpp"
-// #include "osal/osal.hpp"
-#include <stdio.h>
-#include "pico/stdlib.h"
-#include "boards/pico_w.h"
-#include "hardware/structs/systick.h"
 
-#include "pico.h"
-#include "task.h"
-#include "timers.h"
-
-
-// #include "stm32g4xx_hal.h"
-
-// extern "C" uint8_t driver_lpuart_transmit(const uint8_t* data, uint16_t size);
-// extern "C" I2C_HandleTypeDef hi2c1;
 namespace
 {
-
     constexpr const char APP_TAG[] = "MAIN";
-
-    os::thread test_thread{
-    "test thread"
-    , hhg::driver::NORMAL
-    , 1024
-    , [](auto) -> void*
-    {
-
-        using namespace os;
-
-        //bool check = true;
-
-        while(true)
-        {
-
-            //auto i = hhg::utils::random_number(1, 1000);
-
-            OS_LOG_DEBUG("--->", "1");
-
-    //			uint8_t _data = check ? 0xFF : 0x00;
-    //			HAL_StatusTypeDef ret = HAL_I2C_Master_Transmit(&hi2c1, 0x27, &_data, 1, 100);
-
-            os::us_sleep(1_s);
-        }
-
-        return nullptr;
-    }};
-
- }
-
-void led_task()
-{
-    while (true)
-    {
-        OS_LOG_INFO("TEST", "LED_PIN, 1");
-        vTaskDelay(100);
-        OS_LOG_INFO("TEST", "LED_PIN, 0");
-        vTaskDelay(100);
-
-    }
 }
+
 
 #ifdef STM32G474xx
 int hhg_main(void)
@@ -133,13 +77,6 @@ int main(int argc, char* argv[])
          exit(EXIT_FAILURE);
      }
 
-//     test_thread.create(nullptr, &error);
-//     if(error)
-//     {
-//
-//         delete error;
-//         return static_cast<int>(os::exit::KO);
-//     }
 
  #ifndef STM32G474xx
      os::start_main_loop();
