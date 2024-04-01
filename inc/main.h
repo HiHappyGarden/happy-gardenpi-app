@@ -24,10 +24,8 @@
 extern "C" {
 #endif
 
-#ifdef STM32G474xx
-
+#ifdef HHG_NO_MAIN
 int hhg_main(void);
-
 #endif
 
 #ifdef __cplusplus

@@ -30,27 +30,12 @@
           </envs>
         </ADDITIONAL_GENERATION_ENVIRONMENT>
       </configuration>
-      <configuration PROFILE_NAME="Release-Cortex M" ENABLED="true" CONFIG_NAME="Release" TOOLCHAIN_NAME="Cortex M" GENERATION_OPTIONS="-DFREERTOS=ON" BUILD_OPTIONS="-j 16">
-        <ADDITIONAL_GENERATION_ENVIRONMENT>
-          <envs>
-            <env name="PICO_SDK_PATH" value="/usr/local/src/pico-sdk" />
-          </envs>
-        </ADDITIONAL_GENERATION_ENVIRONMENT>
-      </configuration>
     </configurations>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="029740bc-9460-411a-aa9c-3448b8c57430" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/hhg-drivers/inc/pico/pico-fs-io.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hhg-drivers/platform/pico/pico-fsio.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-config.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-config.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-data.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-data.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-main.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-main.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-parser.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-parser.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-drivers/inc/hhg-driver/hardware.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-drivers/inc/hhg-driver/hardware.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-drivers/platform/pico/hardware.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-drivers/platform/pico/hardware.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inc/main.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/main.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -84,8 +69,8 @@
     <option name="nodes">
       <map>
         <entry key="rp2040.svd" value="-E" />
-        <entry key="rp2040.svd|p:RESETS" value="-E" />
-        <entry key="rp2040.svd|p:RESETS|RESET" value="HE" />
+        <entry key="rp2040.svd|p:RESETS" value="-C" />
+        <entry key="rp2040.svd|p:RESETS|RESET" value="HC" />
         <entry key="rp2040.svd|p:RESETS|RESET_DONE" value="HC" />
         <entry key="rp2040.svd|p:RESETS|WDSEL" value="HC" />
       </map>
@@ -94,6 +79,7 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug-Cortex M" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file:///usr/local/src/pico-sdk/src/rp2_common/pico_runtime/runtime.c" root0="FORCE_HIGHLIGHTING" />
@@ -127,28 +113,36 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "git-widget-placeholder": "raspberry-pico",
-    "last_opened_file_path": "/home/antoniosalsi/projects/hi-happy-garden-app/hhg-drivers/inc/pico",
+    "last_opened_file_path": "/home/antoniosalsi/projects/hi-happy-garden-app/hhg-driver/platform/pico",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "CMakeSettings",
+    "settings.editor.selected.configurable": "com.jetbrains.cidr.rtos.config",
+    "structure.view.defaults.are.configured": "true",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/hhg-driver/platform/pico" />
+      <recent name="$PROJECT_DIR$/hhg-driver/inc/pico" />
       <recent name="$PROJECT_DIR$/hhg-drivers/inc/pico" />
       <recent name="$PROJECT_DIR$/hhg-drivers/platform/pico" />
       <recent name="$PROJECT_DIR$/hhg-config" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/hhg-drivers/platform" />
       <recent name="$PROJECT_DIR$/hhg-config/pico" />
       <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/inc" />
       <recent name="$PROJECT_DIR$" />
     </key>
+  </component>
+  <component name="RtosSettings">
+    <option name="rtosEnabled" value="true" />
+    <option name="rtosType" value="FreeRTOS" />
   </component>
   <component name="RunManager" selected="OpenOCD Download &amp; Run.Raspberry Pi Pico W">
     <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
@@ -460,7 +454,21 @@
       <workItem from="1711314394204" duration="4820000" />
       <workItem from="1711403268938" duration="4271000" />
       <workItem from="1711417306763" duration="248000" />
-      <workItem from="1711480573242" duration="7266000" />
+      <workItem from="1711480573242" duration="7446000" />
+      <workItem from="1711607381846" duration="69000" />
+      <workItem from="1711645731018" duration="1163000" />
+      <workItem from="1711657212431" duration="44000" />
+      <workItem from="1711661827732" duration="942000" />
+      <workItem from="1711746319292" duration="657000" />
+      <workItem from="1711752994120" duration="1071000" />
+      <workItem from="1711781948183" duration="8861000" />
+      <workItem from="1711828359573" duration="8041000" />
+      <workItem from="1711899731683" duration="10354000" />
+      <workItem from="1711917654538" duration="2964000" />
+      <workItem from="1711978790967" duration="574000" />
+      <workItem from="1711980363826" duration="5983000" />
+      <workItem from="1711986371147" duration="72000" />
+      <workItem from="1712003773681" duration="5756000" />
     </task>
     <servers />
   </component>
@@ -479,6 +487,16 @@
           <url>file://$PROJECT_DIR$/hhg-parser/CMakeLists.txt</url>
           <line>7</line>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/doc/Freenove_LCD_Module-main/Freenove_LCD_Module_for_Raspberry_Pi_Pico/C/Libraries/LiquidCrystal_I2C/LiquidCrystal_I2C.h</url>
+          <line>59</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/hhg-driver/inc/hhg-driver/lcd.hpp</url>
+          <line>109</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
