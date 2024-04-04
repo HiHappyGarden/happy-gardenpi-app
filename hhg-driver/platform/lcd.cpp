@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "hhg-driver/lcd.hpp"
+using namespace os;
 
 namespace hhg::driver
 {
@@ -25,9 +26,16 @@ inline namespace v1
 {
 
     lcd::lcd(const struct io& io, uint8_t cols, uint8_t rows) OS_NOEXCEPT
-//    : io(io)
+    : io(io)
+    , cols(cols)
+    , rows(rows)
     {
 
+    }
+
+    os::exit lcd::init(os::error **error) OS_NOEXCEPT
+    {
+        return exit::OK;
     }
 
     void lcd::clear() OS_NOEXCEPT
@@ -121,8 +129,6 @@ inline namespace v1
     void lcd::command(uint8_t) OS_NOEXCEPT
     {}
 
-    void lcd::init() OS_NOEXCEPT
-    {}
 
 }
 } // hhg

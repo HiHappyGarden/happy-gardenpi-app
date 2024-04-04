@@ -18,46 +18,36 @@
  ***************************************************************************/
 
 
-
 #pragma once
 
-#include "hhg-iface/fs-io.hpp"
-#include <hardware/flash.h>
+#include "hhg-driver/lcd.hpp"
 
 namespace hhg::driver
 {
 inline namespace v1
 {
 
-class pico_fsio final : public iface::v1::fs_io
+struct pico_lcd_io final : public lcd::io
 {
-	static constexpr uint32_t start_store_address = PICO_FLASH_SIZE_BYTES - FLASH_SECTOR_SIZE;
+    const uint8_t addr = 0x27;
 
+    ~pico_lcd_io() override = default;
+    int32_t write(const uint8_t* data, size_t data_len) const OS_NOEXCEPT override;
+    int32_t read(uint8_t* data, size_t data_size) const OS_NOEXCEPT override;
+    void ms_sleep(uint64_t millis) const OS_NOEXCEPT override;
+};
+
+
+class pico_lcd final : public lcd
+{
 public:
-
-
-	static uint64_t const check_data;
-
-	pico_fsio() OS_NOEXCEPT;
-	~pico_fsio() OS_NOEXCEPT override;
-    OS_NO_COPY_NO_MOVE(pico_fsio);
-
-	os::exit init(os::error** error) OS_NOEXCEPT override;
-
-	os::exit write(iface::v1::data_type type, const uint8_t* data, size_t size, os::error** error) const OS_NOEXCEPT override;
-
-	os::exit read(iface::v1::data_type type, uint8_t* data, size_t size, os::error** error) const OS_NOEXCEPT override;
-
-    os::exit clear(iface::data_type type, os::error** error) const OS_NOEXCEPT override;
-private:
-
-    static inline uint32_t get_offset(iface::v1::data_type type) OS_NOEXCEPT
+    inline pico_lcd(uint8_t cols, uint8_t rows) OS_NOEXCEPT
+            : lcd(pico_lcd_io(), cols, rows)
     {
-        return type == iface::v1::data_type::DATA ? FLASH_SECTOR_SIZE / 2 : 0;
-    }
 
+    }
+    ~pico_lcd() override = default;
 };
 
 }
 }
-
