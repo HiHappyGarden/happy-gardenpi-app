@@ -25,10 +25,6 @@ add_definitions(-DPICO)
 add_definitions(-DOS_MEM_LAYER)
 add_definitions(-DEXCLUDE_CHECK_FOR_STACK_OVERFLOW)
 add_definitions(-DEXCLUDE_USE_MALLOC_FAILED_HOOK)
-#add_definitions(-DconfigNUM_CORES 2)
-#add_definitions(-DconfigTICK_CORE 1)
-#add_definitions(-DconfigRUN_MULTIPLE_PRIORITIES 1)
-#add_definitions(-DconfigUSE_CORE_AFFINITY 1)
 
 
 include_directories(cJSON)

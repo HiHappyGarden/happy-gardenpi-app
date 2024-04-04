@@ -23,6 +23,7 @@ using hhg::iface::io_source;
 using namespace os;
 
 #include <pico/binary_info.h>
+#include <hardware/gpio.h>
 
 
 namespace hhg::driver
@@ -51,6 +52,8 @@ os::exit pico_i2c::init(error** error) OS_NOEXCEPT
 	singleton = this;
 
     i2c_init(i2c_default, 100 * 1'000);
+
+    bi_decl(bi_2pins_with_func(PICO_DEFAULT_I2C_SDA_PIN, PICO_DEFAULT_I2C_SCL_PIN, GPIO_FUNC_I2C));
 
 	return exit::OK;
 }

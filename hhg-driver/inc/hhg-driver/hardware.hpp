@@ -34,6 +34,7 @@ inline namespace v1
 using io_ptr = hhg::iface::io::ptr;
 using fsio_ptr = hhg::iface::fs_io::ptr;
 using time_ptr = hhg::iface::time::ptr;
+using lcd_ptr = hhg::driver::lcd::ptr;
 
 class hardware final : public hhg::iface::initializable
 {
@@ -41,7 +42,7 @@ class hardware final : public hhg::iface::initializable
     const io_ptr uart;
     const fsio_ptr fsio;
     const io_ptr i2c;
-    //const class lcd lcd;
+    const lcd_ptr lcd;
 public:
 	explicit hardware(class os::error** error) OS_NOEXCEPT;
 	~hardware() override = default;
@@ -61,6 +62,11 @@ public:
 	{
 		return time;
 	}
+
+    inline const lcd_ptr& get_lcd() const OS_NOEXCEPT
+    {
+        return lcd;
+    }
 
     os::exit init(os::error** error) OS_NOEXCEPT override;
 
