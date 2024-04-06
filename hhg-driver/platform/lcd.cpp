@@ -20,6 +20,49 @@
 #include "hhg-driver/lcd.hpp"
 using namespace os;
 
+// commands
+const int LCD_CLEARDISPLAY = 0x01;
+const int LCD_RETURNHOME = 0x02;
+const int LCD_ENTRYMODESET = 0x04;
+const int LCD_DISPLAYCONTROL = 0x08;
+const int LCD_CURSORSHIFT = 0x10;
+const int LCD_FUNCTIONSET = 0x20;
+const int LCD_SETCGRAMADDR = 0x40;
+const int LCD_SETDDRAMADDR = 0x80;
+
+// flags for display entry mode
+const int LCD_ENTRYSHIFTINCREMENT = 0x01;
+const int LCD_ENTRYLEFT = 0x02;
+
+// flags for display and cursor control
+const int LCD_BLINKON = 0x01;
+const int LCD_CURSORON = 0x02;
+const int LCD_DISPLAYON = 0x04;
+
+// flags for display and cursor shift
+const int LCD_MOVERIGHT = 0x04;
+const int LCD_DISPLAYMOVE = 0x08;
+
+// flags for function set
+const int LCD_5x10DOTS = 0x04;
+const int LCD_2LINE = 0x08;
+const int LCD_8BITMODE = 0x10;
+
+// flag for backlight control
+const int LCD_BACKLIGHT = 0x08;
+
+const int LCD_ENABLE_BIT = 0x04;
+
+// By default these LCD display drivers are on bus address 0x27
+static int addr = 0x27;
+
+// Modes for lcd_send_byte
+#define LCD_CHARACTER  1
+#define LCD_COMMAND    0
+
+#define MAX_LINES      2
+#define MAX_CHARS      16
+
 namespace hhg::driver
 {
 inline namespace v1
@@ -33,101 +76,142 @@ inline namespace v1
 
     }
 
-    os::exit lcd::init(os::error **error) OS_NOEXCEPT
+    os::exit lcd::init(os::error **error) const OS_NOEXCEPT
     {
+        if(io.init(error) == exit::OK)
+        {
+            return exit::KO;
+        }
+
+        send_byte(0x03, LCD_COMMAND);
+        send_byte(0x03, LCD_COMMAND);
+        send_byte(0x03, LCD_COMMAND);
+        send_byte(0x02, LCD_COMMAND);
+
+        send_byte(LCD_ENTRYMODESET | LCD_ENTRYLEFT, LCD_COMMAND);
+        send_byte(LCD_FUNCTIONSET | LCD_2LINE, LCD_COMMAND);
+        send_byte(LCD_DISPLAYCONTROL | LCD_DISPLAYON, LCD_COMMAND);
+        clear();
+
         return exit::OK;
     }
 
-    void lcd::clear() OS_NOEXCEPT
+    void lcd::clear() const OS_NOEXCEPT
+    {
+        send_byte(LCD_CLEARDISPLAY, LCD_COMMAND);
+    }
+
+    void lcd::home() const OS_NOEXCEPT
     {
 
     }
 
-    void lcd::home() OS_NOEXCEPT
+    void lcd::noDisplay() const OS_NOEXCEPT
     {
 
     }
 
-    void lcd::noDisplay() OS_NOEXCEPT
+    void lcd::display() const OS_NOEXCEPT
     {
 
     }
 
-    void lcd::display() OS_NOEXCEPT
+    void lcd::blink() const OS_NOEXCEPT
     {
 
     }
 
-    void lcd::blink() OS_NOEXCEPT
+    void lcd::noBlink() const OS_NOEXCEPT
     {
 
     }
 
-    void lcd::noBlink() OS_NOEXCEPT
+    void lcd::noCursor() const OS_NOEXCEPT
     {
 
     }
 
-    void lcd::noCursor() OS_NOEXCEPT
+    void lcd::cursor() const OS_NOEXCEPT
     {
 
     }
 
-    void lcd::cursor() OS_NOEXCEPT
+    void lcd::scrollDisplayLeft() const OS_NOEXCEPT
     {
 
     }
 
-    void lcd::scrollDisplayLeft() OS_NOEXCEPT
+    void lcd::scrollDisplayRight() const OS_NOEXCEPT
     {
 
     }
 
-    void lcd::scrollDisplayRight() OS_NOEXCEPT
+    void lcd::printLeft() const OS_NOEXCEPT
     {
 
     }
 
-    void lcd::printLeft() OS_NOEXCEPT
-    {
+    void lcd::printRight() const OS_NOEXCEPT
+    {}
 
+    void lcd::leftToRight() const OS_NOEXCEPT
+    {}
+
+    void lcd::rightToLeft() const OS_NOEXCEPT
+    {}
+
+    void lcd::shiftIncrement() const OS_NOEXCEPT
+    {}
+
+    void lcd::shiftDecrement() const OS_NOEXCEPT
+    {}
+
+    void lcd::noBacklight() const OS_NOEXCEPT
+    {}
+
+    void lcd::backlight() const OS_NOEXCEPT
+    {}
+
+    void lcd::autoscroll() const OS_NOEXCEPT
+    {}
+
+    void lcd::noAutoscroll() const OS_NOEXCEPT
+
+    {}
+    void lcd::createChar(uint8_t, uint8_t[]) const OS_NOEXCEPT
+    {}
+
+    void lcd::setCursor(uint8_t, uint8_t) const OS_NOEXCEPT
+    {}
+
+    void lcd::command(uint8_t) const OS_NOEXCEPT
+    {}
+
+    void lcd::send_byte(uint8_t byte, uint8_t mode) const OS_NOEXCEPT
+    {
+        uint8_t high = mode | (byte & 0xf0) | back_light;
+        uint8_t low = mode | ((byte << 4) & 0xf0) | back_light;
+
+        write_byte(high | mode);
+        toggle_enable(high);
+
+        write_byte(low | mode);
+        toggle_enable(low);
     }
 
-    void lcd::printRight() OS_NOEXCEPT
-    {}
+    void lcd::toggle_enable(uint8_t val) const OS_NOEXCEPT
+    {
+        io.us_sleep(600);
+        write_byte(val | back_light);
+        io.us_sleep(600);
+        write_byte(val & ~back_light);
+        io.us_sleep(600);
+    }
 
-    void lcd::leftToRight() OS_NOEXCEPT
-    {}
-
-    void lcd::rightToLeft() OS_NOEXCEPT
-    {}
-
-    void lcd::shiftIncrement() OS_NOEXCEPT
-    {}
-
-    void lcd::shiftDecrement() OS_NOEXCEPT
-    {}
-
-    void lcd::noBacklight() OS_NOEXCEPT
-    {}
-
-    void lcd::backlight() OS_NOEXCEPT
-    {}
-
-    void lcd::autoscroll() OS_NOEXCEPT
-    {}
-
-    void lcd::noAutoscroll() OS_NOEXCEPT
-
-    {}
-    void lcd::createChar(uint8_t, uint8_t[]) OS_NOEXCEPT
-    {}
-
-    void lcd::setCursor(uint8_t, uint8_t) OS_NOEXCEPT
-    {}
-
-    void lcd::command(uint8_t) OS_NOEXCEPT
-    {}
+    inline void lcd::write_byte(uint8_t val) const OS_NOEXCEPT
+    {
+        io.write(&val, 1);
+    }
 
 
 }

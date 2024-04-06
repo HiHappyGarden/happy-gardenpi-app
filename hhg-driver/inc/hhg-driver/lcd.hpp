@@ -27,7 +27,7 @@ namespace hhg::driver
 inline namespace v1
 {
 
-class lcd : hhg::iface::initializable
+class lcd
 {
     // commands
     enum commands
@@ -102,45 +102,56 @@ public:
         io() = default;
         virtual ~io() = default;
         OS_NO_COPY_NO_MOVE(io)
+        virtual os::exit init(os::error** error) const OS_NOEXCEPT = 0;
         virtual int32_t write(const uint8_t*, size_t data_len) const OS_NOEXCEPT = 0;
         virtual int32_t read(uint8_t*, size_t data_size) const OS_NOEXCEPT = 0;
-        virtual void ms_sleep(uint64_t millis) const OS_NOEXCEPT = 0;
+        virtual void us_sleep(uint64_t us) const OS_NOEXCEPT = 0;
     };
-    ~lcd() override = default;
-    //OS_NO_COPY_NO_MOVE(lcd);
 
-    os::exit init(os::error** error) OS_NOEXCEPT override;
-    void clear() OS_NOEXCEPT;
-    void home() OS_NOEXCEPT;
-    void noDisplay() OS_NOEXCEPT;
-    void display() OS_NOEXCEPT;
-    void noBlink() OS_NOEXCEPT;
-    void blink() OS_NOEXCEPT;
-    void noCursor() OS_NOEXCEPT;
-    void cursor() OS_NOEXCEPT;
-    void scrollDisplayLeft() OS_NOEXCEPT;
-    void scrollDisplayRight() OS_NOEXCEPT;
-    void printLeft() OS_NOEXCEPT;
-    void printRight() OS_NOEXCEPT;
-    void leftToRight() OS_NOEXCEPT;
-    void rightToLeft() OS_NOEXCEPT;
-    void shiftIncrement() OS_NOEXCEPT;
-    void shiftDecrement() OS_NOEXCEPT;
-    void noBacklight() OS_NOEXCEPT;
-    void backlight() OS_NOEXCEPT;
-    void autoscroll() OS_NOEXCEPT;
-    void noAutoscroll() OS_NOEXCEPT;
-    void createChar(uint8_t, uint8_t[]) OS_NOEXCEPT;
-    void setCursor(uint8_t, uint8_t) OS_NOEXCEPT;
-    void command(uint8_t) OS_NOEXCEPT;
+    mutable uint8_t back_light = 0;
+
+    virtual ~lcd() = default;
+    OS_NO_COPY_NO_MOVE(lcd);
+
+    os::exit init(os::error** error) const OS_NOEXCEPT;
+    void clear() const OS_NOEXCEPT;
+    void home() const OS_NOEXCEPT;
+    void noDisplay() const OS_NOEXCEPT;
+    void display() const OS_NOEXCEPT;
+    void noBlink() const OS_NOEXCEPT;
+    void blink() const OS_NOEXCEPT;
+    void noCursor() const OS_NOEXCEPT;
+    void cursor() const OS_NOEXCEPT;
+    void scrollDisplayLeft() const OS_NOEXCEPT;
+    void scrollDisplayRight() const OS_NOEXCEPT;
+    void printLeft() const OS_NOEXCEPT;
+    void printRight() const OS_NOEXCEPT;
+    void leftToRight() const OS_NOEXCEPT;
+    void rightToLeft() const OS_NOEXCEPT;
+    void shiftIncrement() const OS_NOEXCEPT;
+    void shiftDecrement() const OS_NOEXCEPT;
+    void noBacklight() const OS_NOEXCEPT;
+    void backlight() const OS_NOEXCEPT;
+    void autoscroll() const OS_NOEXCEPT;
+    void noAutoscroll() const OS_NOEXCEPT;
+    void createChar(uint8_t, uint8_t[]) const OS_NOEXCEPT;
+    void setCursor(uint8_t, uint8_t) const OS_NOEXCEPT;
+    void command(uint8_t) const OS_NOEXCEPT;
 
 protected:
-    lcd(const struct io& io, uint8_t cols, uint8_t rows) OS_NOEXCEPT;
-
-private:
     uint8_t cols = 0;
     uint8_t rows = 0;
+
+    lcd(const struct io& io, uint8_t cols, uint8_t rows) OS_NOEXCEPT;
+
+
+    void send_byte(uint8_t byte, uint8_t mode) const OS_NOEXCEPT;
+    void toggle_enable(uint8_t val) const OS_NOEXCEPT;
+    void write_byte(uint8_t val) const OS_NOEXCEPT;
+
+private:
     const struct io& io;
+
 
 };
 
