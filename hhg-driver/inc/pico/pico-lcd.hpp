@@ -32,17 +32,19 @@ struct pico_lcd_io final : public lcd::io
     const uint8_t addr = 0x27;
 
     ~pico_lcd_io() override = default;
+    os::exit init(os::error** error) const OS_NOEXCEPT override;
     int32_t write(const uint8_t* data, size_t data_len) const OS_NOEXCEPT override;
     int32_t read(uint8_t* data, size_t data_size) const OS_NOEXCEPT override;
-    void ms_sleep(uint64_t millis) const OS_NOEXCEPT override;
+    void us_sleep(uint64_t us) const OS_NOEXCEPT override;
 };
 
 
 class pico_lcd final : public lcd
 {
+    const pico_lcd_io io;
 public:
     inline pico_lcd(uint8_t cols, uint8_t rows) OS_NOEXCEPT
-            : lcd(pico_lcd_io(), cols, rows)
+    : lcd(io, cols, rows)
     {
 
     }
