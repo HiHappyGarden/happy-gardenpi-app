@@ -39,7 +39,7 @@ class pico_i2c final : public hhg::iface::io
 
     public:
 
-    enum pin : uint8_t
+    enum pin : uint
     {
         SDA_PIN = PICO_DEFAULT_I2C_SDA_PIN,
         SCL_PIN = PICO_DEFAULT_I2C_SCL_PIN

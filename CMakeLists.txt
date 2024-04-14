@@ -75,6 +75,7 @@ target_link_libraries(${PROJECT_NAME}
         hardware_uart
         hardware_flash
         hardware_sync
+        hardware_gpio
         freertos
         hi-happy-garden-parser
 )

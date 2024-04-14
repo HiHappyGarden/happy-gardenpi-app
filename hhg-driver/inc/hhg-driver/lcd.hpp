@@ -29,71 +29,47 @@ inline namespace v1
 
 class lcd
 {
-    // commands
-    enum commands
-    {
-        LCD_CLEAR_DISPLAY = 0x01,
-        LCD_RETURN_HOME = 0x02,
-        LCD_ENTRY_MODE_SET = 0x04,
-        LCD_DISPLAY_CONTROL = 0x08,
-        LCD_CURSOR_SHIFT  = 0x10,
-        LCD_FUNCTION_SET  =0x20,
-        LCD_SET_CG_RAM_ADDR = 0x40,
-        LCD_SET_DD_RAM_ADDR = 0x80
-    };
-
-    // flags for display entry mode
-    enum flags_entry_mode
-    {
-        LCD_ENTRY_RIGHT = 0x00,
-        LCD_ENTRY_LEFT = 0x02,
-        LCD_ENTRY_SHIFT_INCREMENT = 0x01,
-        LCD_ENTRY_SHIFT_DECREMENT = 0x00
-    };
-
-    // flags for display on/off control
-    enum flags_control
-    {
-        LCD_DISPLAY_ON = 0x04,
-        LCD_DISPLAY_OFF = 0x00,
-        LCD_CURSOR_ON = 0x02,
-        LCD_CURSOR_OFF = 0x00,
-        LCD_BLINK_ON = 0x01,
-        LCD_BLINK_OFF = 0x00,
-    };
-
-    // flags for display/cursor shift
-    enum flags_cursor_shift
-    {
-        LCD_DISPLAY_MOVE = 0x08,
-        LCD_CURSOR_MOVE = 0x00,
-        LCD_MOVE_RIGHT = 0x04,
-        LCD_MOVE_LEFT = 0x00
-    };
-
-    // flags for function set
-    enum flags_function_set
-    {
-        LCD_8BIT_MODE = 0x10,
-        LCD_4BIT_MODE = 0x00,
-        LCD_2LINE = 0x08,
-        LCD_1LINE = 0x00,
-        LCD_5x10DOTS = 0x04,
-        LCD_5x8DOTS = 0x00
-    };
-
-    // flags for backlight control
-    enum flags_backlight_control
-    {
-        LCD_BACKLIGHT = 0x08,
-        LCD_NO_BACKLIGHT = 0x00
-    };
-
-    static constexpr uint8_t EN = 0b00000100;  // Enable bit
-    static constexpr uint8_t RW = 0b00000010;  // Read/Write bit
-    static constexpr uint8_t RS = 0b00000001;  // Register select bit
 
 public:
+
+
+// commands
+    static constexpr uint8_t LCD_CLEARDISPLAY = 0x01;
+    static constexpr uint8_t LCD_RETURNHOME = 0x02;
+    static constexpr uint8_t LCD_ENTRYMODESET = 0x04;
+    static constexpr uint8_t LCD_DISPLAYCONTROL = 0x08;
+    static constexpr uint8_t LCD_CURSORSHIFT = 0x10;
+    static constexpr uint8_t LCD_FUNCTIONSET = 0x20;
+    static constexpr uint8_t LCD_SETCGRAMADDR = 0x40;
+    static constexpr uint8_t LCD_SETDDRAMADDR = 0x80;
+
+// flags for display entry mode
+    static constexpr uint8_t LCD_ENTRYSHIFTINCREMENT = 0x01;
+    static constexpr uint8_t LCD_ENTRYLEFT = 0x02;
+
+// flags for display and cursor control
+    static constexpr uint8_t LCD_BLINKON = 0x01;
+    static constexpr uint8_t LCD_CURSORON = 0x02;
+    static constexpr uint8_t LCD_DISPLAYON = 0x04;
+
+// flags for display and cursor shift
+    static constexpr uint8_t LCD_MOVERIGHT = 0x04;
+    static constexpr uint8_t LCD_DISPLAYMOVE = 0x08;
+
+// flags for function set
+    static constexpr uint8_t LCD_5x10DOTS = 0x04;
+    static constexpr uint8_t LCD_2LINE = 0x08;
+    static constexpr uint8_t LCD_8BITMODE = 0x10;
+
+// flag for backlight control
+    static constexpr uint8_t LCD_BACKLIGHT = 0x08;
+
+    static constexpr uint8_t LCD_ENABLE_BIT = 0x04;
+
+
+// Modes for lcd_send_byte
+#define LCD_CHARACTER  1
+#define LCD_COMMAND    0
 
     using ptr = os::unique_ptr<hhg::driver::lcd>;
 
