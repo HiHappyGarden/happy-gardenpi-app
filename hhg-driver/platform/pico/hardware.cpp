@@ -25,6 +25,7 @@
 #include "pico/pico-fsio.hpp"
 #include "pico/pico-i2c.hpp"
 #include "pico/pico-lcd.hpp"
+#include "pico/pico-rotary-encored.hpp"
 
 
 using namespace os;
@@ -48,6 +49,7 @@ hardware::hardware(class error** error) OS_NOEXCEPT
 , fsio(new hhg::driver::pico_fsio)
 , i2c(new hhg::driver::pico_i2c)
 , lcd( new hhg::driver::pico_lcd(20, 4))
+, rotary_encoder(new hhg::driver::pico_rotary_encoder)
 {
     if(time.get() == nullptr && error)
     {
@@ -142,29 +144,41 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
 	}
 	OS_LOG_INFO(APP_TAG, "Init FS IO - OK");
 
-    OS_LOG_INFO(APP_TAG, "Init I2C");
-    if(fsio->init(error) == exit::KO)
-    {
-        if(error && *error)
-        {
-            *error = OS_ERROR_APPEND(*error, "i2c::init() fail.", error_type::OS_EFAULT);
-            OS_ERROR_PTR_SET_POSITION(*error);
-        }
-        return exit::KO;
-    }
-    OS_LOG_INFO(APP_TAG, "Init I2C - OK");
+//    OS_LOG_INFO(APP_TAG, "Init I2C");
+//    if(i2c->init(error) == exit::KO)
+//    {
+//        if(error && *error)
+//        {
+//            *error = OS_ERROR_APPEND(*error, "i2c::init() fail.", error_type::OS_EFAULT);
+//            OS_ERROR_PTR_SET_POSITION(*error);
+//        }
+//        return exit::KO;
+//    }
+//    OS_LOG_INFO(APP_TAG, "Init I2C - OK");
 
-    OS_LOG_INFO(APP_TAG, "Init LCD");
-    if(lcd->init(error) == exit::KO)
+//    OS_LOG_INFO(APP_TAG, "Init LCD");
+//    if(lcd->init(error) == exit::KO)
+//    {
+//        if(error && *error)
+//        {
+//            *error = OS_ERROR_APPEND(*error, "lcd::init() fail.", error_type::OS_EFAULT);
+//            OS_ERROR_PTR_SET_POSITION(*error);
+//        }
+//        return exit::KO;
+//    }
+//    OS_LOG_INFO(APP_TAG, "Init LCD - OK");
+
+    OS_LOG_INFO(APP_TAG, "Init Rotary Encoder");
+    if(rotary_encoder->init(error) == exit::KO)
     {
         if(error && *error)
         {
-            *error = OS_ERROR_APPEND(*error, "lcd::init() fail.", error_type::OS_EFAULT);
+            *error = OS_ERROR_APPEND(*error, "rotary_encoder::init() fail.", error_type::OS_EFAULT);
             OS_ERROR_PTR_SET_POSITION(*error);
         }
         return exit::KO;
     }
-    OS_LOG_INFO(APP_TAG, "Init LCD - OK");
+    OS_LOG_INFO(APP_TAG, "Init Init Rotary Encoder - OK");
 
 	return exit::OK;
 }

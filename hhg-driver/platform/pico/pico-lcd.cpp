@@ -26,8 +26,7 @@ inline namespace v1 {
 
 os::exit pico_lcd_io::init(os::error **error) const OS_NOEXCEPT
 {
-    uint8_t rx_data;
-    return i2c_read_blocking(i2c_default, addr, &rx_data, 1, false) != 0 ? exit::OK : exit::KO;
+    return exit::OK;
 }
 
 

@@ -20,41 +20,34 @@
 
 #pragma once
 
-#include "hhg-iface/io.hpp"
-
-#include "pico/types.h"
+#include "hhg-driver/rotary-encored.hpp"
+#include <pico/types.h>
 
 namespace hhg::driver
 {
 inline namespace v1
 {
 
-
-class pico_uart final : public hhg::iface::io
+class pico_rotary_encoder : public rotary_encoder
 {
-	const hhg::iface::io_on_receive* obj = nullptr;
-	on_receive on_receive_callback = nullptr;
 
-	static inline pico_uart* singleton = nullptr;
+    static inline pico_rotary_encoder* singleton = nullptr;
 
-    public:
+public:
 
     enum pin : uint
     {
-        TX_PIN = 0,
-        RX_PIN = 1
+        ENCODER_A   = 21,
+        ENCODER_B   = 20,
+        ENCODER_BTN = 19
     };
 
-    pico_uart() OS_NOEXCEPT;
-	~pico_uart() OS_NOEXCEPT override;
-	OS_NO_COPY_NO_MOVE(pico_uart)
+    pico_rotary_encoder() OS_NOEXCEPT;
+    ~pico_rotary_encoder() OS_NOEXCEPT override;
 
-	os::exit init(os::error** error) OS_NOEXCEPT override;
+    os::exit init(os::error** error) OS_NOEXCEPT override;
 
-	void set_on_receive(const hhg::iface::io_on_receive* obj, on_receive on_receive_callback) OS_NOEXCEPT override;
-
-    os::exit transmit(const uint8_t data[], uint16_t size) const OS_NOEXCEPT override;
-
+    static void encoder_callback(uint gpio, uint32_t events);
 };
 
 }

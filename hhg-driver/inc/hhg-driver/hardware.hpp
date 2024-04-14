@@ -25,6 +25,7 @@
 #include "hhg-iface/io.hpp"
 #include "hhg-iface/time.hpp"
 #include "hhg-driver/lcd.hpp"
+#include "hhg-driver/rotary-encored.hpp"
 
 namespace hhg::driver
 {
@@ -35,6 +36,7 @@ using io_ptr = hhg::iface::io::ptr;
 using fsio_ptr = hhg::iface::fs_io::ptr;
 using time_ptr = hhg::iface::time::ptr;
 using lcd_ptr = hhg::driver::lcd::ptr;
+using rotary_encoder_ptr = hhg::driver::rotary_encoder::ptr;
 
 class hardware final : public hhg::iface::initializable
 {
@@ -43,6 +45,7 @@ class hardware final : public hhg::iface::initializable
     const fsio_ptr fsio;
     const io_ptr i2c;
     const lcd_ptr lcd;
+    const rotary_encoder_ptr rotary_encoder;
 public:
 	explicit hardware(class os::error** error) OS_NOEXCEPT;
 	~hardware() override = default;
@@ -66,6 +69,11 @@ public:
     inline const lcd_ptr& get_lcd() const OS_NOEXCEPT
     {
         return lcd;
+    }
+
+    inline const rotary_encoder_ptr& get_rotary_encoder() const OS_NOEXCEPT
+    {
+        return rotary_encoder;
     }
 
     os::exit init(os::error** error) OS_NOEXCEPT override;

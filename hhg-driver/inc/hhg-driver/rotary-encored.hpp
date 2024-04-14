@@ -20,41 +20,22 @@
 
 #pragma once
 
-#include "hhg-iface/io.hpp"
-
-#include "pico/types.h"
+#include "hhg-iface/initializable.hpp"
 
 namespace hhg::driver
 {
 inline namespace v1
 {
 
-
-class pico_uart final : public hhg::iface::io
+class rotary_encoder : public hhg::iface::initializable
 {
-	const hhg::iface::io_on_receive* obj = nullptr;
-	on_receive on_receive_callback = nullptr;
+public:
+    using ptr = os::unique_ptr<hhg::driver::rotary_encoder>;
 
-	static inline pico_uart* singleton = nullptr;
 
-    public:
-
-    enum pin : uint
-    {
-        TX_PIN = 0,
-        RX_PIN = 1
-    };
-
-    pico_uart() OS_NOEXCEPT;
-	~pico_uart() OS_NOEXCEPT override;
-	OS_NO_COPY_NO_MOVE(pico_uart)
-
-	os::exit init(os::error** error) OS_NOEXCEPT override;
-
-	void set_on_receive(const hhg::iface::io_on_receive* obj, on_receive on_receive_callback) OS_NOEXCEPT override;
-
-    os::exit transmit(const uint8_t data[], uint16_t size) const OS_NOEXCEPT override;
-
+    rotary_encoder() = default;
+    ~rotary_encoder() override = default;
+    OS_NO_COPY_NO_MOVE(rotary_encoder);
 };
 
 }
