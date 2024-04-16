@@ -87,6 +87,32 @@ hardware::hardware(class error** error) OS_NOEXCEPT
     }
 }
 
+
+    struct test : rotary_encoder::event
+    {
+        test() = default;
+        ~test() override = default;
+
+        int32_t idx = 0;
+
+        void on_event(bool ccw, bool cw, bool click) OS_NOEXCEPT override
+        {
+            if(ccw)
+            {
+                idx--;
+            }
+            else if(cw)
+            {
+                idx++;
+            }
+
+            OS_LOG_INFO(APP_TAG, "idx: %ld click:%u", idx, click);
+        }
+
+    };
+
+    test test_one;
+
 os::exit hardware::init(error** error) OS_NOEXCEPT
 {
 	if(os_config_init() == os::exit::KO)
@@ -179,6 +205,9 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
         return exit::KO;
     }
     OS_LOG_INFO(APP_TAG, "Init Init Rotary Encoder - OK");
+
+
+    rotary_encoder->set_on_event(&test_one, &rotary_encoder::event::on_event);
 
 	return exit::OK;
 }

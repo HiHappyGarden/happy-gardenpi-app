@@ -29,7 +29,6 @@ namespace hhg::app
 {
 inline namespace v1
 {
-using namespace os;
 
 
 void* fsm_thread_handler(void* arg);
@@ -59,7 +58,7 @@ private:
     hhg::app::app_data app_data;
     hhg::app::app_parser app_parser;
 
-	thread fsm_thread{"fsm thread", hhg::driver::HIGH, 1024 * 2, fsm_thread_handler};
+	os::thread fsm_thread{"fsm", hhg::driver::HIGH, 1024 * 2, fsm_thread_handler};
     struct fsm
     {
 		static constexpr uint8_t MAX_ERROR = 5;
@@ -67,21 +66,21 @@ private:
         enum state   state       = state::NONE;
         enum state   old_state 	 = state::NONE;
         uint8_t      errors      = 0;
-        event    	 events;
+        os::event    	 events;
         bool         run         = true;
     }fsm;
 
 
 	friend void* fsm_thread_handler(void* arg);
 public:
-    explicit app_main(driver::hardware& hardware, error** error) OS_NOEXCEPT;
+    explicit app_main(driver::hardware& hardware, os::error** error) OS_NOEXCEPT;
     OS_NO_COPY_NO_MOVE(app_main)
 
     ~app_main() override OS_NOEXCEPT;
 
-    os::exit init(class error** error) OS_NOEXCEPT override;
+    os::exit init(class os::error** error) OS_NOEXCEPT override;
 
-    os::exit fsm_start(class error** error) OS_NOEXCEPT;
+    os::exit fsm_start(class os::error** error) OS_NOEXCEPT;
 
 private:
 
