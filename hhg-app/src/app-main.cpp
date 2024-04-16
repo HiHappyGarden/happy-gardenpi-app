@@ -17,8 +17,9 @@
  *
  ***************************************************************************/
 
-#include <hhg-app/app-main.hpp>
+#include "hhg-app/app-main.hpp"
 using hhg::iface::time;
+using namespace os;
 
 #include "hhg-app/app-parser-commands.hpp"
 

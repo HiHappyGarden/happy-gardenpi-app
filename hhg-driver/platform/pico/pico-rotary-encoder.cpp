@@ -47,63 +47,51 @@ inline namespace v1
         }
         singleton = this;
 
+        polling.create();
 
         return exit::OK;
     }
 
-    void pico_rotary_encoder::encoder_callback(uint gpio, uint32_t events)
+    void* pico_rotary_encoder::encoder_handle(void* arg)
     {
-        uint32_t gpio_state = 0;
 
-        uint i = gpio_get_all();
-
-        gpio_state = (gpio_get_all() >> 19) & 0b0111;  	// get all GPIO them mask out all but bits 10, 11, 12
-        // This will need to change to match which GPIO pins are being used.
-
-
-        static bool ccw_fall = false;  //bool used when falling edge is triggered
-        static bool cw_fall = false;
-
-        uint8_t enc_value = 0;
-        enc_value = (gpio_state & 0x03);
-
-
-        if (gpio == hhg::driver::pico_rotary_encoder::ENCODER_A)
+        bool last_a = false;
+        bool last_b = false;
+        bool last_btn = false;
+        while(singleton->run)
         {
+            bool a = gpio_get(ENCODER_A);
+            bool b = gpio_get(ENCODER_B);
+            bool btn = gpio_get(ENCODER_BTN);
 
-            if ((!cw_fall) && (enc_value == 0b10)) // cw_fall is set to TRUE when phase A interrupt is triggered
-                cw_fall = true;
 
-            if ((ccw_fall) && (enc_value == 0b00)) // if ccw_fall is already set to true from a previous B phase trigger, the ccw event will be triggered
+            bool a_tmp = gpio_get(ENCODER_A);
+            bool b_tmp = gpio_get(ENCODER_B);
+
+            if(a && !b && last_a != a)
             {
-                cw_fall = false;
-                ccw_fall = false;
-                //do something here,  for now it is just printing out CW or CCW
-                printf("CCW \r\n");
+                (singleton->obj->*singleton->callback)(true, false, !btn && last_btn != btn);
+            }
+            else if(!a && b && last_b != b)
+            {
+                (singleton->obj->*singleton->callback)(false, true, !btn && last_btn != btn);
             }
 
-        }
-
-        if (gpio == hhg::driver::pico_rotary_encoder::ENCODER_B)
-        {
-            if ((!ccw_fall) && (enc_value == 0b01)) //ccw leading edge is true
-                ccw_fall = true;
-
-            if ((cw_fall) && (enc_value == 0b00)) //cw trigger
+            if(!btn && last_btn != btn)
             {
-                cw_fall = false;
-                ccw_fall = false;
-                //do something here,  for now it is just printing out CW or CCW
-                printf("CW \r\n");
+                (singleton->obj->*singleton->callback)(a && !b && last_a != a, !a && b && last_b != b, true);
             }
 
+            last_a = a;
+            last_b = b;
+            last_btn = btn;
+
+            osal_us_sleep(10_ms);
         }
 
-        if (gpio == hhg::driver::pico_rotary_encoder::ENCODER_BTN)
-        {
-            printf("CLICK \r\n");
-        }
+        return nullptr;
     }
+
 }
 }
 

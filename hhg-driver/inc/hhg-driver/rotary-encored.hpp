@@ -30,13 +30,28 @@ inline namespace v1
 class rotary_encoder : public hhg::iface::initializable
 {
 public:
+
+    struct event
+    {
+        using callback = void(event::*)(bool ccw, bool cw, bool click);
+
+        virtual ~event() = default;
+        virtual void on_event(bool ccw, bool cw, bool click) OS_NOEXCEPT = 0;
+    };
+
     using ptr = os::unique_ptr<hhg::driver::rotary_encoder>;
+
 
 
     rotary_encoder() = default;
     ~rotary_encoder() override = default;
     OS_NO_COPY_NO_MOVE(rotary_encoder);
+
+    virtual void set_on_event(event* obj, event::callback callback) OS_NOEXCEPT = 0;
 };
+
+
+
 
 }
 }
