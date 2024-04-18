@@ -57,21 +57,6 @@ os::exit init_gpio()
 //    gpio_pull_up(pico_i2c::SDA_PIN);
 //    gpio_pull_up(pico_i2c::SCL_PIN);
 
-
-//    gpio_init(pico_rotary_encoder::ENCODER_A);
-//    gpio_init(pico_rotary_encoder::ENCODER_B);
-//    gpio_init(pico_rotary_encoder::ENCODER_BTN);
-//    gpio_set_dir(pico_rotary_encoder::ENCODER_A, GPIO_IN);
-//    gpio_set_dir(pico_rotary_encoder::ENCODER_B, GPIO_IN);
-//    gpio_set_dir(pico_rotary_encoder::ENCODER_BTN, GPIO_IN);
-//    gpio_disable_pulls(pico_rotary_encoder::ENCODER_A);
-//    gpio_disable_pulls(pico_rotary_encoder::ENCODER_B);
-//    gpio_disable_pulls(pico_rotary_encoder::ENCODER_BTN);
-//    gpio_set_irq_enabled(pico_rotary_encoder::ENCODER_A, GPIO_IRQ_EDGE_FALL, true);
-//    gpio_set_irq_enabled(pico_rotary_encoder::ENCODER_B, GPIO_IRQ_EDGE_FALL, true);
-//    gpio_set_irq_enabled(pico_rotary_encoder::ENCODER_BTN, GPIO_IRQ_EDGE_FALL, true);
-//    gpio_set_irq_enabled_with_callback(pico_rotary_encoder::ENCODER_BTN, GPIO_IRQ_EDGE_FALL, true, &pico_rotary_encoder_callback);
-
     gpio_init(pico_rotary_encoder::ENCODER_A);
     gpio_set_dir(pico_rotary_encoder::ENCODER_A, GPIO_IN);
 

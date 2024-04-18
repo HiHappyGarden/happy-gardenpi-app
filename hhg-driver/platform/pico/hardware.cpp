@@ -93,7 +93,8 @@ hardware::hardware(class error** error) OS_NOEXCEPT
         test() = default;
         ~test() override = default;
 
-        int32_t idx = 0;
+        int8_t idx = 0;
+        int8_t clicked = 0;
 
         void on_event(bool ccw, bool cw, bool click) OS_NOEXCEPT override
         {
@@ -106,7 +107,12 @@ hardware::hardware(class error** error) OS_NOEXCEPT
                 idx++;
             }
 
-            OS_LOG_INFO(APP_TAG, "idx: %ld click:%u", idx, click);
+            if(click)
+            {
+                clicked++;
+            }
+
+            OS_LOG_INFO(APP_TAG, "idx: %u clicked:%u", idx, clicked);
         }
 
     };
