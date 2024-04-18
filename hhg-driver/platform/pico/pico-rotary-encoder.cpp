@@ -64,10 +64,6 @@ inline namespace v1
             bool b = gpio_get(ENCODER_B);
             bool btn = gpio_get(ENCODER_BTN);
 
-
-            bool a_tmp = gpio_get(ENCODER_A);
-            bool b_tmp = gpio_get(ENCODER_B);
-
             if(a && !b && last_a != a)
             {
                 (singleton->obj->*singleton->callback)(true, false, !btn && last_btn != btn);

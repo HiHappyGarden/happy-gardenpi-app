@@ -45,9 +45,9 @@ public:
 
     enum pin : uint
     {
-        ENCODER_A   = 19,
-        ENCODER_B   = 20,
-        ENCODER_BTN = 21
+        ENCODER_A   = 21,
+        ENCODER_B   = 19,
+        ENCODER_BTN = 20
     };
 
     pico_rotary_encoder() OS_NOEXCEPT;
