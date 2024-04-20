@@ -18,54 +18,75 @@
  ***************************************************************************/
 
 #include "pico/pico-ssh1106.hpp"
-
+using namespace os;
 
 namespace hhg::driver
 {
 inline namespace v1
 {
 
-    pico_ssh1106::pico_ssh1106() = default;
+    pico_ssh1106::pico_ssh1106(enum type type)
+    : type(type)
+    {}
     pico_ssh1106::~pico_ssh1106() OS_NOEXCEPT = default;
 
-    void pico_ssh1106::set_pixel(int16_t x, int16_t y, iface::lcd::WriteMode mode) {
+    os::exit pico_ssh1106::init(error **error)
+    {
+        return exit::KO;
+    }
+
+    void pico_ssh1106::set_pixel(int16_t x, int16_t y, iface::lcd::WriteMode mode)
+    {
 
     }
 
-    void pico_ssh1106::send_buffer() {
+    void pico_ssh1106::send_buffer()
+    {
 
     }
 
-    void pico_ssh1106::add_bitmap_image(int16_t anchor_x, int16_t anchor_y, uint8_t image_width, uint8_t image_height,
-                                        uint8_t *image, iface::lcd::WriteMode mode) {
+    void pico_ssh1106::add_bitmap_image(int16_t anchor_x, int16_t anchor_y, uint8_t image_width, uint8_t image_height,uint8_t *image, iface::lcd::WriteMode mode)
+    {
 
     }
 
-    void pico_ssh1106::set_buffer(unsigned char *buffer) {
+    void pico_ssh1106::set_buffer(unsigned char *buffer)
+    {
 
     }
 
-    void pico_ssh1106::set_orientation(bool orientation) {
+    void pico_ssh1106::set_orientation(bool orientation)
+    {
 
     }
 
-    void pico_ssh1106::clear() {
+    void pico_ssh1106::clear()
+    {
 
     }
 
-    void pico_ssh1106::invert_display() {
+    void pico_ssh1106::invert_display()
+    {
 
     }
 
-    void pico_ssh1106::set_contrast(unsigned char contrast) {
+    void pico_ssh1106::set_contrast(unsigned char contrast)
+    {
 
     }
 
-    void pico_ssh1106::turn_off() const {
+    void pico_ssh1106::turn_off() const
+    {
 
     }
 
-    void pico_ssh1106::turn_on() const {
+    void pico_ssh1106::turn_on() const
+    {
+
+    }
+
+    void pico_ssh1106::cmd(uint8_t command)
+    {
 
     }
 }

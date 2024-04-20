@@ -96,6 +96,10 @@ struct lcd
     /// \brief Turns display on
     virtual void turn_on() const = 0;
 
+protected:
+    /// \brief Sends single 8bit command to ssd1306 controller
+    /// \param command - byte to be sent to controller
+    virtual void cmd(uint8_t command) = 0;
 };
 
 } // hhg

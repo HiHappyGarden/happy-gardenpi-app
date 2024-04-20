@@ -22,6 +22,7 @@
 
 #include "osal/osal.hpp"
 #include "hhg-iface/lcd.hpp"
+#include "hhg-iface/initializable.hpp"
 
 #include <pico/types.h>
 
@@ -31,12 +32,22 @@ namespace hhg::driver
 inline namespace v1
 {
 
-class pico_ssh1106 : public hhg::iface::lcd
+class pico_ssh1106 : public hhg::iface::initializable, public hhg::iface::lcd
 {
 public:
-    pico_ssh1106();
+    /// \enum pico_ssd1306::Size
+    enum class type {
+        /// Display size W128xH64
+        W128xH64,
+        /// Display size W128xH32
+        W128xH32
+    };
+
+    explicit pico_ssh1106(enum type type);
     ~pico_ssh1106() OS_NOEXCEPT override;
     OS_NO_COPY_NO_MOVE(pico_ssh1106)
+
+    os::exit init(os::error **error) OS_NOEXCEPT override;
 
     void set_pixel(int16_t x, int16_t y, WriteMode mode) OS_NOEXCEPT override;
 
@@ -57,6 +68,11 @@ public:
     void turn_off() const override;
 
     void turn_on() const override;
+
+private:
+    type type;
+
+    void cmd(uint8_t command) override;
 
 };
 
