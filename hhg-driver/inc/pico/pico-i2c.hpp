@@ -21,7 +21,6 @@
 #pragma once
 
 #include "hhg-iface/io.hpp"
-
 #include <hardware/i2c.h>
 
 namespace hhg::driver
