@@ -29,6 +29,7 @@
 
 using namespace os;
 using namespace hhg::iface;
+using namespace hhg::driver;
 
 namespace hhg::driver
 {
@@ -43,44 +44,44 @@ constexpr const char APP_TAG[] = "HARDWARE";
 }
 
 hardware::hardware(class error** error) OS_NOEXCEPT
-: time(new hhg::driver::pico_time)
-, uart(new hhg::driver::pico_uart)
-, fsio(new hhg::driver::pico_fsio)
-, i2c(new hhg::driver::pico_i2c)
-, lcd( new hhg::driver::pico_ssh1106)
-, rotary_encoder(new hhg::driver::pico_rotary_encoder)
+: time(new pico_time)
+, uart(new pico_uart)
+, fsio(new pico_fsio)
+, i2c(new pico_i2c)
+, lcd( new pico_ssh1106(pico_ssh1106::type::W128xH64))
+, rotary_encoder(new pico_rotary_encoder)
 {
     if(time.get() == nullptr && error)
     {
-        *error = OS_ERROR_BUILD("io(new hhg::driver::stm32_timer) no mem.", error_type::OS_ENOMEM);
+        *error = OS_ERROR_BUILD("io(new stm32_timer) no mem.", error_type::OS_ENOMEM);
         OS_ERROR_PTR_SET_POSITION(*error);
         return;
     }
 
     if(uart.get() == nullptr && error)
 	{
-        *error = OS_ERROR_BUILD("io(new hhg::driver::pico_uart) no mem.", error_type::OS_ENOMEM);
+        *error = OS_ERROR_BUILD("io(new pico_uart) no mem.", error_type::OS_ENOMEM);
         OS_ERROR_PTR_SET_POSITION(*error);
         return;
     }
 
     if(fsio.get() == nullptr && error)
 	{
-        *error = OS_ERROR_BUILD("io(new hhg::driver::pico_fsio) no mem.", error_type::OS_ENOMEM);
+        *error = OS_ERROR_BUILD("io(new pico_fsio) no mem.", error_type::OS_ENOMEM);
         OS_ERROR_PTR_SET_POSITION(*error);
         return;
     }
 
     if(i2c.get() == nullptr && error)
     {
-        *error = OS_ERROR_BUILD("io(new hhg::driver::pico_i2c) no mem.", error_type::OS_ENOMEM);
+        *error = OS_ERROR_BUILD("io(new pico_i2c) no mem.", error_type::OS_ENOMEM);
         OS_ERROR_PTR_SET_POSITION(*error);
         return;
     }
 
     if(lcd.get() == nullptr && error)
     {
-        *error = OS_ERROR_BUILD("io(new hhg::driver::lcd) no mem.", error_type::OS_ENOMEM);
+        *error = OS_ERROR_BUILD("io(new lcd) no mem.", error_type::OS_ENOMEM);
         OS_ERROR_PTR_SET_POSITION(*error);
         return;
     }
