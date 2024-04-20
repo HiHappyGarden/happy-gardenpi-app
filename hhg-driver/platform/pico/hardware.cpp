@@ -48,7 +48,7 @@ hardware::hardware(class error** error) OS_NOEXCEPT
 , uart(new pico_uart)
 , fsio(new pico_fsio)
 , i2c(new pico_i2c)
-, lcd( new pico_ssh1106(pico_ssh1106::type::W128xH64))
+, lcd( new pico_ssh1106(i2c_default, 0x3D, pico_ssh1106::type::W128xH64))
 , rotary_encoder(new pico_rotary_encoder)
 {
     if(time.get() == nullptr && error)
@@ -188,19 +188,19 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
     }
     OS_LOG_INFO(APP_TAG, "Init I2C - OK");
 
-//    OS_LOG_INFO(APP_TAG, "Init LCD");
-//    if(lcd->init(error) == exit::KO)
-//    {
-//        if(error && *error)
-//        {
-//            *error = OS_ERROR_APPEND(*error, "lcd::init() fail.", error_type::OS_EFAULT);
-//            OS_ERROR_PTR_SET_POSITION(*error);
-//        }
-//        return exit::KO;
-//    }
-//    OS_LOG_INFO(APP_TAG, "Init LCD - OK");
+    OS_LOG_INFO(APP_TAG, "Init LCD");
+    if(lcd->init(error) == exit::KO)
+    {
+        if(error && *error)
+        {
+            *error = OS_ERROR_APPEND(*error, "lcd::init() fail.", error_type::OS_EFAULT);
+            OS_ERROR_PTR_SET_POSITION(*error);
+        }
+        return exit::KO;
+    }
+    OS_LOG_INFO(APP_TAG, "Init LCD - OK");
 
-    OS_LOG_INFO(APP_TAG, "Init Rotary Encoder");
+    OS_LOG_INFO(APP_TAG, "Init rotary encoder");
     if(rotary_encoder->init(error) == exit::KO)
     {
         if(error && *error)
@@ -210,8 +210,17 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
         }
         return exit::KO;
     }
-    OS_LOG_INFO(APP_TAG, "Init Init Rotary Encoder - OK");
+    OS_LOG_INFO(APP_TAG, "Init rotary rncoder - OK");
 
+
+
+
+    for(uint8_t i = 0; i < 10; i++)
+    {
+        lcd->set_pixel(20, 20, lcd::write_mode::ADD);
+    }
+
+    lcd->send_buffer();
 
     rotary_encoder->set_on_event(&test_one, &rotary_encoder::event::on_event);
 

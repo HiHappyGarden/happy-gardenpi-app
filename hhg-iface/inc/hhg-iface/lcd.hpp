@@ -27,7 +27,7 @@ namespace hhg::iface
 inline namespace v1
 {
 
-struct lcd
+struct lcd : public initializable
 {
     using ptr = os::unique_ptr<hhg::iface::lcd>;
 
@@ -43,7 +43,7 @@ struct lcd
     };
 
     /// \enum pico_ssd1306::WriteMode
-    enum class WriteMode : const uint8_t
+    enum class write_mode : const uint8_t
     {
         /// sets pixel on regardless of its state
         ADD = 0,
@@ -57,7 +57,7 @@ struct lcd
 
     virtual ~lcd() OS_NOEXCEPT = default;
 
-    virtual void set_pixel(int16_t x, int16_t y, WriteMode mode = WriteMode::ADD) OS_NOEXCEPT = 0;
+    virtual void set_pixel(int16_t x, int16_t y, write_mode mode = write_mode::ADD) const OS_NOEXCEPT = 0;
 
     /// \brief Sends frame buffer to display so that it updated
     virtual void send_buffer() OS_NOEXCEPT = 0;
@@ -69,11 +69,11 @@ struct lcd
     /// \param image_height - height of the image in pixels
     /// \param image - pointer to uint8_t (unsigned char) array containing image data
     /// \param mode - mode describes setting behavior. See WriteMode doc for more information
-    virtual void add_bitmap_image(int16_t anchor_x, int16_t anchor_y, uint8_t image_width, uint8_t image_height, uint8_t *image, WriteMode mode = WriteMode::ADD) OS_NOEXCEPT = 0;
+    virtual void add_bitmap_image(int16_t anchor_x, int16_t anchor_y, uint8_t image_width, uint8_t image_height, uint8_t *image, write_mode mode = write_mode::ADD) OS_NOEXCEPT = 0;
 
     /// \brief Manually set frame buffer. make sure it's correct size of 1024 bytes
     /// \param buffer - pointer to a new buffer
-    virtual void set_buffer(unsigned char *buffer) OS_NOEXCEPT = 0;
+    virtual void set_buffer(uint8_t *buffer) OS_NOEXCEPT = 0;
 
     /// \brief Flips the display
     /// \param orientation - 0 for not flipped, 1 for flipped display
@@ -88,18 +88,18 @@ struct lcd
 
     /// \brief Sets display contrast according to ssd1306 documentation
     /// \param contrast - accepted values of 0 to 255 to set the contrast
-    virtual void set_contrast(unsigned char contrast) OS_NOEXCEPT = 0;
+    virtual void set_contrast(uint8_t contrast) OS_NOEXCEPT = 0;
 
     /// \brief Turns display off
-    virtual void turn_off() const  = 0;
+    virtual void turn_off() const OS_NOEXCEPT = 0;
 
     /// \brief Turns display on
-    virtual void turn_on() const = 0;
+    virtual void turn_on() const OS_NOEXCEPT = 0;
 
 protected:
     /// \brief Sends single 8bit command to ssd1306 controller
     /// \param command - byte to be sent to controller
-    virtual void cmd(uint8_t command) = 0;
+    virtual void cmd(uint8_t command) const OS_NOEXCEPT = 0;
 };
 
 } // hhg
