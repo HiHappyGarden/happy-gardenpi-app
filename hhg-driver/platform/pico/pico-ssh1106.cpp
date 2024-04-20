@@ -17,47 +17,56 @@
  *
  ***************************************************************************/
 
+#include "pico/pico-ssh1106.hpp"
 
-#pragma once
-
-#include "hhg-iface/io.hpp"
-
-#include <hardware/i2c.h>
 
 namespace hhg::driver
 {
 inline namespace v1
 {
 
+    pico_ssh1106::pico_ssh1106() = default;
+    pico_ssh1106::~pico_ssh1106() OS_NOEXCEPT = default;
 
-class pico_i2c final : public hhg::iface::io
-{
-	const hhg::iface::io_on_receive* obj = nullptr;
-	on_receive on_receive_callback = nullptr;
+    void pico_ssh1106::set_pixel(int16_t x, int16_t y, iface::lcd::WriteMode mode) {
 
-	static inline pico_i2c* singleton = nullptr;
+    }
 
-    public:
+    void pico_ssh1106::send_buffer() {
 
-    enum pin : uint
-    {
-        SDA_PIN = PICO_DEFAULT_I2C_SDA_PIN,
-        SCL_PIN = PICO_DEFAULT_I2C_SCL_PIN
-    };
+    }
 
-   static constexpr uint SPEED = 100'000;
+    void pico_ssh1106::add_bitmap_image(int16_t anchor_x, int16_t anchor_y, uint8_t image_width, uint8_t image_height,
+                                        uint8_t *image, iface::lcd::WriteMode mode) {
 
-    pico_i2c() OS_NOEXCEPT;
-	~pico_i2c() OS_NOEXCEPT override;
-	OS_NO_COPY_NO_MOVE(pico_i2c)
+    }
 
-	os::exit init(os::error** error) OS_NOEXCEPT override;
+    void pico_ssh1106::set_buffer(unsigned char *buffer) {
 
-	void set_on_receive(const hhg::iface::io_on_receive* obj, on_receive on_receive_callback) OS_NOEXCEPT override;
+    }
 
-    os::exit transmit(const uint8_t data[], uint16_t size) const OS_NOEXCEPT override;
+    void pico_ssh1106::set_orientation(bool orientation) {
 
-};
+    }
 
+    void pico_ssh1106::clear() {
+
+    }
+
+    void pico_ssh1106::invert_display() {
+
+    }
+
+    void pico_ssh1106::set_contrast(unsigned char contrast) {
+
+    }
+
+    void pico_ssh1106::turn_off() const {
+
+    }
+
+    void pico_ssh1106::turn_on() const {
+
+    }
 }
 }

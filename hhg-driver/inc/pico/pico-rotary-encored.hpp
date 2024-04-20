@@ -46,12 +46,13 @@ public:
     enum pin : uint
     {
         ENCODER_A   = 21,
-        ENCODER_B   = 19,
-        ENCODER_BTN = 20
+        ENCODER_B   = 20,
+        ENCODER_BTN = 19
     };
 
     pico_rotary_encoder() OS_NOEXCEPT;
     ~pico_rotary_encoder() OS_NOEXCEPT override;
+    OS_NO_COPY_NO_MOVE(pico_rotary_encoder)
 
     os::exit init(os::error** error) OS_NOEXCEPT override;
 

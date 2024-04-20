@@ -48,15 +48,18 @@ inline namespace v1
 os::exit init_gpio()
 {
 
+    //Set pins for uart
     gpio_set_function(pico_uart::TX_PIN, GPIO_FUNC_UART);
     gpio_set_function(pico_uart::RX_PIN, GPIO_FUNC_UART);
 
+    //Set pins for I2C operation
+    gpio_set_function(pico_i2c::SDA_PIN, GPIO_FUNC_I2C);
+    gpio_set_function(pico_i2c::SCL_PIN, GPIO_FUNC_I2C);
+    gpio_pull_up(pico_i2c::SDA_PIN);
+    gpio_pull_up(pico_i2c::SCL_PIN);
 
-//    gpio_set_function(pico_i2c::SDA_PIN, GPIO_FUNC_I2C);
-//    gpio_set_function(pico_i2c::SCL_PIN, GPIO_FUNC_I2C);
-//    gpio_pull_up(pico_i2c::SDA_PIN);
-//    gpio_pull_up(pico_i2c::SCL_PIN);
 
+    //Set pins for rotary encoder
     gpio_init(pico_rotary_encoder::ENCODER_A);
     gpio_set_dir(pico_rotary_encoder::ENCODER_A, GPIO_IN);
 
@@ -66,6 +69,10 @@ os::exit init_gpio()
     gpio_init(pico_rotary_encoder::ENCODER_BTN);
     gpio_pull_up(pico_rotary_encoder::ENCODER_BTN);
     gpio_set_dir(pico_rotary_encoder::ENCODER_BTN, GPIO_IN);
+
+    //Set pins for buttons
+
+    //Set pins for relay
 
     return exit::OK;
 }
