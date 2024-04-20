@@ -24,7 +24,7 @@
 #include "hhg-iface/initializable.hpp"
 #include "hhg-iface/io.hpp"
 #include "hhg-iface/time.hpp"
-#include "hhg-driver/lcd.hpp"
+#include "hhg-iface/lcd.hpp"
 #include "hhg-driver/rotary-encored.hpp"
 
 namespace hhg::driver
@@ -35,7 +35,7 @@ inline namespace v1
 using io_ptr = hhg::iface::io::ptr;
 using fsio_ptr = hhg::iface::fs_io::ptr;
 using time_ptr = hhg::iface::time::ptr;
-using lcd_ptr = hhg::driver::lcd::ptr;
+using lcd_ptr = hhg::iface::lcd::ptr;
 using rotary_encoder_ptr = hhg::driver::rotary_encoder::ptr;
 
 class hardware final : public hhg::iface::initializable

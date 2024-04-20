@@ -20,36 +20,46 @@
 
 #pragma once
 
-#include "hhg-driver/lcd.hpp"
+#include "osal/osal.hpp"
+#include "hhg-iface/lcd.hpp"
+
+#include <pico/types.h>
 
 namespace hhg::driver
 {
+
 inline namespace v1
 {
 
-struct pico_lcd_io final : public lcd::io
+class pico_ssh1106 : public hhg::iface::lcd
 {
-    const uint8_t addr = 0x27;
-
-    ~pico_lcd_io() override = default;
-    os::exit init(os::error** error) const OS_NOEXCEPT override;
-    int32_t write(const uint8_t* data, size_t data_len) const OS_NOEXCEPT override;
-    int32_t read(uint8_t* data, size_t data_size) const OS_NOEXCEPT override;
-    void us_sleep(uint64_t us) const OS_NOEXCEPT override;
-};
-
-
-class pico_lcd final : public lcd
-{
-    const pico_lcd_io io;
 public:
-    inline pico_lcd(uint8_t cols, uint8_t rows) OS_NOEXCEPT
-    : lcd(io, cols, rows)
-    {
+    pico_ssh1106();
+    ~pico_ssh1106() OS_NOEXCEPT override;
+    OS_NO_COPY_NO_MOVE(pico_ssh1106)
 
-    }
-    ~pico_lcd() override = default;
+    void set_pixel(int16_t x, int16_t y, WriteMode mode) OS_NOEXCEPT override;
+
+    void send_buffer() OS_NOEXCEPT override;
+
+    void add_bitmap_image(int16_t anchor_x, int16_t anchor_y, uint8_t image_width, uint8_t image_height, uint8_t *image, WriteMode mode) OS_NOEXCEPT override;
+
+    void set_buffer(unsigned char *buffer) OS_NOEXCEPT override;
+
+    void set_orientation(bool orientation) OS_NOEXCEPT override;
+
+    void clear() OS_NOEXCEPT override;
+
+    void invert_display() OS_NOEXCEPT override;
+
+    void set_contrast(unsigned char contrast) OS_NOEXCEPT override;
+
+    void turn_off() const override;
+
+    void turn_on() const override;
+
 };
 
 }
 }
+

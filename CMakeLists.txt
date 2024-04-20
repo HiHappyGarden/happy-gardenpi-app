@@ -41,7 +41,6 @@ include_directories(hhg-parser/inc)
 add_subdirectory(freertos)
 add_subdirectory(hhg-parser)
 
-
 file(GLOB_RECURSE OSAL_INCLUDES CONFIGURE_DEPENDS "osal/inc/*.hpp" "osal/src/freertos/osal_sys/*.hpp" "osal/src/freertos/config/*.h")
 file(GLOB_RECURSE OSAL_SOURCES CONFIGURE_DEPENDS "osal/src/error.cpp" "osal/src/log.cpp" "osal/src/generics.cpp" "osal/src/freertos/*.cpp")
 
@@ -71,11 +70,11 @@ target_link_libraries(${PROJECT_NAME}
         hardware_rtc
         pico_multicore
         hardware_pio
-        hardware_i2c
         hardware_uart
         hardware_flash
         hardware_sync
         hardware_gpio
+        hardware_i2c
         freertos
         hi-happy-garden-parser
 )

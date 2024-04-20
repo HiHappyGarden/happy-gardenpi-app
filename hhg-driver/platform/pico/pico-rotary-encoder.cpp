@@ -17,8 +17,6 @@
  *
  ***************************************************************************/
 
-//ref https://www.reddit.com/r/raspberrypipico/comments/pacarb/sharing_some_c_code_to_read_a_rotary_encoder/
-
 #include "pico/pico-rotary-encored.hpp"
 using namespace os;
 
@@ -63,6 +61,8 @@ inline namespace v1
             bool a = gpio_get(ENCODER_A);
             bool b = gpio_get(ENCODER_B);
             bool btn = gpio_get(ENCODER_BTN);
+
+//            printf("a:%u b:%u btn:%u\n",a , b, btn );
 
             if(a && !b && last_a != a)
             {
