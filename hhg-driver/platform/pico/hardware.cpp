@@ -27,6 +27,10 @@
 #include "pico/pico-ssh1106.hpp"
 #include "pico/pico-rotary-encored.hpp"
 
+#include <hardware/gpio.h>
+#include "ssd1306.h"
+
+
 using namespace os;
 using namespace hhg::iface;
 using namespace hhg::driver;
@@ -48,7 +52,7 @@ hardware::hardware(class error** error) OS_NOEXCEPT
 , uart(new pico_uart)
 , fsio(new pico_fsio)
 , i2c(new pico_i2c)
-, lcd( new pico_ssh1106(i2c_default, 0x3D, pico_ssh1106::type::W128xH64))
+, lcd( new pico_ssh1106(pico_i2c::get_i2C_reference(), 0x3D, pico_ssh1106::type::W128xH64))
 , rotary_encoder(new pico_rotary_encoder)
 {
     if(time.get() == nullptr && error)
@@ -214,15 +218,23 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
 
 
 
+//Create a new display object
+    pico_ssd1306::SSD1306 display = pico_ssd1306::SSD1306(PICO_DEFAULT_I2C_INSTANCE, 0x3C, pico_ssd1306::Size::W128xH64);
 
-    for(uint8_t i = 0; i < 10; i++)
-    {
-        lcd->set_pixel(20, 20, lcd::write_mode::ADD);
-    }
+//    for (int16_t y = 0; y < 64; y++){
+//        display.setPixel(64, y);
+//    }
+    display.clear();
+    display.sendBuffer(); //Send buffer to device and show on screen
 
-    lcd->send_buffer();
-
-    rotary_encoder->set_on_event(&test_one, &rotary_encoder::event::on_event);
+//    for(uint8_t i = 0; i < 10; i++)
+//    {
+//        lcd->set_pixel(20, 20, lcd::write_mode::ADD);
+//    }
+//
+//    lcd->send_buffer();
+//
+//    rotary_encoder->set_on_event(&test_one, &rotary_encoder::event::on_event);
 
 
 	return exit::OK;

@@ -59,6 +59,7 @@ os::exit init_gpio()
     gpio_pull_up(pico_i2c::SCL_PIN);
 
 
+
     //Set pins for rotary encoder
     gpio_init(pico_rotary_encoder::ENCODER_A);
     gpio_set_dir(pico_rotary_encoder::ENCODER_A, GPIO_IN);
