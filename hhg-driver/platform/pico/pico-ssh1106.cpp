@@ -72,8 +72,6 @@ inline namespace v1
             }
         }
 
-        clear();
-
         // this is a list of setup commands for the display
         data setup[] =
         {
@@ -117,6 +115,7 @@ inline namespace v1
 
         cmd(setup, sizeof(setup) / sizeof(setup[0]));
 
+        clear();
         send_buffer();
 
         return exit::OK;
@@ -192,7 +191,7 @@ inline namespace v1
 
     void pico_ssh1106::clear()
     {
-        memset(buffer, 0, buffer_size);
+        memset(buffer, 1, buffer_size);
     }
 
     void pico_ssh1106::invert_display()
@@ -218,7 +217,10 @@ inline namespace v1
     void pico_ssh1106::cmd(uint8_t command) const
     {
         uint8_t data[2] = {0x00, command};
-        i2c_write_blocking(const_cast<i2c_inst *>(this->i2C_reference), this->address, data, 2, false);
+        if(i2c_write_blocking(const_cast<i2c_inst *>(this->i2C_reference), this->address, data, 2, false) != 2)
+        {
+            OS_LOG_ERROR(APP_TAG, " pico_ssh1106::cmd() send data error");
+        }
     }
 
     void pico_ssh1106::cmd(const data commands[], uint8_t data_len) const
