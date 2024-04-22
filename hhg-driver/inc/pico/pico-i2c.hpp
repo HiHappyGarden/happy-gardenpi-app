@@ -21,7 +21,9 @@
 #pragma once
 
 #include "hhg-iface/io.hpp"
+
 #include <hardware/i2c.h>
+
 
 namespace hhg::driver
 {
@@ -35,6 +37,8 @@ class pico_i2c final : public hhg::iface::io
 	on_receive on_receive_callback = nullptr;
 
 	static inline pico_i2c* singleton = nullptr;
+
+    static inline constexpr i2c_inst const *i2C_reference = PICO_DEFAULT_I2C_INSTANCE;
 
     public:
 
@@ -51,6 +55,11 @@ class pico_i2c final : public hhg::iface::io
 	OS_NO_COPY_NO_MOVE(pico_i2c)
 
 	os::exit init(os::error** error) OS_NOEXCEPT override;
+
+    constexpr static i2c_inst const * get_i2C_reference() OS_NOEXCEPT
+    {
+        return i2C_reference;
+    }
 
 	void set_on_receive(const hhg::iface::io_on_receive* obj, on_receive on_receive_callback) OS_NOEXCEPT override;
 
