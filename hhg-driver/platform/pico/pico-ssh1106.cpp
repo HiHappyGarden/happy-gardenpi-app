@@ -157,9 +157,9 @@ inline namespace v1
             auto buffer = new uint8_t[133];
             buffer[0] = static_cast<uint8_t>(reg_address::PAGE_ADDR);
 
-            memset(buffer + 1, 0b11111111, 132);
+            memset(buffer + 1, 0b11100111, 132);
 
-            if(i2c_write_blocking(const_cast<i2c_inst*>(i2c_reference), address, buffer, 133, false) != 133)
+            if(int rc = i2c_write_blocking(const_cast<i2c_inst*>(i2c_reference), address, buffer, 133, false); rc != 133)
             {
                 OS_LOG_ERROR(APP_TAG, " pico_ssh1106::send_cmd() send data error");
             }

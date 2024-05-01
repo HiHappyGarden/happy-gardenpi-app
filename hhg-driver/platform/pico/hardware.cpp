@@ -52,7 +52,7 @@ hardware::hardware(class error** error) OS_NOEXCEPT
 , uart(new pico_uart)
 , fsio(new pico_fsio)
 , i2c(new pico_i2c)
-, lcd( new pico_ssh1106(pico_i2c::get_i2C_reference(), 0x3D, pico_ssh1106::type::W128xH64))
+, lcd( new pico_ssh1106(pico_i2c::get_i2C_reference(), 0x3C, pico_ssh1106::type::W128xH64))
 , rotary_encoder(new pico_rotary_encoder)
 {
     if(time.get() == nullptr && error)
@@ -191,17 +191,17 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
     }
     OS_LOG_INFO(APP_TAG, "Init I2C - OK");
 
-//    OS_LOG_INFO(APP_TAG, "Init LCD");
-//    if(lcd->init(error) == exit::KO)
-//    {
-//        if(error && *error)
-//        {
-//            *error = OS_ERROR_APPEND(*error, "lcd::init() fail.", error_type::OS_EFAULT);
-//            OS_ERROR_PTR_SET_POSITION(*error);
-//        }
-//        return exit::KO;
-//    }
-//    OS_LOG_INFO(APP_TAG, "Init LCD - OK");
+    OS_LOG_INFO(APP_TAG, "Init LCD");
+    if(lcd->init(error) == exit::KO)
+    {
+        if(error && *error)
+        {
+            *error = OS_ERROR_APPEND(*error, "lcd::init() fail.", error_type::OS_EFAULT);
+            OS_ERROR_PTR_SET_POSITION(*error);
+        }
+        return exit::KO;
+    }
+    OS_LOG_INFO(APP_TAG, "Init LCD - OK");
 
     OS_LOG_INFO(APP_TAG, "Init rotary encoder");
     if(rotary_encoder->init(error) == exit::KO)
@@ -223,9 +223,8 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
 
 
 //Create a new display object
-    display = new pico_ssd1306::SSD1306(PICO_DEFAULT_I2C_INSTANCE, 0x3C, pico_ssd1306::Size::W128xH64);
-//
-    display->test();
+//    display = new pico_ssd1306::SSD1306(PICO_DEFAULT_I2C_INSTANCE, 0x3C, pico_ssd1306::Size::W128xH64);
+//    display->test();
 //    for (int16_t y = 0; y < 64; y++){
 //        display.setPixel(64, y);
 //    }
