@@ -51,9 +51,9 @@ class app_parser final : public hhg::iface::initializable, public hhg::iface::io
 	const hhg::parser::parser parser;
 
 	os::thread thread {
-		"app_parser thread"
+		"app_parser"
 		, hhg::driver::NORMAL
-		, 1'024 * 2
+		, 1'024 * 3
 		, app_parser_thread_handler
 	};
 

@@ -122,6 +122,7 @@ hardware::hardware(class error** error) OS_NOEXCEPT
     };
 
     test test_one;
+    pico_ssd1306::SSD1306* display;
 
 os::exit hardware::init(error** error) OS_NOEXCEPT
 {
@@ -192,17 +193,17 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
     }
     OS_LOG_INFO(APP_TAG, "Init I2C - OK");
 
-    OS_LOG_INFO(APP_TAG, "Init LCD");
-    if(lcd->init(error) == exit::KO)
-    {
-        if(error && *error)
-        {
-            *error = OS_ERROR_APPEND(*error, "lcd::init() fail.", error_type::OS_EFAULT);
-            OS_ERROR_PTR_SET_POSITION(*error);
-        }
-        return exit::KO;
-    }
-    OS_LOG_INFO(APP_TAG, "Init LCD - OK");
+//    OS_LOG_INFO(APP_TAG, "Init LCD");
+//    if(lcd->init(error) == exit::KO)
+//    {
+//        if(error && *error)
+//        {
+//            *error = OS_ERROR_APPEND(*error, "lcd::init() fail.", error_type::OS_EFAULT);
+//            OS_ERROR_PTR_SET_POSITION(*error);
+//        }
+//        return exit::KO;
+//    }
+//    OS_LOG_INFO(APP_TAG, "Init LCD - OK");
 
     OS_LOG_INFO(APP_TAG, "Init rotary encoder");
     if(rotary_encoder->init(error) == exit::KO)
@@ -219,13 +220,14 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
 
 
 //Create a new display object
-    pico_ssd1306::SSD1306 display = pico_ssd1306::SSD1306(PICO_DEFAULT_I2C_INSTANCE, 0x3C, pico_ssd1306::Size::W128xH64);
+    display = new pico_ssd1306::SSD1306(PICO_DEFAULT_I2C_INSTANCE, 0x3C, pico_ssd1306::Size::W128xH64);
 
+    display->test();
 //    for (int16_t y = 0; y < 64; y++){
 //        display.setPixel(64, y);
 //    }
-    display.clear();
-    display.sendBuffer(); //Send buffer to device and show on screen
+//    display.clear();
+//    display.sendBuffer(); //Send buffer to device and show on screen
 
 //    for(uint8_t i = 0; i < 10; i++)
 //    {

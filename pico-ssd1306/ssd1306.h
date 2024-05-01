@@ -75,6 +75,7 @@ namespace pico_ssd1306 {
         /// \param command - byte to be sent to controller
         void cmd(unsigned char command);
 
+        void data(unsigned char command);
     public:
         /// \brief SSD1306 constructor initialized display and sets all required registers for operation
         /// \param i2CInst - i2c instance. Either i2c0 or i2c1
@@ -111,6 +112,7 @@ namespace pico_ssd1306 {
         /// \param orientation - 0 for not flipped, 1 for flipped display
         void setOrientation(bool orientation);
 
+        void test();
 
         /// \brief Clears frame buffer aka set all bytes to 0
         void clear();
