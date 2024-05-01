@@ -29,7 +29,7 @@ namespace pico_ssd1306 {
         SSD1306_MEMORYMODE_VERTICAL = 0x01,
         SSD1306_MEMORYMODE_PAGE = 0x10,
         SSD1306_COLUMNADDR = 0x21,
-        SSD1306_PAGEADDR = 0x22,
+        SSD1306_PAGEADDR = 0xB0,
         SSD1306_COM_REMAP_OFF = 0xC0,
         SSD1306_COM_REMAP_ON = 0xC8,
         SSD1306_CLUMN_REMAP_OFF = 0xA0,
@@ -76,6 +76,8 @@ namespace pico_ssd1306 {
         void cmd(unsigned char command);
 
         void data(unsigned char command);
+
+        void data(const uint8_t* buffer, size_t buffer_size);
     public:
         /// \brief SSD1306 constructor initialized display and sets all required registers for operation
         /// \param i2CInst - i2c instance. Either i2c0 or i2c1

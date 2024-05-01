@@ -72,7 +72,7 @@ public:
         MEMORY_MODE_VERTICAL = 0x01,
         MEMORY_MODE_PAGE = 0x10,
         COLUMN_ADDR = 0x21,
-        PAGE_ADDR = 0x22,
+        PAGE_ADDR = 0xB0,
         COM_REMAP_OFF = 0xC0,
         COM_REMAP_ON = 0xC8,
         COLUMN_REMAP_OFF = 0xA0,
@@ -82,7 +82,7 @@ public:
         SWIT_CHCAP_VCC = 0x02,
     };
 
-    class data
+    class data final
     {
         uint8_t const b;
     public:
@@ -91,8 +91,23 @@ public:
         constexpr inline uint8_t value() const  OS_NOEXCEPT { return b; }
     };
 
+    union page final
+    {
+        struct
+        {
+            uint8_t d0 : 1;
+            uint8_t d1 : 1;
+            uint8_t d2 : 1;
+            uint8_t d3 : 1;
+            uint8_t d4 : 1;
+            uint8_t d5 : 1;
+            uint8_t d6 : 1;
+            uint8_t d7 : 1;
+        };
+        uint8_t value;
+    };
 
-    pico_ssh1106(i2c_inst const *i2C_reference, uint16_t address, enum type type) OS_NOEXCEPT;
+    pico_ssh1106(i2c_inst const *i2c_reference, uint16_t address, enum type type) OS_NOEXCEPT;
     ~pico_ssh1106() OS_NOEXCEPT override;
     OS_NO_COPY_NO_MOVE(pico_ssh1106)
 
@@ -104,7 +119,7 @@ public:
 
     void add_bitmap_image(int16_t anchor_x, int16_t anchor_y, uint8_t image_width, uint8_t image_height, uint8_t *image, write_mode mode) OS_NOEXCEPT override;
 
-    void set_buffer(uint8_t *buffer) OS_NOEXCEPT override;
+    void set_buffer(uint8_t *buffer, size_t buffer_size) OS_NOEXCEPT override;
 
     void set_orientation(bool orientation) OS_NOEXCEPT override;
 
@@ -119,7 +134,7 @@ public:
     void turn_on() const OS_NOEXCEPT override;
 
 private:
-    i2c_inst const *i2C_reference = nullptr;
+    i2c_inst const *i2c_reference = nullptr;
     uint16_t const address = 0;
     type const type = type::W128xH64;
 
@@ -129,14 +144,15 @@ private:
     size_t buffer_size = 0;
     uint8_t* buffer = nullptr;
 
-    void cmd(uint8_t command) OS_NOEXCEPT const override;
 
-    inline void cmd(const data& addr) const OS_NOEXCEPT
+    void send_cmd(uint8_t command) OS_NOEXCEPT const override;
+
+    inline void send_cmd(const data& addr, uint8_t or_data = 0x00) const OS_NOEXCEPT
     {
-        cmd(addr.value());
+        send_cmd(addr.value() | or_data);
     }
 
-    void cmd(const data* commands, uint8_t data_len) const OS_NOEXCEPT;
+    void send_cmd(const data* commands, uint8_t data_len) const OS_NOEXCEPT;
 
 
     };
