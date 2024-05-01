@@ -32,8 +32,8 @@ inline namespace v1
         constexpr char APP_TAG[] = "DRV SSH1106";
     }
 
-    pico_ssh1106::pico_ssh1106(i2c_inst const *i2C_reference, uint16_t address, enum type type) OS_NOEXCEPT
-    : i2C_reference(i2C_reference)
+    pico_ssh1106::pico_ssh1106(i2c_inst const *i2c_reference, uint16_t address, enum type type) OS_NOEXCEPT
+    : i2c_reference(i2c_reference)
     , address(address)
     , type(type)
     {
@@ -49,6 +49,8 @@ inline namespace v1
                 break;
         }
 
+        buffer_size = width * (height / 8);
+        buffer = new uint8_t [buffer_size];
     }
 
 
@@ -57,12 +59,10 @@ inline namespace v1
         delete[] buffer;
     }
 
-    os::exit pico_ssh1106::init(error **error)
+    os::exit pico_ssh1106::init(error **error) OS_NOEXCEPT
     {
         OS_LOG_DEBUG(APP_TAG, "Init");
 
-        buffer_size = (width * height) / 8;
-        buffer = new uint8_t [ buffer_size ];
         if(buffer == nullptr)
         {
             if(error && *error == nullptr)
@@ -76,10 +76,11 @@ inline namespace v1
         data setup[] =
         {
             reg_address::DISPLAY_OFF,
-            reg_address::LOW_COLUMN,
-            reg_address::HIGH_COLUMN,
-            reg_address::START_LINE,
-
+//            reg_address::LOW_COLUMN,
+//            reg_address::HIGH_COLUMN,
+//            reg_address::START_LINE,
+//            0x00,
+//
             reg_address::MEMORY_MODE,
             reg_address::MEMORY_MODE_HORIZONTAL,
 
@@ -113,7 +114,7 @@ inline namespace v1
             reg_address::DISPLAY_ON
         };
 
-        cmd(setup, sizeof(setup) / sizeof(setup[0]));
+        send_cmd(setup, sizeof(setup) / sizeof(setup[0]));
 
         clear();
         send_buffer();
@@ -146,84 +147,77 @@ inline namespace v1
     }
 
 
-    void pico_ssh1106::send_buffer()
+    void pico_ssh1106::send_buffer() OS_NOEXCEPT
     {
-        cmd(reg_address::PAGE_ADDR); //Set page address from min to max
-        cmd(0x00);
-        cmd(0x07);
-        cmd(reg_address::COLUMN_ADDR); //Set column address from min to max
-        cmd(0x00);
-        cmd(127);
+        send_cmd(reg_address::START_LINE); //line address
 
-        // create a temporary buffer of size of buffer plus 1 byte for startline command aka 0x40
-        auto data = new uint8_t [buffer_size + 1];
-        if(data == nullptr)
+        for(uint8_t y = 0; y < 8; y++)
         {
-            OS_LOG_FATAL(APP_TAG, "Impossible alloc data");
-            return;
+            send_cmd(reg_address::PAGE_ADDR, y); //set page
+            auto buffer = new uint8_t[133];
+            buffer[0] = static_cast<uint8_t>(reg_address::PAGE_ADDR);
+
+            memset(buffer + 1, 0b11111111, 132);
+
+            if(i2c_write_blocking(const_cast<i2c_inst*>(i2c_reference), address, buffer, 133, false) != 133)
+            {
+                OS_LOG_ERROR(APP_TAG, " pico_ssh1106::send_cmd() send data error");
+            }
+
+            delete[] buffer;
         }
-
-        data[0] = static_cast<uint8_t>(reg_address::START_LINE);
-
-        // copy framebuffer to temporary buffer
-        memcpy(data + 1, buffer, buffer_size);
-
-        // send data to device
-        i2c_write_blocking(const_cast<i2c_inst_t *>(i2C_reference), address, data, buffer_size + 1, false);
-
-        delete[] data;
     }
 
-    void pico_ssh1106::add_bitmap_image(int16_t anchor_x, int16_t anchor_y, uint8_t image_width, uint8_t image_height,uint8_t *image, iface::lcd::write_mode mode)
+    void pico_ssh1106::add_bitmap_image(int16_t anchor_x, int16_t anchor_y, uint8_t image_width, uint8_t image_height,uint8_t *image, iface::lcd::write_mode mode) OS_NOEXCEPT
     {
 
     }
 
-    void pico_ssh1106::set_buffer(uint8_t *buffer)
-    {
-        memcpy(this->buffer, buffer, buffer_size);
-    }
-
-    void pico_ssh1106::set_orientation(bool orientation)
+    void pico_ssh1106::set_buffer(uint8_t *buffer, size_t buffer_size) OS_NOEXCEPT
     {
 
     }
 
-    void pico_ssh1106::clear()
-    {
-        memset(buffer, 1, buffer_size);
-    }
-
-    void pico_ssh1106::invert_display()
+    void pico_ssh1106::set_orientation(bool orientation) OS_NOEXCEPT
     {
 
     }
 
-    void pico_ssh1106::set_contrast(uint8_t contrast)
+    void pico_ssh1106::clear() OS_NOEXCEPT
+    {
+        memset(buffer, 0, buffer_size);
+    }
+
+    void pico_ssh1106::invert_display() OS_NOEXCEPT
     {
 
     }
 
-    void pico_ssh1106::turn_off() const
+    void pico_ssh1106::set_contrast(uint8_t contrast) OS_NOEXCEPT
     {
 
     }
 
-    void pico_ssh1106::turn_on() const
+    void pico_ssh1106::turn_off() const OS_NOEXCEPT
     {
 
     }
 
-    void pico_ssh1106::cmd(uint8_t command) const
+    void pico_ssh1106::turn_on() const OS_NOEXCEPT
+    {
+
+    }
+
+    void pico_ssh1106::send_cmd(uint8_t command) const OS_NOEXCEPT
     {
         uint8_t data[2] = {0x00, command};
-        if(i2c_write_blocking(const_cast<i2c_inst *>(this->i2C_reference), this->address, data, 2, false) != 2)
+        if(i2c_write_blocking(const_cast<i2c_inst *>(i2c_reference), this->address, data, sizeof(data), false) != sizeof(data))
         {
-            OS_LOG_ERROR(APP_TAG, " pico_ssh1106::cmd() send data error");
+            OS_LOG_ERROR(APP_TAG, " pico_ssh1106::send_cmd() send data error");
         }
     }
 
-    void pico_ssh1106::cmd(const data commands[], uint8_t data_len) const
+    void pico_ssh1106::send_cmd(const data commands[], uint8_t data_len) const OS_NOEXCEPT
     {
         if(commands == nullptr)
         {
@@ -231,7 +225,7 @@ inline namespace v1
         }
         for(uint8_t i = 0; i < data_len; i++)
         {
-            cmd(commands[i].value());
+            send_cmd(commands[i].value());
         }
     }
 }

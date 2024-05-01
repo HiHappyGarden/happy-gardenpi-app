@@ -26,6 +26,10 @@ namespace hhg::driver
 {
 inline namespace v1
 {
+    namespace
+    {
+        constexpr char APP_TAG[] = "DRV ROTARY ENCODER";
+    }
 
     pico_rotary_encoder::pico_rotary_encoder() OS_NOEXCEPT = default;
 
@@ -58,11 +62,6 @@ inline namespace v1
         bool last_btn = false;
         while(singleton->run)
         {
-            if(singleton->obj == nullptr)
-            {
-                OS_LOG_ERROR()
-            }
-
             bool a = gpio_get(ENCODER_A);
             bool b = gpio_get(ENCODER_B);
             bool btn = gpio_get(ENCODER_BTN);
@@ -71,16 +70,49 @@ inline namespace v1
 
             if(a && !b && last_a != a)
             {
-                (singleton->obj->*singleton->callback)(true, false, !btn && last_btn != btn);
+                if(singleton->obj == nullptr)
+                {
+                    OS_LOG_ERROR(APP_TAG, "singleton->obj == null");
+                }
+                else if(singleton->callback == nullptr)
+                {
+                    OS_LOG_ERROR(APP_TAG, "singleton->obj == null");
+                }
+                else
+                {
+                    (singleton->obj->*singleton->callback)(true, false, !btn && last_btn != btn);
+                }
             }
             else if(!a && b && last_b != b)
             {
-                (singleton->obj->*singleton->callback)(false, true, !btn && last_btn != btn);
+                if(singleton->obj == nullptr)
+                {
+                    OS_LOG_ERROR(APP_TAG, "singleton->obj == null");
+                }
+                else if(singleton->callback == nullptr)
+                {
+                    OS_LOG_ERROR(APP_TAG, "singleton->obj == null");
+                }
+                else
+                {
+                    (singleton->obj->*singleton->callback)(false, true, !btn && last_btn != btn);
+                }
             }
 
             if(!btn && last_btn != btn)
             {
-                (singleton->obj->*singleton->callback)(a && !b && last_a != a, !a && b && last_b != b, true);
+                if(singleton->obj == nullptr)
+                {
+                    OS_LOG_ERROR(APP_TAG, "singleton->obj == null");
+                }
+                else if(singleton->callback == nullptr)
+                {
+                    OS_LOG_ERROR(APP_TAG, "singleton->obj == null");
+                }
+                else
+                {
+                    (singleton->obj->*singleton->callback)(a && !b && last_a != a, !a && b && last_b != b, true);
+                }
             }
 
             last_a = a;

@@ -168,7 +168,7 @@ namespace pico_ssd1306 {
 
         if(i2c_write_blocking(this->i2CInst, this->address, data, 2, false) != 2)
         {
-            OS_LOG_ERROR("---->", " pico_ssh1106::cmd() send data error");
+            OS_LOG_ERROR("---->", " pico_ssh1106::send_cmd() send data error");
         }
 
     }
@@ -180,9 +180,29 @@ namespace pico_ssd1306 {
 
         if(i2c_write_blocking(this->i2CInst, this->address, data, 2, false) != 2)
         {
-            OS_LOG_ERROR("---->", " pico_ssh1106::cmd() send data error");
+            OS_LOG_ERROR("---->", " pico_ssh1106::send_cmd() send data error");
+        }
+    }
+
+    void SSD1306::data(const uint8_t* buffer, size_t buffer_size)
+    {
+        // 0x00 is a byte indicating to ssd1306 that a command is being sent
+
+        buffer_size++;
+
+        auto data = new uint8_t[buffer_size];
+        data[0] = 0x40;
+
+        memcpy(data + 1, buffer, buffer_size - 1);
+
+        //i2c_write_blocking(this->i2CInst, this->address, data, 2, false);
+
+        if(i2c_write_blocking(this->i2CInst, this->address, data, buffer_size, false) != buffer_size)
+        {
+            OS_LOG_ERROR("---->", " pico_ssh1106::send_cmd() send data error");
         }
 
+        delete[] data;
     }
 
     void SSD1306::setContrast(unsigned char contrast) {
@@ -202,53 +222,20 @@ namespace pico_ssd1306 {
         this->cmd(SSD1306_DISPLAY_ON);
     }
 
-    void SSD1306::test() {
+    void SSD1306::test()
+    {
 
-        cmd(0x00);
-
-        uint8_t* buffer = new uint8_t[width*height];
+        cmd(SSD1306_STARTLINE);//line address
 
         for(uint8_t y = 0; y < 8; y++)
         {
-            cmd(0xB0 + y);
-            for(uint8_t i = 0; i < 132; i++)
-                data(0b11111111);
+            cmd(SSD1306_PAGEADDR | y); //set page
+            auto buffer = new uint8_t[132];
+            memset(buffer, 0b11111111, 132);
+            data(buffer, 132);
+            delete[] buffer;
         }
 
-
-
-
-//        cmd(SSD1306_LOWCOLUMN | 0x0);
-//        cmd(SSD1306_HIGHCOLUMN | 0x10);
-//        cmd(SSD1306_STARTLINE | 0x0);
-//
-//        uint8_t height=64;
-//        uint8_t width=128;
-//        uint8_t m_row = 3;
-//        uint8_t m_col = 2;
-//
-//        uint8_t* buffer = new uint8_t[width*height];
-//        memset(buffer, 0, width*height);
-//
-//        height >>= 3;
-//
-//        int p = 0;
-//
-//        for (uint8_t i = 0; i < height; i++)
-//        {
-//            uint8_t ii = 0xB0 + i + m_row;
-//            cmd(ii);
-//            ii = m_col & 0xf;
-//            cmd(ii);
-//            ii = 0x10 | (m_col >> 4);
-//            cmd(ii);
-//
-//
-//            i2c_write_blocking(this->i2CInst, this->address, &buffer[p], width, false);
-//            p += width;
-//        }
-//
-//        delete [] buffer;
     }
 
 

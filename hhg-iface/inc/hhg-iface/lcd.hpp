@@ -42,7 +42,7 @@ struct lcd : public initializable
         virtual void us_sleep(uint64_t us) const OS_NOEXCEPT = 0;
     };
 
-    /// \enum pico_ssd1306::WriteMode
+    /// \enum pico_sh1106::WriteMode
     enum class write_mode : const uint8_t
     {
         /// sets pixel on regardless of its state
@@ -73,7 +73,7 @@ struct lcd : public initializable
 
     /// \brief Manually set frame buffer. make sure it's correct size of 1024 bytes
     /// \param buffer - pointer to a new buffer
-    virtual void set_buffer(uint8_t *buffer) OS_NOEXCEPT = 0;
+    virtual void set_buffer(uint8_t *buffer, size_t buffer_size) OS_NOEXCEPT = 0;
 
     /// \brief Flips the display
     /// \param orientation - 0 for not flipped, 1 for flipped display
@@ -86,7 +86,7 @@ struct lcd : public initializable
     /// \brief Inverts screen on hardware level. Way more efficient than setting buffer to all ones and then using WriteMode subtract.
     virtual void invert_display() OS_NOEXCEPT = 0;
 
-    /// \brief Sets display contrast according to ssd1306 documentation
+    /// \brief Sets display contrast according to sh1106 documentation
     /// \param contrast - accepted values of 0 to 255 to set the contrast
     virtual void set_contrast(uint8_t contrast) OS_NOEXCEPT = 0;
 
@@ -97,9 +97,10 @@ struct lcd : public initializable
     virtual void turn_on() const OS_NOEXCEPT = 0;
 
 protected:
-    /// \brief Sends single 8bit command to ssd1306 controller
+    /// \brief Sends single 8bit command to sh1106 controller
     /// \param command - byte to be sent to controller
-    virtual void cmd(uint8_t command) const OS_NOEXCEPT = 0;
+    virtual void send_cmd(uint8_t command) const OS_NOEXCEPT = 0;
+
 };
 
 } // hhg
