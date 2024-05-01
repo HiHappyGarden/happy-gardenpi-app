@@ -35,7 +35,7 @@ namespace pico_ssd1306 {
                 SSD1306_INVERTED_OFF,
 
                 SSD1306_MULTIPLEX,
-                63,
+                0x3f,
 
                 SSD1306_DISPLAYOFFSET,
                 0x00,
@@ -66,8 +66,8 @@ namespace pico_ssd1306 {
 
         // clear the buffer and send it to the display
         // if not done display shows garbage data
-        this->clear();
-        this->sendBuffer();
+//        this->clear();
+//        this->sendBuffer();
 
     }
 
@@ -173,6 +173,17 @@ namespace pico_ssd1306 {
 
     }
 
+    void SSD1306::data(unsigned char command) {
+        // 0x00 is a byte indicating to ssd1306 that a command is being sent
+        uint8_t data[2] = {0x40, command};
+        //i2c_write_blocking(this->i2CInst, this->address, data, 2, false);
+
+        if(i2c_write_blocking(this->i2CInst, this->address, data, 2, false) != 2)
+        {
+            OS_LOG_ERROR("---->", " pico_ssh1106::cmd() send data error");
+        }
+
+    }
 
     void SSD1306::setContrast(unsigned char contrast) {
         this->cmd(SSD1306_CONTRAST);
@@ -190,5 +201,56 @@ namespace pico_ssd1306 {
     void SSD1306::turnOn() {
         this->cmd(SSD1306_DISPLAY_ON);
     }
+
+    void SSD1306::test() {
+
+        cmd(0x00);
+
+        uint8_t* buffer = new uint8_t[width*height];
+
+        for(uint8_t y = 0; y < 8; y++)
+        {
+            cmd(0xB0 + y);
+            for(uint8_t i = 0; i < 132; i++)
+                data(0b11111111);
+        }
+
+
+
+
+//        cmd(SSD1306_LOWCOLUMN | 0x0);
+//        cmd(SSD1306_HIGHCOLUMN | 0x10);
+//        cmd(SSD1306_STARTLINE | 0x0);
+//
+//        uint8_t height=64;
+//        uint8_t width=128;
+//        uint8_t m_row = 3;
+//        uint8_t m_col = 2;
+//
+//        uint8_t* buffer = new uint8_t[width*height];
+//        memset(buffer, 0, width*height);
+//
+//        height >>= 3;
+//
+//        int p = 0;
+//
+//        for (uint8_t i = 0; i < height; i++)
+//        {
+//            uint8_t ii = 0xB0 + i + m_row;
+//            cmd(ii);
+//            ii = m_col & 0xf;
+//            cmd(ii);
+//            ii = 0x10 | (m_col >> 4);
+//            cmd(ii);
+//
+//
+//            i2c_write_blocking(this->i2CInst, this->address, &buffer[p], width, false);
+//            p += width;
+//        }
+//
+//        delete [] buffer;
+    }
+
+
 
 }

@@ -58,6 +58,11 @@ inline namespace v1
         bool last_btn = false;
         while(singleton->run)
         {
+            if(singleton->obj == nullptr)
+            {
+                OS_LOG_ERROR()
+            }
+
             bool a = gpio_get(ENCODER_A);
             bool b = gpio_get(ENCODER_B);
             bool btn = gpio_get(ENCODER_BTN);
