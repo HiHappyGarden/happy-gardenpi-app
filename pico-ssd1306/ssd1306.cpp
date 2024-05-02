@@ -168,7 +168,7 @@ namespace pico_ssd1306 {
 
         if(i2c_write_blocking(this->i2CInst, this->address, data, 2, false) != 2)
         {
-            OS_LOG_ERROR("---->", " pico_ssh1106::send_cmd() send data error");
+            OS_LOG_ERROR("---->", " pico_sh1106::send_cmd() send data error");
         }
 
     }
@@ -180,7 +180,7 @@ namespace pico_ssd1306 {
 
         if(i2c_write_blocking(this->i2CInst, this->address, data, 2, false) != 2)
         {
-            OS_LOG_ERROR("---->", " pico_ssh1106::send_cmd() send data error");
+            OS_LOG_ERROR("---->", " pico_sh1106::send_cmd() send data error");
         }
     }
 
@@ -199,7 +199,7 @@ namespace pico_ssd1306 {
 
         if(i2c_write_blocking(this->i2CInst, this->address, data, buffer_size, false) != buffer_size)
         {
-            OS_LOG_ERROR("---->", " pico_ssh1106::send_cmd() send data error");
+            OS_LOG_ERROR("---->", " pico_sh1106::send_cmd() send data error");
         }
 
         delete[] data;

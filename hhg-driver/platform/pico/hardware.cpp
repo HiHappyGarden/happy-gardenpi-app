@@ -24,7 +24,7 @@
 #include "pico/pico-time.hpp"
 #include "pico/pico-fsio.hpp"
 #include "pico/pico-i2c.hpp"
-#include "pico/pico-ssh1106.hpp"
+#include "pico/pico-sh1106.hpp"
 #include "pico/pico-rotary-encored.hpp"
 
 #include <hardware/gpio.h>
@@ -52,7 +52,7 @@ hardware::hardware(class error** error) OS_NOEXCEPT
 , uart(new pico_uart)
 , fsio(new pico_fsio)
 , i2c(new pico_i2c)
-, lcd( new pico_ssh1106(pico_i2c::get_i2C_reference(), 0x3C, pico_ssh1106::type::W128xH64))
+, lcd( new pico_sh1106(pico_i2c::get_i2C_reference(), 0x3C, pico_sh1106::type::W128xH64))
 , rotary_encoder(new pico_rotary_encoder)
 {
     if(time.get() == nullptr && error)
