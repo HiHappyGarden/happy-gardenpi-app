@@ -37,8 +37,7 @@ inline namespace v1
 {
 
 
-
-    class pico_ssh1106 : public hhg::iface::lcd
+class pico_sh1106 : public hhg::iface::lcd
 {
 public:
     /// \enum pico_ssd1306::Size
@@ -59,7 +58,7 @@ public:
         DISPLAY_OFF = 0xAE,
         DISPLAY_ON = 0xAF,
         DISPLAY_OFFSET = 0xD3,
-        COMPINS = 0xDA,
+        COM_PADS = 0xDA,
         VCOM_DETECT = 0xDB,
         DISPLAY_CLOCK_DIV = 0xD5,
         PRE_CHARGE = 0xD9,
@@ -78,8 +77,8 @@ public:
         COLUMN_REMAP_OFF = 0xA0,
         COLUMN_REMAP_ON = 0xA1,
         CHARGE_PUMP = 0x8D,
-        EXTERNAL_VCC = 0x01,
-        SWIT_CHCAP_VCC = 0x02,
+        EXTERNAL_VCC = 0x1,
+        SWITCH_CAP_VCC = 0x2,
     };
 
     class data final
@@ -107,9 +106,9 @@ public:
         uint8_t value;
     };
 
-    pico_ssh1106(i2c_inst const *i2c_reference, uint16_t address, enum type type) OS_NOEXCEPT;
-    ~pico_ssh1106() OS_NOEXCEPT override;
-    OS_NO_COPY_NO_MOVE(pico_ssh1106)
+    pico_sh1106(i2c_inst const *i2c_reference, uint16_t address, enum type type) OS_NOEXCEPT;
+    ~pico_sh1106() OS_NOEXCEPT override;
+    OS_NO_COPY_NO_MOVE(pico_sh1106)
 
     os::exit init(os::error **error) OS_NOEXCEPT override;
 
@@ -145,7 +144,8 @@ private:
     uint8_t* buffer = nullptr;
 
 
-    void send_cmd(uint8_t command) OS_NOEXCEPT const override;
+    void send_cmd(uint8_t command) OS_NOEXCEPT const;
+
 
     inline void send_cmd(const data& addr, uint8_t or_data = 0x00) const OS_NOEXCEPT
     {
@@ -154,6 +154,7 @@ private:
 
     void send_cmd(const data* commands, uint8_t data_len) const OS_NOEXCEPT;
 
+    void send_data(const uint8_t* buff, size_t buff_size) OS_NOEXCEPT const;
 
     };
 

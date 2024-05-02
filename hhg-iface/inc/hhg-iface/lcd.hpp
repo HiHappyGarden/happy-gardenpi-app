@@ -95,12 +95,6 @@ struct lcd : public initializable
 
     /// \brief Turns display on
     virtual void turn_on() const OS_NOEXCEPT = 0;
-
-protected:
-    /// \brief Sends single 8bit command to sh1106 controller
-    /// \param command - byte to be sent to controller
-    virtual void send_cmd(uint8_t command) const OS_NOEXCEPT = 0;
-
 };
 
 } // hhg
