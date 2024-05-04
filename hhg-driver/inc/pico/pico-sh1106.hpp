@@ -40,13 +40,6 @@ inline namespace v1
 class pico_sh1106 : public hhg::iface::lcd
 {
 public:
-    /// \enum pico_ssd1306::Size
-    enum class type {
-        /// Display size W128xH64
-        W128xH64,
-        /// Display size W128xH32
-        W128xH32
-    };
 
     enum class reg_address : uint8_t
     {
@@ -72,13 +65,14 @@ public:
         MEMORY_MODE_PAGE = 0x10,
         COLUMN_ADDR = 0x21,
         PAGE_ADDR = 0xB0,
-        COM_REMAP_OFF = 0xC0,
-        COM_REMAP_ON = 0xC8,
+        VERTICAL_FLIP_OFF = 0xC0,
+        VERTICAL_FLIP_ON = 0xC8,
         COLUMN_REMAP_OFF = 0xA0,
         COLUMN_REMAP_ON = 0xA1,
         CHARGE_PUMP = 0x8D,
         EXTERNAL_VCC = 0x1,
         SWITCH_CAP_VCC = 0x2,
+        SET_CONTRAST = 0x81
     };
 
     class data final
@@ -90,27 +84,11 @@ public:
         constexpr inline uint8_t value() const  OS_NOEXCEPT { return b; }
     };
 
-    union page final
-    {
-        struct
-        {
-            uint8_t d0 : 1;
-            uint8_t d1 : 1;
-            uint8_t d2 : 1;
-            uint8_t d3 : 1;
-            uint8_t d4 : 1;
-            uint8_t d5 : 1;
-            uint8_t d6 : 1;
-            uint8_t d7 : 1;
-        };
-        uint8_t value;
-    };
-
-    pico_sh1106(i2c_inst const *i2c_reference, uint16_t address, enum type type) OS_NOEXCEPT;
+    pico_sh1106(i2c_inst const *i2c_reference, uint16_t address) OS_NOEXCEPT;
     ~pico_sh1106() OS_NOEXCEPT override;
     OS_NO_COPY_NO_MOVE(pico_sh1106)
 
-    os::exit init(os::error **error) OS_NOEXCEPT override;
+    os::exit init(class os::error **error) OS_NOEXCEPT override;
 
     void set_pixel(int16_t x, int16_t y, write_mode mode) const OS_NOEXCEPT override;
 
@@ -120,7 +98,7 @@ public:
 
     void set_buffer(uint8_t *buffer, size_t buffer_size) OS_NOEXCEPT override;
 
-    void set_orientation(bool orientation) OS_NOEXCEPT override;
+    void invert() OS_NOEXCEPT override;
 
     void clear() OS_NOEXCEPT override;
 
@@ -132,20 +110,26 @@ public:
 
     void turn_on() const OS_NOEXCEPT override;
 
+    void column_remap_off() const OS_NOEXCEPT override;
+
+    void column_remap_on() const OS_NOEXCEPT override;
+
 private:
     i2c_inst const *i2c_reference = nullptr;
     uint16_t const address = 0;
-    type const type = type::W128xH64;
 
-    uint8_t width = 0;
-    uint8_t height = 0;
+    static constexpr uint8_t width = 132;
+    static constexpr uint8_t height = 8;
 
-    size_t buffer_size = 0;
-    uint8_t* buffer = nullptr;
+    static constexpr size_t buffer_size = width * height;
+    mutable uint8_t buffer[buffer_size];
 
+    bool orientation = false;
+    bool display = false;
+
+    os::error** error = nullptr;
 
     void send_cmd(uint8_t command) OS_NOEXCEPT const;
-
 
     inline void send_cmd(const data& addr, uint8_t or_data = 0x00) const OS_NOEXCEPT
     {
@@ -154,9 +138,11 @@ private:
 
     void send_cmd(const data* commands, uint8_t data_len) const OS_NOEXCEPT;
 
-    void send_data(const uint8_t* buff, size_t buff_size) OS_NOEXCEPT const;
+    void send_data(const uint8_t* buff, size_t buff_size, uint8_t offset) OS_NOEXCEPT const;
 
-    };
+    void send_row(const uint8_t* buff) const OS_NOEXCEPT;
+
+};
 
 }
 }
