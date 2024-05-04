@@ -27,6 +27,8 @@
 #include "pico/pico-sh1106.hpp"
 #include "pico/pico-rotary-encored.hpp"
 
+#include "hhg-app/font/5x8.hpp"
+
 //#include "ssd1306.h"
 
 
@@ -90,13 +92,14 @@ hardware::hardware(class error** error) OS_NOEXCEPT
     }
 }
 
+    lcd* lcd1;
 
     struct test : rotary_encoder::event
     {
         test() = default;
         ~test() override = default;
 
-        int8_t idx = 0;
+        int8_t idx = 2;
         int8_t clicked = 0;
 
         void on_event(bool ccw, bool cw, bool click) OS_NOEXCEPT override
@@ -104,9 +107,12 @@ hardware::hardware(class error** error) OS_NOEXCEPT
             if(ccw)
             {
                 idx--;
+
             }
             else if(cw)
             {
+                lcd1->add_bitmap_image(10 + (idx * 10), 10, 5, 8, &font_5x8[2 + (idx * 5)]);
+                lcd1->send_buffer();
                 idx++;
             }
 
@@ -120,6 +126,8 @@ hardware::hardware(class error** error) OS_NOEXCEPT
 
     } test_one;
 //    pico_ssd1306::SSD1306* display;
+
+
 
 os::exit hardware::init(error** error) OS_NOEXCEPT
 {
@@ -217,13 +225,22 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
     //TODO: da rimuovere
     rotary_encoder->set_on_event(&test_one, &rotary_encoder::event::on_event);
 
-//    for(uint8_t i = 0; i < 50; i++)
+    for(uint8_t i = 0; i < 50; i++)
+    {
+        lcd->set_pixel(2, i, lcd::write_mode::INVERT);
+    }
+//    for(uint8_t i = 0; i < 10; i++)
 //    {
-//        lcd->set_pixel(2, i, lcd::write_mode::ADD);
+//        lcd->add_bitmap_image(10 + (i * 10), 10, 5, 8, &font_5x8[2 + (i * 5)]);
 //    }
-    lcd->set_pixel(2, 0, lcd::write_mode::ADD);
-    lcd->set_pixel(2, 0, lcd::write_mode::INVERT);
+    lcd1 = lcd.get();
     lcd->send_buffer();
+
+
+
+//    lcd->set_pixel(2, 0, lcd::write_mode::ADD);
+//    lcd->set_pixel(2, 0, lcd::write_mode::INVERT);
+//    lcd->send_buffer();
     //lcd->column_remap_on();
     //lcd->invert_display();
 //Create a new display object

@@ -92,9 +92,19 @@ public:
 
     void set_pixel(int16_t x, int16_t y, write_mode mode) const OS_NOEXCEPT override;
 
+    inline void set_pixel(int16_t x, int16_t y) const OS_NOEXCEPT override
+    {
+        set_pixel(x, y, write_mode::ADD);
+    }
+
     void send_buffer() OS_NOEXCEPT override;
 
-    void add_bitmap_image(int16_t anchor_x, int16_t anchor_y, uint8_t image_width, uint8_t image_height, uint8_t *image, write_mode mode) OS_NOEXCEPT override;
+    void add_bitmap_image(int16_t x, int16_t y, uint8_t width, uint8_t height, const uint8_t *image, write_mode mode) OS_NOEXCEPT override;
+
+    inline void add_bitmap_image(int16_t x, int16_t y, uint8_t width, uint8_t height, const uint8_t *image) OS_NOEXCEPT override
+    {
+        add_bitmap_image(x, y, width, height, image, write_mode::ADD);
+    }
 
     void set_buffer(uint8_t *buffer, size_t buffer_size) OS_NOEXCEPT override;
 
