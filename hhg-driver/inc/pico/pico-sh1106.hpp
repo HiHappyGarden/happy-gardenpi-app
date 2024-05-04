@@ -98,21 +98,15 @@ public:
 
     void set_buffer(uint8_t *buffer, size_t buffer_size) OS_NOEXCEPT override;
 
-    void invert() OS_NOEXCEPT override;
+    void invert_orientation() OS_NOEXCEPT override;
 
     void clear() OS_NOEXCEPT override;
-
-    void invert_display() OS_NOEXCEPT override;
 
     void set_contrast(uint8_t contrast) OS_NOEXCEPT override;
 
     void turn_off() const OS_NOEXCEPT override;
 
     void turn_on() const OS_NOEXCEPT override;
-
-    void column_remap_off() const OS_NOEXCEPT override;
-
-    void column_remap_on() const OS_NOEXCEPT override;
 
 private:
     i2c_inst const *i2c_reference = nullptr;
@@ -124,8 +118,7 @@ private:
     static constexpr size_t buffer_size = width * height;
     mutable uint8_t buffer[buffer_size];
 
-    bool orientation = false;
-    bool display = false;
+    bool orientation = true;
 
     os::error** error = nullptr;
 
