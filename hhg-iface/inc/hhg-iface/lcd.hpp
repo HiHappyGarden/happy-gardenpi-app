@@ -53,11 +53,9 @@ struct lcd : public initializable
         INVERT = 2,
     };
 
-    mutable uint8_t back_light = 0;
+    ~lcd() OS_NOEXCEPT override = default;
 
-    virtual ~lcd() OS_NOEXCEPT = default;
-
-    virtual void set_pixel(int16_t x, int16_t y, write_mode mode = write_mode::ADD) const OS_NOEXCEPT = 0;
+    virtual void set_pixel(int16_t x, int16_t y, write_mode mode) const OS_NOEXCEPT = 0;
 
     /// \brief Sends frame buffer to display so that it updated
     virtual void send_buffer() OS_NOEXCEPT = 0;
@@ -77,7 +75,7 @@ struct lcd : public initializable
 
     /// \brief Flips the display
     /// \param orientation - 0 for not flipped, 1 for flipped display
-    virtual void set_orientation(bool orientation) OS_NOEXCEPT = 0;
+    virtual void invert() OS_NOEXCEPT = 0;
 
 
     /// \brief Clears frame buffer aka set all bytes to 0
@@ -95,6 +93,10 @@ struct lcd : public initializable
 
     /// \brief Turns display on
     virtual void turn_on() const OS_NOEXCEPT = 0;
+
+    virtual void column_remap_off() const OS_NOEXCEPT = 0;
+
+    virtual void column_remap_on() const OS_NOEXCEPT = 0;
 };
 
 } // hhg

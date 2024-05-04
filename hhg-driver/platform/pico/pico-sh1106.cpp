@@ -32,33 +32,17 @@ inline namespace v1
         constexpr char APP_TAG[] = "DRV SSH1106";
     }
 
-    pico_sh1106::pico_sh1106(i2c_inst const *i2c_reference, uint16_t address, enum type type) OS_NOEXCEPT
+    pico_sh1106::pico_sh1106(i2c_inst const *i2c_reference, uint16_t address) OS_NOEXCEPT
     : i2c_reference(i2c_reference)
     , address(address)
-    , type(type)
     {
-        width = 132;
-        switch (type)
-        {
-            case type::W128xH32:
-                height = 32;
-                break;
-            case type::W128xH64:
-                height = 64;
-                break;
-        }
 
-        buffer_size = width * (height / 8);
-        buffer = new uint8_t [buffer_size];
     }
 
 
-    pico_sh1106::~pico_sh1106() OS_NOEXCEPT
-    {
-        delete[] buffer;
-    }
+    pico_sh1106::~pico_sh1106() OS_NOEXCEPT = default;
 
-    os::exit pico_sh1106::init(error **error) OS_NOEXCEPT
+    os::exit pico_sh1106::init(class error **error) OS_NOEXCEPT
     {
         OS_LOG_DEBUG(APP_TAG, "Init");
 
@@ -70,6 +54,8 @@ inline namespace v1
                 OS_ERROR_PTR_SET_POSITION(*error);
             }
         }
+
+        this->error = error;
 
         // this is a list of setup commands for the display
         data setup[] =
@@ -122,23 +108,23 @@ inline namespace v1
 
     void pico_sh1106::set_pixel(int16_t x, int16_t y, lcd::write_mode mode) const
     {
-
-        if ((x < 0) || (x >= width) || (y < 0) || (y >= height))
+        if ((x < 0) || (x >= width) || (y < 0) || (y >= (height * 8) ))
             return;
 
-
-        buffer[y] = 1;
+        uint8_t page = y / 8;
+        uint8_t bit = y % 8;
+        uint16_t idx = (page * width) + x;
 
         switch (mode)
         {
             case lcd::write_mode::ADD:
-
+                buffer[idx] |= (1 << bit);
                 break;
             case lcd::write_mode::SUBTRACT:
-
+                buffer[idx] &= ~(1 << bit);
                 break;
             case lcd::write_mode::INVERT:
-
+                buffer[idx] ^= buffer[idx] & (1 << bit);
                 break;
         }
 
@@ -147,15 +133,12 @@ inline namespace v1
 
     void pico_sh1106::send_buffer() OS_NOEXCEPT
     {
-        send_cmd(reg_address::START_LINE);//line address
-
-        for(uint8_t y = 0; y < 8; y++)
+        send_cmd(reg_address::LOW_COLUMN);
+        send_cmd(reg_address::HIGH_COLUMN);
+        for(uint8_t i = 0; i < height; i++)
         {
-            send_cmd(reg_address::PAGE_ADDR, y); //set page
-            auto buffer = new uint8_t[132];
-            memset(buffer, 0b11111111, 132);
-            send_data(buffer, 132);
-            delete[] buffer;
+            send_cmd(reg_address::PAGE_ADDR, i);
+            send_row(buffer + (i * width));
         }
     }
 
@@ -166,37 +149,62 @@ inline namespace v1
 
     void pico_sh1106::set_buffer(uint8_t *buffer, size_t buffer_size) OS_NOEXCEPT
     {
-
+        if(buffer_size < this->buffer_size)
+        {
+            memcpy(this->buffer, buffer, buffer_size);
+            memset(this->buffer, 0, this->buffer_size - buffer_size);
+        }
+        else if(buffer_size > this->buffer_size)
+        {
+            memcpy(this->buffer, buffer, this->buffer_size);
+        }
+        else
+        {
+            memcpy(pico_sh1106::buffer, buffer, pico_sh1106::buffer_size);
+        }
     }
 
-    void pico_sh1106::set_orientation(bool orientation) OS_NOEXCEPT
+    void pico_sh1106::invert() OS_NOEXCEPT
     {
-
+        orientation = !orientation;
+        send_cmd(orientation ? reg_address::INVERTED_ON : reg_address::INVERTED_OFF);
     }
 
     void pico_sh1106::clear() OS_NOEXCEPT
     {
-        memset(buffer, 0, buffer_size);
+        memset(buffer, 0b00000000, buffer_size);
     }
 
     void pico_sh1106::invert_display() OS_NOEXCEPT
     {
-
+        display = !display;
+        send_cmd(display ? reg_address::VERTICAL_FLIP_ON : reg_address::VERTICAL_FLIP_OFF);
     }
 
     void pico_sh1106::set_contrast(uint8_t contrast) OS_NOEXCEPT
     {
-
+        data data[] = {reg_address::SET_CONTRAST, contrast};
+        send_cmd(data, sizeof(data));
     }
 
     void pico_sh1106::turn_off() const OS_NOEXCEPT
     {
-
+        send_cmd(reg_address::DISPLAY_OFF);
     }
 
     void pico_sh1106::turn_on() const OS_NOEXCEPT
     {
+        send_cmd(reg_address::DISPLAY_ON);
+    }
 
+    void pico_sh1106::column_remap_off() const OS_NOEXCEPT
+    {
+        send_cmd(reg_address::COLUMN_REMAP_OFF);
+    }
+
+    void pico_sh1106::column_remap_on() const OS_NOEXCEPT
+    {
+        send_cmd(reg_address::COLUMN_REMAP_ON);
     }
 
     void pico_sh1106::send_cmd(uint8_t command) const OS_NOEXCEPT
@@ -220,20 +228,45 @@ inline namespace v1
         }
     }
 
-    void pico_sh1106::send_data(const uint8_t* buff, size_t buff_size) const OS_NOEXCEPT {
+    void pico_sh1106::send_data(const uint8_t* buff, size_t buff_size, uint8_t offset) const OS_NOEXCEPT
+    {
         buff_size++;
 
         auto data = new uint8_t[buff_size];
-        data[0] = 0x40;
+        data[0] = static_cast<uint8_t>(reg_address::START_LINE);
 
         memcpy(data + 1, buff, buff_size - 1);
 
         if(i2c_write_blocking(const_cast<i2c_inst *>(i2c_reference), address, data, buff_size, false) != buff_size)
         {
-            OS_LOG_ERROR(APP_TAG, " pico_sh1106::send_data() send data error");
+            OS_LOG_ERROR(APP_TAG, "pico_sh1106::send_data() send data error");
+            if(error)
+            {
+                *error = OS_ERROR_BUILD("pico_sh1106::send_data() send data error", error_type::OS_ECOMM);
+                OS_ERROR_PTR_SET_POSITION(*error);
+            }
         }
 
         delete[] data;
     }
+
+    void pico_sh1106::send_row(const uint8_t* buff) const OS_NOEXCEPT
+    {
+        uint8_t data[width + 1];
+        data[0] = static_cast<uint8_t>(reg_address::START_LINE);
+
+        memcpy(data + 1, buff, sizeof(data)- 1);
+
+        if(i2c_write_blocking(const_cast<i2c_inst *>(i2c_reference), address, data, sizeof(data), false) != sizeof(data))
+        {
+            OS_LOG_ERROR(APP_TAG, "pico_sh1106::send_data() send data error");
+            if(error)
+            {
+                *error = OS_ERROR_BUILD("pico_sh1106::send_data() send data error", error_type::OS_ECOMM);
+                OS_ERROR_PTR_SET_POSITION(*error);
+            }
+        }
+    }
+
 }
 }

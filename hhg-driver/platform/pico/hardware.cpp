@@ -27,8 +27,7 @@
 #include "pico/pico-sh1106.hpp"
 #include "pico/pico-rotary-encored.hpp"
 
-#include <hardware/gpio.h>
-#include "ssd1306.h"
+//#include "ssd1306.h"
 
 
 using namespace os;
@@ -52,7 +51,7 @@ hardware::hardware(class error** error) OS_NOEXCEPT
 , uart(new pico_uart)
 , fsio(new pico_fsio)
 , i2c(new pico_i2c)
-, lcd( new pico_sh1106(pico_i2c::get_i2C_reference(), 0x3C, pico_sh1106::type::W128xH64))
+, lcd( new pico_sh1106(pico_i2c::get_i2C_reference(), 0x3C))
 , rotary_encoder(new pico_rotary_encoder)
 {
     if(time.get() == nullptr && error)
@@ -120,7 +119,7 @@ hardware::hardware(class error** error) OS_NOEXCEPT
         }
 
     } test_one;
-    pico_ssd1306::SSD1306* display;
+//    pico_ssd1306::SSD1306* display;
 
 os::exit hardware::init(error** error) OS_NOEXCEPT
 {
@@ -218,10 +217,15 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
     //TODO: da rimuovere
     rotary_encoder->set_on_event(&test_one, &rotary_encoder::event::on_event);
 
-
-
-
-
+//    for(uint8_t i = 0; i < 50; i++)
+//    {
+//        lcd->set_pixel(2, i, lcd::write_mode::ADD);
+//    }
+    lcd->set_pixel(2, 0, lcd::write_mode::ADD);
+    lcd->set_pixel(2, 0, lcd::write_mode::INVERT);
+    lcd->send_buffer();
+    //lcd->column_remap_on();
+    //lcd->invert_display();
 //Create a new display object
 //    display = new pico_ssd1306::SSD1306(PICO_DEFAULT_I2C_INSTANCE, 0x3C, pico_ssd1306::Size::W128xH64);
 //    display->test();
@@ -231,13 +235,6 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
 //    display.clear();
 //    display.sendBuffer(); //Send buffer to device and show on screen
 
-//    for(uint8_t i = 0; i < 10; i++)
-//    {
-//        lcd->set_pixel(20, 20, lcd::write_mode::ADD);
-//    }
-//
-//    lcd->send_buffer();
-//
 
 
 

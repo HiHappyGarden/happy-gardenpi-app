@@ -41,8 +41,8 @@ include_directories(hhg-parser/inc)
 
 add_subdirectory(freertos)
 add_subdirectory(hhg-parser)
-add_subdirectory(pico-ssd1306)
-include_directories(pico-ssd1306)
+#add_subdirectory(pico-ssd1306)
+#include_directories(pico-ssd1306)
 
 file(GLOB_RECURSE OSAL_INCLUDES CONFIGURE_DEPENDS "osal/inc/*.hpp" "osal/src/freertos/osal_sys/*.hpp" "osal/src/freertos/config/*.h")
 file(GLOB_RECURSE OSAL_SOURCES CONFIGURE_DEPENDS "osal/src/error.cpp" "osal/src/log.cpp" "osal/src/generics.cpp" "osal/src/freertos/*.cpp")
@@ -78,7 +78,7 @@ target_link_libraries(${PROJECT_NAME}
         hardware_sync
         hardware_gpio
         hardware_i2c
-        pico_ssd1306
+#        pico_ssd1306
         freertos
         hi-happy-garden-parser
 )
