@@ -164,21 +164,24 @@ inline namespace v1
         }
     }
 
-    void pico_sh1106::invert() OS_NOEXCEPT
+    void pico_sh1106::invert_orientation() OS_NOEXCEPT
     {
-        orientation = !orientation;
-        send_cmd(orientation ? reg_address::INVERTED_ON : reg_address::INVERTED_OFF);
+        this->orientation = !orientation;
+        if(this->orientation)
+        {
+            send_cmd(reg_address::COLUMN_REMAP_OFF);
+            send_cmd(reg_address::VERTICAL_FLIP_OFF);
+        }
+        else
+        {
+            send_cmd(reg_address::COLUMN_REMAP_ON);
+            send_cmd(reg_address::VERTICAL_FLIP_ON);
+        }
     }
 
     void pico_sh1106::clear() OS_NOEXCEPT
     {
         memset(buffer, 0b00000000, buffer_size);
-    }
-
-    void pico_sh1106::invert_display() OS_NOEXCEPT
-    {
-        display = !display;
-        send_cmd(display ? reg_address::VERTICAL_FLIP_ON : reg_address::VERTICAL_FLIP_OFF);
     }
 
     void pico_sh1106::set_contrast(uint8_t contrast) OS_NOEXCEPT
@@ -197,15 +200,6 @@ inline namespace v1
         send_cmd(reg_address::DISPLAY_ON);
     }
 
-    void pico_sh1106::column_remap_off() const OS_NOEXCEPT
-    {
-        send_cmd(reg_address::COLUMN_REMAP_OFF);
-    }
-
-    void pico_sh1106::column_remap_on() const OS_NOEXCEPT
-    {
-        send_cmd(reg_address::COLUMN_REMAP_ON);
-    }
 
     void pico_sh1106::send_cmd(uint8_t command) const OS_NOEXCEPT
     {

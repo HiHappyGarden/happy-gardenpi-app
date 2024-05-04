@@ -75,14 +75,12 @@ struct lcd : public initializable
 
     /// \brief Flips the display
     /// \param orientation - 0 for not flipped, 1 for flipped display
-    virtual void invert() OS_NOEXCEPT = 0;
+    virtual void invert_orientation() OS_NOEXCEPT = 0;
 
 
     /// \brief Clears frame buffer aka set all bytes to 0
     virtual void clear() OS_NOEXCEPT = 0;
 
-    /// \brief Inverts screen on hardware level. Way more efficient than setting buffer to all ones and then using WriteMode subtract.
-    virtual void invert_display() OS_NOEXCEPT = 0;
 
     /// \brief Sets display contrast according to sh1106 documentation
     /// \param contrast - accepted values of 0 to 255 to set the contrast
@@ -94,9 +92,6 @@ struct lcd : public initializable
     /// \brief Turns display on
     virtual void turn_on() const OS_NOEXCEPT = 0;
 
-    virtual void column_remap_off() const OS_NOEXCEPT = 0;
-
-    virtual void column_remap_on() const OS_NOEXCEPT = 0;
 };
 
 } // hhg
