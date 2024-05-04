@@ -142,8 +142,20 @@ inline namespace v1
         }
     }
 
-    void pico_sh1106::add_bitmap_image(int16_t anchor_x, int16_t anchor_y, uint8_t image_width, uint8_t image_height, uint8_t *image, iface::lcd::write_mode mode) OS_NOEXCEPT
+    void pico_sh1106::add_bitmap_image(int16_t x, int16_t y, uint8_t width, uint8_t height, const uint8_t *image, iface::lcd::write_mode mode) OS_NOEXCEPT
     {
+        if(image == nullptr)
+        {
+            return;
+        }
+
+        for(uint8_t w = 0; w < width; w++)
+        {
+            for(uint8_t h = 0; h < height; h++)
+            {
+                //set_pixel(x, int16_t y, lcd::write_mode mode);
+            }
+        }
 
     }
 
