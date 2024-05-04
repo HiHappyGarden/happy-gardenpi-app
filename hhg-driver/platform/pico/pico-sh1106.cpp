@@ -124,7 +124,7 @@ inline namespace v1
                 buffer[idx] &= ~(1 << bit);
                 break;
             case lcd::write_mode::INVERT:
-                buffer[idx] ^= buffer[idx] & (1 << bit);
+                buffer[idx] ^= (1 << bit);
                 break;
         }
 
