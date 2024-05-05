@@ -236,6 +236,8 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
 //    }
 //    lcd1 = lcd.get();
     lcd->add_bitmap_image(10, 10, 32, 32, ic_skeleton, sizeof(ic_skeleton));
+    lcd->set_rect(10, 10, 32, 32, lcd::write_mode::INVERT);
+    lcd->load_font("font_5x8", font_5x8, sizeof(font_5x8));
     lcd->send_buffer();
 
 

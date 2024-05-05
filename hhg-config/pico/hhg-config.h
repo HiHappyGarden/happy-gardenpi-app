@@ -33,4 +33,6 @@
 #define HHG_FSM_ERROR_SLEEP (1000)
 #define HHG_FSM_ERROR_MAX (4)
 
+#define HHG_FONTS_MAX (4)
+
 #endif // HHG_CONFIG_H

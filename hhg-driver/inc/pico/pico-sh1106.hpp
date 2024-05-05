@@ -20,6 +20,7 @@
 
 #pragma once
 
+#include "hhg-config.h"
 #include "osal/osal.hpp"
 #include "hhg-iface/lcd.hpp"
 #include "hhg-iface/initializable.hpp"
@@ -101,6 +102,10 @@ public:
 
     void add_bitmap_image(int8_t x, int8_t y, uint8_t width, uint8_t height, const uint8_t *image, uint32_t image_size) OS_NOEXCEPT override;
 
+    void set_rect(int8_t x, int8_t y, uint8_t width, uint8_t height, write_mode mode) OS_NOEXCEPT override;
+
+    int16_t load_font(const char* key, const uint8_t* font, uint32_t font_size) OS_NOEXCEPT override;
+
     void set_buffer(uint8_t *buffer, size_t buffer_size) OS_NOEXCEPT override;
 
     void invert_orientation() OS_NOEXCEPT override;
@@ -122,6 +127,16 @@ private:
 
     static constexpr size_t buffer_size = width * height;
     mutable uint8_t buffer[buffer_size];
+
+    struct final
+    {
+        os::string<32> key;
+        uint8_t* font;
+        uint8_t width;
+        uint8_t height;
+        uint8_t characters;
+    }fonts[HHG_FONTS_MAX];
+    uint8_t fonts_size = 0;
 
     bool orientation = true;
 

@@ -31,17 +31,6 @@ struct lcd : public initializable
 {
     using ptr = os::unique_ptr<hhg::iface::lcd>;
 
-    struct io
-    {
-        io() = default;
-        virtual ~io() = default;
-        OS_NO_COPY_NO_MOVE(io)
-        virtual os::exit init(os::error** error) const OS_NOEXCEPT = 0;
-        virtual int32_t write(const uint8_t*, size_t data_len) const OS_NOEXCEPT = 0;
-        virtual int32_t read(uint8_t*, size_t data_size) const OS_NOEXCEPT = 0;
-        virtual void us_sleep(uint64_t us) const OS_NOEXCEPT = 0;
-    };
-
     /// \enum pico_sh1106::WriteMode
     enum class write_mode : const uint8_t
     {
@@ -70,6 +59,10 @@ struct lcd : public initializable
     /// \param image - pointer to uint8_t (unsigned char) array containing image data
     /// \param mode - mode describes setting behavior. See WriteMode doc for more information
     virtual void add_bitmap_image(int8_t x, int8_t y, uint8_t width, uint8_t height, const uint8_t *image, uint32_t image_size) OS_NOEXCEPT = 0;
+
+    virtual void set_rect(int8_t x, int8_t y, uint8_t width, uint8_t height, write_mode mode) OS_NOEXCEPT = 0;
+
+    virtual int16_t load_font(const char* key, const uint8_t* font, uint32_t font_size) OS_NOEXCEPT = 0;
 
     /// \brief Manually set frame buffer. make sure it's correct size of 1024 bytes
     /// \param buffer - pointer to a new buffer
