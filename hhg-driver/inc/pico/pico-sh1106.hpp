@@ -90,21 +90,16 @@ public:
 
     os::exit init(class os::error **error) OS_NOEXCEPT override;
 
-    void set_pixel(int16_t x, int16_t y, write_mode mode) const OS_NOEXCEPT override;
+    void set_pixel(int8_t x, int8_t y, write_mode mode) const OS_NOEXCEPT override;
 
-    inline void set_pixel(int16_t x, int16_t y) const OS_NOEXCEPT override
+    inline void set_pixel(int8_t x, int8_t y) const OS_NOEXCEPT override
     {
         set_pixel(x, y, write_mode::ADD);
     }
 
     void send_buffer() OS_NOEXCEPT override;
 
-    void add_bitmap_image(int16_t x, int16_t y, uint8_t width, uint8_t height, const uint8_t *image, uint32_t image_size, write_mode mode) OS_NOEXCEPT override;
-
-    inline void add_bitmap_image(int16_t x, int16_t y, uint8_t width, uint8_t height, const uint8_t *image, uint32_t image_size) OS_NOEXCEPT override
-    {
-        add_bitmap_image(x, y, width, height, image, image_size, write_mode::ADD);
-    }
+    void add_bitmap_image(int8_t x, int8_t y, uint8_t width, uint8_t height, const uint8_t *image, uint32_t image_size) OS_NOEXCEPT override;
 
     void set_buffer(uint8_t *buffer, size_t buffer_size) OS_NOEXCEPT override;
 
