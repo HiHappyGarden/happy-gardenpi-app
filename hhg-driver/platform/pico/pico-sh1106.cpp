@@ -166,9 +166,40 @@ inline namespace v1
                 idx++;
             }
         }
-
     }
 
+    void pico_sh1106::set_rect(int8_t x, int8_t y, uint8_t width, uint8_t height, write_mode mode) OS_NOEXCEPT 
+    {
+        for(uint8_t w = 0; w < width; w++)
+        {
+            for(uint8_t h = 0; h < height; h++)
+            {
+                set_pixel(x + h, y + w, mode);
+            }
+        }
+    }
+
+    int16_t pico_sh1106::load_font(const char *key, const uint8_t* font, uint32_t font_size) OS_NOEXCEPT
+    {
+        if(key == nullptr || font == nullptr)
+        {
+            return -static_cast<uint16_t>(error_type::OS_EFAULT);
+        }
+
+        if(fonts_size >= HHG_FONTS_MAX)
+        {
+            return -static_cast<uint16_t>(error_type::OS_EXCMAXVAL);
+        }
+
+        fonts[fonts_size].width = font[0];
+        fonts[fonts_size].height = font[1];
+
+
+        fonts_size++;
+
+        return 0;
+    }
+    
     void pico_sh1106::set_buffer(uint8_t *buffer, size_t buffer_size) OS_NOEXCEPT
     {
         if(buffer_size < this->buffer_size)
