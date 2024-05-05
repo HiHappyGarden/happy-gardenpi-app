@@ -69,9 +69,9 @@ struct lcd : public initializable
     /// \param height - height of the image in pixels
     /// \param image - pointer to uint8_t (unsigned char) array containing image data
     /// \param mode - mode describes setting behavior. See WriteMode doc for more information
-    virtual void add_bitmap_image(int16_t x, int16_t y, uint8_t width, uint8_t height, const uint8_t *image, write_mode mode) OS_NOEXCEPT = 0;
+    virtual void add_bitmap_image(int16_t x, int16_t y, uint8_t width, uint8_t height, const uint8_t *image, uint32_t image_size, write_mode mode) OS_NOEXCEPT = 0;
 
-    virtual void add_bitmap_image(int16_t x, int16_t y, uint8_t width, uint8_t height, const uint8_t *image) OS_NOEXCEPT = 0;
+    virtual void add_bitmap_image(int16_t x, int16_t y, uint8_t width, uint8_t height, const uint8_t *image, uint32_t image_size) OS_NOEXCEPT = 0;
 
     /// \brief Manually set frame buffer. make sure it's correct size of 1024 bytes
     /// \param buffer - pointer to a new buffer
