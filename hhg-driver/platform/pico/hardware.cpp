@@ -27,7 +27,8 @@
 #include "pico/pico-sh1106.hpp"
 #include "pico/pico-rotary-encored.hpp"
 
-#include "hhg-app/font/5x8.hpp"
+#include "assets/font_5x8.hpp"
+#include "assets/ic_skeleton.hpp"
 
 //#include "ssd1306.h"
 
@@ -92,7 +93,7 @@ hardware::hardware(class error** error) OS_NOEXCEPT
     }
 }
 
-    lcd* lcd1;
+//    lcd* lcd1;
 
     struct test : rotary_encoder::event
     {
@@ -111,8 +112,8 @@ hardware::hardware(class error** error) OS_NOEXCEPT
             }
             else if(cw)
             {
-                lcd1->add_bitmap_image(10 + (idx * 10), 10, 5, 8, &font_5x8[2 + (idx * 5)]);
-                lcd1->send_buffer();
+//                lcd1->add_bitmap_image(10 + (idx * 10), 10, 5, 8, &font_5x8[2 + (idx * 5)]);
+//                lcd1->send_buffer();
                 idx++;
             }
 
@@ -233,7 +234,8 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
 //    {
 //        lcd->add_bitmap_image(10 + (i * 10), 10, 5, 8, &font_5x8[2 + (i * 5)]);
 //    }
-    lcd1 = lcd.get();
+//    lcd1 = lcd.get();
+    lcd->add_bitmap_image(10, 10, 32, 32, ic_skeleton, sizeof(ic_skeleton));
     lcd->send_buffer();
 
 
