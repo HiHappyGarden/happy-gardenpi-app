@@ -27,10 +27,11 @@
 #include "pico/pico-sh1106.hpp"
 #include "pico/pico-rotary-encored.hpp"
 
-#include "assets/font_5x8.hpp"
+#include "assets/font_12x16.hpp"
 #include "assets/ic_skeleton.hpp"
 
 //#include "ssd1306.h"
+//#include "textRenderer/TextRenderer.h"
 
 
 using namespace os;
@@ -93,7 +94,7 @@ hardware::hardware(class error** error) OS_NOEXCEPT
     }
 }
 
-//    lcd* lcd1;
+
 
     struct test : rotary_encoder::event
     {
@@ -112,7 +113,7 @@ hardware::hardware(class error** error) OS_NOEXCEPT
             }
             else if(cw)
             {
-//                lcd1->add_bitmap_image(10 + (idx * 10), 10, 5, 8, &font_5x8[2 + (idx * 5)]);
+//                lcd1->set_bitmap_image(10 + (idx * 10), 10, 5, 8, &font_5x8[2 + (idx * 5)]);
 //                lcd1->send_buffer();
                 idx++;
             }
@@ -232,12 +233,13 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
     }
 //    for(uint8_t i = 0; i < 10; i++)
 //    {
-//        lcd->add_bitmap_image(10 + (i * 10), 10, 5, 8, &font_5x8[2 + (i * 5)]);
+//        lcd->set_bitmap_image(10 + (i * 10), 10, 5, 8, &font_5x8[2 + (i * 5)]);
 //    }
 //    lcd1 = lcd.get();
-    lcd->add_bitmap_image(10, 10, 32, 32, ic_skeleton, sizeof(ic_skeleton));
-    lcd->set_rect(10, 10, 32, 32, lcd::write_mode::INVERT);
-    lcd->load_font("font_5x8", font_5x8, sizeof(font_5x8));
+    //lcd->invert_orientation();
+    lcd->set_bitmap_image(10, 20, 32, 32, ic_skeleton, sizeof(ic_skeleton));
+    lcd->set_rect(10, 30, 60, 32, lcd::write_mode::INVERT);
+    lcd->set_char('A', 70, 50, font_12x16, sizeof(font_12x16));
     lcd->send_buffer();
 
 
@@ -249,6 +251,8 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
     //lcd->invert_display();
 //Create a new display object
 //    display = new pico_ssd1306::SSD1306(PICO_DEFAULT_I2C_INSTANCE, 0x3C, pico_ssd1306::Size::W128xH64);
+//    display->test();
+//    drawText(display, font_12x16, "TEST text", 0 ,0);
 //    display->test();
 //    for (int16_t y = 0; y < 64; y++){
 //        display.setPixel(64, y);

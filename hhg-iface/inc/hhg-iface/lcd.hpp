@@ -37,7 +37,7 @@ struct lcd : public initializable
         /// sets pixel on regardless of its state
         ADD = 0,
                 /// sets pixel off regardless of its state
-        SUBTRACT = 1,
+        REMOVE = 1,
                 /// inverts pixel, so 1->0 or 0->1
         INVERT = 2,
     };
@@ -58,11 +58,11 @@ struct lcd : public initializable
     /// \param height - height of the image in pixels
     /// \param image - pointer to uint8_t (unsigned char) array containing image data
     /// \param mode - mode describes setting behavior. See WriteMode doc for more information
-    virtual void add_bitmap_image(int8_t x, int8_t y, uint8_t width, uint8_t height, const uint8_t *image, uint32_t image_size) OS_NOEXCEPT = 0;
+    virtual void set_bitmap_image(int8_t x, int8_t y, uint8_t width, uint8_t height, const uint8_t *image, uint32_t image_size) OS_NOEXCEPT = 0;
 
     virtual void set_rect(int8_t x, int8_t y, uint8_t width, uint8_t height, write_mode mode) OS_NOEXCEPT = 0;
 
-    virtual int16_t load_font(const char* key, const uint8_t* font, uint32_t font_size) OS_NOEXCEPT = 0;
+    virtual void set_char(char c, uint8_t x, uint8_t y, const uint8_t * font, uint32_t font_size) OS_NOEXCEPT = 0;
 
     /// \brief Manually set frame buffer. make sure it's correct size of 1024 bytes
     /// \param buffer - pointer to a new buffer

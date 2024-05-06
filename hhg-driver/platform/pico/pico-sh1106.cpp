@@ -120,7 +120,7 @@ inline namespace v1
             case lcd::write_mode::ADD:
                 buffer[idx] |= (1 << bit);
                 break;
-            case lcd::write_mode::SUBTRACT:
+            case lcd::write_mode::REMOVE:
                 buffer[idx] &= ~(1 << bit);
                 break;
             case lcd::write_mode::INVERT:
@@ -142,7 +142,7 @@ inline namespace v1
         }
     }
 
-    void pico_sh1106::add_bitmap_image(int8_t x, int8_t y, uint8_t width, uint8_t height, const uint8_t *image, uint32_t image_size) OS_NOEXCEPT
+    void pico_sh1106::set_bitmap_image(int8_t x, int8_t y, uint8_t width, uint8_t height, const uint8_t *image, uint32_t image_size) OS_NOEXCEPT
     {
         if(image == nullptr || width * height != image_size)
         {
@@ -151,17 +151,18 @@ inline namespace v1
 
         uint32_t idx = 0;
 
-        for(uint8_t w = 0; w < width; w++)
+
+        for(uint8_t h = 0; h < height; h++)
         {
-            for(uint8_t h = 0; h < height; h++)
+            for(uint8_t w = 0; w < width; w++)
             {
                 if(image[idx])
                 {
-                    set_pixel(x + h, y + w, write_mode::ADD);
+                    set_pixel(x + w, y + h, write_mode::ADD);
                 }
                 else
                 {
-                    set_pixel(x + h, y + w, write_mode::SUBTRACT);
+                    set_pixel(x + w, y + h, write_mode::REMOVE);
                 }
                 idx++;
             }
@@ -174,32 +175,80 @@ inline namespace v1
         {
             for(uint8_t h = 0; h < height; h++)
             {
-                set_pixel(x + h, y + w, mode);
+                set_pixel(x + w, y + h, mode);
             }
         }
     }
 
-    int16_t pico_sh1106::load_font(const char *key, const uint8_t* font, uint32_t font_size) OS_NOEXCEPT
+    void pico_sh1106::set_char(char c, uint8_t x, uint8_t y, const uint8_t* font, uint32_t font_size) OS_NOEXCEPT
     {
-        if(key == nullptr || font == nullptr)
+        if(font == nullptr)
         {
-            return -static_cast<uint16_t>(error_type::OS_EFAULT);
+            return;
         }
 
-        if(fonts_size >= HHG_FONTS_MAX)
+        uint8_t width = font[0];
+        uint8_t height = font[1];
+
+        uint8_t chars_count = (font_size - 2) / width;
+
+
+        if((font_size - 2) % width != 0)
         {
-            return -static_cast<uint16_t>(error_type::OS_EXCMAXVAL);
+            OS_LOG_ERROR(APP_TAG, "The table font it's odd");
+            if(error)
+            {
+                *error = OS_ERROR_BUILD("pico_sh1106::set_char() the table font it's odd", error_type::OS_ECOMM);
+                OS_ERROR_PTR_SET_POSITION(*error);
+            }
+            return;
         }
 
-        fonts[fonts_size].width = font[0];
-        fonts[fonts_size].height = font[1];
+        uint16_t seek = (c - 32) * (width * height) / 8 + 2;
+
+        uint8_t b_seek = 0;
+
+        uint16_t idx = (24 * 4) + 2;
+        uint16_t idx1 = 4;
+
+        for(uint8_t i = 0; i < 24; i++)
+        {
+            buffer[idx1 + i] = font[idx + i];
+        }
 
 
-        fonts_size++;
+        for(uint8_t h = 0; h < height; h++)
+        {
+            for(uint8_t w = 0; w < width; w++)
+            {
+                
+            }
+        }
 
-        return 0;
+
+//        for(uint8_t h = 0; h < height; h++)
+//        {
+//            for(uint8_t w = 0; w < width; w++)
+//            {
+//                //set_pixel(x + w, y + h, mode);
+////                if (font[seek] >> b_seek & 0b00000001)
+////                {
+////                    set_pixel(x + w, y + h, write_mode::ADD);
+////                }
+////                else
+////                {
+////                    set_pixel(x + w, y + h, write_mode::REMOVE);
+////                }
+//            }
+//            b_seek++;
+//            if (b_seek == 8) {
+//                b_seek = 0;
+//                seek++;
+//            }
+//        }
+
     }
-    
+
     void pico_sh1106::set_buffer(uint8_t *buffer, size_t buffer_size) OS_NOEXCEPT
     {
         if(buffer_size < this->buffer_size)
@@ -259,7 +308,12 @@ inline namespace v1
         uint8_t data[2] = {0x00, command};
         if(i2c_write_blocking(const_cast<i2c_inst *>(i2c_reference), this->address, data, sizeof(data), false) != sizeof(data))
         {
-            OS_LOG_ERROR(APP_TAG, " pico_sh1106::send_cmd() send data error");
+            OS_LOG_ERROR(APP_TAG, " pico_sh1106::send_cmd() send cmd error");
+            if(error)
+            {
+                *error = OS_ERROR_BUILD("pico_sh1106::send_cmd() send cmd error", error_type::OS_ECOMM);
+                OS_ERROR_PTR_SET_POSITION(*error);
+            }
         }
     }
 
@@ -306,14 +360,13 @@ inline namespace v1
 
         if(i2c_write_blocking(const_cast<i2c_inst *>(i2c_reference), address, data, sizeof(data), false) != sizeof(data))
         {
-            OS_LOG_ERROR(APP_TAG, "pico_sh1106::send_data() send data error");
+            OS_LOG_ERROR(APP_TAG, "pico_sh1106::send_row() send row error");
             if(error)
             {
-                *error = OS_ERROR_BUILD("pico_sh1106::send_data() send data error", error_type::OS_ECOMM);
+                *error = OS_ERROR_BUILD("pico_sh1106::send_row() send row error", error_type::OS_ECOMM);
                 OS_ERROR_PTR_SET_POSITION(*error);
             }
         }
     }
-
 }
 }

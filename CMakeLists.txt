@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.16...3.24)
 add_definitions(-DPICO_CXX_DISABLE_ALLOCATION_OVERRIDES)
 include($ENV{PICO_SDK_PATH}/external/pico_sdk_import.cmake)
 
-PROJECT(hi-happy-garden-app VERSION "0.50.0" LANGUAGES CXX C ASM)
+PROJECT(hi-happy-garden-app VERSION "0.60.0" LANGUAGES CXX C ASM)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -17,6 +17,7 @@ set(ZONES_SIZE 4)
 set(FSM_MAIN_SLEEP 100)
 set(FSM_ERROR_SLEEP 1000)
 set(FSM_ERROR_MAX 4)
+set(FONTS_MAX 4)
 
 pico_sdk_init()
 
@@ -43,6 +44,8 @@ add_subdirectory(freertos)
 add_subdirectory(hhg-parser)
 #add_subdirectory(pico-ssd1306)
 #include_directories(pico-ssd1306)
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/hhg-config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/hhg-config/pico/hhg-config.h)
 
 file(GLOB_RECURSE OSAL_INCLUDES CONFIGURE_DEPENDS "osal/inc/*.hpp" "osal/src/freertos/osal_sys/*.hpp" "osal/src/freertos/config/*.h")
 file(GLOB_RECURSE OSAL_SOURCES CONFIGURE_DEPENDS "osal/src/error.cpp" "osal/src/log.cpp" "osal/src/generics.cpp" "osal/src/freertos/*.cpp")

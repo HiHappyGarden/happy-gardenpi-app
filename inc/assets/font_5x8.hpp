@@ -1,3 +1,9 @@
+#pragma once
+namespace hhg
+{
+inline namespace v1
+{
+
 namespace
 {
 
@@ -1349,4 +1355,7 @@ namespace
     0x0,
     0x0,
     };
+}
+
+}
 }
