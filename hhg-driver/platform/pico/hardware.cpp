@@ -27,6 +27,8 @@
 #include "pico/pico-sh1106.hpp"
 #include "pico/pico-rotary-encored.hpp"
 
+#include "assets/font_8x8.hpp"
+#include "assets/font_5x8.hpp"
 #include "assets/font_12x16.hpp"
 #include "assets/ic_skeleton.hpp"
 
@@ -238,8 +240,10 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
 //    lcd1 = lcd.get();
     //lcd->invert_orientation();
     lcd->set_bitmap_image(10, 20, 32, 32, ic_skeleton, sizeof(ic_skeleton));
-    lcd->set_rect(10, 30, 60, 32, lcd::write_mode::INVERT);
-    lcd->set_char('A', 70, 50, font_12x16, sizeof(font_12x16));
+    lcd->set_rect(10, 30, 30, 32, lcd::write_mode::INVERT);
+//    lcd->set_char('A', 70, 10, font_5x8, sizeof(font_5x8));
+//    lcd->set_char('A', 70, 20, font_8x8, sizeof(font_8x8));
+    lcd->set_char('A', 70, 30, font_12x16, sizeof(font_12x16));
     lcd->send_buffer();
 
 
