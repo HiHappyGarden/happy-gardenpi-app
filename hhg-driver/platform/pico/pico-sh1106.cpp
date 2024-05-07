@@ -106,7 +106,7 @@ inline namespace v1
         return exit::OK;
     }
 
-    void pico_sh1106::set_pixel(int8_t x, int8_t y, lcd::write_mode mode) const
+    void pico_sh1106::set_pixel(uint8_t x, uint8_t y, lcd::write_mode mode) const
     {
         if ((x < 0) || (x >= width) || (y < 0) || (y >= (height * 8) ))
             return;
@@ -142,7 +142,7 @@ inline namespace v1
         }
     }
 
-    void pico_sh1106::set_bitmap_image(int8_t x, int8_t y, uint8_t width, uint8_t height, const uint8_t *image, uint32_t image_size) OS_NOEXCEPT
+    void pico_sh1106::set_bitmap_image(uint8_t x, uint8_t y, uint8_t width, uint8_t height, const uint8_t *image, uint32_t image_size) OS_NOEXCEPT
     {
         if(image == nullptr || width * height != image_size)
         {
@@ -169,7 +169,7 @@ inline namespace v1
         }
     }
 
-    void pico_sh1106::set_rect(int8_t x, int8_t y, uint8_t width, uint8_t height, write_mode mode) OS_NOEXCEPT 
+    void pico_sh1106::set_rect(uint8_t x, uint8_t y, uint8_t width, uint8_t height, write_mode mode) OS_NOEXCEPT
     {
         for(uint8_t w = 0; w < width; w++)
         {
@@ -180,7 +180,7 @@ inline namespace v1
         }
     }
 
-    void pico_sh1106::set_char(char c, uint8_t x, uint8_t y, const uint8_t* font, uint32_t font_size) OS_NOEXCEPT
+    void pico_sh1106::set_char(uint8_t c, uint8_t x, uint8_t y, const uint8_t* font, uint32_t font_size) OS_NOEXCEPT
     {
         if(font == nullptr)
         {
@@ -189,9 +189,6 @@ inline namespace v1
 
         uint8_t width = font[0];
         uint8_t height = font[1];
-
-        uint8_t chars_count = (font_size - 2) / width;
-
 
         if((font_size - 2) % width != 0)
         {
@@ -204,49 +201,25 @@ inline namespace v1
             return;
         }
 
-        uint16_t seek = (c - 32) * (width * height) / 8 + 2;
+        c = 26 + 32 - 2;
 
-        uint8_t b_seek = 0;
-
-        uint16_t idx = (24 * 4) + 2;
-        uint16_t idx1 = 4;
-
-        for(uint8_t i = 0; i < 24; i++)
+        for(uint8_t w = 0; w < width; w++)
         {
-            buffer[idx1 + i] = font[idx + i];
-        }
-
-
-        for(uint8_t h = 0; h < height; h++)
-        {
-            for(uint8_t w = 0; w < width; w++)
+            uint16_t idx = w + (width * (c - 32)) + 2;
+            for (uint8_t h = 0; h < height; h++)
             {
-                
+                uint16_t row = idx + ( (h / 8) * width);
+                if (font[row] & (1 << (h % 8)))
+                {
+                    set_pixel(x + w, y + h, write_mode::ADD);
+                }
+                else
+                {
+                    set_pixel(x + w, y + h, write_mode::REMOVE);
+                }
+
             }
         }
-
-
-//        for(uint8_t h = 0; h < height; h++)
-//        {
-//            for(uint8_t w = 0; w < width; w++)
-//            {
-//                //set_pixel(x + w, y + h, mode);
-////                if (font[seek] >> b_seek & 0b00000001)
-////                {
-////                    set_pixel(x + w, y + h, write_mode::ADD);
-////                }
-////                else
-////                {
-////                    set_pixel(x + w, y + h, write_mode::REMOVE);
-////                }
-//            }
-//            b_seek++;
-//            if (b_seek == 8) {
-//                b_seek = 0;
-//                seek++;
-//            }
-//        }
-
     }
 
     void pico_sh1106::set_buffer(uint8_t *buffer, size_t buffer_size) OS_NOEXCEPT

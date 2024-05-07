@@ -44,9 +44,9 @@ struct lcd : public initializable
 
     ~lcd() OS_NOEXCEPT override = default;
 
-    virtual void set_pixel(int8_t x, int8_t y, write_mode mode) const OS_NOEXCEPT = 0;
+    virtual void set_pixel(uint8_t x, uint8_t y, write_mode mode) const OS_NOEXCEPT = 0;
 
-    virtual void set_pixel(int8_t x, int8_t y) const OS_NOEXCEPT = 0;
+    virtual void set_pixel(uint8_t x, uint8_t y) const OS_NOEXCEPT = 0;
 
     /// \brief Sends frame buffer to display so that it updated
     virtual void send_buffer() OS_NOEXCEPT = 0;
@@ -58,11 +58,11 @@ struct lcd : public initializable
     /// \param height - height of the image in pixels
     /// \param image - pointer to uint8_t (unsigned char) array containing image data
     /// \param mode - mode describes setting behavior. See WriteMode doc for more information
-    virtual void set_bitmap_image(int8_t x, int8_t y, uint8_t width, uint8_t height, const uint8_t *image, uint32_t image_size) OS_NOEXCEPT = 0;
+    virtual void set_bitmap_image(uint8_t x, uint8_t y, uint8_t width, uint8_t height, const uint8_t *image, uint32_t image_size) OS_NOEXCEPT = 0;
 
-    virtual void set_rect(int8_t x, int8_t y, uint8_t width, uint8_t height, write_mode mode) OS_NOEXCEPT = 0;
+    virtual void set_rect(uint8_t x, uint8_t y, uint8_t width, uint8_t height, write_mode mode) OS_NOEXCEPT = 0;
 
-    virtual void set_char(char c, uint8_t x, uint8_t y, const uint8_t * font, uint32_t font_size) OS_NOEXCEPT = 0;
+    virtual void set_char(uint8_t c, uint8_t x, uint8_t y, const uint8_t * font, uint32_t font_size) OS_NOEXCEPT = 0;
 
     /// \brief Manually set frame buffer. make sure it's correct size of 1024 bytes
     /// \param buffer - pointer to a new buffer
