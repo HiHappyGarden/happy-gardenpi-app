@@ -188,7 +188,8 @@ inline namespace v1
         }
 
         uint8_t width = font[0];
-        uint8_t height = font[1];
+        uint8_t height = (font[1] / 8) + (font[1] % 8 ? 1 : 0);
+        uint8_t single_font_size = width * height;
 
         if((font_size - 2) % width != 0)
         {
@@ -201,25 +202,57 @@ inline namespace v1
             return;
         }
 
-        c = 26 + 32 - 2;
-
-        for(uint8_t w = 0; w < width; w++)
+        uint32_t c_offset = ( (c - 32) * (width * height) ) + 2;
+        uint8_t w = 0;
+        uint8_t h = 0;
+        for(uint32_t idx = 0; idx < single_font_size; idx++)
         {
-            uint16_t idx = w + (width * (c - 32)) + 2;
-            for (uint8_t h = 0; h < height; h++)
+            if(w >= width)
             {
-                uint16_t row = idx + ( (h / 8) * width);
-                if (font[row] & (1 << (h % 8)))
-                {
-                    set_pixel(x + w, y + h, write_mode::ADD);
-                }
-                else
-                {
-                    set_pixel(x + w, y + h, write_mode::REMOVE);
-                }
-
+                h++;
+                w = 0;
             }
+
+            if(h == height)
+            {
+                break;
+            }
+
+            if(w < width)
+            {
+                for(uint8_t bit = 0; bit < 8; bit++)
+                {
+                    OS_LOG_ERROR(APP_TAG, "idx = %d, x + w = %u, y + h + bit = %u", idx, x + w, y + (h * 8) + bit);
+                    if (font[c_offset + idx] & (1 << bit))
+                    {
+                        set_pixel(x + w, y + (h * 8) + bit, write_mode::ADD);
+                    }
+                    else
+                    {
+                        set_pixel(x + w, y + (h * 8) + bit, write_mode::REMOVE);
+                    }
+                }
+                w++;
+            }
+
         }
+
+//        for(uint8_t w = 0; w < width; w++)
+//        {
+//            for (uint8_t h = 0; h < height; h++)
+//            {
+//                uint16_t bit = (h % 8);
+//                uint8_t row = (h / 8);
+//                if (font[row] & (1 << bit))
+//                {
+//                    set_pixel(x + w, y + h, write_mode::ADD);
+//                }
+//                else
+//                {
+//                    set_pixel(x + w, y + h, write_mode::REMOVE);
+//                }
+//            }
+//        }
     }
 
     void pico_sh1106::set_buffer(uint8_t *buffer, size_t buffer_size) OS_NOEXCEPT

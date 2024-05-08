@@ -243,7 +243,7 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
     lcd->set_rect(10, 30, 30, 32, lcd::write_mode::INVERT);
 //    lcd->set_char('A', 70, 10, font_5x8, sizeof(font_5x8));
 //    lcd->set_char('A', 70, 20, font_8x8, sizeof(font_8x8));
-    lcd->set_char('A', 70, 30, font_12x16, sizeof(font_12x16));
+    lcd->set_char(33, 70, 30, font_12x16, sizeof(font_12x16));
     lcd->send_buffer();
 
 
