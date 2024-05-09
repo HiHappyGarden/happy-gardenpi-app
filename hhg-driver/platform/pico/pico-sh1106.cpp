@@ -83,7 +83,7 @@ inline namespace v1
                 0x80,
 
                 reg_address::PRE_CHARGE,
-                0x22,
+                0xF1,
 
                 reg_address::COM_PADS,
                 0x12,
@@ -203,6 +203,25 @@ inline namespace v1
         }
 
         uint32_t c_offset = ( (c - 32) * (width * height) ) + 2;
+
+
+        uint32_t i = 80;
+
+//        for(uint8_t k = 0; k  < 12; k++)
+//        {
+//            i = 80 + k;
+//            for(uint8_t z = 0; z  < 8; z++)
+//            {
+//                buffer[i] = font[c_offset++];
+//                buffer[i  + this->width] = font[c_offset++];
+//            }
+//
+//        }
+
+
+
+
+
         uint8_t w = 0;
         uint8_t h = 0;
         for(uint32_t idx = 0; idx < single_font_size; idx++)
@@ -236,23 +255,6 @@ inline namespace v1
             }
 
         }
-
-//        for(uint8_t w = 0; w < width; w++)
-//        {
-//            for (uint8_t h = 0; h < height; h++)
-//            {
-//                uint16_t bit = (h % 8);
-//                uint8_t row = (h / 8);
-//                if (font[row] & (1 << bit))
-//                {
-//                    set_pixel(x + w, y + h, write_mode::ADD);
-//                }
-//                else
-//                {
-//                    set_pixel(x + w, y + h, write_mode::REMOVE);
-//                }
-//            }
-//        }
     }
 
     void pico_sh1106::set_buffer(uint8_t *buffer, size_t buffer_size) OS_NOEXCEPT

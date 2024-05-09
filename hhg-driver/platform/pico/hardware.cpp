@@ -29,11 +29,8 @@
 
 #include "assets/font_8x8.hpp"
 #include "assets/font_5x8.hpp"
-#include "assets/font_12x16.hpp"
+#include "assets/font_test.hpp"
 #include "assets/ic_skeleton.hpp"
-
-//#include "ssd1306.h"
-//#include "textRenderer/TextRenderer.h"
 
 
 using namespace os;
@@ -233,36 +230,13 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
     {
         lcd->set_pixel(2, i, lcd::write_mode::INVERT);
     }
-//    for(uint8_t i = 0; i < 10; i++)
-//    {
-//        lcd->set_bitmap_image(10 + (i * 10), 10, 5, 8, &font_5x8[2 + (i * 5)]);
-//    }
-//    lcd1 = lcd.get();
-    //lcd->invert_orientation();
+
     lcd->set_bitmap_image(10, 20, 32, 32, ic_skeleton, sizeof(ic_skeleton));
     lcd->set_rect(10, 30, 30, 32, lcd::write_mode::INVERT);
-//    lcd->set_char('A', 70, 10, font_5x8, sizeof(font_5x8));
-//    lcd->set_char('A', 70, 20, font_8x8, sizeof(font_8x8));
-    lcd->set_char(33, 70, 30, font_12x16, sizeof(font_12x16));
+    lcd->set_char('A', 70, 10, font_5x8, sizeof(font_5x8));
+    lcd->set_char('1', 70, 20, font_8x8, sizeof(font_8x8));
+    lcd->set_char(32, 70, 30, font_test, sizeof(font_test));
     lcd->send_buffer();
-
-
-
-//    lcd->set_pixel(2, 0, lcd::write_mode::ADD);
-//    lcd->set_pixel(2, 0, lcd::write_mode::INVERT);
-//    lcd->send_buffer();
-    //lcd->column_remap_on();
-    //lcd->invert_display();
-//Create a new display object
-//    display = new pico_ssd1306::SSD1306(PICO_DEFAULT_I2C_INSTANCE, 0x3C, pico_ssd1306::Size::W128xH64);
-//    display->test();
-//    drawText(display, font_12x16, "TEST text", 0 ,0);
-//    display->test();
-//    for (int16_t y = 0; y < 64; y++){
-//        display.setPixel(64, y);
-//    }
-//    display.clear();
-//    display.sendBuffer(); //Send buffer to device and show on screen
 
 
 
