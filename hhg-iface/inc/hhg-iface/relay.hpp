@@ -22,35 +22,25 @@
 
 #include "hhg-iface/initializable.hpp"
 
-namespace hhg::driver
+namespace hhg::iface
 {
 inline namespace v1
 {
 
-class rotary_encoder : public hhg::iface::initializable
+struct relay : public initializable
 {
-public:
+    using ptr = os::unique_ptr<hhg::iface::relay>;
 
-    struct event
-    {
-        using callback = void(event::*)(bool ccw, bool cw, bool click);
+    ~relay() OS_NOEXCEPT override = default;
 
-        virtual ~event() = default;
-        virtual void on_event(bool ccw, bool cw, bool click) OS_NOEXCEPT = 0;
-    };
+    virtual uint8_t size() const OS_NOEXCEPT = 0;
 
-    using ptr = os::unique_ptr<hhg::driver::rotary_encoder>;
+    virtual bool operator [](uint8_t idx) OS_NOEXCEPT = 0;
 
+    virtual bool operator [](uint8_t idx) const OS_NOEXCEPT = 0;
 
-
-    rotary_encoder() = default;
-    ~rotary_encoder() override = default;
-    OS_NO_COPY_NO_MOVE(rotary_encoder);
-
-    virtual void set_on_event(event* obj, event::callback callback) OS_NOEXCEPT = 0;
+    virtual bool set(uint8_t pin, bool value) OS_NOEXCEPT = 0;
 };
-
-
 
 
 }

@@ -1,7 +1,7 @@
 /***************************************************************************
  *
  * Hi Happy Garden
- * Copyright (C) 2023/2024 Antonio Salsi <passy.linux@zresa.it>
+ * Copyright (C) 2023/2024  Antonio Salsi <passy.linux@zresa.it>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,20 +17,35 @@
  *
  ***************************************************************************/
 
-#ifndef HHG_CONFIG_H
-#define HHG_CONFIG_H
 
-#define HHG_NAME "@PROJECT_NAME@"
-#define HHG_VER "@PROJECT_VERSION@"
-#define HHG_VER_MAJOR (@PROJECT_VERSION_MAJOR@)
-#define HHG_VER_MINOR (@PROJECT_VERSION_MINOR@)
-#define HHG_VER_PATCH (@PROJECT_VERSION_PATCH@)
+#pragma once
 
-#define HHG_SCHEDULES_SIZE (@SCHEDULES_SIZE@)
-#define HHG_ZONES_SIZE (@ZONES_SIZE@)
+#include "hhg-iface/initializable.hpp"
 
-#define HHG_FSM_MAIN_SLEEP (@FSM_MAIN_SLEEP@)
-#define HHG_FSM_ERROR_SLEEP (@FSM_ERROR_SLEEP@)
-#define HHG_FSM_ERROR_MAX (@FSM_ERROR_MAX@)
+namespace hhg::iface
+{
+inline namespace v1
+{
 
-#endif // HHG_CONFIG_H
+struct rotary_encoder : public initializable
+{
+    struct event
+    {
+        using callback = void(event::*)(bool ccw, bool cw, bool click);
+
+        virtual ~event() = default;
+        virtual void on_event(bool ccw, bool cw, bool click) OS_NOEXCEPT = 0;
+    };
+
+    using ptr = os::unique_ptr<hhg::iface::rotary_encoder>;
+
+    ~rotary_encoder() override = default;
+
+    virtual void set_on_event(event* obj, event::callback callback) OS_NOEXCEPT = 0;
+};
+
+
+
+
+}
+}

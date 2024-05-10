@@ -17,7 +17,8 @@ set(ZONES_SIZE 4)
 set(FSM_MAIN_SLEEP 100)
 set(FSM_ERROR_SLEEP 1000)
 set(FSM_ERROR_MAX 4)
-set(FONTS_MAX 4)
+
+
 
 pico_sdk_init()
 
