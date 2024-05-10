@@ -20,51 +20,41 @@
 
 #pragma once
 
-#include "hhg-iface/rotary-encored.hpp"
-#include "hhg-driver/os-config.hpp"
-#include "osal/osal.hpp"
+#include "hhg-iface/relay.hpp"
 
 #include <pico/types.h>
+
 
 namespace hhg::driver
 {
 inline namespace v1
 {
 
-class pico_rotary_encoder final : public hhg::iface::rotary_encoder
+class pico_relay final : public hhg::iface::relay
 {
-
-    static inline pico_rotary_encoder* singleton = nullptr;
-
-    bool run = true;
-    os::thread polling{"rotary_encoder", hhg::driver::NORMAL, 256, pico_rotary_encoder::encoder_handle};
-
-    event *obj = nullptr;
-    event::callback callback = nullptr;
 public:
 
     enum pin : uint
     {
-        ENCODER_A   = 21,
-        ENCODER_B   = 20,
-        ENCODER_BTN = 19
+        RELAY_0 = 6,
+        RELAY_1 = 7,
+        RELAY_2 = 8,
+        RELAY_3 = 9,
     };
 
-    pico_rotary_encoder() OS_NOEXCEPT;
-    ~pico_rotary_encoder() OS_NOEXCEPT override;
-    OS_NO_COPY_NO_MOVE(pico_rotary_encoder)
+    pico_relay() OS_NOEXCEPT;
+    ~pico_relay() OS_NOEXCEPT override;
 
-    os::exit init(os::error** error) OS_NOEXCEPT override;
+    os::exit init(os::error **error) OS_NOEXCEPT override;
 
-    void set_on_event(event *obj, event::callback callback) OS_NOEXCEPT override
-    {
-        this->obj = obj;
-        this->callback = callback;
-    }
+    uint8_t size() const OS_NOEXCEPT override;
 
+    bool operator [](uint8_t idx) OS_NOEXCEPT override;
 
-private:
-    static void* encoder_handle(void* arg);
+    bool operator [](uint8_t idx) const OS_NOEXCEPT override;
+
+    bool set(uint8_t pin, bool value) OS_NOEXCEPT override;
+
 
 };
 

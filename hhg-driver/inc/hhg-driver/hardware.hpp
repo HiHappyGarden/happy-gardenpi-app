@@ -24,8 +24,9 @@
 #include "hhg-iface/initializable.hpp"
 #include "hhg-iface/io.hpp"
 #include "hhg-iface/time.hpp"
+#include "hhg-iface/relay.hpp"
 #include "hhg-iface/lcd.hpp"
-#include "hhg-driver/rotary-encored.hpp"
+#include "hhg-iface/rotary-encored.hpp"
 
 namespace hhg::driver
 {
@@ -35,8 +36,10 @@ inline namespace v1
 using io_ptr = hhg::iface::io::ptr;
 using fsio_ptr = hhg::iface::fs_io::ptr;
 using time_ptr = hhg::iface::time::ptr;
+using relay_ptr = hhg::iface::relay::ptr;
 using lcd_ptr = hhg::iface::lcd::ptr;
-using rotary_encoder_ptr = hhg::driver::rotary_encoder::ptr;
+using rotary_encoder_ptr = hhg::iface::rotary_encoder::ptr;
+
 
 class hardware final : public hhg::iface::initializable
 {
@@ -44,6 +47,7 @@ class hardware final : public hhg::iface::initializable
     const io_ptr uart;
     const fsio_ptr fsio;
     const io_ptr i2c;
+    const relay_ptr relay;
     const lcd_ptr lcd;
     const rotary_encoder_ptr rotary_encoder;
 public:
@@ -65,6 +69,11 @@ public:
 	{
 		return time;
 	}
+
+    inline const relay_ptr& get_relay() const OS_NOEXCEPT
+    {
+        return relay;
+    }
 
     inline const lcd_ptr& get_lcd() const OS_NOEXCEPT
     {

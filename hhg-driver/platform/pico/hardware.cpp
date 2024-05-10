@@ -24,14 +24,9 @@
 #include "pico/pico-time.hpp"
 #include "pico/pico-fsio.hpp"
 #include "pico/pico-i2c.hpp"
+#include "pico/pico-relay.hpp"
 #include "pico/pico-sh1106.hpp"
 #include "pico/pico-rotary-encored.hpp"
-
-#include "assets/font_8x8.hpp"
-#include "assets/font_5x8.hpp"
-#include "assets/font_test.hpp"
-#include "assets/ic_skeleton.hpp"
-
 
 using namespace os;
 using namespace hhg::iface;
@@ -54,40 +49,55 @@ hardware::hardware(class error** error) OS_NOEXCEPT
 , uart(new pico_uart)
 , fsio(new pico_fsio)
 , i2c(new pico_i2c)
+, relay(new pico_relay)
 , lcd( new pico_sh1106(pico_i2c::get_i2C_reference(), 0x3C))
 , rotary_encoder(new pico_rotary_encoder)
 {
     if(time.get() == nullptr && error)
     {
-        *error = OS_ERROR_BUILD("io(new stm32_timer) no mem.", error_type::OS_ENOMEM);
+        *error = OS_ERROR_BUILD("time(new stm32_timer) no mem.", error_type::OS_ENOMEM);
         OS_ERROR_PTR_SET_POSITION(*error);
         return;
     }
 
     if(uart.get() == nullptr && error)
 	{
-        *error = OS_ERROR_BUILD("io(new pico_uart) no mem.", error_type::OS_ENOMEM);
+        *error = OS_ERROR_BUILD("uart(new pico_uart) no mem.", error_type::OS_ENOMEM);
         OS_ERROR_PTR_SET_POSITION(*error);
         return;
     }
 
     if(fsio.get() == nullptr && error)
 	{
-        *error = OS_ERROR_BUILD("io(new pico_fsio) no mem.", error_type::OS_ENOMEM);
+        *error = OS_ERROR_BUILD("fsio(new pico_fsio) no mem.", error_type::OS_ENOMEM);
         OS_ERROR_PTR_SET_POSITION(*error);
         return;
     }
 
     if(i2c.get() == nullptr && error)
     {
-        *error = OS_ERROR_BUILD("io(new pico_i2c) no mem.", error_type::OS_ENOMEM);
+        *error = OS_ERROR_BUILD("i2c(new pico_i2c) no mem.", error_type::OS_ENOMEM);
+        OS_ERROR_PTR_SET_POSITION(*error);
+        return;
+    }
+
+    if(relay.get() == nullptr && error)
+    {
+        *error = OS_ERROR_BUILD("relay(new relay) no mem.", error_type::OS_ENOMEM);
         OS_ERROR_PTR_SET_POSITION(*error);
         return;
     }
 
     if(lcd.get() == nullptr && error)
     {
-        *error = OS_ERROR_BUILD("io(new lcd) no mem.", error_type::OS_ENOMEM);
+        *error = OS_ERROR_BUILD("lcd(new lcd) no mem.", error_type::OS_ENOMEM);
+        OS_ERROR_PTR_SET_POSITION(*error);
+        return;
+    }
+
+    if(rotary_encoder.get() == nullptr && error)
+    {
+        *error = OS_ERROR_BUILD("rotary_encoder(new rotary_encoder) no mem.", error_type::OS_ENOMEM);
         OS_ERROR_PTR_SET_POSITION(*error);
         return;
     }
@@ -126,7 +136,7 @@ hardware::hardware(class error** error) OS_NOEXCEPT
         }
 
     } test_one;
-//    pico_ssd1306::SSD1306* display;
+
 
 
 
@@ -199,6 +209,18 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
     }
     OS_LOG_INFO(APP_TAG, "Init I2C - OK");
 
+    OS_LOG_INFO(APP_TAG, "Init relay");
+    if(relay->init(error) == exit::KO)
+    {
+        if(error && *error)
+        {
+            *error = OS_ERROR_APPEND(*error, "relay::init() fail.", error_type::OS_EFAULT);
+            OS_ERROR_PTR_SET_POSITION(*error);
+        }
+        return exit::KO;
+    }
+    OS_LOG_INFO(APP_TAG, "Init relay - OK");
+
     OS_LOG_INFO(APP_TAG, "Init LCD");
     if(lcd->init(error) == exit::KO)
     {
@@ -224,21 +246,19 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
     OS_LOG_INFO(APP_TAG, "Init rotary rncoder - OK");
 
     //TODO: da rimuovere
-    rotary_encoder->set_on_event(&test_one, &rotary_encoder::event::on_event);
-
-    for(uint8_t i = 0; i < 50; i++)
-    {
-        lcd->set_pixel(2, i, lcd::write_mode::INVERT);
-    }
-
-    lcd->set_bitmap_image(10, 20, 32, 32, ic_skeleton, sizeof(ic_skeleton));
-    lcd->set_rect(10, 30, 30, 32, lcd::write_mode::INVERT);
-    lcd->set_char('A', 70, 10, font_5x8, sizeof(font_5x8));
-    lcd->set_char('1', 70, 20, font_8x8, sizeof(font_8x8));
-    lcd->set_char(32, 70, 30, font_test, sizeof(font_test));
-    lcd->send_buffer();
-
-
+//    rotary_encoder->set_on_event(&test_one, &rotary_encoder::event::on_event);
+//
+//    for(uint8_t i = 0; i < 50; i++)
+//    {
+//        lcd->set_pixel(2, i, lcd::write_mode::INVERT);
+//    }
+//
+//    lcd->set_bitmap_image(10, 20, 32, 32, ic_skeleton, sizeof(ic_skeleton));
+//    lcd->set_rect(10, 30, 30, 32, lcd::write_mode::INVERT);
+//    lcd->set_char('A', 70, 10, font_5x8, sizeof(font_5x8));
+//    lcd->set_char('1', 70, 20, font_8x8, sizeof(font_8x8));
+//    lcd->set_char(32, 70, 30, font_test, sizeof(font_test));
+//    lcd->send_buffer();
 
 
 	return exit::OK;
