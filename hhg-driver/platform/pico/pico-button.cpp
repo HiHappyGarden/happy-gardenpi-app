@@ -18,34 +18,26 @@
  ***************************************************************************/
 
 
-#pragma once
+#include "pico/pico-button.hpp"
+using namespace hhg::iface;
+using namespace os;
 
-#include "hhg-iface/io.hpp"
+#include <hardware/gpio.h>
 
 namespace hhg::driver
 {
-inline namespace v1
+namespace v1
 {
+pico_button::~pico_button() = default;
+pico_button::pico_button()= default;
 
-//TODO: implement REAL singleton
-class stm32_lpuart final : public hhg::iface::io
+os::exit pico_button::init(os::error **error)
 {
-	const hhg::iface::io_on_receive* obj = nullptr;
-	on_receive on_receive_callback = nullptr;
+    gpio_set_irq_enabled_with_callback(PIN, GPIO_IRQ_EDGE_FALL, true, nullptr);
+    return exit::OK;
+}
 
-	static inline stm32_lpuart* singleton = nullptr;
-public:
-	stm32_lpuart() OS_NOEXCEPT;
-	~stm32_lpuart() OS_NOEXCEPT override;
-	OS_NO_COPY_NO_MOVE(stm32_lpuart)
 
-	os::exit init(os::error** error) OS_NOEXCEPT override;
-
-	void set_on_receive(const hhg::iface::io_on_receive* obj, on_receive on_receive_callback) OS_NOEXCEPT override;
-
-    os::exit transmit(const uint8_t data[], uint16_t size) const OS_NOEXCEPT override;
-
-};
 
 }
 }

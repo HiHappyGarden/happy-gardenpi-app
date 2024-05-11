@@ -22,6 +22,7 @@
 #include "pico/pico-i2c.hpp"
 #include "pico/pico-rotary-encored.hpp"
 #include "pico/pico-relay.hpp"
+#include "pico/pico-button.hpp"
 using namespace os;
 
 #include <hardware/gpio.h>
@@ -72,8 +73,6 @@ os::exit init_gpio()
     gpio_pull_up(pico_rotary_encoder::ENCODER_BTN);
     gpio_set_dir(pico_rotary_encoder::ENCODER_BTN, GPIO_IN);
 
-    //Set pins for buttons
-
     //Set pins for relay
     gpio_init(pico_relay::RELAY_0);
     gpio_set_dir(pico_relay::RELAY_0, GPIO_OUT);
@@ -86,6 +85,12 @@ os::exit init_gpio()
 
     gpio_init(pico_relay::RELAY_3);
     gpio_set_dir(pico_relay::RELAY_3, GPIO_OUT);
+
+    //Set pins for buttons
+    gpio_init(pico_button::PIN);
+    gpio_set_dir(pico_button::PIN, GPIO_IN);
+    gpio_pull_up(pico_button::PIN);
+
     return exit::OK;
 }
 

@@ -31,6 +31,7 @@ namespace hhg::driver
 inline namespace v1
 {
 
+//TODO: implement REAL singleton
 class pico_rotary_encoder final : public hhg::iface::rotary_encoder
 {
 

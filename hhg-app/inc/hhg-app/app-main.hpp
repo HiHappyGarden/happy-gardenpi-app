@@ -33,6 +33,7 @@ inline namespace v1
 
 void* fsm_thread_handler(void* arg);
 
+//TODO: implement REAL singleton
 class app_main final : public hhg::iface::initializable
 {
 public:

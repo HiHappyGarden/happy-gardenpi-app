@@ -18,32 +18,40 @@
  ***************************************************************************/
 
 
+
 #pragma once
 
-#include "hhg-iface/io.hpp"
+#include "hhg-iface/button.hpp"
+
+#include <pico/types.h>
 
 namespace hhg::driver
 {
 inline namespace v1
 {
 
-//TODO: implement REAL singleton
-class stm32_lpuart final : public hhg::iface::io
+class pico_button : public hhg::iface::button
 {
-	const hhg::iface::io_on_receive* obj = nullptr;
-	on_receive on_receive_callback = nullptr;
-
-	static inline stm32_lpuart* singleton = nullptr;
+    event *obj = nullptr;
+    hhg::iface::button::event::callback callback = nullptr;
 public:
-	stm32_lpuart() OS_NOEXCEPT;
-	~stm32_lpuart() OS_NOEXCEPT override;
-	OS_NO_COPY_NO_MOVE(stm32_lpuart)
 
-	os::exit init(os::error** error) OS_NOEXCEPT override;
+    enum pin : uint
+    {
+        PIN = 26
+    };
 
-	void set_on_receive(const hhg::iface::io_on_receive* obj, on_receive on_receive_callback) OS_NOEXCEPT override;
+    pico_button();
+    ~pico_button() override;
+    OS_NO_COPY_NO_MOVE(pico_button);
 
-    os::exit transmit(const uint8_t data[], uint16_t size) const OS_NOEXCEPT override;
+    inline void set_on_event(event *obj, event::callback callback) OS_NOEXCEPT override
+    {
+        this->obj = obj;
+        this->callback = callback;
+    }
+
+    os::exit init(os::error **error) OS_NOEXCEPT override;
 
 };
 

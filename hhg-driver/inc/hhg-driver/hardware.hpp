@@ -27,6 +27,7 @@
 #include "hhg-iface/relay.hpp"
 #include "hhg-iface/lcd.hpp"
 #include "hhg-iface/rotary-encored.hpp"
+#include "hhg-iface/button.hpp"
 
 namespace hhg::driver
 {
@@ -39,6 +40,7 @@ using time_ptr = hhg::iface::time::ptr;
 using relay_ptr = hhg::iface::relay::ptr;
 using lcd_ptr = hhg::iface::lcd::ptr;
 using rotary_encoder_ptr = hhg::iface::rotary_encoder::ptr;
+using button_ptr = hhg::iface::button::ptr;
 
 
 class hardware final : public hhg::iface::initializable
@@ -50,6 +52,7 @@ class hardware final : public hhg::iface::initializable
     const relay_ptr relay;
     const lcd_ptr lcd;
     const rotary_encoder_ptr rotary_encoder;
+    const button_ptr button;
 public:
 	explicit hardware(class os::error** error) OS_NOEXCEPT;
 	~hardware() override = default;
@@ -83,6 +86,11 @@ public:
     inline const rotary_encoder_ptr& get_rotary_encoder() const OS_NOEXCEPT
     {
         return rotary_encoder;
+    }
+
+    inline const button_ptr& get_button() const OS_NOEXCEPT
+    {
+        return button;
     }
 
     os::exit init(os::error** error) OS_NOEXCEPT override;

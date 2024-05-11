@@ -27,6 +27,9 @@
 #include "pico/pico-relay.hpp"
 #include "pico/pico-sh1106.hpp"
 #include "pico/pico-rotary-encored.hpp"
+#include "pico/pico-button.hpp"
+
+#include <pico/unique_id.h>
 
 using namespace os;
 using namespace hhg::iface;
@@ -52,6 +55,7 @@ hardware::hardware(class error** error) OS_NOEXCEPT
 , relay(new pico_relay)
 , lcd( new pico_sh1106(pico_i2c::get_i2C_reference(), 0x3C))
 , rotary_encoder(new pico_rotary_encoder)
+, button(new pico_button)
 {
     if(time.get() == nullptr && error)
     {
@@ -83,21 +87,28 @@ hardware::hardware(class error** error) OS_NOEXCEPT
 
     if(relay.get() == nullptr && error)
     {
-        *error = OS_ERROR_BUILD("relay(new relay) no mem.", error_type::OS_ENOMEM);
+        *error = OS_ERROR_BUILD("relay(new pico_relay) no mem.", error_type::OS_ENOMEM);
         OS_ERROR_PTR_SET_POSITION(*error);
         return;
     }
 
     if(lcd.get() == nullptr && error)
     {
-        *error = OS_ERROR_BUILD("lcd(new lcd) no mem.", error_type::OS_ENOMEM);
+        *error = OS_ERROR_BUILD("lcd(new pico_lcd) no mem.", error_type::OS_ENOMEM);
         OS_ERROR_PTR_SET_POSITION(*error);
         return;
     }
 
     if(rotary_encoder.get() == nullptr && error)
     {
-        *error = OS_ERROR_BUILD("rotary_encoder(new rotary_encoder) no mem.", error_type::OS_ENOMEM);
+        *error = OS_ERROR_BUILD("rotary_encoder(new pico_rotary_encoder) no mem.", error_type::OS_ENOMEM);
+        OS_ERROR_PTR_SET_POSITION(*error);
+        return;
+    }
+
+    if(button.get() == nullptr && error)
+    {
+        *error = OS_ERROR_BUILD("button(new pico_button) no mem.", error_type::OS_ENOMEM);
         OS_ERROR_PTR_SET_POSITION(*error);
         return;
     }
@@ -147,9 +158,9 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
 		return exit::KO;
 	}
 
-    OS_LOG_PRINTF("--------------------------\r\n");
-    OS_LOG_PRINTF("%s %s\r\n", HHG_NAME, HHG_VER);
-    OS_LOG_PRINTF("--------------------------\r\n");
+    OS_LOG_PRINTF("-------------------------------------------\r\n");
+    OS_LOG_PRINTF("%s %s\r\n", HHG_NAME, get_info().c_str());
+    OS_LOG_PRINTF("-------------------------------------------\r\n");
 
     OS_LOG_INFO(APP_TAG, "Init Time");
     auto time_init = reinterpret_cast<hhg::iface::time_init *>(time.get());
@@ -243,7 +254,19 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
         }
         return exit::KO;
     }
-    OS_LOG_INFO(APP_TAG, "Init rotary rncoder - OK");
+    OS_LOG_INFO(APP_TAG, "Init rotary encoder - OK");
+
+    OS_LOG_INFO(APP_TAG, "Init button");
+    if(button->init(error) == exit::KO)
+    {
+        if(error && *error)
+        {
+            *error = OS_ERROR_APPEND(*error, "button::init() fail.", error_type::OS_EFAULT);
+            OS_ERROR_PTR_SET_POSITION(*error);
+        }
+        return exit::KO;
+    }
+    OS_LOG_INFO(APP_TAG, "Init button - OK");
 
     //TODO: da rimuovere
 //    rotary_encoder->set_on_event(&test_one, &rotary_encoder::event::on_event);
@@ -267,6 +290,18 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
 const string<128>& hardware::get_info() OS_NOEXCEPT
 {
 	static string<128> ret;
+
+    pico_unique_board_id_t board_id;
+    pico_get_unique_board_id(&board_id);
+
+    ret += HHG_VER;
+    ret += "|";
+    for (uint8_t i : board_id.id)
+    {
+        char buff[] = {'\0','\0','\0'};
+        snprintf(buff, sizeof(buff), "%02x", board_id.id[i]);
+        ret += buff;
+    }
 
 	return ret;
 }
