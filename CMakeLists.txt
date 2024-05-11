@@ -43,8 +43,6 @@ include_directories(hhg-parser/inc)
 
 add_subdirectory(freertos)
 add_subdirectory(hhg-parser)
-#add_subdirectory(pico-ssd1306)
-#include_directories(pico-ssd1306)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/hhg-config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/hhg-config/pico/hhg-config.h)
 
@@ -74,6 +72,8 @@ add_executable(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
         pico_stdlib
+        pico_multicore
+        pico_unique_id
         hardware_rtc
         pico_multicore
         hardware_pio
@@ -82,7 +82,6 @@ target_link_libraries(${PROJECT_NAME}
         hardware_sync
         hardware_gpio
         hardware_i2c
-#        pico_ssd1306
         freertos
         hi-happy-garden-parser
 )

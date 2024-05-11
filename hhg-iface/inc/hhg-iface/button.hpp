@@ -20,32 +20,32 @@
 
 #pragma once
 
-#include "hhg-iface/io.hpp"
+#include "hhg-iface/initializable.hpp"
 
-namespace hhg::driver
+namespace hhg::iface
 {
 inline namespace v1
 {
 
-//TODO: implement REAL singleton
-class stm32_lpuart final : public hhg::iface::io
+struct button : public initializable
 {
-	const hhg::iface::io_on_receive* obj = nullptr;
-	on_receive on_receive_callback = nullptr;
+    struct event
+    {
+        using callback = void(event::*)();
 
-	static inline stm32_lpuart* singleton = nullptr;
-public:
-	stm32_lpuart() OS_NOEXCEPT;
-	~stm32_lpuart() OS_NOEXCEPT override;
-	OS_NO_COPY_NO_MOVE(stm32_lpuart)
+        virtual ~event() = default;
+        virtual void on_event(bool ccw, bool cw, bool click) OS_NOEXCEPT = 0;
+    };
 
-	os::exit init(os::error** error) OS_NOEXCEPT override;
+    using ptr = os::unique_ptr<hhg::iface::button>;
 
-	void set_on_receive(const hhg::iface::io_on_receive* obj, on_receive on_receive_callback) OS_NOEXCEPT override;
+    ~button() override = default;
 
-    os::exit transmit(const uint8_t data[], uint16_t size) const OS_NOEXCEPT override;
-
+    virtual void set_on_event(event* obj, event::callback callback) OS_NOEXCEPT = 0;
 };
+
+
+
 
 }
 }
