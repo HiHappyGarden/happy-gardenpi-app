@@ -24,6 +24,7 @@
 #include "hhg-iface/button.hpp"
 
 #include <pico/types.h>
+#include <pico/time.h>
 
 namespace hhg::driver
 {
@@ -34,11 +35,14 @@ class pico_button : public hhg::iface::button
 {
     event *obj = nullptr;
     hhg::iface::button::event::callback callback = nullptr;
+
+    static inline pico_button* singleton = nullptr;
 public:
 
     enum pin : uint
     {
-        PIN = 26
+        PIN = 22
+
     };
 
     pico_button();
@@ -52,6 +56,11 @@ public:
     }
 
     os::exit init(os::error **error) OS_NOEXCEPT override;
+
+private:
+    static inline bool fall = false;
+    static inline alarm_id_t alarm_id = 0;
+    static void on_click(uint gpio, uint32_t event_mask);
 
 };
 
