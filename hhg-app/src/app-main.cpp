@@ -110,6 +110,14 @@ void* fsm_thread_handler(void* arg)
 					{
 						OS_LOG_WARNING(APP_TAG, "Waiting to set timestamp");
 						generic_timer = ONE_SEC_IN_MILLIS;
+                        if(app_main::singleton->hardware.get_rgb_led()->get_rgb().is_off())
+                        {
+                            app_main::singleton->hardware.get_rgb_led()->set_rgb(0xFF, 0x5A, 0X00);
+                        }
+                        else
+                        {
+                            app_main::singleton->hardware.get_rgb_led()->set_rgb(0x00, 0x00, 0X00);
+                        }
 					}
 					else
 					{
