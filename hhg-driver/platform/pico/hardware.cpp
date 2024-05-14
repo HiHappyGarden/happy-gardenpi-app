@@ -28,6 +28,7 @@
 #include "pico/pico-sh1106.hpp"
 #include "pico/pico-rotary-encored.hpp"
 #include "pico/pico-button.hpp"
+#include "pico/pico-rgb-led.hpp"
 
 #include <pico/unique_id.h>
 
@@ -44,7 +45,7 @@ namespace
 {
 
 constexpr const char APP_TAG[] = "HARDWARE";
-    relay* r;
+    relay* relay_to_test;
 }
 
 
@@ -58,6 +59,7 @@ hardware::hardware(class error** error) OS_NOEXCEPT
 , lcd( new pico_sh1106(pico_i2c::get_i2C_reference(), 0x3C))
 , rotary_encoder(new pico_rotary_encoder)
 , button(new pico_button)
+, rgb_led(new pico_rgb_led)
 {
     if(time.get() == nullptr && error)
     {
@@ -115,7 +117,14 @@ hardware::hardware(class error** error) OS_NOEXCEPT
         return;
     }
 
-    r = relay.get();
+    if(rgb_led.get() == nullptr && error)
+    {
+        *error = OS_ERROR_BUILD("rgb_led(new pico_rgb_led) no mem.", error_type::OS_ENOMEM);
+        OS_ERROR_PTR_SET_POSITION(*error);
+        return;
+    }
+
+    relay_to_test = relay.get();
 }
 
 
@@ -138,14 +147,14 @@ struct test : public rotary_encoder::event, public button::event
                 }
                 else
                 {
-                    index =  r->size() - 1;
+                    index =  relay_to_test->size() - 1;
                 }
 
             }
             else if(ccw)
             {
 
-                if(index < r->size())
+                if(index < relay_to_test->size())
                 {
                     index++;
                 }
@@ -160,9 +169,9 @@ struct test : public rotary_encoder::event, public button::event
                 clicked++;
             }
 
-            for (int i = 0; i < r->size(); i++)
+            for (int i = 0; i < relay_to_test->size(); i++)
             {
-                r->set(i, index == i);
+                relay_to_test->set(i, index == i);
             }
 
             OS_LOG_INFO(APP_TAG, "idx: %u clicked:%u", index, clicked);
@@ -176,11 +185,11 @@ struct test : public rotary_encoder::event, public button::event
             {
                 return;
             }
-            for (int i = 0; i < r->size(); i++)
+            for (int i = 0; i < relay_to_test->size(); i++)
             {
-                r->set(i, index == i);
+                relay_to_test->set(i, index == i);
             }
-            if(index < r->size())
+            if(index < relay_to_test->size())
             {
                 index++;
             }
@@ -313,9 +322,25 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
     }
     OS_LOG_INFO(APP_TAG, "Init button - OK");
 
+    OS_LOG_INFO(APP_TAG, "Init RGB led");
+    if(rgb_led->init(error) == exit::KO)
+    {
+        if(error && *error)
+        {
+            *error = OS_ERROR_APPEND(*error, "rgb_led::init() fail.", error_type::OS_EFAULT);
+            OS_ERROR_PTR_SET_POSITION(*error);
+        }
+        return exit::KO;
+    }
+    OS_LOG_INFO(APP_TAG, "Init RGB led - OK");
+
+
     //TODO: da rimuovere
     button->set_on_button_click(&test_one, &button::event::on_button_click);
     rotary_encoder->set_on_rotary_encoder_event(&test_one, &rotary_encoder::event::on_rotary_encoder_event);
+
+    rgb_led->set_green(true);
+
 //
 //    for(uint8_t i = 0; i < 50; i++)
 //    {
@@ -328,7 +353,6 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
 //    lcd->set_char('1', 70, 20, font_8x8, sizeof(font_8x8));
 //    lcd->set_char(32, 70, 30, font_test, sizeof(font_test));
 //    lcd->send_buffer();
-
 
 	return exit::OK;
 }

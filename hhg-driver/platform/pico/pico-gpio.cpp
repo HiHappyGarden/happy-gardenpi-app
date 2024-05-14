@@ -23,6 +23,7 @@
 #include "pico/pico-rotary-encored.hpp"
 #include "pico/pico-relay.hpp"
 #include "pico/pico-button.hpp"
+#include "pico/pico-rgb-led.hpp"
 using namespace os;
 
 #include <hardware/gpio.h>
@@ -91,6 +92,15 @@ os::exit init_gpio()
     gpio_pull_up(pico_button::PIN);
     gpio_set_dir(pico_button::PIN, GPIO_IN);
 
+    //Set pins for RGB led
+    gpio_init(pico_rgb_led::RED);
+    gpio_set_dir(pico_rgb_led::RED, GPIO_OUT);
+
+    gpio_init(pico_rgb_led::GREEN);
+    gpio_set_dir(pico_rgb_led::GREEN, GPIO_OUT);
+
+    gpio_init(pico_rgb_led::BLUE);
+    gpio_set_dir(pico_rgb_led::BLUE, GPIO_OUT);
 
     return exit::OK;
 }

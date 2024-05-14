@@ -28,6 +28,7 @@
 #include "hhg-iface/lcd.hpp"
 #include "hhg-iface/rotary-encored.hpp"
 #include "hhg-iface/button.hpp"
+#include "hhg-iface/rgb_led.hpp"
 
 namespace hhg::driver
 {
@@ -41,6 +42,7 @@ using relay_ptr = hhg::iface::relay::ptr;
 using lcd_ptr = hhg::iface::lcd::ptr;
 using rotary_encoder_ptr = hhg::iface::rotary_encoder::ptr;
 using button_ptr = hhg::iface::button::ptr;
+using rgb_led_ptr = hhg::iface::rgb_led::ptr;
 
 
 class hardware final : public hhg::iface::initializable
@@ -53,6 +55,7 @@ class hardware final : public hhg::iface::initializable
     const lcd_ptr lcd;
     const rotary_encoder_ptr rotary_encoder;
     const button_ptr button;
+    const rgb_led_ptr rgb_led;
 public:
 	explicit hardware(class os::error** error) OS_NOEXCEPT;
 	~hardware() override = default;
@@ -95,7 +98,7 @@ public:
 
     os::exit init(os::error** error) OS_NOEXCEPT override;
 
-    const os::string<128>& get_info() OS_NOEXCEPT;
+    static const os::string<128>& get_info() OS_NOEXCEPT;
 
 };
 
