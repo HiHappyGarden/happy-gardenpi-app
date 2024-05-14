@@ -170,8 +170,12 @@ struct test : public rotary_encoder::event, public button::event
 
 
 
-        void on_button_click() OS_NOEXCEPT override
+        void on_button_click(enum  button::status status) OS_NOEXCEPT override
         {
+            if(status == button::status::RELEASE)
+            {
+                return;
+            }
             for (int i = 0; i < r->size(); i++)
             {
                 r->set(i, index == i);

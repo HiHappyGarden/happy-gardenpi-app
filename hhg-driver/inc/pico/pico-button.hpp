@@ -22,6 +22,7 @@
 #pragma once
 
 #include "hhg-iface/button.hpp"
+#include "hhg-driver/os-config.hpp"
 
 #include <pico/types.h>
 #include <pico/time.h>
@@ -34,10 +35,17 @@ inline namespace v1
 //TODO: implement REAL singleton
 class pico_button : public hhg::iface::button
 {
+
+    static inline pico_button* singleton = nullptr;
+    static constexpr uint16_t DEBOUNCE_TIME = 200;
+
+    bool run = true;
+    os::thread thread{"button", hhg::driver::NORMAL, 256, pico_button::encoder_handle};
+
     event *obj = nullptr;
     hhg::iface::button::event::callback callback = nullptr;
 
-    static inline pico_button* singleton = nullptr;
+    os::queue queue{1, sizeof(button::status) };
 public:
 
     enum pin : uint
@@ -59,8 +67,7 @@ public:
     os::exit init(os::error **error) OS_NOEXCEPT override;
 
 private:
-    static inline bool fall = false;
-    static inline alarm_id_t alarm_id = 0;
+    static void* encoder_handle(void* arg);
     static void on_click(uint gpio, uint32_t event_mask);
 
 };
