@@ -75,13 +75,13 @@ target_link_libraries(${PROJECT_NAME}
         pico_multicore
         pico_unique_id
         hardware_rtc
-        pico_multicore
         hardware_pio
         hardware_uart
         hardware_flash
         hardware_sync
         hardware_gpio
         hardware_i2c
+        hardware_pwm
         freertos
         hi-happy-garden-parser
 )

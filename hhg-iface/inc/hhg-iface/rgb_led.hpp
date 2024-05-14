@@ -38,6 +38,14 @@ inline namespace v1
         virtual void set_green(bool value) const OS_NOEXCEPT = 0;
 
         virtual void set_blue(bool value) const OS_NOEXCEPT = 0;
+
+        virtual void set_red(uint8_t value) const OS_NOEXCEPT = 0;
+
+        virtual void set_green(uint8_t value) const OS_NOEXCEPT = 0;
+
+        virtual void set_blue(uint8_t value) const OS_NOEXCEPT = 0;
+
+        virtual void rgb(uint8_t red, uint8_t green, uint8_t blue) const OS_NOEXCEPT = 0;
     };
 
 }
