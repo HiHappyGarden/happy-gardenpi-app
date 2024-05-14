@@ -34,14 +34,14 @@ struct button : public initializable
         using callback = void(event::*)();
 
         virtual ~event() = default;
-        virtual void on_event(bool ccw, bool cw, bool click) OS_NOEXCEPT = 0;
+        virtual void on_button_click() OS_NOEXCEPT = 0;
     };
 
     using ptr = os::unique_ptr<hhg::iface::button>;
 
     ~button() override = default;
 
-    virtual void set_on_event(event* obj, event::callback callback) OS_NOEXCEPT = 0;
+    virtual void set_on_button_click(event* obj, event::callback callback) OS_NOEXCEPT = 0;
 };
 
 

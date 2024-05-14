@@ -44,8 +44,10 @@ namespace
 {
 
 constexpr const char APP_TAG[] = "HARDWARE";
-
+    relay* r;
 }
+
+
 
 hardware::hardware(class error** error) OS_NOEXCEPT
 : time(new pico_time)
@@ -112,30 +114,45 @@ hardware::hardware(class error** error) OS_NOEXCEPT
         OS_ERROR_PTR_SET_POSITION(*error);
         return;
     }
+
+    r = relay.get();
 }
 
 
 
-    struct test : rotary_encoder::event
+struct test : public rotary_encoder::event, public button::event
     {
         test() = default;
         ~test() override = default;
 
-        int8_t idx = 2;
+        int index = 0;
         int8_t clicked = 0;
 
-        void on_event(bool ccw, bool cw, bool click) OS_NOEXCEPT override
+        void on_rotary_encoder_event(bool ccw, bool cw, bool click) OS_NOEXCEPT override
         {
-            if(ccw)
+            if(cw)
             {
-                idx--;
+                if(index > 0)
+                {
+                    index--;
+                }
+                else
+                {
+                    index =  r->size() - 1;
+                }
 
             }
-            else if(cw)
+            else if(ccw)
             {
-//                lcd1->set_bitmap_image(10 + (idx * 10), 10, 5, 8, &font_5x8[2 + (idx * 5)]);
-//                lcd1->send_buffer();
-                idx++;
+
+                if(index < r->size())
+                {
+                    index++;
+                }
+                else
+                {
+                    index = 0;
+                }
             }
 
             if(click)
@@ -143,7 +160,31 @@ hardware::hardware(class error** error) OS_NOEXCEPT
                 clicked++;
             }
 
-            OS_LOG_INFO(APP_TAG, "idx: %u clicked:%u", idx, clicked);
+            for (int i = 0; i < r->size(); i++)
+            {
+                r->set(i, index == i);
+            }
+
+            OS_LOG_INFO(APP_TAG, "idx: %u clicked:%u", index, clicked);
+        }
+
+
+
+        void on_button_click() OS_NOEXCEPT override
+        {
+            for (int i = 0; i < r->size(); i++)
+            {
+                r->set(i, index == i);
+            }
+            if(index < r->size())
+            {
+                index++;
+            }
+            else
+            {
+                index = 0;
+            }
+
         }
 
     } test_one;
@@ -269,7 +310,8 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
     OS_LOG_INFO(APP_TAG, "Init button - OK");
 
     //TODO: da rimuovere
-//    rotary_encoder->set_on_event(&test_one, &rotary_encoder::event::on_event);
+    button->set_on_button_click(&test_one, &button::event::on_button_click);
+    rotary_encoder->set_on_rotary_encoder_event(&test_one, &rotary_encoder::event::on_rotary_encoder_event);
 //
 //    for(uint8_t i = 0; i < 50; i++)
 //    {
