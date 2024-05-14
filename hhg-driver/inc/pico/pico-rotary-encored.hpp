@@ -57,7 +57,7 @@ public:
 
     os::exit init(os::error** error) OS_NOEXCEPT override;
 
-    void set_on_event(event *obj, event::callback callback) OS_NOEXCEPT override
+    void set_on_rotary_encoder_event(event *obj, event::callback callback) OS_NOEXCEPT override
     {
         this->obj = obj;
         this->callback = callback;

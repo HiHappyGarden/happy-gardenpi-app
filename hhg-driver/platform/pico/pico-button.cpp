@@ -68,14 +68,13 @@ void pico_button::on_click(uint gpio, uint32_t event_mask)
 
     }
 
-    if(fall)
-    {
+
         if(singleton->obj && singleton->callback)
         {
             (singleton->obj->*singleton->callback)();
         }
         fall = false;
-    }
+
 
 }
 
