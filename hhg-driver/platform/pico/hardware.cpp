@@ -339,20 +339,7 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
     button->set_on_button_click(&test_one, &button::event::on_button_click);
     rotary_encoder->set_on_rotary_encoder_event(&test_one, &rotary_encoder::event::on_rotary_encoder_event);
 
-    rgb_led->set_green(true);
-
-//
-//    for(uint8_t i = 0; i < 50; i++)
-//    {
-//        lcd->set_pixel(2, i, lcd::write_mode::INVERT);
-//    }
-//
-//    lcd->set_bitmap_image(10, 20, 32, 32, ic_skeleton, sizeof(ic_skeleton));
-//    lcd->set_rect(10, 30, 30, 32, lcd::write_mode::INVERT);
-//    lcd->set_char('A', 70, 10, font_5x8, sizeof(font_5x8));
-//    lcd->set_char('1', 70, 20, font_8x8, sizeof(font_8x8));
-//    lcd->set_char(32, 70, 30, font_test, sizeof(font_test));
-//    lcd->send_buffer();
+    rgb_led->rgb(0x55, 0xA4, 0xA9);
 
 	return exit::OK;
 }

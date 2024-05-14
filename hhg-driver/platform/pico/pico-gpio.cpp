@@ -27,6 +27,7 @@
 using namespace os;
 
 #include <hardware/gpio.h>
+#include <hardware/pwm.h>
 
 #include "osal/osal.hpp"
 
@@ -35,18 +36,17 @@ namespace hhg::driver
 inline namespace v1
 {
 
-    thread t{"test", 1, 1024, [](auto i) -> void* {
-        while (1)
-        {
-//            gpio_put(20, false);
-//            osal_us_sleep(500_ms);
-//            gpio_put(20, true);
-//            osal_us_sleep(1000_ms);
-        }
-        return nullptr;
-    }};
-
-    bool open;
+namespace
+{
+    void pwm_init_pin(uint8_t pin)
+    {
+        gpio_set_function(pin, GPIO_FUNC_PWM);
+        uint slice_num = pwm_gpio_to_slice_num(pin);
+        pwm_config config = pwm_get_default_config();
+        pwm_config_set_clkdiv(&config, 4.f);
+        pwm_init(slice_num, &config, true);
+    }
+}
 
 os::exit init_gpio()
 {
@@ -93,14 +93,9 @@ os::exit init_gpio()
     gpio_set_dir(pico_button::PIN, GPIO_IN);
 
     //Set pins for RGB led
-    gpio_init(pico_rgb_led::RED);
-    gpio_set_dir(pico_rgb_led::RED, GPIO_OUT);
-
-    gpio_init(pico_rgb_led::GREEN);
-    gpio_set_dir(pico_rgb_led::GREEN, GPIO_OUT);
-
-    gpio_init(pico_rgb_led::BLUE);
-    gpio_set_dir(pico_rgb_led::BLUE, GPIO_OUT);
+    pwm_init_pin(pico_rgb_led::RED);
+    pwm_init_pin(pico_rgb_led::GREEN);
+    pwm_init_pin(pico_rgb_led::BLUE);
 
     return exit::OK;
 }

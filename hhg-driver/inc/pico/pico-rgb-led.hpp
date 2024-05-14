@@ -32,6 +32,7 @@ inline namespace v1
 
 class pico_rgb_led final : public hhg::iface::rgb_led
 {
+    constexpr static uint16_t MULTI = UINT16_MAX / UINT8_MAX;
 public:
     enum pin : uint
     {
@@ -49,6 +50,14 @@ public:
     void set_green(bool value) const OS_NOEXCEPT override;
 
     void set_blue(bool value) const OS_NOEXCEPT override;
+
+    void set_red(uint8_t value) const OS_NOEXCEPT override;
+
+    void set_green(uint8_t value) const OS_NOEXCEPT override;
+
+    void set_blue(uint8_t value) const OS_NOEXCEPT override;
+
+    void rgb(uint8_t red, uint8_t green, uint8_t blue) const OS_NOEXCEPT override;
 
 };
 
