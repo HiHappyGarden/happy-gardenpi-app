@@ -29,11 +29,11 @@ namespace
 {
     constexpr const char APP_TAG[] = "MAIN";
 
-    void* main_thread_handler(void* arg);
+    void* main_thread_handler(void*);
 
     os::thread main_thread{"main", hhg::driver::REALTIME, 1'024, main_thread_handler};
 
-    void* main_thread_handler(void* arg)
+    void* main_thread_handler(void*)
     {
 
         static os::error* error = nullptr;

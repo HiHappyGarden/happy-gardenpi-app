@@ -216,6 +216,19 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
     OS_LOG_PRINTF("%s %s\r\n", HHG_NAME, get_info().c_str());
     OS_LOG_PRINTF("-------------------------------------------\r\n");
 
+    OS_LOG_INFO(APP_TAG, "Init RGB led");
+    if(rgb_led->init(error) == exit::KO)
+    {
+        if(error && *error)
+        {
+            *error = OS_ERROR_APPEND(*error, "rgb_led::init() fail.", error_type::OS_EFAULT);
+            OS_ERROR_PTR_SET_POSITION(*error);
+        }
+        return exit::KO;
+    }
+    OS_LOG_INFO(APP_TAG, "Init RGB led - OK");
+    rgb_led->set_rgb(0xFF, 0xA5, 0x00);
+
     OS_LOG_INFO(APP_TAG, "Init Time");
     auto time_init = reinterpret_cast<hhg::iface::time_init *>(time.get());
     if(time_init == nullptr)
@@ -322,24 +335,9 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
     }
     OS_LOG_INFO(APP_TAG, "Init button - OK");
 
-    OS_LOG_INFO(APP_TAG, "Init RGB led");
-    if(rgb_led->init(error) == exit::KO)
-    {
-        if(error && *error)
-        {
-            *error = OS_ERROR_APPEND(*error, "rgb_led::init() fail.", error_type::OS_EFAULT);
-            OS_ERROR_PTR_SET_POSITION(*error);
-        }
-        return exit::KO;
-    }
-    OS_LOG_INFO(APP_TAG, "Init RGB led - OK");
-
-
     //TODO: da rimuovere
     button->set_on_button_click(&test_one, &button::event::on_button_click);
     rotary_encoder->set_on_rotary_encoder_event(&test_one, &rotary_encoder::event::on_rotary_encoder_event);
-
-    rgb_led->rgb(0x55, 0xA4, 0xA9);
 
 	return exit::OK;
 }

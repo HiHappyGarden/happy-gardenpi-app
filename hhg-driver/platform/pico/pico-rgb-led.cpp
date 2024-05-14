@@ -19,6 +19,7 @@
 
 #include "pico/pico-rgb-led.hpp"
 using namespace os;
+using rgb = hhg::iface::rgb_led::rgb;
 
 #include <hardware/pwm.h>
 
@@ -35,42 +36,34 @@ inline namespace v1
         return exit::OK;
     }
 
-    void pico_rgb_led::set_red(bool value) const OS_NOEXCEPT
-    {
-        //gpio_put(RED, value);
-        pwm_set_gpio_level(RED, value ? 0xFFFF: 0);
-    }
-
-    void pico_rgb_led::set_green(bool value) const OS_NOEXCEPT
-    {
-        pwm_set_gpio_level(GREEN, value ? 0xFFFF: 0);
-    }
-
-    void pico_rgb_led::set_blue(bool value) const OS_NOEXCEPT
-    {
-        pwm_set_gpio_level(BLUE, value ? 0xFFFF: 0);
-    }
-
     void pico_rgb_led::set_red(uint8_t value) const OS_NOEXCEPT
     {
+        rgb.red = value;
         pwm_set_gpio_level(RED, value * MULTI);
     }
 
     void pico_rgb_led::set_green(uint8_t value) const OS_NOEXCEPT
     {
+        rgb.green = value;
         pwm_set_gpio_level(GREEN, value * MULTI);
     }
 
     void pico_rgb_led::set_blue(uint8_t value) const OS_NOEXCEPT
     {
+        rgb.blue = value;
         pwm_set_gpio_level(BLUE, value * MULTI);
     }
 
-    void pico_rgb_led::rgb(uint8_t red, uint8_t green, uint8_t blue) const OS_NOEXCEPT
+    void pico_rgb_led::set_rgb(uint8_t red, uint8_t green, uint8_t blue) const OS_NOEXCEPT
     {
+        rgb = {red, green, blue};
         pwm_set_gpio_level(RED, red * MULTI);
         pwm_set_gpio_level(GREEN, green * MULTI);
         pwm_set_gpio_level(BLUE, blue * MULTI);
+    }
+
+    const rgb& pico_rgb_led::get_rgb() const {
+        return rgb;
     }
 
 }

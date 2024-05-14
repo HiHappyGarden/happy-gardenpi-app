@@ -96,6 +96,11 @@ public:
         return button;
     }
 
+    inline const rgb_led_ptr& get_rgb_led() const OS_NOEXCEPT
+    {
+        return rgb_led;
+    }
+
     os::exit init(os::error** error) OS_NOEXCEPT override;
 
     static const os::string<128>& get_info() OS_NOEXCEPT;

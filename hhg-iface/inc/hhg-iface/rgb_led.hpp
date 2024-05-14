@@ -29,15 +29,20 @@ inline namespace v1
 
     struct rgb_led: public initializable
     {
+        struct rgb final
+        {
+            uint8_t red = 0x00;
+            uint8_t green = 0x00;
+            uint8_t blue = 0x00;
+            inline bool is_off() const OS_NOEXCEPT
+            {
+                return red + green + blue == 0;
+            }
+        };
+
         using ptr = os::unique_ptr<hhg::iface::rgb_led>;
 
         ~rgb_led() OS_NOEXCEPT override = default;
-
-        virtual void set_red(bool value) const OS_NOEXCEPT = 0;
-
-        virtual void set_green(bool value) const OS_NOEXCEPT = 0;
-
-        virtual void set_blue(bool value) const OS_NOEXCEPT = 0;
 
         virtual void set_red(uint8_t value) const OS_NOEXCEPT = 0;
 
@@ -45,7 +50,11 @@ inline namespace v1
 
         virtual void set_blue(uint8_t value) const OS_NOEXCEPT = 0;
 
-        virtual void rgb(uint8_t red, uint8_t green, uint8_t blue) const OS_NOEXCEPT = 0;
+        virtual void set_rgb(uint8_t red, uint8_t green, uint8_t blue) const OS_NOEXCEPT = 0;
+
+        virtual const rgb& get_rgb() const OS_NOEXCEPT = 0;
+
+
     };
 
 }
