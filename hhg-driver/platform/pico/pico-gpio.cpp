@@ -88,8 +88,9 @@ os::exit init_gpio()
 
     //Set pins for buttons
     gpio_init(pico_button::PIN);
-    gpio_set_dir(pico_button::PIN, GPIO_IN);
     gpio_pull_up(pico_button::PIN);
+    gpio_set_dir(pico_button::PIN, GPIO_IN);
+
 
     return exit::OK;
 }
