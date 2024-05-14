@@ -30,6 +30,11 @@ namespace hhg::driver
 {
 namespace v1
 {
+namespace
+{
+    constexpr char APP_TAG[] = "DRV BUTTON";
+}
+
 pico_button::~pico_button() = default;
 pico_button::pico_button()= default;
 
@@ -46,37 +51,63 @@ os::exit pico_button::init(os::error **error)
     }
     singleton = this;
 
-    gpio_set_irq_enabled_with_callback(PIN, GPIO_IRQ_EDGE_FALL, true, &pico_button::on_click);
+    gpio_set_irq_enabled_with_callback(PIN, GPIO_IRQ_EDGE_FALL | GPIO_IRQ_EDGE_RISE, true, &pico_button::on_click);
+
+    thread.create();
+
     return exit::OK;
 }
 
 
 
-void pico_button::on_click(uint gpio, uint32_t event_mask)
-{
-    OS_LOG_INFO("...", "--->%d %d", gpio, event_mask);
-
-    if(!fall && gpio == pin::PIN && event_mask == GPIO_IRQ_EDGE_FALL)
+void pico_button::on_click(uint gpio, uint32_t event_mask) {
+    static uint64_t last_click_press = 0;
+    static uint64_t last_click_release = 0;
+    uint64_t now = osal_system_current_time_millis();
+    if (
+            ( event_mask & GPIO_IRQ_EDGE_FALL && now - last_click_press > DEBOUNCE_TIME)
+            || ( event_mask & GPIO_IRQ_EDGE_RISE && now - last_click_release > DEBOUNCE_TIME)
+        )
     {
-        alarm_id = add_alarm_in_us(100, [](alarm_id_t id, void *user_data) -> int64_t
-        {
-            fall = true;
-            alarm_id = 0;
-            return 0;
-        },
-        nullptr, true);
 
+        status status;
+        if(event_mask & GPIO_IRQ_EDGE_FALL)
+        {
+            status = status::PRESS;
+            last_click_press = osal_system_current_time_millis();
+        }
+        else if(event_mask & GPIO_IRQ_EDGE_RISE)
+        {
+            status = status::RELEASE;
+            last_click_release = osal_system_current_time_millis();
+        }
+
+        if(singleton->queue.post_from_isr(reinterpret_cast<const uint8_t *>(&status), 100_ms) == osal::exit::KO)
+        {
+            OS_LOG_DEBUG(APP_TAG, "Debounce detect");
+        }
     }
 
 
-        if(singleton->obj && singleton->callback)
-        {
-            (singleton->obj->*singleton->callback)();
-        }
-        fall = false;
-
 
 }
+
+    void *pico_button::encoder_handle(void *arg)
+    {
+        while (singleton->run)
+        {
+
+            status status;
+            if(singleton->queue.fetch(&status, WAIT_FOREVER) == osal::exit::OK)
+            {
+                if(singleton->obj && singleton->callback)
+                {
+                    (singleton->obj->*singleton->callback)(status);
+                }
+            }
+        }
+        return nullptr;
+    }
 
 
 }

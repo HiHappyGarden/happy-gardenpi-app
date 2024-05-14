@@ -69,9 +69,10 @@ os::exit app_data::store(os::error** error) const OS_NOEXCEPT
 }
 
 
-os::exit app_data::load(app_data::on_vesrion_change on_vesrion_change, os::error** error) OS_NOEXCEPT
+os::exit app_data::load(app_data::on_vesrion_change on_version_change, os::error** error) OS_NOEXCEPT
 {
-	auto local_data = static_cast<class data*>(os_malloc(sizeof(class data)));
+	//auto local_data = static_cast<class data*>(os::malloc(sizeof(class data)));
+    auto local_data = new class data;
 	if(local_data == nullptr)
 	{
 		if(error)
@@ -113,14 +114,15 @@ os::exit app_data::load(app_data::on_vesrion_change on_vesrion_change, os::error
 		return exit::KO;
 	}
 
-	if(on_vesrion_change)
+	if(on_version_change)
 	{
-		on_vesrion_change(local_data->version);
+		on_version_change(local_data->version);
 	}
 
 	data = *local_data;
 
-	os_free(local_data);
+	//os::free(local_data);
+    delete local_data;
 
 	return exit::OK;
 }

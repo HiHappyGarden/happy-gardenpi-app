@@ -29,12 +29,19 @@ inline namespace v1
 
 struct button : public initializable
 {
+
+    enum class status
+    {
+        PRESS,
+        RELEASE
+    };
+
     struct event
     {
-        using callback = void(event::*)();
+        using callback = void(event::*)(enum  status status);
 
         virtual ~event() = default;
-        virtual void on_button_click() OS_NOEXCEPT = 0;
+        virtual void on_button_click(enum  status status) OS_NOEXCEPT = 0;
     };
 
     using ptr = os::unique_ptr<hhg::iface::button>;
