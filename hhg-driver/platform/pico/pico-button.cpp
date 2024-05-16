@@ -35,8 +35,9 @@ namespace
     constexpr char APP_TAG[] = "DRV BUTTON";
 }
 
+pico_button::pico_button() = default;
 pico_button::~pico_button() = default;
-pico_button::pico_button()= default;
+
 
 os::exit pico_button::init(os::error **error)
 {
