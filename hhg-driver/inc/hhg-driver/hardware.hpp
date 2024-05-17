@@ -29,6 +29,7 @@
 #include "hhg-iface/rotary-encored.hpp"
 #include "hhg-iface/button.hpp"
 #include "hhg-iface/rgb_led.hpp"
+#include "hhg-iface/wifi.hpp"
 
 namespace hhg::driver
 {
@@ -43,6 +44,7 @@ using lcd_ptr = hhg::iface::lcd::ptr;
 using rotary_encoder_ptr = hhg::iface::rotary_encoder::ptr;
 using button_ptr = hhg::iface::button::ptr;
 using rgb_led_ptr = hhg::iface::rgb_led::ptr;
+using wifi_ptr = hhg::iface::wifi::ptr;
 
 
 class hardware final : public hhg::iface::initializable
@@ -56,6 +58,7 @@ class hardware final : public hhg::iface::initializable
     const rotary_encoder_ptr rotary_encoder;
     const button_ptr button;
     const rgb_led_ptr rgb_led;
+    const wifi_ptr wifi;
 public:
 	explicit hardware(class os::error** error) OS_NOEXCEPT;
 	~hardware() override = default;

@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.16...3.24)
 
 add_definitions(-DPICO_CXX_DISABLE_ALLOCATION_OVERRIDES)
 include($ENV{PICO_SDK_PATH}/external/pico_sdk_import.cmake)
+set(PICO_BOARD pico_w)
 
 PROJECT(hi-happy-garden-app VERSION "0.60.0" LANGUAGES CXX C ASM)
 set(CMAKE_CXX_STANDARD 17)
@@ -27,7 +28,7 @@ add_definitions(-DPICO)
 add_definitions(-DOS_MEM_LAYER)
 add_definitions(-DEXCLUDE_CHECK_FOR_STACK_OVERFLOW)
 add_definitions(-DEXCLUDE_USE_MALLOC_FAILED_HOOK)
-
+add_definitions(-DEXCLUDE_USE_MALLOC_FAILED_HOOK)
 
 include_directories(cJSON)
 include_directories(inc)
@@ -39,7 +40,6 @@ include_directories(hhg-iface/inc)
 include_directories(hhg-driver/inc)
 include_directories(hhg-app/inc)
 include_directories(hhg-parser/inc)
-
 
 add_subdirectory(freertos)
 add_subdirectory(hhg-parser)
@@ -70,8 +70,10 @@ add_executable(${PROJECT_NAME}
         ${HHG_UTILS_INCLUDES} ${HHG_UTILS_SOURCES}
 )
 
+
 target_link_libraries(${PROJECT_NAME}
         pico_stdlib
+        pico_cyw43_arch_lwip_threadsafe_background
         pico_multicore
         pico_unique_id
         hardware_rtc
