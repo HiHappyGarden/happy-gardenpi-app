@@ -29,6 +29,7 @@
 #include "pico/pico-rotary-encored.hpp"
 #include "pico/pico-button.hpp"
 #include "pico/pico-rgb-led.hpp"
+#include "pico/pico-wifi.hpp"
 
 #include <pico/unique_id.h>
 
@@ -60,6 +61,7 @@ hardware::hardware(class error** error) OS_NOEXCEPT
 , rotary_encoder(new pico_rotary_encoder)
 , button(new pico_button)
 , rgb_led(new pico_rgb_led)
+, wifi(new pico_wifi)
 {
     if(time.get() == nullptr && error)
     {
@@ -120,6 +122,13 @@ hardware::hardware(class error** error) OS_NOEXCEPT
     if(rgb_led.get() == nullptr && error)
     {
         *error = OS_ERROR_BUILD("rgb_led(new pico_rgb_led) no mem.", error_type::OS_ENOMEM);
+        OS_ERROR_PTR_SET_POSITION(*error);
+        return;
+    }
+
+    if(wifi.get() == nullptr && error)
+    {
+        *error = OS_ERROR_BUILD("wifi(new pico_wifi) no mem.", error_type::OS_ENOMEM);
         OS_ERROR_PTR_SET_POSITION(*error);
         return;
     }
@@ -299,17 +308,17 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
     }
     OS_LOG_INFO(APP_TAG, "Init relay - OK");
 
-    OS_LOG_INFO(APP_TAG, "Init LCD");
-    if(lcd->init(error) == exit::KO)
-    {
-        if(error && *error)
-        {
-            *error = OS_ERROR_APPEND(*error, "lcd::init() fail.", error_type::OS_EFAULT);
-            OS_ERROR_PTR_SET_POSITION(*error);
-        }
-        return exit::KO;
-    }
-    OS_LOG_INFO(APP_TAG, "Init LCD - OK");
+//    OS_LOG_INFO(APP_TAG, "Init LCD");
+//    if(lcd->init(error) == exit::KO)
+//    {
+//        if(error && *error)
+//        {
+//            *error = OS_ERROR_APPEND(*error, "lcd::init() fail.", error_type::OS_EFAULT);
+//            OS_ERROR_PTR_SET_POSITION(*error);
+//        }
+//        return exit::KO;
+//    }
+//    OS_LOG_INFO(APP_TAG, "Init LCD - OK");
 
     OS_LOG_INFO(APP_TAG, "Init rotary encoder");
     if(rotary_encoder->init(error) == exit::KO)
@@ -334,6 +343,19 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
         return exit::KO;
     }
     OS_LOG_INFO(APP_TAG, "Init button - OK");
+
+    OS_LOG_INFO(APP_TAG, "Init WiFI");
+    if(wifi->init(error) == exit::KO)
+    {
+        if(error && *error)
+        {
+            *error = OS_ERROR_APPEND(*error, "wifi::init() fail.", error_type::OS_EFAULT);
+            OS_ERROR_PTR_SET_POSITION(*error);
+        }
+        return exit::KO;
+    }
+    OS_LOG_INFO(APP_TAG, "Init WiFI - OK");
+
 
     //TODO: da rimuovere
     button->set_on_button_click(&test_one, &button::event::on_button_click);
