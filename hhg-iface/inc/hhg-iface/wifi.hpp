@@ -29,9 +29,24 @@ inline namespace v1
 
 struct wifi : public initializable
 {
+
+    enum class auth : uint32_t
+    {
+        OPEN = 1,
+        WPA_TKIP_PSK,
+        WPA2_AES_PSK,
+        WPA2_MIXED_PSK
+    };
+
     using ptr = os::unique_ptr<wifi>;
 
     ~wifi() override = default;
+
+    virtual os::exit connect(const os::string<128>& user, const os::string<64>& passwd, enum auth auth, os::error **error) const OS_NOEXCEPT = 0;
+
+    //virtual os::exit get_ntp() const OS_NOEXCEPT = 0;
+
+
 
 };
 

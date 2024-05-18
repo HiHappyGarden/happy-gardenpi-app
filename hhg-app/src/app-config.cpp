@@ -26,6 +26,7 @@ using hhg::iface::data_type;
 using hhg::utils::crc32;
 
 #include "hhg-config.h"
+#include "cJSON.h"
 
 namespace hhg::app
 {
@@ -105,7 +106,7 @@ os::exit app_config::store(error** error) const OS_NOEXCEPT
 	return fsio->write(data_type::CONFIG, reinterpret_cast<const uint8_t *>(&config), sizeof(config), error);
 }
 
-os::exit app_config::load(app_config::on_vesrion_change on_vesrion_change, error** error) OS_NOEXCEPT
+os::exit app_config::load(app_config::on_vesrion_change on_version_change, error** error) OS_NOEXCEPT
 {
 	class config local_config;
 
@@ -139,9 +140,9 @@ os::exit app_config::load(app_config::on_vesrion_change on_vesrion_change, error
 		return exit::KO;
 	}
 
-	if(on_vesrion_change)
+	if(on_version_change)
 	{
-		on_vesrion_change(local_config.version);
+		on_version_change(local_config.version);
 	}
 
 	config = local_config;
@@ -160,6 +161,111 @@ os::exit app_config::clear(os::error** error) const OS_NOEXCEPT
 {
     return fsio->clear(data_type::CONFIG, error);
 }
+
+    const char *app_config::get_config(bool unformatted) const OS_NOEXCEPT
+    {
+        cJSON *root = cJSON_CreateObject();
+        if (root == nullptr)
+        {
+            OS_LOG_ERROR(APP_TAG, "Malloc fail for root");
+            return nullptr;
+        }
+
+        if (cJSON_AddStringToObject(root, "serial", config.serial.c_str()) == nullptr)
+        {
+            cJSON_Delete(root);
+            OS_LOG_ERROR(APP_TAG, "Malloc fail for serial");
+            return nullptr;
+        }
+
+        if (cJSON_AddStringToObject(root, "descr", config.descr.c_str()) == nullptr)
+        {
+            cJSON_Delete(root);
+            OS_LOG_ERROR(APP_TAG, "Malloc fail for descr");
+            return nullptr;
+        }
+
+        if (cJSON_AddNumberToObject(root, "zones_size", config.zones_size) == nullptr)
+        {
+            cJSON_Delete(root);
+            OS_LOG_ERROR(APP_TAG, "Malloc fail for zones_size");
+            return nullptr;
+        }
+
+        if (cJSON_AddNumberToObject(root, "users_len", config.users_len) == nullptr)
+        {
+            cJSON_Delete(root);
+            OS_LOG_ERROR(APP_TAG, "Malloc fail for users_len");
+            return nullptr;
+        }
+
+
+        auto users = cJSON_AddArrayToObject(root, "users");
+        if (users == nullptr)
+        {
+            cJSON_Delete(root);
+            OS_LOG_ERROR(APP_TAG, "Malloc fail for users");
+            return nullptr;
+        }
+
+        for (uint8_t i = 0; i < config.users_len && i < user::MAX_USERS; ++i)
+        {
+            auto user = cJSON_CreateObject();
+
+            if (cJSON_AddStringToObject(user, "zones_size", config.users[i].user.c_str()) == nullptr)
+            {
+                cJSON_Delete(root);
+                cJSON_Delete(user);
+                OS_LOG_ERROR(APP_TAG, "Malloc fail for users[i].user");
+                return nullptr;
+            }
+
+            if (cJSON_AddStringToObject(user, "zones_size", config.users[i].passwd.c_str()) == nullptr)
+            {
+                cJSON_Delete(root);
+                cJSON_Delete(user);
+                OS_LOG_ERROR(APP_TAG, "Malloc fail for users[i].passwd");
+                return nullptr;
+            }
+
+            cJSON_AddItemToArray(users, user);
+        }
+
+        if (cJSON_AddStringToObject(root, "wifi_ssid", config.wifi_ssid.c_str()) == nullptr)
+        {
+            cJSON_Delete(root);
+            OS_LOG_ERROR(APP_TAG, "Malloc fail for wifi_ssid");
+            return nullptr;
+        }
+
+        if (cJSON_AddStringToObject(root, "wifi_passwd", config.wifi_passwd.c_str()) == nullptr)
+        {
+            cJSON_Delete(root);
+            OS_LOG_ERROR(APP_TAG, "Malloc fail for wifi_passwd");
+            return nullptr;
+        }
+
+        char *ret = nullptr;
+        if(unformatted)
+        {
+            ret = cJSON_PrintUnformatted(root);
+        }
+        else
+        {
+            ret = cJSON_Print(root);
+        }
+
+        if(ret == nullptr)
+        {
+            cJSON_Delete(root);
+            OS_LOG_ERROR(APP_TAG, "Malloc fail for ret");
+            return nullptr;
+        }
+
+        cJSON_Delete(root);
+
+        return ret;
+    }
 
 } /* namespace driver */
 } /* namespace hhg */

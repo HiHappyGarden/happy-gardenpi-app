@@ -257,7 +257,7 @@ os::exit app_main::init(class os::error** error) OS_NOEXCEPT
         }
         return exit::KO;
 	}
-	OS_LOG_INFO(APP_TAG, "Init APP CONFIG - OK");
+    OS_LOG_INFO(APP_TAG, "Init APP CONFIG - OK");
 
 
 	OS_LOG_INFO(APP_TAG, "Init APP DATA");
@@ -298,6 +298,12 @@ os::exit app_main::init(class os::error** error) OS_NOEXCEPT
 	OS_LOG_INFO(APP_TAG, "Set timer to parser");
 	set_time(const_cast<class time*>(hardware.get_time().get()));
 
+    auto config_data = app_config.get_config(false);
+
+    OS_LOG_INFO(APP_TAG, "Show configuration");
+    OS_LOG_INFO(APP_TAG, "\r\n%s", config_data);
+
+    delete config_data;
 
 	return os::exit::OK;
 }
