@@ -47,7 +47,7 @@ class app_config final : public hhg::iface::initializable
 
 		static constexpr uint8_t MAX_USERS = 2;
 
-		os::string<128> email;
+		os::string<128> user;
 		os::string<64> passwd;
 
 	};
@@ -62,6 +62,7 @@ class app_config final : public hhg::iface::initializable
 		user users[user::MAX_USERS];
         os::string<32> wifi_ssid;
         os::string<64> wifi_passwd;
+        uint32_t wifi_auth = 0;
         uint32_t crc = MAIGC;
 	} config;
 
@@ -92,17 +93,50 @@ public:
 		return config.zones_size;
 	}
 
-	os::exit set_descr(const char descr[]) OS_NOEXCEPT;
+    inline void set_wifi_ssid(const char* wifi_ssid) OS_NOEXCEPT
+    {
+        this->config.wifi_ssid = wifi_ssid;
+    }
+
+    inline const os::string<32>& get_wifi_ssid(const char* wifi_ssid) const OS_NOEXCEPT
+    {
+        return this->config.wifi_ssid;
+    }
+
+    inline void set_wifi_passwd(const char* wifi_passwd) OS_NOEXCEPT
+    {
+        this->config.wifi_passwd = wifi_passwd;
+    }
+
+    inline const os::string<64>& get_wifi_passwd() const OS_NOEXCEPT
+    {
+        return this->config.wifi_passwd;
+    }
+
+    inline void set_wifi_auth(uint32_t wifi_auth) OS_NOEXCEPT
+    {
+        this->config.wifi_auth = wifi_auth;
+    }
+
+    inline uint32_t get_wifi_auth() const OS_NOEXCEPT
+    {
+        return this->config.wifi_auth;
+    }
+
+    os::exit set_descr(const char descr[]) OS_NOEXCEPT;
 
 	const char* get_version() const OS_NOEXCEPT;
 
 	os::exit store(os::error** error) const OS_NOEXCEPT;
 
-	os::exit load(app_config::on_vesrion_change on_vesrion_change, os::error** error) OS_NOEXCEPT;
+	os::exit load(app_config::on_vesrion_change on_version_change, os::error** error) OS_NOEXCEPT;
 
 	os::exit load_default(os::error **error) OS_NOEXCEPT;
 
     os::exit clear(os::error** error) const OS_NOEXCEPT;
+
+    const char* get_config(bool unformatted = true) const OS_NOEXCEPT;
+
 };
 
 }

@@ -182,7 +182,7 @@ bool app_data::get_schedule(time_t timestamp, struct schedule& schedule) OS_NOEX
 
 os::exit app_data::set_schedule(const char json_str[]) OS_NOEXCEPT
 {
-    if(json_str == NULL)
+    if(json_str == nullptr)
     {
         OS_LOG_ERROR(APP_TAG, "json_str nullptr");
         return exit::KO;
@@ -273,7 +273,7 @@ os::exit app_data::set_schedule(const char json_str[]) OS_NOEXCEPT
 
 os::exit app_data::set_zone(const char json_str[]) OS_NOEXCEPT
 {
-    if(json_str == NULL)
+    if(json_str == nullptr)
     {
         OS_LOG_ERROR(APP_TAG, "json_str nullptr");
         return exit::KO;
@@ -381,7 +381,7 @@ char *app_data::get_schedule(uint8_t id) OS_NOEXCEPT
 	}
 
     cJSON *root = cJSON_CreateObject();
-    if (root == NULL)
+    if (root == nullptr)
     {
     	OS_LOG_ERROR(APP_TAG, "Malloc fail for root");
         return nullptr;
@@ -464,7 +464,7 @@ char *app_data::get_zone(uint8_t id_schedule, uint8_t id) OS_NOEXCEPT
 	}
 
 	cJSON *root = cJSON_CreateObject();
-	if (root == NULL)
+	if (root == nullptr)
 	{
 		OS_LOG_ERROR(APP_TAG, "Malloc fail for root");
 		return nullptr;
@@ -522,7 +522,7 @@ char *app_data::get_zone(uint8_t id_schedule, uint8_t id) OS_NOEXCEPT
 
 
 	char *ret = cJSON_PrintUnformatted(root);
-	if(ret == NULL)
+	if(ret == nullptr)
 	{
 		cJSON_Delete(root);
 		OS_LOG_ERROR(APP_TAG, "Malloc fail for ret");

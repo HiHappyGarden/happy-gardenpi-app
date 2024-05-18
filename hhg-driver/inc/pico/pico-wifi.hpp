@@ -28,9 +28,16 @@ inline namespace v1
 {
     class pico_wifi final : public hhg::iface::wifi
     {
+        constexpr static uint32_t TIMEOUT = 30'000;
     public:
+
+        pico_wifi();
+        ~pico_wifi() override OS_NOEXCEPT;
+        OS_NO_COPY_NO_MOVE(pico_wifi)
+
         os::exit init(os::error **error) OS_NOEXCEPT override;
 
+        os::exit connect(const os::string<128>& user, const os::string<64>& passwd, enum auth auth, os::error **error) const OS_NOEXCEPT override;
     };
 }
 }

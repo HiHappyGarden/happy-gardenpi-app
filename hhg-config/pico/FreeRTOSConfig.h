@@ -38,7 +38,7 @@ extern void ConfigureTimerForRunTimeStats(void);    //for clion monitoring
 #define configSUPPORT_STATIC_ALLOCATION         0
 #define configSUPPORT_DYNAMIC_ALLOCATION        1
 #define configAPPLICATION_ALLOCATED_HEAP        0
-#define configTOTAL_HEAP_SIZE                   (200 * 1024)
+#define configTOTAL_HEAP_SIZE                   (190 * 1024)
 
 /* Hook function related definitions. */
 #define configUSE_IDLE_HOOK                     0

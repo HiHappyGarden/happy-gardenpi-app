@@ -99,13 +99,16 @@ entry commands_config[] =
 	{.key = "3", .description = "Get description"},
 	{.key = "4", .description = "Set description"},
 	{.key = "5", .description = "Get zones size"},
+    {.key = "6", .description = "Set wifi ssid"},
+    {.key = "7", .description = "Set wifi password"},
+    {.key = "8", .description = "Set wifi auth"},
     {.key = "CLEAR", .description = "Clear all"},
 	{.key = "STORE", .custom_func = [](auto data, auto entry, auto error)
 	{
 		auto ret = app_config->store(error);
 		if(ret == exit::OK)
 		{
-			strncpy(data.ret_buffer, "", data.ret_buffer_len);
+			strncpy(data.ret_buffer, "OK", data.ret_buffer_len);
 		}
 		else
 		{
@@ -114,6 +117,7 @@ entry commands_config[] =
 		return ret;
 	}
 	, .description = "Store config"},
+
 };
 constexpr const size_t commands_config_size = sizeof(commands_config) / sizeof(commands_config[0]);
 
@@ -287,6 +291,24 @@ os::exit set_app_config(class app_config& app_config, error** error) OS_NOEXCEPT
 	{
 		return exit::KO;
 	}
+
+    key = "$CONF 6";
+    if(parser->set(key.c_str(), new method(&app_config, &app_config::set_wifi_ssid), error) == exit::KO)
+    {
+        return exit::KO;
+    }
+
+    key = "$CONF 7";
+    if(parser->set(key.c_str(), new method(&app_config, &app_config::set_wifi_passwd), error) == exit::KO)
+    {
+        return exit::KO;
+    }
+
+    key = "$CONF 8";
+    if(parser->set(key.c_str(), new method(&app_config, &app_config::set_wifi_auth), error) == exit::KO)
+    {
+        return exit::KO;
+    }
 
     key = "$CONF CLEAR";
     if(parser->set(key.c_str(), new method(&app_config, &app_config::clear), error) == exit::KO)
