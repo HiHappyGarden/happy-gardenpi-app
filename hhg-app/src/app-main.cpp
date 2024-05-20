@@ -19,7 +19,9 @@
 
 #include "hhg-app/app-main.hpp"
 using hhg::iface::time;
+using hhg::driver::hardware;
 using namespace os;
+
 
 #include "hhg-app/app-parser-commands.hpp"
 
@@ -259,6 +261,21 @@ os::exit app_main::init(class os::error** error) OS_NOEXCEPT
 	}
     OS_LOG_INFO(APP_TAG, "Init APP CONFIG - OK");
 
+    OS_LOG_INFO(APP_TAG, "Check serial");
+    if(strncmp(app_config.get_serial(), "", 16) == 0)
+    {
+        app_config.set_serial(hardware::get_serial().c_str());
+        if(app_config.store(error) == exit::KO)
+        {
+            if(error && *error)
+            {
+                *error = OS_ERROR_BUILD("set_app_config() impossible store config.", error_type::OS_EFAULT);
+                OS_ERROR_PTR_SET_POSITION(*error);
+            }
+            return exit::KO;
+        }
+        OS_LOG_INFO(APP_TAG, "Update serial");
+    }
 
 	OS_LOG_INFO(APP_TAG, "Init APP DATA");
 	if(app_data.init(error) == exit::KO)

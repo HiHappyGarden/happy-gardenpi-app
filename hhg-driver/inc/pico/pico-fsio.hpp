@@ -31,7 +31,7 @@ inline namespace v1
 
 class pico_fsio final : public iface::v1::fs_io
 {
-	static constexpr uint32_t start_store_address = PICO_FLASH_SIZE_BYTES - FLASH_SECTOR_SIZE;
+	static constexpr uint32_t START_STORE_ADDRESS = PICO_FLASH_SIZE_BYTES - FLASH_SECTOR_SIZE;
 
 public:
 

@@ -308,17 +308,17 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
     }
     OS_LOG_INFO(APP_TAG, "Init relay - OK");
 
-//    OS_LOG_INFO(APP_TAG, "Init LCD");
-//    if(lcd->init(error) == exit::KO)
-//    {
-//        if(error && *error)
-//        {
-//            *error = OS_ERROR_APPEND(*error, "lcd::init() fail.", error_type::OS_EFAULT);
-//            OS_ERROR_PTR_SET_POSITION(*error);
-//        }
-//        return exit::KO;
-//    }
-//    OS_LOG_INFO(APP_TAG, "Init LCD - OK");
+    OS_LOG_INFO(APP_TAG, "Init LCD");
+    if(lcd->init(error) == exit::KO)
+    {
+        if(error && *error)
+        {
+            *error = OS_ERROR_APPEND(*error, "lcd::init() fail.", error_type::OS_EFAULT);
+            OS_ERROR_PTR_SET_POSITION(*error);
+        }
+        return exit::KO;
+    }
+    OS_LOG_INFO(APP_TAG, "Init LCD - OK");
 
     OS_LOG_INFO(APP_TAG, "Init rotary encoder");
     if(rotary_encoder->init(error) == exit::KO)
@@ -364,24 +364,34 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
 	return exit::OK;
 }
 
+    const os::string<16> &hardware::get_serial() OS_NOEXCEPT
+    {
+        static string<16> ret;
+        pico_unique_board_id_t board_id;
+        pico_get_unique_board_id(&board_id);
+
+        for (uint8_t i : board_id.id)
+        {
+            char buff[] = {'\0','\0','\0'};
+            snprintf(buff, sizeof(buff), "%02x", board_id.id[i]);
+            ret += buff;
+        }
+
+        return ret;
+    }
+
+
 const string<128>& hardware::get_info() OS_NOEXCEPT
 {
 	static string<128> ret;
 
-    pico_unique_board_id_t board_id;
-    pico_get_unique_board_id(&board_id);
-
     ret += HHG_VER;
     ret += "|";
-    for (uint8_t i : board_id.id)
-    {
-        char buff[] = {'\0','\0','\0'};
-        snprintf(buff, sizeof(buff), "%02x", board_id.id[i]);
-        ret += buff;
-    }
+    ret += get_serial().c_str();
 
 	return ret;
 }
+
 
 }
 }

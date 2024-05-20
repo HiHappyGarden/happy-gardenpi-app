@@ -106,6 +106,8 @@ public:
 
     os::exit init(os::error** error) OS_NOEXCEPT override;
 
+    static const os::string<16>& get_serial() OS_NOEXCEPT;
+
     static const os::string<128>& get_info() OS_NOEXCEPT;
 
 };

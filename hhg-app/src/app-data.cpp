@@ -100,6 +100,7 @@ os::exit app_data::load(app_data::on_vesrion_change on_version_change, os::error
 		{
 			*error = OS_ERROR_BUILD("app_data::load() crc error.", error_type::OS_ERCRC);
 			OS_ERROR_PTR_SET_POSITION(*error);
+            delete local_data;
 		}
 		return exit::KO;
 	}
@@ -110,6 +111,7 @@ os::exit app_data::load(app_data::on_vesrion_change on_version_change, os::error
 		{
 			*error = OS_ERROR_BUILD("app_data::load() magic number error.", error_type::OS_EBADF);
 			OS_ERROR_PTR_SET_POSITION(*error);
+            delete local_data;
 		}
 		return exit::KO;
 	}
@@ -121,7 +123,6 @@ os::exit app_data::load(app_data::on_vesrion_change on_version_change, os::error
 
 	data = *local_data;
 
-	//os::free(local_data);
     delete local_data;
 
 	return exit::OK;
@@ -534,7 +535,7 @@ char *app_data::get_zone(uint8_t id_schedule, uint8_t id) OS_NOEXCEPT
 	return ret;
 }
 
-uint8_t app_data::get_bit_day(const tm* now) const OS_NOEXCEPT
+uint8_t app_data::get_bit_day(const tm* now) OS_NOEXCEPT
 {
 	if(now == nullptr)
 	{
