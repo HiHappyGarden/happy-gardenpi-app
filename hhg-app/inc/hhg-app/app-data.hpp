@@ -202,7 +202,7 @@ public:
 	char* get_zone(uint8_t id_schedule, uint8_t id) OS_NOEXCEPT;
 
 private:
-	uint8_t get_bit_day(const tm* now) const OS_NOEXCEPT;
+	static uint8_t get_bit_day(const tm* now) OS_NOEXCEPT;
 
 };
 

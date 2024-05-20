@@ -108,17 +108,28 @@ os::exit app_config::store(error** error) const OS_NOEXCEPT
 
 os::exit app_config::load(app_config::on_vesrion_change on_version_change, error** error) OS_NOEXCEPT
 {
-	class config local_config;
+	auto local_config = new class config;
+    if(local_config == nullptr)
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD("app_config::load() out of memory.", error_type::OS_ENOMEM);
+            OS_ERROR_PTR_SET_POSITION(*error);
+        }
+        return exit::KO;
+    }
 
-	if(fsio->read(data_type::CONFIG, reinterpret_cast<uint8_t *>(&local_config), sizeof(local_config), error) == exit::KO)
+
+
+	if(fsio->read(data_type::CONFIG, reinterpret_cast<uint8_t *>(local_config), sizeof(class config), error) == exit::KO)
 	{
 		return exit::KO;
 	}
 
-	uint32_t original_crc = local_config.crc;
-	local_config.crc = MAIGC;
-	uint32_t crc = crc32(reinterpret_cast<uint8_t *>(&local_config), sizeof(local_config));
-	local_config.crc = original_crc;
+	uint32_t original_crc = local_config->crc;
+	local_config->crc = MAIGC;
+	uint32_t crc = crc32(reinterpret_cast<uint8_t *>(local_config), sizeof(class config));
+	local_config->crc = original_crc;
 
 	if(crc != original_crc)
 	{
@@ -126,26 +137,30 @@ os::exit app_config::load(app_config::on_vesrion_change on_version_change, error
 		{
 			*error = OS_ERROR_BUILD("app_config::load() crc error.", error_type::OS_ERCRC);
 			OS_ERROR_PTR_SET_POSITION(*error);
+            delete local_config;
 		}
 		return exit::KO;
 	}
 
-	if(local_config.magic != MAIGC)
+	if(local_config->magic != MAIGC)
 	{
 		if(error)
 		{
 			*error = OS_ERROR_BUILD("app_config::load() magic number error.", error_type::OS_EBADF);
 			OS_ERROR_PTR_SET_POSITION(*error);
+            delete local_config;
 		}
 		return exit::KO;
 	}
 
 	if(on_version_change)
 	{
-		on_version_change(local_config.version);
+		on_version_change(local_config->version);
 	}
 
-	config = local_config;
+	config = *local_config;
+
+    delete local_config;
 
 	return exit::OK;
 }
@@ -212,7 +227,7 @@ os::exit app_config::clear(os::error** error) const OS_NOEXCEPT
         {
             auto user = cJSON_CreateObject();
 
-            if (cJSON_AddStringToObject(user, "zones_size", config.users[i].user.c_str()) == nullptr)
+            if (cJSON_AddStringToObject(user, "user", config.users[i].user.c_str()) == nullptr)
             {
                 cJSON_Delete(root);
                 cJSON_Delete(user);
@@ -220,7 +235,7 @@ os::exit app_config::clear(os::error** error) const OS_NOEXCEPT
                 return nullptr;
             }
 
-            if (cJSON_AddStringToObject(user, "zones_size", config.users[i].passwd.c_str()) == nullptr)
+            if (cJSON_AddStringToObject(user, "passwd", config.users[i].passwd.c_str()) == nullptr)
             {
                 cJSON_Delete(root);
                 cJSON_Delete(user);
@@ -242,6 +257,13 @@ os::exit app_config::clear(os::error** error) const OS_NOEXCEPT
         {
             cJSON_Delete(root);
             OS_LOG_ERROR(APP_TAG, "Malloc fail for wifi_passwd");
+            return nullptr;
+        }
+
+        if (cJSON_AddNumberToObject(root, "wifi_auth", config.wifi_auth) == nullptr)
+        {
+            cJSON_Delete(root);
+            OS_LOG_ERROR(APP_TAG, "Malloc fail for wifi_auth");
             return nullptr;
         }
 

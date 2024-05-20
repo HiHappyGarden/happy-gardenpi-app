@@ -66,22 +66,36 @@ os::exit pico_fsio::write(data_type type, const uint8_t* data, size_t size, erro
         return exit::KO;
     }
 
-    char data_sector[FLASH_SECTOR_SIZE];
+    //TODO: remove dynamic allocation but before increase stack space
+    auto data_sector = new uint8_t[FLASH_SECTOR_SIZE];
+    if(data_sector == nullptr)
+    {
+        if(error && *error)
+        {
+            *error = OS_ERROR_APPEND(*error, "pico_fsio::write() no mem", error_type::OS_ENOMEM);
+            OS_ERROR_PTR_SET_POSITION(*error);
+        }
+        return exit::KO;
+    }
+
+    memset(data_sector, 0xFF, FLASH_SECTOR_SIZE);
 
     uint32_t ints = save_and_disable_interrupts();
 
-    memcpy(data_sector, reinterpret_cast<const void *>(XIP_BASE + start_store_address), FLASH_SECTOR_SIZE);
+    memcpy(data_sector, reinterpret_cast<const void *>(XIP_BASE + START_STORE_ADDRESS), FLASH_SECTOR_SIZE);
 
-    memset(data_sector + get_offset(type), 0xFF, size);
+    memset(data_sector + get_offset(type), 0xFF, FLASH_SECTOR_SIZE / 2);
 
     memcpy(data_sector + get_offset(type), data, size);
 
-    flash_range_erase(start_store_address, FLASH_SECTOR_SIZE);
+    flash_range_erase(START_STORE_ADDRESS, FLASH_SECTOR_SIZE);
 
     for(uint i = 0; i < FLASH_SECTOR_SIZE / FLASH_PAGE_SIZE; i++)
     {
-        flash_range_program(start_store_address + (i * FLASH_PAGE_SIZE), reinterpret_cast<const uint8_t *>(data_sector + (i * FLASH_PAGE_SIZE)), FLASH_PAGE_SIZE);
+        flash_range_program(START_STORE_ADDRESS + (i * FLASH_PAGE_SIZE), reinterpret_cast<const uint8_t *>(data_sector + (i * FLASH_PAGE_SIZE)), FLASH_PAGE_SIZE);
     }
+
+    delete[] data_sector;
 
     restore_interrupts (ints);
 
@@ -112,7 +126,7 @@ os::exit pico_fsio::read(data_type type, uint8_t* data, size_t size, error** err
 
     uint32_t ints = save_and_disable_interrupts();
 
-    memcpy(data, reinterpret_cast<const void *>(XIP_BASE + start_store_address + get_offset(type)), size);
+    memcpy(data, reinterpret_cast<const void *>(XIP_BASE + START_STORE_ADDRESS + get_offset(type)), size);
 
     restore_interrupts (ints);
 
@@ -124,7 +138,7 @@ os::exit pico_fsio::clear(iface::data_type type, os::error** error) const OS_NOE
 
     uint32_t ints = save_and_disable_interrupts();
 
-    flash_range_erase(start_store_address + get_offset(type), FLASH_SECTOR_SIZE / 2);
+    flash_range_erase(START_STORE_ADDRESS + get_offset(type), FLASH_SECTOR_SIZE / 2);
 
     restore_interrupts (ints);
 
