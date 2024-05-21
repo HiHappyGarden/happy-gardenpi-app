@@ -24,7 +24,6 @@ using namespace os;
 
 #include <hardware/gpio.h>
 #include <pico/stdio.h>
-#include <pico/stdlib.h>
 
 namespace hhg::driver
 {
@@ -50,7 +49,7 @@ os::exit pico_button::init(os::error **error)
         }
         return exit::KO;
     }
-    singleton = this;
+    singleton = &pico_button::instance();
 
     gpio_set_irq_enabled_with_callback(PIN, GPIO_IRQ_EDGE_FALL | GPIO_IRQ_EDGE_RISE, true, &pico_button::on_click);
 
@@ -83,7 +82,7 @@ void pico_button::on_click(uint gpio, uint32_t event_mask) {
             last_click_release = osal_system_current_time_millis();
         }
 
-        if(singleton->queue.post_from_isr(reinterpret_cast<const uint8_t *>(&status), 100_ms) == osal::exit::KO)
+        if(pico_button::instance().queue.post_from_isr(reinterpret_cast<const uint8_t *>(&status), 100_ms) == osal::exit::KO)
         {
             OS_LOG_DEBUG(APP_TAG, "Debounce detect");
         }
@@ -95,15 +94,15 @@ void pico_button::on_click(uint gpio, uint32_t event_mask) {
 
     void *pico_button::encoder_handle(void *arg)
     {
-        while (singleton->run)
+        while (pico_button::instance().run)
         {
 
             status status;
-            if(singleton->queue.fetch(&status, WAIT_FOREVER) == osal::exit::OK)
+            if(pico_button::instance().queue.fetch(&status, WAIT_FOREVER) == osal::exit::OK)
             {
-                if(singleton->obj && singleton->callback)
+                if(pico_button::instance().obj && pico_button::instance().callback)
                 {
-                    (singleton->obj->*singleton->callback)(status);
+                    (pico_button::instance().obj->*pico_button::instance().callback)(status);
                 }
             }
         }

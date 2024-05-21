@@ -34,7 +34,7 @@ public:
     template<typename... Args>
     static T &instance(Args&& ...args)
     {
-        static const os::unique_ptr<T> instance{new T{forward<Args>(args)...}};
+        static const os::unique_ptr<T> instance{new T{os::forward<Args>(args)...}};
         return *instance;
     }
 
