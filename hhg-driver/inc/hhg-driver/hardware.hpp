@@ -38,7 +38,7 @@ inline namespace v1
 {
 
 using io_ptr = hhg::iface::io::ptr;
-using fsio_ptr = hhg::iface::fs_io::ptr;
+using fs_io_ptr = hhg::iface::fs_io::ptr;
 using i2c_ptr = hhg::iface::i2c::ptr;
 using time_ptr = hhg::iface::time::ptr;
 using relay_ptr = hhg::iface::relay::ptr;
@@ -53,7 +53,7 @@ class hardware final : public hhg::iface::initializable
 {
     const time_ptr time;
     const io_ptr uart;
-    const fsio_ptr fs_io;
+    const fs_io_ptr fs_io;
     const i2c_ptr i2c;
     const relay_ptr relay;
     const lcd_ptr lcd;
@@ -71,7 +71,7 @@ public:
 		return uart;
 	}
 
-	inline const fsio_ptr& get_fs_io() const OS_NOEXCEPT
+	inline const fs_io_ptr& get_fs_io() const OS_NOEXCEPT
 	{
 		return fs_io;
 	}
