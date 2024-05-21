@@ -41,7 +41,7 @@ constexpr char APP_TAG[] = "APP CONFIG";
 }
 
 app_config::app_config(const fs_io::ptr& fsio) OS_NOEXCEPT
-: fsio(fsio)
+: fs_io(fsio)
 {
 
 }
@@ -61,7 +61,7 @@ os::exit app_config::set_serial(const char serial[]) OS_NOEXCEPT
 		config.serial = "";
 
 	error* error = nullptr;
-	if(fsio->write(data_type::CONFIG, reinterpret_cast<const uint8_t*>(&config), sizeof(config), &error) == exit::KO)
+	if(fs_io->write(data_type::CONFIG, reinterpret_cast<const uint8_t*>(&config), sizeof(config), &error) == exit::KO)
 	{
 		printf_stack_error(APP_TAG, error);
 		delete error;
@@ -79,7 +79,7 @@ os::exit app_config::set_descr(const char descr[]) OS_NOEXCEPT
 		config.descr = "";
 
 	error* error = nullptr;
-	if(fsio->write(data_type::CONFIG, reinterpret_cast<const uint8_t*>(&config), sizeof(config), &error) == exit::KO)
+	if(fs_io->write(data_type::CONFIG, reinterpret_cast<const uint8_t*>(&config), sizeof(config), &error) == exit::KO)
 	{
 		printf_stack_error(APP_TAG, error);
 		delete error;
@@ -103,7 +103,7 @@ os::exit app_config::store(error** error) const OS_NOEXCEPT
 {
 	config.crc = MAIGC;
 	config.crc = crc32(reinterpret_cast<uint8_t *>(&config), sizeof(config));
-	return fsio->write(data_type::CONFIG, reinterpret_cast<const uint8_t *>(&config), sizeof(config), error);
+	return fs_io->write(data_type::CONFIG, reinterpret_cast<const uint8_t *>(&config), sizeof(config), error);
 }
 
 os::exit app_config::load(app_config::on_vesrion_change on_version_change, error** error) OS_NOEXCEPT
@@ -121,7 +121,7 @@ os::exit app_config::load(app_config::on_vesrion_change on_version_change, error
 
 
 
-	if(fsio->read(data_type::CONFIG, reinterpret_cast<uint8_t *>(local_config), sizeof(class config), error) == exit::KO)
+	if(fs_io->read(data_type::CONFIG, reinterpret_cast<uint8_t *>(local_config), sizeof(class config), error) == exit::KO)
 	{
 		return exit::KO;
 	}
@@ -174,7 +174,7 @@ os::exit app_config::load_default(os::error **error) OS_NOEXCEPT
 
 os::exit app_config::clear(os::error** error) const OS_NOEXCEPT
 {
-    return fsio->clear(data_type::CONFIG, error);
+    return fs_io->clear(data_type::CONFIG, error);
 }
 
     const char *app_config::get_config(bool unformatted) const OS_NOEXCEPT

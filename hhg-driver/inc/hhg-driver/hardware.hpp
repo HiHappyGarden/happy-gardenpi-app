@@ -23,6 +23,7 @@
 #include "hhg-iface/fs-io.hpp"
 #include "hhg-iface/initializable.hpp"
 #include "hhg-iface/io.hpp"
+#include "hhg-iface/i2c.hpp"
 #include "hhg-iface/time.hpp"
 #include "hhg-iface/relay.hpp"
 #include "hhg-iface/lcd.hpp"
@@ -38,6 +39,7 @@ inline namespace v1
 
 using io_ptr = hhg::iface::io::ptr;
 using fsio_ptr = hhg::iface::fs_io::ptr;
+using i2c_ptr = hhg::iface::i2c::ptr;
 using time_ptr = hhg::iface::time::ptr;
 using relay_ptr = hhg::iface::relay::ptr;
 using lcd_ptr = hhg::iface::lcd::ptr;
@@ -51,8 +53,8 @@ class hardware final : public hhg::iface::initializable
 {
     const time_ptr time;
     const io_ptr uart;
-    const fsio_ptr fsio;
-    const io_ptr i2c;
+    const fsio_ptr fs_io;
+    const i2c_ptr i2c;
     const relay_ptr relay;
     const lcd_ptr lcd;
     const rotary_encoder_ptr rotary_encoder;
@@ -69,9 +71,9 @@ public:
 		return uart;
 	}
 
-	inline const fsio_ptr& get_fsio() const OS_NOEXCEPT
+	inline const fsio_ptr& get_fs_io() const OS_NOEXCEPT
 	{
-		return fsio;
+		return fs_io;
 	}
 
 	inline const time_ptr& get_time() const OS_NOEXCEPT

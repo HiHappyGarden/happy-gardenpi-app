@@ -18,8 +18,6 @@
  ***************************************************************************/
 
 #include "pico/pico-i2c.hpp"
-using hhg::iface::io_on_receive;
-using hhg::iface::io_source;
 using namespace os;
 
 #include <pico/binary_info.h>
@@ -31,44 +29,21 @@ namespace hhg::driver
 inline namespace v1
 {
 
-pico_i2c::pico_i2c() OS_NOEXCEPT = default;
+pico_i2c::pico_i2c(i2c_inst_t* i2C_reference, uint speed) OS_NOEXCEPT
+: i2C_reference(i2C_reference)
+, speed(speed)
+{}
 
-pico_i2c::~pico_i2c()
-{
-	singleton = nullptr;
-}
+pico_i2c::~pico_i2c() = default;
 
 os::exit pico_i2c::init(error** error) OS_NOEXCEPT
 {
-	if(singleton)
-	{
-		if(error)
-		{
-	        *error = OS_ERROR_BUILD("pico_i2c::init() fail.", error_type::OS_EFAULT);
-	        OS_ERROR_PTR_SET_POSITION(*error);
-		}
-		return exit::KO;
-	}
-	singleton = this;
-
-    i2c_init(PICO_DEFAULT_I2C_INSTANCE, SPEED);
+    i2c_init(i2C_reference, speed);
     bi_decl(bi_2pins_with_func(pico_i2c::pin::SDA_PIN, pico_i2c::pin::SCL_PIN, GPIO_FUNC_I2C));
 
 	return exit::OK;
 }
 
-
-inline void pico_i2c::set_on_receive(const io_on_receive* obj, on_receive on_receive_callback) OS_NOEXCEPT
-{
-	this->obj = obj;
-	this->on_receive_callback = on_receive_callback;
-}
-
-os::exit pico_i2c::transmit(const uint8_t data[], uint16_t size) const OS_NOEXCEPT
-{
-
-	return exit::OK;
-}
 
 }
 }

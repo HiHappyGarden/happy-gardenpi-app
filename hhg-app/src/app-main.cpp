@@ -194,8 +194,8 @@ void* fsm_thread_handler(void* arg)
 
 app_main::app_main(driver::hardware& hardware, class error** error) OS_NOEXCEPT
 : hardware(hardware)
-, app_config(hardware.get_fsio())
-, app_data(hardware.get_fsio())
+, app_config(hardware.get_fs_io())
+, app_data(hardware.get_fs_io())
 , app_parser(hardware.get_uart())
 {
 	if(singleton)

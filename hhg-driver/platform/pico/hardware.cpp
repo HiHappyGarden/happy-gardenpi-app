@@ -54,10 +54,10 @@ constexpr const char APP_TAG[] = "HARDWARE";
 hardware::hardware(class error** error) OS_NOEXCEPT
 : time(new pico_time)
 , uart(new pico_uart)
-, fsio(new pico_fsio)
+, fs_io(new pico_fsio)
 , i2c(new pico_i2c)
 , relay(new pico_relay)
-, lcd( new pico_sh1106(pico_i2c::get_i2C_reference(), 0x3C))
+, lcd( new pico_sh1106(i2c->get_i2C_reference(), 0x3C))
 , rotary_encoder(new pico_rotary_encoder)
 , button(new pico_button)
 , rgb_led(new pico_rgb_led)
@@ -77,9 +77,9 @@ hardware::hardware(class error** error) OS_NOEXCEPT
         return;
     }
 
-    if(fsio.get() == nullptr && error)
+    if(fs_io.get() == nullptr && error)
 	{
-        *error = OS_ERROR_BUILD("fsio(new pico_fsio) no mem.", error_type::OS_ENOMEM);
+        *error = OS_ERROR_BUILD("fs_io(new pico_fsio) no mem.", error_type::OS_ENOMEM);
         OS_ERROR_PTR_SET_POSITION(*error);
         return;
     }
@@ -273,11 +273,11 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
 	OS_LOG_INFO(APP_TAG, "Init UART - OK");
 
 	OS_LOG_INFO(APP_TAG, "Init FS IO");
-	if(fsio->init(error) == exit::KO)
+	if(fs_io->init(error) == exit::KO)
 	{
 		if(error && *error)
 		{
-	        *error = OS_ERROR_APPEND(*error, "fsio::init() fail.", error_type::OS_EFAULT);
+	        *error = OS_ERROR_APPEND(*error, "fs_io::init() fail.", error_type::OS_EFAULT);
 	        OS_ERROR_PTR_SET_POSITION(*error);
 		}
 		return exit::KO;
@@ -360,6 +360,9 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
     //TODO: da rimuovere
     button->set_on_button_click(&test_one, &button::event::on_button_click);
     rotary_encoder->set_on_rotary_encoder_event(&test_one, &rotary_encoder::event::on_rotary_encoder_event);
+
+    lcd->set_rect(30, 30, 30, 30, iface::lcd::write_mode::ADD);
+    lcd->send_buffer();
 
 	return exit::OK;
 }
