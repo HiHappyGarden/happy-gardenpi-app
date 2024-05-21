@@ -49,7 +49,7 @@ os::exit pico_button::init(os::error **error)
         }
         return exit::KO;
     }
-    singleton = &pico_button::instance();
+    singleton = this;
 
     gpio_set_irq_enabled_with_callback(PIN, GPIO_IRQ_EDGE_FALL | GPIO_IRQ_EDGE_RISE, true, &pico_button::on_click);
 
@@ -60,7 +60,8 @@ os::exit pico_button::init(os::error **error)
 
 
 
-void pico_button::on_click(uint gpio, uint32_t event_mask) {
+void pico_button::on_click(uint gpio, uint32_t event_mask)
+{
     static uint64_t last_click_press = 0;
     static uint64_t last_click_release = 0;
     uint64_t now = osal_system_current_time_millis();
@@ -82,32 +83,29 @@ void pico_button::on_click(uint gpio, uint32_t event_mask) {
             last_click_release = osal_system_current_time_millis();
         }
 
-        if(pico_button::instance().queue.post_from_isr(reinterpret_cast<const uint8_t *>(&status), 100_ms) == osal::exit::KO)
+        if(singleton->queue.post_from_isr(reinterpret_cast<const uint8_t *>(&status), 150_ms) == osal::exit::KO)
         {
             OS_LOG_DEBUG(APP_TAG, "Debounce detect");
         }
     }
-
-
-
 }
 
-    void *pico_button::encoder_handle(void *arg)
+void *pico_button::encoder_handle(void *arg)
+{
+    while (singleton->run)
     {
-        while (pico_button::instance().run)
-        {
 
-            status status;
-            if(pico_button::instance().queue.fetch(&status, WAIT_FOREVER) == osal::exit::OK)
+        status status;
+        if(singleton->queue.fetch(&status, WAIT_FOREVER) == osal::exit::OK)
+        {
+            if(singleton->obj && singleton->callback)
             {
-                if(pico_button::instance().obj && pico_button::instance().callback)
-                {
-                    (pico_button::instance().obj->*pico_button::instance().callback)(status);
-                }
+                (singleton->obj->*singleton->callback)(status);
             }
         }
-        return nullptr;
     }
+    return nullptr;
+}
 
 
 }
