@@ -29,7 +29,7 @@ namespace hhg::driver
 inline namespace v1
 {
 
-class pico_fsio final : public iface::v1::fs_io
+class pico_fs_io final : public iface::v1::fs_io
 {
 	static constexpr uint32_t START_STORE_ADDRESS = PICO_FLASH_SIZE_BYTES - FLASH_SECTOR_SIZE;
 
@@ -38,9 +38,9 @@ public:
 
 	static uint64_t const check_data;
 
-	pico_fsio() OS_NOEXCEPT;
-	~pico_fsio() OS_NOEXCEPT override;
-    OS_NO_COPY_NO_MOVE(pico_fsio);
+	pico_fs_io() OS_NOEXCEPT;
+	~pico_fs_io() OS_NOEXCEPT override;
+    OS_NO_COPY_NO_MOVE(pico_fs_io);
 
 	os::exit init(os::error** error) OS_NOEXCEPT override;
 

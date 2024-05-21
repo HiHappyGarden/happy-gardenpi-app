@@ -22,7 +22,7 @@
 #include "hhg-config.h"
 #include "pico/pico-uart.hpp"
 #include "pico/pico-time.hpp"
-#include "pico/pico-fsio.hpp"
+#include "pico/pico-fs-io.hpp"
 #include "pico/pico-i2c.hpp"
 #include "pico/pico-relay.hpp"
 #include "pico/pico-sh1106.hpp"
@@ -54,7 +54,7 @@ constexpr const char APP_TAG[] = "HARDWARE";
 hardware::hardware(class error** error) OS_NOEXCEPT
 : time(new pico_time)
 , uart(new pico_uart)
-, fs_io(new pico_fsio)
+, fs_io(new pico_fs_io)
 , i2c(new pico_i2c)
 , relay(new pico_relay)
 , lcd( new pico_sh1106(i2c->get_i2C_reference(), 0x3C))
@@ -79,7 +79,7 @@ hardware::hardware(class error** error) OS_NOEXCEPT
 
     if(fs_io.get() == nullptr && error)
 	{
-        *error = OS_ERROR_BUILD("fs_io(new pico_fsio) no mem.", error_type::OS_ENOMEM);
+        *error = OS_ERROR_BUILD("fs_io(new pico_fs_io) no mem.", error_type::OS_ENOMEM);
         OS_ERROR_PTR_SET_POSITION(*error);
         return;
     }

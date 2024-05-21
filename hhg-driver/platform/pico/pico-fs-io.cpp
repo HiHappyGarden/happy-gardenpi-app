@@ -18,7 +18,7 @@
  ***************************************************************************/
 
 
-#include "pico/pico-fsio.hpp"
+#include "pico/pico-fs-io.hpp"
 using namespace hhg::iface;
 using namespace os;
 
@@ -33,24 +33,24 @@ namespace hhg::driver
 namespace v1
 {
 
-uint64_t const pico_fsio::check_data = 0x0102030404030201;
+uint64_t const pico_fs_io::check_data = 0x0102030404030201;
 
-pico_fsio::pico_fsio() = default;
+pico_fs_io::pico_fs_io() = default;
 
-pico_fsio::~pico_fsio() = default;
+pico_fs_io::~pico_fs_io() = default;
 
-os::exit pico_fsio::init(error** error) OS_NOEXCEPT
+os::exit pico_fs_io::init(error** error) OS_NOEXCEPT
 {
 	return exit::OK;
 }
 
-os::exit pico_fsio::write(data_type type, const uint8_t* data, size_t size, error** error) const OS_NOEXCEPT
+os::exit pico_fs_io::write(data_type type, const uint8_t* data, size_t size, error** error) const OS_NOEXCEPT
 {
     if(data == nullptr)
     {
         if(error && *error)
         {
-            *error = OS_ERROR_APPEND(*error, "pico_fsio::write() data == null", error_type::OS_ENOENT);
+            *error = OS_ERROR_APPEND(*error, "pico_fs_io::write() data == null", error_type::OS_ENOENT);
             OS_ERROR_PTR_SET_POSITION(*error);
         }
         return exit::KO;
@@ -60,7 +60,7 @@ os::exit pico_fsio::write(data_type type, const uint8_t* data, size_t size, erro
     {
         if(error && *error)
         {
-            *error = OS_ERROR_APPEND(*error, "pico_fsio::write() too much data to write", error_type::OS_ENOENT);
+            *error = OS_ERROR_APPEND(*error, "pico_fs_io::write() too much data to write", error_type::OS_ENOENT);
             OS_ERROR_PTR_SET_POSITION(*error);
         }
         return exit::KO;
@@ -72,7 +72,7 @@ os::exit pico_fsio::write(data_type type, const uint8_t* data, size_t size, erro
     {
         if(error && *error)
         {
-            *error = OS_ERROR_APPEND(*error, "pico_fsio::write() no mem", error_type::OS_ENOMEM);
+            *error = OS_ERROR_APPEND(*error, "pico_fs_io::write() no mem", error_type::OS_ENOMEM);
             OS_ERROR_PTR_SET_POSITION(*error);
         }
         return exit::KO;
@@ -102,13 +102,13 @@ os::exit pico_fsio::write(data_type type, const uint8_t* data, size_t size, erro
 	return exit::OK;
 }
 
-os::exit pico_fsio::read(data_type type, uint8_t* data, size_t size, error** error) const OS_NOEXCEPT
+os::exit pico_fs_io::read(data_type type, uint8_t* data, size_t size, error** error) const OS_NOEXCEPT
 {
     if(data == nullptr)
     {
         if(error && *error)
         {
-            *error = OS_ERROR_APPEND(*error, "pico_fsio::read() data == null", error_type::OS_ENOENT);
+            *error = OS_ERROR_APPEND(*error, "pico_fs_io::read() data == null", error_type::OS_ENOENT);
             OS_ERROR_PTR_SET_POSITION(*error);
         }
         return exit::KO;
@@ -118,7 +118,7 @@ os::exit pico_fsio::read(data_type type, uint8_t* data, size_t size, error** err
     {
         if(error && *error)
         {
-            *error = OS_ERROR_APPEND(*error, "pico_fsio::read() too much data to read", error_type::OS_ENOENT);
+            *error = OS_ERROR_APPEND(*error, "pico_fs_io::read() too much data to read", error_type::OS_ENOENT);
             OS_ERROR_PTR_SET_POSITION(*error);
         }
         return exit::KO;
@@ -133,7 +133,7 @@ os::exit pico_fsio::read(data_type type, uint8_t* data, size_t size, error** err
 	return exit::OK;
 }
 
-os::exit pico_fsio::clear(iface::data_type type, os::error** error) const OS_NOEXCEPT
+os::exit pico_fs_io::clear(iface::data_type type, os::error** error) const OS_NOEXCEPT
 {
 
     uint32_t ints = save_and_disable_interrupts();
