@@ -22,6 +22,7 @@
 #pragma once
 
 #include "hhg-iface/button.hpp"
+#include "hhg-iface/singleton.hpp"
 #include "hhg-driver/os-config.hpp"
 
 #include <pico/types.h>
@@ -33,7 +34,7 @@ inline namespace v1
 {
 
 //TODO: implement REAL singleton
-class pico_button : public hhg::iface::button
+class pico_button : public hhg::iface::button, public hhg::iface::singleton<pico_button>
 {
 
     static inline pico_button* singleton = nullptr;
