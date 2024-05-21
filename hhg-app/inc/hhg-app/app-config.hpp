@@ -40,7 +40,7 @@ class app_config final : public hhg::iface::initializable
 	constexpr static const uint32_t MAIGC = 0xf86c2975;
 	constexpr static const uint8_t VERSION = 1;
 
-	const hhg::iface::fs_io::ptr& fsio;
+	const hhg::iface::fs_io::ptr& fs_io;
 
 	struct alignas(2) user final
 	{
