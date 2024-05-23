@@ -29,6 +29,7 @@ add_definitions(-DOS_MEM_LAYER)
 add_definitions(-DEXCLUDE_CHECK_FOR_STACK_OVERFLOW)
 add_definitions(-DEXCLUDE_USE_MALLOC_FAILED_HOOK)
 add_definitions(-DEXCLUDE_USE_MALLOC_FAILED_HOOK)
+add_definitions(-DNO_SYS=0)
 
 include_directories(cJSON)
 include_directories(inc)
@@ -40,8 +41,10 @@ include_directories(hhg-iface/inc)
 include_directories(hhg-driver/inc)
 include_directories(hhg-app/inc)
 include_directories(hhg-parser/inc)
+include_directories(FreeRTOS-Kernel/include)
+include_directories(FreeRTOS-Kernel/portable/ThirdParty/GCC/RP2040/include)
 
-add_subdirectory(freertos)
+#add_subdirectory(freertos)
 add_subdirectory(hhg-parser)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/hhg-config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/hhg-config/pico/hhg-config.h)
@@ -58,6 +61,9 @@ file(GLOB_RECURSE HHG_APP_SOURCES CONFIGURE_DEPENDS "hhg-app/src/*.cpp" "hhg-app
 file(GLOB_RECURSE HHG_UTILS_INCLUDES CONFIGURE_DEPENDS "hhg-utils/inc/*.hpp" "hhg-utils/inc/*.h")
 file(GLOB_RECURSE HHG_UTILS_SOURCES CONFIGURE_DEPENDS "hhg-utils/src/*.cpp" "hhg-utils/src/*.c")
 
+file(GLOB_RECURSE FREERTOS_KERNEL_INCLUDES CONFIGURE_DEPENDS "FreeRTOS-Kernel/include/*.h" "FreeRTOS-Kernel/portable/ThirdParty/GCC/RP2040/include/*.h")
+file(GLOB_RECURSE FREERTOS_KERNEL_SOURCES CONFIGURE_DEPENDS "FreeRTOS-Kernel/croutine.c" "FreeRTOS-Kernel/event_groups.c" "FreeRTOS-Kernel/list.c" "FreeRTOS-Kernel/queue.c" "FreeRTOS-Kernel/stream_buffer.c" "FreeRTOS-Kernel/tasks.c" "FreeRTOS-Kernel/timers.c" "FreeRTOS-Kernel/portable/MemMang/heap_4.c" "FreeRTOS-Kernel/portable/ThirdParty/GCC/RP2040/*.c")
+
 message(STATUS "PROJECT_SOURCE_DIR=${PROJECT_SOURCE_DIR}")
 message(STATUS "CMAKE_BINARY_DIR=${CMAKE_BINARY_DIR}")
 
@@ -68,12 +74,13 @@ add_executable(${PROJECT_NAME}
         ${HHG_DRIVERS_INCLUDES} ${HHG_DRIVERS_SOURCES}
         ${HHG_APP_INCLUDES} ${HHG_APP_SOURCES}
         ${HHG_UTILS_INCLUDES} ${HHG_UTILS_SOURCES}
+        ${FREERTOS_KERNEL_INCLUDES} ${FREERTOS_KERNEL_SOURCES}
 )
 
 
 target_link_libraries(${PROJECT_NAME}
         pico_stdlib
-        pico_cyw43_arch_lwip_threadsafe_background
+#        pico_cyw43_arch_lwip_threadsafe_background
 #        pico_cyw43_arch_lwip_sys_freertos
         pico_multicore
         pico_unique_id
@@ -85,7 +92,8 @@ target_link_libraries(${PROJECT_NAME}
         hardware_gpio
         hardware_i2c
         hardware_pwm
-        freertos
+        hardware_exception
+#        freertos
         hi-happy-garden-parser
 )
 

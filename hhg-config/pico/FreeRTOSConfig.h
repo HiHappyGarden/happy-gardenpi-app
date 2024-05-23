@@ -1,9 +1,18 @@
 #ifndef FREERTOS_CONFIG_H
 #define FREERTOS_CONFIG_H
 
-extern uint64_t FreeRTOSRunTimeTicks;               //for clion monitoring
-extern void ConfigureTimerForRunTimeStats(void);    //for clion monitoring
+#include "rp2040_config.h"
 
+extern uint64_t FreeRTOSRunTimeTicks;               //for clion monitoring
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+extern void ConfigureTimerForRunTimeStats(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 /* Use Pico SDK ISR handlers */
 #define vPortSVCHandler         isr_svcall
@@ -24,12 +33,12 @@ extern void ConfigureTimerForRunTimeStats(void);    //for clion monitoring
 #define configTASK_NOTIFICATION_ARRAY_ENTRIES   3
 #define configUSE_MUTEXES                       1
 #define configUSE_RECURSIVE_MUTEXES             1
-#define configUSE_COUNTING_SEMAPHORES           0
-#define configQUEUE_REGISTRY_SIZE               10
-#define configUSE_QUEUE_SETS                    0
-#define configUSE_TIME_SLICING                  0
+#define configUSE_COUNTING_SEMAPHORES           1
+#define configQUEUE_REGISTRY_SIZE               8
+#define configUSE_QUEUE_SETS                    1
+#define configUSE_TIME_SLICING                  1
 #define configUSE_NEWLIB_REENTRANT              0
-#define configENABLE_BACKWARD_COMPATIBILITY     0
+//#define configENABLE_BACKWARD_COMPATIBILITY     0
 #define configNUM_THREAD_LOCAL_STORAGE_POINTERS 5
 #define configSTACK_DEPTH_TYPE                  uint16_t
 #define configMESSAGE_BUFFER_LENGTH_TYPE        size_t
@@ -38,7 +47,7 @@ extern void ConfigureTimerForRunTimeStats(void);    //for clion monitoring
 #define configSUPPORT_STATIC_ALLOCATION         0
 #define configSUPPORT_DYNAMIC_ALLOCATION        1
 #define configAPPLICATION_ALLOCATED_HEAP        0
-#define configTOTAL_HEAP_SIZE                   (190 * 1024)
+#define configTOTAL_HEAP_SIZE                   (180 * 1024)
 
 /* Hook function related definitions. */
 #define configUSE_IDLE_HOOK                     0
@@ -78,23 +87,29 @@ extern void ConfigureTimerForRunTimeStats(void);    //for clion monitoring
 #define INCLUDE_vTaskDelay                      1
 #define INCLUDE_xTaskGetSchedulerState          1
 #define INCLUDE_xTaskGetCurrentTaskHandle       1
-#define INCLUDE_uxTaskGetStackHighWaterMark     0
-#define INCLUDE_xTaskGetIdleTaskHandle          0
-#define INCLUDE_eTaskGetState                   0
+#define INCLUDE_uxTaskGetStackHighWaterMark     1
+#define INCLUDE_xTaskGetIdleTaskHandle          1
+#define INCLUDE_eTaskGetState                   1
 #define INCLUDE_xEventGroupSetBitFromISR        1
-#define INCLUDE_xTimerPendFunctionCall          0
-#define INCLUDE_xTaskAbortDelay                 0
-#define INCLUDE_xTaskGetHandle                  0
+#define INCLUDE_xTimerPendFunctionCall          1
+#define INCLUDE_xTaskAbortDelay                 1
+#define INCLUDE_xTaskGetHandle                  1
 #define INCLUDE_xTaskResumeFromISR              1
+
+#define configENABLE_BACKWARD_COMPATIBILITY     1
+#define configNUM_THREAD_LOCAL_STORAGE_POINTERS 5
 
 // SMP port only
 //
-//#define configNUM_CORES                         2
+//#define configNUMBER_OF_CORES                   2
 //#define configTICK_CORE                         0
-//#define configRUN_MULTIPLE_PRIORITIES           0
+//#define configRUN_MULTIPLE_PRIORITIES           1
 //#define configUSE_CORE_AFFINITY                 1
 //#define configSUPPORT_PICO_SYNC_INTEROP         1
 //#define configSUPPORT_PICO_TIME_INTEROP         1
+//#define configUSE_PASSIVE_IDLE_HOOK             0
+//#define configRUN_MULTIPLE_PRIORITIES           1
+//#define portSUPPORT_SMP                         1
 
 /* A header file that defines trace macro can be included here. */
 
