@@ -23,6 +23,7 @@
 
 #include "hhg-iface/button.hpp"
 #include "hhg-driver/os-config.hpp"
+#include "FreeRTOSConfig.h"
 
 #include <pico/types.h>
 #include <pico/time.h>
@@ -40,7 +41,7 @@ class pico_button : public hhg::iface::button
     static constexpr uint16_t DEBOUNCE_TIME = 200;
 
     bool run = true;
-    os::thread thread{"button", hhg::driver::NORMAL, 256, pico_button::encoder_handle};
+    os::thread thread{"button", hhg::driver::NORMAL, configMINIMAL_STACK_SIZE, pico_button::encoder_handle};
 
     event *obj = nullptr;
     hhg::iface::button::event::callback callback = nullptr;
