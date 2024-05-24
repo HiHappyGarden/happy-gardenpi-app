@@ -23,6 +23,7 @@
 #include "hhg-iface/rotary-encored.hpp"
 #include "hhg-driver/os-config.hpp"
 #include "osal/osal.hpp"
+#include "FreeRTOSConfig.h"
 
 #include <pico/types.h>
 
@@ -38,7 +39,7 @@ class pico_rotary_encoder final : public hhg::iface::rotary_encoder
     static inline pico_rotary_encoder* singleton = nullptr;
 
     bool run = true;
-    os::thread polling{"rotary_encoder", hhg::driver::NORMAL, 256, pico_rotary_encoder::encoder_handle};
+    os::thread polling{"rotary_encoder", hhg::driver::NORMAL, configMINIMAL_STACK_SIZE, pico_rotary_encoder::encoder_handle};
 
     event *obj = nullptr;
     event::callback callback = nullptr;
