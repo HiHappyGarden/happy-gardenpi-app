@@ -32,6 +32,7 @@ extern void ConfigureTimerForRunTimeStats(void);
 #define configUSE_TASK_NOTIFICATIONS            1
 #define configTASK_NOTIFICATION_ARRAY_ENTRIES   3
 #define configUSE_MUTEXES                       1
+#define INCLUDE_xSemaphoreGetMutexHolder        1
 #define configUSE_RECURSIVE_MUTEXES             1
 #define configUSE_COUNTING_SEMAPHORES           1
 #define configQUEUE_REGISTRY_SIZE               8
@@ -101,6 +102,7 @@ extern void ConfigureTimerForRunTimeStats(void);
 
 // SMP port only
 //
+#define configNUMBER_OF_CORES                   1
 //#define configNUMBER_OF_CORES                   2
 //#define configTICK_CORE                         0
 //#define configRUN_MULTIPLE_PRIORITIES           1

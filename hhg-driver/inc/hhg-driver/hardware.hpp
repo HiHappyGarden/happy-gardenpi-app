@@ -106,6 +106,12 @@ public:
         return rgb_led;
     }
 
+    inline const wifi_ptr& get_wifi() const OS_NOEXCEPT
+    {
+        return wifi;
+    }
+
+
     os::exit init(os::error** error) OS_NOEXCEPT override;
 
     static const os::string<16>& get_serial() OS_NOEXCEPT;

@@ -38,13 +38,22 @@ struct wifi : public initializable
         WPA2_MIXED_PSK
     };
 
+    struct on_connection_event
+    {
+        using callback = void(on_connection_event::*)(bool old_connected, bool new_connected);
+
+        virtual ~on_connection_event() = default;
+        virtual void on_change_connection(bool old_connected, bool new_connected) OS_NOEXCEPT = 0;
+    };
+
+
     using ptr = os::unique_ptr<wifi>;
 
     ~wifi() override = default;
 
-    virtual os::exit connect(const os::string<128>& user, const os::string<64>& passwd, enum auth auth, os::error **error) const OS_NOEXCEPT = 0;
+    virtual os::exit connect(const os::string<32>& ssid, const os::string<64>& passwd, enum auth auth, os::error **error) const OS_NOEXCEPT = 0;
 
-    //virtual os::exit get_ntp() const OS_NOEXCEPT = 0;
+    virtual void set_change_connection(on_connection_event* obj, on_connection_event::callback callback) OS_NOEXCEPT = 0;
 
 
 

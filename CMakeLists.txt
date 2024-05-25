@@ -30,6 +30,7 @@ add_definitions(-DEXCLUDE_CHECK_FOR_STACK_OVERFLOW)
 add_definitions(-DEXCLUDE_USE_MALLOC_FAILED_HOOK)
 add_definitions(-DEXCLUDE_USE_MALLOC_FAILED_HOOK)
 add_definitions(-DNO_SYS=0)
+add_definitions(-DCYW43_LWIP=1)
 
 include_directories(cJSON)
 include_directories(inc)
@@ -62,7 +63,7 @@ file(GLOB_RECURSE HHG_UTILS_INCLUDES CONFIGURE_DEPENDS "hhg-utils/inc/*.hpp" "hh
 file(GLOB_RECURSE HHG_UTILS_SOURCES CONFIGURE_DEPENDS "hhg-utils/src/*.cpp" "hhg-utils/src/*.c")
 
 file(GLOB_RECURSE FREERTOS_KERNEL_INCLUDES CONFIGURE_DEPENDS "FreeRTOS-Kernel/include/*.h" "FreeRTOS-Kernel/portable/ThirdParty/GCC/RP2040/include/*.h")
-file(GLOB_RECURSE FREERTOS_KERNEL_SOURCES CONFIGURE_DEPENDS "FreeRTOS-Kernel/croutine.c" "FreeRTOS-Kernel/event_groups.c" "FreeRTOS-Kernel/list.c" "FreeRTOS-Kernel/queue.c" "FreeRTOS-Kernel/stream_buffer.c" "FreeRTOS-Kernel/tasks.c" "FreeRTOS-Kernel/timers.c" "FreeRTOS-Kernel/portable/MemMang/heap_4.c" "FreeRTOS-Kernel/portable/ThirdParty/GCC/RP2040/*.c")
+file(GLOB_RECURSE FREERTOS_KERNEL_SOURCES CONFIGURE_DEPENDS "FreeRTOS-Kernel/croutine.c" "FreeRTOS-Kernel/event_groups.c" "FreeRTOS-Kernel/list.c" "FreeRTOS-Kernel/queue.c" "FreeRTOS-Kernel/stream_buffer.c" "FreeRTOS-Kernel/tasks.c" "FreeRTOS-Kernel/timers.c" "FreeRTOS-Kernel/portable/MemMang/heap_2.c" "FreeRTOS-Kernel/portable/ThirdParty/GCC/RP2040/*.c")
 
 message(STATUS "PROJECT_SOURCE_DIR=${PROJECT_SOURCE_DIR}")
 message(STATUS "CMAKE_BINARY_DIR=${CMAKE_BINARY_DIR}")
@@ -79,9 +80,10 @@ add_executable(${PROJECT_NAME}
 
 
 target_link_libraries(${PROJECT_NAME}
+        pico_cyw43_arch_lwip_sys_freertos
         pico_stdlib
-#        pico_cyw43_arch_lwip_threadsafe_background
-#        pico_cyw43_arch_lwip_sys_freertos
+        pico_lwip_iperf
+        #pico_lwip_mbedtls
         pico_multicore
         pico_unique_id
         hardware_rtc

@@ -19,6 +19,7 @@
 
 #include "hhg-app/app-main.hpp"
 using hhg::iface::time;
+using hhg::iface::wifi;
 using hhg::driver::hardware;
 using namespace os;
 
@@ -40,7 +41,13 @@ string<32> state_to_string(app_main::state state)
 	string<32> ret;
 	switch (state)
 	{
-		case app_main::NONE:
+        case app_main::NO_WIFI_CONF:
+            ret = "NO_WIFI_CONF";
+            break;
+        case app_main::NO_USERS:
+            ret = "NO_USERS";
+            break;
+		case app_main::NO_TIMESTAMP:
 			ret = "NONE";
 			break;
 		case app_main::INIT:
@@ -81,7 +88,35 @@ void* fsm_thread_handler(void* arg)
 	{
 		switch (app_main::singleton->fsm.state)
 		{
-			case app_main::NONE:
+            case app_main::NO_WIFI_CONF:
+            {
+                auto ssid = app_main::singleton->app_config.get_wifi_ssid();
+                auto passwd = app_main::singleton->app_config.get_wifi_passwd();
+                auto auth = app_main::singleton->app_config.get_wifi_auth();
+                if (ssid.length() && passwd.length() && auth) {
+                    if (app_main::singleton->hardware.get_wifi()->connect(ssid, passwd, wifi::auth{auth}, error) == exit::OK)
+                    {
+                        OS_LOG_INFO(APP_TAG, "Connection OK state:%s - OK", state_to_string(app_main::singleton->fsm.state));
+                        app_main::singleton->fsm.state = app_main::NO_USERS;
+                        app_main::singleton->fsm.old_state = app_main::NO_USERS;
+                    }
+                    else
+                    {
+                        if(*error)
+                        {
+                            os::printf_stack_error(APP_TAG, *error);
+                            delete *error;
+                            app_main::singleton->handle_error();
+                        }
+                    }
+                }
+                break;
+            }
+            case app_main::NO_USERS:
+                app_main::singleton->fsm.state = app_main::NO_TIMESTAMP;
+                app_main::singleton->fsm.old_state = app_main::NO_USERS;
+                break;
+            case app_main::NO_TIMESTAMP:
 			{
 				if(now_in_millis > app_main::TIMESTAMP_2020 * ONE_SEC_IN_MILLIS)
 				{
@@ -96,7 +131,7 @@ void* fsm_thread_handler(void* arg)
 			        app_main::singleton->fsm.errors = 0;
 					OS_LOG_INFO(APP_TAG, "Date time:%s state:%s - OK", date_time.c_str(), state_to_string(app_main::singleton->fsm.state));
 					app_main::singleton->fsm.state = app_main::INIT;
-					app_main::singleton->fsm.old_state = app_main::NONE;
+					app_main::singleton->fsm.old_state = app_main::NO_TIMESTAMP;
 				}
 				else
 				{
