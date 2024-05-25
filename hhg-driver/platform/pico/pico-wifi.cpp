@@ -40,26 +40,65 @@ inline namespace v1
         cyw43_arch_deinit();
     }
 
-    os::exit pico_wifi::init(os::error **error)
+    void *pico_wifi::handle(void *arg)
     {
-#if HHG_DISABLE_WIFI == 1
-        if (cyw43_arch_init())
+        if (cyw43_arch_init()) {
+            OS_LOG_FATAL(APP_TAG, "Failed to initialise");
+            return nullptr;
+        }
+        cyw43_arch_enable_sta_mode();
+
+        while(singleton)
+        {
+            osal_us_sleep(100);
+
+            bool connected = netif_is_link_up(netif_default);
+            if(!singleton->connected && connected)
+            {
+
+                OS_LOG_DEBUG(APP_TAG, "Connected");
+                if(singleton->obj && singleton->callback)
+                {
+                    (singleton->obj->*singleton->callback)(singleton->connected, connected);
+                }
+                singleton->connected = true;
+            }
+            else if(singleton->connected && !connected)
+            {
+
+                OS_LOG_DEBUG(APP_TAG, "Disconnected");
+                if(singleton->obj && singleton->callback)
+                {
+                    (singleton->obj->*singleton->callback)(singleton->connected, connected);
+                }
+                singleton->connected = false;
+            }
+        }
+
+        thread.exit();
+
+        return nullptr;
+    }
+
+    os::exit pico_wifi::init(error **error)
+    {
+        if(singleton)
         {
             if(error)
             {
-                *error = OS_ERROR_BUILD("pico_uart::init() cyw43_arch_init() fail.", error_type::OS_EFAULT);
+                *error = OS_ERROR_BUILD("pico_wifi::init() fail.", error_type::OS_EFAULT);
                 OS_ERROR_PTR_SET_POSITION(*error);
             }
             return exit::KO;
         }
+        singleton = this;
 
-        cyw43_arch_enable_sta_mode();
-#endif
+        thread.create();
 
         return exit::OK;
     }
 
-    os::exit pico_wifi::connect(const string<128> &user, const string<64> &passwd, enum auth auth, error **error) const OS_NOEXCEPT
+    os::exit pico_wifi::connect(const string<32> &ssid, const string<64> &passwd, enum auth auth, error **error) const OS_NOEXCEPT
     {
         uint32_t pico_auth = 0;
         switch (auth)
@@ -77,8 +116,8 @@ inline namespace v1
                 pico_auth = CYW43_AUTH_WPA2_MIXED_PSK;
                 break;
         }
-#if HHG_DISABLE_WIFI == 1
-        if (cyw43_arch_wifi_connect_timeout_ms(passwd.c_str(), passwd.c_str(), pico_auth, TIMEOUT))
+
+        if (cyw43_arch_wifi_connect_async(ssid.c_str(), passwd.c_str(), pico_auth))
         {
             if(error)
             {
@@ -88,15 +127,8 @@ inline namespace v1
             return exit::KO;
         }
 
-        OS_LOG_DEBUG(APP_TAG, "Connected");
-
-#else
-        OS_LOG_WARNING(APP_TAG, "WIFI disabled");
-#endif
         return exit::OK;
     }
-
-
 
 
 }

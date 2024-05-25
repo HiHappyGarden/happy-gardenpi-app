@@ -98,7 +98,7 @@ public:
         this->config.wifi_ssid = wifi_ssid;
     }
 
-    inline const os::string<32>& get_wifi_ssid(const char* wifi_ssid) const OS_NOEXCEPT
+    inline const os::string<32>& get_wifi_ssid() const OS_NOEXCEPT
     {
         return this->config.wifi_ssid;
     }

@@ -39,11 +39,13 @@ class app_main final : public hhg::iface::initializable
 public:
     enum state
     {
-    	NONE         	= 0x00,
-        INIT         	= (1 << 0),
-		CHECK_ZONE   	= (1 << 1),
-		EXECUTE_ZONE 	= (1 << 2),
-		SINCH_TIMESTAMP = (1 << 3),
+        NO_WIFI_CONF    = 0x00,
+        NO_USERS        = (1 << 0),
+    	NO_TIMESTAMP    = (1 << 1),
+        INIT         	= (1 << 2),
+		CHECK_ZONE   	= (1 << 3),
+		EXECUTE_ZONE 	= (1 << 4),
+		SINCH_TIMESTAMP = (1 << 5),
 
 		ERROR  		 	= (1 << 7)
 
@@ -64,8 +66,8 @@ private:
     {
 		static constexpr uint8_t MAX_ERROR = 5;
 
-        enum state   state       = state::NONE;
-        enum state   old_state 	 = state::NONE;
+        enum state   state       = state::NO_WIFI_CONF;
+        enum state   old_state 	 = state::NO_WIFI_CONF;
         uint8_t      errors      = 0;
         os::event    	 events;
         bool         run         = true;

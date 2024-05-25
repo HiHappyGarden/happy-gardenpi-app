@@ -38,10 +38,10 @@ struct button : public initializable
 
     struct event
     {
-        using callback = void(event::*)(enum  status status);
+        using callback = void(event::*)(enum status status);
 
         virtual ~event() = default;
-        virtual void on_button_click(enum  status status) OS_NOEXCEPT = 0;
+        virtual void on_button_click(enum status status) OS_NOEXCEPT = 0;
     };
 
     using ptr = os::unique_ptr<hhg::iface::button>;
