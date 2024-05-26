@@ -88,6 +88,49 @@ void* fsm_thread_handler(void* arg)
 	{
 		switch (app_main::singleton->fsm.state)
 		{
+            case app_main::NO_USERS:
+            {
+                auto admin = app_main::singleton->app_config.get_user(app_config::user::ADMIN);
+                auto user = app_main::singleton->app_config.get_user(1);
+                if(
+                    admin.user.length() && admin.passwd.length()
+                    && user.user.length() && user.passwd.length()
+                )
+                {
+                    OS_LOG_INFO(APP_TAG, "User OK state:%s - OK", state_to_string(app_main::singleton->fsm.state));
+                    app_main::singleton->fsm.state = app_main::NO_WIFI_CONF;
+                    app_main::singleton->fsm.old_state = app_main::NO_USERS;
+                }
+                else
+                {
+                    now_in_millis = app_main::singleton->hardware.get_time()->get_timestamp(error) * ONE_SEC_IN_MILLIS;
+                    if(*error)
+                    {
+                        os::printf_stack_error(APP_TAG, *error);
+                        delete *error;
+                        app_main::singleton->handle_error();
+                    }
+
+                    if(generic_timer == 0)
+                    {
+                        OS_LOG_WARNING(APP_TAG, "Waiting to set users");
+                        generic_timer = ONE_SEC_IN_MILLIS;
+                        if(app_main::singleton->hardware.get_rgb_led()->get_rgb().is_off())
+                        {
+                            app_main::singleton->hardware.get_rgb_led()->set_rgb(0xFF, 0x5A, 0X00);
+                        }
+                        else
+                        {
+                            app_main::singleton->hardware.get_rgb_led()->set_rgb(0x00, 0x00, 0X00);
+                        }
+                    }
+                    else
+                    {
+                        generic_timer -= app_main::FSM_SLEEP;
+                    }
+                }
+                break;
+            }
             case app_main::NO_WIFI_CONF:
             {
                 auto ssid = app_main::singleton->app_config.get_wifi_ssid();
@@ -112,10 +155,6 @@ void* fsm_thread_handler(void* arg)
                 }
                 break;
             }
-            case app_main::NO_USERS:
-                app_main::singleton->fsm.state = app_main::NO_TIMESTAMP;
-                app_main::singleton->fsm.old_state = app_main::NO_USERS;
-                break;
             case app_main::NO_TIMESTAMP:
 			{
 				if(now_in_millis > app_main::TIMESTAMP_2020 * ONE_SEC_IN_MILLIS)

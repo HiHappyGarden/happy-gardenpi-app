@@ -33,4 +33,7 @@
 #define HHG_FSM_ERROR_SLEEP (1000)
 #define HHG_FSM_ERROR_MAX (4)
 
+#define HHG_ADMIN_USER "admin"
+#define HHG_ADMIN_PASSWD "admin"
+
 #endif // HHG_CONFIG_H

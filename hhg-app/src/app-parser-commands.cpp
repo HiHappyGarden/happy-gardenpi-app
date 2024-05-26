@@ -102,6 +102,15 @@ entry commands_config[] =
     {.key = "6", .description = "Set wifi ssid"},
     {.key = "7", .description = "Set wifi password"},
     {.key = "8", .description = "Set wifi auth"},
+    {.key = "9", .description = "Is wifi enabled"},
+    {.key = "10", .description = "Set wifi enabled"},
+    {.key = "11",  .custom_func = [](auto data, auto entry, auto error)
+    {
+        int i =0;
+
+        return exit::OK;
+    }
+    ,.description = "Set set user"},
     {.key = "CLEAR", .description = "Clear all"},
 	{.key = "STORE", .custom_func = [](auto data, auto entry, auto error)
 	{
@@ -306,6 +315,18 @@ os::exit set_app_config(class app_config& app_config, error** error) OS_NOEXCEPT
 
     key = "$CONF 8";
     if(parser->set(key.c_str(), new method(&app_config, &app_config::set_wifi_auth), error) == exit::KO)
+    {
+        return exit::KO;
+    }
+
+    key = "$CONF 9";
+    if(parser->set(key.c_str(), new method(&app_config, &app_config::is_wifi_enabled), error) == exit::KO)
+    {
+        return exit::KO;
+    }
+
+    key = "$CONF 10";
+    if(parser->set(key.c_str(), new method(&app_config, &app_config::set_wifi_enabled), error) == exit::KO)
     {
         return exit::KO;
     }

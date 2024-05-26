@@ -37,32 +37,39 @@ inline namespace v1
 
 class app_config final : public hhg::iface::initializable
 {
-	constexpr static const uint32_t MAIGC = 0xf86c2975;
+public:
+    struct alignas(2) user final
+    {
+        static constexpr uint8_t MAX_USERS = 2;
+        static constexpr uint8_t ADMIN = 0;
+        static struct user EMPTY;
+
+        os::string<32> user;
+        os::string<32> passwd;
+    };
+
+private:
+
+    constexpr static const uint32_t MAIGC = 0xf86c2975;
 	constexpr static const uint8_t VERSION = 1;
 
 	const hhg::iface::fs_io::ptr& fs_io;
 
-	struct alignas(2) user final
-	{
+	mutable struct alignas(2) config final : public hhg::iface::file_version {
+        inline config() OS_NOEXCEPT: file_version{MAIGC, VERSION} {}
 
-		static constexpr uint8_t MAX_USERS = 2;
-
-		os::string<128> user;
-		os::string<64> passwd;
-
-	};
-
-	mutable struct alignas(2) config final : public hhg::iface::file_version
-	{
-		inline config() OS_NOEXCEPT : file_version{MAIGC, VERSION} {}
-		os::string<16> serial;
-		os::string<128> descr;
-		uint8_t zones_size = HHG_ZONES_SIZE;
+        os::string<16> serial;
+        os::string<128> descr;
+        uint8_t zones_size = HHG_ZONES_SIZE;
         uint8_t users_len = 0;
-		user users[user::MAX_USERS];
-        os::string<32> wifi_ssid;
-        os::string<64> wifi_passwd;
-        uint32_t wifi_auth = 0;
+        user users[user::MAX_USERS];
+        struct
+        {
+            os::string<32> ssid;
+            os::string<64> passwd;
+            uint32_t auth = 0;
+            bool enabled = true;
+        }wifi;
         uint32_t crc = MAIGC;
 	} config;
 
@@ -95,37 +102,59 @@ public:
 
     inline void set_wifi_ssid(const char* wifi_ssid) OS_NOEXCEPT
     {
-        this->config.wifi_ssid = wifi_ssid;
+        this->config.wifi.ssid = wifi_ssid;
     }
 
     inline const os::string<32>& get_wifi_ssid() const OS_NOEXCEPT
     {
-        return this->config.wifi_ssid;
+        return this->config.wifi.ssid;
     }
 
     inline void set_wifi_passwd(const char* wifi_passwd) OS_NOEXCEPT
     {
-        this->config.wifi_passwd = wifi_passwd;
+        this->config.wifi.passwd = wifi_passwd;
     }
 
     inline const os::string<64>& get_wifi_passwd() const OS_NOEXCEPT
     {
-        return this->config.wifi_passwd;
+        return this->config.wifi.passwd;
     }
 
     inline void set_wifi_auth(uint32_t wifi_auth) OS_NOEXCEPT
     {
-        this->config.wifi_auth = wifi_auth;
+        this->config.wifi.auth = wifi_auth;
     }
 
     inline uint32_t get_wifi_auth() const OS_NOEXCEPT
     {
-        return this->config.wifi_auth;
+        return this->config.wifi.auth;
     }
+
+    inline void set_wifi_enabled(bool enabled) OS_NOEXCEPT
+    {
+        this->config.wifi.enabled = enabled;
+    }
+
+    inline bool is_wifi_enabled() const OS_NOEXCEPT
+    {
+        return this->config.wifi.enabled;
+    }
+
+    inline os::exit set_user(uint8_t idx, const char* user, const char* passwd);
+
+    inline const user& get_user(uint8_t idx) const OS_NOEXCEPT
+    {
+        if(idx >= user::MAX_USERS || idx > config.users_len)
+        {
+            return user::EMPTY;
+        }
+        return this->config.users[idx];
+    }
+
 
     os::exit set_descr(const char descr[]) OS_NOEXCEPT;
 
-	const char* get_version() const OS_NOEXCEPT;
+	const char* get_version() OS_NOEXCEPT;
 
 	os::exit store(os::error** error) const OS_NOEXCEPT;
 

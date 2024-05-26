@@ -18,6 +18,8 @@ set(ZONES_SIZE 4)
 set(FSM_MAIN_SLEEP 100)
 set(FSM_ERROR_SLEEP 1000)
 set(FSM_ERROR_MAX 4)
+set(ADMIN_USER "admin")
+set(ADMIN_PASSWD "admin")
 
 
 
@@ -44,6 +46,7 @@ include_directories(hhg-app/inc)
 include_directories(hhg-parser/inc)
 include_directories(FreeRTOS-Kernel/include)
 include_directories(FreeRTOS-Kernel/portable/ThirdParty/GCC/RP2040/include)
+include_directories(md5)
 
 #add_subdirectory(freertos)
 add_subdirectory(hhg-parser)
@@ -71,6 +74,7 @@ message(STATUS "CMAKE_BINARY_DIR=${CMAKE_BINARY_DIR}")
 add_executable(${PROJECT_NAME}
         src/main.cpp
         cJSON/cJSON.h cJSON/cJSON.c cJSON/cJSON_Utils.h cJSON/cJSON_Utils.c
+        md5/md5.h md5/md5.cpp
         ${OSAL_INCLUDES} ${OSAL_SOURCES}
         ${HHG_DRIVERS_INCLUDES} ${HHG_DRIVERS_SOURCES}
         ${HHG_APP_INCLUDES} ${HHG_APP_SOURCES}
@@ -95,7 +99,6 @@ target_link_libraries(${PROJECT_NAME}
         hardware_i2c
         hardware_pwm
         hardware_exception
-#        freertos
         hi-happy-garden-parser
 )
 
