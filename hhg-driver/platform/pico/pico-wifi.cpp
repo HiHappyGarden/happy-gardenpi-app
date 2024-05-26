@@ -50,7 +50,7 @@ inline namespace v1
 
         while(singleton)
         {
-            osal_us_sleep(100);
+            osal_us_sleep(100_ms);
 
             bool connected = netif_is_link_up(netif_default);
             if(!singleton->connected && connected)

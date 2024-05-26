@@ -27,6 +27,7 @@ using hhg::utils::crc32;
 
 #include "hhg-config.h"
 #include "cJSON.h"
+#include "md5.h"
 
 namespace hhg::app
 {
@@ -39,6 +40,8 @@ namespace
 constexpr char APP_TAG[] = "APP CONFIG";
 
 }
+
+app_config::user app_config::user::EMPTY = {};
 
 app_config::app_config(const fs_io::ptr& fsio) OS_NOEXCEPT
 : fs_io(fsio)
@@ -71,6 +74,29 @@ os::exit app_config::set_serial(const char serial[]) OS_NOEXCEPT
 	return exit::OK;
 }
 
+os::exit app_config::set_user(uint8_t idx, const char *user, const char *passwd) OS_NOEXCEPT
+{
+    auto user_len = strlen(user);
+    auto passwd_len = strlen(passwd);
+    if(idx >= user::MAX_USERS || idx > config.users_len || user_len == 0 || user_len > 32 || passwd_len == 0 || passwd_len == 32)
+    {
+        return os::exit::KO;
+    }
+
+    char digest[33];
+    uint8_t hash[16];
+
+    // Write the calculated hash to `hash`
+    MD5::hash(passwd, hash);
+    // Retrieve the hex-encoded digest
+    MD5::digest(hash, digest);
+
+    this->config.users[idx].user = user;
+    this->config.users[idx].passwd = digest;
+    return os::exit::OK;
+}
+
+
 os::exit app_config::set_descr(const char descr[]) OS_NOEXCEPT
 {
 	if(descr)
@@ -89,7 +115,7 @@ os::exit app_config::set_descr(const char descr[]) OS_NOEXCEPT
 	return exit::OK;
 }
 
-const char* app_config::get_version() const OS_NOEXCEPT
+const char* app_config::get_version() OS_NOEXCEPT
 {
 	static string<16> ret;
 	if(ret.length() == 0)
@@ -167,7 +193,20 @@ os::exit app_config::load(app_config::on_vesrion_change on_version_change, error
 
 os::exit app_config::load_default(os::error **error) OS_NOEXCEPT
 {
+
+    char digest[33];
+    uint8_t hash[16];
+
+    // Write the calculated hash to `hash`
+    MD5::hash(HHG_ADMIN_PASSWD, hash);
+    // Retrieve the hex-encoded digest
+    MD5::digest(hash, digest);
+
+
     struct config config_default;
+    config_default.users[0].user = HHG_ADMIN_USER;
+    config_default.users[0].passwd = digest;
+    config_default.users_len = 1;
 	config = config_default;
 	return store(error);
 }
@@ -246,24 +285,31 @@ os::exit app_config::clear(os::error** error) const OS_NOEXCEPT
             cJSON_AddItemToArray(users, user);
         }
 
-        if (cJSON_AddStringToObject(root, "wifi_ssid", config.wifi_ssid.c_str()) == nullptr)
+        if (cJSON_AddStringToObject(root, "wifi.ssid", config.wifi.ssid.c_str()) == nullptr)
         {
             cJSON_Delete(root);
-            OS_LOG_ERROR(APP_TAG, "Malloc fail for wifi_ssid");
+            OS_LOG_ERROR(APP_TAG, "Malloc fail for wifi.ssid");
             return nullptr;
         }
 
-        if (cJSON_AddStringToObject(root, "wifi_passwd", config.wifi_passwd.c_str()) == nullptr)
+        if (cJSON_AddStringToObject(root, "wifi.passwd", config.wifi.passwd.c_str()) == nullptr)
         {
             cJSON_Delete(root);
-            OS_LOG_ERROR(APP_TAG, "Malloc fail for wifi_passwd");
+            OS_LOG_ERROR(APP_TAG, "Malloc fail for wifi.passwd");
             return nullptr;
         }
 
-        if (cJSON_AddNumberToObject(root, "wifi_auth", config.wifi_auth) == nullptr)
+        if (cJSON_AddNumberToObject(root, "wifi.auth", config.wifi.auth) == nullptr)
         {
             cJSON_Delete(root);
-            OS_LOG_ERROR(APP_TAG, "Malloc fail for wifi_auth");
+            OS_LOG_ERROR(APP_TAG, "Malloc fail for wifi.auth");
+            return nullptr;
+        }
+
+        if (cJSON_AddNumberToObject(root, "wifi.enabled", config.wifi.enabled) == nullptr)
+        {
+            cJSON_Delete(root);
+            OS_LOG_ERROR(APP_TAG, "Malloc fail for wifi.enabled");
             return nullptr;
         }
 
