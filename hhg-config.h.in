@@ -36,4 +36,6 @@
 #define HHG_ADMIN_USER "@ADMIN_USER@"
 #define HHG_ADMIN_PASSWD "@ADMIN_PASSWD@"
 
+#define HHG_NO_WIFI (@NO_WIFI@)
+
 #endif // HHG_CONFIG_H

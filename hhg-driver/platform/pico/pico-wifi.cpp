@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "pico/pico-wifi.hpp"
+#include "hhg-config.h"
 using namespace os;
 
 #include <pico/cyw43_arch.h>
@@ -37,7 +38,9 @@ inline namespace v1
 
     pico_wifi::~pico_wifi() OS_NOEXCEPT
     {
+#if HHG_NO_WIFI == 0
         cyw43_arch_deinit();
+#endif
     }
 
     void *pico_wifi::handle(void *arg)
@@ -93,8 +96,9 @@ inline namespace v1
         }
         singleton = this;
 
+#if HHG_NO_WIFI == 0
         thread.create();
-
+#endif
         return exit::OK;
     }
 
