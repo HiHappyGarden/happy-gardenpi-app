@@ -114,7 +114,7 @@ void* app_parser_thread_handler(void* arg) OS_NOEXCEPT
 			if (start && end)
 			{
 				error* error = nullptr;
-				if(app_parser::singleton->parser.execute(buffer.strstr(buffer.c_str() - start, end - start - 1).c_str(), ret.c_str(), ret.size(), &error) == exit::OK)
+				if(app_parser::singleton->parser.execute(buffer.strstr(start - buffer.c_str(), end - start).c_str(), ret.c_str(), ret.size(), &error) == exit::OK)
 				{
 					ret += app_parser::NEW_LINE;
 					app_parser::singleton->io->transmit(reinterpret_cast<const uint8_t*>(ret.c_str()), ret.length());;
