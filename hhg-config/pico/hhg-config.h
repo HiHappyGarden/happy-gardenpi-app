@@ -36,4 +36,6 @@
 #define HHG_ADMIN_USER "admin"
 #define HHG_ADMIN_PASSWD "admin"
 
+#define HHG_NO_WIFI (1)
+
 #endif // HHG_CONFIG_H

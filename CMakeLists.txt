@@ -20,7 +20,7 @@ set(FSM_ERROR_SLEEP 1000)
 set(FSM_ERROR_MAX 4)
 set(ADMIN_USER "admin")
 set(ADMIN_PASSWD "admin")
-
+set(NO_WIFI 1)
 
 
 pico_sdk_init()
@@ -33,6 +33,7 @@ add_definitions(-DEXCLUDE_USE_MALLOC_FAILED_HOOK)
 add_definitions(-DEXCLUDE_USE_MALLOC_FAILED_HOOK)
 add_definitions(-DNO_SYS=0)
 add_definitions(-DCYW43_LWIP=1)
+
 
 include_directories(cJSON)
 include_directories(inc)
