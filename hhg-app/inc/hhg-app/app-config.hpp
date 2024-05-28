@@ -140,7 +140,7 @@ public:
         return this->config.wifi.enabled;
     }
 
-    inline os::exit set_user(uint8_t idx, const char* user, const char* passwd);
+    os::exit set_user(uint8_t idx, const char* user, const char* passwd);
 
     inline const user& get_user(uint8_t idx) const OS_NOEXCEPT
     {

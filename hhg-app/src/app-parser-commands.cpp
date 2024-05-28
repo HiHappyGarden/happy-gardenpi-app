@@ -106,8 +106,22 @@ entry commands_config[] =
     {.key = "10", .description = "Set wifi enabled"},
     {.key = "11",  .custom_func = [](auto data, auto entry, auto error)
     {
-        int i =0;
 
+        char* end_ptr = nullptr;
+        uint8_t idx = strtol(data.tokens[2].start, &end_ptr, 10);
+        if (end_ptr == data.tokens[2].start || *end_ptr != '\0' || errno != 0)
+        {
+            printf("KO");
+            return exit::KO;
+        }
+
+        if(app_config->set_user(idx, data.tokens[3].start, data.tokens[4].start) == exit::KO)
+        {
+            printf("KO");
+            return exit::KO;
+        }
+
+        printf("OK");
         return exit::OK;
     }
     ,.description = "Set set user"},

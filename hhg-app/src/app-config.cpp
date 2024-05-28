@@ -93,6 +93,7 @@ os::exit app_config::set_user(uint8_t idx, const char *user, const char *passwd)
 
     this->config.users[idx].user = user;
     this->config.users[idx].passwd = digest;
+    this->config.users_len++;
     return os::exit::OK;
 }
 

@@ -33,21 +33,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="029740bc-9460-411a-aa9c-3448b8c57430" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/md5" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitmodules" beforeDir="false" afterPath="$PROJECT_DIR$/.gitmodules" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-config.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-config.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-main.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-main.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-parser.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-parser.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hhg-app/src/app-config.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/src/app-config.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-app/src/app-main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/src/app-main.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hhg-app/src/app-parser-commands.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/src/app-parser-commands.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-config.h.in" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-config.h.in" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-config/pico/FreeRTOSConfig.h" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-config/pico/FreeRTOSConfig.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-config/pico/hhg-config.h" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-config/pico/hhg-config.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-wifi.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-wifi.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-app/src/app-parser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/src/app-parser.cpp" afterDir="false" />
       <change beforePath="/usr/local/src/pico-sdk/lib/btstack" beforeDir="false" afterPath="/usr/local/src/pico-sdk/lib/btstack" afterDir="false" />
       <change beforePath="/usr/local/src/pico-sdk/lib/btstack/doc/manual/btstack_gettingstarted.tex" beforeDir="false" afterPath="/usr/local/src/pico-sdk/lib/btstack/doc/manual/btstack_gettingstarted.tex" afterDir="false" />
       <change beforePath="/usr/local/src/pico-sdk/lib/btstack/port/mtk/docs/ruggear-gettingstarted.tex" beforeDir="false" afterPath="/usr/local/src/pico-sdk/lib/btstack/port/mtk/docs/ruggear-gettingstarted.tex" afterDir="false" />
@@ -102,7 +93,7 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug-Cortex M" />
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="/usr/local/src/pico-sdk" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="HighlightingSettingsPerFile">
@@ -129,15 +120,15 @@
   "keyToString": {
     "CMake Application.ELF2UF2Build.executor": "Debug",
     "CMake Application.hi-happy-garden-app.executor": "Debug",
-    "OpenOCD Download & Run.Raspberry Pi Pico W.executor": "Debug",
+    "OpenOCD Download & Run.Raspberry Pi Pico W.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "/home/antoniosalsi/projects/hi-happy-garden-app/hhg-iface/inc/hhg-iface",
+    "git-widget-placeholder": "raspberry-pico",
+    "last_opened_file_path": "/home/antoniosalsi/share/cpp-test",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -169,11 +160,6 @@
     <option name="rtosType" value="FreeRTOS" />
   </component>
   <component name="RunManager" selected="OpenOCD Download &amp; Run.Raspberry Pi Pico W">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="ELF2UF2Build" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden-app" TARGET_NAME="hi-happy-garden-app" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden-app" RUN_TARGET_NAME="hi-happy-garden-app">
       <envs>
         <env name="-DFREERTOS" value="ON -DPICO=ON" />
@@ -730,6 +716,9 @@
       <workItem from="1716673007772" duration="5386000" />
       <workItem from="1716678431578" duration="14000" />
       <workItem from="1716755561464" duration="5344000" />
+      <workItem from="1716841820925" duration="2195000" />
+      <workItem from="1716927370384" duration="82000" />
+      <workItem from="1716931275043" duration="1920000" />
     </task>
     <servers />
   </component>
@@ -742,25 +731,6 @@
     <isAutomaticReloadCMake value="true" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/hhg-app/src/app-parser.cpp</url>
-          <line>102</line>
-          <option name="timeStamp" value="35" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/hhg-app/src/app-parser.cpp</url>
-          <line>65</line>
-          <option name="timeStamp" value="38" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/hhg-app/src/app-parser.cpp</url>
-          <line>92</line>
-          <option name="timeStamp" value="39" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="com.jetbrains.cidr.embedded.openocd.conf.type">
         <watch expression="app_main::singleton" language="ObjectiveC" />
