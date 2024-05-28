@@ -121,6 +121,7 @@ inline namespace v1
                 break;
         }
 
+#if HHG_NO_WIFI == 0
         if (cyw43_arch_wifi_connect_async(ssid.c_str(), passwd.c_str(), pico_auth))
         {
             if(error)
@@ -130,6 +131,7 @@ inline namespace v1
             }
             return exit::KO;
         }
+#endif
 
         return exit::OK;
     }
