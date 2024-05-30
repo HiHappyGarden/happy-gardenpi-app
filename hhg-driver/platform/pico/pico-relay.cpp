@@ -33,10 +33,10 @@ pico_relay::~pico_relay() OS_NOEXCEPT = default;
 os::exit pico_relay::init(error **error)
 {
 
-    gpio_put(RELAY_0, false);
-    gpio_put(RELAY_1, false);
-    gpio_put(RELAY_2, false);
-    gpio_put(RELAY_3, false);
+    gpio_put(RELAY_0, true);
+    gpio_put(RELAY_1, true);
+    gpio_put(RELAY_2, true);
+    gpio_put(RELAY_3, true);
 
     return exit::OK;
 }
@@ -47,19 +47,6 @@ inline uint8_t pico_relay::size() const OS_NOEXCEPT
     return 4;
 }
 
-bool pico_relay::operator[](uint8_t idx) OS_NOEXCEPT
-{
-    static bool ret = false;
-    if(idx >= size())
-    {
-        return ret;
-    }
-
-
-
-    return ret;
-}
-
 bool pico_relay::operator[](uint8_t idx) const OS_NOEXCEPT
 {
     if(idx >= size())
@@ -67,20 +54,20 @@ bool pico_relay::operator[](uint8_t idx) const OS_NOEXCEPT
         return false;
     }
 
-    return gpio_get(RELAY_0 + idx);;
+    return !gpio_get(RELAY_0 + idx);;
 }
 
-    bool pico_relay::set(uint8_t idx, bool value) OS_NOEXCEPT
+bool pico_relay::set(uint8_t idx, bool value) OS_NOEXCEPT
+{
+    if(idx >= size())
     {
-        if(idx >= size())
-        {
-            return false;
-        }
-
-        gpio_put(RELAY_0 + idx, value);
-
-        return true;
+        return false;
     }
+
+    gpio_put(RELAY_0 + idx, !value);
+
+    return true;
+}
 
 
 }

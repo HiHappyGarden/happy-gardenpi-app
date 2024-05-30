@@ -35,8 +35,6 @@ struct relay : public initializable
 
     virtual uint8_t size() const OS_NOEXCEPT = 0;
 
-    virtual bool operator [](uint8_t idx) OS_NOEXCEPT = 0;
-
     virtual bool operator [](uint8_t idx) const OS_NOEXCEPT = 0;
 
     virtual bool set(uint8_t pin, bool value) OS_NOEXCEPT = 0;

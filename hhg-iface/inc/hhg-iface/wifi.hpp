@@ -48,6 +48,7 @@ struct wifi : public initializable
 
 
     using ptr = os::unique_ptr<wifi>;
+    using on_ntp_received = void (*)(os::exit status, time_t);
 
     ~wifi() override = default;
 
@@ -55,7 +56,7 @@ struct wifi : public initializable
 
     virtual void set_change_connection(on_connection_event* obj, on_connection_event::callback callback) OS_NOEXCEPT = 0;
 
-
+    virtual os::exit ntp_start(on_ntp_received, os::error **error) OS_NOEXCEPT = 0;
 
 };
 

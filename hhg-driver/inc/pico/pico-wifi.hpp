@@ -24,14 +24,19 @@
 #include "hhg-driver/os-config.hpp"
 #include "FreeRTOSConfig.h"
 
+#include <pico/cyw43_arch.h>
+
 namespace hhg::driver
 {
 inline namespace v1
 {
+
+
     class pico_wifi final : public hhg::iface::wifi
     {
         static inline pico_wifi* singleton = nullptr;
 
+        constexpr static uint32_t NTP_DELTA  = 2'208'988'800;
         constexpr static uint32_t TIMEOUT = 30'000;
 
         static void* handle(void* arg);
@@ -41,6 +46,17 @@ inline namespace v1
         on_connection_event::callback callback = nullptr;
 
         bool connected = false;
+
+        struct ntp
+        {
+            ip_addr_t ntp_server_address;
+            bool dns_request_sent;
+            udp_pcb *ntp_pcb;
+            absolute_time_t ntp_test_time;
+            alarm_id_t ntp_resend_alarm;
+        } state{};
+        on_ntp_received on_ntp_callback = nullptr;
+        os::error **error = nullptr;
     public:
 
         pico_wifi();
@@ -57,7 +73,14 @@ inline namespace v1
 
         os::exit connect(const os::string<32>& ssid, const os::string<64>& passwd, enum auth auth, os::error **error) const OS_NOEXCEPT override;
 
+        os::exit ntp_start(on_ntp_received, os::error **error) OS_NOEXCEPT override;
 
+    private:
+        static void ntp_request(struct ntp* state);
+        static void ntp_dns_found(const char *hostname, const ip_addr_t *ipaddr, void *arg);
+        static void ntp_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, u16_t port);
     };
+
+
 }
 }

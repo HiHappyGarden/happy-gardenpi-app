@@ -38,4 +38,8 @@
 
 #define HHG_NO_WIFI (@NO_WIFI@)
 
+#define HHG_NTP_MSG_LEN (@NTP_MSG_LEN@)
+#define HHG_NTP_PORT (@NTP_PORT@)
+#define HHG_NTP_SERVER "@NTP_SERVER@"
+
 #endif // HHG_CONFIG_H

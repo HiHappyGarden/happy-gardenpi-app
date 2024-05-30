@@ -19,6 +19,7 @@
 
 #pragma once
 #include "hhg-iface/initializable.hpp"
+#include "hhg-iface/wifi.hpp"
 #include "hhg-driver/hardware.hpp"
 #include "osal/osal.hpp"
 #include "hhg-app/app-config.hpp"
@@ -34,13 +35,13 @@ inline namespace v1
 void* fsm_thread_handler(void* arg);
 
 //TODO: implement REAL singleton
-class app_main final : public hhg::iface::initializable
+class app_main final : public hhg::iface::initializable, public hhg::iface::wifi::on_connection_event
 {
 public:
     enum state
     {
         CHECK_USERS     = 0x00,
-        CHECK_WIFI_CONF = (1 << 0),
+        CHECK_WIFI      = (1 << 0),
     	CHECK_TIMESTAMP = (1 << 1),
         INIT         	= (1 << 2),
 		CHECK_ZONE   	= (1 << 3),
@@ -62,15 +63,17 @@ private:
     hhg::app::app_parser app_parser;
 
 	os::thread fsm_thread{"fsm", hhg::driver::HIGH, 1024 * 2, fsm_thread_handler};
+
     struct fsm
     {
 		static constexpr uint8_t MAX_ERROR = 5;
 
-        enum state   state       = state::CHECK_USERS;
-        enum state   old_state 	 = state::CHECK_USERS;
-        uint8_t      errors      = 0;
-        os::event    	 events;
-        bool         run         = true;
+        enum state   state              = state::CHECK_USERS;
+        enum state   old_state 	        = state::CHECK_USERS;
+        uint8_t      errors             = 0;
+        os::event    events;
+        bool         run                = true;
+        bool         waiting_connection = false;
     }fsm;
 
 
@@ -88,6 +91,8 @@ public:
 private:
 
     os::exit handle_error() OS_NOEXCEPT;
+
+    void on_change_connection(bool old_connected, bool new_connected) OS_NOEXCEPT override;
 
 };
 
