@@ -20,8 +20,10 @@ set(FSM_ERROR_SLEEP 1000)
 set(FSM_ERROR_MAX 4)
 set(ADMIN_USER "admin")
 set(ADMIN_PASSWD "admin")
-set(NO_WIFI 1)
-
+set(NO_WIFI 0)
+set(NTP_MSG_LEN 48)
+set(NTP_PORT 123)
+set(NTP_SERVER "0.it.pool.ntp.org")
 
 pico_sdk_init()
 

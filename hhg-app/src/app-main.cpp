@@ -21,8 +21,8 @@
 using hhg::iface::time;
 using hhg::iface::wifi;
 using hhg::driver::hardware;
+using on_connection_event = hhg::iface::wifi::on_connection_event;
 using namespace os;
-
 
 #include "hhg-app/app-parser-commands.hpp"
 
@@ -41,8 +41,8 @@ string<32> state_to_string(app_main::state state)
 	string<32> ret;
 	switch (state)
 	{
-        case app_main::CHECK_WIFI_CONF:
-            ret = "CHECK_WIFI_CONF";
+        case app_main::CHECK_WIFI:
+            ret = "CHECK_WIFI";
             break;
         case app_main::CHECK_USERS:
             ret = "CHECK_USERS";
@@ -97,8 +97,9 @@ void* fsm_thread_handler(void* arg)
                     && user.user.length() && user.passwd.length()
                 )
                 {
+                    app_main::singleton->fsm.events.set(static_cast<uint8_t>(app_main::CHECK_USERS));
                     OS_LOG_INFO(APP_TAG, "User OK state:%s - OK", state_to_string(app_main::singleton->fsm.state));
-                    app_main::singleton->fsm.state = app_main::CHECK_WIFI_CONF;
+                    app_main::singleton->fsm.state = app_main::CHECK_WIFI;
                     app_main::singleton->fsm.old_state = app_main::CHECK_USERS;
                 }
                 else
@@ -110,7 +111,6 @@ void* fsm_thread_handler(void* arg)
                         delete *error;
                         app_main::singleton->handle_error();
                     }
-
                     if(generic_timer == 0)
                     {
                         OS_LOG_WARNING(APP_TAG, "Waiting to set users");
@@ -131,25 +131,33 @@ void* fsm_thread_handler(void* arg)
                 }
                 break;
             }
-            case app_main::CHECK_WIFI_CONF:
+            case app_main::CHECK_WIFI:
             {
                 auto ssid = app_main::singleton->app_config.get_wifi_ssid();
                 auto passwd = app_main::singleton->app_config.get_wifi_passwd();
                 auto auth = app_main::singleton->app_config.get_wifi_auth();
+                bool connection_flag =  app_main::singleton->fsm.events.get() & static_cast<uint8_t>(app_main::CHECK_WIFI);
 
                 if(!app_main::singleton->app_config.is_wifi_enabled())
                 {
                     app_main::singleton->fsm.state = app_main::CHECK_TIMESTAMP;
                     app_main::singleton->fsm.old_state = app_main::CHECK_USERS;
                 }
-
-                if (ssid.length() && passwd.length() && auth)
+                if(app_main::singleton->fsm.waiting_connection && connection_flag)
                 {
-                    if (app_main::singleton->hardware.get_wifi()->connect(ssid, passwd, wifi::auth{auth}, error) == exit::OK)
+                    app_main::singleton->fsm.events.set(static_cast<uint8_t>(app_main::CHECK_WIFI));
+                    OS_LOG_INFO(APP_TAG, "Connection OK state:%s - OK", state_to_string(app_main::singleton->fsm.state));
+                    app_main::singleton->fsm.state = app_main::CHECK_TIMESTAMP;
+                    app_main::singleton->fsm.old_state = app_main::CHECK_USERS;
+                }
+                else if (ssid.length() && passwd.length() && auth)
+                {
+                    if ( !app_main::singleton->fsm.waiting_connection
+                        && !connection_flag
+                        && app_main::singleton->hardware.get_wifi()->connect(ssid, passwd, wifi::auth{auth}, error) == exit::OK)
                     {
-                        OS_LOG_INFO(APP_TAG, "Connection OK state:%s - OK", state_to_string(app_main::singleton->fsm.state));
-                        app_main::singleton->fsm.state = app_main::CHECK_TIMESTAMP;
-                        app_main::singleton->fsm.old_state = app_main::CHECK_USERS;
+                        app_main::singleton->fsm.waiting_connection = true;
+                        OS_LOG_INFO(APP_TAG, "Waiting connection");
                     }
                     else
                     {
@@ -432,6 +440,8 @@ os::exit app_main::init(class os::error** error) OS_NOEXCEPT
 
     delete config_data;
 
+    hardware.get_wifi()->set_change_connection(this, &on_connection_event::on_change_connection);
+
 	return os::exit::OK;
 }
 
@@ -454,6 +464,30 @@ os::exit app_main::handle_error() OS_NOEXCEPT
 		return exit::KO;
 	}
 }
+
+void app_main::on_change_connection(bool old_connected, bool new_connected) OS_NOEXCEPT
+{
+    if(!old_connected && new_connected)
+    {
+        app_main::singleton->fsm.events.set(static_cast<uint8_t>(app_main::CHECK_WIFI));
+
+        app_main::singleton->hardware.get_wifi()->ntp_start([](os::exit status, time_t timestamp)
+        {
+            if(status == exit::OK)
+            {
+                app_main::singleton->hardware.get_time()->set_timestamp(0, nullptr);
+            }
+        }, nullptr);
+
+    }
+    else if(old_connected && !new_connected)
+    {
+        app_main::singleton->fsm.events.clear(static_cast<uint8_t>(app_main::CHECK_WIFI));
+        app_main::singleton->fsm.waiting_connection = false;
+    }
+}
+
+
 
 }
 }

@@ -49,12 +49,9 @@ public:
 
     uint8_t size() const OS_NOEXCEPT override;
 
-    bool operator [](uint8_t idx) OS_NOEXCEPT override;
-
     bool operator [](uint8_t idx) const OS_NOEXCEPT override;
 
     bool set(uint8_t pin, bool value) OS_NOEXCEPT override;
-
 
 };
 

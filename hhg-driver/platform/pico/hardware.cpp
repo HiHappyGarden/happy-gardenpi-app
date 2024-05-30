@@ -46,7 +46,8 @@ namespace
 {
 
 constexpr const char APP_TAG[] = "HARDWARE";
-    relay* relay_to_test;
+relay* relay_to_test; //TODO: da rimuovere
+
 }
 
 
@@ -355,7 +356,6 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
         return exit::KO;
     }
     OS_LOG_INFO(APP_TAG, "Init WiFI - OK");
-
 
     //TODO: da rimuovere
     button->set_on_button_click(&test_one, &button::event::on_button_click);

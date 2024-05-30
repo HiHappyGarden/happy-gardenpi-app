@@ -21,7 +21,12 @@
 #include "hhg-config.h"
 using namespace os;
 
-#include <pico/cyw43_arch.h>
+
+#include <pico/time.h>
+#include <lwip/dns.h>
+#include <lwip/pbuf.h>
+#include <lwip/udp.h>
+
 
 
 namespace hhg::driver
@@ -32,6 +37,7 @@ inline namespace v1
     namespace
     {
         constexpr char APP_TAG[] = "DRV WIFI";
+
     }
 
     pico_wifi::pico_wifi() = default;
@@ -50,6 +56,8 @@ inline namespace v1
             return nullptr;
         }
         cyw43_arch_enable_sta_mode();
+
+        udp_recv(singleton->state.ntp_pcb, ntp_recv, &singleton->state);
 
         while(singleton)
         {
@@ -83,7 +91,7 @@ inline namespace v1
         return nullptr;
     }
 
-    os::exit pico_wifi::init(error **error)
+    os::exit pico_wifi::init(class error **error)
     {
         if(singleton)
         {
@@ -102,7 +110,7 @@ inline namespace v1
         return exit::OK;
     }
 
-    os::exit pico_wifi::connect(const string<32> &ssid, const string<64> &passwd, enum auth auth, error **error) const OS_NOEXCEPT
+    os::exit pico_wifi::connect(const string<32> &ssid, const string<64> &passwd, enum auth auth, class error **error) const OS_NOEXCEPT
     {
         uint32_t pico_auth = 0;
         switch (auth)
@@ -136,6 +144,108 @@ inline namespace v1
         return exit::OK;
     }
 
+    void pico_wifi::ntp_request(struct ntp* state)
+    {
+        // cyw43_arch_lwip_begin/end should be used around calls into lwIP to ensure correct locking.
+        // You can omit them if you are in a callback from lwIP. Note that when using pico_cyw_arch_poll
+        // these calls are a no-op and can be omitted, but it is a good practice to use them in
+        // case you switch the cyw43_arch type later.
+        //cyw43_arch_lwip_begin();
+        struct pbuf *p = pbuf_alloc(PBUF_TRANSPORT, HHG_NTP_MSG_LEN, PBUF_RAM);
+        auto req = static_cast<uint8_t* >(p->payload);
+        memset(req, 0, HHG_NTP_MSG_LEN);
+        req[0] = 0x1b;
+        udp_sendto(state->ntp_pcb, p, &state->ntp_server_address, HHG_NTP_PORT);
+        pbuf_free(p);
+        //cyw43_arch_lwip_end();
+    }
+
+
+    void pico_wifi::ntp_dns_found(const char *hostname, const ip_addr_t *ipaddr, void *arg)
+    {
+        auto state = static_cast<struct ntp*>(arg);
+        if (ipaddr)
+        {
+            state->ntp_server_address = *ipaddr;
+            OS_LOG_DEBUG(APP_TAG, "NTP address %s", ipaddr_ntoa(ipaddr));
+            ntp_request(state);
+        }
+        else
+        {
+            OS_LOG_DEBUG(APP_TAG, "NTP dns request failed");
+            if(singleton && singleton->error && *singleton->error)
+            {
+                *singleton->error = OS_ERROR_APPEND(*singleton->error, "NTP dns request failed", error_type::OS_EADDRNOTAVAIL);
+                OS_ERROR_PTR_SET_POSITION(*singleton->error);
+            }
+        }
+    }
+
+
+
+    void pico_wifi::ntp_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, u16_t port)
+    {
+        auto state = static_cast<struct ntp*>(arg);
+        uint8_t mode = pbuf_get_at(p, 0) & 0x7;
+        uint8_t stratum = pbuf_get_at(p, 1);
+
+        OS_LOG_DEBUG(APP_TAG, "---->1");
+
+        // Check the result
+        if (ip_addr_cmp(addr, &state->ntp_server_address) && port == HHG_NTP_PORT && p->tot_len == HHG_NTP_MSG_LEN && mode == 0x4 && stratum != 0)
+        {
+            uint8_t seconds_buf[4] = {0};
+            pbuf_copy_partial(p, seconds_buf, sizeof(seconds_buf), 40);
+            uint32_t seconds_since_1900 = seconds_buf[0] << 24 | seconds_buf[1] << 16 | seconds_buf[2] << 8 | seconds_buf[3];
+            uint32_t seconds_since_1970 = seconds_since_1900 - NTP_DELTA;
+            time_t epoch = seconds_since_1970;
+            OS_LOG_DEBUG(APP_TAG, "NTP request - OK %timestamp:%u", epoch);
+            if(singleton && singleton->on_ntp_callback)
+            {
+                singleton->on_ntp_callback(exit::OK, epoch);
+            }
+        }
+        else
+        {
+            if(singleton->pico_wifi::error)
+            {
+                *singleton->pico_wifi::error = OS_ERROR_APPEND(*singleton->pico_wifi::error, "Invalid ntp response", error_type::OS_ECONNABORTED);
+                OS_ERROR_PTR_SET_POSITION(*singleton->pico_wifi::error);
+            }
+
+            OS_LOG_DEBUG(APP_TAG, "NTP request - KO");
+            if(singleton && singleton->on_ntp_callback)
+            {
+                singleton->on_ntp_callback(exit::KO, 0);
+            }
+        }
+        pbuf_free(p);
+    }
+
+
+
+
+    os::exit pico_wifi::ntp_start(on_ntp_received on_ntp_callback, struct error **error) OS_NOEXCEPT
+    {
+        pico_wifi::on_ntp_callback = on_ntp_callback;
+        pico_wifi::error = error;
+
+        memset(&state, 0, sizeof(state));
+        state.ntp_pcb = udp_new_ip_type(IPADDR_TYPE_ANY);
+
+        cyw43_arch_lwip_begin();
+
+        err_t err = dns_gethostbyname(HHG_NTP_SERVER, &state.ntp_server_address, ntp_dns_found, &state);
+        if(err && pico_wifi::error)
+        {
+            *pico_wifi::error = new osal::error("dns_gethostbyname() fail", err, get_file_name(__FILE__), "pico_wifi::ntp_start", __LINE__);
+            OS_ERROR_PTR_SET_POSITION(*pico_wifi::error);
+        }
+
+        cyw43_arch_lwip_end();
+
+        return err == 0 ? exit::OK : exit::KO;
+    }
 
 }
 }

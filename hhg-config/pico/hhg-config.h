@@ -36,6 +36,10 @@
 #define HHG_ADMIN_USER "admin"
 #define HHG_ADMIN_PASSWD "admin"
 
-#define HHG_NO_WIFI (1)
+#define HHG_NO_WIFI (0)
+
+#define HHG_NTP_MSG_LEN (48)
+#define HHG_NTP_PORT (123)
+#define HHG_NTP_SERVER "0.it.pool.ntp.org"
 
 #endif // HHG_CONFIG_H
