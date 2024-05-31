@@ -46,14 +46,12 @@ inline namespace v1
         on_connection_event::callback callback = nullptr;
 
         bool connected = false;
+//        bool init_driver = false;
 
         struct ntp
         {
             ip_addr_t ntp_server_address;
-            bool dns_request_sent;
             udp_pcb *ntp_pcb;
-            absolute_time_t ntp_test_time;
-            alarm_id_t ntp_resend_alarm;
         } state{};
         on_ntp_received on_ntp_callback = nullptr;
         os::error **error = nullptr;
