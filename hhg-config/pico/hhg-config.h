@@ -20,7 +20,7 @@
 #ifndef HHG_CONFIG_H
 #define HHG_CONFIG_H
 
-#define HHG_NAME "hi-happy-garden-app"
+#define HHG_NAME "hi-happy-garden"
 #define HHG_VER "0.60.0"
 #define HHG_VER_MAJOR (0)
 #define HHG_VER_MINOR (60)

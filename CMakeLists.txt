@@ -4,7 +4,7 @@ add_definitions(-DPICO_CXX_DISABLE_ALLOCATION_OVERRIDES)
 include($ENV{PICO_SDK_PATH}/external/pico_sdk_import.cmake)
 set(PICO_BOARD pico_w)
 
-PROJECT(hi-happy-garden-app VERSION "0.60.0" LANGUAGES CXX C ASM)
+PROJECT(hi-happy-garden VERSION "0.60.0" LANGUAGES CXX C ASM)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -35,6 +35,8 @@ add_definitions(-DEXCLUDE_USE_MALLOC_FAILED_HOOK)
 add_definitions(-DEXCLUDE_USE_MALLOC_FAILED_HOOK)
 add_definitions(-DNO_SYS=0)
 add_definitions(-DCYW43_LWIP=1)
+add_definitions(-DCYW43_HOST_NAME=\"${PROJECT_NAME}\")
+
 
 
 include_directories(cJSON)
