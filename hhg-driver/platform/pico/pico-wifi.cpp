@@ -57,11 +57,7 @@ inline namespace v1
         }
         cyw43_arch_enable_sta_mode();
 
-
-
         singleton->state.ntp_pcb = udp_new_ip_type(IPADDR_TYPE_V4);
-
-        OS_LOG_DEBUG(APP_TAG, "%p %u", singleton->state.ntp_pcb, singleton->state.ntp_pcb->ttl);
 
         if (!singleton->state.ntp_pcb)
         {
