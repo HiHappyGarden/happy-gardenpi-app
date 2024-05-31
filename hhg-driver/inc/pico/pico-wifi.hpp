@@ -52,9 +52,11 @@ inline namespace v1
         {
             ip_addr_t ntp_server_address;
             udp_pcb *ntp_pcb;
+            on_ntp_received on_ntp_callback = nullptr;
+            os::error **error = nullptr;
         } state{};
-        on_ntp_received on_ntp_callback = nullptr;
-        os::error **error = nullptr;
+
+
     public:
 
         pico_wifi();

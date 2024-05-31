@@ -67,8 +67,6 @@ inline namespace v1
 
         udp_recv(singleton->state.ntp_pcb, ntp_recv, &singleton->state);
 
-//        cyw43_arch_wifi_connect_timeout_ms("Vodafone-salsi.local", "s4ls3tt4", CYW43_AUTH_WPA2_AES_PSK, 10'000);
-
 
         while(singleton)
         {
@@ -184,10 +182,10 @@ inline namespace v1
         else
         {
             OS_LOG_DEBUG(APP_TAG, "NTP dns request failed");
-            if(singleton && singleton->error && *singleton->error)
+            if(state->error && *state->error)
             {
-                *singleton->error = OS_ERROR_APPEND(*singleton->error, "NTP dns request failed", error_type::OS_EADDRNOTAVAIL);
-                OS_ERROR_PTR_SET_POSITION(*singleton->error);
+                *state->error = OS_ERROR_APPEND(*state->error, "NTP dns request failed", error_type::OS_EADDRNOTAVAIL);
+                OS_ERROR_PTR_SET_POSITION(*state->error);
             }
         }
     }
@@ -209,23 +207,23 @@ inline namespace v1
             uint32_t seconds_since_1970 = seconds_since_1900 - NTP_DELTA;
             time_t epoch = seconds_since_1970;
             OS_LOG_DEBUG(APP_TAG, "NTP request - OK timestamp:%u", epoch);
-            if(singleton && singleton->on_ntp_callback)
+            if(state->on_ntp_callback)
             {
-                singleton->on_ntp_callback(exit::OK, epoch);
+                state->on_ntp_callback(exit::OK, epoch);
             }
         }
         else
         {
-            if(singleton->pico_wifi::error)
+            if(state->error)
             {
-                *singleton->pico_wifi::error = OS_ERROR_APPEND(*singleton->pico_wifi::error, "Invalid ntp response", error_type::OS_ECONNABORTED);
-                OS_ERROR_PTR_SET_POSITION(*singleton->pico_wifi::error);
+                *state->error = OS_ERROR_APPEND(*state->error, "Invalid ntp response", error_type::OS_ECONNABORTED);
+                OS_ERROR_PTR_SET_POSITION(*state->error);
             }
 
             OS_LOG_DEBUG(APP_TAG, "NTP request - KO");
-            if(singleton && singleton->on_ntp_callback)
+            if(state->on_ntp_callback)
             {
-                singleton->on_ntp_callback(exit::KO, 0);
+                state->on_ntp_callback(exit::KO, 0);
             }
         }
         pbuf_free(p);
@@ -236,16 +234,16 @@ inline namespace v1
 
     os::exit pico_wifi::ntp_start(on_ntp_received on_ntp_callback, struct error **error) OS_NOEXCEPT
     {
-        pico_wifi::on_ntp_callback = on_ntp_callback;
-        pico_wifi::error = error;
+        this->state.on_ntp_callback = on_ntp_callback;
+        this->state.error = error;
 
         cyw43_arch_lwip_begin();
 
         err_t err = dns_gethostbyname(HHG_NTP_SERVER, &state.ntp_server_address, ntp_dns_found, &state);
-        if(err && pico_wifi::error)
+        if(err && this->state.error)
         {
-            *pico_wifi::error = new osal::error("dns_gethostbyname() fail", err, get_file_name(__FILE__), "pico_wifi::ntp_start", __LINE__);
-            OS_ERROR_PTR_SET_POSITION(*pico_wifi::error);
+            *this->state.error = new osal::error("dns_gethostbyname() fail", err, get_file_name(__FILE__), "pico_wifi::ntp_start", __LINE__);
+            OS_ERROR_PTR_SET_POSITION(*this->state.error);
         }
 
         cyw43_arch_lwip_end();
