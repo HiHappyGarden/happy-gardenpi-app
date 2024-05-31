@@ -147,6 +147,13 @@ void* fsm_thread_handler(void* arg)
                 {
                     app_main::singleton->fsm.events.set(static_cast<uint8_t>(app_main::CHECK_WIFI));
                     OS_LOG_INFO(APP_TAG, "Connection OK state:%s - OK", state_to_string(app_main::singleton->fsm.state));
+                    app_main::singleton->hardware.get_wifi()->ntp_start([](os::exit status, time_t timestamp)
+                    {
+                        if(status == exit::OK)
+                        {
+                            app_main::singleton->hardware.get_time()->set_timestamp(timestamp, nullptr);
+                        }
+                    }, nullptr);
                     app_main::singleton->fsm.state = app_main::CHECK_TIMESTAMP;
                     app_main::singleton->fsm.old_state = app_main::CHECK_USERS;
                 }
@@ -470,15 +477,6 @@ void app_main::on_change_connection(bool old_connected, bool new_connected) OS_N
     if(!old_connected && new_connected)
     {
         app_main::singleton->fsm.events.set(static_cast<uint8_t>(app_main::CHECK_WIFI));
-
-        app_main::singleton->hardware.get_wifi()->ntp_start([](os::exit status, time_t timestamp)
-        {
-            if(status == exit::OK)
-            {
-                app_main::singleton->hardware.get_time()->set_timestamp(0, nullptr);
-            }
-        }, nullptr);
-
     }
     else if(old_connected && !new_connected)
     {

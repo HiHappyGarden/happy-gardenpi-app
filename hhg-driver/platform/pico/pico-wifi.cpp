@@ -28,7 +28,6 @@ using namespace os;
 #include <lwip/udp.h>
 
 
-
 namespace hhg::driver
 {
 inline namespace v1
@@ -51,13 +50,29 @@ inline namespace v1
 
     void *pico_wifi::handle(void *arg)
     {
-        if (cyw43_arch_init()) {
+        if (cyw43_arch_init())
+        {
             OS_LOG_FATAL(APP_TAG, "Failed to initialise");
             return nullptr;
         }
         cyw43_arch_enable_sta_mode();
 
+
+
+        singleton->state.ntp_pcb = udp_new_ip_type(IPADDR_TYPE_V4);
+
+        OS_LOG_DEBUG(APP_TAG, "%p %u", singleton->state.ntp_pcb, singleton->state.ntp_pcb->ttl);
+
+        if (!singleton->state.ntp_pcb)
+        {
+            OS_LOG_FATAL(APP_TAG, "Failed to create pcb");
+            return nullptr;
+        }
+
         udp_recv(singleton->state.ntp_pcb, ntp_recv, &singleton->state);
+
+//        cyw43_arch_wifi_connect_timeout_ms("Vodafone-salsi.local", "s4ls3tt4", CYW43_AUTH_WPA2_AES_PSK, 10'000);
+
 
         while(singleton)
         {
@@ -150,14 +165,14 @@ inline namespace v1
         // You can omit them if you are in a callback from lwIP. Note that when using pico_cyw_arch_poll
         // these calls are a no-op and can be omitted, but it is a good practice to use them in
         // case you switch the cyw43_arch type later.
-        //cyw43_arch_lwip_begin();
+        cyw43_arch_lwip_begin();
         struct pbuf *p = pbuf_alloc(PBUF_TRANSPORT, HHG_NTP_MSG_LEN, PBUF_RAM);
-        auto req = static_cast<uint8_t* >(p->payload);
+        auto req = static_cast<uint8_t*>(p->payload);
         memset(req, 0, HHG_NTP_MSG_LEN);
         req[0] = 0x1b;
         udp_sendto(state->ntp_pcb, p, &state->ntp_server_address, HHG_NTP_PORT);
         pbuf_free(p);
-        //cyw43_arch_lwip_end();
+        cyw43_arch_lwip_end();
     }
 
 
@@ -189,8 +204,6 @@ inline namespace v1
         uint8_t mode = pbuf_get_at(p, 0) & 0x7;
         uint8_t stratum = pbuf_get_at(p, 1);
 
-        OS_LOG_DEBUG(APP_TAG, "---->1");
-
         // Check the result
         if (ip_addr_cmp(addr, &state->ntp_server_address) && port == HHG_NTP_PORT && p->tot_len == HHG_NTP_MSG_LEN && mode == 0x4 && stratum != 0)
         {
@@ -199,7 +212,7 @@ inline namespace v1
             uint32_t seconds_since_1900 = seconds_buf[0] << 24 | seconds_buf[1] << 16 | seconds_buf[2] << 8 | seconds_buf[3];
             uint32_t seconds_since_1970 = seconds_since_1900 - NTP_DELTA;
             time_t epoch = seconds_since_1970;
-            OS_LOG_DEBUG(APP_TAG, "NTP request - OK %timestamp:%u", epoch);
+            OS_LOG_DEBUG(APP_TAG, "NTP request - OK timestamp:%u", epoch);
             if(singleton && singleton->on_ntp_callback)
             {
                 singleton->on_ntp_callback(exit::OK, epoch);
@@ -229,9 +242,6 @@ inline namespace v1
     {
         pico_wifi::on_ntp_callback = on_ntp_callback;
         pico_wifi::error = error;
-
-        memset(&state, 0, sizeof(state));
-        state.ntp_pcb = udp_new_ip_type(IPADDR_TYPE_ANY);
 
         cyw43_arch_lwip_begin();
 
