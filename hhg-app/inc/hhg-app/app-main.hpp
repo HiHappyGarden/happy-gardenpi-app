@@ -25,6 +25,7 @@
 #include "hhg-app/app-config.hpp"
 #include "hhg-app/app-data.hpp"
 #include "hhg-app/app-parser.hpp"
+#include "hhg-app/app-led.hpp"
 
 namespace hhg::app
 {
@@ -61,12 +62,13 @@ private:
     hhg::app::app_config app_config;
     hhg::app::app_data app_data;
     hhg::app::app_parser app_parser;
+    hhg::app::app_led app_led;
 
 	os::thread fsm_thread{"fsm", hhg::driver::HIGH, 1024 * 2, fsm_thread_handler};
 
     struct fsm
     {
-		static constexpr uint8_t MAX_ERROR = 5;
+		static constexpr uint8_t MAX_ERROR = 135;
 
         enum state   state              = state::CHECK_USERS;
         enum state   old_state 	        = state::CHECK_USERS;

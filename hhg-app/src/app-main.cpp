@@ -115,14 +115,7 @@ void* fsm_thread_handler(void* arg)
                     {
                         OS_LOG_WARNING(APP_TAG, "Waiting to set users");
                         generic_timer = ONE_SEC_IN_MILLIS;
-                        if(app_main::singleton->hardware.get_rgb_led()->get_rgb().is_off())
-                        {
-                            app_main::singleton->hardware.get_rgb_led()->set_rgb(0xFF, 0x5A, 0X00);
-                        }
-                        else
-                        {
-                            app_main::singleton->hardware.get_rgb_led()->set_rgb(0x00, 0x00, 0X00);
-                        }
+                        app_main::singleton->app_led.warning();
                     }
                     else
                     {
@@ -133,10 +126,18 @@ void* fsm_thread_handler(void* arg)
             }
             case app_main::CHECK_WIFI:
             {
-                auto ssid = app_main::singleton->app_config.get_wifi_ssid();
-                auto passwd = app_main::singleton->app_config.get_wifi_passwd();
+                auto&& ssid = app_main::singleton->app_config.get_wifi_ssid();
+                auto&& passwd = app_main::singleton->app_config.get_wifi_passwd();
                 auto auth = app_main::singleton->app_config.get_wifi_auth();
                 bool connection_flag =  app_main::singleton->fsm.events.get() & static_cast<uint8_t>(app_main::CHECK_WIFI);
+
+                app_main::singleton->hardware.get_wifi()->ntp_start([](os::exit status, time_t timestamp)
+                {
+                    if(status == exit::OK)
+                    {
+                        app_main::singleton->hardware.get_time()->set_timestamp(timestamp, nullptr);
+                    }
+                }, nullptr);
 
                 if(!app_main::singleton->app_config.is_wifi_enabled())
                 {
@@ -147,13 +148,6 @@ void* fsm_thread_handler(void* arg)
                 {
                     app_main::singleton->fsm.events.set(static_cast<uint8_t>(app_main::CHECK_WIFI));
                     OS_LOG_INFO(APP_TAG, "Connection OK state:%s - OK", state_to_string(app_main::singleton->fsm.state));
-                    app_main::singleton->hardware.get_wifi()->ntp_start([](os::exit status, time_t timestamp)
-                    {
-                        if(status == exit::OK)
-                        {
-                            app_main::singleton->hardware.get_time()->set_timestamp(timestamp, nullptr);
-                        }
-                    }, nullptr);
                     app_main::singleton->fsm.state = app_main::CHECK_TIMESTAMP;
                     app_main::singleton->fsm.old_state = app_main::CHECK_USERS;
                 }
@@ -190,14 +184,7 @@ void* fsm_thread_handler(void* arg)
                     {
                         OS_LOG_WARNING(APP_TAG, "Waiting to set WIFI params");
                         generic_timer = ONE_SEC_IN_MILLIS;
-                        if(app_main::singleton->hardware.get_rgb_led()->get_rgb().is_off())
-                        {
-                            app_main::singleton->hardware.get_rgb_led()->set_rgb(0xFF, 0x5A, 0X00);
-                        }
-                        else
-                        {
-                            app_main::singleton->hardware.get_rgb_led()->set_rgb(0x00, 0x00, 0X00);
-                        }
+                        app_main::singleton->app_led.warning();
                     }
                     else
                     {
@@ -237,14 +224,7 @@ void* fsm_thread_handler(void* arg)
 					{
 						OS_LOG_WARNING(APP_TAG, "Waiting to set timestamp");
 						generic_timer = ONE_SEC_IN_MILLIS;
-                        if(app_main::singleton->hardware.get_rgb_led()->get_rgb().is_off())
-                        {
-                            app_main::singleton->hardware.get_rgb_led()->set_rgb(0xFF, 0x5A, 0X00);
-                        }
-                        else
-                        {
-                            app_main::singleton->hardware.get_rgb_led()->set_rgb(0x00, 0x00, 0X00);
-                        }
+                        app_main::singleton->app_led.warning();
 					}
 					else
 					{
@@ -257,6 +237,8 @@ void* fsm_thread_handler(void* arg)
 			{
 				OS_LOG_DEBUG(APP_TAG, "HW check");
 				app_main::singleton->fsm.events.set(app_main::INIT);
+
+                app_main::singleton->app_led.ready();
 
 				//TODO: hw check
 				generic_timer = 0;
@@ -322,6 +304,7 @@ app_main::app_main(driver::hardware& hardware, class error** error) OS_NOEXCEPT
 , app_config(hardware.get_fs_io())
 , app_data(hardware.get_fs_io())
 , app_parser(hardware.get_uart())
+, app_led(hardware.get_rgb_led())
 {
 	if(singleton)
 	{
@@ -437,6 +420,13 @@ os::exit app_main::init(class os::error** error) OS_NOEXCEPT
 	}
 	OS_LOG_INFO(APP_TAG, "Init APP DATA - OK");
 
+    OS_LOG_INFO(APP_TAG, "Init APP LED");
+    if(app_led.init(error) == exit::KO)
+    {
+        return exit::KO;
+    }
+    OS_LOG_INFO(APP_TAG, "Init APP LED - OK");
+
 	OS_LOG_INFO(APP_TAG, "Set timer to parser");
 	set_time(const_cast<class time*>(hardware.get_time().get()));
 
@@ -459,6 +449,7 @@ os::exit app_main::fsm_start(class os::error** error) OS_NOEXCEPT
 
 os::exit app_main::handle_error() OS_NOEXCEPT
 {
+    app_main::singleton->app_led.error();
 	if(fsm.errors < fsm::MAX_ERROR)
 	{
 		fsm.errors++;

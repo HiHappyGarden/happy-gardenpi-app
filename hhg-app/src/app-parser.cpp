@@ -88,7 +88,7 @@ void app_parser::on_receive(io_source source, const uint8_t data[], uint16_t siz
 	}
 }
 
-void* app_parser_thread_handler(void* arg) OS_NOEXCEPT
+void* app_parser::handler(void* arg) OS_NOEXCEPT
 {
 	string<app_parser::singleton->BUFFER_SIZE> buffer;
 	string<app_parser::singleton->RET_SIZE> ret;
@@ -113,7 +113,7 @@ void* app_parser_thread_handler(void* arg) OS_NOEXCEPT
 
 			if (start && end)
 			{
-				error* error = nullptr;
+				class error* error = nullptr;
 				if(app_parser::singleton->parser.execute(buffer.substr(start - buffer.c_str(), end - start).c_str(), ret.c_str(), ret.size(), &error) == exit::OK)
 				{
 					ret += app_parser::NEW_LINE;

@@ -19,13 +19,160 @@
 
 
 #include "hhg-app/app-led.hpp"
+using namespace os;
+using hhg::iface::rgb_led;
+
+#define RGB_OFF() singleton->rgb_led->set_rgb(0, 0, 0)
+#define RGB_LOADING() singleton->rgb_led->set_rgb(0, 0xFF, 0)
+#define RGB_WARNING() singleton->rgb_led->set_rgb(0xFF, 0x5A, 0X00)
+#define RGB_ERROR() singleton->rgb_led->set_rgb(0xFF, 0, 0)
+#define RGB_READY() singleton->rgb_led->set_rgb(0, 0xFF, 0)
 
 namespace hhg::app
 {
 inline namespace v1
 {
 
-    
+
+    app_led::app_led(const rgb_led::ptr& rgb_led) OS_NOEXCEPT
+    : rgb_led(rgb_led)
+    {
+
+    }
+
+    app_led::~app_led() = default;
+
+    inline os::exit app_led::init(class error **error) OS_NOEXCEPT
+    {
+        if(singleton)
+        {
+            if(error)
+            {
+                *error = OS_ERROR_BUILD("Only one instance at a time", error_type::OS_EFAULT);
+                OS_ERROR_PTR_SET_POSITION(*error);
+            }
+            return exit::KO;
+        }
+
+        return thread.create(error);
+    }
+
+    void* app_led::handler(void *arg) OS_NOEXCEPT
+    {
+
+        enum status curren_status = status::LOADING;
+
+        uint32_t timer_on = 0;
+        uint32_t timer_off = 0;
+        bool on = true;
+
+        while(singleton)
+        {
+
+            switch (singleton->status)
+            {
+                case status::LOADING:
+                    if(on)
+                    {
+                        RGB_LOADING();
+                        timer_on = 1'000 * TICK;
+                        on = false;
+                    }
+                    else
+                    {
+                        RGB_OFF();
+                        timer_off = 1'000 * TICK;
+                        on = true;
+                    }
+                    curren_status = status::LOADING;
+                    break;
+                case status::WARNING:
+                    if(on)
+                    {
+                        RGB_WARNING();
+                        timer_on = 1'000 * TICK;
+                        on = false;
+                    }
+                    else
+                    {
+                        RGB_OFF();
+                        timer_off = 1'000 * TICK;
+                        on = true;
+                    }
+                    curren_status = status::WARNING;
+                    break;
+                case status::ERROR:
+                    if(on)
+                    {
+                        RGB_ERROR();
+                        timer_on = 500 * TICK;
+                        on = false;
+                    }
+                    else
+                    {
+                        RGB_OFF();
+                        timer_off = 500 * TICK;
+                        on = true;
+                    }
+                    curren_status = status::ERROR;
+                    break;
+                case status::READY:
+                    if(on)
+                    {
+                        RGB_READY();
+                        timer_on = 1000 * TICK;
+                        on = false;
+                    }
+                    else
+                    {
+                        timer_off = 0;
+                        on = true;
+                    }
+                    curren_status = status::READY;
+                    break;
+                default:
+                    break;
+            }
+
+            if(timer_on)
+            {
+                timer_on -= TICK;
+                on = curren_status == singleton->status;
+            }
+            else if(timer_off)
+            {
+                timer_off -= TICK;
+                on = curren_status == singleton->status;
+            }
+
+            us_sleep(ms_to_us(TICK));
+        }
+
+        return nullptr;
+    }
+
+    void app_led::loading() const OS_NOEXCEPT
+    {
+        status = status::LOADING;
+    }
+
+    void app_led::warning() const OS_NOEXCEPT
+    {
+        status = status::WARNING;
+    }
+
+    void app_led::error() const OS_NOEXCEPT
+    {
+        status = status::ERROR;
+    }
+
+    void app_led::ready() const OS_NOEXCEPT
+    {
+        status = status::READY;
+    }
 
 }
+
+
+
 }
