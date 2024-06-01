@@ -58,6 +58,10 @@ struct wifi : public initializable
 
     virtual os::exit ntp_start(on_ntp_received, os::error **error) OS_NOEXCEPT = 0;
 
+    virtual os::string<15> get_ip_address_str() const OS_NOEXCEPT = 0;
+
+    virtual uint32_t get_ip_address() const  OS_NOEXCEPT = 0;
+
 };
 
 

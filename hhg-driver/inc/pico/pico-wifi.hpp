@@ -51,9 +51,10 @@ inline namespace v1
         struct ntp
         {
             ip_addr_t ntp_server_address;
-            udp_pcb *ntp_pcb;
+            udp_pcb* ntp_pcb = nullptr;
             on_ntp_received on_ntp_callback = nullptr;
             os::error **error = nullptr;
+            ip_addr_t ip_addr { .addr = 0 };
         } state{};
 
 
@@ -74,6 +75,14 @@ inline namespace v1
         os::exit connect(const os::string<32>& ssid, const os::string<64>& passwd, enum auth auth, os::error **error) const OS_NOEXCEPT override;
 
         os::exit ntp_start(on_ntp_received, os::error **error) OS_NOEXCEPT override;
+
+        os::string<15> get_ip_address_str() OS_NOEXCEPT const override;
+
+        inline uint32_t get_ip_address() OS_NOEXCEPT const  override
+        {
+            return state.ip_addr.addr;
+        }
+
 
     private:
         static void ntp_request(struct ntp* state);

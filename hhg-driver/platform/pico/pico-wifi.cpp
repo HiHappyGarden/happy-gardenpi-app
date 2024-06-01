@@ -18,15 +18,16 @@
  ***************************************************************************/
 
 #include "pico/pico-wifi.hpp"
-#include "hhg-config.h"
 using namespace os;
 
+#include "hhg-config.h"
 
-#include <pico/time.h>
+
 #include <lwip/dns.h>
 #include <lwip/pbuf.h>
 #include <lwip/udp.h>
 
+extern cyw43_t cyw43_state;
 
 namespace hhg::driver
 {
@@ -75,13 +76,17 @@ inline namespace v1
             bool connected = netif_is_link_up(netif_default);
             if(!singleton->connected && connected)
             {
-
-                OS_LOG_DEBUG(APP_TAG, "Connected");
-                if(singleton->obj && singleton->callback)
+                auto ip_ready = dhcp_supplied_address(&cyw43_state.netif[CYW43_ITF_STA]);
+                if(ip_ready)
                 {
-                    (singleton->obj->*singleton->callback)(singleton->connected, connected);
+                    singleton->state.ip_addr = cyw43_state.netif[CYW43_ITF_STA].ip_addr;
+                    OS_LOG_DEBUG(APP_TAG, "Connected to ip %s", ip4addr_ntoa(&cyw43_state.netif[CYW43_ITF_STA].ip_addr));
+                    if(singleton->obj && singleton->callback)
+                    {
+                        (singleton->obj->*singleton->callback)(singleton->connected, connected);
+                    }
+                    singleton->connected = true;
                 }
-                singleton->connected = true;
             }
             else if(singleton->connected && !connected)
             {
@@ -250,6 +255,14 @@ inline namespace v1
 
         return err == 0 ? exit::OK : exit::KO;
     }
+
+    string<15> pico_wifi::get_ip_address_str() const OS_NOEXCEPT
+    {
+        string<15> ret;
+        ret += ip4addr_ntoa(&state.ip_addr);
+        return ret;
+    }
+
 
 }
 }
