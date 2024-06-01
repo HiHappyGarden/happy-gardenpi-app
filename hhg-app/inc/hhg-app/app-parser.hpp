@@ -30,12 +30,10 @@ namespace hhg::app
 inline namespace v1
 {
 
-void* app_parser_thread_handler(void* arg) OS_NOEXCEPT;
-
 //TODO: implement REAL singleton
 class app_parser final : public hhg::iface::initializable, public hhg::iface::io_on_receive
 {
-	friend void* app_parser_thread_handler(void* arg) OS_NOEXCEPT;
+	//friend void* app_parser_thread_handler(void* arg) OS_NOEXCEPT;
 
 	static constexpr const uint16_t BUFFER_SIZE = 512;
 	static constexpr const uint16_t RET_SIZE = 256;
@@ -51,11 +49,12 @@ class app_parser final : public hhg::iface::initializable, public hhg::iface::io
 	const hhg::iface::io::ptr& io;
 	const hhg::parser::parser parser;
 
+    static void* handler(void* arg) OS_NOEXCEPT;
 	os::thread thread {
 		"parser"
 		, hhg::driver::NORMAL
 		, 1'024 * 6
-		, app_parser_thread_handler
+        , app_parser::handler
 	};
 
 	bool run = false;
