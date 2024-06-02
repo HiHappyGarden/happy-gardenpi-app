@@ -53,6 +53,7 @@ inline namespace v1
             }
             return exit::KO;
         }
+        singleton = this;
 
         return thread.create(error);
     }
@@ -62,8 +63,8 @@ inline namespace v1
 
         enum status curren_status = status::LOADING;
 
-        uint32_t timer_on = 0;
-        uint32_t timer_off = 0;
+        int64_t timer_on = 0;
+        int64_t timer_off = 0;
         bool on = true;
 
         while(singleton)
@@ -134,19 +135,30 @@ inline namespace v1
                     break;
             }
 
-            if(timer_on)
+            if(timer_on > 0)
             {
                 timer_on -= TICK;
-                on = curren_status == singleton->status;
+                singleton->status = status::NONE;
             }
-            else if(timer_off)
+            else
+            {
+                on = !on;
+            }
+
+            if(timer_off > 0)
             {
                 timer_off -= TICK;
-                on = curren_status == singleton->status;
+                singleton->status = status::NONE;
+            }
+            else
+            {
+                on = !on;
             }
 
             us_sleep(ms_to_us(TICK));
         }
+
+
 
         return nullptr;
     }
