@@ -40,9 +40,9 @@ class app_led final  : public hhg::iface::initializable
     static void* handler(void* arg) OS_NOEXCEPT;
     os::thread thread {
             "led"
-            , hhg::driver::NORMAL
-            , 256
-            , nullptr
+            , hhg::driver::LOW
+            , 1024
+            , handler
     };
 
 

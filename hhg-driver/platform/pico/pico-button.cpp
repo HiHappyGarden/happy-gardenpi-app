@@ -53,9 +53,7 @@ os::exit pico_button::init(os::error **error)
 
     gpio_set_irq_enabled_with_callback(PIN, GPIO_IRQ_EDGE_FALL | GPIO_IRQ_EDGE_RISE, true, &pico_button::on_click);
 
-    thread.create();
-
-    return exit::OK;
+    return thread.create();
 }
 
 
