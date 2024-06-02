@@ -119,9 +119,10 @@ inline namespace v1
         singleton = this;
 
 #if HHG_NO_WIFI == 0
-        thread.create();
-#endif
+        return thread.create();
+#else
         return exit::OK;
+#endif
     }
 
     os::exit pico_wifi::connect(const string<32> &ssid, const string<64> &passwd, enum auth auth, class error **error) const OS_NOEXCEPT
@@ -152,6 +153,13 @@ inline namespace v1
                 OS_ERROR_PTR_SET_POSITION(*error);
             }
             return exit::KO;
+        }
+#else
+        us_sleep(500_ms);
+        OS_LOG_DEBUG(APP_TAG, "Connected to ip FAKE IP");
+        if(singleton->obj && singleton->callback)
+        {
+            (singleton->obj->*singleton->callback)(false, true);
         }
 #endif
 
@@ -242,6 +250,7 @@ inline namespace v1
         this->state.on_ntp_callback = on_ntp_callback;
         this->state.error = error;
 
+#if HHG_NO_WIFI == 0
         cyw43_arch_lwip_begin();
 
         err_t err = dns_gethostbyname(HHG_NTP_SERVER, &state.ntp_server_address, ntp_dns_found, &state);
@@ -254,12 +263,26 @@ inline namespace v1
         cyw43_arch_lwip_end();
 
         return err == 0 ? exit::OK : exit::KO;
+#else
+        us_sleep(500_ms);
+        OS_LOG_DEBUG(APP_TAG, "Connected to ip FAKE IP");
+        if(on_ntp_callback)
+        {
+            on_ntp_callback(exit::OK, 1'709'068'081);
+        }
+        return exit::OK;
+#endif
     }
 
     string<15> pico_wifi::get_ip_address_str() const OS_NOEXCEPT
     {
+
         string<15> ret;
+#if HHG_NO_WIFI == 0
         ret += ip4addr_ntoa(&state.ip_addr);
+#else
+        ret += "FAKE IP";
+#endif
         return ret;
     }
 
