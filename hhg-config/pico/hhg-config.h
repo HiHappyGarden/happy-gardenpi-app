@@ -29,14 +29,16 @@
 #define HHG_SCHEDULES_SIZE (2)
 #define HHG_ZONES_SIZE (4)
 
-#define HHG_FSM_MAIN_SLEEP (100)
-#define HHG_FSM_ERROR_SLEEP (1000)
-#define HHG_FSM_ERROR_MAX (4)
-
 #define HHG_ADMIN_USER "admin"
 #define HHG_ADMIN_PASSWD "admin"
+#define HHG_USER "user"
+#define HHG_PASSWD "user"
 
-#define HHG_NO_WIFI (0)
+#define HHG_WIFI_DISABLE (0)
+#define HHG_WIFI_CONNECTION_TIMEOUT (5000)
+#if HHG_WIFI_CONNECTION_TIMEOUT > 30000
+#error HHG_WIFI_CONNECTION_TIMEOUT max value permitted 30000
+#endif
 
 #define HHG_NTP_MSG_LEN (48)
 #define HHG_NTP_PORT (123)
