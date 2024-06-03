@@ -76,14 +76,14 @@ inline namespace v1
                     if(on)
                     {
                         RGB_LOADING();
-                        timer_on = 1'000 * TICK;
-                        on = false;
+                        timer_on = 3 * TICK;
+                        on = true;
                     }
                     else
                     {
                         RGB_OFF();
-                        timer_off = 1'000 * TICK;
-                        on = true;
+                        timer_off = 3 * TICK;
+                        on = false;
                     }
                     curren_status = status::LOADING;
                     break;
@@ -91,14 +91,14 @@ inline namespace v1
                     if(on)
                     {
                         RGB_WARNING();
-                        timer_on = 1'000 * TICK;
-                        on = false;
+                        timer_on = 3 * TICK;
+                        on = true;
                     }
                     else
                     {
                         RGB_OFF();
-                        timer_off = 1'000 * TICK;
-                        on = true;
+                        timer_off = 3 * TICK;
+                        on = false;
                     }
                     curren_status = status::WARNING;
                     break;
@@ -106,14 +106,14 @@ inline namespace v1
                     if(on)
                     {
                         RGB_ERROR();
-                        timer_on = 500 * TICK;
-                        on = false;
+                        timer_on = 2 * TICK;
+                        on = true;
                     }
                     else
                     {
                         RGB_OFF();
-                        timer_off = 500 * TICK;
-                        on = true;
+                        timer_off = 2 * TICK;
+                        on = false;
                     }
                     curren_status = status::ERROR;
                     break;
@@ -122,12 +122,12 @@ inline namespace v1
                     {
                         RGB_READY();
                         timer_on = 1000 * TICK;
-                        on = false;
+                        on = true;
                     }
                     else
                     {
                         timer_off = 0;
-                        on = true;
+                        on = false;
                     }
                     curren_status = status::READY;
                     break;
@@ -140,12 +140,7 @@ inline namespace v1
                 timer_on -= TICK;
                 singleton->status = status::NONE;
             }
-            else
-            {
-                on = !on;
-            }
-
-            if(timer_off > 0)
+            else if(timer_off > 0)
             {
                 timer_off -= TICK;
                 singleton->status = status::NONE;
@@ -154,6 +149,7 @@ inline namespace v1
             {
                 on = !on;
             }
+
 
             us_sleep(ms_to_us(TICK));
         }
