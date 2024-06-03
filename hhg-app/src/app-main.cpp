@@ -71,228 +71,236 @@ string<32> state_to_string(app_main::state state)
 
 }
 
-void* fsm_thread_handler(void* arg)
+void* app_main::handler(void* arg)
 {
 	if(arg == nullptr)
 	{
-		app_main::singleton->fsm.run = false;
+		singleton->fsm.run = false;
 		OS_LOG_INFO(APP_TAG, "Arg nullptr");
 	}
 
-	error** error = static_cast<os::error**>(arg);
-	time_t&& now_in_millis = app_main::singleton->hardware.get_time()->get_timestamp(error) * ONE_SEC_IN_MILLIS;
+	auto error = static_cast<os::error**>(arg);
+	time_t&& now_in_millis = singleton->hardware.get_time()->get_timestamp(error) * ONE_SEC_IN_MILLIS;
 
 	int32_t generic_timer = 0;
 
-	while(app_main::singleton->fsm.run)
+	while(singleton->fsm.run)
 	{
-		switch (app_main::singleton->fsm.state)
+		switch (singleton->fsm.state)
 		{
-            case app_main::CHECK_USERS:
+            case CHECK_USERS:
             {
-                auto admin = app_main::singleton->app_config.get_user(app_config::user::ADMIN);
-                auto user = app_main::singleton->app_config.get_user(1);
+                auto admin = singleton->app_config.get_user(app_config::user::ADMIN);
+                auto user = singleton->app_config.get_user(1);
                 if(
                     admin.user.length() && admin.passwd.length()
                     && user.user.length() && user.passwd.length()
                 )
                 {
-                    app_main::singleton->fsm.events.set(static_cast<uint8_t>(app_main::CHECK_USERS));
-                    OS_LOG_INFO(APP_TAG, "User OK state:%s - OK", state_to_string(app_main::singleton->fsm.state));
-                    app_main::singleton->fsm.state = app_main::CHECK_WIFI;
-                    app_main::singleton->fsm.old_state = app_main::CHECK_USERS;
+                    singleton->fsm.events.set(static_cast<uint8_t>(CHECK_USERS));
+                    OS_LOG_INFO(APP_TAG, "User OK state:%s - OK", state_to_string(singleton->fsm.state));
+                    singleton->fsm.state = CHECK_WIFI;
+                    singleton->fsm.old_state = CHECK_USERS;
                 }
                 else
                 {
-                    now_in_millis = app_main::singleton->hardware.get_time()->get_timestamp(error) * ONE_SEC_IN_MILLIS;
+                    now_in_millis = singleton->hardware.get_time()->get_timestamp(error) * ONE_SEC_IN_MILLIS;
                     if(*error)
                     {
-                        os::printf_stack_error(APP_TAG, *error);
+                        printf_stack_error(APP_TAG, *error);
                         delete *error;
-                        app_main::singleton->handle_error();
+                        singleton->handle_error();
                     }
                     if(generic_timer == 0)
                     {
                         OS_LOG_WARNING(APP_TAG, "Waiting to set users");
                         generic_timer = ONE_SEC_IN_MILLIS;
-                        app_main::singleton->app_led.warning();
+                        singleton->app_led.warning();
                     }
                     else
                     {
-                        generic_timer -= app_main::FSM_SLEEP;
+                        generic_timer -= FSM_SLEEP;
                     }
                 }
                 break;
             }
-            case app_main::CHECK_WIFI:
+            case CHECK_WIFI:
             {
-                auto&& ssid = app_main::singleton->app_config.get_wifi_ssid();
-                auto&& passwd = app_main::singleton->app_config.get_wifi_passwd();
-                auto auth = app_main::singleton->app_config.get_wifi_auth();
-                bool connection_flag =  app_main::singleton->fsm.events.get() & static_cast<uint8_t>(app_main::CHECK_WIFI);
+                auto&& ssid = singleton->app_config.get_wifi_ssid();
+                auto&& passwd = singleton->app_config.get_wifi_passwd();
+                auto auth = singleton->app_config.get_wifi_auth();
+                bool connection_flag =  singleton->fsm.events.get() & static_cast<uint8_t>(CHECK_WIFI);
 
-                app_main::singleton->hardware.get_wifi()->ntp_start([](os::exit status, time_t timestamp)
+                if(!singleton->app_config.is_wifi_enabled())
                 {
-                    if(status == exit::OK)
-                    {
-                        app_main::singleton->hardware.get_time()->set_timestamp(timestamp, nullptr);
-                    }
-                }, nullptr);
-
-                if(!app_main::singleton->app_config.is_wifi_enabled())
-                {
-                    app_main::singleton->fsm.state = app_main::CHECK_TIMESTAMP;
-                    app_main::singleton->fsm.old_state = app_main::CHECK_USERS;
+                    singleton->fsm.state = CHECK_TIMESTAMP;
+                    singleton->fsm.old_state = CHECK_USERS;
                 }
-                if(app_main::singleton->fsm.waiting_connection && connection_flag)
+                if(singleton->fsm.waiting_connection && connection_flag)
                 {
-                    app_main::singleton->fsm.events.set(static_cast<uint8_t>(app_main::CHECK_WIFI));
-                    OS_LOG_INFO(APP_TAG, "Connection OK state:%s - OK", state_to_string(app_main::singleton->fsm.state));
-                    app_main::singleton->fsm.state = app_main::CHECK_TIMESTAMP;
-                    app_main::singleton->fsm.old_state = app_main::CHECK_USERS;
+                    singleton->hardware.get_wifi()->ntp_start([](os::exit status, time_t timestamp)
+                    {
+                        if(status == exit::OK)
+                        {
+                            singleton->hardware.get_time()->set_timestamp(timestamp, nullptr);
+                        }
+                    }, nullptr);
+                    singleton->fsm.events.set(static_cast<uint8_t>(CHECK_WIFI));
+                    OS_LOG_INFO(APP_TAG, "Connection OK state:%s - OK", state_to_string(singleton->fsm.state));
+                    singleton->fsm.state = CHECK_TIMESTAMP;
+                    singleton->fsm.old_state = CHECK_USERS;
                 }
                 else if (ssid.length() && passwd.length() && auth)
                 {
-                    if ( !app_main::singleton->fsm.waiting_connection
+                    if ( !singleton->fsm.waiting_connection
                         && !connection_flag
-                        && app_main::singleton->hardware.get_wifi()->connect(ssid, passwd, wifi::auth{auth}, error) == exit::OK)
+                        && singleton->hardware.get_wifi()->connect(ssid, passwd, wifi::auth{auth}, error) == exit::OK)
                     {
-                        app_main::singleton->fsm.waiting_connection = true;
+                        singleton->fsm.waiting_connection = true;
                         OS_LOG_INFO(APP_TAG, "Waiting connection");
                     }
                     else
                     {
                         if(*error)
                         {
-                            os::printf_stack_error(APP_TAG, *error);
+                            printf_stack_error(APP_TAG, *error);
                             delete *error;
-                            app_main::singleton->handle_error();
+                            singleton->handle_error();
                         }
                     }
                 }
                 else
                 {
-                    now_in_millis = app_main::singleton->hardware.get_time()->get_timestamp(error) * ONE_SEC_IN_MILLIS;
+                    now_in_millis = singleton->hardware.get_time()->get_timestamp(error) * ONE_SEC_IN_MILLIS;
                     if(*error)
                     {
-                        os::printf_stack_error(APP_TAG, *error);
+                        printf_stack_error(APP_TAG, *error);
                         delete *error;
-                        app_main::singleton->handle_error();
+                        singleton->handle_error();
                     }
 
                     if(generic_timer == 0)
                     {
                         OS_LOG_WARNING(APP_TAG, "Waiting to set WIFI params");
                         generic_timer = ONE_SEC_IN_MILLIS;
-                        app_main::singleton->app_led.warning();
+                        singleton->app_led.warning();
                     }
                     else
                     {
-                        generic_timer -= app_main::FSM_SLEEP;
+                        generic_timer -= FSM_SLEEP;
                     }
                 }
                 break;
             }
-            case app_main::CHECK_TIMESTAMP:
+            case CHECK_TIMESTAMP:
 			{
-				if(now_in_millis > app_main::TIMESTAMP_2020 * ONE_SEC_IN_MILLIS)
+				if(now_in_millis > TIMESTAMP_2020 * ONE_SEC_IN_MILLIS)
 				{
-					auto&& date_time = app_main::singleton->hardware.get_time()->get_date_time(time::FORMAT, error);
+					auto&& date_time = singleton->hardware.get_time()->get_date_time(time::FORMAT, error);
 			        if(*error)
 			        {
-			            os::printf_stack_error(APP_TAG, *error);
+			            printf_stack_error(APP_TAG, *error);
 			            delete *error;
-			            app_main::singleton->handle_error();
+			            singleton->handle_error();
 			        }
 
-			        app_main::singleton->fsm.errors = 0;
-					OS_LOG_INFO(APP_TAG, "Date time:%s state:%s - OK", date_time.c_str(), state_to_string(app_main::singleton->fsm.state));
-					app_main::singleton->fsm.state = app_main::INIT;
-					app_main::singleton->fsm.old_state = app_main::CHECK_TIMESTAMP;
+			        singleton->fsm.errors = 0;
+					OS_LOG_INFO(APP_TAG, "Date time:%s state:%s - OK", date_time.c_str(), state_to_string(singleton->fsm.state));
+					singleton->fsm.state = INIT;
+					singleton->fsm.old_state = CHECK_TIMESTAMP;
 				}
 				else
 				{
-					now_in_millis = app_main::singleton->hardware.get_time()->get_timestamp(error) * ONE_SEC_IN_MILLIS;
+					now_in_millis = singleton->hardware.get_time()->get_timestamp(error) * ONE_SEC_IN_MILLIS;
 			        if(*error)
 			        {
-			            os::printf_stack_error(APP_TAG, *error);
+			            printf_stack_error(APP_TAG, *error);
 			            delete *error;
-			            app_main::singleton->handle_error();
+			            singleton->handle_error();
 			        }
 
 					if(generic_timer == 0)
 					{
 						OS_LOG_WARNING(APP_TAG, "Waiting to set timestamp");
 						generic_timer = ONE_SEC_IN_MILLIS;
-                        app_main::singleton->app_led.warning();
+                        singleton->app_led.warning();
 					}
 					else
 					{
-						generic_timer -= app_main::FSM_SLEEP;
+						generic_timer -= FSM_SLEEP;
 					}
 				}
 				break;
 			}
-			case app_main::INIT:
+			case INIT:
 			{
 				OS_LOG_DEBUG(APP_TAG, "HW check");
-				app_main::singleton->fsm.events.set(app_main::INIT);
+				singleton->fsm.events.set(INIT);
 
-                app_main::singleton->app_led.ready();
+                singleton->app_led.ready();
 
 				//TODO: hw check
 				generic_timer = 0;
 
-				app_main::singleton->fsm.errors = 0;
-				OS_LOG_INFO(APP_TAG, "state:%s - OK", state_to_string(app_main::singleton->fsm.state));
-				app_main::singleton->fsm.state = app_main::CHECK_ZONE;
-				app_main::singleton->fsm.old_state = app_main::INIT;
+				singleton->fsm.errors = 0;
+				OS_LOG_INFO(APP_TAG, "state:%s - OK", state_to_string(singleton->fsm.state));
+				singleton->fsm.state = CHECK_ZONE;
+				singleton->fsm.old_state = INIT;
 				break;
 			}
-			case app_main::CHECK_ZONE:
+			case CHECK_ZONE:
 			{
 				if(generic_timer <= 0)
 				{
 					OS_LOG_DEBUG(APP_TAG, "Check zones");
-					app_main::singleton->fsm.events.set(app_main::CHECK_ZONE);
-					app_main::singleton->fsm.old_state = app_main::CHECK_ZONE;
+					singleton->fsm.events.set(CHECK_ZONE);
+					singleton->fsm.old_state = CHECK_ZONE;
 
 					schedule current_schedule;
-					if(app_main::singleton->app_data.get_schedule(now_in_millis / ONE_SEC_IN_MILLIS, current_schedule))
+					if(singleton->app_data.get_schedule(now_in_millis / ONE_SEC_IN_MILLIS, current_schedule))
 					{
 						OS_LOG_DEBUG(APP_TAG, "");
 						current_schedule.status = status::RUN;
 						//TODO:
-						//app_main::singleton->fsm.state = app_main::INIT;
+						//singleton->fsm.state = INIT;
 					}
 					generic_timer = ONE_SEC_IN_MILLIS;
 				}
 				else
 				{
-					generic_timer -= app_main::FSM_SLEEP;
+					generic_timer -= FSM_SLEEP;
 				}
 				break;
 			}
-			case app_main::EXECUTE_ZONE:
+			case EXECUTE_ZONE:
 			{
 
 				break;
 			}
-			case app_main::SINCH_TIMESTAMP:
+			case SINCH_TIMESTAMP:
 			{
 
 				break;
 			}
+            case ERROR:
+            {
+                OS_LOG_FATAL(APP_TAG, "To many error occurred reset state");
+                singleton->fsm.events.clear(CHECK_USERS|CHECK_WIFI|CHECK_TIMESTAMP|INIT|CHECK_ZONE|SINCH_TIMESTAMP|ERROR);
+                singleton->fsm.state              = state::CHECK_USERS;
+                singleton->fsm.old_state 	        = state::CHECK_USERS;
+                singleton->app_led.loading();
+                break;
+            }
 			default:
 			{
 				break;
 			}
 		}
-		us_sleep(ms_to_us(app_main::FSM_SLEEP));
-		now_in_millis += app_main::FSM_SLEEP;
+		us_sleep(ms_to_us(FSM_SLEEP));
+		now_in_millis += FSM_SLEEP;
 	}
 
-	app_main::singleton->fsm_thread.exit();
+	singleton->fsm_thread.exit();
 	OS_LOG_DEBUG(APP_TAG, "Exit thread");
 
 	return nullptr;
@@ -449,10 +457,12 @@ os::exit app_main::fsm_start(class os::error** error) OS_NOEXCEPT
 
 os::exit app_main::handle_error() OS_NOEXCEPT
 {
-    app_main::singleton->app_led.error();
+    app_led.error();
+    fsm.events.set(ERROR);
 	if(fsm.errors < fsm::MAX_ERROR)
 	{
 		fsm.errors++;
+        OS_LOG_ERROR(APP_TAG, "It's occurred an error %u/%u on state: %s", fsm.errors, fsm::MAX_ERROR, state_to_string(fsm.state));
 		return exit::OK;
 	}
 	else
@@ -467,12 +477,18 @@ void app_main::on_change_connection(bool old_connected, bool new_connected) OS_N
 {
     if(!old_connected && new_connected)
     {
-        app_main::singleton->fsm.events.set(static_cast<uint8_t>(app_main::CHECK_WIFI));
+        singleton->fsm.events.set(static_cast<uint8_t>(CHECK_WIFI));
     }
     else if(old_connected && !new_connected)
     {
-        app_main::singleton->fsm.events.clear(static_cast<uint8_t>(app_main::CHECK_WIFI));
-        app_main::singleton->fsm.waiting_connection = false;
+        singleton->fsm.events.clear(static_cast<uint8_t>(CHECK_WIFI));
+        singleton->fsm.waiting_connection = false;
+    }
+    else if(!old_connected && !new_connected)
+    {
+        singleton->fsm.events.clear(static_cast<uint8_t>(CHECK_WIFI));
+        singleton->fsm.waiting_connection = false;
+        handle_error();
     }
 }
 
