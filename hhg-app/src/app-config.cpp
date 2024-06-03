@@ -194,7 +194,9 @@ os::exit app_config::load(app_config::on_vesrion_change on_version_change, error
 
 os::exit app_config::load_default(os::error **error) OS_NOEXCEPT
 {
-
+#if !defined(HHG_ADMIN_USER) || !defined(HHG_ADMIN_PASSWD)
+#error Admin user and password it's mandatory'
+#endif
     char digest[33];
     uint8_t hash[16];
 
@@ -205,8 +207,23 @@ os::exit app_config::load_default(os::error **error) OS_NOEXCEPT
 
 
     struct config config_default;
+
     config_default.users[0].user = HHG_ADMIN_USER;
     config_default.users[0].passwd = digest;
+
+#if defined(HHG_USER) && defined(HHG_PASSWD)
+    if(app_config::user::MAX_USERS > 1)
+    {
+        // Write the calculated hash to `hash`
+        MD5::hash(HHG_PASSWD, hash);
+        // Retrieve the hex-encoded digest
+        MD5::digest(hash, digest);
+
+        config_default.users[1].user = HHG_ADMIN_USER;
+        config_default.users[1].passwd = digest;
+    }
+#endif
+
     config_default.users_len = 1;
 	config = config_default;
 	return store(error);
