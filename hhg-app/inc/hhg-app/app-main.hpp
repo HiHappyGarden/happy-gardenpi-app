@@ -32,9 +32,6 @@ namespace hhg::app
 inline namespace v1
 {
 
-
-void* fsm_thread_handler(void* arg);
-
 //TODO: implement REAL singleton
 class app_main final : public hhg::iface::initializable, public hhg::iface::wifi::on_connection_event
 {
@@ -64,11 +61,12 @@ private:
     hhg::app::app_parser app_parser;
     hhg::app::app_led app_led;
 
-	os::thread fsm_thread{"fsm", hhg::driver::HIGH, 1024 * 2, fsm_thread_handler};
+    static void* handler(void* arg);
+	os::thread fsm_thread{"fsm", hhg::driver::HIGH, 1024 * 2, handler};
 
     struct fsm
     {
-		static constexpr uint8_t MAX_ERROR = 135;
+		static constexpr uint8_t MAX_ERROR = 5;
 
         enum state   state              = state::CHECK_USERS;
         enum state   old_state 	        = state::CHECK_USERS;
@@ -79,7 +77,8 @@ private:
     }fsm;
 
 
-	friend void* fsm_thread_handler(void* arg);
+
+
 public:
     explicit app_main(driver::hardware& hardware, os::error** error) OS_NOEXCEPT;
     OS_NO_COPY_NO_MOVE(app_main)
