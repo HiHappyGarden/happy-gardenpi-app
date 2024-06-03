@@ -46,7 +46,7 @@ inline namespace v1
         on_connection_event::callback callback = nullptr;
 
         bool connected = false;
-//        bool init_driver = false;
+        mutable int16_t connection_timeout = 0;
 
         struct ntp
         {

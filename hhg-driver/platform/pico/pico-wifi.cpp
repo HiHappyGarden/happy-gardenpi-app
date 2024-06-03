@@ -44,7 +44,7 @@ inline namespace v1
 
     pico_wifi::~pico_wifi() OS_NOEXCEPT
     {
-#if HHG_NO_WIFI == 0
+#if HHG_WIFI_DISABLE == 0
         cyw43_arch_deinit();
 #endif
     }
@@ -68,10 +68,22 @@ inline namespace v1
 
         udp_recv(singleton->state.ntp_pcb, ntp_recv, &singleton->state);
 
+        const uint8_t TICK = 100;
 
         while(singleton)
         {
-            osal_us_sleep(100_ms);
+            if (!singleton->connected && singleton->connection_timeout == 0)
+            {
+                if(singleton->obj && singleton->callback)
+                {
+                    (singleton->obj->*singleton->callback)(false, false);
+                }
+                singleton->connected = false;
+            }
+            else if(!singleton->connected && singleton->connection_timeout)
+            {
+                singleton->connection_timeout -= TICK;
+            }
 
             bool connected = netif_is_link_up(netif_default);
             if(!singleton->connected && connected)
@@ -79,6 +91,7 @@ inline namespace v1
                 auto ip_ready = dhcp_supplied_address(&cyw43_state.netif[CYW43_ITF_STA]);
                 if(ip_ready)
                 {
+                    singleton->connection_timeout = 0;
                     singleton->state.ip_addr = cyw43_state.netif[CYW43_ITF_STA].ip_addr;
                     OS_LOG_DEBUG(APP_TAG, "Connected to ip %s", ip4addr_ntoa(&cyw43_state.netif[CYW43_ITF_STA].ip_addr));
                     if(singleton->obj && singleton->callback)
@@ -98,6 +111,8 @@ inline namespace v1
                 }
                 singleton->connected = false;
             }
+
+            osal_us_sleep(ms_to_us(TICK));
         }
 
         thread.exit();
@@ -118,7 +133,7 @@ inline namespace v1
         }
         singleton = this;
 
-#if HHG_NO_WIFI == 0
+#if HHG_WIFI_DISABLE == 0
         return thread.create();
 #else
         return exit::OK;
@@ -127,6 +142,7 @@ inline namespace v1
 
     os::exit pico_wifi::connect(const string<32> &ssid, const string<64> &passwd, enum auth auth, class error **error) const OS_NOEXCEPT
     {
+        connection_timeout = HHG_WIFI_CONNECTION_TIMEOUT;
         uint32_t pico_auth = 0;
         switch (auth)
         {
@@ -144,7 +160,7 @@ inline namespace v1
                 break;
         }
 
-#if HHG_NO_WIFI == 0
+#if HHG_WIFI_DISABLE == 0
         if (cyw43_arch_wifi_connect_async(ssid.c_str(), passwd.c_str(), pico_auth))
         {
             if(error)
@@ -250,7 +266,7 @@ inline namespace v1
         this->state.on_ntp_callback = on_ntp_callback;
         this->state.error = error;
 
-#if HHG_NO_WIFI == 0
+#if HHG_WIFI_DISABLE == 0
         cyw43_arch_lwip_begin();
 
         err_t err = dns_gethostbyname(HHG_NTP_SERVER, &state.ntp_server_address, ntp_dns_found, &state);
@@ -278,7 +294,7 @@ inline namespace v1
     {
 
         string<15> ret;
-#if HHG_NO_WIFI == 0
+#if HHG_WIFI_DISABLE == 0
         ret += ip4addr_ntoa(&state.ip_addr);
 #else
         ret += "FAKE IP";
