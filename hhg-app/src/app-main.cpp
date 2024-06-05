@@ -467,6 +467,7 @@ os::exit app_main::handle_error() OS_NOEXCEPT
 	}
 	else
 	{
+        fsm.errors = 0;
 		fsm.old_state = fsm.state;
 		fsm.state = ERROR;
 		return exit::KO;
@@ -486,9 +487,9 @@ void app_main::on_change_connection(bool old_connected, bool new_connected) OS_N
     }
     else if(!old_connected && !new_connected)
     {
+        handle_error();
         singleton->fsm.events.clear(static_cast<uint8_t>(CHECK_WIFI));
         singleton->fsm.waiting_connection = false;
-        handle_error();
     }
 }
 
