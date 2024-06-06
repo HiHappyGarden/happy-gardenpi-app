@@ -34,7 +34,7 @@
 #define HHG_USER "user"
 #define HHG_PASSWD "user"
 
-#define HHG_WIFI_DISABLE (0)
+#define HHG_WIFI_DISABLE (1)
 #define HHG_WIFI_CONNECTION_TIMEOUT (10000)
 #if HHG_WIFI_CONNECTION_TIMEOUT > 30000
 #error HHG_WIFI_CONNECTION_TIMEOUT max value permitted 30000

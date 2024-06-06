@@ -26,6 +26,7 @@
 #include "hhg-app/app-data.hpp"
 #include "hhg-app/app-parser.hpp"
 #include "hhg-app/app-led.hpp"
+#include "hhg-app/app-display-handler.hpp"
 
 namespace hhg::app
 {
@@ -60,6 +61,7 @@ private:
     hhg::app::app_data app_data;
     hhg::app::app_parser app_parser;
     hhg::app::app_led app_led;
+    hhg::app::app_display_handler app_display_handler;
 
     static void* handler(void* arg);
 	os::thread fsm_thread{"fsm", hhg::driver::HIGH, 1024 * 2, handler};

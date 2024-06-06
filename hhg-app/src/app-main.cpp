@@ -313,6 +313,7 @@ app_main::app_main(driver::hardware& hardware, class error** error) OS_NOEXCEPT
 , app_data(hardware.get_fs_io())
 , app_parser(hardware.get_uart())
 , app_led(hardware.get_rgb_led())
+, app_display_handler(hardware.get_lcd(), hardware.get_rotary_encoder(), hardware.get_button())
 {
 	if(singleton)
 	{
@@ -337,8 +338,21 @@ os::exit app_main::init(class os::error** error) OS_NOEXCEPT
 	OS_LOG_INFO(APP_TAG, "Init APP PARSER");
 	hardware.get_uart()->set_on_receive(&app_parser, &hhg::iface::io_on_receive::on_receive);
 
+    OS_LOG_INFO(APP_TAG, "Init APP LED");
+    if(app_led.init(error) == exit::KO)
+    {
+        if(error)
+        {
+            *error = OS_ERROR_BUILD("app_led.init() fail.", error_type::OS_EFAULT);
+            OS_ERROR_PTR_SET_POSITION(*error);
+        }
+        return exit::KO;
+    }
+    OS_LOG_INFO(APP_TAG, "Init APP LED - OK");
+
 	if(app_parser.init(error) == exit::KO)
 	{
+        app_led.error();
 		return exit::KO;
 	}
 	set_app_parser(app_parser);
@@ -362,6 +376,7 @@ os::exit app_main::init(class os::error** error) OS_NOEXCEPT
 				*error = OS_ERROR_APPEND(*error, "Load default config fail", error_type::OS_ENOENT);
 				OS_ERROR_PTR_SET_POSITION(*error);
 			}
+            app_led.error();
 			return exit::KO;
 		}
 		OS_LOG_INFO(APP_TAG, "Load default config - OK");
@@ -373,6 +388,7 @@ os::exit app_main::init(class os::error** error) OS_NOEXCEPT
             *error = OS_ERROR_BUILD("set_app_config() fail.", error_type::OS_EFAULT);
             OS_ERROR_PTR_SET_POSITION(*error);
         }
+        app_led.error();
         return exit::KO;
 	}
     OS_LOG_INFO(APP_TAG, "Init APP CONFIG - OK");
@@ -385,9 +401,10 @@ os::exit app_main::init(class os::error** error) OS_NOEXCEPT
         {
             if(error && *error)
             {
-                *error = OS_ERROR_BUILD("set_app_config() impossible store config.", error_type::OS_EFAULT);
+                *error = OS_ERROR_BUILD("app_config.set_serial() impossible store config.", error_type::OS_EFAULT);
                 OS_ERROR_PTR_SET_POSITION(*error);
             }
+            app_led.error();
             return exit::KO;
         }
         OS_LOG_INFO(APP_TAG, "Update serial");
@@ -410,9 +427,10 @@ os::exit app_main::init(class os::error** error) OS_NOEXCEPT
 		{
 			if(error)
 			{
-				*error = OS_ERROR_BUILD("set_app_config() fail.", error_type::OS_EFAULT);
+				*error = OS_ERROR_BUILD("app_data.store() fail.", error_type::OS_EFAULT);
 				OS_ERROR_PTR_SET_POSITION(*error);
 			}
+            app_led.error();
 			return exit::KO;
 		}
 		OS_LOG_INFO(APP_TAG, "Store default data - OK");
@@ -424,16 +442,18 @@ os::exit app_main::init(class os::error** error) OS_NOEXCEPT
 			*error = OS_ERROR_BUILD("set_app_data() fail.", error_type::OS_EFAULT);
 			OS_ERROR_PTR_SET_POSITION(*error);
 		}
+        app_led.error();
 		return exit::KO;
 	}
 	OS_LOG_INFO(APP_TAG, "Init APP DATA - OK");
 
-    OS_LOG_INFO(APP_TAG, "Init APP LED");
-    if(app_led.init(error) == exit::KO)
+    OS_LOG_INFO(APP_TAG, "Init APP DISPLAY HANDLER");
+    if(app_display_handler.init(error) == exit::KO)
     {
+        app_led.error();
         return exit::KO;
     }
-    OS_LOG_INFO(APP_TAG, "Init APP LED - OK");
+    OS_LOG_INFO(APP_TAG, "Init APP DISPLAY HANDLER - OK");
 
 	OS_LOG_INFO(APP_TAG, "Set timer to parser");
 	set_time(const_cast<class time*>(hardware.get_time().get()));
@@ -459,6 +479,7 @@ os::exit app_main::handle_error() OS_NOEXCEPT
 {
     app_led.error();
     fsm.events.set(ERROR);
+    singleton->app_led.error();
 	if(fsm.errors < fsm::MAX_ERROR)
 	{
 		fsm.errors++;

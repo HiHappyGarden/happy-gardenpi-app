@@ -53,6 +53,7 @@ class app_led final  : public hhg::iface::initializable
         WARNING,
         ERROR,
         READY,
+        RUNNING_IRRIGATION
     } status = status::LOADING, curren_status = status::LOADING;
 
 public:
@@ -70,6 +71,7 @@ public:
 
     void ready() const OS_NOEXCEPT;
 
+    void running_irrigation()  const OS_NOEXCEPT;
 
 private:
 };

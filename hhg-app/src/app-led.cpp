@@ -72,6 +72,7 @@ inline namespace v1
 
             switch (singleton->status)
             {
+                case status::RUNNING_IRRIGATION:
                 case status::LOADING:
                     if(on)
                     {
@@ -186,6 +187,13 @@ inline namespace v1
 
     void app_led::ready() const OS_NOEXCEPT
     {
+        if(curren_status != status::READY)
+        {
+            status = status::READY;
+        }
+    }
+
+    void app_led::running_irrigation() const {
         if(curren_status != status::READY)
         {
             status = status::READY;
