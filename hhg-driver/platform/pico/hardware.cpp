@@ -46,7 +46,7 @@ namespace
 {
 
 constexpr const char APP_TAG[] = "HARDWARE";
-relay* relay_to_test; //TODO: da rimuovere
+/*relay* relay_to_test; //TODO: da rimuovere*/
 
 }
 
@@ -134,83 +134,83 @@ hardware::hardware(class error** error) OS_NOEXCEPT
         return;
     }
 
-    relay_to_test = relay.get();
+    /*relay_to_test = relay.get();*/
 }
 
 
 
-struct test : public rotary_encoder::event, public button::event
-    {
-        test() = default;
-        ~test() override = default;
-
-        int index = 0;
-        int8_t clicked = 0;
-
-        void on_rotary_encoder_event(bool ccw, bool cw, bool click) OS_NOEXCEPT override
-        {
-            if(cw)
-            {
-                if(index > 0)
-                {
-                    index--;
-                }
-                else
-                {
-                    index =  relay_to_test->size() - 1;
-                }
-
-            }
-            else if(ccw)
-            {
-
-                if(index < relay_to_test->size())
-                {
-                    index++;
-                }
-                else
-                {
-                    index = 0;
-                }
-            }
-
-            if(click)
-            {
-                clicked++;
-            }
-
-            for (int i = 0; i < relay_to_test->size(); i++)
-            {
-                relay_to_test->set(i, index == i);
-            }
-
-            //OS_LOG_INFO(APP_TAG, "idx: %u clicked:%u", index, clicked);
-        }
-
-
-
-        void on_button_click(enum  button::status status) OS_NOEXCEPT override
-        {
-            if(status == button::status::RELEASE)
-            {
-                return;
-            }
-            for (int i = 0; i < relay_to_test->size(); i++)
-            {
-                relay_to_test->set(i, index == i);
-            }
-            if(index < relay_to_test->size())
-            {
-                index++;
-            }
-            else
-            {
-                index = 0;
-            }
-
-        }
-
-    } test_one;
+//struct test : public rotary_encoder::event, public button::event
+//    {
+//        test() = default;
+//        ~test() override = default;
+//
+//        int index = 0;
+//        int8_t clicked = 0;
+//
+//        void on_rotary_encoder_event(bool ccw, bool cw, bool click) OS_NOEXCEPT override
+//        {
+//            if(cw)
+//            {
+//                if(index > 0)
+//                {
+//                    index--;
+//                }
+//                else
+//                {
+//                    index =  relay_to_test->size() - 1;
+//                }
+//
+//            }
+//            else if(ccw)
+//            {
+//
+//                if(index < relay_to_test->size())
+//                {
+//                    index++;
+//                }
+//                else
+//                {
+//                    index = 0;
+//                }
+//            }
+//
+//            if(click)
+//            {
+//                clicked++;
+//            }
+//
+//            for (int i = 0; i < relay_to_test->size(); i++)
+//            {
+//                relay_to_test->set(i, index == i);
+//            }
+//
+//            //OS_LOG_INFO(APP_TAG, "idx: %u clicked:%u", index, clicked);
+//        }
+//
+//
+//
+//        void on_button_click(enum  button::status status) OS_NOEXCEPT override
+//        {
+//            if(status == button::status::RELEASE)
+//            {
+//                return;
+//            }
+//            for (int i = 0; i < relay_to_test->size(); i++)
+//            {
+//                relay_to_test->set(i, index == i);
+//            }
+//            if(index < relay_to_test->size())
+//            {
+//                index++;
+//            }
+//            else
+//            {
+//                index = 0;
+//            }
+//
+//        }
+//
+//    } test_one;
 
 
 
@@ -357,12 +357,12 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
     }
     OS_LOG_INFO(APP_TAG, "Init WiFI - OK");
 
-    //TODO: da rimuovere
-    button->set_on_button_click(&test_one, &button::event::on_button_click);
-    rotary_encoder->set_on_rotary_encoder_event(&test_one, &rotary_encoder::event::on_rotary_encoder_event);
+//    //TODO: da rimuovere
+//    button->set_on_button_click(&test_one, &button::event::on_button_click);
+//    rotary_encoder->set_on_rotary_encoder_event(&test_one, &rotary_encoder::event::on_rotary_encoder_event);
 
-    lcd->set_rect(30, 30, 30, 30, iface::lcd::write_mode::ADD);
-    lcd->send_buffer();
+//    lcd->set_rect(30, 30, 30, 30, iface::lcd::write_mode::ADD);
+//    lcd->send_buffer();
 
 	return exit::OK;
 }
