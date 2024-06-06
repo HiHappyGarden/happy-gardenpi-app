@@ -251,7 +251,6 @@ inline namespace v1
             uint32_t seconds_since_1900 = seconds_buf[0] << 24 | seconds_buf[1] << 16 | seconds_buf[2] << 8 | seconds_buf[3];
             uint32_t seconds_since_1970 = seconds_since_1900 - NTP_DELTA;
             time_t epoch = seconds_since_1970;
-            OS_LOG_DEBUG(APP_TAG, "NTP request - OK timestamp:%u", epoch);
             if(state->on_ntp_callback)
             {
                 state->on_ntp_callback(exit::OK, epoch);
