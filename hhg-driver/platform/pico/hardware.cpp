@@ -184,7 +184,7 @@ struct test : public rotary_encoder::event, public button::event
                 relay_to_test->set(i, index == i);
             }
 
-            OS_LOG_INFO(APP_TAG, "idx: %u clicked:%u", index, clicked);
+            //OS_LOG_INFO(APP_TAG, "idx: %u clicked:%u", index, clicked);
         }
 
 
