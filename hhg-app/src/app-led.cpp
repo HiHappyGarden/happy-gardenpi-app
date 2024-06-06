@@ -55,13 +55,13 @@ inline namespace v1
         }
         singleton = this;
 
+        loading();
+
         return thread.create(error);
     }
 
     void* app_led::handler(void *arg) OS_NOEXCEPT
     {
-
-        enum status curren_status = status::LOADING;
 
         int64_t timer_on = 0;
         int64_t timer_off = 0;
@@ -76,16 +76,16 @@ inline namespace v1
                     if(on)
                     {
                         RGB_LOADING();
-                        timer_on = 3 * TICK;
+                        timer_on = 5 * TICK;
                         on = true;
                     }
                     else
                     {
                         RGB_OFF();
-                        timer_off = 3 * TICK;
+                        timer_off = 5 * TICK;
                         on = false;
                     }
-                    curren_status = status::LOADING;
+                    singleton->curren_status = status::LOADING;
                     break;
                 case status::WARNING:
                     if(on)
@@ -100,7 +100,7 @@ inline namespace v1
                         timer_off = 3 * TICK;
                         on = false;
                     }
-                    curren_status = status::WARNING;
+                    singleton->curren_status = status::WARNING;
                     break;
                 case status::ERROR:
                     if(on)
@@ -115,7 +115,7 @@ inline namespace v1
                         timer_off = 2 * TICK;
                         on = false;
                     }
-                    curren_status = status::ERROR;
+                    singleton->curren_status = status::ERROR;
                     break;
                 case status::READY:
                     if(on)
@@ -129,7 +129,7 @@ inline namespace v1
                         timer_off = 0;
                         on = false;
                     }
-                    curren_status = status::READY;
+                    singleton->curren_status = status::READY;
                     break;
                 default:
                     break;
@@ -145,9 +145,10 @@ inline namespace v1
                 timer_off -= TICK;
                 singleton->status = status::NONE;
             }
-            else
+            else if(timer_on == 0 && timer_off == 0)
             {
                 on = !on;
+                singleton->status = singleton->curren_status;
             }
 
 
@@ -161,22 +162,34 @@ inline namespace v1
 
     void app_led::loading() const OS_NOEXCEPT
     {
-        status = status::LOADING;
+        if(curren_status != status::LOADING)
+        {
+            status = status::LOADING;
+        }
     }
 
     void app_led::warning() const OS_NOEXCEPT
     {
-        status = status::WARNING;
+        if(curren_status != status::WARNING)
+        {
+            status = status::WARNING;
+        }
     }
 
     void app_led::error() const OS_NOEXCEPT
     {
-        status = status::ERROR;
+        if(curren_status != status::ERROR)
+        {
+            status = status::ERROR;
+        }
     }
 
     void app_led::ready() const OS_NOEXCEPT
     {
-        status = status::READY;
+        if(curren_status != status::READY)
+        {
+            status = status::READY;
+        }
     }
 
 }

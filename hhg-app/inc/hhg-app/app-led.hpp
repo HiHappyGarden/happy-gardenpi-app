@@ -53,7 +53,7 @@ class app_led final  : public hhg::iface::initializable
         WARNING,
         ERROR,
         READY,
-    } status = status::LOADING;
+    } status = status::LOADING, curren_status = status::LOADING;
 
 public:
     explicit app_led(const hhg::iface::rgb_led::ptr& rgb_led) OS_NOEXCEPT;
