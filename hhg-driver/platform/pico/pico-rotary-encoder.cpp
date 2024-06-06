@@ -80,6 +80,7 @@ inline namespace v1
                 }
                 else
                 {
+                    //NOTE: NO printf or log in callback!!!!
                     (singleton->obj->*singleton->callback)(true, false, !btn && last_btn != btn);
                 }
             }
@@ -95,6 +96,7 @@ inline namespace v1
                 }
                 else
                 {
+                    //NOTE: NO printf or log in callback!!!!
                     (singleton->obj->*singleton->callback)(false, true, !btn && last_btn != btn);
                 }
             }
