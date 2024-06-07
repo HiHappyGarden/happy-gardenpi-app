@@ -47,7 +47,7 @@ class app_parser final : public hhg::iface::initializable, public hhg::iface::io
 
 
 	const hhg::iface::io::ptr& io;
-	const hhg::parser::parser parser;
+	hhg::parser::parser parser;
 
     static void* handler(void* arg) OS_NOEXCEPT;
 	os::thread thread {
