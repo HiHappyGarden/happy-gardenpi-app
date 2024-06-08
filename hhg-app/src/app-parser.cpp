@@ -50,6 +50,8 @@ app_parser::app_parser(const hhg::iface::io::ptr& io, class error** error) OS_NO
 		return;
 	}
 
+    parser.set_on_auth(this, &hhg::parser::parser::auth::on_auth);
+
 	singleton = this;
 }
 
@@ -62,7 +64,6 @@ app_parser::~app_parser() OS_NOEXCEPT
 
 os::exit app_parser::init(class error** error) OS_NOEXCEPT
 {
-
 	if(!run)
 	{
 		run = thread.create(nullptr, this->error) == exit::OK;
@@ -86,6 +87,45 @@ void app_parser::on_receive(io_source source, const uint8_t data[], uint16_t siz
 		this->source = source;
 		buffer.send_from_isr(data, size, 10_ms, error);
 	}
+}
+
+os::exit app_parser::on_auth(const cmd_data &data, const hhg::parser::entry *entry, os::error **error) OS_NOEXCEPT
+{
+    if(strlen(entry->access) == 0)
+    {
+        return exit::OK;
+    }
+    if(data.tokens_len < 1)
+    {
+        return exit::KO;
+    }
+
+    char access[ACCESS_MAX];
+    strncpy(access, entry->access, ACCESS_MAX);
+
+    char* ptr = strstr(access, HHG_DIVISOR);
+    if(ptr == nullptr)
+    {
+        return exit::KO;
+    }
+
+    *ptr = '\0';
+    const char* admin = access;
+    const char* user = ptr + 1;
+
+    if(user_logged.user == admin)
+    {
+        printf("--->1");
+        return exit::OK;
+    }
+    else if(user_logged.user == user)
+    {
+        printf("--->2");
+        return exit::OK;
+    }
+
+    printf("--->3 %s %s %s", user_logged.user.c_str(), admin, user);
+    return exit::KO;
 }
 
 void* app_parser::handler(void* arg) OS_NOEXCEPT

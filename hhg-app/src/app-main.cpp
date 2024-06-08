@@ -335,7 +335,6 @@ app_main::~app_main() OS_NOEXCEPT = default;
 
 os::exit app_main::init(class os::error** error) OS_NOEXCEPT
 {
-	OS_LOG_INFO(APP_TAG, "Init APP PARSER");
 	hardware.get_uart()->set_on_receive(&app_parser, &hhg::iface::io_on_receive::on_receive);
 
     OS_LOG_INFO(APP_TAG, "Init APP LED");
@@ -350,12 +349,22 @@ os::exit app_main::init(class os::error** error) OS_NOEXCEPT
     }
     OS_LOG_INFO(APP_TAG, "Init APP LED - OK");
 
+    OS_LOG_INFO(APP_TAG, "Init APP PARSER");
 	if(app_parser.init(error) == exit::KO)
 	{
         app_led.error();
 		return exit::KO;
 	}
-	set_app_parser(app_parser);
+	if(set_app_parser(app_parser, error) == exit::KO)
+    {
+        if(error && *error)
+        {
+            *error = OS_ERROR_BUILD("set_app_config() fail.", error_type::OS_EFAULT);
+            OS_ERROR_PTR_SET_POSITION(*error);
+        }
+        app_led.error();
+        return exit::KO;
+    }
 	OS_LOG_INFO(APP_TAG, "Init APP PARSER - OK");
 
 	OS_LOG_INFO(APP_TAG, "Init APP CONFIG");
