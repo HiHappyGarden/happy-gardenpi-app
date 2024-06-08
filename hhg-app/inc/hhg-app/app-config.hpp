@@ -46,6 +46,11 @@ public:
 
         os::string<32> user;
         os::string<32> passwd;
+
+        inline bool is_empty() const OS_NOEXCEPT
+        {
+            return user.length() == 0 && passwd.length() == 0;
+        }
     };
 
 private:
@@ -151,6 +156,9 @@ public:
         return this->config.users[idx];
     }
 
+    os::pair<os::exit, user> set_auth(const os::string<32>& user, const os::string<32>& passwd);
+
+    os::pair<os::exit, user> set_remote_auth(const os::string<32>& user, const os::string<32>& passwd);
 
     os::exit set_descr(const char descr[]) OS_NOEXCEPT;
 
