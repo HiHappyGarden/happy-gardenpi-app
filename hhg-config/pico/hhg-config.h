@@ -25,6 +25,7 @@
 #define HHG_VER_MAJOR (0)
 #define HHG_VER_MINOR (60)
 #define HHG_VER_PATCH (0)
+#define HHG_DIVISOR "|"
 
 #define HHG_SCHEDULES_SIZE (2)
 #define HHG_ZONES_SIZE (4)
@@ -33,6 +34,9 @@
 #define HHG_ADMIN_PASSWD "admin"
 #define HHG_USER "user"
 #define HHG_PASSWD "user"
+#if !defined(HHG_ADMIN_USER) || !defined(HHG_ADMIN_PASSWD)
+#error HHG_ADMIN_USER or HHG_ADMIN_PASSWD are mandatory
+#endif
 
 #define HHG_WIFI_DISABLE (1)
 #define HHG_WIFI_CONNECTION_TIMEOUT (10000)

@@ -32,10 +32,10 @@ class time;
 
 namespace hhg::driver
 {
-    inline namespace v1
-    {
-        class hardware;
-    }
+inline namespace v1
+{
+    class hardware;
+}
 }
 
 namespace hhg::app

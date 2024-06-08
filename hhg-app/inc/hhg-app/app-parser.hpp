@@ -24,6 +24,7 @@
 #include "hhg-iface/initializable.hpp"
 #include "hhg-parser/parser.hpp"
 #include "hhg-driver/os-config.hpp"
+#include "hhg-app/app-config.hpp"
 
 namespace hhg::app
 {
@@ -66,6 +67,7 @@ class app_parser final : public hhg::iface::initializable, public hhg::iface::io
 
 	static inline app_parser* singleton = nullptr;
 
+    app_config::user user_logged;
 public:
 
 	explicit app_parser(const hhg::iface::io::ptr& io, class os::error** error = nullptr) OS_NOEXCEPT;
@@ -85,7 +87,6 @@ public:
 	}
 
 	void on_receive(hhg::iface::io_source, const uint8_t data[], uint16_t size) const OS_NOEXCEPT override;
-
 
 };
 

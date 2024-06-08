@@ -27,6 +27,12 @@
 using hhg::iface::time;
 using namespace hhg::driver;
 
+#if defined(HHG_USER) && defined(HHG_PASSWD)
+#define ACCESS_ALL_USERS HHG_ADMIN_USER HHG_DIVISOR HHG_USER
+#else
+#define ACCESS_ALL_USERS HHG_ADMIN_USER
+#endif
+
 #include <errno.h>
 #include <stdint.h>
 
@@ -45,7 +51,15 @@ static class parser* parser = nullptr;
 namespace
 {
 
+os::exit auth(const cmd_data &data, const hhg::parser::entry *entry, os::error **error) OS_NOEXCEPT
+{
+    return exit::KO;
+}
 
+os::exit auth_remote(const cmd_data &data, const hhg::parser::entry *entry, os::error **error) OS_NOEXCEPT
+{
+    return exit::KO;
+}
 
 entry commands_rtc[] =
 {
@@ -79,7 +93,7 @@ entry commands_rtc[] =
 
 		return exit::OK;
 	}
-	, .description = "Set RTC"},
+	, .description = "Set RTC", .access = ACCESS_ALL_USERS},
 	{.key = "3", .custom_func = [](auto data, auto entry, auto error)
 	{
 		auto&& date_time = time->get_date_time(time::FORMAT, error);
@@ -95,15 +109,15 @@ constexpr const size_t commands_rtc_size = sizeof(commands_rtc) / sizeof(command
 entry commands_config[] =
 {
 	{.key = "1", .description = "Get serial"},
-	{.key = "2", .description = "Set serial"},
+	{.key = "2", .description = "Set serial", .access = ACCESS_ALL_USERS},
 	{.key = "3", .description = "Get description"},
-	{.key = "4", .description = "Set description"},
+	{.key = "4", .description = "Set description", .access = ACCESS_ALL_USERS},
 	{.key = "5", .description = "Get zones size"},
-    {.key = "6", .description = "Set wifi ssid"},
-    {.key = "7", .description = "Set wifi password"},
-    {.key = "8", .description = "Set wifi auth"},
+    {.key = "6", .description = "Set wifi ssid", .access = ACCESS_ALL_USERS},
+    {.key = "7", .description = "Set wifi password", .access = ACCESS_ALL_USERS},
+    {.key = "8", .description = "Set wifi auth", .access = ACCESS_ALL_USERS},
     {.key = "9", .description = "Is wifi enabled"},
-    {.key = "10", .description = "Set wifi enabled"},
+    {.key = "10", .description = "Set wifi enabled", .access = ACCESS_ALL_USERS},
     {.key = "11",  .custom_func = [](auto data, auto entry, auto error)
     {
 
@@ -124,8 +138,8 @@ entry commands_config[] =
         printf("OK");
         return exit::OK;
     }
-    ,.description = "Set set user"},
-    {.key = "CLEAR", .description = "Clear all"},
+    ,.description = "Set set user", .access = ACCESS_ALL_USERS},
+    {.key = "CLEAR", .description = "Clear all", .access = ACCESS_ALL_USERS},
 	{.key = "STORE", .custom_func = [](auto data, auto entry, auto error)
 	{
 		auto ret = app_config->store(error);
@@ -139,7 +153,7 @@ entry commands_config[] =
 		}
 		return ret;
 	}
-	, .description = "Store config"},
+	, .description = "Store config", .access = ACCESS_ALL_USERS},
 
 };
 constexpr const size_t commands_config_size = sizeof(commands_config) / sizeof(commands_config[0]);
@@ -177,7 +191,7 @@ entry commands_data[] =
 		}
 	},
 	.description = "Get scheduler"},
-	{.key = "2", .description = "Set scheduler"},
+	{.key = "2", .description = "Set scheduler", .access = ACCESS_ALL_USERS},
 	{.key = "3",
 	.custom_func = [](auto data, auto entry, auto error)
 	{
@@ -221,8 +235,8 @@ entry commands_data[] =
 
 	},
     .description = "Get zone"},
-	{.key = "4", .description = "Set zone"},
-    {.key = "CLEAR", .description = "Clear all zone"},
+	{.key = "4", .description = "Set zone", .access = ACCESS_ALL_USERS},
+    {.key = "CLEAR", .description = "Clear all zone", .access = ACCESS_ALL_USERS},
 	{.key = "STORE", .custom_func = [](auto data, auto entry, auto error)
 	{
 		auto ret = app_data->store(error);
@@ -236,15 +250,9 @@ entry commands_data[] =
 		}
 		return ret;
 	}
-	, .description = "Store data"},
+	, .description = "Store data", .access = ACCESS_ALL_USERS},
 };
 constexpr const size_t commands_data_size = sizeof(commands_data) / sizeof(commands_data[0]);
-
-entry commands_user[] =
-{
-
-};
-constexpr const size_t commands_user_size = sizeof(commands_user) / sizeof(commands_user[0]);
 
 entry commands_log[] =
 {
@@ -260,8 +268,9 @@ entry commands[] =
 	{.key = "$RTC", .next = commands_rtc, .next_size = commands_rtc_size, .description = "Rtc menu"},
 	{.key = "$CONF", .next = commands_config, .next_size = commands_config_size, .description = "Configuration menu"},
 	{.key = "$DATA", .next = commands_data, .next_size = commands_data_size, .description = "Data menu"},
-	{.key = "$USR", .next = commands_user, .next_size = commands_user_size, .description = "User menu"},
-	{.key = "$LOG", .next = commands_log, .next_size = commands_log_size, .description = "Log menu"}
+	{.key = "$LOG", .next = commands_log, .next_size = commands_log_size, .description = "Log menu"},
+    {.key = "$AUTH", .custom_func = auth, .description = "Log menu", .access = ACCESS_ALL_USERS},
+    {.key = "$AUTH_REMOTE",  .custom_func = auth_remote,  .description = "Log menu", .access = ACCESS_ALL_USERS}
 };
 constexpr const size_t commands_size = sizeof(commands) / sizeof(commands[0]);
 

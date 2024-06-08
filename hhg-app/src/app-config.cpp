@@ -98,6 +98,45 @@ os::exit app_config::set_user(uint8_t idx, const char *user, const char *passwd)
 }
 
 
+os::pair<os::exit, app_config::user> app_config::set_auth(const os::string<32>& user, const os::string<32>& passwd)
+{
+    for(uint8_t i = 0; i < config.users_len && i <  user::MAX_USERS; i++)
+    {
+        auto&& [u, p] = this->config.users[i];
+
+        char digest[33];
+        uint8_t hash[16];
+
+        // Write the calculated hash to `hash`
+        MD5::hash(passwd.c_str(), hash);
+        // Retrieve the hex-encoded digest
+        MD5::digest(hash, digest);
+
+
+        if(u == user && p == passwd)
+        {
+            return {exit::OK, {u, p}};
+        }
+    }
+
+    return {exit::OK, {}};
+}
+
+os::pair<os::exit, app_config::user> app_config::set_remote_auth(const os::string<32>& user, const os::string<32>& passwd)
+{
+    for(uint8_t i = 0; i < config.users_len && i <  user::MAX_USERS; i++)
+    {
+        auto&& [u, p] = config.users[i];
+        if(u == user && p == passwd)
+        {
+            return {exit::OK, {u, p}};
+        }
+    }
+
+    return {exit::KO, {}};
+}
+
+
 os::exit app_config::set_descr(const char descr[]) OS_NOEXCEPT
 {
 	if(descr)
