@@ -122,7 +122,7 @@ os::pair<os::exit, app_config::user> app_config::set_auth(const os::string<32>& 
     return {exit::OK, {}};
 }
 
-os::pair<os::exit, app_config::user> app_config::set_remote_auth(const os::string<32>& user, const os::string<32>& passwd)
+os::pair<os::exit, app_config::user> app_config::set_auth_remote(const os::string<32>& user, const os::string<32>& passwd)
 {
     for(uint8_t i = 0; i < config.users_len && i <  user::MAX_USERS; i++)
     {

@@ -60,7 +60,7 @@ struct wifi : public initializable
 
     virtual os::string<15> get_ip_address_str() const OS_NOEXCEPT = 0;
 
-    virtual uint32_t get_ip_address() const  OS_NOEXCEPT = 0;
+    virtual uint32_t get_ip_address() const OS_NOEXCEPT = 0;
 
 };
 

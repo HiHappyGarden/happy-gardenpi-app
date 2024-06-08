@@ -76,9 +76,9 @@ inline namespace v1
 
         os::exit ntp_start(on_ntp_received, os::error **error) OS_NOEXCEPT override;
 
-        os::string<15> get_ip_address_str() OS_NOEXCEPT const override;
+        os::string<15> get_ip_address_str() const OS_NOEXCEPT override;
 
-        inline uint32_t get_ip_address() OS_NOEXCEPT const  override
+        inline uint32_t get_ip_address()  const OS_NOEXCEPT override
         {
             return state.ip_addr.addr;
         }

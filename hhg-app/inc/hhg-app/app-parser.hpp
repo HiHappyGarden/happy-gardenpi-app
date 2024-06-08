@@ -26,13 +26,14 @@
 #include "hhg-driver/os-config.hpp"
 #include "hhg-app/app-config.hpp"
 
+
 namespace hhg::app
 {
 inline namespace v1
 {
 
 //TODO: implement REAL singleton
-class app_parser final : public hhg::iface::initializable, public hhg::iface::io_on_receive
+class app_parser final : public hhg::iface::initializable, public hhg::iface::io_on_receive, public hhg::parser::parser::auth
 {
 	//friend void* app_parser_thread_handler(void* arg) OS_NOEXCEPT;
 
@@ -40,6 +41,7 @@ class app_parser final : public hhg::iface::initializable, public hhg::iface::io
 	static constexpr const uint16_t RET_SIZE = 256;
 	static constexpr const char STARTER_CHAR[] = "$";
 	static constexpr const uint8_t KO[] = "KO\r\n";
+    static constexpr const uint8_t OK[] = "OK\r\n";
 	static constexpr const char NEW_LINE[] = "\r\n";
 
 
@@ -86,7 +88,28 @@ public:
 		return source;
 	}
 
+    inline bool is_user_logged() const OS_NOEXCEPT
+    {
+        return !user_logged.is_empty();
+    }
+
 	void on_receive(hhg::iface::io_source, const uint8_t data[], uint16_t size) const OS_NOEXCEPT override;
+
+private:
+    friend os::exit auth(const hhg::parser::cmd_data &data, const hhg::parser::entry *entry, os::error **error) OS_NOEXCEPT;
+    friend os::exit set_app_parser(class app_parser& app_parser, os::error** error) OS_NOEXCEPT;
+
+    inline void set_user_logged(const app_config::user& user_logged) OS_NOEXCEPT
+    {
+        this->user_logged = user_logged;
+    }
+
+    inline void clear_user_logged() OS_NOEXCEPT
+    {
+        this->user_logged = {};
+    }
+
+    os::exit on_auth(const hhg::parser::cmd_data& data, const hhg::parser::entry* entry, os::error** error) OS_NOEXCEPT override;
 
 };
 

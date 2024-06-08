@@ -46,20 +46,15 @@ inline namespace v1
 static class app_config* app_config = nullptr;
 static class app_data* app_data = nullptr;
 static class time* time = nullptr;
+static class app_parser* app_parser = nullptr;
 static class parser* parser = nullptr;
+
+
 
 namespace
 {
 
-os::exit auth(const cmd_data &data, const hhg::parser::entry *entry, os::error **error) OS_NOEXCEPT
-{
-    return exit::KO;
-}
 
-os::exit auth_remote(const cmd_data &data, const hhg::parser::entry *entry, os::error **error) OS_NOEXCEPT
-{
-    return exit::KO;
-}
 
 entry commands_rtc[] =
 {
@@ -269,22 +264,34 @@ entry commands[] =
 	{.key = "$CONF", .next = commands_config, .next_size = commands_config_size, .description = "Configuration menu"},
 	{.key = "$DATA", .next = commands_data, .next_size = commands_data_size, .description = "Data menu"},
 	{.key = "$LOG", .next = commands_log, .next_size = commands_log_size, .description = "Log menu"},
-    {.key = "$AUTH", .custom_func = auth, .description = "Log menu", .access = ACCESS_ALL_USERS},
-    {.key = "$AUTH_REMOTE",  .custom_func = auth_remote,  .description = "Log menu", .access = ACCESS_ALL_USERS}
+    {.key = "$AUTH", .custom_func = auth, .description = "Auth from phy"},
+    {.key = "$AUTH_REMOTE",  .custom_func = auth,  .description = "Auth from remote"},
+    {.key = "$AUTH_DISCONNECT", .description = "Disconnect", .access = ACCESS_ALL_USERS}
 };
 constexpr const size_t commands_size = sizeof(commands) / sizeof(commands[0]);
 
 }
 
-void set_app_parser(class app_parser& app_parser) OS_NOEXCEPT
+os::exit set_app_parser(class app_parser& app_parser, error** error) OS_NOEXCEPT
 {
+    hhg::app::app_parser = const_cast<class app_parser*>(&app_parser);
 	parser = const_cast<class parser*>(&app_parser.get_parser());
+
+    string<KEY_MAX> key;
+
+    key = "$AUTH_DISCONNECT";
+    if(parser->set(key.c_str(), new method(&app_parser, &app_parser::clear_user_logged), error) == exit::KO)
+    {
+        return exit::KO;
+    }
+
+    return exit::OK;
 }
 
 
 os::exit set_app_config(class app_config& app_config, error** error) OS_NOEXCEPT
 {
-	string<16> key;
+	string<KEY_MAX> key;
 
 	hhg::app::app_config = &app_config;
 
@@ -365,7 +372,7 @@ os::exit set_app_config(class app_config& app_config, error** error) OS_NOEXCEPT
 
 os::exit set_app_data(class app_data& app_data, error** error) OS_NOEXCEPT
 {
-	string<16> key;
+	string<KEY_MAX> key;
 
 	hhg::app::app_data = &app_data;
 
@@ -406,6 +413,48 @@ void set_time(class time* time) OS_NOEXCEPT
 {
 	hhg::app::time = time;
 }
+
+os::exit auth(const cmd_data &data, const entry *entry, os::error **error) OS_NOEXCEPT
+{
+    if(data.tokens_len < 3)
+    {
+        strncpy(data.ret_buffer, "KO", data.ret_buffer_len);
+        return exit::KO;
+    }
+
+    string<hhg::parser::KEY_MAX> key;
+    string<32> user;
+    string<32> passwd;
+
+    key += data.tokens[0].start;
+    user += data.tokens[1].start;
+    passwd += data.tokens[2].start;
+
+    if(key == "$AUTH")
+    {
+        auto [status, auth] = app_config->set_auth(user, passwd);
+        if(status == exit::OK)
+        {
+            app_parser->set_user_logged(auth);
+            strncpy(data.ret_buffer, "OK", data.ret_buffer_len);
+            return exit::OK;
+        }
+    }
+    if(key == "$AUTH_REMOTE")
+    {
+        auto [status, auth] = app_config->set_auth_remote(user, passwd);
+        if(status == exit::OK)
+        {
+            app_parser->set_user_logged(auth);
+            strncpy(data.ret_buffer, "OK", data.ret_buffer_len);
+            return exit::OK;
+        }
+    }
+
+    strncpy(data.ret_buffer, "KO", data.ret_buffer_len);
+    return exit::KO;
+}
+
 
 entry* get_commands() OS_NOEXCEPT
 {
