@@ -125,6 +125,18 @@ os::exit app_parser::on_auth(const cmd_data &data, const hhg::parser::entry *ent
     return exit::KO;
 }
 
+void app_parser::set_user_logged(const app_config::user& user_logged) OS_NOEXCEPT
+{
+    this->user_logged = user_logged;
+    auth_timer.start();
+}
+
+void app_parser::clear_user_logged() OS_NOEXCEPT
+{
+    this->user_logged = {};
+    auth_timer.stop();
+}
+
 void* app_parser::handler(void* arg) OS_NOEXCEPT
 {
 	string<app_parser::singleton->BUFFER_SIZE> buffer;
@@ -151,14 +163,19 @@ void* app_parser::handler(void* arg) OS_NOEXCEPT
 			if (start && end)
 			{
 				class error* error = nullptr;
-				if(app_parser::singleton->parser.execute(buffer.substr(start - buffer.c_str(), end - start).c_str(), ret.c_str(), ret.size(), &error) == exit::OK)
+				if(singleton->parser.execute(buffer.substr(start - buffer.c_str(), end - start).c_str(), ret.c_str(), ret.size(), &error) == exit::OK)
 				{
+                    if(singleton->is_user_logged() && singleton->auth_timer.is_active())
+                    {
+                        singleton->user_logged_timeout = AUTH_TIMEOUT;
+                    }
+                    
 					ret += app_parser::NEW_LINE;
-					app_parser::singleton->io->transmit(reinterpret_cast<const uint8_t*>(ret.c_str()), ret.length());;
+					singleton->io->transmit(reinterpret_cast<const uint8_t*>(ret.c_str()), ret.length());;
 				}
 				else
 				{
-					app_parser::singleton->io->transmit(app_parser::KO, sizeof(app_parser::KO) - 1);
+					singleton->io->transmit(app_parser::KO, sizeof(app_parser::KO) - 1);
 					if(error)
 					{
 						printf_stack_error(APP_TAG, error);
@@ -169,14 +186,14 @@ void* app_parser::handler(void* arg) OS_NOEXCEPT
 			}
 			else if (start == nullptr && end)
 			{
-				app_parser::singleton->io->transmit(app_parser::KO, sizeof(app_parser::KO) - 1);
+				singleton->io->transmit(app_parser::KO, sizeof(app_parser::KO) - 1);
 				buffer.clear();
 				ret.clear();
 			}
 		}
 	}
 
-	app_parser::singleton->thread.exit();
+	singleton->thread.exit();
 
 	return nullptr;
 }
