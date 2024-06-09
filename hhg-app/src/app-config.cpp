@@ -91,9 +91,21 @@ os::exit app_config::set_user(uint8_t idx, const char *user, const char *passwd)
     // Retrieve the hex-encoded digest
     MD5::digest(hash, digest);
 
-    this->config.users[idx].user = user;
-    this->config.users[idx].passwd = digest;
-    this->config.users_len++;
+    if(config.users[idx].is_empty())
+    {
+        config.users_len++;
+        config.users[idx].user = user;
+        config.users[idx].passwd = digest;
+    }
+    else
+    {
+        if(config.users[idx].user != user)
+        {
+            return os::exit::KO;
+        }
+        config.users[idx].passwd = digest;
+    }
+
     return os::exit::OK;
 }
 
@@ -102,7 +114,7 @@ os::pair<os::exit, app_config::user> app_config::set_auth(const os::string<32>& 
 {
     for(uint8_t i = 0; i < config.users_len && i <  user::MAX_USERS; i++)
     {
-        auto&& [u, p] = this->config.users[i];
+        auto&& [u, p] = config.users[i];
 
         char digest[33];
         uint8_t hash[16];
@@ -112,14 +124,13 @@ os::pair<os::exit, app_config::user> app_config::set_auth(const os::string<32>& 
         // Retrieve the hex-encoded digest
         MD5::digest(hash, digest);
 
-
-        if(u == user && p == passwd)
+        if(u == user && p == digest)
         {
             return {exit::OK, {u, p}};
         }
     }
 
-    return {exit::OK, {}};
+    return {exit::KO, {}};
 }
 
 os::pair<os::exit, app_config::user> app_config::set_auth_remote(const os::string<32>& user, const os::string<32>& passwd)
@@ -167,7 +178,7 @@ const char* app_config::get_version() OS_NOEXCEPT
 
 os::exit app_config::store(error** error) const OS_NOEXCEPT
 {
-	config.crc = MAIGC;
+	config.crc = MAGIC;
 	config.crc = crc32(reinterpret_cast<uint8_t *>(&config), sizeof(config));
 	return fs_io->write(data_type::CONFIG, reinterpret_cast<const uint8_t *>(&config), sizeof(config), error);
 }
@@ -193,7 +204,7 @@ os::exit app_config::load(app_config::on_vesrion_change on_version_change, error
 	}
 
 	uint32_t original_crc = local_config->crc;
-	local_config->crc = MAIGC;
+	local_config->crc = MAGIC;
 	uint32_t crc = crc32(reinterpret_cast<uint8_t *>(local_config), sizeof(class config));
 	local_config->crc = original_crc;
 
@@ -208,7 +219,7 @@ os::exit app_config::load(app_config::on_vesrion_change on_version_change, error
 		return exit::KO;
 	}
 
-	if(local_config->magic != MAIGC)
+	if(local_config->magic != MAGIC)
 	{
 		if(error)
 		{
@@ -249,6 +260,7 @@ os::exit app_config::load_default(os::error **error) OS_NOEXCEPT
 
     config_default.users[0].user = HHG_ADMIN_USER;
     config_default.users[0].passwd = digest;
+    config_default.users_len = 1;
 
 #if defined(HHG_USER) && defined(HHG_PASSWD)
     if(app_config::user::MAX_USERS > 1)
@@ -258,12 +270,12 @@ os::exit app_config::load_default(os::error **error) OS_NOEXCEPT
         // Retrieve the hex-encoded digest
         MD5::digest(hash, digest);
 
-        config_default.users[1].user = HHG_ADMIN_USER;
+        config_default.users[1].user = HHG_USER;
         config_default.users[1].passwd = digest;
+        config_default.users_len++;
     }
 #endif
 
-    config_default.users_len = 1;
 	config = config_default;
 	return store(error);
 }

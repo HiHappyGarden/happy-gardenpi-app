@@ -115,16 +115,13 @@ os::exit app_parser::on_auth(const cmd_data &data, const hhg::parser::entry *ent
 
     if(user_logged.user == admin)
     {
-        printf("--->1");
         return exit::OK;
     }
     else if(user_logged.user == user)
     {
-        printf("--->2");
         return exit::OK;
     }
 
-    printf("--->3 %s %s %s", user_logged.user.c_str(), admin, user);
     return exit::KO;
 }
 

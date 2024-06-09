@@ -1,7 +1,7 @@
 
 send $LOG 1 0
 #send $RTC 2 1709068081
-send $CONF 11 1 passy passy
+send $AUTH user user
 send $CONF 8 3
 send $CONF 6 Vodafone-salsi.local
 send $CONF 7 s4ls3tt4
@@ -11,4 +11,5 @@ $DATA 2 {"id":0,"minute":0,"hour":17,"days":255,"months":65535,"description":"Sc
 send $DATA 4 {"id_schedule":0,"id":0,"description":"Zone test 0","relay_number":1,"watering_time":5,"weight":4,"status":1}
 send $DATA 4 {"id_schedule":0,"id":1,"description":"Zone test 1","relay_number":0,"watering_time":10,"weight":3,"status":1}
 send $DATA STORE
+send $AUTH_DISCONNECT
 send $LOG 1 1

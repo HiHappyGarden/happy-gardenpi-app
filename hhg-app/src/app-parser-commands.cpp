@@ -133,7 +133,7 @@ entry commands_config[] =
         printf("OK");
         return exit::OK;
     }
-    ,.description = "Set set user", .access = ACCESS_ALL_USERS},
+    ,.description = "Set/update user", .access = HHG_USER},
     {.key = "CLEAR", .description = "Clear all", .access = ACCESS_ALL_USERS},
 	{.key = "STORE", .custom_func = [](auto data, auto entry, auto error)
 	{
@@ -259,13 +259,12 @@ constexpr const size_t commands_log_size = sizeof(commands_log) / sizeof(command
 entry commands[] =
 {
 	{.key = "$VER", .description = "Get version"},
-    {.key = "$CLR", .description = "Clear storage"},
 	{.key = "$RTC", .next = commands_rtc, .next_size = commands_rtc_size, .description = "Rtc menu"},
 	{.key = "$CONF", .next = commands_config, .next_size = commands_config_size, .description = "Configuration menu"},
 	{.key = "$DATA", .next = commands_data, .next_size = commands_data_size, .description = "Data menu"},
 	{.key = "$LOG", .next = commands_log, .next_size = commands_log_size, .description = "Log menu"},
     {.key = "$AUTH", .custom_func = auth, .description = "Auth from phy"},
-    {.key = "$AUTH_REMOTE",  .custom_func = auth,  .description = "Auth from remote"},
+    {.key = "$AUTH_REMOTE",  .custom_func = auth,  .description = "Auth from remote", .access = HHG_ADMIN_USER},
     {.key = "$AUTH_DISCONNECT", .description = "Disconnect", .access = ACCESS_ALL_USERS}
 };
 constexpr const size_t commands_size = sizeof(commands) / sizeof(commands[0]);
@@ -414,7 +413,7 @@ void set_time(class time* time) OS_NOEXCEPT
 	hhg::app::time = time;
 }
 
-os::exit auth(const cmd_data &data, const entry *entry, os::error **error) OS_NOEXCEPT
+ auto auth(const cmd_data &data, const entry *entry, os::error **error) -> os::exit OS_NOEXCEPT
 {
     if(data.tokens_len < 3)
     {

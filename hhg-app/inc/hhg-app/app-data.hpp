@@ -159,16 +159,16 @@ struct schedule final
 
 class app_data final : public hhg::iface::initializable
 {
-	constexpr static const uint32_t MAIGC = 0xd2b9b032;
+	constexpr static const uint32_t MAGIC = 0x2E'44'41'54;
 	constexpr static const uint8_t VERSION = 1;
 
 	const hhg::iface::fs_io::ptr& fsio;
 
 	mutable struct alignas(2) data final : public hhg::iface::file_version
 	{
-		inline data() OS_NOEXCEPT : file_version{MAIGC, VERSION} {}
+		inline data() OS_NOEXCEPT : file_version{MAGIC, VERSION} {}
 		schedule schedules[HHG_SCHEDULES_SIZE];
-		uint32_t crc = MAIGC;
+		uint32_t crc = MAGIC;
 	} data;
 
 public:
