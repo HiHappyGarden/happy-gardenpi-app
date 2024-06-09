@@ -106,7 +106,7 @@ inline namespace v1
         return exit::OK;
     }
 
-    void pico_sh1106::set_pixel(uint8_t x, uint8_t y, lcd::write_mode mode) const
+    void pico_sh1106::set_pixel(uint16_t x, uint16_t y, lcd::write_mode mode) const
     {
         if ((x < 0) || (x >= width) || (y < 0) || (y >= (height * 8) ))
             return;
@@ -142,7 +142,7 @@ inline namespace v1
         }
     }
 
-    void pico_sh1106::set_bitmap_image(uint8_t x, uint8_t y, uint8_t width, uint8_t height, const uint8_t *image, uint32_t image_size) OS_NOEXCEPT
+    void pico_sh1106::set_bitmap_image(uint16_t x, uint16_t y, uint16_t width, uint16_t height, const uint8_t *image, uint32_t image_size) OS_NOEXCEPT
     {
         if(image == nullptr || width * height != image_size)
         {
@@ -152,9 +152,9 @@ inline namespace v1
         uint32_t idx = 0;
 
 
-        for(uint8_t h = 0; h < height; h++)
+        for(uint16_t h = 0; h < height; h++)
         {
-            for(uint8_t w = 0; w < width; w++)
+            for(uint16_t w = 0; w < width; w++)
             {
                 if(image[idx])
                 {
@@ -169,18 +169,18 @@ inline namespace v1
         }
     }
 
-    void pico_sh1106::set_rect(uint8_t x, uint8_t y, uint8_t width, uint8_t height, write_mode mode) OS_NOEXCEPT
+    void pico_sh1106::set_rect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, write_mode mode) OS_NOEXCEPT
     {
-        for(uint8_t w = 0; w < width; w++)
+        for(uint16_t w = 0; w < width; w++)
         {
-            for(uint8_t h = 0; h < height; h++)
+            for(uint16_t h = 0; h < height; h++)
             {
                 set_pixel(x + w, y + h, mode);
             }
         }
     }
 
-    void pico_sh1106::set_char(uint8_t c, uint8_t x, uint8_t y, const uint8_t* font, uint32_t font_size) OS_NOEXCEPT
+    void pico_sh1106::set_char(char c, uint16_t x, uint16_t y, const uint8_t* font, uint32_t font_size) OS_NOEXCEPT
     {
         if(font == nullptr)
         {
@@ -206,21 +206,6 @@ inline namespace v1
 
 
         uint32_t i = 80;
-
-//        for(uint8_t k = 0; k  < 12; k++)
-//        {
-//            i = 80 + k;
-//            for(uint8_t z = 0; z  < 8; z++)
-//            {
-//                buffer[i] = font[c_offset++];
-//                buffer[i  + this->width] = font[c_offset++];
-//            }
-//
-//        }
-
-
-
-
 
         uint8_t w = 0;
         uint8_t h = 0;
@@ -255,6 +240,11 @@ inline namespace v1
             }
 
         }
+    }
+
+    void pico_sh1106::set_str(const char *str, uint16_t x, uint16_t y, const uint8_t *font, uint32_t font_size) OS_NOEXCEPT
+    {
+
     }
 
     void pico_sh1106::set_buffer(uint8_t *buffer, size_t buffer_size) OS_NOEXCEPT
@@ -376,5 +366,6 @@ inline namespace v1
             }
         }
     }
+
 }
 }
