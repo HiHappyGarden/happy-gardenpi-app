@@ -91,20 +91,27 @@ public:
 
     os::exit init(class os::error **error) OS_NOEXCEPT override;
 
-    void set_pixel(uint8_t x, uint8_t y, write_mode mode) const OS_NOEXCEPT override;
+    void set_pixel(uint16_t x, uint16_t y, write_mode mode) const OS_NOEXCEPT override;
 
-    inline void set_pixel(uint8_t x, uint8_t y) const OS_NOEXCEPT override
+    inline void set_pixel(uint16_t x, uint16_t y) const OS_NOEXCEPT override
     {
         set_pixel(x, y, write_mode::ADD);
     }
 
     void send_buffer() OS_NOEXCEPT override;
 
-    void set_bitmap_image(uint8_t x, uint8_t y, uint8_t width, uint8_t height, const uint8_t *image, uint32_t image_size) OS_NOEXCEPT override;
+    void set_bitmap_image(uint16_t x, uint16_t y, uint16_t width, uint16_t height, const uint8_t *image, uint32_t image_size) OS_NOEXCEPT override;
 
-    void set_rect(uint8_t x, uint8_t y, uint8_t width, uint8_t height, write_mode mode) OS_NOEXCEPT override;
+    void set_rect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, write_mode mode) OS_NOEXCEPT override;
 
-    void set_char(uint8_t c, uint8_t x, uint8_t y, const uint8_t* font, uint32_t font_size) OS_NOEXCEPT override;
+    void set_char(char c, uint16_t x, uint16_t y, const uint8_t* font, uint32_t font_size) OS_NOEXCEPT override;
+
+    void set_str(const char str[], uint16_t x, uint16_t y, const uint8_t * font, uint32_t font_size) OS_NOEXCEPT override;
+
+    inline os::pair<uint16_t, uint16_t> get_size() const OS_NOEXCEPT override
+    {
+        return {width, height * 8 };
+    }
 
     void set_buffer(uint8_t *buffer, size_t buffer_size) OS_NOEXCEPT override;
 
