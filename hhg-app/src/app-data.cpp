@@ -63,7 +63,7 @@ void app_data::reset() OS_NOEXCEPT
 
 os::exit app_data::store(os::error** error) const OS_NOEXCEPT
 {
-	data.crc = MAIGC;
+	data.crc = MAGIC;
 	data.crc = crc32(reinterpret_cast<uint8_t *>(&data), sizeof(data));
 	return fsio->write(data_type::DATA, reinterpret_cast<const uint8_t *>(&data), sizeof(data), error);
 }
@@ -90,7 +90,7 @@ os::exit app_data::load(app_data::on_vesrion_change on_version_change, os::error
 	}
 
 	uint32_t original_crc = local_data->crc;
-	local_data->crc = MAIGC;
+	local_data->crc = MAGIC;
 	uint32_t crc = crc32(reinterpret_cast<uint8_t *>(local_data), sizeof(class data));
 	local_data->crc = original_crc;
 
@@ -105,7 +105,7 @@ os::exit app_data::load(app_data::on_vesrion_change on_version_change, os::error
 		return exit::KO;
 	}
 
-	if(local_data->magic != MAIGC)
+	if(local_data->magic != MAGIC)
 	{
 		if(error)
 		{

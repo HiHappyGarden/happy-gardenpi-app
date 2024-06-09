@@ -55,13 +55,13 @@ public:
 
 private:
 
-    constexpr static const uint32_t MAIGC = 0xf86c2975;
+    constexpr static const uint32_t MAGIC = 0x2E'43'4E'46;
 	constexpr static const uint8_t VERSION = 1;
 
 	const hhg::iface::fs_io::ptr& fs_io;
 
 	mutable struct alignas(2) config final : public hhg::iface::file_version {
-        inline config() OS_NOEXCEPT: file_version{MAIGC, VERSION} {}
+        inline config() OS_NOEXCEPT: file_version{MAGIC, VERSION} {}
 
         os::string<16> serial;
         os::string<128> descr;
@@ -75,7 +75,7 @@ private:
             uint32_t auth = 0;
             bool enabled = true;
         }wifi;
-        uint32_t crc = MAIGC;
+        uint32_t crc = MAGIC;
 	} config;
 
 public:
