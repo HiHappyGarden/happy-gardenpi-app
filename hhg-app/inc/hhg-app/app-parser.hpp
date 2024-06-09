@@ -39,6 +39,7 @@ class app_parser final : public hhg::iface::initializable, public hhg::iface::io
 
 	static constexpr const uint16_t BUFFER_SIZE = 512;
 	static constexpr const uint16_t RET_SIZE = 256;
+    static constexpr const uint32_t AUTH_TIMEOUT = 60 * 1'000;
 	static constexpr const char STARTER_CHAR[] = "$";
 	static constexpr const uint8_t KO[] = "KO\r\n";
     static constexpr const uint8_t OK[] = "OK\r\n";
@@ -56,11 +57,27 @@ class app_parser final : public hhg::iface::initializable, public hhg::iface::io
 	os::thread thread {
 		"parser"
 		, hhg::driver::NORMAL
-		, 1'024 * 6
+		, 1'024 * 2
         , app_parser::handler
 	};
 
-	bool run = false;
+    os::timer auth_timer{ os::ms_to_us(1'000),
+    [] (os::timer*, void*)-> void*
+    {
+        if(singleton && singleton->user_logged_timeout == 0)
+        {
+            singleton->clear_user_logged();
+        }
+        else
+        {
+            singleton->user_logged_timeout -= 1'000;
+        }
+
+        return nullptr;
+    }};
+
+
+    bool run = false;
 
 	mutable os::stream_buffer buffer {
 		BUFFER_SIZE / 4
@@ -70,6 +87,7 @@ class app_parser final : public hhg::iface::initializable, public hhg::iface::io
 	static inline app_parser* singleton = nullptr;
 
     app_config::user user_logged;
+    uint32_t user_logged_timeout = 0;
 public:
 
 	explicit app_parser(const hhg::iface::io::ptr& io, class os::error** error = nullptr) OS_NOEXCEPT;
@@ -99,17 +117,11 @@ private:
     friend os::exit auth(const hhg::parser::cmd_data &data, const hhg::parser::entry *entry, os::error **error) OS_NOEXCEPT;
     friend os::exit set_app_parser(class app_parser& app_parser, os::error** error) OS_NOEXCEPT;
 
-    inline void set_user_logged(const app_config::user& user_logged) OS_NOEXCEPT
-    {
-        this->user_logged = user_logged;
-    }
-
-    inline void clear_user_logged() OS_NOEXCEPT
-    {
-        this->user_logged = {};
-    }
-
     os::exit on_auth(const hhg::parser::cmd_data& data, const hhg::parser::entry* entry, os::error** error) OS_NOEXCEPT override;
+
+    void set_user_logged(const app_config::user& user_logged) OS_NOEXCEPT;
+
+    void clear_user_logged() OS_NOEXCEPT;
 
 };
 
