@@ -46,8 +46,7 @@ inline namespace v1
 
         void on_rotary_encoder_event(bool ccw, bool cw, bool click) OS_NOEXCEPT override;
 
-    private:
-        void printFrame(bool wifi, time_t now = 0) const OS_NOEXCEPT;
+        void print_frame(bool wifi, const os::string<32>& now) const OS_NOEXCEPT;
 
     };
 

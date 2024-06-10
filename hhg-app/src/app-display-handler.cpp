@@ -28,11 +28,14 @@ using hhg::iface::rotary_encoder;
 #include "assets/ic_wifi_on.hpp"
 #include "assets/ic_wifi_off.hpp"
 
+#include <time.h>
 
 namespace hhg::app
 {
 inline namespace v1
 {
+
+    using write_mode = lcd::write_mode;
 
     app_display_handler::app_display_handler(const iface::lcd::ptr &lcd, const iface::rotary_encoder::ptr &rotary_encoder, const iface::button::ptr &button)
     : lcd(lcd)
@@ -48,10 +51,6 @@ inline namespace v1
         button->set_on_button_click(this, &button::event::on_button_click);
         rotary_encoder->set_on_rotary_encoder_event(this, &rotary_encoder::event::on_rotary_encoder_event);
 
-        printFrame(false);
-
-        lcd->send_buffer();
-
         return os::exit::OK;
     }
 
@@ -65,9 +64,9 @@ inline namespace v1
 
     }
 
-    void app_display_handler::printFrame(bool wifi, time_t now) const OS_NOEXCEPT
+    void app_display_handler::print_frame(bool wifi, const os::string<32> &now) const OS_NOEXCEPT
     {
-        auto [display_width, display_height] = lcd->get_size();
+        auto&& [display_width, display_height] = lcd->get_size();
 
         uint16_t ic_wifi_width = 0;
         uint16_t ic_wifi_height = 0;
@@ -88,11 +87,13 @@ inline namespace v1
             ic_wifi = ic_wifi_off;
             ic_wifi_size = sizeof ic_wifi_off;
         }
+        lcd->set_rect(0, 0, display_width, 10, write_mode::REMOVE);
+
         lcd->set_bitmap_image(3 , 0, ic_wifi_width, ic_wifi_height, ic_wifi, ic_wifi_size);
 
-        lcd->set_rect(0, 11, 132, 1, lcd::write_mode::ADD);
+        lcd->set_rect(0, 11, display_width, 1, lcd::write_mode::ADD);
 
-        lcd->set_str("ciao antonio", 0, 30, font_8x8, sizeof font_8x8);
+        lcd->set_str(now.c_str(), 90, 2, font_8x8, sizeof font_8x8);
 
     }
 
