@@ -264,7 +264,7 @@ entry commands[] =
 	{.key = "$DATA", .next = commands_data, .next_size = commands_data_size, .description = "Data menu"},
 	{.key = "$LOG", .next = commands_log, .next_size = commands_log_size, .description = "Log menu"},
     {.key = "$AUTH", .custom_func = auth, .description = "Auth from phy"},
-    {.key = "$AUTH_REMOTE",  .custom_func = auth,  .description = "Auth from remote", .access = HHG_ADMIN_USER},
+    {.key = "$AUTH_REMOTE",  .custom_func = auth,  .description = "Auth from remote"},
     {.key = "$AUTH_DISCONNECT", .description = "Disconnect", .access = ACCESS_ALL_USERS}
 };
 constexpr const size_t commands_size = sizeof(commands) / sizeof(commands[0]);
