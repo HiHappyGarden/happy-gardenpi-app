@@ -25,6 +25,7 @@
 #include "hhg-app/app-data.hpp"
 #include "hhg-iface/time.hpp"
 using hhg::iface::time;
+using hhg::iface::io_source;
 using namespace hhg::driver;
 
 #if defined(HHG_USER) && defined(HHG_PASSWD)
@@ -413,7 +414,7 @@ void set_time(class time* time) OS_NOEXCEPT
 	hhg::app::time = time;
 }
 
- auto auth(const cmd_data &data, const entry *entry, os::error **error) -> os::exit OS_NOEXCEPT
+os::exit auth(const cmd_data &data, const entry *entry, os::error **error) OS_NOEXCEPT
 {
     if(data.tokens_len < 3)
     {
@@ -429,7 +430,7 @@ void set_time(class time* time) OS_NOEXCEPT
     user += data.tokens[1].start;
     passwd += data.tokens[2].start;
 
-    if(key == "$AUTH")
+    if(key == "$AUTH" && app_parser::singleton->source == io_source::UART)
     {
         auto [status, auth] = app_config->set_auth(user, passwd);
         if(status == exit::OK)
@@ -439,7 +440,7 @@ void set_time(class time* time) OS_NOEXCEPT
             return exit::OK;
         }
     }
-    if(key == "$AUTH_REMOTE")
+    if(key == "$AUTH_REMOTE" && app_parser::singleton->source == io_source::WIFI)
     {
         auto [status, auth] = app_config->set_auth_remote(user, passwd);
         if(status == exit::OK)
