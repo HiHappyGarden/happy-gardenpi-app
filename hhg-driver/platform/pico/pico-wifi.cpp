@@ -86,7 +86,11 @@ inline namespace v1
             }
 
             bool connected = netif_is_link_up(netif_default);
-            if(!singleton->connected && connected)
+
+            //TODO: da finire
+            auto wifi_link_status = cyw43_wifi_link_status(&cyw43_state, CYW43_ITF_STA);
+
+            if(!singleton->connected && connected && !(wifi_link_status & CYW43_LINK_DOWN))
             {
                 auto ip_ready = dhcp_supplied_address(&cyw43_state.netif[CYW43_ITF_STA]);
                 if(ip_ready)
@@ -101,7 +105,7 @@ inline namespace v1
                     singleton->connected = true;
                 }
             }
-            else if(singleton->connected && !connected)
+            else if(singleton->connected && (!connected || (wifi_link_status & CYW43_LINK_DOWN)))
             {
 
                 OS_LOG_DEBUG(APP_TAG, "Disconnected");
