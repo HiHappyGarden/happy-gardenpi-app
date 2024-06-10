@@ -242,6 +242,11 @@ void* app_main::handler(void* arg)
 				//TODO: hw check
 				generic_timer = 0;
 
+                auto status = singleton->fsm.events.get();
+                const os::string<32>&& time = singleton->hardware.get_time()->get_date_time("%H:%M:%S");
+                singleton->app_display_handler.print_frame(status & CHECK_WIFI, time);
+                singleton->hardware.get_lcd()->send_buffer();
+
 				singleton->fsm.errors = 0;
 				OS_LOG_INFO(APP_TAG, "state:%s - OK", state_to_string(singleton->fsm.state));
 				singleton->fsm.state = CHECK_ZONE;
