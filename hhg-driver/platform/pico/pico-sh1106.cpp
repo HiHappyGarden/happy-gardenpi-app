@@ -226,7 +226,6 @@ inline namespace v1
             {
                 for(uint8_t bit = 0; bit < 8; bit++)
                 {
-                    OS_LOG_ERROR(APP_TAG, "idx = %d, x + w = %u, y + h + bit = %u", idx, x + w, y + (h * 8) + bit);
                     if (font[c_offset + idx] & (1 << bit))
                     {
                         set_pixel(x + w, y + (h * 8) + bit, write_mode::ADD);
@@ -244,11 +243,26 @@ inline namespace v1
 
     void pico_sh1106::set_str(const char *str, uint16_t x, uint16_t y, const uint8_t *font, uint32_t font_size) OS_NOEXCEPT
     {
+        if(str == nullptr || font == nullptr)
+        {
+            return;
+        }
+
+        uint8_t width = font[0];
+
+        for(size_t i = 0; i < strlen(str); i++)
+        {
+            set_char(str[i], x + (width * i), y, font, font_size);
+        }
 
     }
 
     void pico_sh1106::set_buffer(uint8_t *buffer, size_t buffer_size) OS_NOEXCEPT
     {
+        if(buffer == nullptr)
+        {
+            return;
+        }
         if(buffer_size < this->buffer_size)
         {
             memcpy(this->buffer, buffer, buffer_size);
