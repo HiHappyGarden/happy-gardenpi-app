@@ -36,6 +36,19 @@ inline namespace v1
         const hhg::iface::button::ptr& button;
     public:
 
+        enum class font
+        {
+            F5X8,
+            F8X8,
+        };
+
+        enum class valign
+        {
+            LEFT,
+            CENTER,
+            RIGHT,
+        };
+
         app_display_handler(const hhg::iface::lcd::ptr& lcd, const hhg::iface::rotary_encoder::ptr& rotary_encoder, const hhg::iface::button::ptr& button) OS_NOEXCEPT;
         ~app_display_handler() override = default;
         OS_NO_COPY_NO_MOVE(app_display_handler)
@@ -45,6 +58,10 @@ inline namespace v1
         void on_button_click(iface::button::status status) OS_NOEXCEPT override;
 
         void on_rotary_encoder_event(bool ccw, bool cw, bool click) OS_NOEXCEPT override;
+
+        void clean() const OS_NOEXCEPT;
+
+        void print_str(const char str[], int16_t y, enum valign valign, enum font font) const OS_NOEXCEPT;
 
         void print_frame(bool wifi, const os::string<32>& now) const OS_NOEXCEPT;
 
