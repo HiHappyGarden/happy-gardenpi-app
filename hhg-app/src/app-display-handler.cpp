@@ -93,8 +93,63 @@ inline namespace v1
 
         lcd->set_rect(0, 11, display_width, 1, lcd::write_mode::ADD);
 
-        lcd->set_str(now.c_str(), 90, 2, font_8x8, sizeof font_8x8);
 
+
+    }
+
+    void app_display_handler::print_str(const char *str, int16_t y, app_display_handler::valign valign, app_display_handler::font font) const OS_NOEXCEPT
+    {
+        if(str == nullptr)
+        {
+            return;
+        }
+
+        auto&& [display_width, display_height] = lcd->get_size();
+
+        const uint8_t* font_ref = nullptr;
+        uint32_t font_ref_size = 0;
+        uint16_t x = 0;
+        uint8_t width = 0;
+
+        switch (font)
+        {
+            case font::F5X8:
+                font_ref = font_5x8;
+                font_ref_size = sizeof font_5x8;
+                break;
+            case font::F8X8:
+                font_ref = font_8x8;
+                font_ref_size = sizeof font_8x8;
+                break;
+        }
+        if(font_ref == nullptr)
+        {
+            return;
+        }
+
+        width = font_ref[0] * strlen(str);
+
+        switch (valign)
+        {
+            case valign::LEFT:
+                x = 0;
+                break;
+            case valign::CENTER:
+                x = (display_width - width) / 2;
+                break;
+            case valign::RIGHT:
+                x = display_width - width;
+                break;
+        }
+
+        lcd->set_str(str, x, y, font_8x8, sizeof font_8x8);
+    }
+
+    void app_display_handler::clean() const OS_NOEXCEPT
+    {
+        auto&& [display_width, display_height] = lcd->get_size();
+
+        lcd->set_rect(0, 12, display_width, display_height - 12, write_mode::REMOVE);
     }
 
 
