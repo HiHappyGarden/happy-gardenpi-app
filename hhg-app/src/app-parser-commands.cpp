@@ -277,9 +277,7 @@ os::exit set_app_parser(class app_parser& app_parser, error** error) OS_NOEXCEPT
     hhg::app::app_parser = const_cast<class app_parser*>(&app_parser);
 	parser = const_cast<class parser*>(&app_parser.get_parser());
 
-    string<KEY_MAX> key;
-
-    key = "$AUTH_DISCONNECT";
+    string<KEY_MAX> key = "$AUTH_DISCONNECT";
     if(parser->set(key.c_str(), new method(&app_parser, &app_parser::clear_user_logged), error) == exit::KO)
     {
         return exit::KO;
@@ -291,11 +289,9 @@ os::exit set_app_parser(class app_parser& app_parser, error** error) OS_NOEXCEPT
 
 os::exit set_app_config(class app_config& app_config, error** error) OS_NOEXCEPT
 {
-	string<KEY_MAX> key;
-
 	hhg::app::app_config = &app_config;
 
-	key = "$VER";
+    string<KEY_MAX> key = "$VER";
 	if(parser->set(key.c_str(), new method(&app_config, &app_config::get_version), error) == exit::KO)
 	{
 		return exit::KO;
@@ -372,11 +368,11 @@ os::exit set_app_config(class app_config& app_config, error** error) OS_NOEXCEPT
 
 os::exit set_app_data(class app_data& app_data, error** error) OS_NOEXCEPT
 {
-	string<KEY_MAX> key;
+
 
 	hhg::app::app_data = &app_data;
 
-	key = "$DATA 1";
+    string<KEY_MAX> key = "$DATA 1";
 	if(parser->set(key.c_str(), new method<struct app_data, char*, uint8_t>(&app_data, &app_data::get_schedule), error) == exit::KO)
 	{
 		return exit::KO;
