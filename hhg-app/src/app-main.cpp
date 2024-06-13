@@ -53,8 +53,8 @@ string<32> state_to_string(app_main::state state)
 		case app_main::INIT:
 			ret = "INIT";
 			break;
-		case app_main::CHECK_ZONE:
-			ret = "CHECK_ZONE";
+		case app_main::READY:
+			ret = "READY";
 			break;
 		case app_main::EXECUTE_ZONE:
 			ret = "EXECUTE_ZONE";
@@ -247,25 +247,29 @@ void* app_main::handler(void* arg)
 				generic_timer = 0;
 
                 auto status = singleton->fsm.events.get();
-                const os::string<32>&& time = singleton->hardware.get_time()->get_date_time("%H:%M:%S");
-                singleton->app_display_handler.print_frame(status & CHECK_WIFI, time);
+                const os::string<32>&& time = singleton->hardware.get_time()->get_date_time("%H:%M");
+                singleton->app_display_handler.print_frame(status & CHECK_WIFI, {});
                 singleton->app_display_handler.clean();
                 singleton->app_display_handler.print_str("Ready", 30, app_display_handler::valign::CENTER, app_display_handler::font::F8X8);
                 singleton->hardware.get_lcd()->send_buffer();
 
 				singleton->fsm.errors = 0;
 				OS_LOG_INFO(APP_TAG, "state:%s - OK", state_to_string(singleton->fsm.state));
-				singleton->fsm.state = CHECK_ZONE;
+				singleton->fsm.state = READY;
 				singleton->fsm.old_state = INIT;
 				break;
 			}
-			case CHECK_ZONE:
+			case READY:
 			{
 				if(generic_timer <= 0)
 				{
 					OS_LOG_DEBUG(APP_TAG, "Check zones");
-					singleton->fsm.events.set(CHECK_ZONE);
-					singleton->fsm.old_state = CHECK_ZONE;
+					singleton->fsm.events.set(READY);
+					singleton->fsm.old_state = READY;
+
+//                    auto status = singleton->fsm.events.get();
+//                    const os::string<32>&& time = singleton->hardware.get_time()->get_date_time("%H:%M");
+//                    singleton->app_display_handler.print_frame(status & CHECK_WIFI, time);
 
 					schedule current_schedule;
 					if(singleton->app_data.get_schedule(now_in_millis / ONE_SEC_IN_MILLIS, current_schedule))
@@ -296,7 +300,7 @@ void* app_main::handler(void* arg)
             case ERROR:
             {
                 OS_LOG_FATAL(APP_TAG, "To many error occurred reset state");
-                singleton->fsm.events.clear(CHECK_USERS|CHECK_WIFI|CHECK_TIMESTAMP|INIT|CHECK_ZONE|SINCH_TIMESTAMP|ERROR);
+                singleton->fsm.events.clear(CHECK_USERS|CHECK_WIFI|CHECK_TIMESTAMP|INIT|READY|SINCH_TIMESTAMP|ERROR);
                 singleton->fsm.state              = state::CHECK_USERS;
                 singleton->fsm.old_state 	        = state::CHECK_USERS;
                 singleton->app_led.loading();
