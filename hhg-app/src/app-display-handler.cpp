@@ -93,7 +93,7 @@ inline namespace v1
 
         lcd->set_rect(0, 11, display_width, 1, lcd::write_mode::ADD);
 
-
+        lcd->set_str(now.c_str(), display_width - (now.length() * 5) - 5, 1, font_5x8, sizeof(font_5x8));
 
     }
 
