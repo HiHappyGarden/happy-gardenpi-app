@@ -66,7 +66,7 @@ os::exit app_parser::init(class error** error) OS_NOEXCEPT
 {
 	if(!run)
 	{
-		run = thread.create(nullptr, this->error) == exit::OK;
+		run = thread.create(nullptr, this->error) == exit::OK && auth_timer.create() == exit::OK;
 	}
 	else
 	{
@@ -197,6 +197,22 @@ void* app_parser::handler(void* arg) OS_NOEXCEPT
 
 	return nullptr;
 }
+
+auto app_parser::auth_timer_handler(os::timer *, void *) -> void *
+{
+    if(singleton && singleton->user_logged_timeout == 0)
+    {
+        OS_LOG_DEBUG(APP_TAG, "Session timeout user:%s", singleton->user_logged.user.c_str());
+        singleton->clear_user_logged();
+    }
+    else if(singleton)
+    {
+        singleton->user_logged_timeout -= 1'000;
+    }
+
+    return nullptr;
+}
+
 
 }
 }

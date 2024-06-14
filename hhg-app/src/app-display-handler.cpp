@@ -37,10 +37,11 @@ inline namespace v1
 
     using write_mode = lcd::write_mode;
 
-    app_display_handler::app_display_handler(const iface::lcd::ptr &lcd, const iface::rotary_encoder::ptr &rotary_encoder, const iface::button::ptr &button)
+    app_display_handler::app_display_handler(const iface::lcd::ptr &lcd, const iface::rotary_encoder::ptr &rotary_encoder, const iface::button::ptr &button,const hhg::app::app_parser& app_parser)
     : lcd(lcd)
     , rotary_encoder(rotary_encoder)
     , button(button)
+    , app_parser(app_parser)
     {
 
     }
@@ -98,10 +99,32 @@ inline namespace v1
             lcd->set_str(now.c_str(), display_width - (now.length() * 5) - 5, 1, font_5x8, sizeof(font_5x8));
         }
 
+//        if(app_parser.is_user_logged())
+//        {
+//            switch (app_parser.get_source())
+//            {
+//                case iface::v1::io_source::UART:
+//                    print_str("Operation not permitter", uint16_t y, enum valign valign, enum font font, int16_t offset_x, int16_t offset_y)
+//                    break;
+//                case iface::v1::io_source::WIFI:
+//                    break;
+//                case iface::v1::io_source::DISPLAY:
+//                    break;
+//            }
+//        }
     }
 
-    void app_display_handler::print_str(const char str[], uint16_t y, enum valign valign, enum font font, int16_t offset_x, int16_t offset_y) const OS_NOEXCEPT
+    void app_display_handler::send_buffer() OS_NOEXCEPT
     {
+        lcd->send_buffer();
+    }
+
+    void app_display_handler::print_str(bool internal, const char str[], uint16_t y, enum valign valign, enum font font, int16_t offset_x, int16_t offset_y) const OS_NOEXCEPT
+    {
+        if (!internal && (app_parser.get_source() == iface::io_source::UART || app_parser.get_source() == iface::io_source::WIFI) )
+        {
+            return;
+        }
         if(str == nullptr || strlen(str) == 0)
         {
             return;
@@ -148,18 +171,23 @@ inline namespace v1
         lcd->set_str(str, x + offset_x, y + offset_y, font_8x8, sizeof font_8x8);
     }
 
-    void app_display_handler::clean() const OS_NOEXCEPT
+    void app_display_handler::clean(bool internal) const OS_NOEXCEPT
     {
+        if (!internal && (app_parser.get_source() == iface::io_source::UART || app_parser.get_source() == iface::io_source::WIFI) )
+        {
+            return;
+        }
         auto&& [display_width, display_height] = lcd->get_size();
 
         lcd->set_rect(0, 12, display_width, display_height - 12, write_mode::REMOVE);
     }
 
-    void app_display_handler::send_buffer() OS_NOEXCEPT
+    auto app_display_handler::blink_timer_handler(os::timer *, void *) -> void *
     {
-        lcd->send_buffer();
-    }
+        
 
+        return nullptr;
+    }
 
 }
 }

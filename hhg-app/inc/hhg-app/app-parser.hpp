@@ -45,8 +45,6 @@ class app_parser final : public hhg::iface::initializable, public hhg::iface::io
     static constexpr const uint8_t OK[] = "OK\r\n";
 	static constexpr const char NEW_LINE[] = "\r\n";
 
-
-	mutable hhg::iface::io_source source;
 	class os::error** error = nullptr;
 
 
@@ -61,21 +59,8 @@ class app_parser final : public hhg::iface::initializable, public hhg::iface::io
         , app_parser::handler
 	};
 
-    os::timer auth_timer{ os::ms_to_us(1'000),
-    [] (os::timer*, void*)-> void*
-    {
-        if(singleton && singleton->user_logged_timeout == 0)
-        {
-            singleton->clear_user_logged();
-        }
-        else
-        {
-            singleton->user_logged_timeout -= 1'000;
-        }
-
-        return nullptr;
-    }};
-
+    static auto auth_timer_handler(os::timer*, void*)-> void*;
+    os::timer auth_timer{ os::ms_to_us(1'000), auth_timer_handler };
 
     bool run = false;
 
@@ -86,7 +71,9 @@ class app_parser final : public hhg::iface::initializable, public hhg::iface::io
 
 	static inline app_parser* singleton = nullptr;
 
+
     app_config::user user_logged;
+    mutable hhg::iface::io_source source;
     uint32_t user_logged_timeout = 0;
 public:
 
@@ -109,6 +96,16 @@ public:
     inline bool is_user_logged() const OS_NOEXCEPT
     {
         return !user_logged.is_empty();
+    }
+
+    inline void set_source(hhg::iface::io_source source) OS_NOEXCEPT
+    {
+        this->source = source;
+    }
+
+    inline hhg::iface::io_source get_source(hhg::iface::io_source source) const OS_NOEXCEPT
+    {
+        return source;
     }
 
 	void on_receive(hhg::iface::io_source, const uint8_t data[], uint16_t size) const OS_NOEXCEPT override;

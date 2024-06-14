@@ -32,7 +32,8 @@ inline namespace v1
 enum class io_source
 {
 	UART,
-	WIFI
+	WIFI,
+    DISPLAY
 };
 
 struct io_on_receive
