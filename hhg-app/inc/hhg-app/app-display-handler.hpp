@@ -61,10 +61,11 @@ inline namespace v1
 
         void clean() const OS_NOEXCEPT;
 
-        void print_str(const char str[], int16_t y, enum valign valign, enum font font) const OS_NOEXCEPT;
+        void print_str(const char str[], uint16_t y, enum valign valign, enum font font, int16_t offset_x = 0, int16_t offset_y = 0) const OS_NOEXCEPT;
 
         void print_frame(bool wifi, const os::string<32>& now) const OS_NOEXCEPT;
 
+        void send_buffer() OS_NOEXCEPT;
     };
 
 
