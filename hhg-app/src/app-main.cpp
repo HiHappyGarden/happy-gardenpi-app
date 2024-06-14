@@ -86,7 +86,7 @@ void* app_main::handler(void* arg)
 
     singleton->app_display_handler.print_frame(false, {});
     singleton->app_display_handler.print_str("Loading...", 30, app_display_handler::valign::CENTER, app_display_handler::font::F8X8);
-    singleton->hardware.get_lcd()->send_buffer();
+    singleton->app_display_handler.send_buffer();
 
 	while(singleton->fsm.run)
 	{
@@ -248,10 +248,10 @@ void* app_main::handler(void* arg)
 
                 auto status = singleton->fsm.events.get();
                 const os::string<32>&& time = singleton->hardware.get_time()->get_date_time("%H:%M");
-                singleton->app_display_handler.print_frame(status & CHECK_WIFI, {});
+                singleton->app_display_handler.print_frame(status & CHECK_WIFI, time);
                 singleton->app_display_handler.clean();
                 singleton->app_display_handler.print_str("Ready", 30, app_display_handler::valign::CENTER, app_display_handler::font::F8X8);
-                singleton->hardware.get_lcd()->send_buffer();
+                singleton->app_display_handler.send_buffer();
 
 				singleton->fsm.errors = 0;
 				OS_LOG_INFO(APP_TAG, "state:%s - OK", state_to_string(singleton->fsm.state));
