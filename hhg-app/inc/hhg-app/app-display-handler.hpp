@@ -23,6 +23,7 @@
 #include "hhg-iface/lcd.hpp"
 #include "hhg-iface/rotary-encored.hpp"
 #include "hhg-iface/button.hpp"
+#include "hhg-app/app-parser.hpp"
 
 namespace hhg::app
 {
@@ -34,6 +35,10 @@ inline namespace v1
         const hhg::iface::lcd::ptr& lcd;
         const hhg::iface::rotary_encoder::ptr& rotary_encoder;
         const hhg::iface::button::ptr& button;
+        const hhg::app::app_parser& app_parser;
+
+        static auto blink_timer_handler(os::timer*, void*)-> void*;
+        os::timer blink_timer{ os::ms_to_us(1'000), blink_timer_handler };
     public:
 
         enum class font
@@ -49,7 +54,7 @@ inline namespace v1
             RIGHT,
         };
 
-        app_display_handler(const hhg::iface::lcd::ptr& lcd, const hhg::iface::rotary_encoder::ptr& rotary_encoder, const hhg::iface::button::ptr& button) OS_NOEXCEPT;
+        app_display_handler(const hhg::iface::lcd::ptr& lcd, const hhg::iface::rotary_encoder::ptr& rotary_encoder, const hhg::iface::button::ptr& button, const hhg::app::app_parser& app_parser) OS_NOEXCEPT;
         ~app_display_handler() override = default;
         OS_NO_COPY_NO_MOVE(app_display_handler)
 
@@ -59,13 +64,25 @@ inline namespace v1
 
         void on_rotary_encoder_event(bool ccw, bool cw, bool click) OS_NOEXCEPT override;
 
-        void clean() const OS_NOEXCEPT;
+        void clean() const OS_NOEXCEPT
+        {
+            clean(true);
+        }
 
-        void print_str(const char str[], uint16_t y, enum valign valign, enum font font, int16_t offset_x = 0, int16_t offset_y = 0) const OS_NOEXCEPT;
+        void print_str(const char str[], uint16_t y, enum valign valign, enum font font, int16_t offset_x = 0, int16_t offset_y = 0) const OS_NOEXCEPT
+        {
+            print_str(true, str, y, valign, font, offset_x, offset_y);
+        }
 
         void print_frame(bool wifi, const os::string<32>& now) const OS_NOEXCEPT;
 
         void send_buffer() OS_NOEXCEPT;
+
+    private:
+        void clean(bool internal) const OS_NOEXCEPT;
+
+        void print_str(bool internal, const char str[], uint16_t y, enum valign valign, enum font font, int16_t offset_x = 0, int16_t offset_y = 0) const OS_NOEXCEPT;
+
     };
 
 

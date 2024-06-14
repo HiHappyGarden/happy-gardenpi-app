@@ -451,8 +451,7 @@ os::exit auth(const cmd_data &data, const entry *entry, os::error **error) OS_NO
     return exit::KO;
 }
 
-
-entry* get_commands() OS_NOEXCEPT
+    entry* get_commands() OS_NOEXCEPT
 {
 	return commands;
 }
