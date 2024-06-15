@@ -57,8 +57,8 @@ inline namespace v1
         {
             if(error)
             {
-                *error = OS_ERROR_BUILD("Only one instance at a time", error_type::OS_EFAULT);
-                OS_ERROR_PTR_SET_POSITION(*error);
+                *error = OSAL_ERROR_BUILD("Only one instance at a time", error_type::OS_EFAULT);
+                OSAL_ERROR_PTR_SET_POSITION(*error);
             }
             return exit::KO;
         }

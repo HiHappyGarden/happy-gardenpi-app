@@ -53,8 +53,8 @@ os::exit stm32_time::set_timestamp(time_t timestamp, os::error **error) OSAL_NOE
 	{
         if(error)
         {
-            *error = OS_ERROR_BUILD("Invalid HAL_RTC_SetTime()", error_type::OS_EINVAL);
-            OS_ERROR_PTR_SET_POSITION(*error);
+            *error = OSAL_ERROR_BUILD("Invalid HAL_RTC_SetTime()", error_type::OS_EINVAL);
+            OSAL_ERROR_PTR_SET_POSITION(*error);
         }
 		return exit::KO;
 	}
@@ -67,8 +67,8 @@ os::exit stm32_time::set_timestamp(time_t timestamp, os::error **error) OSAL_NOE
 	{
         if(error)
         {
-            *error = OS_ERROR_BUILD("Invalid HAL_RTC_SetDate()", error_type::OS_EINVAL);
-            OS_ERROR_PTR_SET_POSITION(*error);
+            *error = OSAL_ERROR_BUILD("Invalid HAL_RTC_SetDate()", error_type::OS_EINVAL);
+            OSAL_ERROR_PTR_SET_POSITION(*error);
         }
 		return exit::KO;
 	}
@@ -84,8 +84,8 @@ os::exit stm32_time::set_timestamp(time_t timestamp, os::error **error) OSAL_NOE
 	{
         if(error)
         {
-            *error = OS_ERROR_BUILD("Invalid HAL_RTC_GetTime()", error_type::OS_EINVAL);
-            OS_ERROR_PTR_SET_POSITION(*error);
+            *error = OSAL_ERROR_BUILD("Invalid HAL_RTC_GetTime()", error_type::OS_EINVAL);
+            OSAL_ERROR_PTR_SET_POSITION(*error);
         }
 		return {0};
 	}
@@ -94,8 +94,8 @@ os::exit stm32_time::set_timestamp(time_t timestamp, os::error **error) OSAL_NOE
 	{
         if(error)
         {
-            *error = OS_ERROR_BUILD("Invalid HAL_RTC_GetTime()", error_type::OS_EINVAL);
-            OS_ERROR_PTR_SET_POSITION(*error);
+            *error = OSAL_ERROR_BUILD("Invalid HAL_RTC_GetTime()", error_type::OS_EINVAL);
+            OSAL_ERROR_PTR_SET_POSITION(*error);
         }
         return {0};
 	}

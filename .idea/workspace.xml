@@ -35,75 +35,25 @@
     <list default="true" id="029740bc-9460-411a-aa9c-3448b8c57430" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-config.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-config.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-data.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-data.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-display-handler.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-display-handler.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-led.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-led.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-main.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-main.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-parser-commands.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-parser-commands.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-parser.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-parser.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hhg-app/src/app-config.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/src/app-config.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hhg-app/src/app-data.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/src/app-data.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-app/src/app-display-handler.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/src/app-display-handler.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-app/src/app-led.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/src/app-led.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hhg-app/src/app-main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/src/app-main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-app/src/app-parser-commands.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/src/app-parser-commands.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hhg-app/src/app-parser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/src/app-parser.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-config/pico/hhg-config.h" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-config/pico/hhg-config.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/hhg-driver/hardware.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/hhg-driver/hardware.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/hhg-driver/os-config.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/hhg-driver/os-config.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-button.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-button.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-fs-io.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-fs-io.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-i2c.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-i2c.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-relay.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-relay.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-rgb-led.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-rgb-led.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-rotary-encored.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-rotary-encored.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-sh1106.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-sh1106.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-time.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-time.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-uart.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-uart.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-wifi.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-wifi.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/stm32g4xx/stm32-fs-io.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/stm32g4xx/stm32-fs-io.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/stm32g4xx/stm32-lpuart.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/stm32g4xx/stm32-lpuart.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/stm32g4xx/stm32-time.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/stm32g4xx/stm32-time.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/linux/hardware.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/linux/hardware.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/linux/os-config.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/linux/os-config.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/hardware.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/hardware.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/os-config.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/os-config.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-fs-io.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-fs-io.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-i2c.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-i2c.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-relay.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-relay.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-rgb-led.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-rgb-led.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-button.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-button.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-rotary-encoder.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-rotary-encoder.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-sh1106.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-sh1106.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-time.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-time.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-uart.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-uart.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-wifi.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-wifi.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hhg-driver/platform/stm32g4xx/hardware.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/stm32g4xx/hardware.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/stm32g4xx/os-config.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/stm32g4xx/os-config.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/stm32g4xx/stm32-fsio.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/stm32g4xx/stm32-fsio.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/stm32g4xx/stm32-lpuart.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/stm32g4xx/stm32-lpuart.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/stm32g4xx/stm32-time.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/stm32g4xx/stm32-time.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/button.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/button.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/fs-io.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/fs-io.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/i2c.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/i2c.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/initializable.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/initializable.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/io.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/io.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/lcd.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/lcd.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/relay.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/relay.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/rgb_led.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/rgb_led.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/rotary-encored.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/rotary-encored.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/startable.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/startable.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/time.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/time.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/wifi.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/wifi.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-parser/config/osal-config.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-parser/inc/hhg-parser/parser.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-parser/inc/hhg-parser/parser.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-parser/osal" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-parser/osal" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-parser/src/parser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-parser/src/parser.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-parser/test/test.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-parser/test/test.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-utils/inc/hhg-utils/hhg-utils.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-utils/inc/hhg-utils/hhg-utils.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-utils/src/hhg-utils.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-utils/src/hhg-utils.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/osal" beforeDir="false" afterPath="$PROJECT_DIR$/osal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-parser/osal/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-parser/osal/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-parser/osal/inc/osal/log.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-parser/osal/inc/osal/log.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-parser/osal/inc/osal/memory.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-parser/osal/inc/osal/memory.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-parser/osal/inc/osal/osal.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-parser/osal/inc/osal/osal.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/osal/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/osal/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/osal/inc/osal/log.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/osal/inc/osal/log.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/osal/inc/osal/memory.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/osal/inc/osal/memory.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/osal/inc/osal/osal.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/osal/inc/osal/osal.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
       <change beforePath="/usr/local/src/pico-sdk/lib/btstack" beforeDir="false" afterPath="/usr/local/src/pico-sdk/lib/btstack" afterDir="false" />
       <change beforePath="/usr/local/src/pico-sdk/lib/btstack/doc/manual/btstack_gettingstarted.tex" beforeDir="false" afterPath="/usr/local/src/pico-sdk/lib/btstack/doc/manual/btstack_gettingstarted.tex" afterDir="false" />
       <change beforePath="/usr/local/src/pico-sdk/lib/btstack/port/mtk/docs/ruggear-gettingstarted.tex" beforeDir="false" afterPath="/usr/local/src/pico-sdk/lib/btstack/port/mtk/docs/ruggear-gettingstarted.tex" afterDir="false" />
@@ -1023,7 +973,7 @@
       <workItem from="1718459935187" duration="220000" />
       <workItem from="1718484577824" duration="2618000" />
       <workItem from="1718487205369" duration="119000" />
-      <workItem from="1718488098077" duration="1187000" />
+      <workItem from="1718488098077" duration="1923000" />
     </task>
     <servers />
   </component>
@@ -1042,6 +992,11 @@
           <url>file://$PROJECT_DIR$/hhg-app/src/app-parser.cpp</url>
           <line>84</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/hhg-app/src/app-main.cpp</url>
+          <line>490</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

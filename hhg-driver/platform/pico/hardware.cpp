@@ -66,71 +66,71 @@ hardware::hardware(class error** error) OSAL_NOEXCEPT
 {
     if(time.get() == nullptr && error)
     {
-        *error = OS_ERROR_BUILD("time(new stm32_timer) no mem.", error_type::OS_ENOMEM);
-        OS_ERROR_PTR_SET_POSITION(*error);
+        *error = OSAL_ERROR_BUILD("time(new stm32_timer) no mem.", error_type::OS_ENOMEM);
+        OSAL_ERROR_PTR_SET_POSITION(*error);
         return;
     }
 
     if(uart.get() == nullptr && error)
 	{
-        *error = OS_ERROR_BUILD("uart(new pico_uart) no mem.", error_type::OS_ENOMEM);
-        OS_ERROR_PTR_SET_POSITION(*error);
+        *error = OSAL_ERROR_BUILD("uart(new pico_uart) no mem.", error_type::OS_ENOMEM);
+        OSAL_ERROR_PTR_SET_POSITION(*error);
         return;
     }
 
     if(fs_io.get() == nullptr && error)
 	{
-        *error = OS_ERROR_BUILD("fs_io(new pico_fs_io) no mem.", error_type::OS_ENOMEM);
-        OS_ERROR_PTR_SET_POSITION(*error);
+        *error = OSAL_ERROR_BUILD("fs_io(new pico_fs_io) no mem.", error_type::OS_ENOMEM);
+        OSAL_ERROR_PTR_SET_POSITION(*error);
         return;
     }
 
     if(i2c.get() == nullptr && error)
     {
-        *error = OS_ERROR_BUILD("i2c(new pico_i2c) no mem.", error_type::OS_ENOMEM);
-        OS_ERROR_PTR_SET_POSITION(*error);
+        *error = OSAL_ERROR_BUILD("i2c(new pico_i2c) no mem.", error_type::OS_ENOMEM);
+        OSAL_ERROR_PTR_SET_POSITION(*error);
         return;
     }
 
     if(relay.get() == nullptr && error)
     {
-        *error = OS_ERROR_BUILD("relay(new pico_relay) no mem.", error_type::OS_ENOMEM);
-        OS_ERROR_PTR_SET_POSITION(*error);
+        *error = OSAL_ERROR_BUILD("relay(new pico_relay) no mem.", error_type::OS_ENOMEM);
+        OSAL_ERROR_PTR_SET_POSITION(*error);
         return;
     }
 
     if(lcd.get() == nullptr && error)
     {
-        *error = OS_ERROR_BUILD("lcd(new pico_lcd) no mem.", error_type::OS_ENOMEM);
-        OS_ERROR_PTR_SET_POSITION(*error);
+        *error = OSAL_ERROR_BUILD("lcd(new pico_lcd) no mem.", error_type::OS_ENOMEM);
+        OSAL_ERROR_PTR_SET_POSITION(*error);
         return;
     }
 
     if(rotary_encoder.get() == nullptr && error)
     {
-        *error = OS_ERROR_BUILD("rotary_encoder(new pico_rotary_encoder) no mem.", error_type::OS_ENOMEM);
-        OS_ERROR_PTR_SET_POSITION(*error);
+        *error = OSAL_ERROR_BUILD("rotary_encoder(new pico_rotary_encoder) no mem.", error_type::OS_ENOMEM);
+        OSAL_ERROR_PTR_SET_POSITION(*error);
         return;
     }
 
     if(button.get() == nullptr && error)
     {
-        *error = OS_ERROR_BUILD("button(new pico_button) no mem.", error_type::OS_ENOMEM);
-        OS_ERROR_PTR_SET_POSITION(*error);
+        *error = OSAL_ERROR_BUILD("button(new pico_button) no mem.", error_type::OS_ENOMEM);
+        OSAL_ERROR_PTR_SET_POSITION(*error);
         return;
     }
 
     if(rgb_led.get() == nullptr && error)
     {
-        *error = OS_ERROR_BUILD("rgb_led(new pico_rgb_led) no mem.", error_type::OS_ENOMEM);
-        OS_ERROR_PTR_SET_POSITION(*error);
+        *error = OSAL_ERROR_BUILD("rgb_led(new pico_rgb_led) no mem.", error_type::OS_ENOMEM);
+        OSAL_ERROR_PTR_SET_POSITION(*error);
         return;
     }
 
     if(wifi.get() == nullptr && error)
     {
-        *error = OS_ERROR_BUILD("wifi(new pico_wifi) no mem.", error_type::OS_ENOMEM);
-        OS_ERROR_PTR_SET_POSITION(*error);
+        *error = OSAL_ERROR_BUILD("wifi(new pico_wifi) no mem.", error_type::OS_ENOMEM);
+        OSAL_ERROR_PTR_SET_POSITION(*error);
         return;
     }
 
@@ -184,7 +184,7 @@ hardware::hardware(class error** error) OSAL_NOEXCEPT
 //                relay_to_test->set(i, index == i);
 //            }
 //
-//            //OS_LOG_INFO(APP_TAG, "idx: %u clicked:%u", index, clicked);
+//            //OSAL_LOG_INFO(APP_TAG, "idx: %u clicked:%u", index, clicked);
 //        }
 //
 //
@@ -222,31 +222,31 @@ os::exit hardware::init(error** error) OSAL_NOEXCEPT
 		return exit::KO;
 	}
 
-    OS_LOG_PRINTF("-------------------------------------------\r\n");
-    OS_LOG_PRINTF("%s %s\r\n", HHG_NAME, get_info().c_str());
-    OS_LOG_PRINTF("-------------------------------------------\r\n");
+    OSAL_LOG_PRINTF("-------------------------------------------\r\n");
+    OSAL_LOG_PRINTF("%s %s\r\n", HHG_NAME, get_info().c_str());
+    OSAL_LOG_PRINTF("-------------------------------------------\r\n");
 
-    OS_LOG_INFO(APP_TAG, "Init RGB led");
+    OSAL_LOG_INFO(APP_TAG, "Init RGB led");
     if(rgb_led->init(error) == exit::KO)
     {
         if(error && *error)
         {
-            *error = OS_ERROR_APPEND(*error, "rgb_led::init() fail.", error_type::OS_EFAULT);
-            OS_ERROR_PTR_SET_POSITION(*error);
+            *error = OSAL_ERROR_APPEND(*error, "rgb_led::init() fail.", error_type::OS_EFAULT);
+            OSAL_ERROR_PTR_SET_POSITION(*error);
         }
         return exit::KO;
     }
-    OS_LOG_INFO(APP_TAG, "Init RGB led - OK");
+    OSAL_LOG_INFO(APP_TAG, "Init RGB led - OK");
     rgb_led->set_rgb(0xFF, 0xA5, 0x00);
 
-    OS_LOG_INFO(APP_TAG, "Init Time");
+    OSAL_LOG_INFO(APP_TAG, "Init Time");
     auto time_init = reinterpret_cast<hhg::iface::time_init *>(time.get());
     if(time_init == nullptr)
     {
         if(error && *error)
         {
-            *error = OS_ERROR_APPEND(*error, " reinterpret_cast<hhg::iface::time_init *>(time.get()) fail.", error_type::OS_EFAULT);
-            OS_ERROR_PTR_SET_POSITION(*error);
+            *error = OSAL_ERROR_APPEND(*error, " reinterpret_cast<hhg::iface::time_init *>(time.get()) fail.", error_type::OS_EFAULT);
+            OSAL_ERROR_PTR_SET_POSITION(*error);
         }
         return exit::KO;
     }
@@ -254,108 +254,108 @@ os::exit hardware::init(error** error) OSAL_NOEXCEPT
     {
         if(error && *error)
         {
-            *error = OS_ERROR_APPEND(*error, "io::init() fail.", error_type::OS_EFAULT);
-            OS_ERROR_PTR_SET_POSITION(*error);
+            *error = OSAL_ERROR_APPEND(*error, "io::init() fail.", error_type::OS_EFAULT);
+            OSAL_ERROR_PTR_SET_POSITION(*error);
         }
         return exit::KO;
     }
-    OS_LOG_INFO(APP_TAG, "Init Time - OK");
+    OSAL_LOG_INFO(APP_TAG, "Init Time - OK");
 
-	OS_LOG_INFO(APP_TAG, "Init UART");
+	OSAL_LOG_INFO(APP_TAG, "Init UART");
 	if(uart->init(error) == exit::KO)
 	{
 		if(error && *error)
 		{
-	        *error = OS_ERROR_APPEND(*error, "io::init() fail.", error_type::OS_EFAULT);
-	        OS_ERROR_PTR_SET_POSITION(*error);
+	        *error = OSAL_ERROR_APPEND(*error, "io::init() fail.", error_type::OS_EFAULT);
+	        OSAL_ERROR_PTR_SET_POSITION(*error);
 		}
 		return exit::KO;
 	}
-	OS_LOG_INFO(APP_TAG, "Init UART - OK");
+	OSAL_LOG_INFO(APP_TAG, "Init UART - OK");
 
-	OS_LOG_INFO(APP_TAG, "Init FS IO");
+	OSAL_LOG_INFO(APP_TAG, "Init FS IO");
 	if(fs_io->init(error) == exit::KO)
 	{
 		if(error && *error)
 		{
-	        *error = OS_ERROR_APPEND(*error, "fs_io::init() fail.", error_type::OS_EFAULT);
-	        OS_ERROR_PTR_SET_POSITION(*error);
+	        *error = OSAL_ERROR_APPEND(*error, "fs_io::init() fail.", error_type::OS_EFAULT);
+	        OSAL_ERROR_PTR_SET_POSITION(*error);
 		}
 		return exit::KO;
 	}
-	OS_LOG_INFO(APP_TAG, "Init FS IO - OK");
+	OSAL_LOG_INFO(APP_TAG, "Init FS IO - OK");
 
-    OS_LOG_INFO(APP_TAG, "Init I2C");
+    OSAL_LOG_INFO(APP_TAG, "Init I2C");
     if(i2c->init(error) == exit::KO)
     {
         if(error && *error)
         {
-            *error = OS_ERROR_APPEND(*error, "i2c::init() fail.", error_type::OS_EFAULT);
-            OS_ERROR_PTR_SET_POSITION(*error);
+            *error = OSAL_ERROR_APPEND(*error, "i2c::init() fail.", error_type::OS_EFAULT);
+            OSAL_ERROR_PTR_SET_POSITION(*error);
         }
         return exit::KO;
     }
-    OS_LOG_INFO(APP_TAG, "Init I2C - OK");
+    OSAL_LOG_INFO(APP_TAG, "Init I2C - OK");
 
-    OS_LOG_INFO(APP_TAG, "Init relay");
+    OSAL_LOG_INFO(APP_TAG, "Init relay");
     if(relay->init(error) == exit::KO)
     {
         if(error && *error)
         {
-            *error = OS_ERROR_APPEND(*error, "relay::init() fail.", error_type::OS_EFAULT);
-            OS_ERROR_PTR_SET_POSITION(*error);
+            *error = OSAL_ERROR_APPEND(*error, "relay::init() fail.", error_type::OS_EFAULT);
+            OSAL_ERROR_PTR_SET_POSITION(*error);
         }
         return exit::KO;
     }
-    OS_LOG_INFO(APP_TAG, "Init relay - OK");
+    OSAL_LOG_INFO(APP_TAG, "Init relay - OK");
 
-    OS_LOG_INFO(APP_TAG, "Init LCD");
+    OSAL_LOG_INFO(APP_TAG, "Init LCD");
     if(lcd->init(error) == exit::KO)
     {
         if(error && *error)
         {
-            *error = OS_ERROR_APPEND(*error, "lcd::init() fail.", error_type::OS_EFAULT);
-            OS_ERROR_PTR_SET_POSITION(*error);
+            *error = OSAL_ERROR_APPEND(*error, "lcd::init() fail.", error_type::OS_EFAULT);
+            OSAL_ERROR_PTR_SET_POSITION(*error);
         }
         return exit::KO;
     }
-    OS_LOG_INFO(APP_TAG, "Init LCD - OK");
+    OSAL_LOG_INFO(APP_TAG, "Init LCD - OK");
 
-    OS_LOG_INFO(APP_TAG, "Init rotary encoder");
+    OSAL_LOG_INFO(APP_TAG, "Init rotary encoder");
     if(rotary_encoder->init(error) == exit::KO)
     {
         if(error && *error)
         {
-            *error = OS_ERROR_APPEND(*error, "rotary_encoder::init() fail.", error_type::OS_EFAULT);
-            OS_ERROR_PTR_SET_POSITION(*error);
+            *error = OSAL_ERROR_APPEND(*error, "rotary_encoder::init() fail.", error_type::OS_EFAULT);
+            OSAL_ERROR_PTR_SET_POSITION(*error);
         }
         return exit::KO;
     }
-    OS_LOG_INFO(APP_TAG, "Init rotary encoder - OK");
+    OSAL_LOG_INFO(APP_TAG, "Init rotary encoder - OK");
 
-    OS_LOG_INFO(APP_TAG, "Init button");
+    OSAL_LOG_INFO(APP_TAG, "Init button");
     if(button->init(error) == exit::KO)
     {
         if(error && *error)
         {
-            *error = OS_ERROR_APPEND(*error, "button::init() fail.", error_type::OS_EFAULT);
-            OS_ERROR_PTR_SET_POSITION(*error);
+            *error = OSAL_ERROR_APPEND(*error, "button::init() fail.", error_type::OS_EFAULT);
+            OSAL_ERROR_PTR_SET_POSITION(*error);
         }
         return exit::KO;
     }
-    OS_LOG_INFO(APP_TAG, "Init button - OK");
+    OSAL_LOG_INFO(APP_TAG, "Init button - OK");
 
-    OS_LOG_INFO(APP_TAG, "Init WiFI");
+    OSAL_LOG_INFO(APP_TAG, "Init WiFI");
     if(wifi->init(error) == exit::KO)
     {
         if(error && *error)
         {
-            *error = OS_ERROR_APPEND(*error, "wifi::init() fail.", error_type::OS_EFAULT);
-            OS_ERROR_PTR_SET_POSITION(*error);
+            *error = OSAL_ERROR_APPEND(*error, "wifi::init() fail.", error_type::OS_EFAULT);
+            OSAL_ERROR_PTR_SET_POSITION(*error);
         }
         return exit::KO;
     }
-    OS_LOG_INFO(APP_TAG, "Init WiFI - OK");
+    OSAL_LOG_INFO(APP_TAG, "Init WiFI - OK");
 
 //    //TODO: da rimuovere
 //    button->set_on_button_click(&test_one, &button::event::on_button_click);

@@ -42,8 +42,8 @@ inline namespace v1
         {
             if(error)
             {
-                *error = OS_ERROR_BUILD("pico_rotary_encoder::init() fail.", error_type::OS_EFAULT);
-                OS_ERROR_PTR_SET_POSITION(*error);
+                *error = OSAL_ERROR_BUILD("pico_rotary_encoder::init() fail.", error_type::OS_EFAULT);
+                OSAL_ERROR_PTR_SET_POSITION(*error);
             }
             return exit::KO;
         }
@@ -72,11 +72,11 @@ inline namespace v1
             {
                 if(singleton->obj == nullptr)
                 {
-                    OS_LOG_ERROR(APP_TAG, "singleton->obj == null");
+                    OSAL_LOG_ERROR(APP_TAG, "singleton->obj == null");
                 }
                 else if(singleton->callback == nullptr)
                 {
-                    OS_LOG_ERROR(APP_TAG, "singleton->obj == null");
+                    OSAL_LOG_ERROR(APP_TAG, "singleton->obj == null");
                 }
                 else
                 {
@@ -88,11 +88,11 @@ inline namespace v1
             {
                 if(singleton->obj == nullptr)
                 {
-                    OS_LOG_ERROR(APP_TAG, "singleton->obj == null");
+                    OSAL_LOG_ERROR(APP_TAG, "singleton->obj == null");
                 }
                 else if(singleton->callback == nullptr)
                 {
-                    OS_LOG_ERROR(APP_TAG, "singleton->obj == null");
+                    OSAL_LOG_ERROR(APP_TAG, "singleton->obj == null");
                 }
                 else
                 {
@@ -105,11 +105,11 @@ inline namespace v1
             {
                 if(singleton->obj == nullptr)
                 {
-                    OS_LOG_ERROR(APP_TAG, "singleton->obj == null");
+                    OSAL_LOG_ERROR(APP_TAG, "singleton->obj == null");
                 }
                 else if(singleton->callback == nullptr)
                 {
-                    OS_LOG_ERROR(APP_TAG, "singleton->obj == null");
+                    OSAL_LOG_ERROR(APP_TAG, "singleton->obj == null");
                 }
                 else
                 {

@@ -44,14 +44,14 @@ inline namespace v1
 
     os::exit pico_sh1106::init(class error **error) OSAL_NOEXCEPT
     {
-        OS_LOG_DEBUG(APP_TAG, "Init");
+        OSAL_LOG_DEBUG(APP_TAG, "Init");
 
         if(buffer == nullptr)
         {
             if(error && *error == nullptr)
             {
-                *error = OS_ERROR_BUILD("buffer no mem.", error_type::OS_ENOMEM);
-                OS_ERROR_PTR_SET_POSITION(*error);
+                *error = OSAL_ERROR_BUILD("buffer no mem.", error_type::OS_ENOMEM);
+                OSAL_ERROR_PTR_SET_POSITION(*error);
             }
         }
 
@@ -193,11 +193,11 @@ inline namespace v1
 
         if((font_size - 2) % width != 0)
         {
-            OS_LOG_ERROR(APP_TAG, "The table font it's odd");
+            OSAL_LOG_ERROR(APP_TAG, "The table font it's odd");
             if(error)
             {
-                *error = OS_ERROR_BUILD("pico_sh1106::set_char() the table font it's odd", error_type::OS_ECOMM);
-                OS_ERROR_PTR_SET_POSITION(*error);
+                *error = OSAL_ERROR_BUILD("pico_sh1106::set_char() the table font it's odd", error_type::OS_ECOMM);
+                OSAL_ERROR_PTR_SET_POSITION(*error);
             }
             return;
         }
@@ -320,11 +320,11 @@ inline namespace v1
         uint8_t data[2] = {0x00, command};
         if(i2c_write_blocking(const_cast<i2c_inst *>(i2c_reference), this->address, data, sizeof(data), false) != sizeof(data))
         {
-            OS_LOG_ERROR(APP_TAG, " pico_sh1106::send_cmd() send cmd error");
+            OSAL_LOG_ERROR(APP_TAG, " pico_sh1106::send_cmd() send cmd error");
             if(error)
             {
-                *error = OS_ERROR_BUILD("pico_sh1106::send_cmd() send cmd error", error_type::OS_ECOMM);
-                OS_ERROR_PTR_SET_POSITION(*error);
+                *error = OSAL_ERROR_BUILD("pico_sh1106::send_cmd() send cmd error", error_type::OS_ECOMM);
+                OSAL_ERROR_PTR_SET_POSITION(*error);
             }
         }
     }
@@ -352,11 +352,11 @@ inline namespace v1
 
         if(i2c_write_blocking(const_cast<i2c_inst *>(i2c_reference), address, data, buff_size, false) != buff_size)
         {
-            OS_LOG_ERROR(APP_TAG, "pico_sh1106::send_data() send data error");
+            OSAL_LOG_ERROR(APP_TAG, "pico_sh1106::send_data() send data error");
             if(error)
             {
-                *error = OS_ERROR_BUILD("pico_sh1106::send_data() send data error", error_type::OS_ECOMM);
-                OS_ERROR_PTR_SET_POSITION(*error);
+                *error = OSAL_ERROR_BUILD("pico_sh1106::send_data() send data error", error_type::OS_ECOMM);
+                OSAL_ERROR_PTR_SET_POSITION(*error);
             }
         }
 
@@ -372,11 +372,11 @@ inline namespace v1
 
         if(i2c_write_blocking(const_cast<i2c_inst *>(i2c_reference), address, data, sizeof(data), false) != sizeof(data))
         {
-            OS_LOG_ERROR(APP_TAG, "pico_sh1106::send_row() send row error");
+            OSAL_LOG_ERROR(APP_TAG, "pico_sh1106::send_row() send row error");
             if(error)
             {
-                *error = OS_ERROR_BUILD("pico_sh1106::send_row() send row error", error_type::OS_ECOMM);
-                OS_ERROR_PTR_SET_POSITION(*error);
+                *error = OSAL_ERROR_BUILD("pico_sh1106::send_row() send row error", error_type::OS_ECOMM);
+                OSAL_ERROR_PTR_SET_POSITION(*error);
             }
         }
     }
