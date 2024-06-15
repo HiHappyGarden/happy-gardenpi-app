@@ -34,7 +34,7 @@ inline namespace v1
             uint8_t red = 0x00;
             uint8_t green = 0x00;
             uint8_t blue = 0x00;
-            inline bool is_off() const OS_NOEXCEPT
+            inline bool is_off() const OSAL_NOEXCEPT
             {
                 return red + green + blue == 0;
             }
@@ -42,17 +42,17 @@ inline namespace v1
 
         using ptr = os::unique_ptr<hhg::iface::rgb_led>;
 
-        ~rgb_led() OS_NOEXCEPT override = default;
+        ~rgb_led() OSAL_NOEXCEPT override = default;
 
-        virtual void set_red(uint8_t value) const OS_NOEXCEPT = 0;
+        virtual void set_red(uint8_t value) const OSAL_NOEXCEPT = 0;
 
-        virtual void set_green(uint8_t value) const OS_NOEXCEPT = 0;
+        virtual void set_green(uint8_t value) const OSAL_NOEXCEPT = 0;
 
-        virtual void set_blue(uint8_t value) const OS_NOEXCEPT = 0;
+        virtual void set_blue(uint8_t value) const OSAL_NOEXCEPT = 0;
 
-        virtual void set_rgb(uint8_t red, uint8_t green, uint8_t blue) const OS_NOEXCEPT = 0;
+        virtual void set_rgb(uint8_t red, uint8_t green, uint8_t blue) const OSAL_NOEXCEPT = 0;
 
-        virtual const rgb& get_rgb() const OS_NOEXCEPT = 0;
+        virtual const rgb& get_rgb() const OSAL_NOEXCEPT = 0;
 
 
     };

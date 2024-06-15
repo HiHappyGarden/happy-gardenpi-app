@@ -31,7 +31,7 @@ struct initializable
 {
     virtual ~initializable() = default;
 
-    virtual os::exit init(os::error** error) OS_NOEXCEPT = 0;
+    virtual os::exit init(os::error** error) OSAL_NOEXCEPT = 0;
 };
 
 }

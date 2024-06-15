@@ -47,19 +47,19 @@ class app_config;
 
 using namespace hhg::parser;
 
-os::exit set_app_parser(class app_parser& app_parser, os::error** error) OS_NOEXCEPT;
+os::exit set_app_parser(class app_parser& app_parser, os::error** error) OSAL_NOEXCEPT;
 
-os::exit set_app_config(class app_config& app_config, os::error** error = nullptr) OS_NOEXCEPT;
+os::exit set_app_config(class app_config& app_config, os::error** error = nullptr) OSAL_NOEXCEPT;
 
-os::exit set_app_data(class app_data& app_data, os::error** error) OS_NOEXCEPT;
+os::exit set_app_data(class app_data& app_data, os::error** error) OSAL_NOEXCEPT;
 
-void set_time(class hhg::iface::time* time) OS_NOEXCEPT;
+void set_time(class hhg::iface::time* time) OSAL_NOEXCEPT;
 
-os::exit auth(const cmd_data &data, const entry *entry, os::error **error) OS_NOEXCEPT;
+os::exit auth(const cmd_data &data, const entry *entry, os::error **error) OSAL_NOEXCEPT;
 
-entry* get_commands() OS_NOEXCEPT;
+entry* get_commands() OSAL_NOEXCEPT;
 
-size_t get_commands_size() OS_NOEXCEPT;
+size_t get_commands_size() OSAL_NOEXCEPT;
 
 }
 }

@@ -47,7 +47,7 @@ public:
         os::string<32> user;
         os::string<32> passwd;
 
-        inline bool is_empty() const OS_NOEXCEPT
+        inline bool is_empty() const OSAL_NOEXCEPT
         {
             return user.length() == 0 && passwd.length() == 0;
         }
@@ -61,7 +61,7 @@ private:
 	const hhg::iface::fs_io::ptr& fs_io;
 
 	mutable struct alignas(2) config final : public hhg::iface::file_version {
-        inline config() OS_NOEXCEPT: file_version{MAGIC, VERSION} {}
+        inline config() OSAL_NOEXCEPT: file_version{MAGIC, VERSION} {}
 
         os::string<16> serial;
         os::string<128> descr;
@@ -82,72 +82,72 @@ public:
 
 	using on_vesrion_change = void (*)(uint8_t version);
 
-	explicit app_config(const hhg::iface::fs_io::ptr& fsio) OS_NOEXCEPT;
+	explicit app_config(const hhg::iface::fs_io::ptr& fsio) OSAL_NOEXCEPT;
 	~app_config() override;
 	OS_NO_COPY_NO_MOVE(app_config)
 
-	os::exit init(os::error** error) OS_NOEXCEPT override;
+	os::exit init(os::error** error) OSAL_NOEXCEPT override;
 
-	inline const char* get_serial() const OS_NOEXCEPT
+	inline const char* get_serial() const OSAL_NOEXCEPT
 	{
 		return config.serial.c_str();
 	}
 
-	os::exit set_serial(const char serial[]) OS_NOEXCEPT;
+	os::exit set_serial(const char serial[]) OSAL_NOEXCEPT;
 
-	inline const char* get_descr() const OS_NOEXCEPT
+	inline const char* get_descr() const OSAL_NOEXCEPT
 	{
 		return config.descr.c_str();
 	}
 
-	inline uint8_t get_zones_size() const OS_NOEXCEPT
+	inline uint8_t get_zones_size() const OSAL_NOEXCEPT
 	{
 		return config.zones_size;
 	}
 
-    inline void set_wifi_ssid(const char* wifi_ssid) OS_NOEXCEPT
+    inline void set_wifi_ssid(const char* wifi_ssid) OSAL_NOEXCEPT
     {
         this->config.wifi.ssid = wifi_ssid;
     }
 
-    inline const os::string<32>& get_wifi_ssid() const OS_NOEXCEPT
+    inline const os::string<32>& get_wifi_ssid() const OSAL_NOEXCEPT
     {
         return this->config.wifi.ssid;
     }
 
-    inline void set_wifi_passwd(const char* wifi_passwd) OS_NOEXCEPT
+    inline void set_wifi_passwd(const char* wifi_passwd) OSAL_NOEXCEPT
     {
         this->config.wifi.passwd = wifi_passwd;
     }
 
-    inline const os::string<64>& get_wifi_passwd() const OS_NOEXCEPT
+    inline const os::string<64>& get_wifi_passwd() const OSAL_NOEXCEPT
     {
         return this->config.wifi.passwd;
     }
 
-    inline void set_wifi_auth(uint32_t wifi_auth) OS_NOEXCEPT
+    inline void set_wifi_auth(uint32_t wifi_auth) OSAL_NOEXCEPT
     {
         this->config.wifi.auth = wifi_auth;
     }
 
-    inline uint32_t get_wifi_auth() const OS_NOEXCEPT
+    inline uint32_t get_wifi_auth() const OSAL_NOEXCEPT
     {
         return this->config.wifi.auth;
     }
 
-    inline void set_wifi_enabled(bool enabled) OS_NOEXCEPT
+    inline void set_wifi_enabled(bool enabled) OSAL_NOEXCEPT
     {
         this->config.wifi.enabled = enabled;
     }
 
-    inline bool is_wifi_enabled() const OS_NOEXCEPT
+    inline bool is_wifi_enabled() const OSAL_NOEXCEPT
     {
         return this->config.wifi.enabled;
     }
 
     os::exit set_user(uint8_t idx, const char* user, const char* passwd);
 
-    inline const user& get_user(uint8_t idx) const OS_NOEXCEPT
+    inline const user& get_user(uint8_t idx) const OSAL_NOEXCEPT
     {
         if(idx >= user::MAX_USERS || idx > config.users_len)
         {
@@ -160,19 +160,19 @@ public:
 
     os::pair<os::exit, user> set_auth_remote(const os::string<32>& user, const os::string<32>& passwd);
 
-    os::exit set_descr(const char descr[]) OS_NOEXCEPT;
+    os::exit set_descr(const char descr[]) OSAL_NOEXCEPT;
 
-	const char* get_version() OS_NOEXCEPT;
+	const char* get_version() OSAL_NOEXCEPT;
 
-	os::exit store(os::error** error) const OS_NOEXCEPT;
+	os::exit store(os::error** error) const OSAL_NOEXCEPT;
 
-	os::exit load(app_config::on_vesrion_change on_version_change, os::error** error) OS_NOEXCEPT;
+	os::exit load(app_config::on_vesrion_change on_version_change, os::error** error) OSAL_NOEXCEPT;
 
-	os::exit load_default(os::error **error) OS_NOEXCEPT;
+	os::exit load_default(os::error **error) OSAL_NOEXCEPT;
 
-    os::exit clear(os::error** error) const OS_NOEXCEPT;
+    os::exit clear(os::error** error) const OSAL_NOEXCEPT;
 
-    const char* get_config(bool unformatted = true) const OS_NOEXCEPT;
+    const char* get_config(bool unformatted = true) const OSAL_NOEXCEPT;
 
 };
 

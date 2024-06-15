@@ -39,12 +39,12 @@ pico_fs_io::pico_fs_io() = default;
 
 pico_fs_io::~pico_fs_io() = default;
 
-os::exit pico_fs_io::init(error** error) OS_NOEXCEPT
+os::exit pico_fs_io::init(error** error) OSAL_NOEXCEPT
 {
 	return exit::OK;
 }
 
-os::exit pico_fs_io::write(data_type type, const uint8_t* data, size_t size, error** error) const OS_NOEXCEPT
+os::exit pico_fs_io::write(data_type type, const uint8_t* data, size_t size, error** error) const OSAL_NOEXCEPT
 {
     if(data == nullptr)
     {
@@ -102,7 +102,7 @@ os::exit pico_fs_io::write(data_type type, const uint8_t* data, size_t size, err
 	return exit::OK;
 }
 
-os::exit pico_fs_io::read(data_type type, uint8_t* data, size_t size, error** error) const OS_NOEXCEPT
+os::exit pico_fs_io::read(data_type type, uint8_t* data, size_t size, error** error) const OSAL_NOEXCEPT
 {
     if(data == nullptr)
     {
@@ -133,7 +133,7 @@ os::exit pico_fs_io::read(data_type type, uint8_t* data, size_t size, error** er
 	return exit::OK;
 }
 
-os::exit pico_fs_io::clear(iface::data_type type, os::error** error) const OS_NOEXCEPT
+os::exit pico_fs_io::clear(iface::data_type type, os::error** error) const OSAL_NOEXCEPT
 {
 
     uint32_t ints = save_and_disable_interrupts();

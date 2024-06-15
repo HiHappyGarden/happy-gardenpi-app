@@ -59,13 +59,13 @@ public:
     ~pico_button() override;
     OS_NO_COPY_NO_MOVE(pico_button);
 
-    inline void set_on_button_click(event *obj, event::callback callback) OS_NOEXCEPT override
+    inline void set_on_button_click(event *obj, event::callback callback) OSAL_NOEXCEPT override
     {
         this->obj = obj;
         this->callback = callback;
     }
 
-    os::exit init(os::error **error) OS_NOEXCEPT override;
+    os::exit init(os::error **error) OSAL_NOEXCEPT override;
 
 private:
     static void* encoder_handle(void* arg);

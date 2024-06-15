@@ -40,14 +40,14 @@ constexpr uint8_t DATA_BITS = 8;
 constexpr uint8_t STOP_BITS = 1;
 }
 
-pico_uart::pico_uart() OS_NOEXCEPT = default;
+pico_uart::pico_uart() OSAL_NOEXCEPT = default;
 
 pico_uart::~pico_uart()
 {
 	singleton = nullptr;
 }
 
-os::exit pico_uart::init(error** error) OS_NOEXCEPT
+os::exit pico_uart::init(error** error) OSAL_NOEXCEPT
 {
 	if(singleton)
 	{
@@ -86,13 +86,13 @@ os::exit pico_uart::init(error** error) OS_NOEXCEPT
 }
 
 
-inline void pico_uart::set_on_receive(const io_on_receive* obj, on_receive on_receive_callback) OS_NOEXCEPT
+inline void pico_uart::set_on_receive(const io_on_receive* obj, on_receive on_receive_callback) OSAL_NOEXCEPT
 {
 	this->obj = obj;
 	this->on_receive_callback = on_receive_callback;
 }
 
-os::exit pico_uart::transmit(const uint8_t data[], uint16_t size) const OS_NOEXCEPT
+os::exit pico_uart::transmit(const uint8_t data[], uint16_t size) const OSAL_NOEXCEPT
 {
     for(uint16_t i = 0; i < size; i++)
     {

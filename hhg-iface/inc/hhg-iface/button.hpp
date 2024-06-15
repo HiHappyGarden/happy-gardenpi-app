@@ -41,14 +41,14 @@ struct button : public initializable
         using callback = void(event::*)(enum status status);
 
         virtual ~event() = default;
-        virtual void on_button_click(enum status status) OS_NOEXCEPT = 0;
+        virtual void on_button_click(enum status status) OSAL_NOEXCEPT = 0;
     };
 
     using ptr = os::unique_ptr<hhg::iface::button>;
 
     ~button() override = default;
 
-    virtual void set_on_button_click(event* obj, event::callback callback) OS_NOEXCEPT = 0;
+    virtual void set_on_button_click(event* obj, event::callback callback) OSAL_NOEXCEPT = 0;
 };
 
 

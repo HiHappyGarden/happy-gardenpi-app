@@ -38,20 +38,20 @@ public:
 
 	static uint64_t const check_data;
 
-	pico_fs_io() OS_NOEXCEPT;
-	~pico_fs_io() OS_NOEXCEPT override;
+	pico_fs_io() OSAL_NOEXCEPT;
+	~pico_fs_io() OSAL_NOEXCEPT override;
     OS_NO_COPY_NO_MOVE(pico_fs_io);
 
-	os::exit init(os::error** error) OS_NOEXCEPT override;
+	os::exit init(os::error** error) OSAL_NOEXCEPT override;
 
-	os::exit write(iface::v1::data_type type, const uint8_t* data, size_t size, os::error** error) const OS_NOEXCEPT override;
+	os::exit write(iface::v1::data_type type, const uint8_t* data, size_t size, os::error** error) const OSAL_NOEXCEPT override;
 
-	os::exit read(iface::v1::data_type type, uint8_t* data, size_t size, os::error** error) const OS_NOEXCEPT override;
+	os::exit read(iface::v1::data_type type, uint8_t* data, size_t size, os::error** error) const OSAL_NOEXCEPT override;
 
-    os::exit clear(iface::data_type type, os::error** error) const OS_NOEXCEPT override;
+    os::exit clear(iface::data_type type, os::error** error) const OSAL_NOEXCEPT override;
 private:
 
-    static inline uint32_t get_offset(iface::v1::data_type type) OS_NOEXCEPT
+    static inline uint32_t get_offset(iface::v1::data_type type) OSAL_NOEXCEPT
     {
         return type == iface::v1::data_type::DATA ? FLASH_SECTOR_SIZE / 2 : 0;
     }

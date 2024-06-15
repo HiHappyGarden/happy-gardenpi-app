@@ -43,7 +43,7 @@ constexpr char APP_TAG[] = "APP CONFIG";
 
 }
 
-app_data::app_data(const fs_io::ptr& fsio) OS_NOEXCEPT
+app_data::app_data(const fs_io::ptr& fsio) OSAL_NOEXCEPT
 : fsio(fsio)
 {
 
@@ -51,17 +51,17 @@ app_data::app_data(const fs_io::ptr& fsio) OS_NOEXCEPT
 
 app_data::~app_data() = default;
 
-inline os::exit app_data::init(os::error** error) OS_NOEXCEPT
+inline os::exit app_data::init(os::error** error) OSAL_NOEXCEPT
 {
 	return load(nullptr, error);
 }
 
-void app_data::reset() OS_NOEXCEPT
+void app_data::reset() OSAL_NOEXCEPT
 {
 	data = {};
 }
 
-os::exit app_data::store(os::error** error) const OS_NOEXCEPT
+os::exit app_data::store(os::error** error) const OSAL_NOEXCEPT
 {
 	data.crc = MAGIC;
 	data.crc = crc32(reinterpret_cast<uint8_t *>(&data), sizeof(data));
@@ -69,7 +69,7 @@ os::exit app_data::store(os::error** error) const OS_NOEXCEPT
 }
 
 
-os::exit app_data::load(app_data::on_vesrion_change on_version_change, os::error** error) OS_NOEXCEPT
+os::exit app_data::load(app_data::on_vesrion_change on_version_change, os::error** error) OSAL_NOEXCEPT
 {
 	//auto local_data = static_cast<class data*>(os::malloc(sizeof(class data)));
     auto local_data = new class data;
@@ -128,18 +128,18 @@ os::exit app_data::load(app_data::on_vesrion_change on_version_change, os::error
 	return exit::OK;
 }
 
-os::exit app_data::load_default(os::error** error) OS_NOEXCEPT
+os::exit app_data::load_default(os::error** error) OSAL_NOEXCEPT
 {
 	reset();
 	return store(error);
 }
 
-os::exit app_data::clear(os::error** error) const OS_NOEXCEPT
+os::exit app_data::clear(os::error** error) const OSAL_NOEXCEPT
 {
     return fsio->clear(data_type::DATA, error);
 }
 
-bool app_data::get_schedule(time_t timestamp, struct schedule& schedule) OS_NOEXCEPT
+bool app_data::get_schedule(time_t timestamp, struct schedule& schedule) OSAL_NOEXCEPT
 {
 	tm* now = gmtime(&timestamp);
 
@@ -181,7 +181,7 @@ bool app_data::get_schedule(time_t timestamp, struct schedule& schedule) OS_NOEX
 	return false;
 }
 
-os::exit app_data::set_schedule(const char json_str[]) OS_NOEXCEPT
+os::exit app_data::set_schedule(const char json_str[]) OSAL_NOEXCEPT
 {
     if(json_str == nullptr)
     {
@@ -272,7 +272,7 @@ os::exit app_data::set_schedule(const char json_str[]) OS_NOEXCEPT
 	return exit::OK;
 }
 
-os::exit app_data::set_zone(const char json_str[]) OS_NOEXCEPT
+os::exit app_data::set_zone(const char json_str[]) OSAL_NOEXCEPT
 {
     if(json_str == nullptr)
     {
@@ -373,7 +373,7 @@ os::exit app_data::set_zone(const char json_str[]) OS_NOEXCEPT
 	return exit::OK;
 }
 
-char *app_data::get_schedule(uint8_t id) OS_NOEXCEPT
+char *app_data::get_schedule(uint8_t id) OSAL_NOEXCEPT
 {
 	if(id >= HHG_SCHEDULES_SIZE)
 	{
@@ -450,7 +450,7 @@ char *app_data::get_schedule(uint8_t id) OS_NOEXCEPT
 	return ret;
 }
 
-char *app_data::get_zone(uint8_t id_schedule, uint8_t id) OS_NOEXCEPT
+char *app_data::get_zone(uint8_t id_schedule, uint8_t id) OSAL_NOEXCEPT
 {
 	if(id >= HHG_ZONES_SIZE)
 	{
@@ -535,7 +535,7 @@ char *app_data::get_zone(uint8_t id_schedule, uint8_t id) OS_NOEXCEPT
 	return ret;
 }
 
-uint8_t app_data::get_bit_day(const tm* now) OS_NOEXCEPT
+uint8_t app_data::get_bit_day(const tm* now) OSAL_NOEXCEPT
 {
 	if(now == nullptr)
 	{

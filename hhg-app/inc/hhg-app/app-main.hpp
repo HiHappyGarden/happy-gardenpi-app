@@ -82,20 +82,20 @@ private:
 
 
 public:
-    explicit app_main(driver::hardware& hardware, os::error** error) OS_NOEXCEPT;
+    explicit app_main(driver::hardware& hardware, os::error** error) OSAL_NOEXCEPT;
     OS_NO_COPY_NO_MOVE(app_main)
 
-    ~app_main() override OS_NOEXCEPT;
+    ~app_main() override OSAL_NOEXCEPT;
 
-    os::exit init(class os::error** error) OS_NOEXCEPT override;
+    os::exit init(class os::error** error) OSAL_NOEXCEPT override;
 
-    os::exit fsm_start(class os::error** error) OS_NOEXCEPT;
+    os::exit fsm_start(class os::error** error) OSAL_NOEXCEPT;
 
 private:
 
-    os::exit handle_error() OS_NOEXCEPT;
+    os::exit handle_error() OSAL_NOEXCEPT;
 
-    void on_change_connection(bool old_connected, bool new_connected) OS_NOEXCEPT override;
+    void on_change_connection(bool old_connected, bool new_connected) OSAL_NOEXCEPT override;
 
 };
 

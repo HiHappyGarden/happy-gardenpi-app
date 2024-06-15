@@ -37,7 +37,7 @@ uint32_t const REALTIME = 6;
 
 char const TIME_T_STR[] = "%lu";
 
-os::exit os_config_init() OS_NOEXCEPT
+os::exit os_config_init() OSAL_NOEXCEPT
 {
 
 	return exit::OK;

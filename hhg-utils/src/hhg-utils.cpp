@@ -26,7 +26,7 @@ namespace hhg::utils
 inline namespace v1
 {
 
-int32_t crc32(const uint8_t buffer[], uint32_t buffer_len) OS_NOEXCEPT
+int32_t crc32(const uint8_t buffer[], uint32_t buffer_len) OSAL_NOEXCEPT
 {
     int i, j;
     unsigned int byte, crc, mask;
@@ -47,7 +47,7 @@ int32_t crc32(const uint8_t buffer[], uint32_t buffer_len) OS_NOEXCEPT
     return ~crc;
 }
 
-os::exit to_hex(char* dest, size_t dest_len, const uint8_t* src, size_t src_len) OS_NOEXCEPT
+os::exit to_hex(char* dest, size_t dest_len, const uint8_t* src, size_t src_len) OSAL_NOEXCEPT
 {
 	if(dest == nullptr || src == nullptr)
 	{
@@ -68,7 +68,7 @@ os::exit to_hex(char* dest, size_t dest_len, const uint8_t* src, size_t src_len)
     return exit::OK;
 }
 
-os::exit from_hex(uint8_t* dest, size_t dest_len, const char* src, size_t src_len) OS_NOEXCEPT
+os::exit from_hex(uint8_t* dest, size_t dest_len, const char* src, size_t src_len) OSAL_NOEXCEPT
 {
 	if(dest == nullptr || src == nullptr)
 	{
@@ -95,7 +95,7 @@ os::exit from_hex(uint8_t* dest, size_t dest_len, const char* src, size_t src_le
     return exit::OK;
 }
 
-void print_hex(const uint8_t* buf, size_t len) OS_NOEXCEPT
+void print_hex(const uint8_t* buf, size_t len) OSAL_NOEXCEPT
 {
     for (size_t i = 0; i < len; ++i)
     {

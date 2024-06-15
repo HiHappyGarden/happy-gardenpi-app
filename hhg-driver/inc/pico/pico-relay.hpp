@@ -42,16 +42,16 @@ public:
         RELAY_3 = 9,
     };
 
-    pico_relay() OS_NOEXCEPT;
-    ~pico_relay() OS_NOEXCEPT override;
+    pico_relay() OSAL_NOEXCEPT;
+    ~pico_relay() OSAL_NOEXCEPT override;
 
-    os::exit init(os::error **error) OS_NOEXCEPT override;
+    os::exit init(os::error **error) OSAL_NOEXCEPT override;
 
-    uint8_t size() const OS_NOEXCEPT override;
+    uint8_t size() const OSAL_NOEXCEPT override;
 
-    bool operator [](uint8_t idx) const OS_NOEXCEPT override;
+    bool operator [](uint8_t idx) const OSAL_NOEXCEPT override;
 
-    bool set(uint8_t pin, bool value) OS_NOEXCEPT override;
+    bool set(uint8_t pin, bool value) OSAL_NOEXCEPT override;
 
 };
 

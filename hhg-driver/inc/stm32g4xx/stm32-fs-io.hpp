@@ -314,14 +314,14 @@ public:
 
 	static uint64_t const check_data;
 
-	stm32_fsio(uint32_t start_flash_address, uint32_t end_flash_address) OS_NOEXCEPT;
+	stm32_fsio(uint32_t start_flash_address, uint32_t end_flash_address) OSAL_NOEXCEPT;
 	virtual ~stm32_fsio();
 
-	os::exit init(os::error** error) OS_NOEXCEPT override;
+	os::exit init(os::error** error) OSAL_NOEXCEPT override;
 
-	os::exit write(iface::v1::data_type type, const uint8_t data[], size_t size, os::error** error) const OS_NOEXCEPT override;
+	os::exit write(iface::v1::data_type type, const uint8_t data[], size_t size, os::error** error) const OSAL_NOEXCEPT override;
 
-	os::exit read(iface::v1::data_type type, uint8_t data[], size_t size, os::error** error) const OS_NOEXCEPT override;
+	os::exit read(iface::v1::data_type type, uint8_t data[], size_t size, os::error** error) const OSAL_NOEXCEPT override;
 
 private:
 	struct meta_address
@@ -330,8 +330,8 @@ private:
 		uint32_t bank = FLASH_BANK_1;
 	};
 
-	static uint32_t get_page(uint32_t address) OS_NOEXCEPT;
-	os::pair<meta_address, meta_address> get_start_and_end_addresses(iface::v1::data_type type, size_t size, os::error** error) const OS_NOEXCEPT;
+	static uint32_t get_page(uint32_t address) OSAL_NOEXCEPT;
+	os::pair<meta_address, meta_address> get_start_and_end_addresses(iface::v1::data_type type, size_t size, os::error** error) const OSAL_NOEXCEPT;
 };
 
 }

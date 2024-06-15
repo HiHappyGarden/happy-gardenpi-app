@@ -166,7 +166,7 @@ class app_data final : public hhg::iface::initializable
 
 	mutable struct alignas(2) data final : public hhg::iface::file_version
 	{
-		inline data() OS_NOEXCEPT : file_version{MAGIC, VERSION} {}
+		inline data() OSAL_NOEXCEPT : file_version{MAGIC, VERSION} {}
 		schedule schedules[HHG_SCHEDULES_SIZE];
 		uint32_t crc = MAGIC;
 	} data;
@@ -175,34 +175,34 @@ public:
 
 	using on_vesrion_change = void (*)(uint8_t version);
 
-	explicit app_data(const hhg::iface::fs_io::ptr& fsio) OS_NOEXCEPT;
+	explicit app_data(const hhg::iface::fs_io::ptr& fsio) OSAL_NOEXCEPT;
 	~app_data() override;
 	OS_NO_COPY_NO_MOVE(app_data)
 
-	os::exit init(os::error** error) OS_NOEXCEPT override;
+	os::exit init(os::error** error) OSAL_NOEXCEPT override;
 
-	void reset() OS_NOEXCEPT;
+	void reset() OSAL_NOEXCEPT;
 
-	os::exit store(os::error** error) const OS_NOEXCEPT;
+	os::exit store(os::error** error) const OSAL_NOEXCEPT;
 
-	os::exit load(app_data::on_vesrion_change on_version_change, os::error** error) OS_NOEXCEPT;
+	os::exit load(app_data::on_vesrion_change on_version_change, os::error** error) OSAL_NOEXCEPT;
 
-	os::exit load_default(os::error** error) OS_NOEXCEPT;
+	os::exit load_default(os::error** error) OSAL_NOEXCEPT;
 
-    os::exit clear(os::error** error) const OS_NOEXCEPT;
+    os::exit clear(os::error** error) const OSAL_NOEXCEPT;
 
-	bool get_schedule(time_t timestamp, struct schedule& schedule) OS_NOEXCEPT;
+	bool get_schedule(time_t timestamp, struct schedule& schedule) OSAL_NOEXCEPT;
 
-	os::exit set_schedule(const char[]) OS_NOEXCEPT;
+	os::exit set_schedule(const char[]) OSAL_NOEXCEPT;
 
-	os::exit set_zone(const char[]) OS_NOEXCEPT;
+	os::exit set_zone(const char[]) OSAL_NOEXCEPT;
 
-	char* get_schedule(uint8_t id) OS_NOEXCEPT;
+	char* get_schedule(uint8_t id) OSAL_NOEXCEPT;
 
-	char* get_zone(uint8_t id_schedule, uint8_t id) OS_NOEXCEPT;
+	char* get_zone(uint8_t id_schedule, uint8_t id) OSAL_NOEXCEPT;
 
 private:
-	static uint8_t get_bit_day(const tm* now) OS_NOEXCEPT;
+	static uint8_t get_bit_day(const tm* now) OSAL_NOEXCEPT;
 
 };
 

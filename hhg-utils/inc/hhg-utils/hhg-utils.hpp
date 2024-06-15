@@ -26,15 +26,15 @@ namespace hhg::utils
 inline namespace v1
 {
 
-int32_t random_number(int32_t min, int32_t max) __attribute__ ((weak)) OS_NOEXCEPT;
+int32_t random_number(int32_t min, int32_t max) __attribute__ ((weak)) OSAL_NOEXCEPT;
 
-int32_t crc32(const uint8_t buffer[], uint32_t buffer_len) OS_NOEXCEPT;
+int32_t crc32(const uint8_t buffer[], uint32_t buffer_len) OSAL_NOEXCEPT;
 
-os::exit to_hex(char* dest, size_t dest_len, const uint8_t* src, size_t src_len) OS_NOEXCEPT;
+os::exit to_hex(char* dest, size_t dest_len, const uint8_t* src, size_t src_len) OSAL_NOEXCEPT;
 
-os::exit from_hex(uint8_t* dest, size_t dest_len, const char* src, size_t src_len) OS_NOEXCEPT;
+os::exit from_hex(uint8_t* dest, size_t dest_len, const char* src, size_t src_len) OSAL_NOEXCEPT;
 
-void print_hex(const uint8_t* buf, size_t len) OS_NOEXCEPT;
+void print_hex(const uint8_t* buf, size_t len) OSAL_NOEXCEPT;
 
 }
 }

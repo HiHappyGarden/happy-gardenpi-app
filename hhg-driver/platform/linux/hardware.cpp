@@ -41,17 +41,17 @@ constexpr const char APP_TAG[] = "HARDWARE";
 
 }
 
-hardware::hardware(class error** error) OS_NOEXCEPT
+hardware::hardware(class error** error) OSAL_NOEXCEPT
 {
 
 }
 
-os::exit hardware::init(error** error) OS_NOEXCEPT
+os::exit hardware::init(error** error) OSAL_NOEXCEPT
 {
 	return exit::OK;
 }
 
-const string<128>& hardware::get_info() OS_NOEXCEPT
+const string<128>& hardware::get_info() OSAL_NOEXCEPT
 {
 	static string<128> ret;
 
@@ -59,7 +59,7 @@ const string<128>& hardware::get_info() OS_NOEXCEPT
 }
 
 
-const string<128>& hardware::get_version() OS_NOEXCEPT
+const string<128>& hardware::get_version() OSAL_NOEXCEPT
 {
 	static string<128> ret;
 

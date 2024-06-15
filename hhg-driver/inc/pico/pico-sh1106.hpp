@@ -80,50 +80,50 @@ public:
     {
         uint8_t const b;
     public:
-        constexpr inline data(uint8_t byte) : b(byte) OS_NOEXCEPT {} // no explicit
-        constexpr inline data(reg_address byte) : b(static_cast<uint8_t>(byte)) OS_NOEXCEPT {} // no explicit
-        constexpr inline uint8_t value() const  OS_NOEXCEPT { return b; }
+        constexpr inline data(uint8_t byte) : b(byte) OSAL_NOEXCEPT {} // no explicit
+        constexpr inline data(reg_address byte) : b(static_cast<uint8_t>(byte)) OSAL_NOEXCEPT {} // no explicit
+        constexpr inline uint8_t value() const  OSAL_NOEXCEPT { return b; }
     };
 
-    pico_sh1106(i2c_inst const *i2c_reference, uint16_t address) OS_NOEXCEPT;
-    ~pico_sh1106() OS_NOEXCEPT override;
+    pico_sh1106(i2c_inst const *i2c_reference, uint16_t address) OSAL_NOEXCEPT;
+    ~pico_sh1106() OSAL_NOEXCEPT override;
     OS_NO_COPY_NO_MOVE(pico_sh1106)
 
-    os::exit init(class os::error **error) OS_NOEXCEPT override;
+    os::exit init(class os::error **error) OSAL_NOEXCEPT override;
 
-    void set_pixel(uint16_t x, uint16_t y, write_mode mode) const OS_NOEXCEPT override;
+    void set_pixel(uint16_t x, uint16_t y, write_mode mode) const OSAL_NOEXCEPT override;
 
-    inline void set_pixel(uint16_t x, uint16_t y) const OS_NOEXCEPT override
+    inline void set_pixel(uint16_t x, uint16_t y) const OSAL_NOEXCEPT override
     {
         set_pixel(x, y, write_mode::ADD);
     }
 
-    void send_buffer() OS_NOEXCEPT override;
+    void send_buffer() OSAL_NOEXCEPT override;
 
-    void set_bitmap_image(uint16_t x, uint16_t y, uint16_t width, uint16_t height, const uint8_t *image, uint32_t image_size) OS_NOEXCEPT override;
+    void set_bitmap_image(uint16_t x, uint16_t y, uint16_t width, uint16_t height, const uint8_t *image, uint32_t image_size) OSAL_NOEXCEPT override;
 
-    void set_rect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, write_mode mode) OS_NOEXCEPT override;
+    void set_rect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, write_mode mode) OSAL_NOEXCEPT override;
 
-    void set_char(char c, uint16_t x, uint16_t y, const uint8_t* font, uint32_t font_size) OS_NOEXCEPT override;
+    void set_char(char c, uint16_t x, uint16_t y, const uint8_t* font, uint32_t font_size) OSAL_NOEXCEPT override;
 
-    void set_str(const char str[], uint16_t x, uint16_t y, const uint8_t * font, uint32_t font_size) OS_NOEXCEPT override;
+    void set_str(const char str[], uint16_t x, uint16_t y, const uint8_t * font, uint32_t font_size) OSAL_NOEXCEPT override;
 
-    inline os::pair<uint16_t, uint16_t> get_size() const OS_NOEXCEPT override
+    inline os::pair<uint16_t, uint16_t> get_size() const OSAL_NOEXCEPT override
     {
         return {width, height * 8 };
     }
 
-    void set_buffer(uint8_t *buffer, size_t buffer_size) OS_NOEXCEPT override;
+    void set_buffer(uint8_t *buffer, size_t buffer_size) OSAL_NOEXCEPT override;
 
-    void invert_orientation() OS_NOEXCEPT override;
+    void invert_orientation() OSAL_NOEXCEPT override;
 
-    void clear() OS_NOEXCEPT override;
+    void clear() OSAL_NOEXCEPT override;
 
-    void set_contrast(uint8_t contrast) OS_NOEXCEPT override;
+    void set_contrast(uint8_t contrast) OSAL_NOEXCEPT override;
 
-    void turn_off() const OS_NOEXCEPT override;
+    void turn_off() const OSAL_NOEXCEPT override;
 
-    void turn_on() const OS_NOEXCEPT override;
+    void turn_on() const OSAL_NOEXCEPT override;
 
 private:
     i2c_inst const *i2c_reference = nullptr;
@@ -139,18 +139,18 @@ private:
 
     os::error** error = nullptr;
 
-    void send_cmd(uint8_t command) OS_NOEXCEPT const;
+    void send_cmd(uint8_t command) OSAL_NOEXCEPT const;
 
-    inline void send_cmd(const data& addr, uint8_t or_data = 0x00) const OS_NOEXCEPT
+    inline void send_cmd(const data& addr, uint8_t or_data = 0x00) const OSAL_NOEXCEPT
     {
         send_cmd(addr.value() | or_data);
     }
 
-    void send_cmd(const data* commands, uint8_t data_len) const OS_NOEXCEPT;
+    void send_cmd(const data* commands, uint8_t data_len) const OSAL_NOEXCEPT;
 
-    void send_data(const uint8_t* buff, size_t buff_size, uint8_t offset) OS_NOEXCEPT const;
+    void send_data(const uint8_t* buff, size_t buff_size, uint8_t offset) OSAL_NOEXCEPT const;
 
-    void send_row(const uint8_t* buff) const OS_NOEXCEPT;
+    void send_row(const uint8_t* buff) const OSAL_NOEXCEPT;
 
 };
 

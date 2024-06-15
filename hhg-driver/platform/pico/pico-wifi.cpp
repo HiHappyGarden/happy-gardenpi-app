@@ -42,7 +42,7 @@ inline namespace v1
 
     pico_wifi::pico_wifi() = default;
 
-    pico_wifi::~pico_wifi() OS_NOEXCEPT
+    pico_wifi::~pico_wifi() OSAL_NOEXCEPT
     {
 #if HHG_WIFI_DISABLE == 0
         cyw43_arch_deinit();
@@ -144,7 +144,7 @@ inline namespace v1
 #endif
     }
 
-    os::exit pico_wifi::connect(const string<32> &ssid, const string<64> &passwd, enum auth auth, class error **error) const OS_NOEXCEPT
+    os::exit pico_wifi::connect(const string<32> &ssid, const string<64> &passwd, enum auth auth, class error **error) const OSAL_NOEXCEPT
     {
         connection_timeout = HHG_WIFI_CONNECTION_TIMEOUT;
         uint32_t pico_auth = 0;
@@ -280,7 +280,7 @@ inline namespace v1
 
 
 
-    os::exit pico_wifi::ntp_start(on_ntp_received on_ntp_callback, struct error **error) OS_NOEXCEPT
+    os::exit pico_wifi::ntp_start(on_ntp_received on_ntp_callback, struct error **error) OSAL_NOEXCEPT
     {
         this->state.on_ntp_callback = on_ntp_callback;
         this->state.error = error;
@@ -309,7 +309,7 @@ inline namespace v1
 #endif
     }
 
-    string<15> pico_wifi::get_ip_address_str() const OS_NOEXCEPT
+    string<15> pico_wifi::get_ip_address_str() const OSAL_NOEXCEPT
     {
 
         string<15> ret;

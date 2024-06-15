@@ -43,11 +43,11 @@ struct fs_io : public initializable
 
 	~fs_io() override = default;
 
-	virtual os::exit write(data_type type, const uint8_t* data, size_t size, os::error** error) const OS_NOEXCEPT = 0;
+	virtual os::exit write(data_type type, const uint8_t* data, size_t size, os::error** error) const OSAL_NOEXCEPT = 0;
 
-	virtual os::exit read(data_type type, uint8_t* data, size_t size, os::error** error) const OS_NOEXCEPT = 0;
+	virtual os::exit read(data_type type, uint8_t* data, size_t size, os::error** error) const OSAL_NOEXCEPT = 0;
 
-    virtual os::exit clear(data_type type, os::error** error) const OS_NOEXCEPT = 0;
+    virtual os::exit clear(data_type type, os::error** error) const OSAL_NOEXCEPT = 0;
 };
 
 }

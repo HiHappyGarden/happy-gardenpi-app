@@ -322,7 +322,7 @@ void* app_main::handler(void* arg)
 }
 
 
-app_main::app_main(driver::hardware& hardware, class error** error) OS_NOEXCEPT
+app_main::app_main(driver::hardware& hardware, class error** error) OSAL_NOEXCEPT
 : hardware(hardware)
 , app_config(hardware.get_fs_io())
 , app_data(hardware.get_fs_io())
@@ -346,9 +346,9 @@ app_main::app_main(driver::hardware& hardware, class error** error) OS_NOEXCEPT
 	singleton = this;
 }
 
-app_main::~app_main() OS_NOEXCEPT = default;
+app_main::~app_main() OSAL_NOEXCEPT = default;
 
-os::exit app_main::init(class os::error** error) OS_NOEXCEPT
+os::exit app_main::init(class os::error** error) OSAL_NOEXCEPT
 {
 	hardware.get_uart()->set_on_receive(&app_parser, &hhg::iface::io_on_receive::on_receive);
 
@@ -477,6 +477,7 @@ os::exit app_main::init(class os::error** error) OS_NOEXCEPT
         app_led.error();
         return exit::KO;
     }
+    app_display_handler.set_on_receive(&app_parser, &hhg::iface::io_on_receive::on_receive);
     OS_LOG_INFO(APP_TAG, "Init APP DISPLAY HANDLER - OK");
 
 	OS_LOG_INFO(APP_TAG, "Set timer to parser");
@@ -490,16 +491,15 @@ os::exit app_main::init(class os::error** error) OS_NOEXCEPT
     delete config_data;
 
     hardware.get_wifi()->set_change_connection(this, &on_connection_event::on_change_connection);
-
 	return os::exit::OK;
 }
 
-os::exit app_main::fsm_start(class os::error** error) OS_NOEXCEPT
+os::exit app_main::fsm_start(class os::error** error) OSAL_NOEXCEPT
 {
 	return fsm_thread.create(error, error);
 }
 
-os::exit app_main::handle_error() OS_NOEXCEPT
+os::exit app_main::handle_error() OSAL_NOEXCEPT
 {
     app_led.error();
     fsm.events.set(ERROR);
@@ -519,7 +519,7 @@ os::exit app_main::handle_error() OS_NOEXCEPT
 	}
 }
 
-void app_main::on_change_connection(bool old_connected, bool new_connected) OS_NOEXCEPT
+void app_main::on_change_connection(bool old_connected, bool new_connected) OSAL_NOEXCEPT
 {
     if(!old_connected && new_connected)
     {

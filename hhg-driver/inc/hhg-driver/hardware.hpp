@@ -62,61 +62,61 @@ class hardware final : public hhg::iface::initializable
     const rgb_led_ptr rgb_led;
     const wifi_ptr wifi;
 public:
-	explicit hardware(class os::error** error) OS_NOEXCEPT;
+	explicit hardware(class os::error** error) OSAL_NOEXCEPT;
 	~hardware() override = default;
 	OS_NO_COPY_NO_MOVE(hardware)
 
-	inline const io_ptr& get_uart() const OS_NOEXCEPT
+	inline const io_ptr& get_uart() const OSAL_NOEXCEPT
 	{
 		return uart;
 	}
 
-	inline const fs_io_ptr& get_fs_io() const OS_NOEXCEPT
+	inline const fs_io_ptr& get_fs_io() const OSAL_NOEXCEPT
 	{
 		return fs_io;
 	}
 
-	inline const time_ptr& get_time() const OS_NOEXCEPT
+	inline const time_ptr& get_time() const OSAL_NOEXCEPT
 	{
 		return time;
 	}
 
-    inline const relay_ptr& get_relay() const OS_NOEXCEPT
+    inline const relay_ptr& get_relay() const OSAL_NOEXCEPT
     {
         return relay;
     }
 
-    inline const lcd_ptr& get_lcd() const OS_NOEXCEPT
+    inline const lcd_ptr& get_lcd() const OSAL_NOEXCEPT
     {
         return lcd;
     }
 
-    inline const rotary_encoder_ptr& get_rotary_encoder() const OS_NOEXCEPT
+    inline const rotary_encoder_ptr& get_rotary_encoder() const OSAL_NOEXCEPT
     {
         return rotary_encoder;
     }
 
-    inline const button_ptr& get_button() const OS_NOEXCEPT
+    inline const button_ptr& get_button() const OSAL_NOEXCEPT
     {
         return button;
     }
 
-    inline const rgb_led_ptr& get_rgb_led() const OS_NOEXCEPT
+    inline const rgb_led_ptr& get_rgb_led() const OSAL_NOEXCEPT
     {
         return rgb_led;
     }
 
-    inline const wifi_ptr& get_wifi() const OS_NOEXCEPT
+    inline const wifi_ptr& get_wifi() const OSAL_NOEXCEPT
     {
         return wifi;
     }
 
 
-    os::exit init(os::error** error) OS_NOEXCEPT override;
+    os::exit init(os::error** error) OSAL_NOEXCEPT override;
 
-    static const os::string<16>& get_serial() OS_NOEXCEPT;
+    static const os::string<16>& get_serial() OSAL_NOEXCEPT;
 
-    static const os::string<128>& get_info() OS_NOEXCEPT;
+    static const os::string<128>& get_info() OSAL_NOEXCEPT;
 
 };
 

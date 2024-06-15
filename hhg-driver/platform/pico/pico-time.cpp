@@ -34,14 +34,14 @@ inline namespace v1
 pico_time::pico_time() = default;
 pico_time::~pico_time() = default;
 
-os::exit pico_time::init(error** error) OS_NOEXCEPT
+os::exit pico_time::init(error** error) OSAL_NOEXCEPT
 {
     rtc_init();
 
     return exit::OK;
 }
 
-os::exit pico_time::set_timestamp(time_t timestamp, os::error **error) OS_NOEXCEPT
+os::exit pico_time::set_timestamp(time_t timestamp, os::error **error) OSAL_NOEXCEPT
 {
 	const auto ts = gmtime(&timestamp);
 
@@ -60,7 +60,7 @@ os::exit pico_time::set_timestamp(time_t timestamp, os::error **error) OS_NOEXCE
 	return exit::OK;
 }
 
-::tm pico_time::get_date_time(os::error **error) const OS_NOEXCEPT
+::tm pico_time::get_date_time(os::error **error) const OSAL_NOEXCEPT
 {
     datetime_t t{0, 0, 0, 0, 0, 0, 0};
     rtc_get_datetime(&t);
@@ -76,7 +76,7 @@ os::exit pico_time::set_timestamp(time_t timestamp, os::error **error) OS_NOEXCE
 	};
 }
 
-string<32> pico_time::get_date_time(const char format[], os::error **error) const OS_NOEXCEPT
+string<32> pico_time::get_date_time(const char format[], os::error **error) const OSAL_NOEXCEPT
 {
 	string<32> ret;
 
@@ -89,7 +89,7 @@ string<32> pico_time::get_date_time(const char format[], os::error **error) cons
 	return ret;
 }
 
-bool pico_time::wait_for_synchro(uint64_t timeout) const OS_NOEXCEPT
+bool pico_time::wait_for_synchro(uint64_t timeout) const OSAL_NOEXCEPT
 {
 	return true;
 }

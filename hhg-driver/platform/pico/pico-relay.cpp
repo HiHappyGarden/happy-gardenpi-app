@@ -27,8 +27,8 @@ namespace hhg::driver
 inline namespace v1
 {
 
-pico_relay::pico_relay() OS_NOEXCEPT = default;
-pico_relay::~pico_relay() OS_NOEXCEPT = default;
+pico_relay::pico_relay() OSAL_NOEXCEPT = default;
+pico_relay::~pico_relay() OSAL_NOEXCEPT = default;
 
 os::exit pico_relay::init(error **error)
 {
@@ -42,12 +42,12 @@ os::exit pico_relay::init(error **error)
 }
 
 
-inline uint8_t pico_relay::size() const OS_NOEXCEPT
+inline uint8_t pico_relay::size() const OSAL_NOEXCEPT
 {
     return 4;
 }
 
-bool pico_relay::operator[](uint8_t idx) const OS_NOEXCEPT
+bool pico_relay::operator[](uint8_t idx) const OSAL_NOEXCEPT
 {
     if(idx >= size())
     {
@@ -57,7 +57,7 @@ bool pico_relay::operator[](uint8_t idx) const OS_NOEXCEPT
     return !gpio_get(RELAY_0 + idx);;
 }
 
-bool pico_relay::set(uint8_t idx, bool value) OS_NOEXCEPT
+bool pico_relay::set(uint8_t idx, bool value) OSAL_NOEXCEPT
 {
     if(idx >= size())
     {

@@ -43,7 +43,7 @@ constexpr char APP_TAG[] = "APP CONFIG";
 
 app_config::user app_config::user::EMPTY = {};
 
-app_config::app_config(const fs_io::ptr& fsio) OS_NOEXCEPT
+app_config::app_config(const fs_io::ptr& fsio) OSAL_NOEXCEPT
 : fs_io(fsio)
 {
 
@@ -51,12 +51,12 @@ app_config::app_config(const fs_io::ptr& fsio) OS_NOEXCEPT
 
 app_config::~app_config() = default;
 
-inline os::exit app_config::init(error** error) OS_NOEXCEPT
+inline os::exit app_config::init(error** error) OSAL_NOEXCEPT
 {
 	return load(nullptr, error);
 }
 
-os::exit app_config::set_serial(const char serial[]) OS_NOEXCEPT
+os::exit app_config::set_serial(const char serial[]) OSAL_NOEXCEPT
 {
 	if(serial)
 		config.serial += serial;
@@ -74,7 +74,7 @@ os::exit app_config::set_serial(const char serial[]) OS_NOEXCEPT
 	return exit::OK;
 }
 
-os::exit app_config::set_user(uint8_t idx, const char *user, const char *passwd) OS_NOEXCEPT
+os::exit app_config::set_user(uint8_t idx, const char *user, const char *passwd) OSAL_NOEXCEPT
 {
     auto user_len = strlen(user);
     auto passwd_len = strlen(passwd);
@@ -148,7 +148,7 @@ os::pair<os::exit, app_config::user> app_config::set_auth_remote(const os::strin
 }
 
 
-os::exit app_config::set_descr(const char descr[]) OS_NOEXCEPT
+os::exit app_config::set_descr(const char descr[]) OSAL_NOEXCEPT
 {
 	if(descr)
 		config.descr += descr;
@@ -166,7 +166,7 @@ os::exit app_config::set_descr(const char descr[]) OS_NOEXCEPT
 	return exit::OK;
 }
 
-const char* app_config::get_version() OS_NOEXCEPT
+const char* app_config::get_version() OSAL_NOEXCEPT
 {
 	static string<16> ret;
 	if(ret.length() == 0)
@@ -176,14 +176,14 @@ const char* app_config::get_version() OS_NOEXCEPT
 	return ret.c_str();
 }
 
-os::exit app_config::store(error** error) const OS_NOEXCEPT
+os::exit app_config::store(error** error) const OSAL_NOEXCEPT
 {
 	config.crc = MAGIC;
 	config.crc = crc32(reinterpret_cast<uint8_t *>(&config), sizeof(config));
 	return fs_io->write(data_type::CONFIG, reinterpret_cast<const uint8_t *>(&config), sizeof(config), error);
 }
 
-os::exit app_config::load(app_config::on_vesrion_change on_version_change, error** error) OS_NOEXCEPT
+os::exit app_config::load(app_config::on_vesrion_change on_version_change, error** error) OSAL_NOEXCEPT
 {
 	auto local_config = new class config;
     if(local_config == nullptr)
@@ -242,7 +242,7 @@ os::exit app_config::load(app_config::on_vesrion_change on_version_change, error
 	return exit::OK;
 }
 
-os::exit app_config::load_default(os::error **error) OS_NOEXCEPT
+os::exit app_config::load_default(os::error **error) OSAL_NOEXCEPT
 {
 #if !defined(HHG_ADMIN_USER) || !defined(HHG_ADMIN_PASSWD)
 #error Admin user and password it's mandatory'
@@ -280,12 +280,12 @@ os::exit app_config::load_default(os::error **error) OS_NOEXCEPT
 	return store(error);
 }
 
-os::exit app_config::clear(os::error** error) const OS_NOEXCEPT
+os::exit app_config::clear(os::error** error) const OSAL_NOEXCEPT
 {
     return fs_io->clear(data_type::CONFIG, error);
 }
 
-    const char *app_config::get_config(bool unformatted) const OS_NOEXCEPT
+    const char *app_config::get_config(bool unformatted) const OSAL_NOEXCEPT
     {
         cJSON *root = cJSON_CreateObject();
         if (root == nullptr)

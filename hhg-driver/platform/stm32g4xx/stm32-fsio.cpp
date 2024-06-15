@@ -36,7 +36,7 @@ namespace v1
 
 uint64_t const stm32_fsio::check_data = 0x0102030404030201;
 
-stm32_fsio::stm32_fsio(uint32_t start_flash_address, uint32_t end_flash_address) OS_NOEXCEPT
+stm32_fsio::stm32_fsio(uint32_t start_flash_address, uint32_t end_flash_address) OSAL_NOEXCEPT
 : start_flash_address(start_flash_address)
 , end_flash_address(end_flash_address)
 {
@@ -50,7 +50,7 @@ stm32_fsio::~stm32_fsio()
 	HAL_FLASH_Lock();
 }
 
-os::exit stm32_fsio::init(error** error) OS_NOEXCEPT
+os::exit stm32_fsio::init(error** error) OSAL_NOEXCEPT
 {
 	/* Unlock the Flash to enable the flash control register access *************/
 	HAL_FLASH_Unlock();
@@ -110,7 +110,7 @@ os::exit stm32_fsio::init(error** error) OS_NOEXCEPT
 	return exit::OK;
 }
 
-os::exit stm32_fsio::write(data_type type, const uint8_t data[], size_t size, error** error) const OS_NOEXCEPT
+os::exit stm32_fsio::write(data_type type, const uint8_t data[], size_t size, error** error) const OSAL_NOEXCEPT
 {
 	auto&& [start_address, end_address] = get_start_and_end_addresses(type, size, error);
 
@@ -181,7 +181,7 @@ os::exit stm32_fsio::write(data_type type, const uint8_t data[], size_t size, er
 	return exit::OK;
 }
 
-os::exit stm32_fsio::read(data_type type, uint8_t data[], size_t size, error** error) const OS_NOEXCEPT
+os::exit stm32_fsio::read(data_type type, uint8_t data[], size_t size, error** error) const OSAL_NOEXCEPT
 {
     /* Check the correctness of written data */
 	auto&& [start_address, end_address] = get_start_and_end_addresses(type, size, error);
@@ -205,7 +205,7 @@ os::exit stm32_fsio::read(data_type type, uint8_t data[], size_t size, error** e
   * @param  Addr: Address of the FLASH Memory
   * @retval The page of a given address
   */
-uint32_t stm32_fsio::get_page(uint32_t address) OS_NOEXCEPT
+uint32_t stm32_fsio::get_page(uint32_t address) OSAL_NOEXCEPT
 {
   uint32_t page = 0;
 
@@ -223,7 +223,7 @@ uint32_t stm32_fsio::get_page(uint32_t address) OS_NOEXCEPT
   return page;
 }
 
-pair<stm32_fsio::meta_address, stm32_fsio::meta_address> stm32_fsio::get_start_and_end_addresses(iface::v1::data_type type, size_t size, error** error) const OS_NOEXCEPT
+pair<stm32_fsio::meta_address, stm32_fsio::meta_address> stm32_fsio::get_start_and_end_addresses(iface::v1::data_type type, size_t size, error** error) const OSAL_NOEXCEPT
 {
 	uint32_t start_address = 0;
 	uint32_t end_address = 0;

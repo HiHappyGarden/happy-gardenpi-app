@@ -272,7 +272,7 @@ constexpr const size_t commands_size = sizeof(commands) / sizeof(commands[0]);
 
 }
 
-os::exit set_app_parser(class app_parser& app_parser, error** error) OS_NOEXCEPT
+os::exit set_app_parser(class app_parser& app_parser, error** error) OSAL_NOEXCEPT
 {
     hhg::app::app_parser = const_cast<class app_parser*>(&app_parser);
 	parser = const_cast<class parser*>(&app_parser.get_parser());
@@ -287,7 +287,7 @@ os::exit set_app_parser(class app_parser& app_parser, error** error) OS_NOEXCEPT
 }
 
 
-os::exit set_app_config(class app_config& app_config, error** error) OS_NOEXCEPT
+os::exit set_app_config(class app_config& app_config, error** error) OSAL_NOEXCEPT
 {
 	hhg::app::app_config = &app_config;
 
@@ -366,7 +366,7 @@ os::exit set_app_config(class app_config& app_config, error** error) OS_NOEXCEPT
 	return exit::OK;
 }
 
-os::exit set_app_data(class app_data& app_data, error** error) OS_NOEXCEPT
+os::exit set_app_data(class app_data& app_data, error** error) OSAL_NOEXCEPT
 {
 
 
@@ -405,12 +405,12 @@ os::exit set_app_data(class app_data& app_data, error** error) OS_NOEXCEPT
 	return exit::OK;
 }
 
-void set_time(class time* time) OS_NOEXCEPT
+void set_time(class time* time) OSAL_NOEXCEPT
 {
 	hhg::app::time = time;
 }
 
-os::exit auth(const cmd_data &data, const entry *entry, os::error **error) OS_NOEXCEPT
+os::exit auth(const cmd_data &data, const entry *entry, os::error **error) OSAL_NOEXCEPT
 {
     if(data.tokens_len < 3)
     {
@@ -426,7 +426,7 @@ os::exit auth(const cmd_data &data, const entry *entry, os::error **error) OS_NO
     user += data.tokens[1].start;
     passwd += data.tokens[2].start;
 
-    if(key == "$AUTH" && app_parser::singleton->source == io_source::UART)
+    if(key == "$AUTH" && (app_parser::singleton->source == io_source::UART || app_parser::singleton->source == io_source::DISPLAY) )
     {
         auto [status, auth] = app_config->set_auth(user, passwd);
         if(status == exit::OK)
@@ -451,12 +451,12 @@ os::exit auth(const cmd_data &data, const entry *entry, os::error **error) OS_NO
     return exit::KO;
 }
 
-    entry* get_commands() OS_NOEXCEPT
+    entry* get_commands() OSAL_NOEXCEPT
 {
 	return commands;
 }
 
-size_t get_commands_size() OS_NOEXCEPT
+size_t get_commands_size() OSAL_NOEXCEPT
 {
 	return commands_size;
 }

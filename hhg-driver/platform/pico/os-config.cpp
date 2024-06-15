@@ -92,7 +92,7 @@ cJSON_Hooks cjson_hooks
 
 }
 
-os::exit os_config_init() OS_NOEXCEPT
+os::exit os_config_init() OSAL_NOEXCEPT
 {
     stdio_init_all();
 

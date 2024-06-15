@@ -47,7 +47,7 @@ constexpr const char APP_TAG[] = "HARDWARE";
 
 }
 
-hardware::hardware(class error** error) OS_NOEXCEPT
+hardware::hardware(class error** error) OSAL_NOEXCEPT
 : uart(new hhg::driver::stm32_lpuart)
 , fsio(new hhg::driver::stm32_fsio(static_cast<uint32_t>(addr_flash::PAGE_112), static_cast<uint32_t>(addr_flash::PAGE_127) + FLASH_PAGE_SIZE - 1 ))
 , time(new hhg::driver::stm32_time)
@@ -74,7 +74,7 @@ hardware::hardware(class error** error) OS_NOEXCEPT
 	}
 }
 
-os::exit hardware::init(error** error) OS_NOEXCEPT
+os::exit hardware::init(error** error) OSAL_NOEXCEPT
 {
 	OS_LOG_INFO(APP_TAG, "Init OS Config");
 	if(os_config_init() == os::exit::KO)
@@ -123,7 +123,7 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
 	return exit::OK;
 }
 
-const string<128>& hardware::get_info() OS_NOEXCEPT
+const string<128>& hardware::get_info() OSAL_NOEXCEPT
 {
 	static string<128> ret;
 
@@ -131,7 +131,7 @@ const string<128>& hardware::get_info() OS_NOEXCEPT
 }
 
 
-const string<128>& hardware::get_version() OS_NOEXCEPT
+const string<128>& hardware::get_version() OSAL_NOEXCEPT
 {
 	static string<128> ret;
 

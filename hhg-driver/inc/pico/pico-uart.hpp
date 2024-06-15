@@ -45,15 +45,15 @@ class pico_uart final : public hhg::iface::io
         RX_PIN = 1
     };
 
-    pico_uart() OS_NOEXCEPT;
-	~pico_uart() OS_NOEXCEPT override;
+    pico_uart() OSAL_NOEXCEPT;
+	~pico_uart() OSAL_NOEXCEPT override;
 	OS_NO_COPY_NO_MOVE(pico_uart)
 
-	os::exit init(os::error** error) OS_NOEXCEPT override;
+	os::exit init(os::error** error) OSAL_NOEXCEPT override;
 
-	void set_on_receive(const hhg::iface::io_on_receive* obj, on_receive on_receive_callback) OS_NOEXCEPT override;
+	void set_on_receive(const hhg::iface::io_on_receive* obj, on_receive on_receive_callback) OSAL_NOEXCEPT override;
 
-    os::exit transmit(const uint8_t data[], uint16_t size) const OS_NOEXCEPT override;
+    os::exit transmit(const uint8_t data[], uint16_t size) const OSAL_NOEXCEPT override;
 
 };
 

@@ -61,24 +61,24 @@ inline namespace v1
     public:
 
         pico_wifi();
-        ~pico_wifi() override OS_NOEXCEPT;
+        ~pico_wifi() override OSAL_NOEXCEPT;
         OS_NO_COPY_NO_MOVE(pico_wifi)
 
-        void set_change_connection(on_connection_event* obj, on_connection_event::callback callback) OS_NOEXCEPT override
+        void set_change_connection(on_connection_event* obj, on_connection_event::callback callback) OSAL_NOEXCEPT override
         {
             this->obj = obj;
             this->callback = callback;
         }
 
-        os::exit init(os::error **error) OS_NOEXCEPT override;
+        os::exit init(os::error **error) OSAL_NOEXCEPT override;
 
-        os::exit connect(const os::string<32>& ssid, const os::string<64>& passwd, enum auth auth, os::error **error) const OS_NOEXCEPT override;
+        os::exit connect(const os::string<32>& ssid, const os::string<64>& passwd, enum auth auth, os::error **error) const OSAL_NOEXCEPT override;
 
-        os::exit ntp_start(on_ntp_received, os::error **error) OS_NOEXCEPT override;
+        os::exit ntp_start(on_ntp_received, os::error **error) OSAL_NOEXCEPT override;
 
-        os::string<15> get_ip_address_str() const OS_NOEXCEPT override;
+        os::string<15> get_ip_address_str() const OSAL_NOEXCEPT override;
 
-        inline uint32_t get_ip_address()  const OS_NOEXCEPT override
+        inline uint32_t get_ip_address()  const OSAL_NOEXCEPT override
         {
             return state.ip_addr.addr;
         }

@@ -37,7 +37,7 @@ class app_led final  : public hhg::iface::initializable
 
     const hhg::iface::rgb_led::ptr& rgb_led;
 
-    static void* handler(void* arg) OS_NOEXCEPT;
+    static void* handler(void* arg) OSAL_NOEXCEPT;
     os::thread thread {
             "led"
             , hhg::driver::LOW
@@ -57,21 +57,21 @@ class app_led final  : public hhg::iface::initializable
     } status = status::LOADING, curren_status = status::LOADING;
 
 public:
-    explicit app_led(const hhg::iface::rgb_led::ptr& rgb_led) OS_NOEXCEPT;
+    explicit app_led(const hhg::iface::rgb_led::ptr& rgb_led) OSAL_NOEXCEPT;
     ~app_led() override;
     OS_NO_COPY_NO_MOVE(app_led)
 
-    os::exit init(os::error **error) OS_NOEXCEPT override;
+    os::exit init(os::error **error) OSAL_NOEXCEPT override;
 
-    void loading() const OS_NOEXCEPT;
+    void loading() const OSAL_NOEXCEPT;
 
-    void warning() const OS_NOEXCEPT;
+    void warning() const OSAL_NOEXCEPT;
 
-    void error() const OS_NOEXCEPT;
+    void error() const OSAL_NOEXCEPT;
 
-    void ready() const OS_NOEXCEPT;
+    void ready() const OSAL_NOEXCEPT;
 
-    void running_irrigation()  const OS_NOEXCEPT;
+    void running_irrigation()  const OSAL_NOEXCEPT;
 
 private:
 };

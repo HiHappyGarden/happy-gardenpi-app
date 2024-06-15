@@ -31,12 +31,12 @@ inline namespace v1
         constexpr char APP_TAG[] = "DRV ROTARY ENCODER";
     }
 
-    pico_rotary_encoder::pico_rotary_encoder() OS_NOEXCEPT = default;
+    pico_rotary_encoder::pico_rotary_encoder() OSAL_NOEXCEPT = default;
 
-    pico_rotary_encoder::~pico_rotary_encoder() OS_NOEXCEPT = default;
+    pico_rotary_encoder::~pico_rotary_encoder() OSAL_NOEXCEPT = default;
 
 
-    os::exit pico_rotary_encoder::init(os::error **error) OS_NOEXCEPT
+    os::exit pico_rotary_encoder::init(os::error **error) OSAL_NOEXCEPT
     {
         if(singleton)
         {
