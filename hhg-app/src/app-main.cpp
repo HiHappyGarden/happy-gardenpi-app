@@ -350,8 +350,6 @@ app_main::~app_main() OSAL_NOEXCEPT = default;
 
 os::exit app_main::init(class os::error** error) OSAL_NOEXCEPT
 {
-	hardware.get_uart()->set_on_receive(&app_parser, &hhg::iface::io_on_receive::on_receive);
-
     OSAL_LOG_INFO(APP_TAG, "Init APP LED");
     if(app_led.init(error) == exit::KO)
     {
@@ -380,6 +378,7 @@ os::exit app_main::init(class os::error** error) OSAL_NOEXCEPT
         app_led.error();
         return exit::KO;
     }
+    hardware.get_uart()->set_on_receive(&app_parser, &hhg::iface::io_on_receive::on_receive);
 	OSAL_LOG_INFO(APP_TAG, "Init APP PARSER - OK");
 
 	OSAL_LOG_INFO(APP_TAG, "Init APP CONFIG");
