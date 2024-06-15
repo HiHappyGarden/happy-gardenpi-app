@@ -34,8 +34,76 @@
   <component name="ChangeListManager">
     <list default="true" id="029740bc-9460-411a-aa9c-3448b8c57430" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-config.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-config.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-data.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-data.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-display-handler.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-display-handler.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-led.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-led.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-main.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-main.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-parser-commands.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-parser-commands.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-parser.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-parser.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-app/src/app-config.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/src/app-config.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-app/src/app-data.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/src/app-data.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-app/src/app-display-handler.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/src/app-display-handler.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-app/src/app-led.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/src/app-led.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-app/src/app-main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/src/app-main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-app/src/app-parser-commands.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/src/app-parser-commands.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-app/src/app-parser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/src/app-parser.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-config/pico/hhg-config.h" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-config/pico/hhg-config.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/hhg-driver/hardware.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/hhg-driver/hardware.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/hhg-driver/os-config.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/hhg-driver/os-config.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-button.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-button.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-fs-io.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-fs-io.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-i2c.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-i2c.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-relay.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-relay.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-rgb-led.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-rgb-led.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-rotary-encored.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-rotary-encored.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-sh1106.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-sh1106.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-time.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-time.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-uart.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-uart.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-wifi.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/pico/pico-wifi.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/stm32g4xx/stm32-fs-io.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/stm32g4xx/stm32-fs-io.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/stm32g4xx/stm32-lpuart.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/stm32g4xx/stm32-lpuart.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/inc/stm32g4xx/stm32-time.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/inc/stm32g4xx/stm32-time.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/linux/hardware.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/linux/hardware.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/linux/os-config.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/linux/os-config.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/hardware.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/hardware.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/os-config.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/os-config.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-fs-io.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-fs-io.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-i2c.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-i2c.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-relay.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-relay.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-rgb-led.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-rgb-led.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-rotary-encoder.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-rotary-encoder.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-sh1106.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-sh1106.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-time.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-time.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-uart.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-uart.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-wifi.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-wifi.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/stm32g4xx/hardware.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/stm32g4xx/hardware.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/stm32g4xx/os-config.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/stm32g4xx/os-config.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/stm32g4xx/stm32-fsio.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/stm32g4xx/stm32-fsio.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/stm32g4xx/stm32-lpuart.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/stm32g4xx/stm32-lpuart.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/stm32g4xx/stm32-time.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/stm32g4xx/stm32-time.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/button.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/button.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/fs-io.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/fs-io.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/i2c.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/i2c.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/initializable.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/initializable.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/io.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/io.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/lcd.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/lcd.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/relay.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/relay.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/rgb_led.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/rgb_led.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/rotary-encored.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/rotary-encored.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/startable.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/startable.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/time.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/time.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/wifi.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-iface/inc/hhg-iface/wifi.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-parser/config/osal-config.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-parser/inc/hhg-parser/parser.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-parser/inc/hhg-parser/parser.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-parser/osal" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-parser/osal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-parser/src/parser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-parser/src/parser.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-parser/test/test.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-parser/test/test.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-utils/inc/hhg-utils/hhg-utils.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-utils/inc/hhg-utils/hhg-utils.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-utils/src/hhg-utils.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-utils/src/hhg-utils.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/osal" beforeDir="false" afterPath="$PROJECT_DIR$/osal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/osal/inc/osal/log.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/osal/inc/osal/log.hpp" afterDir="false" />
       <change beforePath="/usr/local/src/pico-sdk/lib/btstack" beforeDir="false" afterPath="/usr/local/src/pico-sdk/lib/btstack" afterDir="false" />
       <change beforePath="/usr/local/src/pico-sdk/lib/btstack/doc/manual/btstack_gettingstarted.tex" beforeDir="false" afterPath="/usr/local/src/pico-sdk/lib/btstack/doc/manual/btstack_gettingstarted.tex" afterDir="false" />
       <change beforePath="/usr/local/src/pico-sdk/lib/btstack/port/mtk/docs/ruggear-gettingstarted.tex" beforeDir="false" afterPath="/usr/local/src/pico-sdk/lib/btstack/port/mtk/docs/ruggear-gettingstarted.tex" afterDir="false" />
@@ -81,7 +149,7 @@
     <option name="nodes">
       <map>
         <entry key="rp2040.svd" value="-E" />
-        <entry key="rp2040.svd|p:RESETS" value="-E" />
+        <entry key="rp2040.svd|p:RESETS" value="-C" />
         <entry key="rp2040.svd|p:RESETS|RESET" value="HC" />
         <entry key="rp2040.svd|p:RESETS|RESET_DONE" value="HC" />
         <entry key="rp2040.svd|p:RESETS|WDSEL" value="HC" />
@@ -113,43 +181,43 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;CMake Application.ELF2UF2Build.executor&quot;: &quot;Debug&quot;,
-    &quot;CMake Application.hi-happy-garden-app.executor&quot;: &quot;Debug&quot;,
-    &quot;OpenOCD Download &amp; Run.Raspberry Pi Pico W.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;raspberry-pico&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/antoniosalsi/share/cpp-test&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;CMakeSettings&quot;,
-    &quot;structure.view.defaults.are.configured&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "CMake Application.ELF2UF2Build.executor": "Debug",
+    "CMake Application.hi-happy-garden-app.executor": "Debug",
+    "OpenOCD Download & Run.Raspberry Pi Pico W.executor": "Debug",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "raspberry-pico",
+    "last_opened_file_path": "/home/antoniosalsi/projects/hi-happy-garden-app/hhg-parser/config",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "Docker",
+    "structure.view.defaults.are.configured": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/hhg-parser/config" />
+      <recent name="$PROJECT_DIR$/hhg-config/pico" />
+      <recent name="$PROJECT_DIR$/inc/assets" />
       <recent name="$PROJECT_DIR$/hhg-iface/inc/hhg-iface" />
       <recent name="$PROJECT_DIR$/hhg-app/inc/hhg-app" />
-      <recent name="$PROJECT_DIR$/hhg-driver/inc/pico" />
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/hhg-driver/platform/pico" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/hhg-app/inc/hhg-app" />
+      <recent name="$PROJECT_DIR$/hhg-app/inc" />
+      <recent name="$PROJECT_DIR$/hhg-app/src" />
       <recent name="$PROJECT_DIR$/hhg-driver/platform/pico" />
       <recent name="$PROJECT_DIR$/hhg-driver/inc/pico" />
-      <recent name="$PROJECT_DIR$/hhg-iface/inc/hhg-iface" />
-      <recent name="$PROJECT_DIR$/inc" />
-      <recent name="$PROJECT_DIR$/assets" />
     </key>
   </component>
   <component name="RtosSettings">
@@ -157,6 +225,19 @@
     <option name="rtosType" value="FreeRTOS" />
   </component>
   <component name="RunManager" selected="OpenOCD Download &amp; Run.Raspberry Pi Pico W">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ELF2UF2Build" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="hi-happy-garden-app" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="hi-happy-garden-app">
+      <envs>
+        <env name="-DFREERTOS" value="ON -DPICO=ON" />
+      </envs>
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ELF2UF2Build" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="hi-happy-garden-app" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="hi-happy-garden-app">
       <envs>
         <env name="-DFREERTOS" value="ON -DPICO=ON" />
@@ -186,12 +267,22 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="PioasmBuild" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="PioasmBuild" CONFIG_NAME="Debug-Cortex M">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="PioasmBuild" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden-app" TARGET_NAME="PioasmBuild" CONFIG_NAME="Debug-Cortex M">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="PioasmBuild" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden-app" TARGET_NAME="PioasmBuild" CONFIG_NAME="Debug-Cortex M">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="bs2_default" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="bs2_default" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="bs2_default">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -216,12 +307,22 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="bs2_default_bin" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="bs2_default_bin" CONFIG_NAME="Debug-Cortex M">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="bs2_default_bin" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden-app" TARGET_NAME="bs2_default_bin" CONFIG_NAME="Debug-Cortex M">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="bs2_default_bin" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden-app" TARGET_NAME="bs2_default_bin" CONFIG_NAME="Debug-Cortex M">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="bs2_default_padded_checksummed_asm" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="bs2_default_padded_checksummed_asm" CONFIG_NAME="Debug-Cortex M">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -246,7 +347,17 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="cJSON_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="cJSON_test" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="cJSON_test">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="cJSON_test" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden-app" TARGET_NAME="cJSON_test" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden-app" RUN_TARGET_NAME="cJSON_test">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="check" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="check" CONFIG_NAME="Debug-Cortex M">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -266,7 +377,17 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="cjson" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="cjson" CONFIG_NAME="Debug-Cortex M">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="cjson" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden-app" TARGET_NAME="cjson" CONFIG_NAME="Debug-Cortex M">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="cjson_add" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="cjson_add" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="cjson_add">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -286,7 +407,17 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="compare_tests" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="compare_tests" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="compare_tests">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="compare_tests" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden-app" TARGET_NAME="compare_tests" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden-app" RUN_TARGET_NAME="compare_tests">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="cyw43_driver_picow_cyw43_bus_pio_spi_pio_h" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="cyw43_driver_picow_cyw43_bus_pio_spi_pio_h" CONFIG_NAME="Debug-Cortex M">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -311,12 +442,30 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="freertos" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="freertos" CONFIG_NAME="Debug-Cortex M">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="fuzz_main" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="fuzz_main" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="fuzz_main">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="fuzz_main" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="fuzz_main" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="fuzz_main">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="fuzz_main" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden-app" TARGET_NAME="fuzz_main" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden-app" RUN_TARGET_NAME="fuzz_main">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="hi-happy-garden-app" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="hi-happy-garden-app" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="hi-happy-garden-app">
+      <envs>
+        <env name="-DFREERTOS" value="ON -DPICO=ON -DCMAKE_BUILD_TYPE=Debug" />
+      </envs>
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -350,12 +499,27 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="hi-happy-garden-parser" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="hi-happy-garden-parser" CONFIG_NAME="Debug-Cortex M">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="hi-happy-garden-parser" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden-app" TARGET_NAME="hi-happy-garden-parser" CONFIG_NAME="Debug-Cortex M">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="hi-happy-garden" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="hi-happy-garden" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="hi-happy-garden">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="hi-happy-garden" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="hi-happy-garden" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="hi-happy-garden">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="minify_tests" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="minify_tests" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="minify_tests">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -375,7 +539,17 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="misc_tests" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="misc_tests" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="misc_tests">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="misc_tests" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden-app" TARGET_NAME="misc_tests" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden-app" RUN_TARGET_NAME="misc_tests">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="parse_array" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="parse_array" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="parse_array">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -395,7 +569,17 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="parse_examples" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="parse_examples" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="parse_examples">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="parse_examples" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden-app" TARGET_NAME="parse_examples" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden-app" RUN_TARGET_NAME="parse_examples">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="parse_hex4" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="parse_hex4" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="parse_hex4">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -415,7 +599,17 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="parse_number" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="parse_number" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="parse_number">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="parse_number" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden-app" TARGET_NAME="parse_number" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden-app" RUN_TARGET_NAME="parse_number">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="parse_object" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="parse_object" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="parse_object">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -435,7 +629,17 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="parse_string" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="parse_string" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="parse_string">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="parse_string" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden-app" TARGET_NAME="parse_string" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden-app" RUN_TARGET_NAME="parse_string">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="parse_value" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="parse_value" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="parse_value">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -455,7 +659,17 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="parse_with_opts" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="parse_with_opts" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="parse_with_opts">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="parse_with_opts" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden-app" TARGET_NAME="parse_with_opts" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden-app" RUN_TARGET_NAME="parse_with_opts">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="print_array" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="print_array" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="print_array">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -475,7 +689,17 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="print_number" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="print_number" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="print_number">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="print_number" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden-app" TARGET_NAME="print_number" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden-app" RUN_TARGET_NAME="print_number">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="print_object" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="print_object" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="print_object">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -495,7 +719,17 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="print_string" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="print_string" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="print_string">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="print_string" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden-app" TARGET_NAME="print_string" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden-app" RUN_TARGET_NAME="print_string">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="print_value" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="print_value" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="print_value">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -515,7 +749,17 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="readme_examples" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="readme_examples" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="readme_examples">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="readme_examples" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden-app" TARGET_NAME="readme_examples" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden-app" RUN_TARGET_NAME="readme_examples">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="uninstall" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="uninstall" CONFIG_NAME="Debug-Cortex M">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -535,9 +779,22 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="unity" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="unity" CONFIG_NAME="Debug-Cortex M">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="unity" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden-app" TARGET_NAME="unity" CONFIG_NAME="Debug-Cortex M">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Raspberry Pi Pico W" type="com.jetbrains.cidr.embedded.openocd.conf.type" factoryName="com.jetbrains.cidr.embedded.openocd.conf.factory" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="hi-happy-garden" CONFIG_NAME="Debug-Cortex M" version="1" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="hi-happy-garden">
+      <openocd version="1" gdb-port="3333" telnet-port="4444" board-config="$PROJECT_DIR$/pico/openocd_pico.cfg" reset-type="INIT" download-type="UPDATED_ONLY">
+        <debugger kind="GDB" isBundled="true" />
+      </openocd>
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
       </method>
     </configuration>
     <configuration name="Raspberry Pi Pico W" type="com.jetbrains.cidr.embedded.openocd.conf.type" factoryName="com.jetbrains.cidr.embedded.openocd.conf.factory" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="hi-happy-garden" CONFIG_NAME="Debug-Cortex M" version="1" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="hi-happy-garden">
@@ -579,8 +836,8 @@
       <item itemvalue="CMake Application.freertos" />
       <item itemvalue="CMake Application.fuzz_main" />
       <item itemvalue="CMake Application.hi-happy-garden-app" />
-      <item itemvalue="CMake Application.hi-happy-garden" />
       <item itemvalue="CMake Application.hi-happy-garden-parser" />
+      <item itemvalue="CMake Application.hi-happy-garden" />
       <item itemvalue="CMake Application.minify_tests" />
       <item itemvalue="CMake Application.misc_tests" />
       <item itemvalue="CMake Application.parse_array" />
@@ -732,7 +989,41 @@
       <workItem from="1717079393223" duration="1349000" />
       <workItem from="1717080750124" duration="9153000" />
       <workItem from="1717186407810" duration="5767000" />
-      <workItem from="1717193233660" duration="269000" />
+      <workItem from="1717193233660" duration="308000" />
+      <workItem from="1717220078309" duration="4994000" />
+      <workItem from="1717268254385" duration="5590000" />
+      <workItem from="1717312385828" duration="157000" />
+      <workItem from="1717352290899" duration="3438000" />
+      <workItem from="1717358952464" duration="2233000" />
+      <workItem from="1717448073237" duration="4695000" />
+      <workItem from="1717528405244" duration="7866000" />
+      <workItem from="1717571373544" duration="190000" />
+      <workItem from="1717622965927" duration="2634000" />
+      <workItem from="1717654078420" duration="109000" />
+      <workItem from="1717703620225" duration="5034000" />
+      <workItem from="1717709351659" duration="3691000" />
+      <workItem from="1717765820348" duration="17000" />
+      <workItem from="1717770512558" duration="195000" />
+      <workItem from="1717798115823" duration="39000" />
+      <workItem from="1717799701604" duration="498000" />
+      <workItem from="1717801530118" duration="524000" />
+      <workItem from="1717846887973" duration="10018000" />
+      <workItem from="1717877247680" duration="7966000" />
+      <workItem from="1717926276789" duration="602000" />
+      <workItem from="1717946000669" duration="11891000" />
+      <workItem from="1718051172412" duration="4578000" />
+      <workItem from="1718055862772" duration="108000" />
+      <workItem from="1718141120334" duration="6000" />
+      <workItem from="1718142356898" duration="1593000" />
+      <workItem from="1718228654294" duration="1647000" />
+      <workItem from="1718230305843" duration="13000" />
+      <workItem from="1718259642208" duration="54000" />
+      <workItem from="1718316933081" duration="1700000" />
+      <workItem from="1718396166239" duration="4114000" />
+      <workItem from="1718459935187" duration="220000" />
+      <workItem from="1718484577824" duration="2618000" />
+      <workItem from="1718487205369" duration="119000" />
+      <workItem from="1718488098077" duration="1187000" />
     </task>
     <servers />
   </component>
@@ -745,10 +1036,14 @@
     <isAutomaticReloadCMake value="true" />
   </component>
   <component name="XDebuggerManager">
-    <watches-manager>
-      <configuration name="com.jetbrains.cidr.embedded.openocd.conf.type">
-        <watch expression="app_main::singleton" language="ObjectiveC" />
-      </configuration>
-    </watches-manager>
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/hhg-app/src/app-parser.cpp</url>
+          <line>84</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

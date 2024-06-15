@@ -35,15 +35,15 @@ class stm32_lpuart final : public hhg::iface::io
 
 	static inline stm32_lpuart* singleton = nullptr;
 public:
-	stm32_lpuart() OS_NOEXCEPT;
-	~stm32_lpuart() OS_NOEXCEPT override;
+	stm32_lpuart() OSAL_NOEXCEPT;
+	~stm32_lpuart() OSAL_NOEXCEPT override;
 	OS_NO_COPY_NO_MOVE(stm32_lpuart)
 
-	os::exit init(os::error** error) OS_NOEXCEPT override;
+	os::exit init(os::error** error) OSAL_NOEXCEPT override;
 
-	void set_on_receive(const hhg::iface::io_on_receive* obj, on_receive on_receive_callback) OS_NOEXCEPT override;
+	void set_on_receive(const hhg::iface::io_on_receive* obj, on_receive on_receive_callback) OSAL_NOEXCEPT override;
 
-    os::exit transmit(const uint8_t data[], uint16_t size) const OS_NOEXCEPT override;
+    os::exit transmit(const uint8_t data[], uint16_t size) const OSAL_NOEXCEPT override;
 
 };
 

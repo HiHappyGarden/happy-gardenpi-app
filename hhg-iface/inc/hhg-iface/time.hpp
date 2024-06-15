@@ -41,20 +41,20 @@ struct time
 
 	virtual ~time() = default;
 
-	virtual os::exit set_timestamp(time_t timestamp, os::error **error = nullptr) OS_NOEXCEPT = 0;
+	virtual os::exit set_timestamp(time_t timestamp, os::error **error = nullptr) OSAL_NOEXCEPT = 0;
 
-	virtual ::tm get_date_time(os::error **error = nullptr) const OS_NOEXCEPT = 0;
+	virtual ::tm get_date_time(os::error **error = nullptr) const OSAL_NOEXCEPT = 0;
 
-	virtual inline time_t get_timestamp(os::error **error = nullptr) const OS_NOEXCEPT
+	virtual inline time_t get_timestamp(os::error **error = nullptr) const OSAL_NOEXCEPT
 	{
 		tm&& ret = get_date_time(error);
 		return mktime(&ret);
 	}
 
 
-	virtual os::string<32> get_date_time(const char format[] = FORMAT, os::error **error = nullptr) const OS_NOEXCEPT = 0;
+	virtual os::string<32> get_date_time(const char format[] = FORMAT, os::error **error = nullptr) const OSAL_NOEXCEPT = 0;
 
-	virtual bool wait_for_synchro(uint64_t timeout = os::ms_to_us(1'000)) const OS_NOEXCEPT { return true; };
+	virtual bool wait_for_synchro(uint64_t timeout = os::ms_to_us(1'000)) const OSAL_NOEXCEPT { return true; };
 
 };
 

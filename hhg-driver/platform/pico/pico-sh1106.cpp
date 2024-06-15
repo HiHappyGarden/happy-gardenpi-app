@@ -32,7 +32,7 @@ inline namespace v1
         constexpr char APP_TAG[] = "DRV SSH1106";
     }
 
-    pico_sh1106::pico_sh1106(i2c_inst const *i2c_reference, uint16_t address) OS_NOEXCEPT
+    pico_sh1106::pico_sh1106(i2c_inst const *i2c_reference, uint16_t address) OSAL_NOEXCEPT
     : i2c_reference(i2c_reference)
     , address(address)
     {
@@ -40,9 +40,9 @@ inline namespace v1
     }
 
 
-    pico_sh1106::~pico_sh1106() OS_NOEXCEPT = default;
+    pico_sh1106::~pico_sh1106() OSAL_NOEXCEPT = default;
 
-    os::exit pico_sh1106::init(class error **error) OS_NOEXCEPT
+    os::exit pico_sh1106::init(class error **error) OSAL_NOEXCEPT
     {
         OS_LOG_DEBUG(APP_TAG, "Init");
 
@@ -131,7 +131,7 @@ inline namespace v1
     }
 
 
-    void pico_sh1106::send_buffer() OS_NOEXCEPT
+    void pico_sh1106::send_buffer() OSAL_NOEXCEPT
     {
         send_cmd(reg_address::LOW_COLUMN);
         send_cmd(reg_address::HIGH_COLUMN);
@@ -142,7 +142,7 @@ inline namespace v1
         }
     }
 
-    void pico_sh1106::set_bitmap_image(uint16_t x, uint16_t y, uint16_t width, uint16_t height, const uint8_t *image, uint32_t image_size) OS_NOEXCEPT
+    void pico_sh1106::set_bitmap_image(uint16_t x, uint16_t y, uint16_t width, uint16_t height, const uint8_t *image, uint32_t image_size) OSAL_NOEXCEPT
     {
         if(image == nullptr || width * height != image_size)
         {
@@ -169,7 +169,7 @@ inline namespace v1
         }
     }
 
-    void pico_sh1106::set_rect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, write_mode mode) OS_NOEXCEPT
+    void pico_sh1106::set_rect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, write_mode mode) OSAL_NOEXCEPT
     {
         for(uint16_t w = 0; w < width; w++)
         {
@@ -180,7 +180,7 @@ inline namespace v1
         }
     }
 
-    void pico_sh1106::set_char(char c, uint16_t x, uint16_t y, const uint8_t* font, uint32_t font_size) OS_NOEXCEPT
+    void pico_sh1106::set_char(char c, uint16_t x, uint16_t y, const uint8_t* font, uint32_t font_size) OSAL_NOEXCEPT
     {
         if(font == nullptr)
         {
@@ -241,7 +241,7 @@ inline namespace v1
         }
     }
 
-    void pico_sh1106::set_str(const char *str, uint16_t x, uint16_t y, const uint8_t *font, uint32_t font_size) OS_NOEXCEPT
+    void pico_sh1106::set_str(const char *str, uint16_t x, uint16_t y, const uint8_t *font, uint32_t font_size) OSAL_NOEXCEPT
     {
         if(str == nullptr || font == nullptr)
         {
@@ -257,7 +257,7 @@ inline namespace v1
 
     }
 
-    void pico_sh1106::set_buffer(uint8_t *buffer, size_t buffer_size) OS_NOEXCEPT
+    void pico_sh1106::set_buffer(uint8_t *buffer, size_t buffer_size) OSAL_NOEXCEPT
     {
         if(buffer == nullptr)
         {
@@ -278,7 +278,7 @@ inline namespace v1
         }
     }
 
-    void pico_sh1106::invert_orientation() OS_NOEXCEPT
+    void pico_sh1106::invert_orientation() OSAL_NOEXCEPT
     {
         this->orientation = !orientation;
         if(this->orientation)
@@ -293,29 +293,29 @@ inline namespace v1
         }
     }
 
-    void pico_sh1106::clear() OS_NOEXCEPT
+    void pico_sh1106::clear() OSAL_NOEXCEPT
     {
         memset(buffer, 0b00000000, buffer_size);
     }
 
-    void pico_sh1106::set_contrast(uint8_t contrast) OS_NOEXCEPT
+    void pico_sh1106::set_contrast(uint8_t contrast) OSAL_NOEXCEPT
     {
         data data[] = {reg_address::SET_CONTRAST, contrast};
         send_cmd(data, sizeof(data));
     }
 
-    void pico_sh1106::turn_off() const OS_NOEXCEPT
+    void pico_sh1106::turn_off() const OSAL_NOEXCEPT
     {
         send_cmd(reg_address::DISPLAY_OFF);
     }
 
-    void pico_sh1106::turn_on() const OS_NOEXCEPT
+    void pico_sh1106::turn_on() const OSAL_NOEXCEPT
     {
         send_cmd(reg_address::DISPLAY_ON);
     }
 
 
-    void pico_sh1106::send_cmd(uint8_t command) const OS_NOEXCEPT
+    void pico_sh1106::send_cmd(uint8_t command) const OSAL_NOEXCEPT
     {
         uint8_t data[2] = {0x00, command};
         if(i2c_write_blocking(const_cast<i2c_inst *>(i2c_reference), this->address, data, sizeof(data), false) != sizeof(data))
@@ -329,7 +329,7 @@ inline namespace v1
         }
     }
 
-    void pico_sh1106::send_cmd(const data commands[], uint8_t data_len) const OS_NOEXCEPT
+    void pico_sh1106::send_cmd(const data commands[], uint8_t data_len) const OSAL_NOEXCEPT
     {
         if(commands == nullptr)
         {
@@ -341,7 +341,7 @@ inline namespace v1
         }
     }
 
-    void pico_sh1106::send_data(const uint8_t* buff, size_t buff_size, uint8_t offset) const OS_NOEXCEPT
+    void pico_sh1106::send_data(const uint8_t* buff, size_t buff_size, uint8_t offset) const OSAL_NOEXCEPT
     {
         buff_size++;
 
@@ -363,7 +363,7 @@ inline namespace v1
         delete[] data;
     }
 
-    void pico_sh1106::send_row(const uint8_t* buff) const OS_NOEXCEPT
+    void pico_sh1106::send_row(const uint8_t* buff) const OSAL_NOEXCEPT
     {
         uint8_t data[width + 1];
         data[0] = static_cast<uint8_t>(reg_address::START_LINE);

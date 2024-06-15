@@ -46,13 +46,13 @@ class pico_i2c final : public hhg::iface::i2c
 
     static constexpr uint SPEED = 100'000;
 
-    explicit pico_i2c(i2c_inst_t* i2C_reference = PICO_DEFAULT_I2C_INSTANCE, uint speed = pico_i2c::SPEED) OS_NOEXCEPT;
-	~pico_i2c() OS_NOEXCEPT override;
+    explicit pico_i2c(i2c_inst_t* i2C_reference = PICO_DEFAULT_I2C_INSTANCE, uint speed = pico_i2c::SPEED) OSAL_NOEXCEPT;
+	~pico_i2c() OSAL_NOEXCEPT override;
 	OS_NO_COPY_NO_MOVE(pico_i2c)
 
-	os::exit init(os::error** error) OS_NOEXCEPT override;
+	os::exit init(os::error** error) OSAL_NOEXCEPT override;
 
-    i2c_inst_t const * get_i2C_reference() const OS_NOEXCEPT override
+    i2c_inst_t const * get_i2C_reference() const OSAL_NOEXCEPT override
     {
         return i2C_reference;
     }

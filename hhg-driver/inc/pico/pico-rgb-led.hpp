@@ -45,17 +45,17 @@ public:
 
     ~pico_rgb_led() override = default;
 
-    os::exit init(os::error **error) OS_NOEXCEPT override;
+    os::exit init(os::error **error) OSAL_NOEXCEPT override;
 
-    void set_red(uint8_t value) const OS_NOEXCEPT override;
+    void set_red(uint8_t value) const OSAL_NOEXCEPT override;
 
-    void set_green(uint8_t value) const OS_NOEXCEPT override;
+    void set_green(uint8_t value) const OSAL_NOEXCEPT override;
 
-    void set_blue(uint8_t value) const OS_NOEXCEPT override;
+    void set_blue(uint8_t value) const OSAL_NOEXCEPT override;
 
-    void set_rgb(uint8_t red, uint8_t green, uint8_t blue) const OS_NOEXCEPT override;
+    void set_rgb(uint8_t red, uint8_t green, uint8_t blue) const OSAL_NOEXCEPT override;
 
-    const rgb_led::rgb& get_rgb() const OS_NOEXCEPT override;
+    const rgb_led::rgb& get_rgb() const OSAL_NOEXCEPT override;
 
 };
 

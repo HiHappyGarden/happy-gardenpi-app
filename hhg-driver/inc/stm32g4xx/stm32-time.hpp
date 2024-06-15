@@ -38,13 +38,13 @@ public:
 	~stm32_time();
 	OS_NO_COPY_NO_MOVE(stm32_time)
 
-	os::exit set_timestamp(time_t timestamp, os::error **error = nullptr) OS_NOEXCEPT override;
+	os::exit set_timestamp(time_t timestamp, os::error **error = nullptr) OSAL_NOEXCEPT override;
 
-	::tm get_date_time(os::error **error = nullptr) const OS_NOEXCEPT override;
+	::tm get_date_time(os::error **error = nullptr) const OSAL_NOEXCEPT override;
 
-	os::string<32> get_date_time(const char[] = FORMAT, os::error **error = nullptr) const OS_NOEXCEPT override;
+	os::string<32> get_date_time(const char[] = FORMAT, os::error **error = nullptr) const OSAL_NOEXCEPT override;
 
-	bool wait_for_synchro(uint64_t timeout = os::ms_to_us(1'000)) const OS_NOEXCEPT override;
+	bool wait_for_synchro(uint64_t timeout = os::ms_to_us(1'000)) const OSAL_NOEXCEPT override;
 
 };
 

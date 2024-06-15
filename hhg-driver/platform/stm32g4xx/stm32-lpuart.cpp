@@ -30,14 +30,14 @@ inline namespace v1
 {
 
 
-stm32_lpuart::stm32_lpuart() OS_NOEXCEPT = default;
+stm32_lpuart::stm32_lpuart() OSAL_NOEXCEPT = default;
 
 stm32_lpuart::~stm32_lpuart()
 {
 	singleton = nullptr;
 }
 
-os::exit stm32_lpuart::init(error** error) OS_NOEXCEPT
+os::exit stm32_lpuart::init(error** error) OSAL_NOEXCEPT
 {
 	if(singleton)
 	{
@@ -63,13 +63,13 @@ os::exit stm32_lpuart::init(error** error) OS_NOEXCEPT
 }
 
 
-inline void stm32_lpuart::set_on_receive(const io_on_receive* obj, on_receive on_receive_callback) OS_NOEXCEPT
+inline void stm32_lpuart::set_on_receive(const io_on_receive* obj, on_receive on_receive_callback) OSAL_NOEXCEPT
 {
 	this->obj = obj;
 	this->on_receive_callback = on_receive_callback;
 }
 
-os::exit stm32_lpuart::transmit(const uint8_t data[], uint16_t size) const OS_NOEXCEPT
+os::exit stm32_lpuart::transmit(const uint8_t data[], uint16_t size) const OSAL_NOEXCEPT
 {
 
 	if(driver_lpuart_transmit(data, size) == static_cast<int>(exit::KO))

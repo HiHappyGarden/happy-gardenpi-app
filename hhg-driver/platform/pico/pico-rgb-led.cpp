@@ -28,7 +28,7 @@ namespace hhg::driver
 inline namespace v1
 {
 
-    os::exit pico_rgb_led::init(os::error **error) OS_NOEXCEPT
+    os::exit pico_rgb_led::init(os::error **error) OSAL_NOEXCEPT
     {
         pwm_set_gpio_level(RED, 0);
         pwm_set_gpio_level(GREEN, 0);
@@ -36,25 +36,25 @@ inline namespace v1
         return exit::OK;
     }
 
-    void pico_rgb_led::set_red(uint8_t value) const OS_NOEXCEPT
+    void pico_rgb_led::set_red(uint8_t value) const OSAL_NOEXCEPT
     {
         rgb.red = value;
         pwm_set_gpio_level(RED, value * MULTI);
     }
 
-    void pico_rgb_led::set_green(uint8_t value) const OS_NOEXCEPT
+    void pico_rgb_led::set_green(uint8_t value) const OSAL_NOEXCEPT
     {
         rgb.green = value;
         pwm_set_gpio_level(GREEN, value * MULTI);
     }
 
-    void pico_rgb_led::set_blue(uint8_t value) const OS_NOEXCEPT
+    void pico_rgb_led::set_blue(uint8_t value) const OSAL_NOEXCEPT
     {
         rgb.blue = value;
         pwm_set_gpio_level(BLUE, value * MULTI);
     }
 
-    void pico_rgb_led::set_rgb(uint8_t red, uint8_t green, uint8_t blue) const OS_NOEXCEPT
+    void pico_rgb_led::set_rgb(uint8_t red, uint8_t green, uint8_t blue) const OSAL_NOEXCEPT
     {
         rgb = {red, green, blue};
         pwm_set_gpio_level(RED, red * MULTI);

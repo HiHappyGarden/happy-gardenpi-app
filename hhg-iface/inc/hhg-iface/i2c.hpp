@@ -35,9 +35,9 @@ inline namespace v1
     {
         using ptr = os::unique_ptr<hhg::iface::i2c>;
 
-        ~i2c() OS_NOEXCEPT override = default;
+        ~i2c() OSAL_NOEXCEPT override = default;
 
-        virtual i2c_inst const * get_i2C_reference() const OS_NOEXCEPT = 0;
+        virtual i2c_inst const * get_i2C_reference() const OSAL_NOEXCEPT = 0;
     };
 
 }

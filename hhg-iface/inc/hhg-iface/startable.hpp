@@ -31,7 +31,7 @@ struct startable
 {
     virtual ~startable() = default;
 
-    virtual os::exit start(os::error** error) OS_NOEXCEPT = 0;
+    virtual os::exit start(os::error** error) OSAL_NOEXCEPT = 0;
 };
 
 }

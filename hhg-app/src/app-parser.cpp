@@ -35,7 +35,7 @@ constexpr char APP_TAG[] = "APP-PARSER";
 
 }
 
-app_parser::app_parser(const hhg::iface::io::ptr& io, class error** error) OS_NOEXCEPT
+app_parser::app_parser(const hhg::iface::io::ptr& io, class error** error) OSAL_NOEXCEPT
 : error(nullptr)
 , io(io)
 , parser(get_commands(), get_commands_size())
@@ -56,13 +56,13 @@ app_parser::app_parser(const hhg::iface::io::ptr& io, class error** error) OS_NO
 }
 
 
-app_parser::~app_parser() OS_NOEXCEPT
+app_parser::~app_parser() OSAL_NOEXCEPT
 {
 	singleton = nullptr;
 	run = false;
 }
 
-os::exit app_parser::init(class error** error) OS_NOEXCEPT
+os::exit app_parser::init(class error** error) OSAL_NOEXCEPT
 {
 	if(!run)
 	{
@@ -80,7 +80,7 @@ os::exit app_parser::init(class error** error) OS_NOEXCEPT
 	return run ? exit::OK : exit::KO;
 }
 
-void app_parser::on_receive(io_source source, const uint8_t data[], uint16_t size) const OS_NOEXCEPT
+void app_parser::on_receive(io_source source, const uint8_t data[], uint16_t size) const OSAL_NOEXCEPT
 {
 	if(data)
 	{
@@ -89,7 +89,7 @@ void app_parser::on_receive(io_source source, const uint8_t data[], uint16_t siz
 	}
 }
 
-os::exit app_parser::on_auth(const cmd_data &data, const hhg::parser::entry *entry, os::error **error) OS_NOEXCEPT
+os::exit app_parser::on_auth(const cmd_data &data, const hhg::parser::entry *entry, os::error **error) OSAL_NOEXCEPT
 {
     if(strlen(entry->access) == 0)
     {
@@ -125,19 +125,19 @@ os::exit app_parser::on_auth(const cmd_data &data, const hhg::parser::entry *ent
     return exit::KO;
 }
 
-void app_parser::set_user_logged(const app_config::user& user_logged) OS_NOEXCEPT
+void app_parser::set_user_logged(const app_config::user& user_logged) OSAL_NOEXCEPT
 {
     this->user_logged = user_logged;
     auth_timer.start();
 }
 
-void app_parser::clear_user_logged() OS_NOEXCEPT
+void app_parser::clear_user_logged() OSAL_NOEXCEPT
 {
     this->user_logged = {};
     auth_timer.stop();
 }
 
-void* app_parser::handler(void* arg) OS_NOEXCEPT
+void* app_parser::handler(void* arg) OSAL_NOEXCEPT
 {
 	string<app_parser::singleton->BUFFER_SIZE> buffer;
 	string<app_parser::singleton->RET_SIZE> ret;

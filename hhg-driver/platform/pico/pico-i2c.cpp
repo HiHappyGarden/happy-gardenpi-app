@@ -29,14 +29,14 @@ namespace hhg::driver
 inline namespace v1
 {
 
-pico_i2c::pico_i2c(i2c_inst_t* i2C_reference, uint speed) OS_NOEXCEPT
+pico_i2c::pico_i2c(i2c_inst_t* i2C_reference, uint speed) OSAL_NOEXCEPT
 : i2C_reference(i2C_reference)
 , speed(speed)
 {}
 
 pico_i2c::~pico_i2c() = default;
 
-os::exit pico_i2c::init(error** error) OS_NOEXCEPT
+os::exit pico_i2c::init(error** error) OSAL_NOEXCEPT
 {
     i2c_init(i2C_reference, speed);
     bi_decl(bi_2pins_with_func(pico_i2c::pin::SDA_PIN, pico_i2c::pin::SCL_PIN, GPIO_FUNC_I2C));

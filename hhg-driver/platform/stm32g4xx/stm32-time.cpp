@@ -36,7 +36,7 @@ stm32_time::stm32_time() = default;
 stm32_time::~stm32_time() = default;
 
 
-os::exit stm32_time::set_timestamp(time_t timestamp, os::error **error) OS_NOEXCEPT
+os::exit stm32_time::set_timestamp(time_t timestamp, os::error **error) OSAL_NOEXCEPT
 {
 	RTC_TimeTypeDef local_time = {0};
 	RTC_DateTypeDef local_date = {0};
@@ -75,7 +75,7 @@ os::exit stm32_time::set_timestamp(time_t timestamp, os::error **error) OS_NOEXC
 	return exit::OK;
 }
 
-::tm stm32_time::get_date_time(os::error **error) const OS_NOEXCEPT
+::tm stm32_time::get_date_time(os::error **error) const OSAL_NOEXCEPT
 {
 	RTC_TimeTypeDef local_time = {0};
 	RTC_DateTypeDef local_date = {0};
@@ -111,7 +111,7 @@ os::exit stm32_time::set_timestamp(time_t timestamp, os::error **error) OS_NOEXC
 	};
 }
 
-string<32> stm32_time::get_date_time(const char format[], os::error **error) const OS_NOEXCEPT
+string<32> stm32_time::get_date_time(const char format[], os::error **error) const OSAL_NOEXCEPT
 {
 	string<32> ret;
 
@@ -124,7 +124,7 @@ string<32> stm32_time::get_date_time(const char format[], os::error **error) con
 	return ret;
 }
 
-bool stm32_time::wait_for_synchro(uint64_t timeout) const OS_NOEXCEPT
+bool stm32_time::wait_for_synchro(uint64_t timeout) const OSAL_NOEXCEPT
 {
 	/* Clear RSF flag */
 	LL_RTC_ClearFlag_RS(RTC);

@@ -35,7 +35,7 @@ inline namespace v1
 //TODO: implement REAL singleton
 class app_parser final : public hhg::iface::initializable, public hhg::iface::io_on_receive, public hhg::parser::parser::auth
 {
-	//friend void* app_parser_thread_handler(void* arg) OS_NOEXCEPT;
+	//friend void* app_parser_thread_handler(void* arg) OSAL_NOEXCEPT;
 
 	static constexpr const uint16_t BUFFER_SIZE = 512;
 	static constexpr const uint16_t RET_SIZE = 256;
@@ -50,8 +50,9 @@ class app_parser final : public hhg::iface::initializable, public hhg::iface::io
 
 	const hhg::iface::io::ptr& io;
 	hhg::parser::parser parser;
+    mutable hhg::iface::io_source source;
 
-    static void* handler(void* arg) OS_NOEXCEPT;
+    static void* handler(void* arg) OSAL_NOEXCEPT;
 	os::thread thread {
 		"parser"
 		, hhg::driver::NORMAL
@@ -73,52 +74,46 @@ class app_parser final : public hhg::iface::initializable, public hhg::iface::io
 
 
     app_config::user user_logged;
-    mutable hhg::iface::io_source source;
     uint32_t user_logged_timeout = 0;
 public:
 
-	explicit app_parser(const hhg::iface::io::ptr& io, class os::error** error = nullptr) OS_NOEXCEPT;
-	~app_parser() override OS_NOEXCEPT;
+	explicit app_parser(const hhg::iface::io::ptr& io, class os::error** error = nullptr) OSAL_NOEXCEPT;
+	~app_parser() override OSAL_NOEXCEPT;
 	OS_NO_COPY_NO_MOVE(app_parser)
 
-	os::exit init(os::error** error) OS_NOEXCEPT override;
+	os::exit init(os::error** error) OSAL_NOEXCEPT override;
 
-	inline const hhg::parser::parser& get_parser() const OS_NOEXCEPT
+	inline const hhg::parser::parser& get_parser() const OSAL_NOEXCEPT
 	{
 		return parser;
 	}
 
-	inline hhg::iface::io_source get_source() const OS_NOEXCEPT
+	inline hhg::iface::io_source get_source() const OSAL_NOEXCEPT
 	{
 		return source;
 	}
 
-    inline bool is_user_logged() const OS_NOEXCEPT
+    inline bool is_user_logged() const OSAL_NOEXCEPT
     {
         return !user_logged.is_empty();
     }
 
-    inline void set_source(hhg::iface::io_source source) OS_NOEXCEPT
+    inline const os::string<32>& get_user_logged() const OSAL_NOEXCEPT
     {
-        this->source = source;
+        return user_logged.user;
     }
 
-    inline hhg::iface::io_source get_source(hhg::iface::io_source source) const OS_NOEXCEPT
-    {
-        return source;
-    }
-
-	void on_receive(hhg::iface::io_source, const uint8_t data[], uint16_t size) const OS_NOEXCEPT override;
+	void on_receive(hhg::iface::io_source, const uint8_t data[], uint16_t size) const OSAL_NOEXCEPT override;
 
 private:
-    friend os::exit auth(const hhg::parser::cmd_data &data, const hhg::parser::entry *entry, os::error **error) OS_NOEXCEPT;
-    friend os::exit set_app_parser(class app_parser& app_parser, os::error** error) OS_NOEXCEPT;
+    friend os::exit auth(const hhg::parser::cmd_data &data, const hhg::parser::entry *entry, os::error **error) OSAL_NOEXCEPT;
+    friend os::exit set_app_parser(class app_parser& app_parser, os::error** error) OSAL_NOEXCEPT;
 
-    os::exit on_auth(const hhg::parser::cmd_data& data, const hhg::parser::entry* entry, os::error** error) OS_NOEXCEPT override;
+    os::exit on_auth(const hhg::parser::cmd_data& data, const hhg::parser::entry* entry, os::error** error) OSAL_NOEXCEPT override;
 
-    void set_user_logged(const app_config::user& user_logged) OS_NOEXCEPT;
+    void set_user_logged(const app_config::user& user_logged) OSAL_NOEXCEPT;
 
-    void clear_user_logged() OS_NOEXCEPT;
+    void clear_user_logged() OSAL_NOEXCEPT;
 
 };
 

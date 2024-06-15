@@ -42,14 +42,14 @@ struct lcd : public initializable
         INVERT = 2,
     };
 
-    ~lcd() OS_NOEXCEPT override = default;
+    ~lcd() OSAL_NOEXCEPT override = default;
 
-    virtual void set_pixel(uint16_t x, uint16_t y, write_mode mode) const OS_NOEXCEPT = 0;
+    virtual void set_pixel(uint16_t x, uint16_t y, write_mode mode) const OSAL_NOEXCEPT = 0;
 
-    virtual void set_pixel(uint16_t x, uint16_t y) const OS_NOEXCEPT = 0;
+    virtual void set_pixel(uint16_t x, uint16_t y) const OSAL_NOEXCEPT = 0;
 
     /// \brief Sends frame buffer to display so that it updated
-    virtual void send_buffer() OS_NOEXCEPT = 0;
+    virtual void send_buffer() OSAL_NOEXCEPT = 0;
 
     /// \brief Adds bitmap image to frame buffer
     /// \param anchorX - sets start point of where to put the image on the screen
@@ -58,38 +58,38 @@ struct lcd : public initializable
     /// \param height - height of the image in pixels
     /// \param image - pointer to uint8_t (unsigned char) array containing image data
     /// \param mode - mode describes setting behavior. See WriteMode doc for more information
-    virtual void set_bitmap_image(uint16_t x, uint16_t y, uint16_t width, uint16_t height, const uint8_t *image, uint32_t image_size) OS_NOEXCEPT = 0;
+    virtual void set_bitmap_image(uint16_t x, uint16_t y, uint16_t width, uint16_t height, const uint8_t *image, uint32_t image_size) OSAL_NOEXCEPT = 0;
 
-    virtual void set_rect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, write_mode mode) OS_NOEXCEPT = 0;
+    virtual void set_rect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, write_mode mode) OSAL_NOEXCEPT = 0;
 
-    virtual void set_char(char c, uint16_t x, uint16_t y, const uint8_t* font, uint32_t font_size) OS_NOEXCEPT = 0;
+    virtual void set_char(char c, uint16_t x, uint16_t y, const uint8_t* font, uint32_t font_size) OSAL_NOEXCEPT = 0;
 
-    virtual void set_str(const char str[], uint16_t x, uint16_t y, const uint8_t* font, uint32_t font_size) OS_NOEXCEPT = 0;
+    virtual void set_str(const char str[], uint16_t x, uint16_t y, const uint8_t* font, uint32_t font_size) OSAL_NOEXCEPT = 0;
 
-    virtual os::pair<uint16_t, uint16_t> get_size() const OS_NOEXCEPT = 0;
+    virtual os::pair<uint16_t, uint16_t> get_size() const OSAL_NOEXCEPT = 0;
 
     /// \brief Manually set frame buffer. make sure it's correct size of 1024 bytes
     /// \param buffer - pointer to a new buffer
-    virtual void set_buffer(uint8_t *buffer, size_t buffer_size) OS_NOEXCEPT = 0;
+    virtual void set_buffer(uint8_t *buffer, size_t buffer_size) OSAL_NOEXCEPT = 0;
 
     /// \brief Flips the display
     /// \param orientation - 0 for not flipped, 1 for flipped display
-    virtual void invert_orientation() OS_NOEXCEPT = 0;
+    virtual void invert_orientation() OSAL_NOEXCEPT = 0;
 
 
     /// \brief Clears frame buffer aka set all bytes to 0
-    virtual void clear() OS_NOEXCEPT = 0;
+    virtual void clear() OSAL_NOEXCEPT = 0;
 
 
     /// \brief Sets display contrast according to sh1106 documentation
     /// \param contrast - accepted values of 0 to 255 to set the contrast
-    virtual void set_contrast(uint8_t contrast) OS_NOEXCEPT = 0;
+    virtual void set_contrast(uint8_t contrast) OSAL_NOEXCEPT = 0;
 
     /// \brief Turns display off
-    virtual void turn_off() const OS_NOEXCEPT = 0;
+    virtual void turn_off() const OSAL_NOEXCEPT = 0;
 
     /// \brief Turns display on
-    virtual void turn_on() const OS_NOEXCEPT = 0;
+    virtual void turn_on() const OSAL_NOEXCEPT = 0;
 
 
 };

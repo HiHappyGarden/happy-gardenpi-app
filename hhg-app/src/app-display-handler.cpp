@@ -46,8 +46,23 @@ inline namespace v1
 
     }
 
-    os::exit app_display_handler::init(os::error **error) OS_NOEXCEPT
+//    if(pico_uart::singleton && pico_uart::singleton->obj && pico_uart::singleton->on_receive_callback)
+//{
+//    (pico_uart::singleton->obj->*pico_uart::singleton->on_receive_callback)(io_source::UART, &ch, 1);
+//}
+//
+    os::exit app_display_handler::init(os::error **error) OSAL_NOEXCEPT
     {
+        if(singleton)
+        {
+            if(error)
+            {
+                *error = OS_ERROR_BUILD("Only one instance at a time", error_type::OS_EFAULT);
+                OS_ERROR_PTR_SET_POSITION(*error);
+            }
+            return exit::KO;
+        }
+        singleton = this;
 
         button->set_on_button_click(this, &button::event::on_button_click);
         rotary_encoder->set_on_rotary_encoder_event(this, &rotary_encoder::event::on_rotary_encoder_event);
@@ -55,17 +70,17 @@ inline namespace v1
         return os::exit::OK;
     }
 
-    void app_display_handler::on_button_click(iface::button::status status) OS_NOEXCEPT
+    void app_display_handler::on_button_click(iface::button::status status) OSAL_NOEXCEPT
     {
 
     }
 
-    void app_display_handler::on_rotary_encoder_event(bool ccw, bool cw, bool click) OS_NOEXCEPT
+    void app_display_handler::on_rotary_encoder_event(bool ccw, bool cw, bool click) OSAL_NOEXCEPT
     {
 
     }
 
-    void app_display_handler::print_frame(bool wifi, const os::string<32> &now) const OS_NOEXCEPT
+    void app_display_handler::print_frame(bool wifi, const os::string<32> &now) const OSAL_NOEXCEPT
     {
         auto&& [display_width, display_height] = lcd->get_size();
 
@@ -99,27 +114,14 @@ inline namespace v1
             lcd->set_str(now.c_str(), display_width - (now.length() * 5) - 5, 1, font_5x8, sizeof(font_5x8));
         }
 
-//        if(app_parser.is_user_logged())
-//        {
-//            switch (app_parser.get_source())
-//            {
-//                case iface::v1::io_source::UART:
-//                    print_str("Operation not permitter", uint16_t y, enum valign valign, enum font font, int16_t offset_x, int16_t offset_y)
-//                    break;
-//                case iface::v1::io_source::WIFI:
-//                    break;
-//                case iface::v1::io_source::DISPLAY:
-//                    break;
-//            }
-//        }
     }
 
-    void app_display_handler::send_buffer() OS_NOEXCEPT
+    void app_display_handler::send_buffer() OSAL_NOEXCEPT
     {
         lcd->send_buffer();
     }
 
-    void app_display_handler::print_str(bool internal, const char str[], uint16_t y, enum valign valign, enum font font, int16_t offset_x, int16_t offset_y) const OS_NOEXCEPT
+    void app_display_handler::print_str(bool internal, const char str[], uint16_t y, enum valign valign, enum font font, int16_t offset_x, int16_t offset_y) const OSAL_NOEXCEPT
     {
         if (!internal && (app_parser.get_source() == iface::io_source::UART || app_parser.get_source() == iface::io_source::WIFI) )
         {
@@ -171,7 +173,7 @@ inline namespace v1
         lcd->set_str(str, x + offset_x, y + offset_y, font_8x8, sizeof font_8x8);
     }
 
-    void app_display_handler::clean(bool internal) const OS_NOEXCEPT
+    void app_display_handler::clean(bool internal) const OSAL_NOEXCEPT
     {
         if (!internal && (app_parser.get_source() == iface::io_source::UART || app_parser.get_source() == iface::io_source::WIFI) )
         {
@@ -184,7 +186,25 @@ inline namespace v1
 
     auto app_display_handler::blink_timer_handler(os::timer *, void *) -> void *
     {
-        
+
+        string<64> msg = "Device locked by: ";
+        msg += singleton->app_parser.get_user_logged();
+
+
+
+        if(singleton->app_parser.is_user_logged())
+        {
+            switch (singleton->app_parser.get_source())
+            {
+                case iface::v1::io_source::UART:
+                    //print_str("Operation not permitter", uint16_t y, enum valign valign, enum font font, int16_t offset_x, int16_t offset_y)
+                    break;
+                case iface::v1::io_source::WIFI:
+                    break;
+                case iface::v1::io_source::DISPLAY:
+                    break;
+            }
+        }
 
         return nullptr;
     }

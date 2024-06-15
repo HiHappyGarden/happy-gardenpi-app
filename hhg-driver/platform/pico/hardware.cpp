@@ -52,7 +52,7 @@ constexpr const char APP_TAG[] = "HARDWARE";
 
 
 
-hardware::hardware(class error** error) OS_NOEXCEPT
+hardware::hardware(class error** error) OSAL_NOEXCEPT
 : time(new pico_time)
 , uart(new pico_uart)
 , fs_io(new pico_fs_io)
@@ -147,7 +147,7 @@ hardware::hardware(class error** error) OS_NOEXCEPT
 //        int index = 0;
 //        int8_t clicked = 0;
 //
-//        void on_rotary_encoder_event(bool ccw, bool cw, bool click) OS_NOEXCEPT override
+//        void on_rotary_encoder_event(bool ccw, bool cw, bool click) OSAL_NOEXCEPT override
 //        {
 //            if(cw)
 //            {
@@ -189,7 +189,7 @@ hardware::hardware(class error** error) OS_NOEXCEPT
 //
 //
 //
-//        void on_button_click(enum  button::status status) OS_NOEXCEPT override
+//        void on_button_click(enum  button::status status) OSAL_NOEXCEPT override
 //        {
 //            if(status == button::status::RELEASE)
 //            {
@@ -215,7 +215,7 @@ hardware::hardware(class error** error) OS_NOEXCEPT
 
 
 
-os::exit hardware::init(error** error) OS_NOEXCEPT
+os::exit hardware::init(error** error) OSAL_NOEXCEPT
 {
 	if(os_config_init() == os::exit::KO)
 	{
@@ -367,7 +367,7 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
 	return exit::OK;
 }
 
-    const os::string<16> &hardware::get_serial() OS_NOEXCEPT
+    const os::string<16> &hardware::get_serial() OSAL_NOEXCEPT
     {
         static string<16> ret;
         pico_unique_board_id_t board_id;
@@ -384,7 +384,7 @@ os::exit hardware::init(error** error) OS_NOEXCEPT
     }
 
 
-const string<128>& hardware::get_info() OS_NOEXCEPT
+const string<128>& hardware::get_info() OSAL_NOEXCEPT
 {
 	static string<128> ret;
 

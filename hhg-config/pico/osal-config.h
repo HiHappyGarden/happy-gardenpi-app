@@ -1,7 +1,7 @@
 /***************************************************************************
  *
- * Hi Happy Garden
- * Copyright (C) 2023/2024  Antonio Salsi <passy.linux@zresa.it>
+ * OSAL
+ * Copyright (C) 2023/2024 Antonio Salsi <passy.linux@zresa.it>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,29 +17,15 @@
  *
  ***************************************************************************/
 
+#ifndef OSAL_CONFIG_H
+#define OSAL_CONFIG_H
 
-#pragma once
+#define OSAL_NAME "osal"
+#define OSAL_VER "1.1.2"
+#define OSAL_VER_MAJOR (1)
+#define OSAL_VER_MINOR (1)
+#define OSAL_VER_PATCH (2)
+#define OSAL_LOG_NEW_LINE "\r\n"
+#define OSAL_MEM_LAYER (1)
 
-#include "hhg-iface/initializable.hpp"
-
-namespace hhg::iface
-{
-inline namespace v1
-{
-
-struct relay : public initializable
-{
-    using ptr = os::unique_ptr<hhg::iface::relay>;
-
-    ~relay() OSAL_NOEXCEPT override = default;
-
-    virtual uint8_t size() const OSAL_NOEXCEPT = 0;
-
-    virtual bool operator [](uint8_t idx) const OSAL_NOEXCEPT = 0;
-
-    virtual bool set(uint8_t pin, bool value) OSAL_NOEXCEPT = 0;
-};
-
-
-}
-}
+#endif // OS_CONFIG_H

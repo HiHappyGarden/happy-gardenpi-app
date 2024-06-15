@@ -36,7 +36,7 @@ extern uint32_t const REALTIME;
 
 extern char const TIME_T_STR[];
 
-os::exit os_config_init() OS_NOEXCEPT;
+os::exit os_config_init() OSAL_NOEXCEPT;
 
 }
 }

@@ -34,7 +34,7 @@ inline namespace v1
 {
 
 
-    app_led::app_led(const rgb_led::ptr& rgb_led) OS_NOEXCEPT
+    app_led::app_led(const rgb_led::ptr& rgb_led) OSAL_NOEXCEPT
     : rgb_led(rgb_led)
     {
 
@@ -42,7 +42,7 @@ inline namespace v1
 
     app_led::~app_led() = default;
 
-    inline os::exit app_led::init(class error **error) OS_NOEXCEPT
+    inline os::exit app_led::init(class error **error) OSAL_NOEXCEPT
     {
         if(singleton)
         {
@@ -60,7 +60,7 @@ inline namespace v1
         return thread.create(error);
     }
 
-    void* app_led::handler(void *arg) OS_NOEXCEPT
+    void* app_led::handler(void *arg) OSAL_NOEXCEPT
     {
 
         int64_t timer_on = 0;
@@ -161,7 +161,7 @@ inline namespace v1
         return nullptr;
     }
 
-    void app_led::loading() const OS_NOEXCEPT
+    void app_led::loading() const OSAL_NOEXCEPT
     {
         if(curren_status != status::LOADING)
         {
@@ -169,7 +169,7 @@ inline namespace v1
         }
     }
 
-    void app_led::warning() const OS_NOEXCEPT
+    void app_led::warning() const OSAL_NOEXCEPT
     {
         if(curren_status != status::WARNING)
         {
@@ -177,7 +177,7 @@ inline namespace v1
         }
     }
 
-    void app_led::error() const OS_NOEXCEPT
+    void app_led::error() const OSAL_NOEXCEPT
     {
         if(curren_status != status::ERROR)
         {
@@ -185,7 +185,7 @@ inline namespace v1
         }
     }
 
-    void app_led::ready() const OS_NOEXCEPT
+    void app_led::ready() const OSAL_NOEXCEPT
     {
         if(curren_status != status::READY)
         {
