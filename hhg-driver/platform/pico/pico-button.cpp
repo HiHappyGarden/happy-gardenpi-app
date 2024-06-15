@@ -44,8 +44,8 @@ os::exit pico_button::init(os::error **error)
     {
         if(error)
         {
-            *error = OS_ERROR_BUILD("pico_rotary_encoder::init() fail.", error_type::OS_EFAULT);
-            OS_ERROR_PTR_SET_POSITION(*error);
+            *error = OSAL_ERROR_BUILD("pico_rotary_encoder::init() fail.", error_type::OS_EFAULT);
+            OSAL_ERROR_PTR_SET_POSITION(*error);
         }
         return exit::KO;
     }
@@ -83,7 +83,7 @@ void pico_button::on_click(uint gpio, uint32_t event_mask)
 
         if(singleton->queue.post_from_isr(reinterpret_cast<const uint8_t *>(&status), 150_ms) == osal::exit::KO)
         {
-            OS_LOG_DEBUG(APP_TAG, "Debounce detect");
+            OSAL_LOG_DEBUG(APP_TAG, "Debounce detect");
         }
     }
 }

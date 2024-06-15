@@ -67,7 +67,7 @@ namespace
             exit(EXIT_FAILURE);
         }
 
-        OS_LOG_INFO(APP_TAG, "Start FSM app_main");
+        OSAL_LOG_INFO(APP_TAG, "Start FSM app_main");
         if(app_main.fsm_start(&error) == os::exit::KO)
         {
             if(error)

@@ -50,8 +50,8 @@ os::exit pico_fs_io::write(data_type type, const uint8_t* data, size_t size, err
     {
         if(error && *error)
         {
-            *error = OS_ERROR_APPEND(*error, "pico_fs_io::write() data == null", error_type::OS_ENOENT);
-            OS_ERROR_PTR_SET_POSITION(*error);
+            *error = OSAL_ERROR_APPEND(*error, "pico_fs_io::write() data == null", error_type::OS_ENOENT);
+            OSAL_ERROR_PTR_SET_POSITION(*error);
         }
         return exit::KO;
     }
@@ -60,8 +60,8 @@ os::exit pico_fs_io::write(data_type type, const uint8_t* data, size_t size, err
     {
         if(error && *error)
         {
-            *error = OS_ERROR_APPEND(*error, "pico_fs_io::write() too much data to write", error_type::OS_ENOENT);
-            OS_ERROR_PTR_SET_POSITION(*error);
+            *error = OSAL_ERROR_APPEND(*error, "pico_fs_io::write() too much data to write", error_type::OS_ENOENT);
+            OSAL_ERROR_PTR_SET_POSITION(*error);
         }
         return exit::KO;
     }
@@ -72,8 +72,8 @@ os::exit pico_fs_io::write(data_type type, const uint8_t* data, size_t size, err
     {
         if(error && *error)
         {
-            *error = OS_ERROR_APPEND(*error, "pico_fs_io::write() no mem", error_type::OS_ENOMEM);
-            OS_ERROR_PTR_SET_POSITION(*error);
+            *error = OSAL_ERROR_APPEND(*error, "pico_fs_io::write() no mem", error_type::OS_ENOMEM);
+            OSAL_ERROR_PTR_SET_POSITION(*error);
         }
         return exit::KO;
     }
@@ -108,8 +108,8 @@ os::exit pico_fs_io::read(data_type type, uint8_t* data, size_t size, error** er
     {
         if(error && *error)
         {
-            *error = OS_ERROR_APPEND(*error, "pico_fs_io::read() data == null", error_type::OS_ENOENT);
-            OS_ERROR_PTR_SET_POSITION(*error);
+            *error = OSAL_ERROR_APPEND(*error, "pico_fs_io::read() data == null", error_type::OS_ENOENT);
+            OSAL_ERROR_PTR_SET_POSITION(*error);
         }
         return exit::KO;
     }
@@ -118,8 +118,8 @@ os::exit pico_fs_io::read(data_type type, uint8_t* data, size_t size, error** er
     {
         if(error && *error)
         {
-            *error = OS_ERROR_APPEND(*error, "pico_fs_io::read() too much data to read", error_type::OS_ENOENT);
-            OS_ERROR_PTR_SET_POSITION(*error);
+            *error = OSAL_ERROR_APPEND(*error, "pico_fs_io::read() too much data to read", error_type::OS_ENOENT);
+            OSAL_ERROR_PTR_SET_POSITION(*error);
         }
         return exit::KO;
     }

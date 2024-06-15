@@ -76,8 +76,8 @@ entry commands_rtc[] =
 		{
 	        if(error)
 	        {
-	            *error = OS_ERROR_BUILD("Convention string to time_t fail", error_type::OS_EINVAL);
-	            OS_ERROR_PTR_SET_POSITION(*error);
+	            *error = OSAL_ERROR_BUILD("Convention string to time_t fail", error_type::OS_EINVAL);
+	            OSAL_ERROR_PTR_SET_POSITION(*error);
 	        }
 			return exit::KO;
 		}
@@ -165,8 +165,8 @@ entry commands_data[] =
 		{
 			if(error)
 			{
-				*error = OS_ERROR_BUILD("Convention string to time_t fail", error_type::OS_EINVAL);
-				OS_ERROR_PTR_SET_POSITION(*error);
+				*error = OSAL_ERROR_BUILD("Convention string to time_t fail", error_type::OS_EINVAL);
+				OSAL_ERROR_PTR_SET_POSITION(*error);
 			}
 			return exit::KO;
 		}
@@ -197,8 +197,8 @@ entry commands_data[] =
 		{
 			if(error)
 			{
-				*error = OS_ERROR_BUILD("Convention string to time_t fail", error_type::OS_EINVAL);
-				OS_ERROR_PTR_SET_POSITION(*error);
+				*error = OSAL_ERROR_BUILD("Convention string to time_t fail", error_type::OS_EINVAL);
+				OSAL_ERROR_PTR_SET_POSITION(*error);
 			}
 			return exit::KO;
 		}
@@ -209,8 +209,8 @@ entry commands_data[] =
 		{
 			if(error)
 			{
-				*error = OS_ERROR_BUILD("Convention string to time_t fail", error_type::OS_EINVAL);
-				OS_ERROR_PTR_SET_POSITION(*error);
+				*error = OSAL_ERROR_BUILD("Convention string to time_t fail", error_type::OS_EINVAL);
+				OSAL_ERROR_PTR_SET_POSITION(*error);
 			}
 			return exit::KO;
 		}

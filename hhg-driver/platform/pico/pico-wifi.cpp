@@ -53,7 +53,7 @@ inline namespace v1
     {
         if (cyw43_arch_init())
         {
-            OS_LOG_FATAL(APP_TAG, "Failed to initialise");
+            OSAL_LOG_FATAL(APP_TAG, "Failed to initialise");
             return nullptr;
         }
         cyw43_arch_enable_sta_mode();
@@ -62,7 +62,7 @@ inline namespace v1
 
         if (!singleton->state.ntp_pcb)
         {
-            OS_LOG_FATAL(APP_TAG, "Failed to create pcb");
+            OSAL_LOG_FATAL(APP_TAG, "Failed to create pcb");
             return nullptr;
         }
 
@@ -97,7 +97,7 @@ inline namespace v1
                 {
                     singleton->connection_timeout = 0;
                     singleton->state.ip_addr = cyw43_state.netif[CYW43_ITF_STA].ip_addr;
-                    OS_LOG_DEBUG(APP_TAG, "Connected to ip %s", ip4addr_ntoa(&cyw43_state.netif[CYW43_ITF_STA].ip_addr));
+                    OSAL_LOG_DEBUG(APP_TAG, "Connected to ip %s", ip4addr_ntoa(&cyw43_state.netif[CYW43_ITF_STA].ip_addr));
                     if(singleton->obj && singleton->callback)
                     {
                         (singleton->obj->*singleton->callback)(singleton->connected, connected);
@@ -108,7 +108,7 @@ inline namespace v1
             else if(singleton->connected && (!connected || (wifi_link_status & CYW43_LINK_DOWN)))
             {
 
-                OS_LOG_DEBUG(APP_TAG, "Disconnected");
+                OSAL_LOG_DEBUG(APP_TAG, "Disconnected");
                 if(singleton->obj && singleton->callback)
                 {
                     (singleton->obj->*singleton->callback)(singleton->connected, connected);
@@ -130,8 +130,8 @@ inline namespace v1
         {
             if(error)
             {
-                *error = OS_ERROR_BUILD("pico_wifi::init() fail.", error_type::OS_EFAULT);
-                OS_ERROR_PTR_SET_POSITION(*error);
+                *error = OSAL_ERROR_BUILD("pico_wifi::init() fail.", error_type::OS_EFAULT);
+                OSAL_ERROR_PTR_SET_POSITION(*error);
             }
             return exit::KO;
         }
@@ -169,21 +169,21 @@ inline namespace v1
         {
             if(error)
             {
-                *error = OS_ERROR_BUILD("pico_uart::connect() cyw43_arch_init() fail.", error_type::OS_EFAULT);
-                OS_ERROR_PTR_SET_POSITION(*error);
+                *error = OSAL_ERROR_BUILD("pico_uart::connect() cyw43_arch_init() fail.", error_type::OS_EFAULT);
+                OSAL_ERROR_PTR_SET_POSITION(*error);
             }
             return exit::KO;
         }
 #elif HHG_WIFI_DISABLE == 1
         us_sleep(500_ms);
-        OS_LOG_DEBUG(APP_TAG, "Connected to ip FAKE IP");
+        OSAL_LOG_DEBUG(APP_TAG, "Connected to ip FAKE IP");
         if(singleton->obj && singleton->callback)
         {
             (singleton->obj->*singleton->callback)(false, true);
         }
 #elif HHG_WIFI_DISABLE == 2
         us_sleep(500_ms);
-        OS_LOG_DEBUG(APP_TAG, "Connected to ip FAKE IP");
+        OSAL_LOG_DEBUG(APP_TAG, "Connected to ip FAKE IP");
 
         static timer test_timer{ 1'000_ms,
         [] (timer*, void*)-> void*
@@ -225,16 +225,16 @@ inline namespace v1
         if (ipaddr)
         {
             state->ntp_server_address = *ipaddr;
-            OS_LOG_DEBUG(APP_TAG, "NTP address %s", ipaddr_ntoa(ipaddr));
+            OSAL_LOG_DEBUG(APP_TAG, "NTP address %s", ipaddr_ntoa(ipaddr));
             ntp_request(state);
         }
         else
         {
-            OS_LOG_DEBUG(APP_TAG, "NTP dns request failed");
+            OSAL_LOG_DEBUG(APP_TAG, "NTP dns request failed");
             if(state->error && *state->error)
             {
-                *state->error = OS_ERROR_APPEND(*state->error, "NTP dns request failed", error_type::OS_EADDRNOTAVAIL);
-                OS_ERROR_PTR_SET_POSITION(*state->error);
+                *state->error = OSAL_ERROR_APPEND(*state->error, "NTP dns request failed", error_type::OS_EADDRNOTAVAIL);
+                OSAL_ERROR_PTR_SET_POSITION(*state->error);
             }
         }
     }
@@ -264,11 +264,11 @@ inline namespace v1
         {
             if(state->error)
             {
-                *state->error = OS_ERROR_APPEND(*state->error, "Invalid ntp response", error_type::OS_ECONNABORTED);
-                OS_ERROR_PTR_SET_POSITION(*state->error);
+                *state->error = OSAL_ERROR_APPEND(*state->error, "Invalid ntp response", error_type::OS_ECONNABORTED);
+                OSAL_ERROR_PTR_SET_POSITION(*state->error);
             }
 
-            OS_LOG_DEBUG(APP_TAG, "NTP request - KO");
+            OSAL_LOG_DEBUG(APP_TAG, "NTP request - KO");
             if(state->on_ntp_callback)
             {
                 state->on_ntp_callback(exit::KO, 0);
@@ -292,7 +292,7 @@ inline namespace v1
         if(err && this->state.error)
         {
             *this->state.error = new osal::error("dns_gethostbyname() fail", err, get_file_name(__FILE__), "pico_wifi::ntp_start", __LINE__);
-            OS_ERROR_PTR_SET_POSITION(*this->state.error);
+            OSAL_ERROR_PTR_SET_POSITION(*this->state.error);
         }
 
         cyw43_arch_lwip_end();
@@ -300,7 +300,7 @@ inline namespace v1
         return err == 0 ? exit::OK : exit::KO;
 #else
         us_sleep(500_ms);
-        OS_LOG_DEBUG(APP_TAG, "Connected to ip FAKE IP");
+        OSAL_LOG_DEBUG(APP_TAG, "Connected to ip FAKE IP");
         if(on_ntp_callback)
         {
             on_ntp_callback(exit::OK, 1'709'068'081);

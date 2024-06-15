@@ -190,8 +190,8 @@ os::exit app_config::load(app_config::on_vesrion_change on_version_change, error
     {
         if(error)
         {
-            *error = OS_ERROR_BUILD("app_config::load() out of memory.", error_type::OS_ENOMEM);
-            OS_ERROR_PTR_SET_POSITION(*error);
+            *error = OSAL_ERROR_BUILD("app_config::load() out of memory.", error_type::OS_ENOMEM);
+            OSAL_ERROR_PTR_SET_POSITION(*error);
         }
         return exit::KO;
     }
@@ -212,8 +212,8 @@ os::exit app_config::load(app_config::on_vesrion_change on_version_change, error
 	{
 		if(error)
 		{
-			*error = OS_ERROR_BUILD("app_config::load() crc error.", error_type::OS_ERCRC);
-			OS_ERROR_PTR_SET_POSITION(*error);
+			*error = OSAL_ERROR_BUILD("app_config::load() crc error.", error_type::OS_ERCRC);
+			OSAL_ERROR_PTR_SET_POSITION(*error);
             delete local_config;
 		}
 		return exit::KO;
@@ -223,8 +223,8 @@ os::exit app_config::load(app_config::on_vesrion_change on_version_change, error
 	{
 		if(error)
 		{
-			*error = OS_ERROR_BUILD("app_config::load() magic number error.", error_type::OS_EBADF);
-			OS_ERROR_PTR_SET_POSITION(*error);
+			*error = OSAL_ERROR_BUILD("app_config::load() magic number error.", error_type::OS_EBADF);
+			OSAL_ERROR_PTR_SET_POSITION(*error);
             delete local_config;
 		}
 		return exit::KO;
@@ -290,35 +290,35 @@ os::exit app_config::clear(os::error** error) const OSAL_NOEXCEPT
         cJSON *root = cJSON_CreateObject();
         if (root == nullptr)
         {
-            OS_LOG_ERROR(APP_TAG, "Malloc fail for root");
+            OSAL_LOG_ERROR(APP_TAG, "Malloc fail for root");
             return nullptr;
         }
 
         if (cJSON_AddStringToObject(root, "serial", config.serial.c_str()) == nullptr)
         {
             cJSON_Delete(root);
-            OS_LOG_ERROR(APP_TAG, "Malloc fail for serial");
+            OSAL_LOG_ERROR(APP_TAG, "Malloc fail for serial");
             return nullptr;
         }
 
         if (cJSON_AddStringToObject(root, "descr", config.descr.c_str()) == nullptr)
         {
             cJSON_Delete(root);
-            OS_LOG_ERROR(APP_TAG, "Malloc fail for descr");
+            OSAL_LOG_ERROR(APP_TAG, "Malloc fail for descr");
             return nullptr;
         }
 
         if (cJSON_AddNumberToObject(root, "zones_size", config.zones_size) == nullptr)
         {
             cJSON_Delete(root);
-            OS_LOG_ERROR(APP_TAG, "Malloc fail for zones_size");
+            OSAL_LOG_ERROR(APP_TAG, "Malloc fail for zones_size");
             return nullptr;
         }
 
         if (cJSON_AddNumberToObject(root, "users_len", config.users_len) == nullptr)
         {
             cJSON_Delete(root);
-            OS_LOG_ERROR(APP_TAG, "Malloc fail for users_len");
+            OSAL_LOG_ERROR(APP_TAG, "Malloc fail for users_len");
             return nullptr;
         }
 
@@ -327,7 +327,7 @@ os::exit app_config::clear(os::error** error) const OSAL_NOEXCEPT
         if (users == nullptr)
         {
             cJSON_Delete(root);
-            OS_LOG_ERROR(APP_TAG, "Malloc fail for users");
+            OSAL_LOG_ERROR(APP_TAG, "Malloc fail for users");
             return nullptr;
         }
 
@@ -339,7 +339,7 @@ os::exit app_config::clear(os::error** error) const OSAL_NOEXCEPT
             {
                 cJSON_Delete(root);
                 cJSON_Delete(user);
-                OS_LOG_ERROR(APP_TAG, "Malloc fail for users[i].user");
+                OSAL_LOG_ERROR(APP_TAG, "Malloc fail for users[i].user");
                 return nullptr;
             }
 
@@ -347,7 +347,7 @@ os::exit app_config::clear(os::error** error) const OSAL_NOEXCEPT
             {
                 cJSON_Delete(root);
                 cJSON_Delete(user);
-                OS_LOG_ERROR(APP_TAG, "Malloc fail for users[i].passwd");
+                OSAL_LOG_ERROR(APP_TAG, "Malloc fail for users[i].passwd");
                 return nullptr;
             }
 
@@ -357,28 +357,28 @@ os::exit app_config::clear(os::error** error) const OSAL_NOEXCEPT
         if (cJSON_AddStringToObject(root, "wifi.ssid", config.wifi.ssid.c_str()) == nullptr)
         {
             cJSON_Delete(root);
-            OS_LOG_ERROR(APP_TAG, "Malloc fail for wifi.ssid");
+            OSAL_LOG_ERROR(APP_TAG, "Malloc fail for wifi.ssid");
             return nullptr;
         }
 
         if (cJSON_AddStringToObject(root, "wifi.passwd", config.wifi.passwd.c_str()) == nullptr)
         {
             cJSON_Delete(root);
-            OS_LOG_ERROR(APP_TAG, "Malloc fail for wifi.passwd");
+            OSAL_LOG_ERROR(APP_TAG, "Malloc fail for wifi.passwd");
             return nullptr;
         }
 
         if (cJSON_AddNumberToObject(root, "wifi.auth", config.wifi.auth) == nullptr)
         {
             cJSON_Delete(root);
-            OS_LOG_ERROR(APP_TAG, "Malloc fail for wifi.auth");
+            OSAL_LOG_ERROR(APP_TAG, "Malloc fail for wifi.auth");
             return nullptr;
         }
 
         if (cJSON_AddNumberToObject(root, "wifi.enabled", config.wifi.enabled) == nullptr)
         {
             cJSON_Delete(root);
-            OS_LOG_ERROR(APP_TAG, "Malloc fail for wifi.enabled");
+            OSAL_LOG_ERROR(APP_TAG, "Malloc fail for wifi.enabled");
             return nullptr;
         }
 
@@ -395,7 +395,7 @@ os::exit app_config::clear(os::error** error) const OSAL_NOEXCEPT
         if(ret == nullptr)
         {
             cJSON_Delete(root);
-            OS_LOG_ERROR(APP_TAG, "Malloc fail for ret");
+            OSAL_LOG_ERROR(APP_TAG, "Malloc fail for ret");
             return nullptr;
         }
 

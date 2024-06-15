@@ -76,8 +76,8 @@ os::exit stm32_fsio::init(error** error) OSAL_NOEXCEPT
 			/* Error occurred while options bytes programming. **********************/
 			if(error)
 			{
-				*error = OS_ERROR_BUILD("Error occurred while options bytes programming.", error_type::OS_EFAULT);
-				OS_ERROR_PTR_SET_POSITION(*error);
+				*error = OSAL_ERROR_BUILD("Error occurred while options bytes programming.", error_type::OS_EFAULT);
+				OSAL_ERROR_PTR_SET_POSITION(*error);
 			}
 			return exit::KO;
 		}
@@ -90,8 +90,8 @@ os::exit stm32_fsio::init(error** error) OSAL_NOEXCEPT
 			/* Error occurred while options bytes programming. **********************/
 			if(error)
 			{
-				*error = OS_ERROR_BUILD("Error occurred while options bytes programming.", error_type::OS_EFAULT);
-				OS_ERROR_PTR_SET_POSITION(*error);
+				*error = OSAL_ERROR_BUILD("Error occurred while options bytes programming.", error_type::OS_EFAULT);
+				OSAL_ERROR_PTR_SET_POSITION(*error);
 			}
 			return exit::KO;
 		}
@@ -145,8 +145,8 @@ os::exit stm32_fsio::write(data_type type, const uint8_t data[], size_t size, er
 		*/
 		if(error)
 		{
-			*error = OS_ERROR_BUILD("Error occurred while page erase.", error_type::OS_EIO);
-			OS_ERROR_PTR_SET_POSITION(*error);
+			*error = OSAL_ERROR_BUILD("Error occurred while page erase.", error_type::OS_EIO);
+			OSAL_ERROR_PTR_SET_POSITION(*error);
 		}
 		return exit::KO;
 	}
@@ -171,8 +171,8 @@ os::exit stm32_fsio::write(data_type type, const uint8_t data[], size_t size, er
 			User can add here some code to deal with this error */
 			if(error)
 			{
-				*error = OS_ERROR_BUILD("Error occurred while writing data in Flash memory.", error_type::OS_EIO);
-				OS_ERROR_PTR_SET_POSITION(*error);
+				*error = OSAL_ERROR_BUILD("Error occurred while writing data in Flash memory.", error_type::OS_EIO);
+				OSAL_ERROR_PTR_SET_POSITION(*error);
 			}
 			return exit::KO;
 		}
@@ -237,8 +237,8 @@ pair<stm32_fsio::meta_address, stm32_fsio::meta_address> stm32_fsio::get_start_a
 		{
 			if(error)
 			{
-				*error = OS_ERROR_BUILD("Data too much bigger than CONFIG area.", error_type::OS_EMSGSIZE);
-				OS_ERROR_PTR_SET_POSITION(*error);
+				*error = OSAL_ERROR_BUILD("Data too much bigger than CONFIG area.", error_type::OS_EMSGSIZE);
+				OSAL_ERROR_PTR_SET_POSITION(*error);
 			}
 			return {{}, {}};
 		}
@@ -250,8 +250,8 @@ pair<stm32_fsio::meta_address, stm32_fsio::meta_address> stm32_fsio::get_start_a
 		{
 			if(error)
 			{
-				*error = OS_ERROR_BUILD("Data too much bigger than DATA area.", error_type::OS_EMSGSIZE);
-				OS_ERROR_PTR_SET_POSITION(*error);
+				*error = OSAL_ERROR_BUILD("Data too much bigger than DATA area.", error_type::OS_EMSGSIZE);
+				OSAL_ERROR_PTR_SET_POSITION(*error);
 			}
 			return {{}, {}};
 		}

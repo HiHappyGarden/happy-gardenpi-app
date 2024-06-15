@@ -44,8 +44,8 @@ app_parser::app_parser(const hhg::iface::io::ptr& io, class error** error) OSAL_
 	{
 		if(error)
 		{
-	        *error = OS_ERROR_BUILD("Only one instance at a time", error_type::OS_EFAULT);
-	        OS_ERROR_PTR_SET_POSITION(*error);
+	        *error = OSAL_ERROR_BUILD("Only one instance at a time", error_type::OS_EFAULT);
+	        OSAL_ERROR_PTR_SET_POSITION(*error);
 		}
 		return;
 	}
@@ -72,8 +72,8 @@ os::exit app_parser::init(class error** error) OSAL_NOEXCEPT
 	{
 		if(error)
 		{
-			*error = OS_ERROR_BUILD("Thread already run", error_type::OS_EFAULT);
-	        OS_ERROR_PTR_SET_POSITION(*error);
+			*error = OSAL_ERROR_BUILD("Thread already run", error_type::OS_EFAULT);
+	        OSAL_ERROR_PTR_SET_POSITION(*error);
 		}
 		return exit::KO;
 	}
@@ -202,7 +202,7 @@ auto app_parser::auth_timer_handler(os::timer *, void *) -> void *
 {
     if(singleton && singleton->user_logged_timeout == 0)
     {
-        OS_LOG_DEBUG(APP_TAG, "Session timeout user:%s", singleton->user_logged.user.c_str());
+        OSAL_LOG_DEBUG(APP_TAG, "Session timeout user:%s", singleton->user_logged.user.c_str());
         singleton->clear_user_logged();
     }
     else if(singleton)

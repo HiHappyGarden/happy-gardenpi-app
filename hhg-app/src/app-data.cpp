@@ -77,8 +77,8 @@ os::exit app_data::load(app_data::on_vesrion_change on_version_change, os::error
 	{
 		if(error)
 		{
-			*error = OS_ERROR_BUILD("app_data::load() out of memory.", error_type::OS_ENOMEM);
-			OS_ERROR_PTR_SET_POSITION(*error);
+			*error = OSAL_ERROR_BUILD("app_data::load() out of memory.", error_type::OS_ENOMEM);
+			OSAL_ERROR_PTR_SET_POSITION(*error);
 		}
 		return exit::KO;
 	}
@@ -98,8 +98,8 @@ os::exit app_data::load(app_data::on_vesrion_change on_version_change, os::error
 	{
 		if(error)
 		{
-			*error = OS_ERROR_BUILD("app_data::load() crc error.", error_type::OS_ERCRC);
-			OS_ERROR_PTR_SET_POSITION(*error);
+			*error = OSAL_ERROR_BUILD("app_data::load() crc error.", error_type::OS_ERCRC);
+			OSAL_ERROR_PTR_SET_POSITION(*error);
             delete local_data;
 		}
 		return exit::KO;
@@ -109,8 +109,8 @@ os::exit app_data::load(app_data::on_vesrion_change on_version_change, os::error
 	{
 		if(error)
 		{
-			*error = OS_ERROR_BUILD("app_data::load() magic number error.", error_type::OS_EBADF);
-			OS_ERROR_PTR_SET_POSITION(*error);
+			*error = OSAL_ERROR_BUILD("app_data::load() magic number error.", error_type::OS_EBADF);
+			OSAL_ERROR_PTR_SET_POSITION(*error);
             delete local_data;
 		}
 		return exit::KO;
@@ -185,7 +185,7 @@ os::exit app_data::set_schedule(const char json_str[]) OSAL_NOEXCEPT
 {
     if(json_str == nullptr)
     {
-        OS_LOG_ERROR(APP_TAG, "json_str nullptr");
+        OSAL_LOG_ERROR(APP_TAG, "json_str nullptr");
         return exit::KO;
     }
 
@@ -193,7 +193,7 @@ os::exit app_data::set_schedule(const char json_str[]) OSAL_NOEXCEPT
 	if (cJSON_IsInvalid(root) || !cJSON_IsObject(root))
 	{
 		cJSON_Delete(root);
-		OS_LOG_ERROR(APP_TAG, "Unable read json root");
+		OSAL_LOG_ERROR(APP_TAG, "Unable read json root");
 		return exit::KO;
 	}
 
@@ -201,7 +201,7 @@ os::exit app_data::set_schedule(const char json_str[]) OSAL_NOEXCEPT
     if (cJSON_IsInvalid(id) || !cJSON_IsNumber(id))
     {
         cJSON_Delete(root);
-        OS_LOG_ERROR(APP_TAG, "Unable read id");
+        OSAL_LOG_ERROR(APP_TAG, "Unable read id");
         return exit::KO;
     }
 
@@ -209,7 +209,7 @@ os::exit app_data::set_schedule(const char json_str[]) OSAL_NOEXCEPT
     if (cJSON_IsInvalid(minute) || !cJSON_IsNumber(minute))
     {
         cJSON_Delete(root);
-        OS_LOG_ERROR(APP_TAG, "Unable read minute");
+        OSAL_LOG_ERROR(APP_TAG, "Unable read minute");
         return exit::KO;
     }
 
@@ -217,7 +217,7 @@ os::exit app_data::set_schedule(const char json_str[]) OSAL_NOEXCEPT
     if (cJSON_IsInvalid(hour) || !cJSON_IsNumber(hour))
     {
         cJSON_Delete(root);
-        OS_LOG_ERROR(APP_TAG, "Unable read hour");
+        OSAL_LOG_ERROR(APP_TAG, "Unable read hour");
         return exit::KO;
     }
 
@@ -225,7 +225,7 @@ os::exit app_data::set_schedule(const char json_str[]) OSAL_NOEXCEPT
     if (cJSON_IsInvalid(days) || !cJSON_IsNumber(days))
     {
         cJSON_Delete(root);
-        OS_LOG_ERROR(APP_TAG, "Unable read days");
+        OSAL_LOG_ERROR(APP_TAG, "Unable read days");
         return exit::KO;
     }
 
@@ -233,7 +233,7 @@ os::exit app_data::set_schedule(const char json_str[]) OSAL_NOEXCEPT
     if (cJSON_IsInvalid(months) || !cJSON_IsNumber(months))
     {
         cJSON_Delete(root);
-        OS_LOG_ERROR(APP_TAG, "Unable read months");
+        OSAL_LOG_ERROR(APP_TAG, "Unable read months");
         return exit::KO;
     }
 
@@ -241,7 +241,7 @@ os::exit app_data::set_schedule(const char json_str[]) OSAL_NOEXCEPT
     if (cJSON_IsInvalid(description) || !cJSON_IsString(description))
     {
         cJSON_Delete(root);
-        OS_LOG_ERROR(APP_TAG, "Unable read description");
+        OSAL_LOG_ERROR(APP_TAG, "Unable read description");
         return exit::KO;
     }
 
@@ -249,14 +249,14 @@ os::exit app_data::set_schedule(const char json_str[]) OSAL_NOEXCEPT
 	if (cJSON_IsInvalid(status) || !cJSON_IsNumber(status))
 	{
 		cJSON_Delete(root);
-		OS_LOG_ERROR(APP_TAG, "Unable read status");
+		OSAL_LOG_ERROR(APP_TAG, "Unable read status");
 		return exit::KO;
 	}
 
 	uint8_t	idx = id->valueint;
 	if(idx >= HHG_SCHEDULES_SIZE)
 	{
-		OS_LOG_ERROR(APP_TAG, "Out of max scheduling index");
+		OSAL_LOG_ERROR(APP_TAG, "Out of max scheduling index");
 		return exit::KO;
 	}
 
@@ -276,7 +276,7 @@ os::exit app_data::set_zone(const char json_str[]) OSAL_NOEXCEPT
 {
     if(json_str == nullptr)
     {
-        OS_LOG_ERROR(APP_TAG, "json_str nullptr");
+        OSAL_LOG_ERROR(APP_TAG, "json_str nullptr");
         return exit::KO;
     }
 
@@ -284,7 +284,7 @@ os::exit app_data::set_zone(const char json_str[]) OSAL_NOEXCEPT
 	if (cJSON_IsInvalid(root) || !cJSON_IsObject(root))
 	{
 		cJSON_Delete(root);
-		OS_LOG_ERROR(APP_TAG, "Unable read json root");
+		OSAL_LOG_ERROR(APP_TAG, "Unable read json root");
 		return exit::KO;
 	}
 
@@ -292,7 +292,7 @@ os::exit app_data::set_zone(const char json_str[]) OSAL_NOEXCEPT
     if (cJSON_IsInvalid(id) || !cJSON_IsNumber(id))
     {
         cJSON_Delete(root);
-        OS_LOG_ERROR(APP_TAG, "Unable read id");
+        OSAL_LOG_ERROR(APP_TAG, "Unable read id");
         return exit::KO;
     }
 
@@ -300,7 +300,7 @@ os::exit app_data::set_zone(const char json_str[]) OSAL_NOEXCEPT
     if (cJSON_IsInvalid(id) || !cJSON_IsNumber(id))
     {
         cJSON_Delete(root);
-        OS_LOG_ERROR(APP_TAG, "Unable read id");
+        OSAL_LOG_ERROR(APP_TAG, "Unable read id");
         return exit::KO;
     }
 
@@ -308,7 +308,7 @@ os::exit app_data::set_zone(const char json_str[]) OSAL_NOEXCEPT
     if (cJSON_IsInvalid(description) || !cJSON_IsString(description))
     {
         cJSON_Delete(root);
-        OS_LOG_ERROR(APP_TAG, "Unable read description");
+        OSAL_LOG_ERROR(APP_TAG, "Unable read description");
         return exit::KO;
     }
 
@@ -316,7 +316,7 @@ os::exit app_data::set_zone(const char json_str[]) OSAL_NOEXCEPT
     if (cJSON_IsInvalid(relay_number) || !cJSON_IsNumber(relay_number))
     {
         cJSON_Delete(root);
-        OS_LOG_ERROR(APP_TAG, "Unable read relay_number");
+        OSAL_LOG_ERROR(APP_TAG, "Unable read relay_number");
         return exit::KO;
     }
 
@@ -324,7 +324,7 @@ os::exit app_data::set_zone(const char json_str[]) OSAL_NOEXCEPT
 	if (cJSON_IsInvalid(watering_time) || !cJSON_IsNumber(watering_time))
 	{
 		cJSON_Delete(root);
-		OS_LOG_ERROR(APP_TAG, "Unable read relay_number");
+		OSAL_LOG_ERROR(APP_TAG, "Unable read relay_number");
 		return exit::KO;
 	}
 
@@ -332,7 +332,7 @@ os::exit app_data::set_zone(const char json_str[]) OSAL_NOEXCEPT
 	if (cJSON_IsInvalid(weight) || !cJSON_IsNumber(weight))
 	{
 		cJSON_Delete(root);
-		OS_LOG_ERROR(APP_TAG, "Unable read weight");
+		OSAL_LOG_ERROR(APP_TAG, "Unable read weight");
 		return exit::KO;
 	}
 
@@ -340,13 +340,13 @@ os::exit app_data::set_zone(const char json_str[]) OSAL_NOEXCEPT
 	if (cJSON_IsInvalid(status) || !cJSON_IsNumber(status))
 	{
 		cJSON_Delete(root);
-		OS_LOG_ERROR(APP_TAG, "Unable read status");
+		OSAL_LOG_ERROR(APP_TAG, "Unable read status");
 		return exit::KO;
 	}
 
 	if(id_schedule->valueint >= HHG_SCHEDULES_SIZE)
 	{
-		OS_LOG_ERROR(APP_TAG, "Out of max scheduling index");
+		OSAL_LOG_ERROR(APP_TAG, "Out of max scheduling index");
 		return exit::KO;
 	}
 
@@ -356,7 +356,7 @@ os::exit app_data::set_zone(const char json_str[]) OSAL_NOEXCEPT
 
 	if(idx > s.zones_len && idx >= HHG_ZONES_SIZE)
 	{
-		OS_LOG_ERROR(APP_TAG, "Out of max zoning index");
+		OSAL_LOG_ERROR(APP_TAG, "Out of max zoning index");
 		return exit::KO;
 	}
 
@@ -377,63 +377,63 @@ char *app_data::get_schedule(uint8_t id) OSAL_NOEXCEPT
 {
 	if(id >= HHG_SCHEDULES_SIZE)
 	{
-		OS_LOG_ERROR(APP_TAG, "Out of max scheduling index");
+		OSAL_LOG_ERROR(APP_TAG, "Out of max scheduling index");
 		return nullptr;
 	}
 
     cJSON *root = cJSON_CreateObject();
     if (root == nullptr)
     {
-    	OS_LOG_ERROR(APP_TAG, "Malloc fail for root");
+    	OSAL_LOG_ERROR(APP_TAG, "Malloc fail for root");
         return nullptr;
     }
 
 	if (cJSON_AddNumberToObject(root, "id", id) == nullptr)
 	{
 		cJSON_Delete(root);
-		OS_LOG_ERROR(APP_TAG, "Malloc fail for id");
+		OSAL_LOG_ERROR(APP_TAG, "Malloc fail for id");
 		return nullptr;
 	}
 
     if (cJSON_AddNumberToObject(root, "minute", data.schedules[id].minute) == nullptr)
     {
         cJSON_Delete(root);
-        OS_LOG_ERROR(APP_TAG, "Malloc fail for minute");
+        OSAL_LOG_ERROR(APP_TAG, "Malloc fail for minute");
         return nullptr;
     }
 
     if (cJSON_AddNumberToObject(root, "hour", data.schedules[id].hour) == nullptr)
     {
         cJSON_Delete(root);
-        OS_LOG_ERROR(APP_TAG, "Malloc fail for hour");
+        OSAL_LOG_ERROR(APP_TAG, "Malloc fail for hour");
         return nullptr;
     }
 
     if (cJSON_AddNumberToObject(root, "days", data.schedules[id].days.data) == nullptr)
     {
         cJSON_Delete(root);
-        OS_LOG_ERROR(APP_TAG, "Malloc fail for days");
+        OSAL_LOG_ERROR(APP_TAG, "Malloc fail for days");
         return nullptr;
     }
 
     if (cJSON_AddNumberToObject(root, "months", data.schedules[id].months.data) == nullptr)
     {
         cJSON_Delete(root);
-        OS_LOG_ERROR(APP_TAG, "Malloc fail for months");
+        OSAL_LOG_ERROR(APP_TAG, "Malloc fail for months");
         return nullptr;
     }
 
     if (cJSON_AddStringToObject(root, "description", data.schedules[id].description.c_str()) == nullptr)
     {
         cJSON_Delete(root);
-        OS_LOG_ERROR(APP_TAG, "Malloc fail for description");
+        OSAL_LOG_ERROR(APP_TAG, "Malloc fail for description");
         return nullptr;
     }
 
     if (cJSON_AddNumberToObject(root, "status", static_cast<uint8_t>(data.schedules[id].status)) == nullptr)
     {
         cJSON_Delete(root);
-        OS_LOG_ERROR(APP_TAG, "Malloc fail for status");
+        OSAL_LOG_ERROR(APP_TAG, "Malloc fail for status");
         return nullptr;
     }
 
@@ -441,7 +441,7 @@ char *app_data::get_schedule(uint8_t id) OSAL_NOEXCEPT
 	if(ret == NULL)
 	{
 		cJSON_Delete(root);
-		OS_LOG_ERROR(APP_TAG, "Malloc fail for ret");
+		OSAL_LOG_ERROR(APP_TAG, "Malloc fail for ret");
 		return nullptr;
 	}
 
@@ -454,27 +454,27 @@ char *app_data::get_zone(uint8_t id_schedule, uint8_t id) OSAL_NOEXCEPT
 {
 	if(id >= HHG_ZONES_SIZE)
 	{
-		OS_LOG_ERROR(APP_TAG, "Out of max scheduling index");
+		OSAL_LOG_ERROR(APP_TAG, "Out of max scheduling index");
 		return nullptr;
 	}
 
 	if(id >= data.schedules[id_schedule].zones_len + 1 || id >= HHG_ZONES_SIZE)
 	{
-		OS_LOG_ERROR(APP_TAG, "Out of max zoning index");
+		OSAL_LOG_ERROR(APP_TAG, "Out of max zoning index");
 		return nullptr;
 	}
 
 	cJSON *root = cJSON_CreateObject();
 	if (root == nullptr)
 	{
-		OS_LOG_ERROR(APP_TAG, "Malloc fail for root");
+		OSAL_LOG_ERROR(APP_TAG, "Malloc fail for root");
 		return nullptr;
 	}
 
 	if (cJSON_AddNumberToObject(root, "id_schedule", id_schedule) == nullptr)
 	{
 		cJSON_Delete(root);
-		OS_LOG_ERROR(APP_TAG, "Malloc fail for id_schedule");
+		OSAL_LOG_ERROR(APP_TAG, "Malloc fail for id_schedule");
 		return nullptr;
 	}
 
@@ -482,42 +482,42 @@ char *app_data::get_zone(uint8_t id_schedule, uint8_t id) OSAL_NOEXCEPT
 	if (cJSON_AddNumberToObject(root, "id", id) == nullptr)
 	{
 		cJSON_Delete(root);
-		OS_LOG_ERROR(APP_TAG, "Malloc fail for id");
+		OSAL_LOG_ERROR(APP_TAG, "Malloc fail for id");
 		return nullptr;
 	}
 
 	if (cJSON_AddStringToObject(root, "description", data.schedules[id_schedule].zones[id].description.c_str()) == nullptr)
 	{
 		cJSON_Delete(root);
-		OS_LOG_ERROR(APP_TAG, "Malloc fail for description");
+		OSAL_LOG_ERROR(APP_TAG, "Malloc fail for description");
 		return nullptr;
 	}
 
 	if (cJSON_AddNumberToObject(root, "relay_number", data.schedules[id_schedule].zones[id].relay_number) == nullptr)
 	{
 		cJSON_Delete(root);
-		OS_LOG_ERROR(APP_TAG, "Malloc fail for relay_number");
+		OSAL_LOG_ERROR(APP_TAG, "Malloc fail for relay_number");
 		return nullptr;
 	}
 
 	if (cJSON_AddNumberToObject(root, "watering_time", data.schedules[id_schedule].zones[id].watering_time) == nullptr)
 	{
 		cJSON_Delete(root);
-		OS_LOG_ERROR(APP_TAG, "Malloc fail for watering_time");
+		OSAL_LOG_ERROR(APP_TAG, "Malloc fail for watering_time");
 		return nullptr;
 	}
 
 	if (cJSON_AddNumberToObject(root, "weight", data.schedules[id_schedule].zones[id].weight) == nullptr)
 	{
 		cJSON_Delete(root);
-		OS_LOG_ERROR(APP_TAG, "Malloc fail for weight");
+		OSAL_LOG_ERROR(APP_TAG, "Malloc fail for weight");
 		return nullptr;
 	}
 
     if (cJSON_AddNumberToObject(root, "status", static_cast<uint8_t>(data.schedules[id].zones[id].weight)) == nullptr)
     {
         cJSON_Delete(root);
-        OS_LOG_ERROR(APP_TAG, "Malloc fail for status");
+        OSAL_LOG_ERROR(APP_TAG, "Malloc fail for status");
         return nullptr;
     }
 
@@ -526,7 +526,7 @@ char *app_data::get_zone(uint8_t id_schedule, uint8_t id) OSAL_NOEXCEPT
 	if(ret == nullptr)
 	{
 		cJSON_Delete(root);
-		OS_LOG_ERROR(APP_TAG, "Malloc fail for ret");
+		OSAL_LOG_ERROR(APP_TAG, "Malloc fail for ret");
 		return nullptr;
 	}
 

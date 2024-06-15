@@ -76,7 +76,7 @@ void* app_main::handler(void* arg)
 	if(arg == nullptr)
 	{
 		singleton->fsm.run = false;
-		OS_LOG_INFO(APP_TAG, "Arg nullptr");
+		OSAL_LOG_INFO(APP_TAG, "Arg nullptr");
 	}
 
 	auto error = static_cast<os::error**>(arg);
@@ -102,7 +102,7 @@ void* app_main::handler(void* arg)
                 )
                 {
                     singleton->fsm.events.set(static_cast<uint8_t>(CHECK_USERS));
-                    OS_LOG_INFO(APP_TAG, "User OK state:%s - OK", state_to_string(singleton->fsm.state));
+                    OSAL_LOG_INFO(APP_TAG, "User OK state:%s - OK", state_to_string(singleton->fsm.state));
                     singleton->fsm.state = CHECK_WIFI;
                     singleton->fsm.old_state = CHECK_USERS;
                 }
@@ -117,7 +117,7 @@ void* app_main::handler(void* arg)
                     }
                     if(generic_timer == 0)
                     {
-                        OS_LOG_WARNING(APP_TAG, "Waiting to set users");
+                        OSAL_LOG_WARNING(APP_TAG, "Waiting to set users");
                         generic_timer = ONE_SEC_IN_MILLIS;
                         singleton->app_led.warning();
                     }
@@ -150,7 +150,7 @@ void* app_main::handler(void* arg)
                         }
                     }, nullptr);
                     singleton->fsm.events.set(static_cast<uint8_t>(CHECK_WIFI));
-                    OS_LOG_INFO(APP_TAG, "Connection OK state:%s - OK", state_to_string(singleton->fsm.state));
+                    OSAL_LOG_INFO(APP_TAG, "Connection OK state:%s - OK", state_to_string(singleton->fsm.state));
                     singleton->fsm.state = CHECK_TIMESTAMP;
                     singleton->fsm.old_state = CHECK_USERS;
                 }
@@ -161,7 +161,7 @@ void* app_main::handler(void* arg)
                         && singleton->hardware.get_wifi()->connect(ssid, passwd, wifi::auth{auth}, error) == exit::OK)
                     {
                         singleton->fsm.waiting_connection = true;
-                        OS_LOG_INFO(APP_TAG, "Waiting connection");
+                        OSAL_LOG_INFO(APP_TAG, "Waiting connection");
                     }
                     else
                     {
@@ -185,7 +185,7 @@ void* app_main::handler(void* arg)
 
                     if(generic_timer == 0)
                     {
-                        OS_LOG_WARNING(APP_TAG, "Waiting to set WIFI params");
+                        OSAL_LOG_WARNING(APP_TAG, "Waiting to set WIFI params");
                         generic_timer = ONE_SEC_IN_MILLIS;
                         singleton->app_led.warning();
                     }
@@ -209,7 +209,7 @@ void* app_main::handler(void* arg)
 			        }
 
 			        singleton->fsm.errors = 0;
-					OS_LOG_INFO(APP_TAG, "Date time:%s state:%s - OK", date_time.c_str(), state_to_string(singleton->fsm.state));
+					OSAL_LOG_INFO(APP_TAG, "Date time:%s state:%s - OK", date_time.c_str(), state_to_string(singleton->fsm.state));
 					singleton->fsm.state = INIT;
 					singleton->fsm.old_state = CHECK_TIMESTAMP;
 				}
@@ -225,7 +225,7 @@ void* app_main::handler(void* arg)
 
 					if(generic_timer == 0)
 					{
-						OS_LOG_WARNING(APP_TAG, "Waiting to set timestamp");
+						OSAL_LOG_WARNING(APP_TAG, "Waiting to set timestamp");
 						generic_timer = ONE_SEC_IN_MILLIS;
                         singleton->app_led.warning();
 					}
@@ -238,7 +238,7 @@ void* app_main::handler(void* arg)
 			}
 			case INIT:
 			{
-				OS_LOG_DEBUG(APP_TAG, "HW check");
+				OSAL_LOG_DEBUG(APP_TAG, "HW check");
 				singleton->fsm.events.set(INIT);
 
                 singleton->app_led.ready();
@@ -254,7 +254,7 @@ void* app_main::handler(void* arg)
                 singleton->app_display_handler.send_buffer();
 
 				singleton->fsm.errors = 0;
-				OS_LOG_INFO(APP_TAG, "state:%s - OK", state_to_string(singleton->fsm.state));
+				OSAL_LOG_INFO(APP_TAG, "state:%s - OK", state_to_string(singleton->fsm.state));
 				singleton->fsm.state = READY;
 				singleton->fsm.old_state = INIT;
 				break;
@@ -263,7 +263,7 @@ void* app_main::handler(void* arg)
 			{
 				if(generic_timer <= 0)
 				{
-					OS_LOG_DEBUG(APP_TAG, "Check zones");
+					OSAL_LOG_DEBUG(APP_TAG, "Check zones");
 					singleton->fsm.events.set(READY);
 					singleton->fsm.old_state = READY;
 
@@ -274,7 +274,7 @@ void* app_main::handler(void* arg)
 					schedule current_schedule;
 					if(singleton->app_data.get_schedule(now_in_millis / ONE_SEC_IN_MILLIS, current_schedule))
 					{
-						OS_LOG_DEBUG(APP_TAG, "");
+						OSAL_LOG_DEBUG(APP_TAG, "");
 						current_schedule.status = status::RUN;
 						//TODO:
 						//singleton->fsm.state = INIT;
@@ -299,7 +299,7 @@ void* app_main::handler(void* arg)
 			}
             case ERROR:
             {
-                OS_LOG_FATAL(APP_TAG, "To many error occurred reset state");
+                OSAL_LOG_FATAL(APP_TAG, "To many error occurred reset state");
                 singleton->fsm.events.clear(CHECK_USERS|CHECK_WIFI|CHECK_TIMESTAMP|INIT|READY|SINCH_TIMESTAMP|ERROR);
                 singleton->fsm.state              = state::CHECK_USERS;
                 singleton->fsm.old_state 	        = state::CHECK_USERS;
@@ -316,7 +316,7 @@ void* app_main::handler(void* arg)
 	}
 
 	singleton->fsm_thread.exit();
-	OS_LOG_DEBUG(APP_TAG, "Exit thread");
+	OSAL_LOG_DEBUG(APP_TAG, "Exit thread");
 
 	return nullptr;
 }
@@ -334,8 +334,8 @@ app_main::app_main(driver::hardware& hardware, class error** error) OSAL_NOEXCEP
 	{
 		if(error)
 		{
-	        *error = OS_ERROR_BUILD("Only one instance at a time", error_type::OS_EFAULT);
-	        OS_ERROR_PTR_SET_POSITION(*error);
+	        *error = OSAL_ERROR_BUILD("Only one instance at a time", error_type::OS_EFAULT);
+	        OSAL_ERROR_PTR_SET_POSITION(*error);
 		}
 		return;
 	}
@@ -352,19 +352,19 @@ os::exit app_main::init(class os::error** error) OSAL_NOEXCEPT
 {
 	hardware.get_uart()->set_on_receive(&app_parser, &hhg::iface::io_on_receive::on_receive);
 
-    OS_LOG_INFO(APP_TAG, "Init APP LED");
+    OSAL_LOG_INFO(APP_TAG, "Init APP LED");
     if(app_led.init(error) == exit::KO)
     {
         if(error)
         {
-            *error = OS_ERROR_BUILD("app_led.init() fail.", error_type::OS_EFAULT);
-            OS_ERROR_PTR_SET_POSITION(*error);
+            *error = OSAL_ERROR_BUILD("app_led.init() fail.", error_type::OS_EFAULT);
+            OSAL_ERROR_PTR_SET_POSITION(*error);
         }
         return exit::KO;
     }
-    OS_LOG_INFO(APP_TAG, "Init APP LED - OK");
+    OSAL_LOG_INFO(APP_TAG, "Init APP LED - OK");
 
-    OS_LOG_INFO(APP_TAG, "Init APP PARSER");
+    OSAL_LOG_INFO(APP_TAG, "Init APP PARSER");
 	if(app_parser.init(error) == exit::KO)
 	{
         app_led.error();
@@ -374,15 +374,15 @@ os::exit app_main::init(class os::error** error) OSAL_NOEXCEPT
     {
         if(error && *error)
         {
-            *error = OS_ERROR_BUILD("set_app_config() fail.", error_type::OS_EFAULT);
-            OS_ERROR_PTR_SET_POSITION(*error);
+            *error = OSAL_ERROR_BUILD("set_app_config() fail.", error_type::OS_EFAULT);
+            OSAL_ERROR_PTR_SET_POSITION(*error);
         }
         app_led.error();
         return exit::KO;
     }
-	OS_LOG_INFO(APP_TAG, "Init APP PARSER - OK");
+	OSAL_LOG_INFO(APP_TAG, "Init APP PARSER - OK");
 
-	OS_LOG_INFO(APP_TAG, "Init APP CONFIG");
+	OSAL_LOG_INFO(APP_TAG, "Init APP CONFIG");
 	if(app_config.init(error) == exit::KO)
 	{
         if(error && *error)
@@ -392,32 +392,32 @@ os::exit app_main::init(class os::error** error) OSAL_NOEXCEPT
             *error = nullptr;
         }
 
-		OS_LOG_WARNING(APP_TAG, "Load default config");
+		OSAL_LOG_WARNING(APP_TAG, "Load default config");
 		if(app_config.load_default(error) == exit::KO)
 		{
 			if(error && *error)
 			{
-				*error = OS_ERROR_APPEND(*error, "Load default config fail", error_type::OS_ENOENT);
-				OS_ERROR_PTR_SET_POSITION(*error);
+				*error = OSAL_ERROR_APPEND(*error, "Load default config fail", error_type::OS_ENOENT);
+				OSAL_ERROR_PTR_SET_POSITION(*error);
 			}
             app_led.error();
 			return exit::KO;
 		}
-		OS_LOG_INFO(APP_TAG, "Load default config - OK");
+		OSAL_LOG_INFO(APP_TAG, "Load default config - OK");
 	}
 	if(set_app_config(app_config, error) == exit::KO)
 	{
         if(error && *error)
         {
-            *error = OS_ERROR_BUILD("set_app_config() fail.", error_type::OS_EFAULT);
-            OS_ERROR_PTR_SET_POSITION(*error);
+            *error = OSAL_ERROR_BUILD("set_app_config() fail.", error_type::OS_EFAULT);
+            OSAL_ERROR_PTR_SET_POSITION(*error);
         }
         app_led.error();
         return exit::KO;
 	}
-    OS_LOG_INFO(APP_TAG, "Init APP CONFIG - OK");
+    OSAL_LOG_INFO(APP_TAG, "Init APP CONFIG - OK");
 
-    OS_LOG_INFO(APP_TAG, "Check serial");
+    OSAL_LOG_INFO(APP_TAG, "Check serial");
     if(strncmp(app_config.get_serial(), "", 16) == 0)
     {
         app_config.set_serial(hardware::get_serial().c_str());
@@ -425,16 +425,16 @@ os::exit app_main::init(class os::error** error) OSAL_NOEXCEPT
         {
             if(error && *error)
             {
-                *error = OS_ERROR_BUILD("app_config.set_serial() impossible store config.", error_type::OS_EFAULT);
-                OS_ERROR_PTR_SET_POSITION(*error);
+                *error = OSAL_ERROR_BUILD("app_config.set_serial() impossible store config.", error_type::OS_EFAULT);
+                OSAL_ERROR_PTR_SET_POSITION(*error);
             }
             app_led.error();
             return exit::KO;
         }
-        OS_LOG_INFO(APP_TAG, "Update serial");
+        OSAL_LOG_INFO(APP_TAG, "Update serial");
     }
 
-	OS_LOG_INFO(APP_TAG, "Init APP DATA");
+	OSAL_LOG_INFO(APP_TAG, "Init APP DATA");
 	if(app_data.init(error) == exit::KO)
 	{
 		if(error && *error)
@@ -443,50 +443,50 @@ os::exit app_main::init(class os::error** error) OSAL_NOEXCEPT
 			delete (*error);
 			*error = nullptr;
 		}
-		OS_LOG_WARNING(APP_TAG, "Impossible load data, reset");
+		OSAL_LOG_WARNING(APP_TAG, "Impossible load data, reset");
 		app_data.reset();
 
-		OS_LOG_WARNING(APP_TAG, "Store default data");
+		OSAL_LOG_WARNING(APP_TAG, "Store default data");
 		if(app_data.store(error) == exit::KO)
 		{
 			if(error)
 			{
-				*error = OS_ERROR_BUILD("app_data.store() fail.", error_type::OS_EFAULT);
-				OS_ERROR_PTR_SET_POSITION(*error);
+				*error = OSAL_ERROR_BUILD("app_data.store() fail.", error_type::OS_EFAULT);
+				OSAL_ERROR_PTR_SET_POSITION(*error);
 			}
             app_led.error();
 			return exit::KO;
 		}
-		OS_LOG_INFO(APP_TAG, "Store default data - OK");
+		OSAL_LOG_INFO(APP_TAG, "Store default data - OK");
 	}
 	if(set_app_data(app_data, error) == exit::KO)
 	{
 		if(error)
 		{
-			*error = OS_ERROR_BUILD("set_app_data() fail.", error_type::OS_EFAULT);
-			OS_ERROR_PTR_SET_POSITION(*error);
+			*error = OSAL_ERROR_BUILD("set_app_data() fail.", error_type::OS_EFAULT);
+			OSAL_ERROR_PTR_SET_POSITION(*error);
 		}
         app_led.error();
 		return exit::KO;
 	}
-	OS_LOG_INFO(APP_TAG, "Init APP DATA - OK");
+	OSAL_LOG_INFO(APP_TAG, "Init APP DATA - OK");
 
-    OS_LOG_INFO(APP_TAG, "Init APP DISPLAY HANDLER");
+    OSAL_LOG_INFO(APP_TAG, "Init APP DISPLAY HANDLER");
     if(app_display_handler.init(error) == exit::KO)
     {
         app_led.error();
         return exit::KO;
     }
     app_display_handler.set_on_receive(&app_parser, &hhg::iface::io_on_receive::on_receive);
-    OS_LOG_INFO(APP_TAG, "Init APP DISPLAY HANDLER - OK");
+    OSAL_LOG_INFO(APP_TAG, "Init APP DISPLAY HANDLER - OK");
 
-	OS_LOG_INFO(APP_TAG, "Set timer to parser");
+	OSAL_LOG_INFO(APP_TAG, "Set timer to parser");
 	set_time(const_cast<class time*>(hardware.get_time().get()));
 
     auto config_data = app_config.get_config(false);
 
-    OS_LOG_INFO(APP_TAG, "Show configuration");
-    OS_LOG_INFO(APP_TAG, "\r\n%s", config_data);
+    OSAL_LOG_INFO(APP_TAG, "Show configuration");
+    OSAL_LOG_INFO(APP_TAG, "\r\n%s", config_data);
 
     delete config_data;
 
@@ -507,7 +507,7 @@ os::exit app_main::handle_error() OSAL_NOEXCEPT
 	if(fsm.errors < fsm::MAX_ERROR)
 	{
 		fsm.errors++;
-        OS_LOG_ERROR(APP_TAG, "It's occurred an error %u/%u on state: %s", fsm.errors, fsm::MAX_ERROR, state_to_string(fsm.state));
+        OSAL_LOG_ERROR(APP_TAG, "It's occurred an error %u/%u on state: %s", fsm.errors, fsm::MAX_ERROR, state_to_string(fsm.state));
 		return exit::OK;
 	}
 	else

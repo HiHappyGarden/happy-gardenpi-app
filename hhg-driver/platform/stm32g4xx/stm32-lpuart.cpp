@@ -43,8 +43,8 @@ os::exit stm32_lpuart::init(error** error) OSAL_NOEXCEPT
 	{
 		if(error)
 		{
-	        *error = OS_ERROR_BUILD("stm32_lpuart::init() fail.", error_type::OS_EFAULT);
-	        OS_ERROR_PTR_SET_POSITION(*error);
+	        *error = OSAL_ERROR_BUILD("stm32_lpuart::init() fail.", error_type::OS_EFAULT);
+	        OSAL_ERROR_PTR_SET_POSITION(*error);
 		}
 		return exit::KO;
 	}

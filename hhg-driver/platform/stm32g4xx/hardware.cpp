@@ -54,70 +54,70 @@ hardware::hardware(class error** error) OSAL_NOEXCEPT
 {
 	if(uart.get() == nullptr && error)
 	{
-        *error = OS_ERROR_BUILD("io(new hhg::driver::stm32_io) no mem.", error_type::OS_ENOMEM);
-        OS_ERROR_PTR_SET_POSITION(*error);
+        *error = OSAL_ERROR_BUILD("io(new hhg::driver::stm32_io) no mem.", error_type::OS_ENOMEM);
+        OSAL_ERROR_PTR_SET_POSITION(*error);
         return;
 	}
 
 	if(fsio.get() == nullptr && error)
 	{
-        *error = OS_ERROR_BUILD("io(new hhg::driver::stm32_fsio) no mem.", error_type::OS_ENOMEM);
-        OS_ERROR_PTR_SET_POSITION(*error);
+        *error = OSAL_ERROR_BUILD("io(new hhg::driver::stm32_fsio) no mem.", error_type::OS_ENOMEM);
+        OSAL_ERROR_PTR_SET_POSITION(*error);
         return;
 	}
 
 	if(time.get() == nullptr && error)
 	{
-        *error = OS_ERROR_BUILD("io(new hhg::driver::stm32_timer) no mem.", error_type::OS_ENOMEM);
-        OS_ERROR_PTR_SET_POSITION(*error);
+        *error = OSAL_ERROR_BUILD("io(new hhg::driver::stm32_timer) no mem.", error_type::OS_ENOMEM);
+        OSAL_ERROR_PTR_SET_POSITION(*error);
         return;
 	}
 }
 
 os::exit hardware::init(error** error) OSAL_NOEXCEPT
 {
-	OS_LOG_INFO(APP_TAG, "Init OS Config");
+	OSAL_LOG_INFO(APP_TAG, "Init OS Config");
 	if(os_config_init() == os::exit::KO)
 	{
 		return exit::KO;
 	}
-	OS_LOG_INFO(APP_TAG, "Init OS Config - OK");
+	OSAL_LOG_INFO(APP_TAG, "Init OS Config - OK");
 
-	OS_LOG_INFO(APP_TAG, "Init PLUART");
+	OSAL_LOG_INFO(APP_TAG, "Init PLUART");
 	if(driver_lpuart_init() == EXIT_FAILURE)
 	{
 		if(error)
 		{
-	        *error = OS_ERROR_BUILD("driver_lpuart_init() fail.", error_type::OS_EFAULT);
-	        OS_ERROR_PTR_SET_POSITION(*error);
+	        *error = OSAL_ERROR_BUILD("driver_lpuart_init() fail.", error_type::OS_EFAULT);
+	        OSAL_ERROR_PTR_SET_POSITION(*error);
 		}
 		return exit::KO;
 	}
-	OS_LOG_INFO(APP_TAG, "Init PLUART - OK");
+	OSAL_LOG_INFO(APP_TAG, "Init PLUART - OK");
 
-	OS_LOG_INFO(APP_TAG, "Init IO");
+	OSAL_LOG_INFO(APP_TAG, "Init IO");
 	if(uart->init(error) == exit::KO)
 	{
 		if(error && *error)
 		{
-	        *error = OS_ERROR_APPEND(*error, "io::init() fail.", error_type::OS_EFAULT);
-	        OS_ERROR_PTR_SET_POSITION(*error);
+	        *error = OSAL_ERROR_APPEND(*error, "io::init() fail.", error_type::OS_EFAULT);
+	        OSAL_ERROR_PTR_SET_POSITION(*error);
 		}
 		return exit::KO;
 	}
-	OS_LOG_INFO(APP_TAG, "Init IO - OK");
+	OSAL_LOG_INFO(APP_TAG, "Init IO - OK");
 
-	OS_LOG_INFO(APP_TAG, "Init FS IO");
+	OSAL_LOG_INFO(APP_TAG, "Init FS IO");
 	if(fsio->init(error) == exit::KO)
 	{
 		if(error && *error)
 		{
-	        *error = OS_ERROR_APPEND(*error, "fsio::init() fail.", error_type::OS_EFAULT);
-	        OS_ERROR_PTR_SET_POSITION(*error);
+	        *error = OSAL_ERROR_APPEND(*error, "fsio::init() fail.", error_type::OS_EFAULT);
+	        OSAL_ERROR_PTR_SET_POSITION(*error);
 		}
 		return exit::KO;
 	}
-	OS_LOG_INFO(APP_TAG, "Init FS IO - OK");
+	OSAL_LOG_INFO(APP_TAG, "Init FS IO - OK");
 
 
 	return exit::OK;
