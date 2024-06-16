@@ -35,11 +35,21 @@ inline namespace v1
 //TODO: implement REAL singleton
 class app_parser final : public hhg::iface::initializable, public hhg::iface::io_on_receive, public hhg::parser::parser::auth
 {
+public:
+    struct auth
+    {
+        using callback = void (auth::*)() const OSAL_NOEXCEPT;
+
+        virtual ~auth() = default;
+        virtual void on_logout() const OSAL_NOEXCEPT = 0;
+    };
+
+private:
 	//friend void* app_parser_thread_handler(void* arg) OSAL_NOEXCEPT;
 
 	static constexpr const uint16_t BUFFER_SIZE = 512;
 	static constexpr const uint16_t RET_SIZE = 256;
-    static constexpr const uint32_t AUTH_TIMEOUT = 60 * 1'000;
+    static constexpr const uint32_t AUTH_TIMEOUT = 5 * 60 * 1'000;
 	static constexpr const char STARTER_CHAR[] = "$";
 	static constexpr const uint8_t KO[] = "KO\r\n";
     static constexpr const uint8_t OK[] = "OK\r\n";
@@ -62,6 +72,8 @@ class app_parser final : public hhg::iface::initializable, public hhg::iface::io
 
     static auto auth_timer_handler(os::timer*, void*)-> void*;
     os::timer auth_timer{ os::ms_to_us(1'000), auth_timer_handler };
+    const auth* obj = nullptr;
+    auth::callback on_logout = nullptr;
 
     bool run = false;
 
@@ -74,12 +86,15 @@ class app_parser final : public hhg::iface::initializable, public hhg::iface::io
 
 
     app_config::user user_logged;
+    hhg::iface::io_source source_user_logged;
     uint32_t user_logged_timeout = 0;
 public:
 
+
+
 	explicit app_parser(const hhg::iface::io::ptr& io, class os::error** error = nullptr) OSAL_NOEXCEPT;
 	~app_parser() override OSAL_NOEXCEPT;
-	OS_NO_COPY_NO_MOVE(app_parser)
+	OSAL_NO_COPY_NO_MOVE(app_parser)
 
 	os::exit init(os::error** error) OSAL_NOEXCEPT override;
 
@@ -103,7 +118,18 @@ public:
         return user_logged.user;
     }
 
+    inline const hhg::iface::io_source get_source_user_logged() const OSAL_NOEXCEPT
+    {
+        return source_user_logged;
+    }
+
 	void on_receive(hhg::iface::io_source, const uint8_t data[], uint16_t size) const OSAL_NOEXCEPT override;
+
+    inline void set_on_logout(const auth* obj, auth::callback on_logout) OSAL_NOEXCEPT
+    {
+        this->obj = obj;
+        this->on_logout = on_logout;
+    }
 
 private:
     friend os::exit auth(const hhg::parser::cmd_data &data, const hhg::parser::entry *entry, os::error **error) OSAL_NOEXCEPT;

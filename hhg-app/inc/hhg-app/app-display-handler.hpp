@@ -30,7 +30,7 @@ namespace hhg::app
 inline namespace v1
 {
 
-    class app_display_handler final : public hhg::iface::rotary_encoder::event, public hhg::iface::button::event, public hhg::iface::io
+class app_display_handler final : public hhg::iface::rotary_encoder::event, public hhg::iface::button::event, public hhg::iface::io, public hhg::app::app_parser::auth
     {
         const hhg::iface::lcd::ptr& lcd;
         const hhg::iface::rotary_encoder::ptr& rotary_encoder;
@@ -42,6 +42,7 @@ inline namespace v1
 
         static auto blink_timer_handler(os::timer*, void*)-> void*;
         os::timer blink_timer{ os::ms_to_us(1'000), blink_timer_handler };
+        bool blink_show = true;
 
         static inline app_display_handler* singleton = nullptr;
     public:
@@ -61,7 +62,7 @@ inline namespace v1
 
         app_display_handler(const hhg::iface::lcd::ptr& lcd, const hhg::iface::rotary_encoder::ptr& rotary_encoder, const hhg::iface::button::ptr& button, const hhg::app::app_parser& app_parser) OSAL_NOEXCEPT;
         ~app_display_handler() override = default;
-        OS_NO_COPY_NO_MOVE(app_display_handler)
+        OSAL_NO_COPY_NO_MOVE(app_display_handler)
 
         os::exit init(os::error **error) OSAL_NOEXCEPT override;
 
@@ -74,9 +75,9 @@ inline namespace v1
             clean(true);
         }
 
-        void print_str(const char str[], uint16_t y, enum valign valign, enum font font, int16_t offset_x = 0, int16_t offset_y = 0) const OSAL_NOEXCEPT
+        void print_str(const char str[], uint16_t y, enum valign valign, enum font font, int16_t offset_x = 0) const OSAL_NOEXCEPT
         {
-            print_str(true, str, y, valign, font, offset_x, offset_y);
+            print_str(true, str, y, valign, font, offset_x);
         }
 
         void print_frame(bool wifi, const os::string<32>& now) const OSAL_NOEXCEPT;
@@ -94,10 +95,14 @@ inline namespace v1
             return os::exit::KO;
         }
 
-    private:
+        void lock() OSAL_NOEXCEPT;
+
+        void on_logout() const OSAL_NOEXCEPT override;
+
+private:
         void clean(bool internal) const OSAL_NOEXCEPT;
 
-        void print_str(bool internal, const char str[], uint16_t y, enum valign valign, enum font font, int16_t offset_x = 0, int16_t offset_y = 0) const OSAL_NOEXCEPT;
+        void print_str(bool internal, const char str[], uint16_t y, enum valign valign, enum font font, int16_t offset_x = 0) const OSAL_NOEXCEPT;
 
     };
 

@@ -23,6 +23,7 @@
 #include "hhg-app/app-parser.hpp"
 #include "hhg-app/app-config.hpp"
 #include "hhg-app/app-data.hpp"
+#include "hhg-app/app-display-handler.hpp"
 #include "hhg-iface/time.hpp"
 using hhg::iface::time;
 using hhg::iface::io_source;
@@ -49,7 +50,7 @@ static class app_data* app_data = nullptr;
 static class time* time = nullptr;
 static class app_parser* app_parser = nullptr;
 static class parser* parser = nullptr;
-
+static class app_display_handler* app_display_handler = nullptr;
 
 
 namespace
@@ -405,6 +406,11 @@ os::exit set_app_data(class app_data& app_data, error** error) OSAL_NOEXCEPT
 	return exit::OK;
 }
 
+void set_app_display_handler(class app_display_handler& app_display_handler) OSAL_NOEXCEPT
+{
+    hhg::app::app_display_handler = &app_display_handler;
+}
+
 void set_time(class time* time) OSAL_NOEXCEPT
 {
 	hhg::app::time = time;
@@ -432,6 +438,10 @@ os::exit auth(const cmd_data &data, const entry *entry, os::error **error) OSAL_
         if(status == exit::OK)
         {
             app_parser->set_user_logged(auth);
+            if(app_parser::singleton->source == io_source::UART)
+            {
+                app_display_handler->lock();
+            }
             strncpy(data.ret_buffer, "OK", data.ret_buffer_len);
             return exit::OK;
         }
@@ -442,6 +452,7 @@ os::exit auth(const cmd_data &data, const entry *entry, os::error **error) OSAL_
         if(status == exit::OK)
         {
             app_parser->set_user_logged(auth);
+            app_display_handler->lock();
             strncpy(data.ret_buffer, "OK", data.ret_buffer_len);
             return exit::OK;
         }

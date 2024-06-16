@@ -205,6 +205,10 @@ auto app_parser::auth_timer_handler(os::timer *, void *) -> void *
     {
         OSAL_LOG_DEBUG(APP_TAG, "Session timeout user:%s", singleton->user_logged.user.c_str());
         singleton->clear_user_logged();
+        if(singleton->obj && singleton->on_logout)
+        {
+            (singleton->obj->*singleton->on_logout)();
+        }
     }
     else if(singleton)
     {
