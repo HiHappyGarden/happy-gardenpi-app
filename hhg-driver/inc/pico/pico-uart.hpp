@@ -47,7 +47,7 @@ class pico_uart final : public hhg::iface::io
 
     pico_uart() OSAL_NOEXCEPT;
 	~pico_uart() OSAL_NOEXCEPT override;
-	OS_NO_COPY_NO_MOVE(pico_uart)
+	OSAL_NO_COPY_NO_MOVE(pico_uart)
 
 	os::exit init(os::error** error) OSAL_NOEXCEPT override;
 

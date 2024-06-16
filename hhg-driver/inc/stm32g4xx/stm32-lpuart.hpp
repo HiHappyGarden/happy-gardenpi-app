@@ -37,7 +37,7 @@ class stm32_lpuart final : public hhg::iface::io
 public:
 	stm32_lpuart() OSAL_NOEXCEPT;
 	~stm32_lpuart() OSAL_NOEXCEPT override;
-	OS_NO_COPY_NO_MOVE(stm32_lpuart)
+	OSAL_NO_COPY_NO_MOVE(stm32_lpuart)
 
 	os::exit init(os::error** error) OSAL_NOEXCEPT override;
 

@@ -64,7 +64,7 @@ class hardware final : public hhg::iface::initializable
 public:
 	explicit hardware(class os::error** error) OSAL_NOEXCEPT;
 	~hardware() override = default;
-	OS_NO_COPY_NO_MOVE(hardware)
+	OSAL_NO_COPY_NO_MOVE(hardware)
 
 	inline const io_ptr& get_uart() const OSAL_NOEXCEPT
 	{

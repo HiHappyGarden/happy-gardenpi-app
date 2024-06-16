@@ -57,7 +57,7 @@ public:
 
     pico_button();
     ~pico_button() override;
-    OS_NO_COPY_NO_MOVE(pico_button);
+    OSAL_NO_COPY_NO_MOVE(pico_button);
 
     inline void set_on_button_click(event *obj, event::callback callback) OSAL_NOEXCEPT override
     {

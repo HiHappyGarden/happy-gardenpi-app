@@ -48,7 +48,7 @@ class pico_i2c final : public hhg::iface::i2c
 
     explicit pico_i2c(i2c_inst_t* i2C_reference = PICO_DEFAULT_I2C_INSTANCE, uint speed = pico_i2c::SPEED) OSAL_NOEXCEPT;
 	~pico_i2c() OSAL_NOEXCEPT override;
-	OS_NO_COPY_NO_MOVE(pico_i2c)
+	OSAL_NO_COPY_NO_MOVE(pico_i2c)
 
 	os::exit init(os::error** error) OSAL_NOEXCEPT override;
 

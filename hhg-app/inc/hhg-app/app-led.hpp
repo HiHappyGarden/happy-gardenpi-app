@@ -59,7 +59,7 @@ class app_led final  : public hhg::iface::initializable
 public:
     explicit app_led(const hhg::iface::rgb_led::ptr& rgb_led) OSAL_NOEXCEPT;
     ~app_led() override;
-    OS_NO_COPY_NO_MOVE(app_led)
+    OSAL_NO_COPY_NO_MOVE(app_led)
 
     os::exit init(os::error **error) OSAL_NOEXCEPT override;
 

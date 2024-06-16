@@ -33,27 +33,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="029740bc-9460-411a-aa9c-3448b8c57430" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/antoniosalsi.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-app/src/app-config.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/src/app-config.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-app/src/app-data.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/src/app-data.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-app/src/app-main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/src/app-main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-display-handler.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-display-handler.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-parser.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/inc/hhg-app/app-parser.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hhg-app/src/app-display-handler.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/src/app-display-handler.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hhg-app/src/app-parser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-app/src/app-parser.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/hardware.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/hardware.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-button.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-button.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-rotary-encoder.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-rotary-encoder.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-sh1106.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-sh1106.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-wifi.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/pico/pico-wifi.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-driver/platform/stm32g4xx/hardware.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-driver/platform/stm32g4xx/hardware.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-parser/osal/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-parser/osal/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-parser/osal/inc/osal/log.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-parser/osal/inc/osal/log.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-parser/osal/inc/osal/memory.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-parser/osal/inc/osal/memory.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hhg-parser/osal/inc/osal/osal.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/hhg-parser/osal/inc/osal/osal.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/osal/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/osal/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/osal/inc/osal/log.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/osal/inc/osal/log.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/osal/inc/osal/memory.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/osal/inc/osal/memory.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/osal/inc/osal/osal.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/osal/inc/osal/osal.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
       <change beforePath="/usr/local/src/pico-sdk/lib/btstack" beforeDir="false" afterPath="/usr/local/src/pico-sdk/lib/btstack" afterDir="false" />
       <change beforePath="/usr/local/src/pico-sdk/lib/btstack/doc/manual/btstack_gettingstarted.tex" beforeDir="false" afterPath="/usr/local/src/pico-sdk/lib/btstack/doc/manual/btstack_gettingstarted.tex" afterDir="false" />
       <change beforePath="/usr/local/src/pico-sdk/lib/btstack/port/mtk/docs/ruggear-gettingstarted.tex" beforeDir="false" afterPath="/usr/local/src/pico-sdk/lib/btstack/port/mtk/docs/ruggear-gettingstarted.tex" afterDir="false" />
@@ -117,6 +104,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="NamedScopeManager">
+    <scope name="Hi Happy Garden" pattern="file:LICENSE_SHORT" />
+  </component>
   <component name="ProjectApplicationVersion">
     <option name="ide" value="CLion" />
     <option name="majorVersion" value="2023" />
@@ -131,29 +121,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "CMake Application.ELF2UF2Build.executor": "Debug",
-    "CMake Application.hi-happy-garden-app.executor": "Debug",
-    "OpenOCD Download & Run.Raspberry Pi Pico W.executor": "Debug",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "raspberry-pico",
-    "last_opened_file_path": "/home/antoniosalsi/projects/hi-happy-garden-app/hhg-parser/config",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "Docker",
-    "structure.view.defaults.are.configured": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;CMake Application.ELF2UF2Build.executor&quot;: &quot;Debug&quot;,
+    &quot;CMake Application.hi-happy-garden-app.executor&quot;: &quot;Debug&quot;,
+    &quot;OpenOCD Download &amp; Run.Raspberry Pi Pico W.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;raspberry-pico&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/antoniosalsi/projects/hi-happy-garden-app/hhg-parser/config&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.C/C++&quot;,
+    &quot;structure.view.defaults.are.configured&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/hhg-parser/config" />
@@ -175,11 +166,6 @@
     <option name="rtosType" value="FreeRTOS" />
   </component>
   <component name="RunManager" selected="OpenOCD Download &amp; Run.Raspberry Pi Pico W">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="ELF2UF2Build" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="hi-happy-garden" TARGET_NAME="hi-happy-garden-app" CONFIG_NAME="Debug-Cortex M" RUN_TARGET_PROJECT_NAME="hi-happy-garden" RUN_TARGET_NAME="hi-happy-garden-app">
       <envs>
         <env name="-DFREERTOS" value="ON -DPICO=ON" />
@@ -973,7 +959,9 @@
       <workItem from="1718459935187" duration="220000" />
       <workItem from="1718484577824" duration="2618000" />
       <workItem from="1718487205369" duration="119000" />
-      <workItem from="1718488098077" duration="1923000" />
+      <workItem from="1718488098077" duration="3105000" />
+      <workItem from="1718518521425" duration="3220000" />
+      <workItem from="1718568313854" duration="2000" />
     </task>
     <servers />
   </component>
@@ -994,11 +982,15 @@
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/hhg-app/src/app-main.cpp</url>
-          <line>490</line>
-          <option name="timeStamp" value="4" />
+          <url>file://$PROJECT_DIR$/hhg-app/src/app-display-handler.cpp</url>
+          <line>191</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

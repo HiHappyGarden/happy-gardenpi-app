@@ -40,7 +40,7 @@ public:
 
 	pico_fs_io() OSAL_NOEXCEPT;
 	~pico_fs_io() OSAL_NOEXCEPT override;
-    OS_NO_COPY_NO_MOVE(pico_fs_io);
+    OSAL_NO_COPY_NO_MOVE(pico_fs_io);
 
 	os::exit init(os::error** error) OSAL_NOEXCEPT override;
 

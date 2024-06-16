@@ -84,7 +84,7 @@ public:
 
 	explicit app_config(const hhg::iface::fs_io::ptr& fsio) OSAL_NOEXCEPT;
 	~app_config() override;
-	OS_NO_COPY_NO_MOVE(app_config)
+	OSAL_NO_COPY_NO_MOVE(app_config)
 
 	os::exit init(os::error** error) OSAL_NOEXCEPT override;
 
