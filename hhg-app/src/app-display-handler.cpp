@@ -67,6 +67,8 @@ inline namespace v1
         button->set_on_button_click(this, &button::event::on_button_click);
         rotary_encoder->set_on_rotary_encoder_event(this, &rotary_encoder::event::on_rotary_encoder_event);
 
+        blink_timer.create();
+
         return os::exit::OK;
     }
 
@@ -121,7 +123,7 @@ inline namespace v1
         lcd->send_buffer();
     }
 
-    void app_display_handler::print_str(bool internal, const char str[], uint16_t y, enum valign valign, enum font font, int16_t offset_x, int16_t offset_y) const OSAL_NOEXCEPT
+    void app_display_handler::print_str(bool internal, const char str[], uint16_t y, enum valign valign, enum font font, int16_t offset_x) const OSAL_NOEXCEPT
     {
         if (!internal && (app_parser.get_source() == iface::io_source::UART || app_parser.get_source() == iface::io_source::WIFI) )
         {
@@ -170,7 +172,7 @@ inline namespace v1
                 break;
         }
 
-        lcd->set_str(str, x + offset_x, y + offset_y, font_8x8, sizeof font_8x8);
+        lcd->set_str(str, x + offset_x, y, font_ref, font_ref_size);
     }
 
     void app_display_handler::clean(bool internal) const OSAL_NOEXCEPT
@@ -187,26 +189,48 @@ inline namespace v1
     auto app_display_handler::blink_timer_handler(os::timer *, void *) -> void *
     {
 
-        string<64> msg = "Device locked by: ";
-        msg += singleton->app_parser.get_user_logged();
-
-
-
-        if(singleton->app_parser.is_user_logged())
+        if(singleton->blink_show)
         {
-            switch (singleton->app_parser.get_source())
-            {
-                case iface::v1::io_source::UART:
-                    //print_str("Operation not permitter", uint16_t y, enum valign valign, enum font font, int16_t offset_x, int16_t offset_y)
-                    break;
-                case iface::v1::io_source::WIFI:
-                    break;
-                case iface::v1::io_source::DISPLAY:
-                    break;
-            }
-        }
 
+            singleton->clean(true);
+
+            string<64> msg = "Device locked by: ";
+            msg += singleton->app_parser.get_user_logged();
+
+            singleton->print_str(true, msg.c_str(), 26, valign::CENTER, font::F5X8);
+
+            if(singleton->app_parser.is_user_logged())
+            {
+                switch (singleton->app_parser.get_source())
+                {
+                    case iface::v1::io_source::UART:
+                        singleton->print_str(true, "from UART", 45, valign::CENTER, font::F5X8);
+                        break;
+                    case iface::v1::io_source::WIFI:
+                        singleton->print_str(true, "from WIFI", 45, valign::CENTER, font::F5X8);
+                        break;
+                    default: break;
+                }
+            }
+            singleton->blink_show = false;
+        }
+        else
+        {
+            singleton->clean(true);
+            singleton->blink_show = true;
+        }
+        singleton->send_buffer();
         return nullptr;
+    }
+
+    void app_display_handler::lock()
+    {
+        blink_timer.start();
+    }
+
+    inline void app_display_handler::on_logout() const
+    {
+        blink_timer.stop();
     }
 
 }
