@@ -87,7 +87,7 @@ public:
 
     pico_sh1106(i2c_inst const *i2c_reference, uint16_t address) OSAL_NOEXCEPT;
     ~pico_sh1106() OSAL_NOEXCEPT override;
-    OS_NO_COPY_NO_MOVE(pico_sh1106)
+    OSAL_NO_COPY_NO_MOVE(pico_sh1106)
 
     os::exit init(class os::error **error) OSAL_NOEXCEPT override;
 

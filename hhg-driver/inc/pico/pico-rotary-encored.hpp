@@ -54,7 +54,7 @@ public:
 
     pico_rotary_encoder() OSAL_NOEXCEPT;
     ~pico_rotary_encoder() OSAL_NOEXCEPT override;
-    OS_NO_COPY_NO_MOVE(pico_rotary_encoder)
+    OSAL_NO_COPY_NO_MOVE(pico_rotary_encoder)
 
     os::exit init(os::error** error) OSAL_NOEXCEPT override;
 

@@ -62,7 +62,7 @@ inline namespace v1
 
         pico_wifi();
         ~pico_wifi() override OSAL_NOEXCEPT;
-        OS_NO_COPY_NO_MOVE(pico_wifi)
+        OSAL_NO_COPY_NO_MOVE(pico_wifi)
 
         void set_change_connection(on_connection_event* obj, on_connection_event::callback callback) OSAL_NOEXCEPT override
         {

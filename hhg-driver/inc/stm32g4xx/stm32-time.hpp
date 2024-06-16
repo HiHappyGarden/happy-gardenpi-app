@@ -36,7 +36,7 @@ public:
 
 	stm32_time();
 	~stm32_time();
-	OS_NO_COPY_NO_MOVE(stm32_time)
+	OSAL_NO_COPY_NO_MOVE(stm32_time)
 
 	os::exit set_timestamp(time_t timestamp, os::error **error = nullptr) OSAL_NOEXCEPT override;
 

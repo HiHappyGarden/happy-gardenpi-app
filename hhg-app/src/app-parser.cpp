@@ -128,6 +128,7 @@ os::exit app_parser::on_auth(const cmd_data &data, const hhg::parser::entry *ent
 void app_parser::set_user_logged(const app_config::user& user_logged) OSAL_NOEXCEPT
 {
     this->user_logged = user_logged;
+    source_user_logged = source;
     auth_timer.start();
 }
 

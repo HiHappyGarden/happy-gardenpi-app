@@ -37,7 +37,7 @@ public:
 
 	pico_time();
 	~pico_time() override;
-	OS_NO_COPY_NO_MOVE(pico_time)
+	OSAL_NO_COPY_NO_MOVE(pico_time)
 
     os::exit init(os::error** error) OSAL_NOEXCEPT override;
 

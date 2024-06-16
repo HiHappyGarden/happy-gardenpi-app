@@ -177,7 +177,7 @@ public:
 
 	explicit app_data(const hhg::iface::fs_io::ptr& fsio) OSAL_NOEXCEPT;
 	~app_data() override;
-	OS_NO_COPY_NO_MOVE(app_data)
+	OSAL_NO_COPY_NO_MOVE(app_data)
 
 	os::exit init(os::error** error) OSAL_NOEXCEPT override;
 

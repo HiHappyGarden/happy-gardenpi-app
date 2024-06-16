@@ -38,7 +38,7 @@ public:
         return *instance;
     }
 
-    OS_NO_COPY_NO_MOVE(singleton)
+    OSAL_NO_COPY_NO_MOVE(singleton)
 
 protected:
     singleton() {}

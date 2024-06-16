@@ -83,7 +83,7 @@ private:
 
 public:
     explicit app_main(driver::hardware& hardware, os::error** error) OSAL_NOEXCEPT;
-    OS_NO_COPY_NO_MOVE(app_main)
+    OSAL_NO_COPY_NO_MOVE(app_main)
 
     ~app_main() override OSAL_NOEXCEPT;
 
