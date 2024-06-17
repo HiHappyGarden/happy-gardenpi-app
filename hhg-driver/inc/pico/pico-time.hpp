@@ -41,13 +41,13 @@ public:
 
     os::exit init(os::error** error) OSAL_NOEXCEPT override;
 
-	os::exit set_timestamp(time_t timestamp, os::error **error = nullptr) OSAL_NOEXCEPT override;
+	os::exit set_timestamp(time_t timestamp, os::error **error) OSAL_NOEXCEPT override;
 
-	::tm get_date_time(os::error **error = nullptr) const OSAL_NOEXCEPT override;
+	::tm get_date_time(bool localtime, os::error **error) const OSAL_NOEXCEPT override;
 
-	os::string<32> get_date_time(const char[] = FORMAT, os::error **error = nullptr) const OSAL_NOEXCEPT override;
+	os::string<32> get_date_time(const char[], bool localtime, os::error **error) const OSAL_NOEXCEPT override;
 
-	bool wait_for_synchro(uint64_t timeout = os::ms_to_us(1'000)) const OSAL_NOEXCEPT override;
+	bool wait_for_synchro(uint64_t timeout) const OSAL_NOEXCEPT override;
 
 
 };

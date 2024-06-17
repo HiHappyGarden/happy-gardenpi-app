@@ -60,7 +60,7 @@ os::exit pico_time::set_timestamp(time_t timestamp, os::error **error) OSAL_NOEX
 	return exit::OK;
 }
 
-::tm pico_time::get_date_time(os::error **error) const OSAL_NOEXCEPT
+::tm pico_time::get_date_time(bool localtime, os::error **error) const OSAL_NOEXCEPT
 {
     datetime_t t{0, 0, 0, 0, 0, 0, 0};
     rtc_get_datetime(&t);
@@ -76,11 +76,11 @@ os::exit pico_time::set_timestamp(time_t timestamp, os::error **error) OSAL_NOEX
 	};
 }
 
-string<32> pico_time::get_date_time(const char format[], os::error **error) const OSAL_NOEXCEPT
+string<32> pico_time::get_date_time(const char format[], bool localtime, os::error **error) const OSAL_NOEXCEPT
 {
 	string<32> ret;
 
-	auto&& now = get_date_time(error);
+	auto&& now = get_date_time(localtime, error);
 
 	strftime(ret.c_str(), ret.size(), format, &now);
 
