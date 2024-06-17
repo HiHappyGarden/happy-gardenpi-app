@@ -102,14 +102,14 @@ void* app_main::handler(void* arg)
                 )
                 {
                     singleton->fsm.events.set(static_cast<uint8_t>(CHECK_USERS));
-                    OSAL_LOG_INFO(APP_TAG, "User OK state:%s - OK", state_to_string(singleton->fsm.state));
+                    OSAL_LOG_INFO(APP_TAG, "User OK state:%s - OK", state_to_string(singleton->fsm.state).c_str());
                     singleton->fsm.state = CHECK_WIFI;
                     singleton->fsm.old_state = CHECK_USERS;
                 }
                 else
                 {
                     now_in_millis = singleton->hardware.get_time()->get_timestamp(error) * ONE_SEC_IN_MILLIS;
-                    if(*error)
+                    if(error && *error)
                     {
                         printf_stack_error(APP_TAG, *error);
                         delete *error;
@@ -150,7 +150,7 @@ void* app_main::handler(void* arg)
                         }
                     }, nullptr);
                     singleton->fsm.events.set(static_cast<uint8_t>(CHECK_WIFI));
-                    OSAL_LOG_INFO(APP_TAG, "Connection OK state:%s - OK", state_to_string(singleton->fsm.state));
+                    OSAL_LOG_INFO(APP_TAG, "Connection OK state:%s - OK", state_to_string(singleton->fsm.state).c_str());
                     singleton->fsm.state = CHECK_TIMESTAMP;
                     singleton->fsm.old_state = CHECK_USERS;
                 }
@@ -165,7 +165,7 @@ void* app_main::handler(void* arg)
                     }
                     else
                     {
-                        if(*error)
+                        if(error && *error)
                         {
                             printf_stack_error(APP_TAG, *error);
                             delete *error;
@@ -176,7 +176,7 @@ void* app_main::handler(void* arg)
                 else
                 {
                     now_in_millis = singleton->hardware.get_time()->get_timestamp(error) * ONE_SEC_IN_MILLIS;
-                    if(*error)
+                    if(error && *error)
                     {
                         printf_stack_error(APP_TAG, *error);
                         delete *error;
@@ -201,7 +201,7 @@ void* app_main::handler(void* arg)
 				if(now_in_millis > TIMESTAMP_2020 * ONE_SEC_IN_MILLIS)
 				{
 					auto&& date_time = singleton->hardware.get_time()->get_date_time(time::FORMAT, error);
-			        if(*error)
+			        if(error && *error)
 			        {
 			            printf_stack_error(APP_TAG, *error);
 			            delete *error;
@@ -209,14 +209,14 @@ void* app_main::handler(void* arg)
 			        }
 
 			        singleton->fsm.errors = 0;
-					OSAL_LOG_INFO(APP_TAG, "Date time:%s state:%s - OK", date_time.c_str(), state_to_string(singleton->fsm.state));
+					OSAL_LOG_INFO(APP_TAG, "Date time:%s state:%s - OK", date_time.c_str(), state_to_string(singleton->fsm.state).c_str());
 					singleton->fsm.state = INIT;
 					singleton->fsm.old_state = CHECK_TIMESTAMP;
 				}
 				else
 				{
 					now_in_millis = singleton->hardware.get_time()->get_timestamp(error) * ONE_SEC_IN_MILLIS;
-			        if(*error)
+			        if(error && *error)
 			        {
 			            printf_stack_error(APP_TAG, *error);
 			            delete *error;
@@ -254,7 +254,7 @@ void* app_main::handler(void* arg)
                 singleton->app_display_handler.send_buffer();
 
 				singleton->fsm.errors = 0;
-				OSAL_LOG_INFO(APP_TAG, "state:%s - OK", state_to_string(singleton->fsm.state));
+				OSAL_LOG_INFO(APP_TAG, "state:%s - OK", state_to_string(singleton->fsm.state).c_str());
 				singleton->fsm.state = READY;
 				singleton->fsm.old_state = INIT;
 				break;
@@ -508,7 +508,8 @@ os::exit app_main::handle_error() OSAL_NOEXCEPT
 	if(fsm.errors < fsm::MAX_ERROR)
 	{
 		fsm.errors++;
-        OSAL_LOG_ERROR(APP_TAG, "It's occurred an error %u/%u on state: %s", fsm.errors, fsm::MAX_ERROR, state_to_string(fsm.state));
+        OSAL_LOG_ERROR(APP_TAG, "Error %u/%u on state: %s", fsm.errors, fsm::MAX_ERROR, state_to_string(fsm.state).c_str());
+        us_sleep(500_ms);
 		return exit::OK;
 	}
 	else
@@ -533,9 +534,12 @@ void app_main::on_change_connection(bool old_connected, bool new_connected) OSAL
     }
     else if(!old_connected && !new_connected)
     {
-        handle_error();
-        singleton->fsm.events.clear(static_cast<uint8_t>(CHECK_WIFI));
-        singleton->fsm.waiting_connection = false;
+        if(singleton->app_config.get_wifi_ssid().length() && singleton->app_config.get_wifi_passwd().length() && singleton->app_config.get_wifi_auth())
+        {
+            handle_error();
+            singleton->fsm.events.clear(static_cast<uint8_t>(CHECK_WIFI));
+            singleton->fsm.waiting_connection = false;
+        }
     }
 }
 
