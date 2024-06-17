@@ -136,6 +136,10 @@ void app_parser::clear_user_logged() OSAL_NOEXCEPT
 {
     this->user_logged = {};
     auth_timer.stop();
+    if(obj && on_logout)
+    {
+        (obj->*on_logout)();
+    }
 }
 
 void* app_parser::handler(void* arg) OSAL_NOEXCEPT
