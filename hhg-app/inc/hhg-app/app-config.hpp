@@ -75,6 +75,8 @@ private:
             uint32_t auth = 0;
             bool enabled = true;
         }wifi;
+        int8_t timezone = 0;
+        bool daylight_saving_time = true;
         uint32_t crc = MAGIC;
 	} config;
 

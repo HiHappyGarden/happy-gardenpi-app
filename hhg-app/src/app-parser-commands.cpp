@@ -62,7 +62,7 @@ entry commands_rtc[] =
 {
 	{.key = "1", .custom_func = [](auto data, auto entry, auto error)
 	{
-		auto t = time->get_timestamp(error);
+		auto t = time->get_timestamp(false, error);
 		sprintf(data.ret_buffer,  TIME_T_STR, t);
 
 		return exit::OK;
@@ -93,12 +93,14 @@ entry commands_rtc[] =
 	, .description = "Set RTC", .access = ACCESS_ALL_USERS},
 	{.key = "3", .custom_func = [](auto data, auto entry, auto error)
 	{
-		auto&& date_time = time->get_date_time(time::FORMAT, error);
+		auto&& date_time = time->get_date_time(time::FORMAT, false, error);
 		strncpy(data.ret_buffer, date_time.c_str(), data.ret_buffer_len);
 
 		return exit::OK;
 	}
 	, .description = "Get RTC readable format"}
+    , {.key = "4", .description = "Set timestamp"}
+    , {.key = "5", .description = "Set daylight saving time"}
 };
 constexpr const size_t commands_rtc_size = sizeof(commands_rtc) / sizeof(commands_rtc[0]);
 
@@ -413,6 +415,14 @@ void set_app_display_handler(class app_display_handler& app_display_handler) OSA
 
 void set_time(class time* time) OSAL_NOEXCEPT
 {
+    string<KEY_MAX> key = "$RTC 4";
+
+    //TODO: $RTC 4 and $RTC 5
+//    if(parser->set(key.c_str(), new method(time, &time::set), error) == exit::KO)
+//    {
+//        return exit::KO;
+//    }
+
 	hhg::app::time = time;
 }
 
