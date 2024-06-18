@@ -158,6 +158,26 @@ public:
         return this->config.users[idx];
     }
 
+    inline void set_timezone(int8_t timezone) OSAL_NOEXCEPT
+    {
+        config.timezone = timezone;
+    }
+
+    inline int8_t get_timezone() const OSAL_NOEXCEPT
+    {
+        return config.timezone;
+    }
+
+    inline void set_daylight_saving_time(bool daylight_saving_time) OSAL_NOEXCEPT
+    {
+        config.daylight_saving_time = daylight_saving_time;
+    }
+
+    inline bool get_daylight_saving_time() const OSAL_NOEXCEPT
+    {
+        return config.daylight_saving_time;
+    }
+
     os::pair<os::exit, user> set_auth(const os::string<32>& user, const os::string<32>& passwd);
 
     os::pair<os::exit, user> set_auth_remote(const os::string<32>& user, const os::string<32>& passwd);

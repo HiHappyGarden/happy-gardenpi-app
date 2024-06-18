@@ -47,7 +47,7 @@ inline namespace v1
 
 static class app_config* app_config = nullptr;
 static class app_data* app_data = nullptr;
-static class time* time = nullptr;
+static struct time* time = nullptr;
 static class app_parser* app_parser = nullptr;
 static class parser* parser = nullptr;
 static class app_display_handler* app_display_handler = nullptr;
@@ -99,8 +99,8 @@ entry commands_rtc[] =
 		return exit::OK;
 	}
 	, .description = "Get RTC readable format"}
-    , {.key = "4", .description = "Set timestamp"}
-    , {.key = "5", .description = "Set daylight saving time"}
+    , {.key = "4", .description = "Set timestamp", .access = ACCESS_ALL_USERS}
+    , {.key = "5", .description = "Set daylight saving time", .access = ACCESS_ALL_USERS}
 };
 constexpr const size_t commands_rtc_size = sizeof(commands_rtc) / sizeof(commands_rtc[0]);
 
@@ -413,17 +413,25 @@ void set_app_display_handler(class app_display_handler& app_display_handler) OSA
     hhg::app::app_display_handler = &app_display_handler;
 }
 
-void set_time(class time* time) OSAL_NOEXCEPT
+
+os::exit set_time(struct time* time, error** error) OSAL_NOEXCEPT
 {
     string<KEY_MAX> key = "$RTC 4";
 
-    //TODO: $RTC 4 and $RTC 5
-//    if(parser->set(key.c_str(), new method(time, &time::set), error) == exit::KO)
-//    {
-//        return exit::KO;
-//    }
-
 	hhg::app::time = time;
+
+    if(parser->set(key.c_str(), new method(app_config, &app_config::set_timezone), error) == exit::KO)
+    {
+        return exit::KO;
+    }
+
+    key = "$RTC 5";
+    if(parser->set(key.c_str(), new method(app_config, &app_config::set_daylight_saving_time), error) == exit::KO)
+    {
+        return exit::KO;
+    }
+
+    return  exit::OK;
 }
 
 os::exit auth(const cmd_data &data, const entry *entry, os::error **error) OSAL_NOEXCEPT
