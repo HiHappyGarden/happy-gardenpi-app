@@ -482,7 +482,16 @@ os::exit app_main::init(class os::error** error) OSAL_NOEXCEPT
     OSAL_LOG_INFO(APP_TAG, "Init APP DISPLAY HANDLER - OK");
 
 	OSAL_LOG_INFO(APP_TAG, "Set timer to parser");
-	set_time(const_cast<class time*>(hardware.get_time().get()));
+    if(set_time(const_cast<class time*>(hardware.get_time().get()), error) == exit::KO)
+    {
+        if(error)
+        {
+            *error = OSAL_ERROR_BUILD("set_time() fail.", error_type::OS_EFAULT);
+            OSAL_ERROR_PTR_SET_POSITION(*error);
+        }
+        app_led.error();
+        return exit::KO;
+    }
 
     auto config_data = app_config.get_config(false);
 

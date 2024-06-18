@@ -26,7 +26,7 @@ namespace hhg::iface
 {
 inline namespace v1
 {
-    class time;
+    struct time;
 }
 }
 
@@ -56,7 +56,7 @@ inline namespace v1
 
     void set_app_display_handler(class app_display_handler& app_display_handler) OSAL_NOEXCEPT;
 
-    void set_time(class hhg::iface::time* time) OSAL_NOEXCEPT;
+    os::exit set_time(struct hhg::iface::time* time, os::error** error) OSAL_NOEXCEPT;
 
     os::exit auth(const cmd_data &data, const entry *entry, os::error **error) OSAL_NOEXCEPT;
 

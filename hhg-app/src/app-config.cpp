@@ -334,6 +334,12 @@ os::exit app_config::clear(os::error** error) const OSAL_NOEXCEPT
         for (uint8_t i = 0; i < config.users_len && i < user::MAX_USERS; ++i)
         {
             auto user = cJSON_CreateObject();
+            if(user == nullptr)
+            {
+                cJSON_Delete(root);
+                OSAL_LOG_ERROR(APP_TAG, "Malloc fail for user");
+                return nullptr;
+            }
 
             if (cJSON_AddStringToObject(user, "user", config.users[i].user.c_str()) == nullptr)
             {
@@ -354,31 +360,58 @@ os::exit app_config::clear(os::error** error) const OSAL_NOEXCEPT
             cJSON_AddItemToArray(users, user);
         }
 
-        if (cJSON_AddStringToObject(root, "wifi.ssid", config.wifi.ssid.c_str()) == nullptr)
+        auto wifi = cJSON_CreateObject();
+        if(wifi == nullptr)
         {
             cJSON_Delete(root);
+            OSAL_LOG_ERROR(APP_TAG, "Malloc fail for user");
+            return nullptr;
+        }
+
+        if (cJSON_AddStringToObject(wifi, "ssid", config.wifi.ssid.c_str()) == nullptr)
+        {
+            cJSON_Delete(root);
+            cJSON_Delete(wifi);
             OSAL_LOG_ERROR(APP_TAG, "Malloc fail for wifi.ssid");
             return nullptr;
         }
 
-        if (cJSON_AddStringToObject(root, "wifi.passwd", config.wifi.passwd.c_str()) == nullptr)
+        if (cJSON_AddStringToObject(wifi, "passwd", config.wifi.passwd.c_str()) == nullptr)
         {
             cJSON_Delete(root);
+            cJSON_Delete(wifi);
             OSAL_LOG_ERROR(APP_TAG, "Malloc fail for wifi.passwd");
             return nullptr;
         }
 
-        if (cJSON_AddNumberToObject(root, "wifi.auth", config.wifi.auth) == nullptr)
+        if (cJSON_AddNumberToObject(wifi, "auth", config.wifi.auth) == nullptr)
         {
             cJSON_Delete(root);
+            cJSON_Delete(wifi);
             OSAL_LOG_ERROR(APP_TAG, "Malloc fail for wifi.auth");
             return nullptr;
         }
 
-        if (cJSON_AddNumberToObject(root, "wifi.enabled", config.wifi.enabled) == nullptr)
+        if (cJSON_AddNumberToObject(wifi, "enabled", config.wifi.enabled) == nullptr)
         {
             cJSON_Delete(root);
+            cJSON_Delete(wifi);
             OSAL_LOG_ERROR(APP_TAG, "Malloc fail for wifi.enabled");
+            return nullptr;
+        }
+        cJSON_AddItemToObject(root, "wifi", wifi);
+
+        if (cJSON_AddNumberToObject(root, "timezone", config.timezone) == nullptr)
+        {
+            cJSON_Delete(root);
+            OSAL_LOG_ERROR(APP_TAG, "Malloc fail for timezone");
+            return nullptr;
+        }
+
+        if (cJSON_AddNumberToObject(root, "daylight_saving_time", config.daylight_saving_time) == nullptr)
+        {
+            cJSON_Delete(root);
+            OSAL_LOG_ERROR(APP_TAG, "Malloc fail for daylight_saving_time");
             return nullptr;
         }
 
