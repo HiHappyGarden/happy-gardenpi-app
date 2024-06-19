@@ -62,7 +62,7 @@ entry commands_rtc[] =
 {
 	{.key = "1", .custom_func = [](auto data, auto entry, auto error)
 	{
-		auto t = time->get_timestamp(false, error);
+		auto t = time->get_timestamp(0, false, error);
 		sprintf(data.ret_buffer,  TIME_T_STR, t);
 
 		return exit::OK;
@@ -93,14 +93,56 @@ entry commands_rtc[] =
 	, .description = "Set RTC", .access = ACCESS_ALL_USERS},
 	{.key = "3", .custom_func = [](auto data, auto entry, auto error)
 	{
-		auto&& date_time = time->get_date_time(time::FORMAT, false, error);
+		auto&& date_time = time->get_date_time(time::FORMAT, 0, false, error);
 		strncpy(data.ret_buffer, date_time.c_str(), data.ret_buffer_len);
 
 		return exit::OK;
 	}
 	, .description = "Get RTC readable format"}
-    , {.key = "4", .description = "Set timestamp", .access = ACCESS_ALL_USERS}
-    , {.key = "5", .description = "Set daylight saving time", .access = ACCESS_ALL_USERS}
+//    , {.key = "4"
+//    , .custom_func = [](auto data, auto entry, auto error)
+//    {
+//
+//        char* ptr = nullptr;
+//        int16_t timezone = strtol(data.tokens[2].start, &ptr, 10);
+//        if (ptr == data.tokens[2].start || *ptr != '\0' || errno == ERANGE)
+//        {
+//            if(error)
+//            {
+//                *error = OSAL_ERROR_BUILD("Convention string to timezome in minutes fail", error_type::OS_EINVAL);
+//                OSAL_ERROR_PTR_SET_POSITION(*error);
+//            }
+//            return exit::KO;
+//        }
+//
+//        app_config->set_timezone(timezone);
+//
+//        return exit::OK;
+//    }
+//    , .description = "Set timezone"
+//    , .access = ACCESS_ALL_USERS}
+//    , {.key = "5"
+//       , .custom_func = [](auto data, auto entry, auto error)
+//        {
+//
+//            char* ptr = nullptr;
+//            bool daylight_saving_time = strtol(data.tokens[2].start, &ptr, 10);
+//            if (ptr == data.tokens[2].start || *ptr != '\0' || errno == ERANGE)
+//            {
+//                if(error)
+//                {
+//                    *error = OSAL_ERROR_BUILD("Convention string to timezome in minutes fail", error_type::OS_EINVAL);
+//                    OSAL_ERROR_PTR_SET_POSITION(*error);
+//                }
+//                return exit::KO;
+//            }
+//
+//            app_config->set_daylight_saving_time(daylight_saving_time);
+//
+//            return exit::OK;
+//        }
+//        , .description = "Set daylight saving time"
+//        , .access = ACCESS_ALL_USERS}
 };
 constexpr const size_t commands_rtc_size = sizeof(commands_rtc) / sizeof(commands_rtc[0]);
 
@@ -138,6 +180,8 @@ entry commands_config[] =
         return exit::OK;
     }
     ,.description = "Set/update user", .access = HHG_USER},
+    {.key = "12", .description = "Set timezone", .access = ACCESS_ALL_USERS},
+    {.key = "13", .description = "Set daylight saving time", .access = ACCESS_ALL_USERS},
     {.key = "CLEAR", .description = "Clear all", .access = ACCESS_ALL_USERS},
 	{.key = "STORE", .custom_func = [](auto data, auto entry, auto error)
 	{
@@ -207,8 +251,8 @@ entry commands_data[] =
 		}
 
 		ptr = nullptr;
-		uint8_t id = strtol(data.tokens[2].start, &ptr, 10);
-		if (ptr == data.tokens[2].start || *ptr != '\0' || ((id == 0 || id == UINT8_MAX) && errno == ERANGE))
+		uint8_t id = strtol(data.tokens[3].start, &ptr, 10);
+		if (ptr == data.tokens[3].start || *ptr != '\0' || ((id == 0 || id == UINT8_MAX) && errno == ERANGE))
 		{
 			if(error)
 			{
@@ -360,6 +404,18 @@ os::exit set_app_config(class app_config& app_config, error** error) OSAL_NOEXCE
         return exit::KO;
     }
 
+    key = "$CONF 12";
+    if(parser->set(key.c_str(), new method(&app_config, &app_config::set_timezone), error) == exit::KO)
+    {
+        return exit::KO;
+    }
+
+    key = "$CONF 13";
+    if(parser->set(key.c_str(), new method(&app_config, &app_config::set_daylight_saving_time), error) == exit::KO)
+    {
+        return exit::KO;
+    }
+
     key = "$CONF CLEAR";
     if(parser->set(key.c_str(), new method(&app_config, &app_config::clear), error) == exit::KO)
     {
@@ -416,20 +472,7 @@ void set_app_display_handler(class app_display_handler& app_display_handler) OSA
 
 os::exit set_time(struct time* time, error** error) OSAL_NOEXCEPT
 {
-    string<KEY_MAX> key = "$RTC 4";
-
 	hhg::app::time = time;
-
-    if(parser->set(key.c_str(), new method(app_config, &app_config::set_timezone), error) == exit::KO)
-    {
-        return exit::KO;
-    }
-
-    key = "$RTC 5";
-    if(parser->set(key.c_str(), new method(app_config, &app_config::set_daylight_saving_time), error) == exit::KO)
-    {
-        return exit::KO;
-    }
 
     return  exit::OK;
 }

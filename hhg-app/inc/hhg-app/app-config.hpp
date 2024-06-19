@@ -75,7 +75,7 @@ private:
             uint32_t auth = 0;
             bool enabled = true;
         }wifi;
-        int8_t timezone = 0;
+        int16_t timezone = 0; //<! in minutes
         bool daylight_saving_time = true;
         uint32_t crc = MAGIC;
 	} config;
@@ -158,12 +158,12 @@ public:
         return this->config.users[idx];
     }
 
-    inline void set_timezone(int8_t timezone) OSAL_NOEXCEPT
+    inline void set_timezone(int16_t timezone_in_minutes) OSAL_NOEXCEPT
     {
-        config.timezone = timezone;
+        config.timezone = timezone_in_minutes;
     }
 
-    inline int8_t get_timezone() const OSAL_NOEXCEPT
+    inline int16_t get_timezone() const OSAL_NOEXCEPT
     {
         return config.timezone;
     }

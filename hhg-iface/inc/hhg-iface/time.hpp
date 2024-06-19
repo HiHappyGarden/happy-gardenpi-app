@@ -40,19 +40,19 @@ struct time
 	using ptr = os::unique_ptr<hhg::iface::time>;
 
 	virtual ~time() = default;
-
+    //TODO: aggiungere ai metodi corretti la gestione dell'ora legale
 	virtual os::exit set_timestamp(time_t timestamp, os::error **error) OSAL_NOEXCEPT = 0;
 
-	virtual ::tm get_date_time(bool localtime, os::error **error) const OSAL_NOEXCEPT = 0;
+	virtual ::tm get_date_time(int16_t timezone, bool daylight_saving_time, os::error **error) const OSAL_NOEXCEPT = 0;
 
-	virtual inline time_t get_timestamp(bool localtime, os::error **error) const OSAL_NOEXCEPT
+	virtual inline time_t get_timestamp(int16_t timezone, bool daylight_saving_time, os::error **error) const OSAL_NOEXCEPT
 	{
-		tm&& ret = get_date_time(localtime, error);
+		tm&& ret = get_date_time(timezone, daylight_saving_time, error);
 		return mktime(&ret);
 	}
 
 
-	virtual os::string<32> get_date_time(const char format[], bool localtime, os::error **error) const OSAL_NOEXCEPT = 0;
+	virtual os::string<32> get_date_time(const char format[], int16_t timezone, bool daylight_saving_time, os::error **error) const OSAL_NOEXCEPT = 0;
 
 	virtual bool wait_for_synchro(uint64_t timeout) const OSAL_NOEXCEPT { return true; };
 

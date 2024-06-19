@@ -43,12 +43,15 @@ public:
 
 	os::exit set_timestamp(time_t timestamp, os::error **error) OSAL_NOEXCEPT override;
 
-	::tm get_date_time(bool localtime, os::error **error) const OSAL_NOEXCEPT override;
+	::tm get_date_time(int16_t timezone, bool daylight_saving_time, os::error **error) const OSAL_NOEXCEPT override;
 
-	os::string<32> get_date_time(const char[], bool localtime, os::error **error) const OSAL_NOEXCEPT override;
+	os::string<32> get_date_time(const char[], int16_t timezone, bool daylight_saving_time, os::error **error) const OSAL_NOEXCEPT override;
 
 	bool wait_for_synchro(uint64_t timeout) const OSAL_NOEXCEPT override;
 
+private:
+    static uint8_t is_dst(tm *timeinfo);
+    constexpr static int32_t get_timezone_in_sec(int16_t imezone_in_minute);
 
 };
 
