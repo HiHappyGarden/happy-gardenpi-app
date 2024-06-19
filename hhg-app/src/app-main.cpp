@@ -80,7 +80,7 @@ void* app_main::handler(void* arg)
 	}
 
 	auto error = static_cast<os::error**>(arg);
-	time_t&& now_in_millis = singleton->hardware.get_time()->get_timestamp(false, error) * ONE_SEC_IN_MILLIS;
+	time_t&& now_in_millis = singleton->hardware.get_time()->get_timestamp(0, false, error) * ONE_SEC_IN_MILLIS;
 
 	int32_t generic_timer = 0;
 
@@ -108,7 +108,7 @@ void* app_main::handler(void* arg)
                 }
                 else
                 {
-                    now_in_millis = singleton->hardware.get_time()->get_timestamp(false, error) * ONE_SEC_IN_MILLIS;
+                    now_in_millis = singleton->hardware.get_time()->get_timestamp(0, false, error) * ONE_SEC_IN_MILLIS;
                     if(error && *error)
                     {
                         printf_stack_error(APP_TAG, *error);
@@ -175,7 +175,7 @@ void* app_main::handler(void* arg)
                 }
                 else
                 {
-                    now_in_millis = singleton->hardware.get_time()->get_timestamp(false, error) * ONE_SEC_IN_MILLIS;
+                    now_in_millis = singleton->hardware.get_time()->get_timestamp(0, false, error) * ONE_SEC_IN_MILLIS;
                     if(error && *error)
                     {
                         printf_stack_error(APP_TAG, *error);
@@ -200,7 +200,7 @@ void* app_main::handler(void* arg)
 			{
 				if(now_in_millis > TIMESTAMP_2020 * ONE_SEC_IN_MILLIS)
 				{
-					auto&& date_time = singleton->hardware.get_time()->get_date_time(time::FORMAT, true, error);
+					auto&& date_time = singleton->hardware.get_time()->get_date_time(time::FORMAT, singleton->app_config.get_timezone(), singleton->app_config.get_daylight_saving_time(), error);
 			        if(error && *error)
 			        {
 			            printf_stack_error(APP_TAG, *error);
@@ -215,7 +215,7 @@ void* app_main::handler(void* arg)
 				}
 				else
 				{
-					now_in_millis = singleton->hardware.get_time()->get_timestamp(false, error) * ONE_SEC_IN_MILLIS;
+					now_in_millis = singleton->hardware.get_time()->get_timestamp(0, false, error) * ONE_SEC_IN_MILLIS;
 			        if(error && *error)
 			        {
 			            printf_stack_error(APP_TAG, *error);
@@ -247,7 +247,7 @@ void* app_main::handler(void* arg)
 				generic_timer = 0;
 
                 auto status = singleton->fsm.events.get();
-                const os::string<32>&& time = singleton->hardware.get_time()->get_date_time("%H:%M", true, nullptr);
+                const os::string<32>&& time = singleton->hardware.get_time()->get_date_time("%H:%M", singleton->app_config.get_timezone(), singleton->app_config.get_daylight_saving_time(),nullptr);
                 singleton->app_display_handler.print_frame(status & CHECK_WIFI, time);
                 singleton->app_display_handler.clean();
                 singleton->app_display_handler.print_str("Ready", 30, app_display_handler::valign::CENTER, app_display_handler::font::F8X8);
