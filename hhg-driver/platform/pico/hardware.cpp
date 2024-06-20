@@ -19,7 +19,9 @@
 
 #include "hhg-driver/hardware.hpp"
 #include "hhg-driver/os-config.hpp"
+#ifdef INCLUDE_HHG_CONFIG
 #include "hhg-config.h"
+#endif
 #include "pico/pico-uart.hpp"
 #include "pico/pico-time.hpp"
 #include "pico/pico-fs-io.hpp"

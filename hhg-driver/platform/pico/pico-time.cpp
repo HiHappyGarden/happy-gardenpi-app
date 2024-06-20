@@ -75,9 +75,9 @@ os::exit pico_time::set_timestamp(time_t timestamp, os::error **error) OSAL_NOEX
 		.tm_wday = t.dotw
 	};
 
-    if(is_dst(&tm))
+    if(daylight_saving_time && is_dst(&tm))
     {
-        tm.tm_hour++;
+        add_hour(&tm, 1);
     }
 
     if(timezone)
@@ -148,7 +148,20 @@ void pico_time::add_minute(tm* tm, time_t minute) OSAL_NOEXCEPT
 
     timestamp += minute * 60;
 
-    tm = gmtime(&timestamp);
+    auto rc = gmtime(&timestamp);
+
+    *tm = *rc;
+}
+
+void pico_time::add_hour(tm *tm, int8_t hours)
+{
+    time_t timestamp = mktime(tm);
+
+    timestamp += hours * 60 * 60;
+
+    auto rc = gmtime(&timestamp);
+
+    *tm = *rc;
 }
 
 

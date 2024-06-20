@@ -20,8 +20,9 @@
 #include "pico/pico-wifi.hpp"
 using namespace os;
 
+#ifdef INCLUDE_HHG_CONFIG
 #include "hhg-config.h"
-
+#endif
 
 #include <lwip/dns.h>
 #include <lwip/pbuf.h>
