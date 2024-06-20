@@ -84,9 +84,7 @@ void* app_main::handler(void* arg)
 
 	int32_t generic_timer = 0;
 
-    singleton->app_display_handler.print_frame(false, {});
-    singleton->app_display_handler.print_str("Loading...", 30, app_display_handler::valign::CENTER, app_display_handler::font::F8X8);
-    singleton->app_display_handler.send_buffer();
+    print("Loading...", true);
 
 	while(singleton->fsm.run)
 	{
@@ -246,12 +244,7 @@ void* app_main::handler(void* arg)
 				//TODO: hw check
 				generic_timer = 0;
 
-                auto status = singleton->fsm.events.get();
-                const os::string<32>&& time = singleton->hardware.get_time()->get_date_time("%H:%M", singleton->app_config.get_timezone(), singleton->app_config.get_daylight_saving_time(),nullptr);
-                singleton->app_display_handler.print_frame(status & CHECK_WIFI, time);
-                singleton->app_display_handler.clean();
-                singleton->app_display_handler.print_str("Ready", 30, app_display_handler::valign::CENTER, app_display_handler::font::F8X8);
-                singleton->app_display_handler.send_buffer();
+                print("Init");
 
 				singleton->fsm.errors = 0;
 				OSAL_LOG_INFO(APP_TAG, "state:%s - OK", state_to_string(singleton->fsm.state).c_str());
@@ -267,9 +260,7 @@ void* app_main::handler(void* arg)
 					singleton->fsm.events.set(READY);
 					singleton->fsm.old_state = READY;
 
-//                    auto status = singleton->fsm.events.get();
-//                    const os::string<32>&& time = singleton->hardware.get_time()->get_date_time("%H:%M");
-//                    singleton->app_display_handler.print_frame(status & CHECK_WIFI, time);
+                    print("Ready");
 
 					schedule current_schedule;
 					if(singleton->app_data.get_schedule(now_in_millis / ONE_SEC_IN_MILLIS, current_schedule))
@@ -552,6 +543,23 @@ void app_main::on_change_connection(bool old_connected, bool new_connected) OSAL
     }
 }
 
+    void app_main::print(const string<32> &&str, bool init)
+    {
+        if(init)
+        {
+            singleton->app_display_handler.print_frame(false, "");
+        }
+        else
+        {
+            auto status = singleton->fsm.events.get();
+            const os::string<32>&& time = singleton->hardware.get_time()->get_date_time(time::FORMAT, singleton->app_config.get_timezone(), singleton->app_config.get_daylight_saving_time(),nullptr);
+            singleton->app_display_handler.print_frame(status & CHECK_WIFI, time);
+        }
+        singleton->app_display_handler.clean();
+        singleton->app_display_handler.print_str(str.c_str(), 30, app_display_handler::valign::CENTER, app_display_handler::font::F8X8);
+        singleton->app_display_handler.send_buffer();
+
+    }
 
 
 }
