@@ -50,8 +50,8 @@ public:
 	bool wait_for_synchro(uint64_t timeout) const OSAL_NOEXCEPT override;
 
 private:
-    static uint8_t is_dst(tm *timeinfo);
-    constexpr static int32_t get_timezone_in_sec(int16_t imezone_in_minute);
+    static bool is_dst(tm *time) OSAL_NOEXCEPT;
+    static void add_minute(tm* tm, time_t minute) OSAL_NOEXCEPT;
 
 };
 
