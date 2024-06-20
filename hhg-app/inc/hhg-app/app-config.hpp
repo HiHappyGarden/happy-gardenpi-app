@@ -76,7 +76,7 @@ private:
             bool enabled = true;
         }wifi;
         int16_t timezone = 0; //<! in minutes
-        bool daylight_saving_time = true;
+        bool daylight_saving_time = HHG_DAYLIGHT_SAVING_TIME;
         uint32_t crc = MAGIC;
 	} config;
 
