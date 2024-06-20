@@ -97,6 +97,7 @@ private:
 
     void on_change_connection(bool old_connected, bool new_connected) OSAL_NOEXCEPT override;
 
+    static void print(const os::string<32>&& str, bool init = false);
 };
 
 }

@@ -35,12 +35,12 @@ inline namespace v1
 
 struct time
 {
-	static constexpr char FORMAT[] = "%Y/%m/%d %H:%M:%S";
+	static constexpr char FORMAT[] = "%Y/%m/%d  %H:%M";
 
 	using ptr = os::unique_ptr<hhg::iface::time>;
 
 	virtual ~time() = default;
-    //TODO: aggiungere ai metodi corretti la gestione dell'ora legale
+
 	virtual os::exit set_timestamp(time_t timestamp, os::error **error) OSAL_NOEXCEPT = 0;
 
 	virtual ::tm get_date_time(int16_t timezone, bool daylight_saving_time, os::error **error) const OSAL_NOEXCEPT = 0;
