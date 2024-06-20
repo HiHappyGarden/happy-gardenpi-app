@@ -19,9 +19,9 @@
 
 
 #include "pico/pico-time.hpp"
+#include "hhg-config.h"
 using namespace os;
 
-#include <pico/stdlib.h>
 #include <pico/util/datetime.h>
 #include <hardware/rtc.h>
 
@@ -82,18 +82,7 @@ os::exit pico_time::set_timestamp(time_t timestamp, os::error **error) OSAL_NOEX
 
     if(timezone)
     {
-        tm.tm_min += timezone;
-        if(tm.tm_min % 60)
-        {
-            tm.tm_min = tm.tm_min % 60;
-            tm.tm_hour +=  tm.tm_min / 60;
-        }
-        if(tm.tm_hour % 24)
-        {
-            tm.tm_hour = tm.tm_hour % 24;
-            tm.tm_hour +=  tm.tm_min / 60;
-        }
-        //TODO: da finire
+        add_minute(&tm, timezone);
     }
 
     return tm;
@@ -104,11 +93,6 @@ string<32> pico_time::get_date_time(const char format[], int16_t timezone, bool 
 	string<32> ret;
 
 	auto&& now = get_date_time(timezone, daylight_saving_time, error);
-
-    if(is_dst(&now))
-    {
-        now.tm_hour++;
-    }
 
 	strftime(ret.c_str(), ret.size(), format, &now);
 
@@ -122,15 +106,15 @@ bool pico_time::wait_for_synchro(uint64_t timeout) const OSAL_NOEXCEPT
 	return true;
 }
 
-bool pico_time::is_dst(tm *timeinfo)
+bool pico_time::is_dst(tm *time) OSAL_NOEXCEPT
 {
     tm start{}, end{};
 
     // Ultima domenica di marzo
-    start = *timeinfo;
-    start.tm_mon = 2; // Marzo
-    start.tm_mday = 31;
-    start.tm_hour = 2; // L'ora legale inizia alle 2:00 AM
+    start = *time;
+    start.tm_mon = HHG_DAYLIGHT_SAVING_TIME_START_MONTH; // Marzo
+    start.tm_mday = HHG_DAYLIGHT_SAVING_TIME_START_DAY;
+    start.tm_hour = HHG_DAYLIGHT_SAVING_TIME_START_HOUR; // L'ora legale inizia alle 2:00 AM
     mktime(&start);
     while (start.tm_wday != 0)
     { // Finché non è domenica
@@ -139,10 +123,10 @@ bool pico_time::is_dst(tm *timeinfo)
     }
 
     // Ultima domenica di ottobre
-    end = *timeinfo;
-    end.tm_mon = 9; // Ottobre
-    end.tm_mday = 31;
-    end.tm_hour = 3; // L'ora legale termina alle 3:00 AM
+    end = *time;
+    end.tm_mon = HHG_DAYLIGHT_SAVING_TIME_END_MONTH; // Ottobre
+    end.tm_mday = HHG_DAYLIGHT_SAVING_TIME_END_DAY;
+    end.tm_hour = HHG_DAYLIGHT_SAVING_TIME_END_HOUR; // L'ora legale termina alle 3:00 AM
     mktime(&end);
     while (end.tm_wday != 0)
     { // Finché non è domenica
@@ -150,18 +134,22 @@ bool pico_time::is_dst(tm *timeinfo)
         mktime(&end);
     }
 
-    if (difftime(mktime(timeinfo), mktime(&start)) >= 0 &&
-        difftime(mktime(&end), mktime(timeinfo)) > 0) {
+    if (difftime(mktime(time), mktime(&start)) >= 0 &&
+        difftime(mktime(&end), mktime(time)) > 0) {
         return true; // È ora legale
     } else {
         return false; // Non è ora legale
     }
 }
 
-    inline constexpr int32_t pico_time::get_timezone_in_sec(int16_t imezone_in_minute)
-    {
-        return imezone_in_minute * 60;
-    }
+void pico_time::add_minute(tm* tm, time_t minute) OSAL_NOEXCEPT
+{
+    time_t timestamp = mktime(tm);
+
+    timestamp += minute * 60;
+
+    tm = gmtime(&timestamp);
+}
 
 
 } /* namespace driver */
