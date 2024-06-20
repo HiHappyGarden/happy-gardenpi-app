@@ -25,7 +25,9 @@ using hhg::iface::data_type;
 #include "hhg-utils/hhg-utils.hpp"
 using hhg::utils::crc32;
 
+#ifdef INCLUDE_HHG_CONFIG
 #include "hhg-config.h"
+#endif
 #include "cJSON.h"
 #include "md5.h"
 

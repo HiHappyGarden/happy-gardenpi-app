@@ -33,8 +33,6 @@ inline namespace v1
 class pico_time final : public hhg::iface::time_init
 {
 public:
-	static constexpr time_t TIMESTAMP_2000 = 946688400;
-
 	pico_time();
 	~pico_time() override;
 	OSAL_NO_COPY_NO_MOVE(pico_time)
@@ -52,7 +50,7 @@ public:
 private:
     static bool is_dst(tm *time) OSAL_NOEXCEPT;
     static void add_minute(tm* tm, time_t minute) OSAL_NOEXCEPT;
-
+    static void add_hour(tm* tm, int8_t hours) OSAL_NOEXCEPT;
 };
 
 } /* namespace driver */

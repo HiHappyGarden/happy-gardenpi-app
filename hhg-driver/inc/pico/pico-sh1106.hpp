@@ -20,7 +20,9 @@
 
 #pragma once
 
+#ifdef INCLUDE_HHG_CONFIG
 #include "hhg-config.h"
+#endif
 #include "osal/osal.hpp"
 #include "hhg-iface/lcd.hpp"
 #include "hhg-iface/initializable.hpp"
