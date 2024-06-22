@@ -88,7 +88,7 @@ void pico_button::on_click(uint gpio, uint32_t event_mask)
     }
 }
 
-void *pico_button::encoder_handle(void *arg)
+void *pico_button::handle(void *arg)
 {
     while (singleton->run)
     {
