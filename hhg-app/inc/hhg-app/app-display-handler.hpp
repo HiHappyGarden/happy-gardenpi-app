@@ -31,80 +31,81 @@ inline namespace v1
 {
 
 class app_display_handler final : public hhg::iface::rotary_encoder::event, public hhg::iface::button::event, public hhg::iface::io, public hhg::app::app_parser::auth
+{
+    const hhg::iface::lcd::ptr &lcd;
+    const hhg::iface::rotary_encoder::ptr &rotary_encoder;
+    const hhg::iface::button::ptr &button;
+    const hhg::app::app_parser &app_parser;
+
+    const hhg::iface::io_on_receive *obj = nullptr;
+    on_receive on_receive_callback = nullptr;
+
+    static auto blink_timer_handler(os::timer *, void *) -> void *;
+
+    os::timer blink_timer{os::ms_to_us(1'000), blink_timer_handler};
+    bool blink_show = true;
+
+    mutable osal::mutex mx;
+
+    static inline app_display_handler *singleton = nullptr;
+public:
+
+    enum class font
     {
-        const hhg::iface::lcd::ptr& lcd;
-        const hhg::iface::rotary_encoder::ptr& rotary_encoder;
-        const hhg::iface::button::ptr& button;
-        const hhg::app::app_parser& app_parser;
+        F5X8, F8X8, };
 
-        const hhg::iface::io_on_receive* obj = nullptr;
-        on_receive on_receive_callback = nullptr;
+    enum class valign
+    {
+        LEFT, CENTER, RIGHT, };
 
-        static auto blink_timer_handler(os::timer*, void*)-> void*;
-        os::timer blink_timer{ os::ms_to_us(1'000), blink_timer_handler };
-        bool blink_show = true;
+    app_display_handler(const hhg::iface::lcd::ptr &lcd, const hhg::iface::rotary_encoder::ptr &rotary_encoder, const hhg::iface::button::ptr &button, const hhg::app::app_parser &app_parser) OSAL_NOEXCEPT;
 
-        static inline app_display_handler* singleton = nullptr;
-    public:
+    ~app_display_handler() override = default;
+    OSAL_NO_COPY_NO_MOVE(app_display_handler)
 
-        enum class font
-        {
-            F5X8,
-            F8X8,
-        };
+    os::exit init(os::error **error) OSAL_NOEXCEPT override;
 
-        enum class valign
-        {
-            LEFT,
-            CENTER,
-            RIGHT,
-        };
+    void on_button_click(iface::button::status status) OSAL_NOEXCEPT override;
 
-        app_display_handler(const hhg::iface::lcd::ptr& lcd, const hhg::iface::rotary_encoder::ptr& rotary_encoder, const hhg::iface::button::ptr& button, const hhg::app::app_parser& app_parser) OSAL_NOEXCEPT;
-        ~app_display_handler() override = default;
-        OSAL_NO_COPY_NO_MOVE(app_display_handler)
+    void on_rotary_encoder_event(bool ccw, bool cw, bool click) OSAL_NOEXCEPT override;
 
-        os::exit init(os::error **error) OSAL_NOEXCEPT override;
+    void clean() const OSAL_NOEXCEPT
+    {
+        os::lock_guard lg(mx);
+        clean(true);
+    }
 
-        void on_button_click(iface::button::status status) OSAL_NOEXCEPT override;
+    void print_str(const char str[], uint16_t y, enum valign valign, enum font font, int16_t offset_x = 0) const OSAL_NOEXCEPT
+    {
+        os::lock_guard lg(mx);
+        print_str(true, str, y, valign, font, offset_x);
+    }
 
-        void on_rotary_encoder_event(bool ccw, bool cw, bool click) OSAL_NOEXCEPT override;
+    void show_frame(bool wifi, const os::string<32> &now) const OSAL_NOEXCEPT;
 
-        void clean() const OSAL_NOEXCEPT
-        {
-            clean(true);
-        }
+    void send_buffer() OSAL_NOEXCEPT;
 
-        void print_str(const char str[], uint16_t y, enum valign valign, enum font font, int16_t offset_x = 0) const OSAL_NOEXCEPT
-        {
-            print_str(true, str, y, valign, font, offset_x);
-        }
+    inline void set_on_receive(const iface::io_on_receive *obj, on_receive on_receive_callback) OSAL_NOEXCEPT override
+    {
+        this->obj = obj;
+        this->on_receive_callback = on_receive_callback;
+    }
 
-        void print_frame(bool wifi, const os::string<32>& now) const OSAL_NOEXCEPT;
+    inline os::exit transmit(const uint8_t *data, uint16_t size) const OSAL_NOEXCEPT override
+    {
+        return os::exit::KO;
+    }
 
-        void send_buffer() OSAL_NOEXCEPT;
+    void lock() OSAL_NOEXCEPT;
 
-        inline void set_on_receive(const iface::io_on_receive *obj, on_receive on_receive_callback) OSAL_NOEXCEPT override
-        {
-            this->obj = obj;
-            this->on_receive_callback = on_receive_callback;
-        }
-
-        inline os::exit transmit(const uint8_t *data, uint16_t size) const OSAL_NOEXCEPT override
-        {
-            return os::exit::KO;
-        }
-
-        void lock() OSAL_NOEXCEPT;
-
-        void on_logout() const OSAL_NOEXCEPT override;
+    void on_logout() const OSAL_NOEXCEPT override;
 
 private:
-        void clean(bool internal) const OSAL_NOEXCEPT;
+    void clean(bool internal) const OSAL_NOEXCEPT;
 
-        void print_str(bool internal, const char str[], uint16_t y, enum valign valign, enum font font, int16_t offset_x = 0) const OSAL_NOEXCEPT;
+    void print_str(bool internal, const char str[], uint16_t y, enum valign valign, enum font font, int16_t offset_x = 0) const OSAL_NOEXCEPT;
 
-    };
+};
 
 
 }

@@ -41,7 +41,7 @@ class pico_button : public hhg::iface::button
     static constexpr uint16_t DEBOUNCE_TIME = 200;
 
     bool run = true;
-    os::thread thread{"button", hhg::driver::NORMAL, configMINIMAL_STACK_SIZE, pico_button::encoder_handle};
+    os::thread thread{"button", hhg::driver::NORMAL, configMINIMAL_STACK_SIZE, pico_button::handle};
 
     event *obj = nullptr;
     hhg::iface::button::event::callback callback = nullptr;
@@ -68,7 +68,7 @@ public:
     os::exit init(os::error **error) OSAL_NOEXCEPT override;
 
 private:
-    static void* encoder_handle(void* arg);
+    static void* handle(void* arg);
     static void on_click(uint gpio, uint32_t event_mask);
 
 };

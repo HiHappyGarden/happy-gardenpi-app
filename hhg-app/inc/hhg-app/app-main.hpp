@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #pragma once
+
 #include "hhg-iface/initializable.hpp"
 #include "hhg-iface/wifi.hpp"
 #include "hhg-driver/hardware.hpp"
@@ -39,57 +40,55 @@ class app_main final : public hhg::iface::initializable, public hhg::iface::wifi
 public:
     enum state
     {
-        CHECK_USERS     = 0x00,
-        CHECK_WIFI      = (1 << 0),
-    	CHECK_TIMESTAMP = (1 << 1),
-        INIT         	= (1 << 2),
-		READY          	= (1 << 3),
-		EXECUTE_ZONE 	= (1 << 4),
-		SINCH_TIMESTAMP = (1 << 5),
-
-		ERROR  		 	= (1 << 7)
+        CHECK_USERS = 0x00
+        , CHECK_WIFI = (1 << 0)
+        , CHECK_TIMESTAMP = (1 << 1)
+        , INIT = (1 << 2)
+        , READY = (1 << 3)
+        , EXECUTE_ZONE = (1 << 4)
+        , SINCH_TIMESTAMP = (1 << 5)
+        , ERROR = (1 << 7)
 
     };
 
 private:
-    static inline app_main* singleton = nullptr;
+    static inline app_main *singleton = nullptr;
     static constexpr uint64_t FSM_SLEEP = 100;
-	static constexpr time_t TIMESTAMP_2020 = 1'577'880'000;
+    static constexpr time_t TIMESTAMP_2020 = 1'577'880'000;
 
-    const driver::hardware& hardware;
+    const driver::hardware &hardware;
     hhg::app::app_config app_config;
     hhg::app::app_data app_data;
     hhg::app::app_parser app_parser;
     hhg::app::app_led app_led;
     hhg::app::app_display_handler app_display_handler;
 
-    static void* handler(void* arg);
-	os::thread fsm_thread{"fsm", hhg::driver::HIGH, 1024 * 2, handler};
+    static void *handler(void *arg);
+
+    os::thread fsm_thread{"fsm", hhg::driver::HIGH, 1024 * 2, handler};
 
     struct fsm
     {
-		static constexpr uint8_t MAX_ERROR = 5;
+        static constexpr uint8_t MAX_ERROR = 5;
 
-        enum state   state              = state::CHECK_USERS;
-        enum state   old_state 	        = state::CHECK_USERS;
-        uint8_t      errors             = 0;
-        os::event    events;
-        bool         run                = true;
-        bool         waiting_connection = false;
-    }fsm;
-
-
+        enum state state = state::CHECK_USERS;
+        enum state old_state = state::CHECK_USERS;
+        uint8_t errors = 0;
+        os::event events;
+        bool run = true;
+        bool waiting_connection = false;
+    } fsm;
 
 
 public:
-    explicit app_main(driver::hardware& hardware, os::error** error) OSAL_NOEXCEPT;
+    explicit app_main(driver::hardware &hardware, os::error **error) OSAL_NOEXCEPT;
     OSAL_NO_COPY_NO_MOVE(app_main)
 
     ~app_main() override OSAL_NOEXCEPT;
 
-    os::exit init(class os::error** error) OSAL_NOEXCEPT override;
+    os::exit init(class os::error **error) OSAL_NOEXCEPT override;
 
-    os::exit fsm_start(class os::error** error) OSAL_NOEXCEPT;
+    os::exit fsm_start(class os::error **error) OSAL_NOEXCEPT;
 
 private:
 
@@ -97,7 +96,7 @@ private:
 
     void on_change_connection(bool old_connected, bool new_connected) OSAL_NOEXCEPT override;
 
-    static void print(const os::string<32>&& str, bool init = false);
+    static void refresh_display(const os::string<32> &&str, bool init = false, bool handle_context = true);
 };
 
 }
