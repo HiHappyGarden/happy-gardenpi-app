@@ -95,8 +95,6 @@ private:
     os::exit handle_error() OSAL_NOEXCEPT;
 
     void on_change_connection(bool old_connected, bool new_connected) OSAL_NOEXCEPT override;
-
-    static void refresh_display(const os::string<32> &&str, bool init = false, bool handle_context = true);
 };
 
 }

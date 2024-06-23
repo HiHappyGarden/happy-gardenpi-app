@@ -47,6 +47,8 @@ public:
 
 	bool wait_for_synchro(uint64_t timeout) const OSAL_NOEXCEPT override;
 
+    os::string<32> to_string(time_t timestamp, const char format[], int16_t timezone, bool daylight_saving_time) const OSAL_NOEXCEPT override;
+
 private:
     static bool is_dst(tm *time) OSAL_NOEXCEPT;
     static void add_minute(tm* tm, time_t minute) OSAL_NOEXCEPT;

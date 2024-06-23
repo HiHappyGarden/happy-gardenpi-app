@@ -106,6 +106,33 @@ bool pico_time::wait_for_synchro(uint64_t timeout) const OSAL_NOEXCEPT
 	return true;
 }
 
+
+os::string<32> pico_time::to_string(time_t timestamp, const char format[], int16_t timezone, bool daylight_saving_time) const OSAL_NOEXCEPT
+{
+    os::string<32> ret;
+
+    tm* tm = gmtime(&timestamp);
+    if(tm == nullptr)
+    {
+        return {};
+    }
+
+    if(daylight_saving_time && is_dst(tm))
+    {
+        add_hour(tm, 1);
+    }
+
+    if(timezone)
+    {
+        add_minute(tm, timezone);
+    }
+
+    strftime(ret.c_str(), ret.size(), format, tm);
+
+    return ret;
+}
+
+
 bool pico_time::is_dst(tm *time) OSAL_NOEXCEPT
 {
     tm start{}, end{};
