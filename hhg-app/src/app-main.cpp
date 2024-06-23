@@ -85,7 +85,9 @@ void *app_main::handler(void *arg)
 
     int32_t generic_timer = 0;
 
-    refresh_display("Loading...", true);
+    singleton->app_display_handler.paint_header(false);
+    singleton->app_display_handler.paint_str("Loading...");
+    singleton->app_display_handler.send_buffer();
 
     while(singleton->fsm.run)
     {
@@ -107,8 +109,7 @@ void *app_main::handler(void *arg)
                 }
                 else
                 {
-                    now_in_millis =
-                            singleton->hardware.get_time()->get_timestamp(0, false, error) * ONE_SEC_IN_MILLIS;
+                    now_in_millis = singleton->hardware.get_time()->get_timestamp(0, false, error) * ONE_SEC_IN_MILLIS;
                     if(error && *error)
                     {
                         printf_stack_error(APP_TAG, *error);
@@ -158,8 +159,7 @@ void *app_main::handler(void *arg)
                 {
                     if(!singleton->fsm.waiting_connection
                        && !connection_flag
-                       && singleton->hardware.get_wifi()->connect(ssid, passwd, wifi::auth{auth}, error)
-                          == exit::OK)
+                       && singleton->hardware.get_wifi()->connect(ssid, passwd, wifi::auth{auth}, error) == exit::OK)
                     {
                         singleton->fsm.waiting_connection = true;
                         OSAL_LOG_INFO(APP_TAG, "Waiting connection");
@@ -247,7 +247,10 @@ void *app_main::handler(void *arg)
                 //TODO: hw check
                 generic_timer = 0;
 
-                refresh_display("Init");
+                singleton->app_display_handler.paint_header(singleton->fsm.events.get() & CHECK_WIFI, now_in_millis / ONE_SEC_IN_MILLIS, singleton->app_config.get_timezone(), singleton->app_config.get_daylight_saving_time());
+                singleton->app_display_handler.clean();
+                singleton->app_display_handler.paint_str("Init");
+                singleton->app_display_handler.send_buffer();
 
                 singleton->fsm.errors = 0;
                 OSAL_LOG_INFO(APP_TAG, "state:%s - OK", state_to_string(singleton->fsm.state).c_str());
@@ -263,7 +266,10 @@ void *app_main::handler(void *arg)
                     singleton->fsm.events.set(READY);
                     singleton->fsm.old_state = READY;
 
-                    refresh_display("Ready");
+                    singleton->app_display_handler.paint_header(singleton->fsm.events.get() & CHECK_WIFI, now_in_millis / ONE_SEC_IN_MILLIS, singleton->app_config.get_timezone(), singleton->app_config.get_daylight_saving_time());
+                    singleton->app_display_handler.clean();
+                    singleton->app_display_handler.paint_str("Ready");
+                    singleton->app_display_handler.send_buffer();
 
                     schedule current_schedule;
                     if(singleton->app_data.get_schedule(now_in_millis / ONE_SEC_IN_MILLIS, current_schedule))
@@ -322,7 +328,7 @@ app_main::app_main(driver::hardware &hardware, class error **error) OSAL_NOEXCEP
         , app_data(hardware.get_fs_io())
         , app_parser(hardware.get_uart())
         , app_led(hardware.get_rgb_led())
-        , app_display_handler(hardware.get_lcd(), hardware.get_rotary_encoder(), hardware.get_button(), app_parser)
+        , app_display_handler(hardware.get_lcd(), hardware.get_rotary_encoder(), hardware.get_button(), hardware.get_time(), app_parser)
 {
     if(singleton)
     {
@@ -545,25 +551,6 @@ void app_main::on_change_connection(bool old_connected, bool new_connected) OSAL
     }
 }
 
-void app_main::refresh_display(const string<32> &&str, bool init, bool handle_context)
-{
-    if(init)
-    {
-        singleton->app_display_handler.show_frame(false, "");
-    }
-    else
-    {
-        auto status = singleton->fsm.events.get();
-        const os::string<32> &&time = singleton->hardware.get_time()->get_date_time(time::FORMAT, singleton->app_config.get_timezone(), singleton->app_config.get_daylight_saving_time(), nullptr);
-        singleton->app_display_handler.show_frame(status & CHECK_WIFI, time);
-    }
-    if(handle_context)
-    {
-        singleton->app_display_handler.clean();
-        singleton->app_display_handler.print_str(str.c_str(), 30, app_display_handler::valign::CENTER, app_display_handler::font::F8X8);
-        singleton->app_display_handler.send_buffer();
-    }
-}
 }
 }
 

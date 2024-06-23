@@ -23,6 +23,7 @@
 #include "hhg-iface/lcd.hpp"
 #include "hhg-iface/rotary-encored.hpp"
 #include "hhg-iface/button.hpp"
+#include "hhg-iface/time.hpp"
 #include "hhg-app/app-parser.hpp"
 
 namespace hhg::app
@@ -32,10 +33,12 @@ inline namespace v1
 
 class app_display_handler final : public hhg::iface::rotary_encoder::event, public hhg::iface::button::event, public hhg::iface::io, public hhg::app::app_parser::auth
 {
-    const hhg::iface::lcd::ptr &lcd;
-    const hhg::iface::rotary_encoder::ptr &rotary_encoder;
-    const hhg::iface::button::ptr &button;
-    const hhg::app::app_parser &app_parser;
+    const hhg::iface::lcd::ptr& lcd;
+    const hhg::iface::rotary_encoder::ptr& rotary_encoder;
+    const hhg::iface::button::ptr& button;
+    const hhg::iface::time::ptr& time;
+    const hhg::app::app_parser& app_parser;
+
 
     const hhg::iface::io_on_receive *obj = nullptr;
     on_receive on_receive_callback = nullptr;
@@ -58,7 +61,7 @@ public:
     {
         LEFT, CENTER, RIGHT, };
 
-    app_display_handler(const hhg::iface::lcd::ptr &lcd, const hhg::iface::rotary_encoder::ptr &rotary_encoder, const hhg::iface::button::ptr &button, const hhg::app::app_parser &app_parser) OSAL_NOEXCEPT;
+    app_display_handler(const hhg::iface::lcd::ptr &lcd, const hhg::iface::rotary_encoder::ptr &rotary_encoder, const hhg::iface::button::ptr &button, const hhg::iface::time::ptr &time, const hhg::app::app_parser &app_parser) OSAL_NOEXCEPT;
 
     ~app_display_handler() override = default;
     OSAL_NO_COPY_NO_MOVE(app_display_handler)
@@ -75,13 +78,20 @@ public:
         clean(true);
     }
 
-    void print_str(const char str[], uint16_t y, enum valign valign, enum font font, int16_t offset_x = 0) const OSAL_NOEXCEPT
+    void paint_str(const char str[], uint16_t y, enum valign valign, enum font font, int16_t offset_x = 0) const OSAL_NOEXCEPT
     {
         os::lock_guard lg(mx);
-        print_str(true, str, y, valign, font, offset_x);
+        paint_str(true, str, y, valign, font, offset_x);
     }
 
-    void show_frame(bool wifi, const os::string<32> &now) const OSAL_NOEXCEPT;
+    void paint_str(const char str[]) const OSAL_NOEXCEPT
+    {
+        os::lock_guard lg(mx);
+        paint_str(true, str, 30, valign::CENTER, font::F8X8);
+    }
+
+    void paint_header(bool wifi, time_t timestamp = 0, int16_t timezone = 0, bool daylight_saving_time = false) const OSAL_NOEXCEPT;
+    void paint_string() const OSAL_NOEXCEPT;
 
     void send_buffer() OSAL_NOEXCEPT;
 
@@ -103,7 +113,7 @@ public:
 private:
     void clean(bool internal) const OSAL_NOEXCEPT;
 
-    void print_str(bool internal, const char str[], uint16_t y, enum valign valign, enum font font, int16_t offset_x = 0) const OSAL_NOEXCEPT;
+    void paint_str(bool internal, const char str[], uint16_t y, enum valign valign, enum font font, int16_t offset_x = 0) const OSAL_NOEXCEPT;
 
 };
 

@@ -23,6 +23,7 @@ using namespace os;
 using hhg::iface::lcd;
 using hhg::iface::button;
 using hhg::iface::rotary_encoder;
+using hhg::iface::time;
 
 #include "assets/font_5x8.hpp"
 #include "assets/font_8x8.hpp"
@@ -44,20 +45,16 @@ constexpr char APP_TAG[] = "APP DISPLAY HANDLER";
 
 using write_mode = lcd::write_mode;
 
-app_display_handler::app_display_handler(const iface::lcd::ptr &lcd, const iface::rotary_encoder::ptr &rotary_encoder, const iface::button::ptr &button, const hhg::app::app_parser &app_parser)
+app_display_handler::app_display_handler(const iface::lcd::ptr &lcd, const iface::rotary_encoder::ptr &rotary_encoder, const iface::button::ptr &button, const hhg::iface::time::ptr &time, const hhg::app::app_parser &app_parser)
         : lcd(lcd)
         , rotary_encoder(rotary_encoder)
         , button(button)
+        , time(time)
         , app_parser(app_parser)
 {
 
 }
 
-//    if(pico_uart::singleton && pico_uart::singleton->obj && pico_uart::singleton->on_receive_callback)
-//{
-//    (pico_uart::singleton->obj->*pico_uart::singleton->on_receive_callback)(io_source::UART, &ch, 1);
-//}
-//
 os::exit app_display_handler::init(os::error **error) OSAL_NOEXCEPT
 {
     if(singleton)
@@ -116,7 +113,7 @@ void app_display_handler::on_rotary_encoder_event(bool ccw, bool cw, bool click)
 
 }
 
-void app_display_handler::show_frame(bool wifi, const os::string<32> &now) const OSAL_NOEXCEPT
+void app_display_handler::paint_header(bool wifi, time_t timestamp, int16_t timezone, bool daylight_saving_time) const OSAL_NOEXCEPT
 {
     os::lock_guard lg(mx);
     auto &&[display_width, display_height] = lcd->get_size();
@@ -148,8 +145,10 @@ void app_display_handler::show_frame(bool wifi, const os::string<32> &now) const
 
     lcd->set_rect(0, 11, display_width, 1, lcd::write_mode::ADD);
 
-    if(now.length())
+    if(timestamp)
     {
+        auto&& now = time->to_string(timestamp, time::FORMAT, timezone, daylight_saving_time);
+
         lcd->set_str(now.c_str(), display_width - (now.length() * 5) - 5, 1, font_5x8, sizeof(font_5x8));
     }
 
@@ -161,8 +160,8 @@ void app_display_handler::send_buffer() OSAL_NOEXCEPT
     lcd->send_buffer();
 }
 
-void
-app_display_handler::print_str(bool internal, const char str[], uint16_t y, enum valign valign, enum font font, int16_t offset_x) const OSAL_NOEXCEPT
+
+void app_display_handler::paint_str(bool internal, const char str[], uint16_t y, enum valign valign, enum font font, int16_t offset_x) const OSAL_NOEXCEPT
 {
     if(!internal && (app_parser.get_source() == iface::io_source::UART || app_parser.get_source() == iface::io_source::WIFI))
     {
@@ -236,17 +235,17 @@ auto app_display_handler::blink_timer_handler(os::timer *, void *) -> void *
         string<64> msg = "Device locked by: ";
         msg += singleton->app_parser.get_user_logged();
 
-        singleton->print_str(true, msg.c_str(), 26, valign::CENTER, font::F5X8);
+        singleton->paint_str(true, msg.c_str(), 26, valign::CENTER, font::F5X8);
 
         if(singleton->app_parser.is_user_logged())
         {
             switch(singleton->app_parser.get_source())
             {
                 case iface::v1::io_source::UART:
-                    singleton->print_str(true, "from UART", 45, valign::CENTER, font::F5X8);
+                    singleton->paint_str(true, "from UART", 45, valign::CENTER, font::F5X8);
                     break;
                 case iface::v1::io_source::WIFI:
-                    singleton->print_str(true, "from WIFI", 45, valign::CENTER, font::F5X8);
+                    singleton->paint_str(true, "from WIFI", 45, valign::CENTER, font::F5X8);
                     break;
                 default:
                     break;
