@@ -144,8 +144,8 @@ void app_parser::clear_user_logged() OSAL_NOEXCEPT
 
 void* app_parser::handler(void* arg) OSAL_NOEXCEPT
 {
-	string<app_parser::singleton->BUFFER_SIZE> buffer;
-	string<app_parser::singleton->RET_SIZE> ret;
+	string<app_parser::BUFFER_SIZE> buffer;
+	string<app_parser::RET_SIZE> ret;
 
 	while(app_parser::singleton->run)
 	{

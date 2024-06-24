@@ -73,6 +73,8 @@ uint32_t const HIGH = 4;
 uint32_t const HIGHEST = 5;
 uint32_t const REALTIME = 6;
 
+uint32_t const MINIMAL_STACK_SIZE = configMINIMAL_STACK_SIZE;
+
 char const TIME_T_STR[] = "%lu";
 
 namespace

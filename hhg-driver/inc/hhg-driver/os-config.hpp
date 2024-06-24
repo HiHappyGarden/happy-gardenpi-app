@@ -34,6 +34,8 @@ extern uint32_t const HIGH;
 extern uint32_t const HIGHEST;
 extern uint32_t const REALTIME;
 
+extern uint32_t const MINIMAL_STACK_SIZE;
+
 extern char const TIME_T_STR[];
 
 os::exit os_config_init() OSAL_NOEXCEPT;

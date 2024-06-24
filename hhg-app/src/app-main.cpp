@@ -34,7 +34,6 @@ inline namespace v1
 
 namespace
 {
-constexpr const uint16_t ONE_SEC_IN_MILLIS = 1'000;
 constexpr const char APP_TAG[] = "APP MAIN";
 
 string<32> state_to_string(app_main::state state)
@@ -84,10 +83,6 @@ void *app_main::handler(void *arg)
     time_t &&now_in_millis = singleton->hardware.get_time()->get_timestamp(0, false, error) * ONE_SEC_IN_MILLIS;
 
     int32_t generic_timer = 0;
-
-    singleton->app_display_handler.paint_header(false);
-    singleton->app_display_handler.paint_str("Loading...");
-    singleton->app_display_handler.send_buffer();
 
     while(singleton->fsm.run)
     {
@@ -247,11 +242,6 @@ void *app_main::handler(void *arg)
                 //TODO: hw check
                 generic_timer = 0;
 
-                singleton->app_display_handler.paint_header(singleton->fsm.events.get() & CHECK_WIFI, now_in_millis / ONE_SEC_IN_MILLIS, singleton->app_config.get_timezone(), singleton->app_config.get_daylight_saving_time());
-                singleton->app_display_handler.clean();
-                singleton->app_display_handler.paint_str("Init");
-                singleton->app_display_handler.send_buffer();
-
                 singleton->fsm.errors = 0;
                 OSAL_LOG_INFO(APP_TAG, "state:%s - OK", state_to_string(singleton->fsm.state).c_str());
                 singleton->fsm.state = READY;
@@ -328,7 +318,7 @@ app_main::app_main(driver::hardware &hardware, class error **error) OSAL_NOEXCEP
         , app_data(hardware.get_fs_io())
         , app_parser(hardware.get_uart())
         , app_led(hardware.get_rgb_led())
-        , app_display_handler(hardware.get_lcd(), hardware.get_rotary_encoder(), hardware.get_button(), hardware.get_time(), app_parser)
+        , app_display_handler(hardware.get_lcd(), hardware.get_rotary_encoder(), hardware.get_button(), hardware.get_time(), *this, app_config, app_parser)
 {
     if(singleton)
     {
@@ -505,6 +495,11 @@ os::exit app_main::init(class os::error **error) OSAL_NOEXCEPT
 os::exit app_main::fsm_start(class os::error **error) OSAL_NOEXCEPT
 {
     return fsm_thread.create(error, error);
+}
+
+uint32_t app_main::get_state() const
+{
+    return singleton->fsm.events.get();
 }
 
 os::exit app_main::handle_error() OSAL_NOEXCEPT

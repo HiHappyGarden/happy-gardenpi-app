@@ -24,29 +24,40 @@
 #include "hhg-iface/rotary-encored.hpp"
 #include "hhg-iface/button.hpp"
 #include "hhg-iface/time.hpp"
+#include "hhg-app/app-config.hpp"
 #include "hhg-app/app-parser.hpp"
+#include "hhg-driver/os-config.hpp"
 
 namespace hhg::app
 {
 inline namespace v1
 {
 
+class app_main;
+
 class app_display_handler final : public hhg::iface::rotary_encoder::event, public hhg::iface::button::event, public hhg::iface::io, public hhg::app::app_parser::auth
 {
+    static constexpr uint8_t FSM_SLEEP = 5;
+    static constexpr uint16_t BLINK_SLEEP = 300;
+
     const hhg::iface::lcd::ptr& lcd;
     const hhg::iface::rotary_encoder::ptr& rotary_encoder;
     const hhg::iface::button::ptr& button;
     const hhg::iface::time::ptr& time;
+    const hhg::app::app_main& app_main;
+    const hhg::app::app_config& app_config;
     const hhg::app::app_parser& app_parser;
 
 
     const hhg::iface::io_on_receive *obj = nullptr;
     on_receive on_receive_callback = nullptr;
 
-    static auto blink_timer_handler(os::timer *, void *) -> void *;
+    static auto handler(void *) -> void *;
+    os::thread thread{"app_display_handler", hhg::driver::LOW, 1024, handler};
+    bool run = true;
 
-    os::timer blink_timer{os::ms_to_us(1'000), blink_timer_handler};
-    bool blink_show = true;
+    bool locked = false;
+    bool locked_blink_show = true;
 
     mutable osal::mutex mx;
 
@@ -55,13 +66,22 @@ public:
 
     enum class font
     {
-        F5X8, F8X8, };
+        F5X8, F8X8
+    };
 
     enum class valign
     {
-        LEFT, CENTER, RIGHT, };
+        LEFT, CENTER, RIGHT
+    };
 
-    app_display_handler(const hhg::iface::lcd::ptr &lcd, const hhg::iface::rotary_encoder::ptr &rotary_encoder, const hhg::iface::button::ptr &button, const hhg::iface::time::ptr &time, const hhg::app::app_parser &app_parser) OSAL_NOEXCEPT;
+    app_display_handler(const hhg::iface::lcd::ptr& lcd,
+                        const hhg::iface::rotary_encoder::ptr& rotary_encoder,
+                        const hhg::iface::button::ptr& button,
+                        const hhg::iface::time::ptr& time,
+                        const hhg::app::app_main& app_main,
+                        const hhg::app::app_config& app_config,
+                        const hhg::app::app_parser& app_parser
+                        ) OSAL_NOEXCEPT;
 
     ~app_display_handler() override = default;
     OSAL_NO_COPY_NO_MOVE(app_display_handler)
@@ -91,7 +111,6 @@ public:
     }
 
     void paint_header(bool wifi, time_t timestamp = 0, int16_t timezone = 0, bool daylight_saving_time = false) const OSAL_NOEXCEPT;
-    void paint_string() const OSAL_NOEXCEPT;
 
     void send_buffer() OSAL_NOEXCEPT;
 
@@ -108,13 +127,14 @@ public:
 
     void lock() OSAL_NOEXCEPT;
 
-    void on_logout() const OSAL_NOEXCEPT override;
+    void on_logout() OSAL_NOEXCEPT;
 
 private:
     void clean(bool internal) const OSAL_NOEXCEPT;
 
     void paint_str(bool internal, const char str[], uint16_t y, enum valign valign, enum font font, int16_t offset_x = 0) const OSAL_NOEXCEPT;
 
+    static void handle_locked_blink_show(app_display_handler* self) OSAL_NOEXCEPT;
 };
 
 

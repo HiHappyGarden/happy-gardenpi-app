@@ -29,7 +29,7 @@ namespace hhg::driver
 inline namespace v1
 {
 
-//TODO: implement REAL singleton
+
 class pico_uart final : public hhg::iface::io
 {
 	const hhg::iface::io_on_receive* obj = nullptr;
