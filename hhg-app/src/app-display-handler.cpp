@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "hhg-app/app-display-handler.hpp"
+#include "hhg-app/app-main.hpp"
 
 using namespace os;
 using hhg::iface::lcd;
@@ -45,11 +46,13 @@ constexpr char APP_TAG[] = "APP DISPLAY HANDLER";
 
 using write_mode = lcd::write_mode;
 
-app_display_handler::app_display_handler(const iface::lcd::ptr &lcd, const iface::rotary_encoder::ptr &rotary_encoder, const iface::button::ptr &button, const hhg::iface::time::ptr &time, const hhg::app::app_parser &app_parser)
+app_display_handler::app_display_handler(const iface::lcd::ptr &lcd, const iface::rotary_encoder::ptr &rotary_encoder, const iface::button::ptr &button, const hhg::iface::time::ptr &time, const hhg::app::app_main& app_main, const hhg::app::app_config& app_config, const hhg::app::app_parser &app_parser)
         : lcd(lcd)
         , rotary_encoder(rotary_encoder)
         , button(button)
         , time(time)
+        , app_main(app_main)
+        , app_config(app_config)
         , app_parser(app_parser)
 {
 
@@ -71,7 +74,7 @@ os::exit app_display_handler::init(os::error **error) OSAL_NOEXCEPT
     button->set_on_button_click(this, &button::event::on_button_click);
     rotary_encoder->set_on_rotary_encoder_event(this, &rotary_encoder::event::on_rotary_encoder_event);
 
-    blink_timer.create();
+    thread.create();
 
     return os::exit::OK;
 }
@@ -224,52 +227,180 @@ void app_display_handler::clean(bool internal) const OSAL_NOEXCEPT
     lcd->set_rect(0, 12, display_width, display_height - 12, write_mode::REMOVE);
 }
 
-auto app_display_handler::blink_timer_handler(os::timer *, void *) -> void *
+auto app_display_handler::handler(void *) -> void *
 {
 
-    if(singleton->blink_show)
+    if(singleton == nullptr)
     {
+        return nullptr;
+    }
 
-        singleton->clean(true);
+    time_t &&now_in_millis = singleton->time->get_timestamp(0, false, nullptr);
+    int32_t generic_timer = 0;
 
-        string<64> msg = "Device locked by: ";
-        msg += singleton->app_parser.get_user_logged();
+    uint32_t fsm_last_state = 0;
 
-        singleton->paint_str(true, msg.c_str(), 26, valign::CENTER, font::F5X8);
+    singleton->paint_header(false);
+    singleton->paint_str("Loading...");
+    singleton->send_buffer();
 
-        if(singleton->app_parser.is_user_logged())
+    while(singleton->run)
+    {
+        auto fsm_state = singleton->app_main.get_state();
+
+        if(!singleton->locked)
         {
-            switch(singleton->app_parser.get_source())
+            if(fsm_state & app_main::CHECK_USERS)
             {
-                case iface::v1::io_source::UART:
-                    singleton->paint_str(true, "from UART", 45, valign::CENTER, font::F5X8);
-                    break;
-                case iface::v1::io_source::WIFI:
-                    singleton->paint_str(true, "from WIFI", 45, valign::CENTER, font::F5X8);
-                    break;
-                default:
-                    break;
+                if(fsm_last_state == fsm_state)
+                {
+                    continue;
+                }
+                fsm_last_state = fsm_state;
+
+
+            }
+            else if(fsm_state & app_main::CHECK_WIFI)
+            {
+                if(fsm_last_state == fsm_state)
+                {
+                    continue;
+                }
+                fsm_last_state = fsm_state;
+
+
+            }
+            else if(fsm_state & app_main::CHECK_TIMESTAMP)
+            {
+                if(fsm_last_state == fsm_state)
+                {
+                    continue;
+                }
+                fsm_last_state = fsm_state;
+                now_in_millis = singleton->time->get_timestamp(singleton->app_config.get_timezone(), singleton->app_config.get_daylight_saving_time(), nullptr);
+            }
+            else if(fsm_state & app_main::INIT)
+            {
+                if(fsm_last_state == fsm_state)
+                {
+                    continue;
+                }
+                fsm_last_state = fsm_state;
+
+                singleton->paint_header(fsm_state & app_main::CHECK_WIFI, now_in_millis);
+                singleton->clean();
+                singleton->paint_str("Init");
+                singleton->send_buffer();
+            }
+            else if(fsm_state & app_main::READY)
+            {
+                if(fsm_last_state == fsm_state)
+                {
+                    continue;
+                }
+                fsm_last_state = fsm_state;
+
+                singleton->paint_header(fsm_state & app_main::CHECK_WIFI, now_in_millis);
+                singleton->clean();
+                singleton->paint_str("Ready");
+                singleton->send_buffer();
+            }
+            else if(fsm_state & app_main::EXECUTE_ZONE)
+            {
+                if(fsm_last_state == fsm_state)
+                {
+                    continue;
+                }
+                fsm_last_state = fsm_state;
+
+
+            }
+            else if(fsm_state & app_main::SINCH_TIMESTAMP)
+            {
+                if(fsm_last_state == fsm_state)
+                {
+                    continue;
+                }
+                fsm_last_state = fsm_state;
+
+            }
+            else if(fsm_state & app_main::ERROR)
+            {
+                if(fsm_last_state == fsm_state)
+                {
+                    continue;
+                }
+                fsm_last_state = fsm_state;
+
             }
         }
-        singleton->blink_show = false;
+        else
+        {
+            if(generic_timer == 0)
+            {
+                handle_locked_blink_show(singleton);
+                generic_timer = BLINK_SLEEP;
+            }
+            else
+            {
+                generic_timer -= FSM_SLEEP;
+            }
+
+
+            singleton->send_buffer();
+        }
+
+        us_sleep(ms_to_us(FSM_SLEEP));
     }
-    else
-    {
-        singleton->clean(true);
-        singleton->blink_show = true;
-    }
-    singleton->send_buffer();
+
+    singleton->thread.exit();
+
     return nullptr;
 }
 
 void app_display_handler::lock()
 {
-    blink_timer.start();
+    locked = true;
 }
 
-inline void app_display_handler::on_logout() const
+inline void app_display_handler::on_logout()
 {
-    blink_timer.stop();
+    locked = false;
+}
+
+void app_display_handler::handle_locked_blink_show(app_display_handler* self)
+{
+    if(self->locked_blink_show)
+    {
+
+        self->clean(true);
+
+        string<64> msg = "Device locked by: ";
+        msg += self->app_parser.get_user_logged();
+
+        self->paint_str(true, msg.c_str(), 26, valign::CENTER, font::F5X8);
+
+        if(self->app_parser.is_user_logged())
+        {
+            switch(self->app_parser.get_source())
+            {
+                case iface::v1::io_source::UART:
+                    self->paint_str(true, "from UART", 45, valign::CENTER, font::F5X8);
+                    break;
+                case iface::v1::io_source::WIFI:
+                    self->paint_str(true, "from WIFI", 45, valign::CENTER, font::F5X8);
+                    break;
+                default:
+                    break;
+            }
+        }
+        self->locked_blink_show = false;
+    }
+    else
+    {
+        self->clean(true);
+        self->locked_blink_show = true;
+    }
 }
 
 }

@@ -34,11 +34,13 @@ namespace hhg::app
 inline namespace v1
 {
 
-//TODO: implement REAL singleton
+
 class app_main final : public hhg::iface::initializable, public hhg::iface::wifi::on_connection_event
 {
 public:
-    enum state
+    constexpr static const uint16_t ONE_SEC_IN_MILLIS = 1'000;
+
+    enum state : uint32_t
     {
         CHECK_USERS = 0x00
         , CHECK_WIFI = (1 << 0)
@@ -48,7 +50,6 @@ public:
         , EXECUTE_ZONE = (1 << 4)
         , SINCH_TIMESTAMP = (1 << 5)
         , ERROR = (1 << 7)
-
     };
 
 private:
@@ -90,6 +91,7 @@ public:
 
     os::exit fsm_start(class os::error **error) OSAL_NOEXCEPT;
 
+    uint32_t get_state() const OSAL_NOEXCEPT;
 private:
 
     os::exit handle_error() OSAL_NOEXCEPT;

@@ -33,7 +33,7 @@ namespace hhg::driver
 inline namespace v1
 {
 
-//TODO: implement REAL singleton
+
 class pico_button : public hhg::iface::button
 {
 

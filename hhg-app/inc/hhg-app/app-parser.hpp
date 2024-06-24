@@ -32,16 +32,16 @@ namespace hhg::app
 inline namespace v1
 {
 
-//TODO: implement REAL singleton
+
 class app_parser final : public hhg::iface::initializable, public hhg::iface::io_on_receive, public hhg::parser::parser::auth
 {
 public:
     struct auth
     {
-        using callback = void (auth::*)() const OSAL_NOEXCEPT;
+        using callback = void (auth::*)() OSAL_NOEXCEPT;
 
         virtual ~auth() = default;
-        virtual void on_logout() const OSAL_NOEXCEPT = 0;
+        virtual void on_logout() OSAL_NOEXCEPT = 0;
     };
 
 private:
@@ -72,7 +72,7 @@ private:
 
     static auto auth_timer_handler(os::timer*, void*)-> void*;
     os::timer auth_timer{ os::ms_to_us(1'000), auth_timer_handler };
-    const auth* obj = nullptr;
+    auth* obj = nullptr;
     auth::callback on_logout = nullptr;
 
     bool run = false;
@@ -125,7 +125,7 @@ public:
 
 	void on_receive(hhg::iface::io_source, const uint8_t data[], uint16_t size) const OSAL_NOEXCEPT override;
 
-    inline void set_on_logout(const auth* obj, auth::callback on_logout) OSAL_NOEXCEPT
+    inline void set_on_logout(auth* obj, auth::callback on_logout) OSAL_NOEXCEPT
     {
         this->obj = obj;
         this->on_logout = on_logout;
