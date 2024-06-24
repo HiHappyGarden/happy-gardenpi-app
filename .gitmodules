@@ -13,3 +13,6 @@
 [submodule "md5"]
 	path = md5
 	url = https://github.com/calebstewart/md5.git
+[submodule "pico-sdk"]
+	path = pico-sdk
+	url = https://github.com/raspberrypi/pico-sdk.git
