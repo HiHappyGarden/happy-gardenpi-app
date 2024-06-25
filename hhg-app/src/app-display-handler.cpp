@@ -126,8 +126,6 @@ void app_display_handler::paint_header(bool wifi, time_t timestamp, int16_t time
     const uint8_t *ic_wifi = nullptr;
     uint8_t ic_wifi_size = 0;
 
-    OSAL_LOG_DEBUG(APP_TAG, "i:%u, i2:%u rot:%d", i, i2, rot);
-
     if(wifi)
     {
         ic_wifi_width = ic_wifi_on_width;
@@ -235,7 +233,7 @@ auto app_display_handler::handler(void *) -> void *
         return nullptr;
     }
 
-    time_t &&now_in_millis = singleton->time->get_timestamp(0, false, nullptr);
+    time_t &&now_in_millis = singleton->time->get_timestamp(0, false, nullptr) * app_main::ONE_SEC_IN_MILLIS;
     int32_t generic_timer = 0;
 
     uint32_t fsm_last_state = 0;
@@ -250,7 +248,15 @@ auto app_display_handler::handler(void *) -> void *
 
         if(!singleton->locked)
         {
-            if(fsm_state & app_main::CHECK_USERS)
+            if(fsm_state & app_main::ERROR)
+            {
+                if(fsm_last_state == fsm_state)
+                {
+                    continue;
+                }
+                fsm_last_state = fsm_state;
+            }
+            else if(fsm_state & app_main::EXECUTE_ZONE)
             {
                 if(fsm_last_state == fsm_state)
                 {
@@ -258,7 +264,54 @@ auto app_display_handler::handler(void *) -> void *
                 }
                 fsm_last_state = fsm_state;
 
+            }
+            else if(fsm_state & app_main::READY)
+            {
+                if(generic_timer == 0)
+                {
+                    generic_timer = 60 * 60 * app_main::ONE_SEC_IN_MILLIS;
+                    singleton->paint_header(fsm_state & app_main::CHECK_WIFI, now_in_millis / app_main::ONE_SEC_IN_MILLIS);
+                    singleton->clean();
+                    singleton->paint_str("Ready");
+                    singleton->send_buffer();
+                }
+                else
+                {
+                    generic_timer -= FSM_SLEEP;
+                }
 
+                if(fsm_last_state == fsm_state)
+                {
+                    continue;
+                }
+                fsm_last_state = fsm_state;
+
+            }
+            else if(fsm_state & app_main::INIT)
+            {
+                if(fsm_last_state == fsm_state)
+                {
+                    continue;
+                }
+                fsm_last_state = fsm_state;
+
+                OSAL_LOG_DEBUG(APP_TAG, "-->%u", now_in_millis);
+                singleton->paint_header(fsm_state & app_main::CHECK_WIFI, now_in_millis / app_main::ONE_SEC_IN_MILLIS);
+                singleton->clean();
+                singleton->paint_str("Init");
+                singleton->send_buffer();
+            }
+            else if(fsm_state & app_main::SINCH_TIMESTAMP)
+            {
+                now_in_millis = singleton->time->get_timestamp(singleton->app_config.get_timezone(), singleton->app_config.get_daylight_saving_time(), nullptr) * app_main::ONE_SEC_IN_MILLIS;
+            }
+            else if(fsm_state & app_main::CHECK_TIMESTAMP)
+            {
+                if(fsm_last_state == fsm_state)
+                {
+                    continue;
+                }
+                fsm_last_state = fsm_state;
             }
             else if(fsm_state & app_main::CHECK_WIFI)
             {
@@ -270,16 +323,7 @@ auto app_display_handler::handler(void *) -> void *
 
 
             }
-            else if(fsm_state & app_main::CHECK_TIMESTAMP)
-            {
-                if(fsm_last_state == fsm_state)
-                {
-                    continue;
-                }
-                fsm_last_state = fsm_state;
-                now_in_millis = singleton->time->get_timestamp(singleton->app_config.get_timezone(), singleton->app_config.get_daylight_saving_time(), nullptr);
-            }
-            else if(fsm_state & app_main::INIT)
+            else if(fsm_state & app_main::CHECK_USERS)
             {
                 if(fsm_last_state == fsm_state)
                 {
@@ -287,50 +331,6 @@ auto app_display_handler::handler(void *) -> void *
                 }
                 fsm_last_state = fsm_state;
 
-                singleton->paint_header(fsm_state & app_main::CHECK_WIFI, now_in_millis);
-                singleton->clean();
-                singleton->paint_str("Init");
-                singleton->send_buffer();
-            }
-            else if(fsm_state & app_main::READY)
-            {
-                if(fsm_last_state == fsm_state)
-                {
-                    continue;
-                }
-                fsm_last_state = fsm_state;
-
-                singleton->paint_header(fsm_state & app_main::CHECK_WIFI, now_in_millis);
-                singleton->clean();
-                singleton->paint_str("Ready");
-                singleton->send_buffer();
-            }
-            else if(fsm_state & app_main::EXECUTE_ZONE)
-            {
-                if(fsm_last_state == fsm_state)
-                {
-                    continue;
-                }
-                fsm_last_state = fsm_state;
-
-
-            }
-            else if(fsm_state & app_main::SINCH_TIMESTAMP)
-            {
-                if(fsm_last_state == fsm_state)
-                {
-                    continue;
-                }
-                fsm_last_state = fsm_state;
-
-            }
-            else if(fsm_state & app_main::ERROR)
-            {
-                if(fsm_last_state == fsm_state)
-                {
-                    continue;
-                }
-                fsm_last_state = fsm_state;
 
             }
         }
@@ -350,6 +350,7 @@ auto app_display_handler::handler(void *) -> void *
             singleton->send_buffer();
         }
 
+        now_in_millis += FSM_SLEEP;
         us_sleep(ms_to_us(FSM_SLEEP));
     }
 
