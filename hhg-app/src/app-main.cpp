@@ -52,6 +52,8 @@ void *app_main::handler(void *arg)
     time_t generic_timer = 0;
     time_t sync_timestamp_timer = 0;
 
+    singleton->app_led.loading();
+
     while(singleton->fsm.run)
     {
         switch(singleton->fsm.state)
@@ -67,6 +69,7 @@ void *app_main::handler(void *arg)
                         && user.user.length() && user.passwd.length()
                         )
                 {
+                    singleton->app_led.loading();
                     singleton->fsm.errors = 0;
                     singleton->fsm.events.set(CHECK_USERS);
                     OSAL_LOG_INFO(APP_TAG, "User OK state:%s - OK", state_to_string(singleton->fsm.state).c_str());
@@ -105,6 +108,7 @@ void *app_main::handler(void *arg)
 
                 if(!singleton->app_config.is_wifi_enabled())
                 {
+                    singleton->app_led.loading();
                     singleton->fsm.errors = 0;
                     singleton->fsm.events.set(CHECK_WIFI);
                     OSAL_LOG_INFO(APP_TAG, "WIFI disabled state:%s - OK", state_to_string(singleton->fsm.state).c_str());
@@ -120,6 +124,7 @@ void *app_main::handler(void *arg)
                                                                       singleton->hardware.get_time()->set_timestamp(timestamp, nullptr);
                                                                   }
                                                               }, nullptr);
+                    singleton->app_led.loading();
                     singleton->fsm.errors = 0;
                     singleton->fsm.events.set(CHECK_WIFI);
                     OSAL_LOG_INFO(APP_TAG, "Connection OK state:%s - OK", state_to_string(singleton->fsm.state).c_str());
@@ -132,6 +137,8 @@ void *app_main::handler(void *arg)
                        && !connection_flag
                        && singleton->hardware.get_wifi()->connect(ssid, passwd, wifi::auth{auth}, error) == exit::OK)
                     {
+                        singleton->app_led.loading();
+                        singleton->fsm.errors = 0;
                         singleton->fsm.waiting_connection = true;
                         OSAL_LOG_INFO(APP_TAG, "Waiting connection");
                     }
@@ -184,6 +191,7 @@ void *app_main::handler(void *arg)
                         singleton->handle_error();
                     }
 
+                    singleton->app_led.loading();
                     singleton->fsm.errors = 0;
                     singleton->fsm.events.set(CHECK_TIMESTAMP);
                     OSAL_LOG_INFO(APP_TAG, "Date time:%s state:%s - OK", date_time.c_str(), state_to_string(singleton->fsm.state).c_str());
@@ -237,6 +245,8 @@ void *app_main::handler(void *arg)
                     singleton->fsm.events.set(READY);
                     singleton->fsm.old_state = READY;
 
+                    singleton->app_led.ready();
+
                     schedule current_schedule;
                     if(singleton->app_data.get_schedule(now_in_millis / ONE_SEC_IN_MILLIS, current_schedule))
                     {
@@ -276,7 +286,6 @@ void *app_main::handler(void *arg)
                 singleton->fsm.events.clear(CHECK_USERS | CHECK_WIFI | CHECK_TIMESTAMP  | READY | SINCH_TIMESTAMP);
                 singleton->fsm.state = CHECK_USERS;
                 singleton->fsm.old_state = CHECK_USERS;
-                singleton->app_led.loading();
                 break;
             }
             default:
