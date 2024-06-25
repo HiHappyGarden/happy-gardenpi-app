@@ -36,39 +36,6 @@ namespace
 {
 constexpr const char APP_TAG[] = "APP MAIN";
 
-string<32> state_to_string(app_main::state state)
-{
-    string<32> ret;
-    switch(state)
-    {
-        case app_main::CHECK_WIFI:
-            ret = "CHECK_WIFI";
-            break;
-        case app_main::CHECK_USERS:
-            ret = "CHECK_USERS";
-            break;
-        case app_main::CHECK_TIMESTAMP:
-            ret = "NONE";
-            break;
-        case app_main::INIT:
-            ret = "INIT";
-            break;
-        case app_main::READY:
-            ret = "READY";
-            break;
-        case app_main::EXECUTE_ZONE:
-            ret = "EXECUTE_ZONE";
-            break;
-        case app_main::SINCH_TIMESTAMP:
-            ret = "SINCH_TIMESTAMP";
-            break;
-        case app_main::ERROR:
-            ret = "ERROR";
-            break;
-    }
-    return ret;
-}
-
 }
 
 void *app_main::handler(void *arg)
@@ -100,7 +67,7 @@ void *app_main::handler(void *arg)
                         )
                 {
                     singleton->fsm.errors = 0;
-                    singleton->fsm.events.set(static_cast<uint8_t>(CHECK_USERS));
+                    singleton->fsm.events.set(CHECK_USERS);
                     OSAL_LOG_INFO(APP_TAG, "User OK state:%s - OK", state_to_string(singleton->fsm.state).c_str());
                     singleton->fsm.state = CHECK_WIFI;
                     singleton->fsm.old_state = CHECK_USERS;
@@ -112,6 +79,7 @@ void *app_main::handler(void *arg)
                     {
                         printf_stack_error(APP_TAG, *error);
                         delete *error;
+                        *error = nullptr;
                         singleton->handle_error();
                     }
                     if(generic_timer == 0)
@@ -136,9 +104,8 @@ void *app_main::handler(void *arg)
 
                 if(!singleton->app_config.is_wifi_enabled())
                 {
-
                     singleton->fsm.errors = 0;
-                    singleton->fsm.events.set(static_cast<uint8_t>(CHECK_WIFI));
+                    singleton->fsm.events.set(CHECK_WIFI);
                     OSAL_LOG_INFO(APP_TAG, "WIFI disabled state:%s - OK", state_to_string(singleton->fsm.state).c_str());
                     singleton->fsm.state = CHECK_TIMESTAMP;
                     singleton->fsm.old_state = CHECK_WIFI;
@@ -153,7 +120,7 @@ void *app_main::handler(void *arg)
                                                                   }
                                                               }, nullptr);
                     singleton->fsm.errors = 0;
-                    singleton->fsm.events.set(static_cast<uint8_t>(CHECK_WIFI));
+                    singleton->fsm.events.set(CHECK_WIFI);
                     OSAL_LOG_INFO(APP_TAG, "Connection OK state:%s - OK", state_to_string(singleton->fsm.state).c_str());
                     singleton->fsm.state = CHECK_TIMESTAMP;
                     singleton->fsm.old_state = CHECK_WIFI;
@@ -173,6 +140,7 @@ void *app_main::handler(void *arg)
                         {
                             printf_stack_error(APP_TAG, *error);
                             delete *error;
+                            *error = nullptr;
                             singleton->handle_error();
                         }
                     }
@@ -184,6 +152,7 @@ void *app_main::handler(void *arg)
                     {
                         printf_stack_error(APP_TAG, *error);
                         delete *error;
+                        *error = nullptr;
                         singleton->handle_error();
                     }
 
@@ -202,6 +171,7 @@ void *app_main::handler(void *arg)
             }
             case CHECK_TIMESTAMP:
             {
+                singleton->fsm.events.clear(SINCH_TIMESTAMP);
                 if(now_in_millis > TIMESTAMP_2020 * ONE_SEC_IN_MILLIS)
                 {
                     auto &&date_time = singleton->hardware.get_time()->get_date_time(time::FORMAT, singleton->app_config.get_timezone(), singleton->app_config.get_daylight_saving_time(), error);
@@ -209,11 +179,12 @@ void *app_main::handler(void *arg)
                     {
                         printf_stack_error(APP_TAG, *error);
                         delete *error;
+                        *error = nullptr;
                         singleton->handle_error();
                     }
 
                     singleton->fsm.errors = 0;
-                    singleton->fsm.events.set(static_cast<uint8_t>(CHECK_TIMESTAMP));
+                    singleton->fsm.events.set(CHECK_TIMESTAMP);
                     OSAL_LOG_INFO(APP_TAG, "Date time:%s state:%s - OK", date_time.c_str(), state_to_string(singleton->fsm.state).c_str());
                     singleton->fsm.state = INIT;
                     singleton->fsm.old_state = CHECK_TIMESTAMP;
@@ -243,11 +214,13 @@ void *app_main::handler(void *arg)
                 {
                     printf_stack_error(APP_TAG, *error);
                     delete *error;
+                    *error = nullptr;
                     singleton->handle_error();
                 }
 
                 singleton->fsm.errors = 0;
                 singleton->fsm.events.set(SINCH_TIMESTAMP);
+                singleton->fsm.events.clear(CHECK_TIMESTAMP);
                 OSAL_LOG_INFO(APP_TAG, "state:%s - OK", state_to_string(singleton->fsm.state).c_str());
                 singleton->fsm.state = CHECK_TIMESTAMP;
                 singleton->fsm.old_state = SINCH_TIMESTAMP;
@@ -514,10 +487,42 @@ uint32_t app_main::get_state() const
     return singleton->fsm.events.get();
 }
 
+string<32> app_main::state_to_string(app_main::state state)
+{
+    string<32> ret;
+    switch(state)
+    {
+        case app_main::CHECK_WIFI:
+            ret = "CHECK_WIFI";
+            break;
+        case app_main::CHECK_USERS:
+            ret = "CHECK_USERS";
+            break;
+        case app_main::CHECK_TIMESTAMP:
+            ret = "NONE";
+            break;
+        case app_main::INIT:
+            ret = "INIT";
+            break;
+        case app_main::READY:
+            ret = "READY";
+            break;
+        case app_main::EXECUTE_ZONE:
+            ret = "EXECUTE_ZONE";
+            break;
+        case app_main::SINCH_TIMESTAMP:
+            ret = "SINCH_TIMESTAMP";
+            break;
+        case app_main::ERROR:
+            ret = "ERROR";
+            break;
+    }
+    return ret;
+}
+
 os::exit app_main::handle_error() OSAL_NOEXCEPT
 {
     app_led.error();
-    fsm.events.set(ERROR);
     singleton->app_led.error();
     if(fsm.errors < fsm::MAX_ERROR)
     {
@@ -539,11 +544,11 @@ void app_main::on_change_connection(bool old_connected, bool new_connected) OSAL
 {
     if(!old_connected && new_connected)
     {
-        singleton->fsm.events.set(static_cast<uint8_t>(CHECK_WIFI));
+        singleton->fsm.events.set(CHECK_WIFI);
     }
     else if(old_connected && !new_connected)
     {
-        singleton->fsm.events.clear(static_cast<uint8_t>(CHECK_WIFI));
+        singleton->fsm.events.clear(CHECK_WIFI);
         singleton->fsm.waiting_connection = false;
     }
     else if(!old_connected && !new_connected)
@@ -552,7 +557,7 @@ void app_main::on_change_connection(bool old_connected, bool new_connected) OSAL
            && singleton->app_config.get_wifi_auth())
         {
             handle_error();
-            singleton->fsm.events.clear(static_cast<uint8_t>(CHECK_WIFI));
+            singleton->fsm.events.clear(CHECK_WIFI);
             singleton->fsm.waiting_connection = false;
         }
     }

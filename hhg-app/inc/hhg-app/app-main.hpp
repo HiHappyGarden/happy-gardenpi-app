@@ -93,6 +93,8 @@ public:
     os::exit fsm_start(class os::error **error) OSAL_NOEXCEPT;
 
     uint32_t get_state() const OSAL_NOEXCEPT;
+
+    static os::string<32> state_to_string(app_main::state state);
 private:
 
     os::exit handle_error() OSAL_NOEXCEPT;
