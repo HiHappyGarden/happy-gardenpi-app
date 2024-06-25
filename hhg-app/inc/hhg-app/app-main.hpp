@@ -38,7 +38,8 @@ inline namespace v1
 class app_main final : public hhg::iface::initializable, public hhg::iface::wifi::on_connection_event
 {
 public:
-    constexpr static const uint16_t ONE_SEC_IN_MILLIS = 1'000;
+    constexpr static const int16_t ONE_SEC_IN_MILLIS = 1'000;
+    constexpr static const int32_t ONE_HOUR_IN_MILLIS = 60 * 60 * 1'000;
 
     enum state : uint32_t
     {
@@ -46,9 +47,8 @@ public:
         , CHECK_WIFI = (1 << 0)
         , CHECK_TIMESTAMP = (1 << 1)
         , SINCH_TIMESTAMP = (1 << 2)
-        , INIT = (1 << 3)
-        , READY = (1 << 4)
-        , EXECUTE_ZONE = (1 << 5)
+        , READY = (1 << 3)
+        , EXECUTE_ZONE = (1 << 4)
 
         , ERROR = (1 << 7)
     };
