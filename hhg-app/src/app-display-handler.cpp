@@ -286,20 +286,6 @@ auto app_display_handler::handler(void *) -> void *
                 }
                 fsm_last_state = fsm_state;
             }
-            else if(fsm_state & app_main::INIT)
-            {
-                if(fsm_last_state == fsm_state)
-                {
-                    goto continue_to_end_loop;
-                }
-                fsm_last_state = fsm_state;
-
-                singleton->paint_header(fsm_state & app_main::CHECK_WIFI, singleton->now_in_millis / app_main::ONE_SEC_IN_MILLIS);
-                singleton->clean();
-                singleton->paint_str("Init");
-                singleton->send_buffer();
-
-            }
             else if(fsm_state & app_main::SINCH_TIMESTAMP)
             {
                 singleton->now_in_millis = singleton->time->get_timestamp(singleton->app_config.get_timezone(), singleton->app_config.get_daylight_saving_time(), nullptr) * app_main::ONE_SEC_IN_MILLIS;

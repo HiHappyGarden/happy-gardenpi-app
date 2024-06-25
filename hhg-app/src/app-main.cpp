@@ -49,7 +49,8 @@ void *app_main::handler(void *arg)
     auto error = static_cast<os::error **>(arg);
     time_t &&now_in_millis = singleton->hardware.get_time()->get_timestamp(0, false, error) * ONE_SEC_IN_MILLIS;
 
-    int32_t generic_timer = 0;
+    time_t generic_timer = 0;
+    time_t sync_timestamp_timer = 0;
 
     while(singleton->fsm.run)
     {
@@ -186,8 +187,10 @@ void *app_main::handler(void *arg)
                     singleton->fsm.errors = 0;
                     singleton->fsm.events.set(CHECK_TIMESTAMP);
                     OSAL_LOG_INFO(APP_TAG, "Date time:%s state:%s - OK", date_time.c_str(), state_to_string(singleton->fsm.state).c_str());
-                    singleton->fsm.state = INIT;
+                    singleton->fsm.state = READY;
                     singleton->fsm.old_state = CHECK_TIMESTAMP;
+                    generic_timer = 0;
+                    sync_timestamp_timer = ONE_HOUR_IN_MILLIS;
                 }
                 else
                 {
@@ -226,23 +229,6 @@ void *app_main::handler(void *arg)
                 singleton->fsm.old_state = SINCH_TIMESTAMP;
                 break;
             }
-            case INIT:
-            {
-                OSAL_LOG_DEBUG(APP_TAG, "HW check");
-
-
-                singleton->app_led.ready();
-
-                //TODO: hw check
-                generic_timer = 0;
-
-                singleton->fsm.errors = 0;
-                singleton->fsm.events.set(INIT);
-                OSAL_LOG_INFO(APP_TAG, "state:%s - OK", state_to_string(singleton->fsm.state).c_str());
-                singleton->fsm.state = READY;
-                singleton->fsm.old_state = INIT;
-                break;
-            }
             case READY:
             {
                 if(generic_timer <= 0)
@@ -259,6 +245,18 @@ void *app_main::handler(void *arg)
                         //TODO:
                         //singleton->fsm.state = INIT;
                     }
+
+                    if(sync_timestamp_timer == 0)
+                    {
+                        OSAL_LOG_WARNING(APP_TAG, "Start sinch timestamp");
+                        singleton->fsm.state = SINCH_TIMESTAMP;
+                        singleton->fsm.old_state = CHECK_TIMESTAMP;
+                    }
+                    else
+                    {
+                        sync_timestamp_timer -= ONE_SEC_IN_MILLIS;
+                    }
+
                     generic_timer = ONE_SEC_IN_MILLIS;
                 }
                 else
@@ -275,7 +273,7 @@ void *app_main::handler(void *arg)
             case ERROR:
             {
                 OSAL_LOG_FATAL(APP_TAG, "To many error occurred reset state");
-                singleton->fsm.events.clear(CHECK_USERS | CHECK_WIFI | CHECK_TIMESTAMP | INIT | READY | SINCH_TIMESTAMP);
+                singleton->fsm.events.clear(CHECK_USERS | CHECK_WIFI | CHECK_TIMESTAMP  | READY | SINCH_TIMESTAMP);
                 singleton->fsm.state = CHECK_USERS;
                 singleton->fsm.old_state = CHECK_USERS;
                 singleton->app_led.loading();
@@ -501,17 +499,14 @@ string<32> app_main::state_to_string(app_main::state state)
         case app_main::CHECK_TIMESTAMP:
             ret = "NONE";
             break;
-        case app_main::INIT:
-            ret = "INIT";
+        case app_main::SINCH_TIMESTAMP:
+            ret = "SINCH_TIMESTAMP";
             break;
         case app_main::READY:
             ret = "READY";
             break;
         case app_main::EXECUTE_ZONE:
             ret = "EXECUTE_ZONE";
-            break;
-        case app_main::SINCH_TIMESTAMP:
-            ret = "SINCH_TIMESTAMP";
             break;
         case app_main::ERROR:
             ret = "ERROR";
