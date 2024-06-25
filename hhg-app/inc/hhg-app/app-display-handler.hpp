@@ -38,7 +38,7 @@ class app_main;
 class app_display_handler final : public hhg::iface::rotary_encoder::event, public hhg::iface::button::event, public hhg::iface::io, public hhg::app::app_parser::auth
 {
     static constexpr uint8_t FSM_SLEEP = 5;
-    static constexpr uint16_t BLINK_SLEEP = 300;
+    static constexpr uint16_t BLINK_SLEEP = 30;
 
     const hhg::iface::lcd::ptr& lcd;
     const hhg::iface::rotary_encoder::ptr& rotary_encoder;
@@ -61,6 +61,7 @@ class app_display_handler final : public hhg::iface::rotary_encoder::event, publ
 
     mutable osal::mutex mx;
     time_t now_in_millis = 0;
+    int32_t generic_timer = 0;
 
     static inline app_display_handler *singleton = nullptr;
 public:

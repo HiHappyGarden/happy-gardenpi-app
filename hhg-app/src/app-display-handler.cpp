@@ -234,7 +234,6 @@ auto app_display_handler::handler(void *) -> void *
     }
 
     singleton->now_in_millis = singleton->time->get_timestamp(0, false, nullptr) * app_main::ONE_SEC_IN_MILLIS;
-    int32_t generic_timer = 0;
 
     uint32_t fsm_last_state = 0;
 
@@ -267,9 +266,9 @@ auto app_display_handler::handler(void *) -> void *
             }
             else if(fsm_state & app_main::READY)
             {
-                if(generic_timer == 0)
+                if(singleton->generic_timer == 0)
                 {
-                    generic_timer = app_main::ONE_SEC_IN_MILLIS;
+                    singleton->generic_timer = app_main::ONE_SEC_IN_MILLIS;
                     singleton->paint_header(fsm_state & app_main::CHECK_WIFI, singleton->now_in_millis / app_main::ONE_SEC_IN_MILLIS);
                     singleton->clean();
                     singleton->paint_str("Ready");
@@ -277,7 +276,7 @@ auto app_display_handler::handler(void *) -> void *
                 }
                 else
                 {
-                    generic_timer -= FSM_SLEEP;
+                    singleton->generic_timer -= FSM_SLEEP;
                 }
 
                 if(fsm_last_state == fsm_state)
@@ -323,14 +322,14 @@ auto app_display_handler::handler(void *) -> void *
         }
         else
         {
-            if(generic_timer == 0)
+            if(singleton->generic_timer == 0)
             {
                 handle_locked_blink_show(singleton);
-                generic_timer = BLINK_SLEEP;
+                singleton->generic_timer = BLINK_SLEEP;
             }
             else
             {
-                generic_timer -= FSM_SLEEP;
+                singleton->generic_timer -= FSM_SLEEP;
             }
 
 
@@ -340,7 +339,9 @@ auto app_display_handler::handler(void *) -> void *
         continue_to_end_loop:
         singleton->now_in_millis += FSM_SLEEP;
         us_sleep(ms_to_us(FSM_SLEEP));
+
     }
+
 
     singleton->thread.exit();
 
@@ -350,6 +351,7 @@ auto app_display_handler::handler(void *) -> void *
 void app_display_handler::lock()
 {
     locked = true;
+    generic_timer = 0;
 }
 
 inline void app_display_handler::on_logout()
