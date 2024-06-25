@@ -233,7 +233,7 @@ auto app_display_handler::handler(void *) -> void *
         return nullptr;
     }
 
-    time_t &&now_in_millis = singleton->time->get_timestamp(0, false, nullptr) * app_main::ONE_SEC_IN_MILLIS;
+    singleton->now_in_millis = singleton->time->get_timestamp(0, false, nullptr) * app_main::ONE_SEC_IN_MILLIS;
     int32_t generic_timer = 0;
 
     uint32_t fsm_last_state = 0;
@@ -252,25 +252,25 @@ auto app_display_handler::handler(void *) -> void *
             {
                 if(fsm_last_state == fsm_state)
                 {
-                    continue;
+                    goto continue_to_end_loop;
                 }
                 fsm_last_state = fsm_state;
+
             }
             else if(fsm_state & app_main::EXECUTE_ZONE)
             {
                 if(fsm_last_state == fsm_state)
                 {
-                    continue;
+                    goto continue_to_end_loop;
                 }
                 fsm_last_state = fsm_state;
-
             }
             else if(fsm_state & app_main::READY)
             {
                 if(generic_timer == 0)
                 {
-                    generic_timer = 60 * 60 * app_main::ONE_SEC_IN_MILLIS;
-                    singleton->paint_header(fsm_state & app_main::CHECK_WIFI, now_in_millis / app_main::ONE_SEC_IN_MILLIS);
+                    generic_timer = app_main::ONE_SEC_IN_MILLIS;
+                    singleton->paint_header(fsm_state & app_main::CHECK_WIFI, singleton->now_in_millis / app_main::ONE_SEC_IN_MILLIS);
                     singleton->clean();
                     singleton->paint_str("Ready");
                     singleton->send_buffer();
@@ -282,34 +282,33 @@ auto app_display_handler::handler(void *) -> void *
 
                 if(fsm_last_state == fsm_state)
                 {
-                    continue;
+                    goto continue_to_end_loop;
                 }
                 fsm_last_state = fsm_state;
-
             }
             else if(fsm_state & app_main::INIT)
             {
                 if(fsm_last_state == fsm_state)
                 {
-                    continue;
+                    goto continue_to_end_loop;
                 }
                 fsm_last_state = fsm_state;
 
-                OSAL_LOG_DEBUG(APP_TAG, "-->%u", now_in_millis);
-                singleton->paint_header(fsm_state & app_main::CHECK_WIFI, now_in_millis / app_main::ONE_SEC_IN_MILLIS);
+                singleton->paint_header(fsm_state & app_main::CHECK_WIFI, singleton->now_in_millis / app_main::ONE_SEC_IN_MILLIS);
                 singleton->clean();
                 singleton->paint_str("Init");
                 singleton->send_buffer();
+
             }
             else if(fsm_state & app_main::SINCH_TIMESTAMP)
             {
-                now_in_millis = singleton->time->get_timestamp(singleton->app_config.get_timezone(), singleton->app_config.get_daylight_saving_time(), nullptr) * app_main::ONE_SEC_IN_MILLIS;
+                singleton->now_in_millis = singleton->time->get_timestamp(singleton->app_config.get_timezone(), singleton->app_config.get_daylight_saving_time(), nullptr) * app_main::ONE_SEC_IN_MILLIS;
             }
             else if(fsm_state & app_main::CHECK_TIMESTAMP)
             {
                 if(fsm_last_state == fsm_state)
                 {
-                    continue;
+                    goto continue_to_end_loop;
                 }
                 fsm_last_state = fsm_state;
             }
@@ -317,21 +316,23 @@ auto app_display_handler::handler(void *) -> void *
             {
                 if(fsm_last_state == fsm_state)
                 {
-                    continue;
+                    goto continue_to_end_loop;
                 }
                 fsm_last_state = fsm_state;
 
+                singleton->paint_header(false, 0);
+                singleton->clean();
+                singleton->paint_str("In connection...");
+                singleton->send_buffer();
 
             }
             else if(fsm_state & app_main::CHECK_USERS)
             {
                 if(fsm_last_state == fsm_state)
                 {
-                    continue;
+                    goto continue_to_end_loop;
                 }
                 fsm_last_state = fsm_state;
-
-
             }
         }
         else
@@ -350,7 +351,8 @@ auto app_display_handler::handler(void *) -> void *
             singleton->send_buffer();
         }
 
-        now_in_millis += FSM_SLEEP;
+        continue_to_end_loop:
+        singleton->now_in_millis += FSM_SLEEP;
         us_sleep(ms_to_us(FSM_SLEEP));
     }
 

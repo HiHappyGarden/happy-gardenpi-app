@@ -60,6 +60,7 @@ class app_display_handler final : public hhg::iface::rotary_encoder::event, publ
     bool locked_blink_show = true;
 
     mutable osal::mutex mx;
+    time_t now_in_millis = 0;
 
     static inline app_display_handler *singleton = nullptr;
 public:

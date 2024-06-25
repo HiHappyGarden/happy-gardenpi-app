@@ -166,11 +166,12 @@ inline namespace v1
         }
 
 #if HHG_WIFI_DISABLE == 0
-        if (cyw43_arch_wifi_connect_async(ssid.c_str(), passwd.c_str(), pico_auth))
+        if (int32_t rc = cyw43_arch_wifi_connect_async(ssid.c_str(), passwd.c_str(), pico_auth); rc)
         {
+            OSAL_LOG_ERROR(APP_TAG, "---->rc:%d", rc);
             if(error)
             {
-                *error = OSAL_ERROR_BUILD("pico_uart::connect() cyw43_arch_init() fail.", error_type::OS_EFAULT);
+                *error = OSAL_ERROR_BUILD("pico_uart::connect() cyw43_arch_init() fail.", rc);
                 OSAL_ERROR_PTR_SET_POSITION(*error);
             }
             return exit::KO;
