@@ -45,10 +45,11 @@ public:
         CHECK_USERS = 0x00
         , CHECK_WIFI = (1 << 0)
         , CHECK_TIMESTAMP = (1 << 1)
-        , INIT = (1 << 2)
-        , READY = (1 << 3)
-        , EXECUTE_ZONE = (1 << 4)
-        , SINCH_TIMESTAMP = (1 << 5)
+        , SINCH_TIMESTAMP = (1 << 2)
+        , INIT = (1 << 3)
+        , READY = (1 << 4)
+        , EXECUTE_ZONE = (1 << 5)
+
         , ERROR = (1 << 7)
     };
 

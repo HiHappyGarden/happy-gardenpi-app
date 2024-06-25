@@ -304,7 +304,7 @@ inline namespace v1
         OSAL_LOG_DEBUG(APP_TAG, "Connected to ip FAKE IP");
         if(on_ntp_callback)
         {
-            on_ntp_callback(exit::OK, 1'709'068'081);
+            on_ntp_callback(exit::OK, HHG_WIFI_DISABLE_NTP_TIMESTAMP);
         }
         return exit::OK;
 #endif
