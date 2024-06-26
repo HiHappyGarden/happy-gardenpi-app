@@ -306,14 +306,23 @@ inline namespace v1
 
     void pico_sh1106::turn_off() const OSAL_NOEXCEPT
     {
+        if(!turned_on)
+        {
+            return;
+        }
+        turned_on = false;
         send_cmd(reg_address::DISPLAY_OFF);
     }
 
     void pico_sh1106::turn_on() const OSAL_NOEXCEPT
     {
+        if(turned_on)
+        {
+            return;
+        }
+        turned_on = true;
         send_cmd(reg_address::DISPLAY_ON);
     }
-
 
     void pico_sh1106::send_cmd(uint8_t command) const OSAL_NOEXCEPT
     {

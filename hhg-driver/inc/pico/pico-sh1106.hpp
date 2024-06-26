@@ -127,6 +127,11 @@ public:
 
     void turn_on() const OSAL_NOEXCEPT override;
 
+    inline bool is_turn_on() const OSAL_NOEXCEPT override
+    {
+        return turned_on;
+    }
+
 private:
     i2c_inst const *i2c_reference = nullptr;
     uint16_t const address = 0;
@@ -138,6 +143,7 @@ private:
     mutable uint8_t buffer[buffer_size];
 
     bool orientation = true;
+    mutable bool turned_on = true;
 
     os::error** error = nullptr;
 

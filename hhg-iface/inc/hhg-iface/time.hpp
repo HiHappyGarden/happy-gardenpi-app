@@ -51,10 +51,7 @@ struct time
 		return mktime(&ret);
 	}
 
-
 	virtual os::string<32> get_date_time(const char format[], int16_t timezone, bool daylight_saving_time, os::error **error) const OSAL_NOEXCEPT = 0;
-
-	virtual bool wait_for_synchro(uint64_t timeout) const OSAL_NOEXCEPT { return true; };
 
     virtual  os::string<32> to_string(time_t timestamp, const char format[], int16_t timezone, bool daylight_saving_time) const OSAL_NOEXCEPT = 0;
 };

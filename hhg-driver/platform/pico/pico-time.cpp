@@ -101,12 +101,6 @@ string<32> pico_time::get_date_time(const char format[], int16_t timezone, bool 
 	return ret;
 }
 
-bool pico_time::wait_for_synchro(uint64_t timeout) const OSAL_NOEXCEPT
-{
-	return true;
-}
-
-
 os::string<32> pico_time::to_string(time_t timestamp, const char format[], int16_t timezone, bool daylight_saving_time) const OSAL_NOEXCEPT
 {
     os::string<32> ret;
