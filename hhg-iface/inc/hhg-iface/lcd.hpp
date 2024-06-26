@@ -91,6 +91,8 @@ struct lcd : public initializable
     /// \brief Turns display on
     virtual void turn_on() const OSAL_NOEXCEPT = 0;
 
+    virtual bool is_turn_on() const OSAL_NOEXCEPT = 0;
+
 
 };
 

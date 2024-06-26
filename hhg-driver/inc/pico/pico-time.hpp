@@ -45,8 +45,6 @@ public:
 
 	os::string<32> get_date_time(const char[], int16_t timezone, bool daylight_saving_time, os::error **error) const OSAL_NOEXCEPT override;
 
-	bool wait_for_synchro(uint64_t timeout) const OSAL_NOEXCEPT override;
-
     os::string<32> to_string(time_t timestamp, const char format[], int16_t timezone, bool daylight_saving_time) const OSAL_NOEXCEPT override;
 
 private:

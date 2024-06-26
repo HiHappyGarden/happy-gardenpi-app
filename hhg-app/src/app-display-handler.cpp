@@ -54,6 +54,7 @@ app_display_handler::app_display_handler(const iface::lcd::ptr &lcd, const iface
         , app_main(app_main)
         , app_config(app_config)
         , app_parser(app_parser)
+        , app_display_menu(*this)
 {
 
 }
@@ -79,41 +80,41 @@ os::exit app_display_handler::init(os::error **error) OSAL_NOEXCEPT
     return os::exit::OK;
 }
 
-uint8_t i = 0;
-uint8_t i2 = 0;
-int8_t rot = 0;
-
 void app_display_handler::on_button_click(button::status status) OSAL_NOEXCEPT
 {
     //NOTE: NO log in callback!!!!
-
-    if(status == button::status::RELEASE)
+    if(is_turn_on())
     {
-        i++;
+        app_display_menu.button_click(status);
     }
-
-
+    display_turn_off_timer = app_display_handler::DISPLAY_TURN_ODD_TIMEOUT;
 }
 
 void app_display_handler::on_rotary_encoder_event(bool ccw, bool cw, bool click) OSAL_NOEXCEPT
 {
     //NOTE: NO log in callback!!!!
-
-    if(ccw)
+    if(is_turn_on())
     {
-        rot--;
-    }
+        if(ccw)
+        {
+            app_display_menu.rotary_encoder_ccw();
+        }
 
-    if(cw)
-    {
-        rot++;
-    }
+        if(cw)
+        {
+            if(is_turn_on())
+            {
+                app_display_menu.rotary_encoder_cw();
+            }
+        }
 
-    if(click)
-    {
-        i2++;
-    }
+        if(click)
+        {
 
+            app_display_menu.rotary_encoder_click();
+        }
+    }
+    display_turn_off_timer = app_display_handler::DISPLAY_TURN_ODD_TIMEOUT;
 }
 
 void app_display_handler::paint_header(bool wifi, time_t timestamp, int16_t timezone, bool daylight_saving_time) const OSAL_NOEXCEPT
@@ -266,24 +267,41 @@ auto app_display_handler::handler(void *) -> void *
             }
             else if(fsm_state & app_main::READY)
             {
+
                 if(singleton->generic_timer == 0)
                 {
-                    singleton->generic_timer = app_main::ONE_SEC_IN_MILLIS;
-                    singleton->paint_header(fsm_state & app_main::CHECK_WIFI, singleton->now_in_millis / app_main::ONE_SEC_IN_MILLIS);
-                    singleton->clean();
-                    singleton->paint_str("Ready");
-                    singleton->send_buffer();
+                    if(singleton->display_turn_off_timer)
+                    {
+                        singleton->lcd->turn_on();
+                    }
+
+                    if(singleton->lcd->is_turn_on())
+                    {
+                        if(!singleton->app_display_menu.is_opened())
+                        {
+                            singleton->generic_timer = app_main::ONE_SEC_IN_MILLIS;
+                            singleton->paint_header(fsm_state & app_main::CHECK_WIFI, singleton->now_in_millis / app_main::ONE_SEC_IN_MILLIS);
+                            singleton->clean();
+                            singleton->paint_str("Ready");
+                            singleton->send_buffer();
+                        }
+                        else
+                        {
+                            singleton->app_display_menu.paint();
+                        }
+                    }
+
                 }
                 else
                 {
                     singleton->generic_timer -= FSM_SLEEP;
                 }
 
-                if(fsm_last_state == fsm_state)
+                if(singleton->display_turn_off_timer == 0)
                 {
-                    goto continue_to_end_loop;
+                    singleton->lcd->turn_off();
                 }
-                fsm_last_state = fsm_state;
+
             }
             else if(fsm_state & app_main::SINCH_TIMESTAMP)
             {
@@ -322,6 +340,7 @@ auto app_display_handler::handler(void *) -> void *
         }
         else
         {
+            singleton->display_turn_off_timer = app_display_handler::DISPLAY_TURN_ODD_TIMEOUT;
             if(singleton->generic_timer == 0)
             {
                 handle_locked_blink_show(singleton);
@@ -337,6 +356,10 @@ auto app_display_handler::handler(void *) -> void *
         }
 
         continue_to_end_loop:
+        if(singleton->display_turn_off_timer)
+        {
+            singleton->display_turn_off_timer -= FSM_SLEEP;
+        }
         singleton->now_in_millis += FSM_SLEEP;
         us_sleep(ms_to_us(FSM_SLEEP));
 

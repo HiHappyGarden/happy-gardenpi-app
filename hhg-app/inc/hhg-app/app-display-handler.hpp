@@ -27,6 +27,8 @@
 #include "hhg-app/app-config.hpp"
 #include "hhg-app/app-parser.hpp"
 #include "hhg-driver/os-config.hpp"
+#include "hhg-app/app-display-menu.hpp"
+
 
 namespace hhg::app
 {
@@ -48,6 +50,7 @@ class app_display_handler final : public hhg::iface::rotary_encoder::event, publ
     const hhg::app::app_config& app_config;
     const hhg::app::app_parser& app_parser;
 
+    class app_display_menu app_display_menu;
 
     const hhg::iface::io_on_receive *obj = nullptr;
     on_receive on_receive_callback = nullptr;
@@ -62,9 +65,11 @@ class app_display_handler final : public hhg::iface::rotary_encoder::event, publ
     mutable osal::mutex mx;
     time_t now_in_millis = 0;
     int32_t generic_timer = 0;
+    int32_t display_turn_off_timer = DISPLAY_TURN_ODD_TIMEOUT;
 
     static inline app_display_handler *singleton = nullptr;
 public:
+    static constexpr uint16_t DISPLAY_TURN_ODD_TIMEOUT = 6 * 1'000;
 
     enum class font
     {
@@ -100,16 +105,10 @@ public:
         clean(true);
     }
 
-    void paint_str(const char str[], uint16_t y, enum valign valign, enum font font, int16_t offset_x = 0) const OSAL_NOEXCEPT
+    void paint_str(const char str[], uint16_t y = 30, enum valign valign = valign::CENTER, enum font font = font::F8X8, int16_t offset_x = 0) const OSAL_NOEXCEPT
     {
         os::lock_guard lg(mx);
         paint_str(true, str, y, valign, font, offset_x);
-    }
-
-    void paint_str(const char str[]) const OSAL_NOEXCEPT
-    {
-        os::lock_guard lg(mx);
-        paint_str(true, str, 30, valign::CENTER, font::F8X8);
     }
 
     void paint_header(bool wifi, time_t timestamp = 0, int16_t timezone = 0, bool daylight_saving_time = false) const OSAL_NOEXCEPT;
@@ -129,7 +128,12 @@ public:
 
     void lock() OSAL_NOEXCEPT;
 
-    void on_logout() OSAL_NOEXCEPT;
+    void on_logout() OSAL_NOEXCEPT override;
+
+    inline bool is_turn_on() const OSAL_NOEXCEPT
+    {
+        return lcd->is_turn_on();
+    }
 
 private:
     void clean(bool internal) const OSAL_NOEXCEPT;
