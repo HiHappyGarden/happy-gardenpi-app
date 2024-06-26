@@ -40,7 +40,7 @@ inline namespace v1
         constexpr static uint32_t TIMEOUT = 30'000;
 
         static void* handle(void* arg);
-        static inline os::thread thread{"wifi", hhg::driver::HIGH, 1024, pico_wifi::handle};
+        os::thread thread{"wifi", HIGH, 1024, handle};
 
         on_connection_event* obj = nullptr;
         on_connection_event::callback callback = nullptr;

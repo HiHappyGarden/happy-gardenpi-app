@@ -344,7 +344,10 @@ auto app_display_handler::handler(void *) -> void *
             singleton->display_turn_off_timer = app_display_handler::DISPLAY_TURN_ODD_TIMEOUT;
             if(singleton->generic_timer == 0)
             {
+                singleton->lcd->turn_on();
                 handle_locked_blink_show(singleton);
+                singleton->send_buffer();
+
                 singleton->generic_timer = BLINK_SLEEP;
             }
             else
@@ -353,7 +356,6 @@ auto app_display_handler::handler(void *) -> void *
             }
 
 
-            singleton->send_buffer();
         }
 
         continue_to_end_loop:

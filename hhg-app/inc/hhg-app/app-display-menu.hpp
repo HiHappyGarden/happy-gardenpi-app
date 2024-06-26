@@ -31,26 +31,40 @@ class app_display_menu final
 {
     static constexpr uint8_t MENU_SIZE = 4;
     static constexpr uint8_t MENU_LABEL_SIZE = 16;
+    static constexpr int8_t MENU_LEVEL_SIZE = 2;
 
     class app_display_handler& app_display_handler;
 
-    bool do_paint = false;
-    bool opened = false;
-
-    char const first_level_labels[MENU_SIZE][MENU_LABEL_SIZE] = {
-            "Settings",
-            "Irrigates now",
-            "WiFi",
-            "Passwd"
+    enum first_level
+    {
+        PLANNING,
+        IRRIGATE_NOW,
+        WIFI,
+        PASSWD,
+        FIRST_LEVEL_SIZE
     };
 
+    char const first_level_labels[MENU_SIZE][MENU_LABEL_SIZE] = {
+            [PLANNING] = "Planning",
+            [IRRIGATE_NOW] = "Irrigates now",
+            [WIFI] = "WiFi",
+            [PASSWD] = "Passwd"
+    };
+
+    enum passwd_level
+    {
+        SET_PASSWD
+    };
+
+    char const passwd_level_labels[MENU_SIZE][MENU_LABEL_SIZE] = {
+            [SET_PASSWD] = "Set passwd"
+    };
+
+    bool do_paint = false;
+    bool opened = false;
     int8_t menu_idx = -1;
 
-    enum
-    {
-        FIRST_LEVEL
-    } menu_level;
-
+    int8_t menu_level_store[MENU_LEVEL_SIZE];
 
 public:
     explicit app_display_menu(class app_display_handler& app_display_handler) OSAL_NOEXCEPT;
@@ -72,6 +86,15 @@ public:
     {
         return opened;
     }
+
+private:
+
+    void paint_setting() OSAL_NOEXCEPT;
+    void paint_irrigates_now() OSAL_NOEXCEPT;
+    void paint_wifi() OSAL_NOEXCEPT;
+    void paint_passwd() OSAL_NOEXCEPT;
+
+    void paint_keyboard(bool number = false) OSAL_NOEXCEPT;
 
 };
 

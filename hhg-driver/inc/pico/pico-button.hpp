@@ -41,7 +41,7 @@ class pico_button : public hhg::iface::button
     static constexpr uint16_t DEBOUNCE_TIME = 200;
 
     bool run = true;
-    os::thread thread{"button", hhg::driver::NORMAL, configMINIMAL_STACK_SIZE, pico_button::handle};
+    os::thread thread{"button", hhg::driver::NORMAL, MINIMAL_STACK_SIZE, handle};
 
     event *obj = nullptr;
     hhg::iface::button::event::callback callback = nullptr;

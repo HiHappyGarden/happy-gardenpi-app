@@ -52,6 +52,11 @@ inline namespace v1
 
     void *pico_wifi::handle(void *arg)
     {
+        if(singleton == nullptr)
+        {
+            return nullptr;
+        }
+
         if (cyw43_arch_init())
         {
             OSAL_LOG_FATAL(APP_TAG, "Failed to initialise");
@@ -120,7 +125,7 @@ inline namespace v1
             osal_us_sleep(ms_to_us(TICK));
         }
 
-        thread.exit();
+        singleton->thread.exit();
 
         return nullptr;
     }
