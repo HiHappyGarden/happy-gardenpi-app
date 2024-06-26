@@ -37,7 +37,7 @@ constexpr char APP_TAG[] = "APP DISPLAY MENU";
 app_display_menu::app_display_menu(class app_display_handler& app_display_handler) OSAL_NOEXCEPT
         : app_display_handler(app_display_handler)
 {
-
+    memset(menu_level_store, -1, MENU_LEVEL_SIZE);
 }
 
 void app_display_menu::button_click(button::status status) OSAL_NOEXCEPT
@@ -45,12 +45,20 @@ void app_display_menu::button_click(button::status status) OSAL_NOEXCEPT
     if(button::status::RELEASE == status)
     {
         opened = true;
+        for(int8_t i : menu_level_store)
+        {
+            if(menu_level_store[i] == -1)
+            {
+                menu_level_store[i] = menu_idx;
+                break;
+            }
+        }
     }
 }
 
 void app_display_menu::rotary_encoder_click() OSAL_NOEXCEPT
 {
-
+    opened = true;
 }
 
 void app_display_menu::rotary_encoder_ccw() OSAL_NOEXCEPT
@@ -82,10 +90,38 @@ void app_display_menu::paint() OSAL_NOEXCEPT
         return;
     }
 
-    if(menu_level == FIRST_LEVEL)
+    if(menu_level_store[0] == -1)
     {
         app_display_handler.clean();
         app_display_handler.paint_str(first_level_labels[menu_idx]);
+    }
+    else 
+    {
+        switch(menu_level_store[1])
+        {
+            case PLANNING:
+            {
+
+                break;
+            }
+            case IRRIGATE_NOW:
+            {
+
+                break;
+            }
+            case WIFI:
+            {
+                break;
+            }
+            case PASSWD:
+            {
+                app_display_handler.paint_str(passwd_level_labels[0]);
+                paint_keyboard();
+                break;
+            }
+            default:
+                break;
+        }    
     }
 
     app_display_handler.send_buffer();
@@ -95,7 +131,35 @@ void app_display_menu::paint() OSAL_NOEXCEPT
 
 void app_display_menu::exit() OSAL_NOEXCEPT
 {
+    do_paint = false;
     opened = false;
+    menu_idx = -1;
+    memset(menu_level_store, -1, MENU_LEVEL_SIZE);
+}
+
+void app_display_menu::paint_setting() OSAL_NOEXCEPT
+{
+
+}
+
+void app_display_menu::paint_irrigates_now() OSAL_NOEXCEPT
+{
+
+}
+
+void app_display_menu::paint_wifi() OSAL_NOEXCEPT
+{
+
+}
+
+void app_display_menu::paint_passwd() OSAL_NOEXCEPT
+{
+
+}
+
+void app_display_menu::paint_keyboard(bool number) OSAL_NOEXCEPT
+{
+
 }
 
 }

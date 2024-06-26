@@ -54,7 +54,7 @@ inline namespace v1
         return exit::OK;
     }
 
-    void* pico_rotary_encoder::encoder_handle(void* arg)
+    void* pico_rotary_encoder::handler(void* arg)
     {
 
         bool last_a = false;
@@ -121,7 +121,7 @@ inline namespace v1
             last_b = b;
             last_btn = btn;
 
-            osal_us_sleep(10_ms);
+            osal_us_sleep(1_ms);
         }
 
         return nullptr;
