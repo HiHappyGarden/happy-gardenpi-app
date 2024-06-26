@@ -44,10 +44,7 @@ void app_display_menu::button_click(button::status status) OSAL_NOEXCEPT
 {
     if(button::status::RELEASE == status)
     {
-        if(app_display_handler.is_turn_on())
-        {
-            opened = true;
-        }
+        opened = true;
     }
 }
 
@@ -58,12 +55,24 @@ void app_display_menu::rotary_encoder_click() OSAL_NOEXCEPT
 
 void app_display_menu::rotary_encoder_ccw() OSAL_NOEXCEPT
 {
-
+    do_paint = true;
+    opened = true;
+    menu_idx--;
+    if(menu_idx < 0)
+    {
+        menu_idx = MENU_SIZE - 1;
+    }
 }
 
 void app_display_menu::rotary_encoder_cw() OSAL_NOEXCEPT
 {
-
+    do_paint = true;
+    opened = true;
+    menu_idx++;
+    if(menu_idx >= MENU_SIZE)
+    {
+        menu_idx = 0;
+    }
 }
 
 void app_display_menu::paint() OSAL_NOEXCEPT
@@ -73,15 +82,15 @@ void app_display_menu::paint() OSAL_NOEXCEPT
         return;
     }
 
-    if(app_display_handler.is_turn_on())
+    if(menu_level == FIRST_LEVEL)
     {
-        app_display_handler.send_buffer();
-        do_paint = false;
+        app_display_handler.clean();
+        app_display_handler.paint_str(first_level_labels[menu_idx]);
     }
-    else
-    {
-        exit();
-    }
+
+    app_display_handler.send_buffer();
+    do_paint = false;
+
 }
 
 void app_display_menu::exit() OSAL_NOEXCEPT

@@ -65,7 +65,7 @@ class app_display_handler final : public hhg::iface::rotary_encoder::event, publ
     mutable osal::mutex mx;
     time_t now_in_millis = 0;
     int32_t generic_timer = 0;
-    int32_t display_turn_off_timer = DISPLAY_TURN_ODD_TIMEOUT;
+    volatile int32_t display_turn_off_timer = DISPLAY_TURN_ODD_TIMEOUT;
 
     static inline app_display_handler *singleton = nullptr;
 public:

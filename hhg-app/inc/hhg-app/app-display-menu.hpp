@@ -29,19 +29,28 @@ inline namespace v1
 class app_display_handler;
 class app_display_menu final
 {
+    static constexpr uint8_t MENU_SIZE = 4;
+    static constexpr uint8_t MENU_LABEL_SIZE = 16;
+
     class app_display_handler& app_display_handler;
 
     bool do_paint = false;
     bool opened = false;
 
-    char const menu_labels[4][16] = {
+    char const first_level_labels[MENU_SIZE][MENU_LABEL_SIZE] = {
             "Settings",
             "Irrigates now",
             "WiFi",
             "Passwd"
     };
 
-    uint8_t menu_idx = 0;
+    int8_t menu_idx = -1;
+
+    enum
+    {
+        FIRST_LEVEL
+    } menu_level;
+
 
 public:
     explicit app_display_menu(class app_display_handler& app_display_handler) OSAL_NOEXCEPT;

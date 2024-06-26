@@ -102,10 +102,7 @@ void app_display_handler::on_rotary_encoder_event(bool ccw, bool cw, bool click)
 
         if(cw)
         {
-            if(is_turn_on())
-            {
-                app_display_menu.rotary_encoder_cw();
-            }
+            app_display_menu.rotary_encoder_cw();
         }
 
         if(click)
@@ -299,6 +296,10 @@ auto app_display_handler::handler(void *) -> void *
 
                 if(singleton->display_turn_off_timer == 0)
                 {
+                    if(singleton->app_display_menu.is_opened())
+                    {
+                        singleton->app_display_menu.exit();
+                    }
                     singleton->lcd->turn_off();
                 }
 
