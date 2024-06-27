@@ -202,7 +202,7 @@ inline namespace v1
             return;
         }
 
-        uint32_t c_offset = ( (c - 32) * (width * height) ) + 2;
+        uint32_t c_offset = ( (c - ASCII_TABLE_START_AT_IDX) * (width * height) ) + 2;
 
 
         uint32_t i = 80;
