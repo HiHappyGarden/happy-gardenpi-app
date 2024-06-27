@@ -19,6 +19,7 @@
 
 #pragma once
 #include "hhg-iface/button.hpp"
+#include "hhg-app/app-display-keyboard.hpp"
 
 
 namespace hhg::app
@@ -34,6 +35,7 @@ class app_display_menu final
     static constexpr int8_t MENU_LEVEL_SIZE = 2;
 
     class app_display_handler& app_display_handler;
+    class app_display_keyboard app_display_keyboard;
 
     enum first_level
     {
@@ -60,7 +62,6 @@ class app_display_menu final
     };
 
     os::mutex mx;
-    os::pair<uint8_t, uint8_t>&& font_limit;
 
     bool do_paint = false;
     bool opened = false;

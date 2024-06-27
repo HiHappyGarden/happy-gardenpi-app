@@ -31,6 +31,8 @@ struct lcd : public initializable
 {
     using ptr = os::unique_ptr<hhg::iface::lcd>;
 
+    constexpr static uint8_t ASCII_TABLE_START_AT_IDX = 32;
+
     /// \enum pico_sh1106::WriteMode
     enum class write_mode : const uint8_t
     {

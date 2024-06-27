@@ -159,9 +159,9 @@ pair<uint8_t, uint8_t> app_display_handler::get_font_range(app_display_handler::
     switch(font)
     {
         case font::F5X8:
-            return {32, font_5x8_size - 1 + 32};
+            return {lcd::ASCII_TABLE_START_AT_IDX, font_5x8_size - 1 + lcd::ASCII_TABLE_START_AT_IDX};
         case font::F8X8:
-            return {32, font_8x8_size - 1 + 32};
+            return {lcd::ASCII_TABLE_START_AT_IDX, font_8x8_size - 1 + lcd::ASCII_TABLE_START_AT_IDX};
     }
     return {0,0};
 }
