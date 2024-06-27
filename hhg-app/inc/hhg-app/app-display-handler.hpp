@@ -115,6 +115,11 @@ public:
         paint_char(true, c, x, y, font);
     }
 
+    inline void paint_clean(uint16_t x, uint16_t y, uint16_t width, uint16_t height) const OSAL_NOEXCEPT
+    {
+        lcd->set_rect(x, y, width, height, hhg::iface::lcd::write_mode::REMOVE);
+    }
+
     void paint_header(bool wifi, time_t timestamp = 0, int16_t timezone = 0, bool daylight_saving_time = false) const OSAL_NOEXCEPT;
 
     os::pair<uint8_t, uint8_t> get_font_range(enum font font = font::F8X8);

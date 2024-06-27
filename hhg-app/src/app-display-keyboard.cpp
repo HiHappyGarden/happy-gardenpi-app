@@ -27,8 +27,8 @@ namespace hhg::app
 inline namespace v1
 {
 
-app_display_keyboard::app_display_keyboard(int16_t& keyboard_idx, class app_display_handler& app_display_handler) OSAL_NOEXCEPT
-: keyboard_idx(keyboard_idx)
+app_display_keyboard::app_display_keyboard(int16_t& menu_idx, class app_display_handler& app_display_handler) OSAL_NOEXCEPT
+: menu_idx(menu_idx)
 , app_display_handler(app_display_handler)
 , font_limit(app_display_handler.get_font_range(app_display_handler::font::F5X8))
 {
@@ -45,32 +45,39 @@ void app_display_keyboard::button_click() OSAL_NOEXCEPT
 {
     if(keyboard_position < KEYBOARD_BUFFER_SIZE - 1)
     {
-        keyboard_buffer[keyboard_position] = keyboard_idx;
+        keyboard_buffer[keyboard_position] = menu_idx;
         keyboard_position++;
-        keyboard_idx = 'a';
+        menu_idx = 'a';
+        add_char = true;
     }
 }
 
 void app_display_keyboard::rotary_encoder_click() OSAL_NOEXCEPT
 {
-
+    if(keyboard_position > 0)
+    {
+        keyboard_position--;
+        keyboard_buffer[keyboard_position] = '\0';
+        menu_idx = 'a';
+        add_char = false;
+    }
 }
 
 void app_display_keyboard::rotary_encoder_ccw() OSAL_NOEXCEPT
 {
-    keyboard_idx--;
-    if(keyboard_idx < font_limit.first)
+    menu_idx--;
+    if(menu_idx < font_limit.first)
     {
-        keyboard_idx = int16_t(font_limit.second);
+        menu_idx = int16_t(font_limit.second);
     }
 }
 
 void app_display_keyboard::rotary_encoder_cw() OSAL_NOEXCEPT
 {
-    keyboard_idx++;
-    if(keyboard_idx > font_limit.second)
+    menu_idx++;
+    if(menu_idx > font_limit.second)
     {
-        keyboard_idx = font_limit.first;
+        menu_idx = font_limit.first;
     }
 }
 
@@ -80,7 +87,12 @@ void app_display_keyboard::paint() OSAL_NOEXCEPT
     uint8_t const width_char = 8;
     uint16_t x = 2 + (keyboard_position * width_char);
 
-    app_display_handler.paint_char(keyboard_idx , x, y, app_display_handler::font::F8X8);
+    printf("-->x:%u\n", x);
+
+    if(add_char)
+        app_display_handler.paint_char(menu_idx , x, y, app_display_handler::font::F8X8);
+    else
+        app_display_handler.paint_clean(x, y, 8 + 8, 8);
 }
 
 }

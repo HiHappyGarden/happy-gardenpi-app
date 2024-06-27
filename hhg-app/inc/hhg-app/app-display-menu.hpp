@@ -67,7 +67,6 @@ class app_display_menu final
     bool opened = false;
 
     int16_t menu_idx = -1;
-    int16_t keyboard_idx = -1;
 
     int16_t menu_level_store[MENU_LEVEL_SIZE];
 
@@ -99,7 +98,6 @@ private:
     void paint_wifi() OSAL_NOEXCEPT;
     void paint_passwd() OSAL_NOEXCEPT;
 
-    void paint_keyboard(bool number = false) OSAL_NOEXCEPT;
 
 };
 
