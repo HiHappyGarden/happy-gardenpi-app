@@ -37,7 +37,7 @@ constexpr char APP_TAG[] = "APP DISPLAY MENU";
 
 app_display_menu::app_display_menu(class app_display_handler& app_display_handler) OSAL_NOEXCEPT
         : app_display_handler(app_display_handler)
-        , app_display_keyboard(keyboard_idx, app_display_handler)
+        , app_display_keyboard(menu_idx, app_display_handler)
 {
     memset(menu_level_store, -1, MENU_LEVEL_SIZE);
 }
@@ -49,7 +49,7 @@ void app_display_menu::button_click(button::status status) OSAL_NOEXCEPT
         lock_guard lg(mx);
         opened = true;
 
-        if(keyboard_idx == -1)
+        if(menu_level_store[0] == -1)
         {
             uint8_t level = 0;
             for(int16_t value: menu_level_store)
@@ -58,6 +58,7 @@ void app_display_menu::button_click(button::status status) OSAL_NOEXCEPT
                 {
                     do_paint = true;
                     menu_level_store[level] = menu_idx;
+                    menu_idx = -1;
                     break;
                 }
                 level++;
@@ -66,7 +67,23 @@ void app_display_menu::button_click(button::status status) OSAL_NOEXCEPT
         else
         {
             do_paint = true;
-            app_display_keyboard.button_click();
+
+            switch(menu_level_store[0])
+            {
+                case PLANNING:
+
+                    break;
+                case IRRIGATE_NOW:
+
+                    break;
+                case WIFI:
+
+                    break;
+                case PASSWD:
+                    app_display_keyboard.button_click();
+                    break;
+            }
+
         }
     }
 }
@@ -75,9 +92,29 @@ void app_display_menu::rotary_encoder_click() OSAL_NOEXCEPT
 {
     lock_guard lg(mx);
     opened = true;
-    if(keyboard_idx > -1)
+    if(menu_level_store[0] == -1)
     {
-        app_display_keyboard.rotary_encoder_click();
+
+    }
+    else
+    {
+        do_paint = true;
+        switch(menu_level_store[0])
+        {
+            case PLANNING:
+
+                break;
+            case IRRIGATE_NOW:
+
+                break;
+            case WIFI:
+
+                break;
+            case PASSWD:
+                app_display_keyboard.rotary_encoder_click();
+                break;
+        }
+
     }
 }
 
@@ -87,7 +124,7 @@ void app_display_menu::rotary_encoder_ccw() OSAL_NOEXCEPT
     do_paint = true;
     opened = true;
 
-    if(keyboard_idx == -1)
+    if(menu_level_store[0] == -1)
     {
         menu_idx--;
         if(menu_idx < 0)
@@ -97,7 +134,21 @@ void app_display_menu::rotary_encoder_ccw() OSAL_NOEXCEPT
     }
     else
     {
-        app_display_keyboard.rotary_encoder_ccw();
+        switch(menu_level_store[0])
+        {
+            case PLANNING:
+
+                break;
+            case IRRIGATE_NOW:
+
+                break;
+            case WIFI:
+
+                break;
+            case PASSWD:
+                app_display_keyboard.rotary_encoder_ccw();
+                break;
+        }
     }
 }
 
@@ -106,7 +157,7 @@ void app_display_menu::rotary_encoder_cw() OSAL_NOEXCEPT
     lock_guard lg(mx);
     do_paint = true;
     opened = true;
-    if(keyboard_idx == -1)
+    if(menu_level_store[0] == -1)
     {
         menu_idx++;
         if(menu_idx >= MENU_SIZE)
@@ -116,7 +167,21 @@ void app_display_menu::rotary_encoder_cw() OSAL_NOEXCEPT
     }
     else
     {
-        app_display_keyboard.rotary_encoder_cw();
+        switch(menu_level_store[0])
+        {
+            case PLANNING:
+
+                break;
+            case IRRIGATE_NOW:
+
+                break;
+            case WIFI:
+
+                break;
+            case PASSWD:
+                app_display_keyboard.rotary_encoder_cw();
+                break;
+        }
     }
 }
 
@@ -135,7 +200,7 @@ pair<bool, bool> app_display_menu::paint() OSAL_NOEXCEPT //<update paint_header,
         app_display_handler.paint_str(first_level_labels[menu_idx]);
         return {true, true};
     }
-    else if(keyboard_idx == -1)
+    else
     {
 
         switch(menu_level_store[0])
@@ -156,9 +221,12 @@ pair<bool, bool> app_display_menu::paint() OSAL_NOEXCEPT //<update paint_header,
             }
             case PASSWD:
             {
+                if(menu_idx == -1)
+                {
+                    menu_idx = 'a';
+                }
                 app_display_handler.paint_str(passwd_level_labels[0]);
-                keyboard_idx = 'a';
-                paint_keyboard();
+                app_display_keyboard.paint();
                 break;
             }
             default:
@@ -166,11 +234,7 @@ pair<bool, bool> app_display_menu::paint() OSAL_NOEXCEPT //<update paint_header,
         }
         return {false, true};
     }
-    else
-    {
-        paint_keyboard();
-        return {true, true};
-    }
+
     return {true, false};
 }
 
@@ -179,7 +243,6 @@ void app_display_menu::exit() OSAL_NOEXCEPT
     do_paint = false;
     opened = false;
     menu_idx = -1;
-    keyboard_idx = -1;
     memset(menu_level_store, -1, MENU_LEVEL_SIZE);
     app_display_keyboard.exit();
 }
@@ -204,11 +267,6 @@ void app_display_menu::paint_passwd() OSAL_NOEXCEPT
 
 }
 
-void app_display_menu::paint_keyboard(bool number) OSAL_NOEXCEPT
-{
-   lock_guard lg(mx);
-    app_display_keyboard.paint();
-}
 
 }
 }

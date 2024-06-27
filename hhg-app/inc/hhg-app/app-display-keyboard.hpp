@@ -34,15 +34,16 @@ public:
     static constexpr int8_t KEYBOARD_BUFFER_SIZE = 32;
 
 private:
-    int16_t& keyboard_idx;
+    int16_t& menu_idx;
     class app_display_handler& app_display_handler;
 
+    bool add_char = true;
     uint8_t keyboard_position = 0;
     char keyboard_buffer[KEYBOARD_BUFFER_SIZE];
 
     os::pair<uint8_t, uint8_t> font_limit;
 public:
-    app_display_keyboard(int16_t& keyboard_idx, class app_display_handler& app_display_handler);
+    app_display_keyboard(int16_t& menu_idx, class app_display_handler& app_display_handler);
     OSAL_NO_COPY_NO_MOVE(app_display_keyboard)
 
     void button_click() OSAL_NOEXCEPT;
