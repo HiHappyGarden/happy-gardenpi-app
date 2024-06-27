@@ -19,7 +19,7 @@
 
 
 #pragma once
-namespace hhg
+namespace hhg::asset
 {
 inline namespace v1
 {

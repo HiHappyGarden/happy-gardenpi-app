@@ -40,7 +40,7 @@ class app_main;
 class app_display_handler final : public hhg::iface::rotary_encoder::event, public hhg::iface::button::event, public hhg::iface::io, public hhg::app::app_parser::auth
 {
     static constexpr uint8_t FSM_SLEEP = 5;
-    static constexpr uint16_t BLINK_SLEEP = 30;
+    static constexpr uint16_t BLINK_SLEEP = 500;
 
     const hhg::iface::lcd::ptr& lcd;
     const hhg::iface::rotary_encoder::ptr& rotary_encoder;
@@ -62,14 +62,14 @@ class app_display_handler final : public hhg::iface::rotary_encoder::event, publ
     bool locked = false;
     bool locked_blink_show = true;
 
-    mutable osal::mutex mx;
+    mutable os::mutex mx;
     time_t now_in_millis = 0;
     int32_t generic_timer = 0;
     volatile int32_t display_turn_off_timer = DISPLAY_TURN_ODD_TIMEOUT;
 
     static inline app_display_handler *singleton = nullptr;
 public:
-    static constexpr uint16_t DISPLAY_TURN_ODD_TIMEOUT = 6 * 1'000;
+    static constexpr uint16_t DISPLAY_TURN_ODD_TIMEOUT = 60 * 1'000;
 
     enum class font
     {
@@ -105,13 +105,19 @@ public:
         clean(true);
     }
 
-    void paint_str(const char str[], uint16_t y = 30, enum valign valign = valign::CENTER, enum font font = font::F8X8, int16_t offset_x = 0) const OSAL_NOEXCEPT
+    inline void paint_str(const char str[], uint16_t y = 30, enum valign valign = valign::CENTER, enum font font = font::F8X8, int16_t offset_x = 0) const OSAL_NOEXCEPT
     {
-        os::lock_guard lg(mx);
         paint_str(true, str, y, valign, font, offset_x);
     }
 
+    inline void paint_char(char c, uint16_t x, uint16_t y, enum font font = font::F8X8) const OSAL_NOEXCEPT
+    {
+        paint_char(true, c, x, y, font);
+    }
+
     void paint_header(bool wifi, time_t timestamp = 0, int16_t timezone = 0, bool daylight_saving_time = false) const OSAL_NOEXCEPT;
+
+    os::pair<uint8_t, uint8_t> get_font_range(enum font font = font::F8X8);
 
     void send_buffer() OSAL_NOEXCEPT;
 
@@ -136,9 +142,11 @@ public:
     }
 
 private:
-    void clean(bool internal) const OSAL_NOEXCEPT;
-
     void paint_str(bool internal, const char str[], uint16_t y, enum valign valign, enum font font, int16_t offset_x = 0) const OSAL_NOEXCEPT;
+
+    void paint_char(bool internal, char c, uint16_t x, uint16_t y, enum font font) const OSAL_NOEXCEPT;
+
+    void clean(bool internal) const OSAL_NOEXCEPT;
 
     static void handle_locked_blink_show(app_display_handler* self) OSAL_NOEXCEPT;
 };

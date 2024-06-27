@@ -40,8 +40,7 @@ class app_display_menu final
         PLANNING,
         IRRIGATE_NOW,
         WIFI,
-        PASSWD,
-        FIRST_LEVEL_SIZE
+        PASSWD
     };
 
     char const first_level_labels[MENU_SIZE][MENU_LABEL_SIZE] = {
@@ -60,11 +59,16 @@ class app_display_menu final
             [SET_PASSWD] = "Set passwd"
     };
 
+    os::mutex mx;
+    os::pair<uint8_t, uint8_t>&& font_limit;
+
     bool do_paint = false;
     bool opened = false;
-    int8_t menu_idx = -1;
 
-    int8_t menu_level_store[MENU_LEVEL_SIZE];
+    int16_t menu_idx = -1;
+    int16_t keyboard_idx = -1;
+
+    int16_t menu_level_store[MENU_LEVEL_SIZE];
 
 public:
     explicit app_display_menu(class app_display_handler& app_display_handler) OSAL_NOEXCEPT;
@@ -78,7 +82,7 @@ public:
 
     void rotary_encoder_cw() OSAL_NOEXCEPT;
 
-    void paint() OSAL_NOEXCEPT;
+    os::pair<bool, bool> paint() OSAL_NOEXCEPT; //<update paint_header, update send_buffer>
 
     void exit() OSAL_NOEXCEPT;
 
