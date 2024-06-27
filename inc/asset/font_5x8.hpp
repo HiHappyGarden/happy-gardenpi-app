@@ -18,7 +18,7 @@
  ***************************************************************************/
 
 #pragma once
-namespace hhg
+namespace hhg::assets
 {
 inline namespace v1
 {
@@ -26,8 +26,8 @@ inline namespace v1
 namespace
 {
 
-    constexpr uint8_t  font_5x8[] =
-    {
+constexpr uint8_t font_5x8[] =
+{
     0x5, 0x8, // font width, height
 
     0x0,
@@ -1373,7 +1373,10 @@ namespace
     0x0,
     0x0,
     0x0,
-    };
+};
+
+constexpr uint16_t font_5x8_size = (sizeof(font_5x8) - 2) / 5;
+
 }
 
 }
