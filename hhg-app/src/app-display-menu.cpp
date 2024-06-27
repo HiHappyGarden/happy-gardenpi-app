@@ -20,6 +20,9 @@
 #include "hhg-app/app-display-menu.hpp"
 #include "hhg-app/app-display-handler.hpp"
 
+using namespace os;
+
+
 using hhg::iface::button;
 
 namespace hhg::app
@@ -36,68 +39,104 @@ constexpr char APP_TAG[] = "APP DISPLAY MENU";
 
 app_display_menu::app_display_menu(class app_display_handler& app_display_handler) OSAL_NOEXCEPT
         : app_display_handler(app_display_handler)
+        , font_limit(app_display_handler.get_font_range(app_display_handler::font::F5X8))
 {
     memset(menu_level_store, -1, MENU_LEVEL_SIZE);
 }
 
 void app_display_menu::button_click(button::status status) OSAL_NOEXCEPT
 {
-    if(button::status::RELEASE == status)
+    if(status == button::status::RELEASE)
     {
+        lock_guard lg(mx);
         opened = true;
-        for(int8_t i : menu_level_store)
+        uint8_t level = 0;
+        for(int16_t value : menu_level_store)
         {
-            if(menu_level_store[i] == -1)
+            if(value == -1)
             {
-                menu_level_store[i] = menu_idx;
+                do_paint = true;
+                menu_level_store[level] = menu_idx;
                 break;
             }
+            level++;
         }
     }
 }
 
 void app_display_menu::rotary_encoder_click() OSAL_NOEXCEPT
 {
+    lock_guard lg(mx);
     opened = true;
 }
 
 void app_display_menu::rotary_encoder_ccw() OSAL_NOEXCEPT
 {
+    lock_guard lg(mx);
     do_paint = true;
     opened = true;
-    menu_idx--;
-    if(menu_idx < 0)
+
+    if(keyboard_idx == -1)
     {
-        menu_idx = MENU_SIZE - 1;
+        menu_idx--;
+        if(menu_idx < 0)
+        {
+            menu_idx = MENU_SIZE - 1;
+        }
     }
+    else
+    {
+        keyboard_idx--;
+        if(keyboard_idx < font_limit.first)
+        {
+            keyboard_idx = int16_t(font_limit.second);
+        }
+    }
+
 }
 
 void app_display_menu::rotary_encoder_cw() OSAL_NOEXCEPT
 {
+    lock_guard lg(mx);
     do_paint = true;
     opened = true;
-    menu_idx++;
-    if(menu_idx >= MENU_SIZE)
+    if(keyboard_idx == -1)
     {
-        menu_idx = 0;
+        menu_idx++;
+        if(menu_idx >= MENU_SIZE)
+        {
+            menu_idx = 0;
+        }
+    }
+    else
+    {
+        keyboard_idx++;
+        if(keyboard_idx > font_limit.second)
+        {
+            keyboard_idx = font_limit.first;
+        }
     }
 }
 
-void app_display_menu::paint() OSAL_NOEXCEPT
+pair<bool, bool> app_display_menu::paint() OSAL_NOEXCEPT //<update paint_header, update send_buffer>
 {
     if(!do_paint)
     {
-        return;
+        return {true, false};
     }
+    lock_guard lg(mx);
+    do_paint = false;
 
     if(menu_level_store[0] == -1)
     {
         app_display_handler.clean();
         app_display_handler.paint_str(first_level_labels[menu_idx]);
+        return {true, true};
     }
-    else 
+    else if(keyboard_idx == -1)
     {
-        switch(menu_level_store[1])
+
+        switch(menu_level_store[0])
         {
             case PLANNING:
             {
@@ -116,17 +155,21 @@ void app_display_menu::paint() OSAL_NOEXCEPT
             case PASSWD:
             {
                 app_display_handler.paint_str(passwd_level_labels[0]);
+                keyboard_idx = font_limit.first;
                 paint_keyboard();
                 break;
             }
             default:
                 break;
-        }    
+        }
+        return {false, true};
     }
-
-    app_display_handler.send_buffer();
-    do_paint = false;
-
+    else
+    {
+        paint_keyboard();
+        return {true, false};
+    }
+    return {true, false};
 }
 
 void app_display_menu::exit() OSAL_NOEXCEPT
@@ -159,6 +202,11 @@ void app_display_menu::paint_passwd() OSAL_NOEXCEPT
 
 void app_display_menu::paint_keyboard(bool number) OSAL_NOEXCEPT
 {
+    static uint16_t const y = 45;
+    uint8_t const width_char = 5;
+    uint16_t x = 2 + ( (keyboard_idx - 32) * width_char);
+
+    app_display_handler.paint_char(keyboard_idx , x, y, app_display_handler::font::F8X8);
 
 }
 

@@ -26,10 +26,11 @@ using hhg::iface::button;
 using hhg::iface::rotary_encoder;
 using hhg::iface::time;
 
-#include "assets/font_5x8.hpp"
-#include "assets/font_8x8.hpp"
-#include "assets/ic_wifi_on.hpp"
-#include "assets/ic_wifi_off.hpp"
+#include "asset/font_5x8.hpp"
+#include "asset/font_8x8.hpp"
+#include "asset/ic_wifi_on.hpp"
+#include "asset/ic_wifi_off.hpp"
+using namespace hhg::asset;
 
 #include <time.h>
 
@@ -116,7 +117,7 @@ void app_display_handler::on_rotary_encoder_event(bool ccw, bool cw, bool click)
 
 void app_display_handler::paint_header(bool wifi, time_t timestamp, int16_t timezone, bool daylight_saving_time) const OSAL_NOEXCEPT
 {
-    os::lock_guard lg(mx);
+    lock_guard lg(mx);
     auto &&[display_width, display_height] = lcd->get_size();
 
     uint16_t ic_wifi_width = 0;
@@ -153,9 +154,21 @@ void app_display_handler::paint_header(bool wifi, time_t timestamp, int16_t time
 
 }
 
+pair<uint8_t, uint8_t> app_display_handler::get_font_range(app_display_handler::font font)
+{
+    switch(font)
+    {
+        case font::F5X8:
+            return {32, font_5x8_size - 1 + 32};
+        case font::F8X8:
+            return {32, font_8x8_size - 1 + 32};
+    }
+    return {0,0};
+}
+
 void app_display_handler::send_buffer() OSAL_NOEXCEPT
 {
-    os::lock_guard lg(mx);
+    lock_guard lg(mx);
     lcd->send_buffer();
 }
 
@@ -170,6 +183,7 @@ void app_display_handler::paint_str(bool internal, const char str[], uint16_t y,
     {
         return;
     }
+    os::lock_guard lg(mx);
 
     auto &&[display_width, display_height] = lcd->get_size();
 
@@ -211,6 +225,37 @@ void app_display_handler::paint_str(bool internal, const char str[], uint16_t y,
 
     lcd->set_str(str, x + offset_x, y, font_ref, font_ref_size);
 }
+
+void app_display_handler::paint_char(bool internal, char c, uint16_t x, uint16_t y, app_display_handler::font font) const
+{
+    if(!internal && (app_parser.get_source() == iface::io_source::UART || app_parser.get_source() == iface::io_source::WIFI))
+    {
+        return;
+    }
+    os::lock_guard lg(mx);
+
+    const uint8_t *font_ref = nullptr;
+    uint32_t font_ref_size = 0;
+
+    switch(font)
+    {
+        case font::F5X8:
+            font_ref = font_5x8;
+            font_ref_size = sizeof font_5x8;
+            break;
+        case font::F8X8:
+            font_ref = font_8x8;
+            font_ref_size = sizeof font_8x8;
+            break;
+    }
+    if(font_ref == nullptr)
+    {
+        return;
+    }
+
+    lcd->set_char(c, x, y, font_ref, font_ref_size);
+}
+
 
 void app_display_handler::clean(bool internal) const OSAL_NOEXCEPT
 {
@@ -284,7 +329,17 @@ auto app_display_handler::handler(void *) -> void *
                         }
                         else
                         {
-                            singleton->app_display_menu.paint();
+                            auto [update_paint_header, update_send_buffer] = singleton->app_display_menu.paint();
+
+                            if(update_paint_header)
+                            {
+                                singleton->paint_header(fsm_state & app_main::CHECK_WIFI, singleton->now_in_millis / app_main::ONE_SEC_IN_MILLIS);
+                            }
+
+                            if(update_send_buffer)
+                            {
+                                singleton->send_buffer();
+                            }
                         }
                     }
 
@@ -345,6 +400,7 @@ auto app_display_handler::handler(void *) -> void *
             if(singleton->generic_timer == 0)
             {
                 singleton->lcd->turn_on();
+                singleton->paint_header(fsm_state & app_main::CHECK_WIFI, singleton->now_in_millis / app_main::ONE_SEC_IN_MILLIS);
                 handle_locked_blink_show(singleton);
                 singleton->send_buffer();
 
