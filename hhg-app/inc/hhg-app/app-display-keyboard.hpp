@@ -42,7 +42,7 @@ private:
 
     bool add_char = true;
     uint8_t keyboard_position = 0;
-    char keyboard_buffer[KEYBOARD_BUFFER_SIZE];
+    char keyboard_buffer[KEYBOARD_BUFFER_SIZE + 1];
     bool keyboard_buffer_overflow = false;
 
     os::pair<uint8_t, uint8_t> font_limit;
@@ -64,7 +64,7 @@ public:
 
     void rotary_encoder_cw() OSAL_NOEXCEPT;
 
-    void paint() OSAL_NOEXCEPT; //<update paint_header, update send_buffer>
+    void paint() OSAL_NOEXCEPT; 
 
     void exit();
 
