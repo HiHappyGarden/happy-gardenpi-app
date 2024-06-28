@@ -120,6 +120,11 @@ public:
         lcd->set_rect(x, y, width, height, hhg::iface::lcd::write_mode::REMOVE);
     }
 
+    inline os::pair<uint16_t, uint16_t> get_size() const OSAL_NOEXCEPT
+    {
+        return lcd->get_size();;
+    }
+
     void paint_header(bool wifi, time_t timestamp = 0, int16_t timezone = 0, bool daylight_saving_time = false) const OSAL_NOEXCEPT;
 
     os::pair<uint8_t, uint8_t> get_font_range(enum font font = font::F8X8);
