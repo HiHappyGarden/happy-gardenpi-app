@@ -32,7 +32,7 @@ class app_display_keyboard final
 {
 public:
     static constexpr int8_t KEYBOARD_BUFFER_SIZE = 32;
-
+    static constexpr uint8_t const WIDTH_CHAR = 8;
 private:
     int16_t& menu_idx;
     class app_display_handler& app_display_handler;
@@ -42,8 +42,12 @@ private:
     char keyboard_buffer[KEYBOARD_BUFFER_SIZE];
 
     os::pair<uint8_t, uint8_t> font_limit;
+    uint8_t const display_width;
+    uint8_t const line_max_char;
+    char* sub_keyboard_buffer = nullptr;
 public:
     app_display_keyboard(int16_t& menu_idx, class app_display_handler& app_display_handler);
+    ~app_display_keyboard();
     OSAL_NO_COPY_NO_MOVE(app_display_keyboard)
 
     void button_click() OSAL_NOEXCEPT;
