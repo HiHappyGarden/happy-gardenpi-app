@@ -33,7 +33,8 @@ struct button : public initializable
     enum class status
     {
         PRESS,
-        RELEASE
+        RELEASE,
+        LONG_CLICK
     };
 
     struct event

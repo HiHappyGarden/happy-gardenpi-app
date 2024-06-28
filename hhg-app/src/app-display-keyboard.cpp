@@ -19,8 +19,8 @@
 
 #include "hhg-app/app-display-keyboard.hpp"
 #include "hhg-app/app-display-handler.hpp"
-
 using namespace os;
+using hhg::iface::button;
 
 namespace hhg::app
 {
@@ -54,14 +54,22 @@ void app_display_keyboard::exit() OSAL_NOEXCEPT
     memset(sub_keyboard_buffer, '\0', line_max_char + 1);
 }
 
-void app_display_keyboard::button_click() OSAL_NOEXCEPT
+void app_display_keyboard::button_click(button::status status) OSAL_NOEXCEPT
 {
-    if(keyboard_position < KEYBOARD_BUFFER_SIZE - 1)
+    if(status == button::status::RELEASE)
     {
-        keyboard_buffer[keyboard_position] = menu_idx;
-        keyboard_position++;
-        menu_idx = 'a';
-        add_char = true;
+        if(keyboard_position < KEYBOARD_BUFFER_SIZE - 1)
+        {
+            keyboard_buffer[keyboard_position] = menu_idx;
+            keyboard_position++;
+            menu_idx = 'a';
+            add_char = true;
+        }
+    }
+    else if(status == button::status::LONG_CLICK && on_exit)
+    {
+        on_exit(exit::KO, keyboard_buffer);
+        exit();
     }
 }
 

@@ -39,6 +39,7 @@ class pico_button : public hhg::iface::button
 
     static inline pico_button* singleton = nullptr;
     static constexpr uint16_t DEBOUNCE_TIME = 200;
+    static constexpr uint16_t LONG_CLICK_TIME = 500;
 
     bool run = true;
     os::thread thread{"button", hhg::driver::NORMAL, MINIMAL_STACK_SIZE, handle};
@@ -46,7 +47,13 @@ class pico_button : public hhg::iface::button
     event *obj = nullptr;
     hhg::iface::button::event::callback callback = nullptr;
 
-    os::queue queue{1, sizeof(button::status) };
+    struct click_event final
+    {
+        enum status status;
+        uint64_t timestamp = 0;
+    };
+
+    os::queue queue{1, sizeof(click_event) };
 public:
 
     enum pin : uint

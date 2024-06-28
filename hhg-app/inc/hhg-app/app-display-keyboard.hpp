@@ -20,6 +20,7 @@
 #pragma once
 
 #include "hhg-iface/initializable.hpp"
+#include "hhg-iface/button.hpp"
 
 
 namespace hhg::app
@@ -56,7 +57,7 @@ public:
     ~app_display_keyboard();
     OSAL_NO_COPY_NO_MOVE(app_display_keyboard)
 
-    void button_click() OSAL_NOEXCEPT;
+    void button_click(hhg::iface::button::status status) OSAL_NOEXCEPT;
 
     void rotary_encoder_click() OSAL_NOEXCEPT;
 
@@ -64,7 +65,7 @@ public:
 
     void rotary_encoder_cw() OSAL_NOEXCEPT;
 
-    void paint() OSAL_NOEXCEPT; 
+    void paint() OSAL_NOEXCEPT;
 
     void exit();
 
