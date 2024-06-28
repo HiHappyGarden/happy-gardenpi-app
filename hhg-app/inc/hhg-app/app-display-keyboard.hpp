@@ -31,8 +31,11 @@ class app_display_handler;
 class app_display_keyboard final
 {
 public:
+    using on_exit_calback = void(*)(os::exit, const char*);
+
     static constexpr int8_t KEYBOARD_BUFFER_SIZE = 32;
     static constexpr uint8_t const WIDTH_CHAR = 8;
+    static constexpr uint16_t const Y = 45;
 private:
     int16_t& menu_idx;
     class app_display_handler& app_display_handler;
@@ -40,13 +43,16 @@ private:
     bool add_char = true;
     uint8_t keyboard_position = 0;
     char keyboard_buffer[KEYBOARD_BUFFER_SIZE];
+    bool keyboard_buffer_overflow = false;
 
     os::pair<uint8_t, uint8_t> font_limit;
     uint8_t const display_width;
     uint8_t const line_max_char;
     char* sub_keyboard_buffer = nullptr;
+
+    on_exit_calback on_exit = nullptr;
 public:
-    app_display_keyboard(int16_t& menu_idx, class app_display_handler& app_display_handler);
+    app_display_keyboard(int16_t& menu_idx, class app_display_handler& app_display_handler, on_exit_calback on_exit);
     ~app_display_keyboard();
     OSAL_NO_COPY_NO_MOVE(app_display_keyboard)
 

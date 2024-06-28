@@ -27,13 +27,14 @@ namespace hhg::app
 inline namespace v1
 {
 
-app_display_keyboard::app_display_keyboard(int16_t& menu_idx, class app_display_handler& app_display_handler) OSAL_NOEXCEPT
+app_display_keyboard::app_display_keyboard(int16_t& menu_idx, class app_display_handler& app_display_handler, on_exit_calback on_exit) OSAL_NOEXCEPT
 : menu_idx(menu_idx)
 , app_display_handler(app_display_handler)
 , font_limit(app_display_handler.get_font_range(app_display_handler::font::F5X8))
 , display_width(app_display_handler.get_size().first)
 , line_max_char(display_width / WIDTH_CHAR)
-, sub_keyboard_buffer(new char[line_max_char])
+, sub_keyboard_buffer(new char[line_max_char + 1])
+, on_exit(on_exit)
 {
     memset(keyboard_buffer, '\0', KEYBOARD_BUFFER_SIZE);
 }
@@ -46,8 +47,11 @@ app_display_keyboard::~app_display_keyboard()
 
 void app_display_keyboard::exit() OSAL_NOEXCEPT
 {
+    add_char = true;
     keyboard_position = 0;
     memset(keyboard_buffer, '\0', KEYBOARD_BUFFER_SIZE);
+    keyboard_buffer_overflow = false;
+    memset(sub_keyboard_buffer, '\0', line_max_char + 1);
 }
 
 void app_display_keyboard::button_click() OSAL_NOEXCEPT
@@ -69,6 +73,11 @@ void app_display_keyboard::rotary_encoder_click() OSAL_NOEXCEPT
         keyboard_buffer[keyboard_position] = '\0';
         menu_idx = 'a';
         add_char = false;
+    }
+    else if(on_exit)
+    {
+        on_exit(exit::KO, nullptr);
+        exit();
     }
 }
 
@@ -92,31 +101,42 @@ void app_display_keyboard::rotary_encoder_cw() OSAL_NOEXCEPT
 
 void app_display_keyboard::paint() OSAL_NOEXCEPT
 {
-    static uint16_t const y = 45;
-    uint16_t x = 2 + (keyboard_position * WIDTH_CHAR);
-
     if (keyboard_position < line_max_char - 1)
     {
-        if(add_char)
+        uint16_t x = 2 + (keyboard_position * WIDTH_CHAR);
+        if(keyboard_buffer_overflow)
         {
-            app_display_handler.paint_char(menu_idx , x, y, app_display_handler::font::F8X8);
+            app_display_handler.paint_clean(0, Y, display_width, 8);
+            app_display_handler.paint_str(keyboard_buffer, Y, app_display_handler::valign::LEFT, app_display_handler::font::F8X8, 2);
+            add_char = true;
+            app_display_handler.paint_char(menu_idx , x, Y, app_display_handler::font::F8X8);
         }
         else
         {
-            app_display_handler.paint_clean(x, y, 8 + 8, 8);
-            add_char = true;
-            app_display_handler.paint_char(menu_idx , x, y, app_display_handler::font::F8X8);
+            if(add_char)
+            {
+                app_display_handler.paint_char(menu_idx , x, Y, app_display_handler::font::F8X8);
+            }
+            else
+            {
+                app_display_handler.paint_clean(x, Y, 8 + 8, 8);
+                add_char = true;
+                app_display_handler.paint_char(menu_idx , x, Y, app_display_handler::font::F8X8);
+            }
         }
+        keyboard_buffer_overflow = false;
     }
     else
     {
+        keyboard_buffer_overflow = true;
+        uint16_t delta = keyboard_position - (line_max_char - 1);
         memset(sub_keyboard_buffer, '\0', line_max_char);
-        strncpy(sub_keyboard_buffer, keyboard_buffer + 3, keyboard_position - 3);
+        strncpy(sub_keyboard_buffer, keyboard_buffer + 3 + delta, keyboard_position - 3 - delta);
 
-        app_display_handler.paint_clean(0, y, display_width, 8);
-        app_display_handler.paint_str("...", y, app_display_handler::valign::LEFT, app_display_handler::font::F8X8);
-        app_display_handler.paint_str(sub_keyboard_buffer, y, app_display_handler::valign::LEFT, app_display_handler::font::F8X8, 3 * WIDTH_CHAR);
-        app_display_handler.paint_char(menu_idx ,  ( (line_max_char - 1) * WIDTH_CHAR), y, app_display_handler::font::F8X8);
+        app_display_handler.paint_clean(0, Y, display_width, 8);
+        app_display_handler.paint_str("...", Y, app_display_handler::valign::LEFT, app_display_handler::font::F8X8);
+        app_display_handler.paint_str(sub_keyboard_buffer, Y, app_display_handler::valign::LEFT, app_display_handler::font::F8X8, 3 * WIDTH_CHAR);
+        app_display_handler.paint_char(menu_idx ,  ( (line_max_char - 1) * WIDTH_CHAR), Y, app_display_handler::font::F8X8);
 
     }
 }
