@@ -36,7 +36,7 @@ app_display_keyboard::app_display_keyboard(int16_t& menu_idx, class app_display_
 , sub_keyboard_buffer(new char[line_max_char + 1])
 , on_exit(on_exit)
 {
-    memset(keyboard_buffer, '\0', KEYBOARD_BUFFER_SIZE);
+    memset(keyboard_buffer, '\0', KEYBOARD_BUFFER_SIZE + 1);
 }
 
 app_display_keyboard::~app_display_keyboard()
@@ -49,7 +49,7 @@ void app_display_keyboard::exit() OSAL_NOEXCEPT
 {
     add_char = true;
     keyboard_position = 0;
-    memset(keyboard_buffer, '\0', KEYBOARD_BUFFER_SIZE);
+    memset(keyboard_buffer, '\0', KEYBOARD_BUFFER_SIZE + 1);
     keyboard_buffer_overflow = false;
     memset(sub_keyboard_buffer, '\0', line_max_char + 1);
 }

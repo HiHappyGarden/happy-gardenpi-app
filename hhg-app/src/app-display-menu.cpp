@@ -37,7 +37,7 @@ constexpr char APP_TAG[] = "APP DISPLAY MENU";
 
 app_display_menu::app_display_menu(class app_display_handler& app_display_handler) OSAL_NOEXCEPT
         : app_display_handler(app_display_handler)
-        , app_display_keyboard(menu_idx, app_display_handler)
+        , app_display_keyboard(menu_idx, app_display_handler, nullptr) //todo: da gestire la callback
 {
     memset(menu_level_store, -1, MENU_LEVEL_SIZE);
 }
