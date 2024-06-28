@@ -69,19 +69,19 @@ void pico_button::on_click(uint gpio, uint32_t event_mask)
         )
     {
 
-        status status;
+        struct click_event click_event { .timestamp = now };
         if(event_mask & GPIO_IRQ_EDGE_FALL)
         {
-            status = status::PRESS;
+            click_event.status = status::PRESS;
             last_click_press = osal_system_current_time_millis();
         }
         else if(event_mask & GPIO_IRQ_EDGE_RISE)
         {
-            status = status::RELEASE;
+            click_event.status = status::RELEASE;
             last_click_release = osal_system_current_time_millis();
         }
 
-        if(singleton->queue.post_from_isr(reinterpret_cast<const uint8_t *>(&status), 150_ms) == osal::exit::KO)
+        if(singleton->queue.post_from_isr(reinterpret_cast<const uint8_t *>(&click_event), 150_ms) == osal::exit::KO)
         {
             OSAL_LOG_DEBUG(APP_TAG, "Debounce detect");
         }
@@ -90,15 +90,28 @@ void pico_button::on_click(uint gpio, uint32_t event_mask)
 
 void *pico_button::handle(void *arg)
 {
+    click_event event_last;
     while (singleton->run)
     {
 
-        status status;
-        if(singleton->queue.fetch(&status, WAIT_FOREVER) == osal::exit::OK)
+        struct click_event click_event;
+        if(singleton->queue.fetch(&click_event, WAIT_FOREVER) == osal::exit::OK)
         {
             if(singleton->obj && singleton->callback)
             {
-                (singleton->obj->*singleton->callback)(status);
+                if(event_last.status == status::PRESS && click_event.status == status::RELEASE && click_event.timestamp - event_last.timestamp >= LONG_CLICK_TIME)
+                {
+                    (singleton->obj->*singleton->callback)(status::LONG_CLICK);
+                    event_last.status = status::LONG_CLICK;
+                    event_last = click_event;
+                }
+                else
+                {
+                    (singleton->obj->*singleton->callback)(click_event.status);
+                    event_last = click_event;
+                }
+
+
             }
         }
     }

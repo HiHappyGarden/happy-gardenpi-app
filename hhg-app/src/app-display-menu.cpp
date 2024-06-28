@@ -44,7 +44,7 @@ app_display_menu::app_display_menu(class app_display_handler& app_display_handle
 
 void app_display_menu::button_click(button::status status) OSAL_NOEXCEPT
 {
-    if(status == button::status::RELEASE)
+    if(status == button::status::RELEASE || status == button::status::LONG_CLICK)
     {
         lock_guard lg(mx);
         opened = true;
@@ -80,7 +80,7 @@ void app_display_menu::button_click(button::status status) OSAL_NOEXCEPT
 
                     break;
                 case PASSWD:
-                    app_display_keyboard.button_click();
+                    app_display_keyboard.button_click(status);
                     break;
             }
 
