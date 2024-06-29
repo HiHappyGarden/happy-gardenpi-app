@@ -137,10 +137,7 @@ public:
         this->on_receive_callback = on_receive_callback;
     }
 
-    inline os::exit transmit(const uint8_t *data, uint16_t size) const OSAL_NOEXCEPT override
-    {
-        return os::exit::KO;
-    }
+    os::exit set_cmd(const os::string<128>&& cmd) const;
 
     void lock() OSAL_NOEXCEPT;
 
@@ -159,6 +156,8 @@ private:
     void clean(bool internal) const OSAL_NOEXCEPT;
 
     static void handle_locked_blink_show(app_display_handler* self) OSAL_NOEXCEPT;
+
+    os::exit transmit(const uint8_t *data, uint16_t size) const OSAL_NOEXCEPT override;
 };
 
 

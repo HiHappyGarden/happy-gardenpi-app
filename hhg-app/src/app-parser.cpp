@@ -19,6 +19,7 @@
 
 #include "hhg-app/app-parser.hpp"
 using hhg::iface::io_source;
+using hhg::iface::io;
 
 #include "hhg-app/app-parser-commands.hpp"
 using namespace os;
@@ -50,6 +51,7 @@ app_parser::app_parser(class error** error) OSAL_NOEXCEPT
 		return;
 	}
 
+    memset(io_ifaces, 0, sizeof(io_ifaces));
     parser.set_on_auth(this, &hhg::parser::parser::auth::on_auth);
 
 	singleton = this;
@@ -90,12 +92,17 @@ void app_parser::on_receive(io_source source, const uint8_t data[], uint16_t siz
 }
 
 
-void app_parser::register_io(hhg::iface::io_source, hhg::iface::io*)
+void app_parser::register_io(io_source io_source, class io* io)
 {
-    //TODO: da finire
+    auto idx = static_cast<uint8_t>(io_source);
+    if(idx > static_cast<uint8_t>(io_source::DISPLAY))
+    {
+        return;
+    }
+    io_ifaces[static_cast<uint8_t>(io_source)] = io;
 }
 
-os::exit app_parser::on_auth(const cmd_data &data, const hhg::parser::entry *entry, os::error **error) OSAL_NOEXCEPT
+os::exit app_parser::on_auth(const cmd_data &data, const entry *entry, class error **error) OSAL_NOEXCEPT
 {
     if(strlen(entry->access) == 0)
     {
@@ -158,6 +165,7 @@ void* app_parser::handler(void* arg) OSAL_NOEXCEPT
 		char ch = '\0';
 		if(app_parser::singleton->buffer.receive(reinterpret_cast<uint8_t *>(&ch), 1, WAIT_FOREVER))
 		{
+            class io* io = singleton->io_ifaces[static_cast<uint8_t>(singleton->source)];
 			buffer += ch;
 
 			auto start = buffer.find(app_parser::STARTER_CHAR);
@@ -182,11 +190,11 @@ void* app_parser::handler(void* arg) OSAL_NOEXCEPT
                     }
                     
 					ret += app_parser::NEW_LINE;
-					singleton->io->transmit(reinterpret_cast<const uint8_t*>(ret.c_str()), ret.length());;
+					io->transmit(reinterpret_cast<const uint8_t*>(ret.c_str()), ret.length());;
 				}
 				else
 				{
-					singleton->io->transmit(app_parser::KO, sizeof(app_parser::KO) - 1);
+					io->transmit(app_parser::KO, sizeof(app_parser::KO) - 1);
 					if(error)
 					{
 						printf_stack_error(APP_TAG, error);
@@ -197,7 +205,7 @@ void* app_parser::handler(void* arg) OSAL_NOEXCEPT
 			}
 			else if (start == nullptr && end)
 			{
-				singleton->io->transmit(app_parser::KO, sizeof(app_parser::KO) - 1);
+				io->transmit(app_parser::KO, sizeof(app_parser::KO) - 1);
 				buffer.clear();
 				ret.clear();
 			}

@@ -22,7 +22,8 @@
 using hhg::iface::time;
 using hhg::iface::wifi;
 using hhg::driver::hardware;
-using on_connection_event = hhg::iface::wifi::on_connection_event;
+using hhg::iface::io_source;
+using hhg::iface::io;
 using namespace os;
 
 #include "hhg-app/app-parser-commands.hpp"
@@ -358,7 +359,8 @@ os::exit app_main::init(class os::error **error) OSAL_NOEXCEPT
         app_led.error();
         return exit::KO;
     }
-    hardware.get_uart()->set_on_receive(&app_parser, &hhg::iface::io::receive::on_receive);
+    hardware.get_uart()->set_on_receive(&app_parser, &io::receive::on_receive);
+    app_parser.register_io(io_source::UART, hardware.get_uart().get());
     OSAL_LOG_INFO(APP_TAG, "Init APP PARSER - OK");
 
     OSAL_LOG_INFO(APP_TAG, "Init APP CONFIG");
@@ -457,7 +459,8 @@ os::exit app_main::init(class os::error **error) OSAL_NOEXCEPT
         return exit::KO;
     }
     set_app_display_handler(app_display_handler);
-    app_display_handler.set_on_receive(&app_parser, &hhg::iface::io::receive::on_receive);
+    app_display_handler.set_on_receive(&app_parser, &io::receive::on_receive);
+    app_parser.register_io(io_source::DISPLAY, &app_display_handler);
     app_parser.set_on_logout(&app_display_handler, &hhg::app::app_parser::auth::on_logout);
     OSAL_LOG_INFO(APP_TAG, "Init APP DISPLAY HANDLER - OK");
 

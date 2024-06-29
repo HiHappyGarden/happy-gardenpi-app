@@ -263,7 +263,26 @@ void app_display_menu::paint_passwd() OSAL_NOEXCEPT
 
 }
 
-void app_display_menu::on_exit(os::exit exit, const char* string)
+void app_display_menu::on_exit(os::exit exit, const char* string) OSAL_NOEXCEPT
+{
+    switch(menu_level_store[0])
+    {
+        case PLANNING:
+
+            break;
+        case IRRIGATE_NOW:
+
+            break;
+        case WIFI:
+
+            break;
+        case PASSWD:
+            app_display_handler.set_cmd("$VER\r\n");
+            break;
+    }
+}
+
+os::exit app_display_menu::transmit(const uint8_t* data, uint16_t size) const OSAL_NOEXCEPT
 {
     switch(menu_level_store[0])
     {
@@ -280,21 +299,9 @@ void app_display_menu::on_exit(os::exit exit, const char* string)
 
             break;
     }
-}
 
-inline void app_display_menu::set_on_receive(const receive* obj, on_receive on_receive_callback) OSAL_NOEXCEPT
-{
-    //TODO: da finire
-//    this->obj = obj;
-//    this->on_receive_callback = on_receive_callback;
+    return exit::OK;
 }
-
-os::exit app_display_menu::transmit(const uint8_t* data, uint16_t size) const
-{
-    //NoTE: not not implemented
-    return os::exit::KO;
-}
-
 
 }
 }
