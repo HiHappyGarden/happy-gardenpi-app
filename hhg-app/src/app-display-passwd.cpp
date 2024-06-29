@@ -76,7 +76,10 @@ void app_display_passwd::exit() OSAL_NOEXCEPT
 
 void app_display_passwd::on_exit(os::exit exit, const char* string)
 {
-    uint8_t i =0;
+    if(obj && on_exit_calback)
+    {
+        (obj->*on_exit_calback)(exit, nullptr);
+    }
 }
 
 }
