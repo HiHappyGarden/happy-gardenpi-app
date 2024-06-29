@@ -85,7 +85,7 @@ os::exit app_display_handler::init(os::error **error) OSAL_NOEXCEPT
 void app_display_handler::on_button_click(button::status status) OSAL_NOEXCEPT
 {
     //NOTE: NO log in callback!!!!
-    if(is_turn_on())
+    if(is_turn_on() && !locked)
     {
         app_display_menu.button_click(status);
     }
@@ -95,7 +95,7 @@ void app_display_handler::on_button_click(button::status status) OSAL_NOEXCEPT
 void app_display_handler::on_rotary_encoder_event(bool ccw, bool cw, bool click) OSAL_NOEXCEPT
 {
     //NOTE: NO log in callback!!!!
-    if(is_turn_on())
+    if(is_turn_on() && !locked)
     {
         if(ccw)
         {
@@ -431,12 +431,12 @@ auto app_display_handler::handler(void *) OSAL_NOEXCEPT -> void *
     return nullptr;
 }
 
-os::exit app_display_handler::set_cmd(const os::string<128>&& cmd) const OSAL_NOEXCEPT
+os::exit app_display_handler::send_cmd(const os::string<128>&& cmd) const OSAL_NOEXCEPT
 {
     if(obj &&on_receive_callback)
     {
         (obj->*on_receive_callback)(io_source::DISPLAY, reinterpret_cast<const uint8_t*>(cmd.c_str()), cmd.length());
-        return exit::KO;
+        return exit::OK;
     }
 
     return exit::KO;

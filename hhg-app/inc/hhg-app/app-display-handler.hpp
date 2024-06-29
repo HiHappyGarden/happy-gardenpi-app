@@ -137,7 +137,7 @@ public:
         this->on_receive_callback = on_receive_callback;
     }
 
-    os::exit set_cmd(const os::string<128>&& cmd) const;
+    os::exit send_cmd(const os::string<128>&& cmd) const;
 
     void lock() OSAL_NOEXCEPT;
 
