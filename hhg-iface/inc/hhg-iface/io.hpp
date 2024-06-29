@@ -36,22 +36,24 @@ enum class io_source
     DISPLAY
 };
 
-struct io_on_receive
-{
-	virtual ~io_on_receive() = default;
-
-	virtual void on_receive(io_source io_source, const uint8_t data[], uint16_t size) const OSAL_NOEXCEPT = 0;
-};
 
 struct io : public initializable
 {
+
+    struct receive
+    {
+        virtual ~receive() = default;
+
+        virtual void on_receive(io_source io_source, const uint8_t data[], uint16_t size) const OSAL_NOEXCEPT = 0;
+    };
+
 	using ptr = os::unique_ptr<hhg::iface::io>;
 
-	using on_receive = void (io_on_receive::*)(io_source io_source, const uint8_t data[], uint16_t size) const OSAL_NOEXCEPT;
+	using on_receive = void (receive::*)(io_source io_source, const uint8_t data[], uint16_t size) const OSAL_NOEXCEPT;
 
     ~io() override = default;
 
-    virtual void set_on_receive(const io_on_receive*, on_receive) OSAL_NOEXCEPT = 0;
+    virtual void set_on_receive(const receive*, on_receive) OSAL_NOEXCEPT = 0;
 
     virtual os::exit transmit(const uint8_t data[], uint16_t size) const OSAL_NOEXCEPT = 0;
 };

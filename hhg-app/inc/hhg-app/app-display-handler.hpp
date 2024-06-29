@@ -52,7 +52,7 @@ class app_display_handler final : public hhg::iface::rotary_encoder::event, publ
 
     class app_display_menu app_display_menu;
 
-    const hhg::iface::io_on_receive *obj = nullptr;
+    const hhg::iface::io::receive *obj = nullptr;
     on_receive on_receive_callback = nullptr;
 
     static auto handler(void *) -> void *;
@@ -131,7 +131,7 @@ public:
 
     void send_buffer() OSAL_NOEXCEPT;
 
-    inline void set_on_receive(const iface::io_on_receive *obj, on_receive on_receive_callback) OSAL_NOEXCEPT override
+    inline void set_on_receive(const iface::io::receive *obj, on_receive on_receive_callback) OSAL_NOEXCEPT override
     {
         this->obj = obj;
         this->on_receive_callback = on_receive_callback;

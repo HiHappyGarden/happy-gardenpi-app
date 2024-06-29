@@ -18,7 +18,7 @@
  ***************************************************************************/
 
 #include "pico/pico-uart.hpp"
-using hhg::iface::io_on_receive;
+using hhg::iface::io;
 using hhg::iface::io_source;
 using namespace os;
 
@@ -86,7 +86,7 @@ os::exit pico_uart::init(error** error) OSAL_NOEXCEPT
 }
 
 
-inline void pico_uart::set_on_receive(const io_on_receive* obj, on_receive on_receive_callback) OSAL_NOEXCEPT
+inline void pico_uart::set_on_receive(const receive* obj, on_receive on_receive_callback) OSAL_NOEXCEPT
 {
 	this->obj = obj;
 	this->on_receive_callback = on_receive_callback;

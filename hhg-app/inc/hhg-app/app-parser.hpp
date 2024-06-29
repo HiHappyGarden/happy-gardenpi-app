@@ -33,7 +33,7 @@ inline namespace v1
 {
 
 
-class app_parser final : public hhg::iface::initializable, public hhg::iface::io_on_receive, public hhg::parser::parser::auth
+class app_parser final : public hhg::iface::initializable, public hhg::iface::io::receive, public hhg::parser::parser::auth
 {
 public:
     struct auth
