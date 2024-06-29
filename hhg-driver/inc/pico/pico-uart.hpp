@@ -32,7 +32,7 @@ inline namespace v1
 
 class pico_uart final : public hhg::iface::io
 {
-	const hhg::iface::io_on_receive* obj = nullptr;
+	const hhg::iface::io::receive* obj = nullptr;
 	on_receive on_receive_callback = nullptr;
 
 	static inline pico_uart* singleton = nullptr;
@@ -51,7 +51,7 @@ class pico_uart final : public hhg::iface::io
 
 	os::exit init(os::error** error) OSAL_NOEXCEPT override;
 
-	void set_on_receive(const hhg::iface::io_on_receive* obj, on_receive on_receive_callback) OSAL_NOEXCEPT override;
+	void set_on_receive(const hhg::iface::io::receive* obj, on_receive on_receive_callback) OSAL_NOEXCEPT override;
 
     os::exit transmit(const uint8_t data[], uint16_t size) const OSAL_NOEXCEPT override;
 
