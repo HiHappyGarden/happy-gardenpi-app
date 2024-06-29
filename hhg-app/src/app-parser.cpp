@@ -35,7 +35,7 @@ constexpr char APP_TAG[] = "APP-PARSER";
 
 }
 
-app_parser::app_parser(const hhg::iface::io::ptr& io, class error** error) OSAL_NOEXCEPT
+app_parser::app_parser(const hhg::iface::io_initializable::ptr& io, class error** error) OSAL_NOEXCEPT
 : error(nullptr)
 , io(io)
 , parser(get_commands(), get_commands_size())

@@ -30,7 +30,7 @@ inline namespace v1
 {
 
 
-class pico_uart final : public hhg::iface::io
+class pico_uart final : public hhg::iface::io_initializable
 {
 	const hhg::iface::io::receive* obj = nullptr;
 	on_receive on_receive_callback = nullptr;

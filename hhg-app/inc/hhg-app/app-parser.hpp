@@ -58,7 +58,7 @@ private:
 	class os::error** error = nullptr;
 
 
-	const hhg::iface::io::ptr& io;
+	const hhg::iface::io_initializable::ptr& io;
 	hhg::parser::parser parser;
     mutable hhg::iface::io_source source;
 
@@ -92,7 +92,7 @@ public:
 
 
 
-	explicit app_parser(const hhg::iface::io::ptr& io, class os::error** error = nullptr) OSAL_NOEXCEPT;
+	explicit app_parser(const hhg::iface::io_initializable::ptr& io, class os::error** error = nullptr) OSAL_NOEXCEPT;
 	~app_parser() override OSAL_NOEXCEPT;
 	OSAL_NO_COPY_NO_MOVE(app_parser)
 

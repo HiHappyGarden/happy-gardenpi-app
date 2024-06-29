@@ -37,7 +37,7 @@ namespace hhg::driver
 inline namespace v1
 {
 
-using io_ptr = hhg::iface::io::ptr;
+using io_ptr = hhg::iface::io_initializable::ptr;
 using fs_io_ptr = hhg::iface::fs_io::ptr;
 using i2c_ptr = hhg::iface::i2c::ptr;
 using time_ptr = hhg::iface::time::ptr;
