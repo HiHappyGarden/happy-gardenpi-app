@@ -277,7 +277,7 @@ void app_display_menu::on_exit(os::exit exit, const char* string) OSAL_NOEXCEPT
 
             break;
         case PASSWD:
-            app_display_handler.set_cmd("$VER\r\n");
+            app_display_handler.send_cmd("$VER\r\n");
             break;
     }
 }
