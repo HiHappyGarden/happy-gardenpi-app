@@ -37,7 +37,7 @@ inline namespace v1
 
 class app_main;
 
-class app_display_handler final : public hhg::iface::rotary_encoder::event, public hhg::iface::button::event, public hhg::iface::io, public hhg::app::app_parser::auth
+class app_display_handler final : public hhg::iface::rotary_encoder::event, public hhg::iface::button::event, public hhg::iface::io_initializable, public hhg::app::app_parser::auth
 {
     static constexpr uint8_t FSM_SLEEP = 5;
     static constexpr uint16_t BLINK_SLEEP = 500;

@@ -37,7 +37,7 @@ enum class io_source
 };
 
 
-struct io : public initializable
+struct io
 {
 
     struct receive
@@ -51,12 +51,21 @@ struct io : public initializable
 
 	using on_receive = void (receive::*)(io_source io_source, const uint8_t data[], uint16_t size) const OSAL_NOEXCEPT;
 
-    ~io() override = default;
+    virtual ~io() = default;
 
     virtual void set_on_receive(const receive*, on_receive) OSAL_NOEXCEPT = 0;
 
     virtual os::exit transmit(const uint8_t data[], uint16_t size) const OSAL_NOEXCEPT = 0;
 };
+
+struct io_initializable : public hhg::iface::io, public hhg::iface::initializable
+{
+    using ptr = os::unique_ptr<hhg::iface::io_initializable>;
+
+    ~io_initializable() override = default;
+};
+
+
 
 }
 }
