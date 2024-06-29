@@ -22,6 +22,7 @@
 using namespace os;
 using hhg::iface::lcd;
 using hhg::iface::button;
+using hhg::iface::event_exit;
 
 namespace hhg::app
 {
@@ -37,7 +38,7 @@ constexpr char APP_TAG[] = "APP DISPLAY MENU";
 
 app_display_menu::app_display_menu(class app_display_handler& app_display_handler) OSAL_NOEXCEPT
         : app_display_handler(app_display_handler)
-        , app_display_keyboard(menu_idx, app_display_handler, nullptr) //todo: da gestire la callback
+        , app_display_passwd(menu_idx, app_display_handler, this, &event_exit::on_exit)
 {
     memset(menu_level_store, -1, MENU_LEVEL_SIZE);
 }
@@ -80,7 +81,7 @@ void app_display_menu::button_click(button::status status) OSAL_NOEXCEPT
 
                     break;
                 case PASSWD:
-                    app_display_keyboard.button_click(status);
+                    app_display_passwd.button_click(status);
                     break;
             }
 
@@ -111,7 +112,7 @@ void app_display_menu::rotary_encoder_click() OSAL_NOEXCEPT
 
                 break;
             case PASSWD:
-                app_display_keyboard.rotary_encoder_click();
+                app_display_passwd.rotary_encoder_click();
                 break;
         }
 
@@ -146,7 +147,7 @@ void app_display_menu::rotary_encoder_ccw() OSAL_NOEXCEPT
 
                 break;
             case PASSWD:
-                app_display_keyboard.rotary_encoder_ccw();
+                app_display_passwd.rotary_encoder_ccw();
                 break;
         }
     }
@@ -179,7 +180,7 @@ void app_display_menu::rotary_encoder_cw() OSAL_NOEXCEPT
 
                 break;
             case PASSWD:
-                app_display_keyboard.rotary_encoder_cw();
+                app_display_passwd.rotary_encoder_cw();
                 break;
         }
     }
@@ -221,12 +222,7 @@ pair<bool, bool> app_display_menu::paint() OSAL_NOEXCEPT //<update paint_header,
             }
             case PASSWD:
             {
-                if(menu_idx == -1)
-                {
-                    menu_idx = 'a';
-                }
-                app_display_handler.paint_str(passwd_level_labels[0]);
-                app_display_keyboard.paint();
+                app_display_passwd.paint();
                 break;
             }
             default:
@@ -244,7 +240,7 @@ void app_display_menu::exit() OSAL_NOEXCEPT
     opened = false;
     menu_idx = -1;
     memset(menu_level_store, -1, MENU_LEVEL_SIZE);
-    app_display_keyboard.exit();
+    app_display_passwd.exit();
 }
 
 void app_display_menu::paint_setting() OSAL_NOEXCEPT
@@ -263,6 +259,11 @@ void app_display_menu::paint_wifi() OSAL_NOEXCEPT
 }
 
 void app_display_menu::paint_passwd() OSAL_NOEXCEPT
+{
+
+}
+
+void app_display_menu::on_exit(os::exit exit, const char* string)
 {
 
 }
