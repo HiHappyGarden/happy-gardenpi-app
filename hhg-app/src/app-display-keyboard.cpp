@@ -21,19 +21,21 @@
 #include "hhg-app/app-display-handler.hpp"
 using namespace os;
 using hhg::iface::button;
+using hhg::iface::event_exit;
 
 namespace hhg::app
 {
 inline namespace v1
 {
 
-app_display_keyboard::app_display_keyboard(int16_t& menu_idx, class app_display_handler& app_display_handler, on_exit_calback on_exit) OSAL_NOEXCEPT
+app_display_keyboard::app_display_keyboard(int16_t& menu_idx, class app_display_handler& app_display_handler, hhg::iface::event_exit* obj, event_exit::on_exit_calback on_exit) OSAL_NOEXCEPT
 : menu_idx(menu_idx)
 , app_display_handler(app_display_handler)
 , font_limit(app_display_handler.get_font_range(app_display_handler::font::F5X8))
 , display_width(app_display_handler.get_size().first)
 , line_max_char(display_width / WIDTH_CHAR)
 , sub_keyboard_buffer(new char[line_max_char + 1])
+, obj(obj)
 , on_exit(on_exit)
 {
     memset(keyboard_buffer, '\0', KEYBOARD_BUFFER_SIZE + 1);
@@ -66,9 +68,9 @@ void app_display_keyboard::button_click(button::status status) OSAL_NOEXCEPT
             add_char = true;
         }
     }
-    else if(status == button::status::LONG_CLICK && on_exit)
+    else if(status == button::status::LONG_CLICK && obj && on_exit)
     {
-        on_exit(exit::KO, keyboard_buffer);
+        (obj->*on_exit)(exit::KO, keyboard_buffer);
         exit();
     }
 }
@@ -82,9 +84,9 @@ void app_display_keyboard::rotary_encoder_click() OSAL_NOEXCEPT
         menu_idx = 'a';
         add_char = false;
     }
-    else if(on_exit)
+    else if(obj && on_exit)
     {
-        on_exit(exit::KO, nullptr);
+        (obj->*on_exit)(exit::KO, nullptr);
         exit();
     }
 }

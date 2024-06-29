@@ -39,9 +39,9 @@ class app_led final  : public hhg::iface::initializable
 
     static void* handler(void* arg) OSAL_NOEXCEPT;
     os::thread thread {
-            "led"
+            "app_led"
             , hhg::driver::LOW
-            , 1024
+            , hhg::driver::MINIMAL_STACK_SIZE
             , handler
     };
 

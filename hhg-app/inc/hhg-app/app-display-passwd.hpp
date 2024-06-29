@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "hhg-iface/initializable.hpp"
 #include "hhg-iface/button.hpp"
 #include "hhg-iface/event-exit.hpp"
+#include "hhg-app/app-display-keyboard.hpp"
 
 namespace hhg::app
 {
@@ -29,32 +29,23 @@ inline namespace v1
 {
 
 class app_display_handler;
-class app_display_keyboard final
+class app_display_passwd final : public hhg::iface::event_exit
 {
-public:
-    static constexpr int8_t KEYBOARD_BUFFER_SIZE = 32;
-    static constexpr uint8_t const WIDTH_CHAR = 8;
-    static constexpr uint16_t const Y = 45;
-private:
+
     int16_t& menu_idx;
     class app_display_handler& app_display_handler;
-
-    bool add_char = true;
-    uint8_t keyboard_position = 0;
-    char keyboard_buffer[KEYBOARD_BUFFER_SIZE + 1];
-    bool keyboard_buffer_overflow = false;
-
-    os::pair<uint8_t, uint8_t> font_limit;
-    uint8_t const display_width;
-    uint8_t const line_max_char;
-    char* sub_keyboard_buffer = nullptr;
-
     hhg::iface::event_exit* obj = nullptr;
-    hhg::iface::event_exit::on_exit_calback on_exit = nullptr;
+    hhg::iface::event_exit::on_exit_calback on_exit_calback = nullptr;
+
+    os::string<32> submenu_label = "Set passwd";
+
+    class app_display_keyboard app_display_keyboard;
+
+
 public:
-    app_display_keyboard(int16_t& menu_idx, class app_display_handler& app_display_handler, hhg::iface::event_exit* obj, hhg::iface::event_exit::on_exit_calback on_exit);
-    ~app_display_keyboard();
-    OSAL_NO_COPY_NO_MOVE(app_display_keyboard)
+    explicit app_display_passwd(int16_t& menu_idx, class app_display_handler& app_display_handler, hhg::iface::event_exit* obj, hhg::iface::event_exit::on_exit_calback on_exit) OSAL_NOEXCEPT;
+    ~app_display_passwd() override = default;
+    OSAL_NO_COPY_NO_MOVE(app_display_passwd)
 
     void button_click(hhg::iface::button::status status) OSAL_NOEXCEPT;
 
@@ -66,12 +57,11 @@ public:
 
     void paint() OSAL_NOEXCEPT;
 
-    void exit() OSAL_NOEXCEPT;
+    void exit();
 
-    inline void set_first_char() OSAL_NOEXCEPT
-    {
-        menu_idx = 'a';
-    }
+private:
+    void on_exit(os::exit exit, const char* string) override;
+
 };
 
 }

@@ -64,9 +64,9 @@ private:
 
     static void* handler(void* arg) OSAL_NOEXCEPT;
 	os::thread thread {
-		"parser"
+		"app_parser"
 		, hhg::driver::NORMAL
-		, 1'024 * 2
+		, 1'024
         , app_parser::handler
 	};
 
