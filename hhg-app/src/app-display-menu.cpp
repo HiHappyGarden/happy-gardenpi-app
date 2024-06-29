@@ -282,6 +282,19 @@ void app_display_menu::on_exit(os::exit exit, const char* string)
     }
 }
 
+inline void app_display_menu::set_on_receive(const receive* obj, on_receive on_receive_callback) OSAL_NOEXCEPT
+{
+    //TODO: da finire
+//    this->obj = obj;
+//    this->on_receive_callback = on_receive_callback;
+}
+
+os::exit app_display_menu::transmit(const uint8_t* data, uint16_t size) const
+{
+    //NoTE: not not implemented
+    return os::exit::KO;
+}
+
 
 }
 }

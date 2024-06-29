@@ -57,8 +57,10 @@ private:
 
 	class os::error** error = nullptr;
 
+	os::pair<hhg::iface::io_source, hhg::iface::io*> io_ifaces;
 
-	const hhg::iface::io_initializable::ptr& io;
+    hhg::iface::io* io = nullptr; //current io selected
+
 	hhg::parser::parser parser;
     mutable hhg::iface::io_source source;
 
@@ -90,9 +92,7 @@ private:
     uint32_t user_logged_timeout = 0;
 public:
 
-
-
-	explicit app_parser(const hhg::iface::io_initializable::ptr& io, class os::error** error = nullptr) OSAL_NOEXCEPT;
+	explicit app_parser(class os::error** error = nullptr) OSAL_NOEXCEPT;
 	~app_parser() override OSAL_NOEXCEPT;
 	OSAL_NO_COPY_NO_MOVE(app_parser)
 
@@ -130,6 +130,8 @@ public:
         this->obj = obj;
         this->on_logout = on_logout;
     }
+
+    void register_io(hhg::iface::io_source, hhg::iface::io*) OSAL_NOEXCEPT;
 
 private:
     friend os::exit auth(const hhg::parser::cmd_data &data, const hhg::parser::entry *entry, os::error **error) OSAL_NOEXCEPT;
