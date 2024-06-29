@@ -265,7 +265,21 @@ void app_display_menu::paint_passwd() OSAL_NOEXCEPT
 
 void app_display_menu::on_exit(os::exit exit, const char* string)
 {
+    switch(menu_level_store[0])
+    {
+        case PLANNING:
 
+            break;
+        case IRRIGATE_NOW:
+
+            break;
+        case WIFI:
+
+            break;
+        case PASSWD:
+
+            break;
+    }
 }
 
 

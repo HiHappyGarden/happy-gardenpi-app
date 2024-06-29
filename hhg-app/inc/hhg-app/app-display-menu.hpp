@@ -91,7 +91,6 @@ private:
     void paint_wifi() OSAL_NOEXCEPT;
     void paint_passwd() OSAL_NOEXCEPT;
 
-public:
     void on_exit(os::exit exit, const char* string) override;
 
 };
