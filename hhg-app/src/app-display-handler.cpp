@@ -25,6 +25,7 @@ using hhg::iface::lcd;
 using hhg::iface::button;
 using hhg::iface::rotary_encoder;
 using hhg::iface::time;
+using hhg::iface::io_source;
 
 #include "asset/font_5x8.hpp"
 #include "asset/font_8x8.hpp"
@@ -75,7 +76,6 @@ os::exit app_display_handler::init(os::error **error) OSAL_NOEXCEPT
 
     button->set_on_button_click(this, &button::event::on_button_click);
     rotary_encoder->set_on_rotary_encoder_event(this, &rotary_encoder::event::on_rotary_encoder_event);
-    app_display_menu.set_on_receive(&app_parser, &hhg::iface::io::receive::on_receive);
 
     thread.create();
 
@@ -155,7 +155,7 @@ void app_display_handler::paint_header(bool wifi, time_t timestamp, int16_t time
 
 }
 
-pair<uint8_t, uint8_t> app_display_handler::get_font_range(app_display_handler::font font)
+pair<uint8_t, uint8_t> app_display_handler::get_font_range(app_display_handler::font font) OSAL_NOEXCEPT
 {
     switch(font)
     {
@@ -227,7 +227,7 @@ void app_display_handler::paint_str(bool internal, const char str[], uint16_t y,
     lcd->set_str(str, x + offset_x, y, font_ref, font_ref_size);
 }
 
-void app_display_handler::paint_char(bool internal, char c, uint16_t x, uint16_t y, app_display_handler::font font) const
+void app_display_handler::paint_char(bool internal, char c, uint16_t x, uint16_t y, app_display_handler::font font) const OSAL_NOEXCEPT
 {
     if(!internal && (app_parser.get_source() == iface::io_source::UART || app_parser.get_source() == iface::io_source::WIFI))
     {
@@ -269,7 +269,7 @@ void app_display_handler::clean(bool internal) const OSAL_NOEXCEPT
     lcd->set_rect(0, 12, display_width, display_height - 12, write_mode::REMOVE);
 }
 
-auto app_display_handler::handler(void *) -> void *
+auto app_display_handler::handler(void *) OSAL_NOEXCEPT -> void *
 {
 
     if(singleton == nullptr)
@@ -431,18 +431,29 @@ auto app_display_handler::handler(void *) -> void *
     return nullptr;
 }
 
-void app_display_handler::lock()
+os::exit app_display_handler::set_cmd(const os::string<128>&& cmd) const OSAL_NOEXCEPT
+{
+    if(obj &&on_receive_callback)
+    {
+        (obj->*on_receive_callback)(io_source::DISPLAY, reinterpret_cast<const uint8_t*>(cmd.c_str()), cmd.length());
+        return exit::KO;
+    }
+
+    return exit::KO;
+}
+
+void app_display_handler::lock() OSAL_NOEXCEPT
 {
     locked = true;
     generic_timer = 0;
 }
 
-inline void app_display_handler::on_logout()
+inline void app_display_handler::on_logout() OSAL_NOEXCEPT
 {
     locked = false;
 }
 
-void app_display_handler::handle_locked_blink_show(app_display_handler* self)
+void app_display_handler::handle_locked_blink_show(app_display_handler* self) OSAL_NOEXCEPT
 {
     if(self->locked_blink_show)
     {
@@ -475,6 +486,11 @@ void app_display_handler::handle_locked_blink_show(app_display_handler* self)
         self->clean(true);
         self->locked_blink_show = true;
     }
+}
+
+inline os::exit app_display_handler::transmit(const uint8_t *data, uint16_t size) const OSAL_NOEXCEPT
+{
+    return app_display_menu.transmit(data, size);
 }
 
 }

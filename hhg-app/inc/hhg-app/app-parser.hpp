@@ -44,8 +44,8 @@ public:
         virtual void on_logout() OSAL_NOEXCEPT = 0;
     };
 
+
 private:
-	//friend void* app_parser_thread_handler(void* arg) OSAL_NOEXCEPT;
 
 	static constexpr const uint16_t BUFFER_SIZE = 512;
 	static constexpr const uint16_t RET_SIZE = 256;
@@ -57,12 +57,11 @@ private:
 
 	class os::error** error = nullptr;
 
-	os::pair<hhg::iface::io_source, hhg::iface::io*> io_ifaces;
-
-    hhg::iface::io* io = nullptr; //current io selected
+    hhg::iface::io* io_ifaces[3];
+    mutable hhg::iface::io_source source;
 
 	hhg::parser::parser parser;
-    mutable hhg::iface::io_source source;
+
 
     static void* handler(void* arg) OSAL_NOEXCEPT;
 	os::thread thread {
@@ -80,8 +79,8 @@ private:
     bool run = false;
 
 	mutable os::stream_buffer buffer {
-		BUFFER_SIZE / 4
-		, 1
+		BUFFER_SIZE / 2
+        , sizeof(char)
 	};
 
 	static inline app_parser* singleton = nullptr;
