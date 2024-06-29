@@ -19,6 +19,7 @@
 
 #pragma once
 #include "hhg-iface/button.hpp"
+#include "hhg-iface/io.hpp"
 #include "hhg-app/app-display-passwd.hpp"
 
 
@@ -28,7 +29,7 @@ inline namespace v1
 {
 
 class app_display_handler;
-class app_display_menu final : public hhg::iface::event_exit
+class app_display_menu final : public hhg::iface::event_exit, hhg::iface::io
 {
     static constexpr uint8_t MENU_SIZE = 4;
     static constexpr uint8_t MENU_LABEL_SIZE = 16;
@@ -84,6 +85,8 @@ public:
         return opened;
     }
 
+    void set_on_receive(const receive* receive, on_receive on_receive) OSAL_NOEXCEPT override;
+
 private:
 
     void paint_setting() OSAL_NOEXCEPT;
@@ -92,6 +95,9 @@ private:
     void paint_passwd() OSAL_NOEXCEPT;
 
     void on_exit(os::exit exit, const char* string) override;
+
+    os::exit transmit(const uint8_t* data, uint16_t size) const OSAL_NOEXCEPT override;
+
 
 };
 

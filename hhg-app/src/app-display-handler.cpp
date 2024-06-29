@@ -75,6 +75,7 @@ os::exit app_display_handler::init(os::error **error) OSAL_NOEXCEPT
 
     button->set_on_button_click(this, &button::event::on_button_click);
     rotary_encoder->set_on_rotary_encoder_event(this, &rotary_encoder::event::on_rotary_encoder_event);
+    app_display_menu.set_on_receive(&app_parser, &hhg::iface::io::receive::on_receive);
 
     thread.create();
 

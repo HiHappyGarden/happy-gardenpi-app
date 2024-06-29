@@ -523,7 +523,7 @@ os::exit auth(const cmd_data &data, const entry *entry, os::error **error) OSAL_
     return exit::KO;
 }
 
-    entry* get_commands() OSAL_NOEXCEPT
+entry* get_commands() OSAL_NOEXCEPT
 {
 	return commands;
 }

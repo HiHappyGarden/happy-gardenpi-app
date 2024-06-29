@@ -35,9 +35,9 @@ constexpr char APP_TAG[] = "APP-PARSER";
 
 }
 
-app_parser::app_parser(const hhg::iface::io_initializable::ptr& io, class error** error) OSAL_NOEXCEPT
+app_parser::app_parser(class error** error) OSAL_NOEXCEPT
 : error(nullptr)
-, io(io)
+//, io(io)
 , parser(get_commands(), get_commands_size())
 {
 	if(singleton)
@@ -87,6 +87,12 @@ void app_parser::on_receive(io_source source, const uint8_t data[], uint16_t siz
 		this->source = source;
 		buffer.send_from_isr(data, size, 10_ms, error);
 	}
+}
+
+
+void app_parser::register_io(hhg::iface::io_source, hhg::iface::io*)
+{
+    //TODO: da finire
 }
 
 os::exit app_parser::on_auth(const cmd_data &data, const hhg::parser::entry *entry, os::error **error) OSAL_NOEXCEPT
