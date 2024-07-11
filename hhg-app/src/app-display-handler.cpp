@@ -109,7 +109,6 @@ void app_display_handler::on_rotary_encoder_event(bool ccw, bool cw, bool click)
 
         if(click)
         {
-
             app_display_menu.rotary_encoder_click();
         }
     }

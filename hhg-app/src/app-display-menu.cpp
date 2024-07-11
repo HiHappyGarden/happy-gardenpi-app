@@ -203,7 +203,6 @@ pair<bool, bool> app_display_menu::paint() OSAL_NOEXCEPT //<update paint_header,
     }
     else
     {
-
         switch(menu_level_store[0])
         {
             case PLANNING:
@@ -277,7 +276,15 @@ void app_display_menu::on_exit(os::exit exit, const char* string) OSAL_NOEXCEPT
 
             break;
         case PASSWD:
-            app_display_handler.send_cmd("$VER\r\n");
+            if(string == nullptr)
+            {
+                menu_idx = PLANNING;
+                menu_level_store[0] = -1;
+            }
+            else
+            {
+                app_display_handler.send_cmd("$VER\r\n");
+            }
             break;
     }
 }
