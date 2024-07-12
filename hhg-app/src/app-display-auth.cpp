@@ -28,9 +28,39 @@ namespace hhg::app
 inline namespace v1
 {
 
-app_display_auth::app_display_auth(int16_t& menu_idx, class app_display_handler& app_display_handler, event_exit* obj, event_exit::on_exit_calback on_exit) OSAL_NOEXCEPT
+app_display_auth::app_display_auth(int16_t& menu_idx, class app_display_handler& app_display_handler, event_auth* obj, event_auth::on_auth_calback on_auth) OSAL_NOEXCEPT
 : obj(obj)
-, on_exit(on_exit)
+, on_auth(on_auth)
+{
+
+}
+
+void app_display_auth::button_click(hhg::iface::button::status status) OSAL_NOEXCEPT
+{
+
+}
+
+void app_display_auth::rotary_encoder_click() OSAL_NOEXCEPT
+{
+
+}
+
+void app_display_auth::rotary_encoder_ccw() OSAL_NOEXCEPT
+{
+
+}
+
+void app_display_auth::rotary_encoder_cw() OSAL_NOEXCEPT
+{
+
+}
+
+void app_display_auth::paint() OSAL_NOEXCEPT
+{
+
+}
+
+void app_display_auth::exit() OSAL_NOEXCEPT
 {
 
 }

@@ -29,7 +29,7 @@ inline namespace v1
 
 struct event_exit
 {
-    using on_exit_calback = void(event_exit::*)(os::exit, const char*);
+    using on_exit_callback = void(event_exit::*)(os::exit, const char*);
 
     virtual ~event_exit() = default;
 

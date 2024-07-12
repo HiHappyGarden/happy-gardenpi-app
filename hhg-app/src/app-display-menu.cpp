@@ -242,26 +242,6 @@ void app_display_menu::exit() OSAL_NOEXCEPT
     app_display_passwd.exit();
 }
 
-void app_display_menu::paint_setting() OSAL_NOEXCEPT
-{
-
-}
-
-void app_display_menu::paint_irrigates_now() OSAL_NOEXCEPT
-{
-
-}
-
-void app_display_menu::paint_wifi() OSAL_NOEXCEPT
-{
-
-}
-
-void app_display_menu::paint_passwd() OSAL_NOEXCEPT
-{
-
-}
-
 void app_display_menu::on_exit(os::exit exit, const char* string) OSAL_NOEXCEPT
 {
     switch(menu_level_store[0])

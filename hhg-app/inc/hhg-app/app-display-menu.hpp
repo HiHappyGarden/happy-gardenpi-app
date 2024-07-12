@@ -88,13 +88,7 @@ public:
 
 private:
 
-    void paint_setting() OSAL_NOEXCEPT;
-    void paint_irrigates_now() OSAL_NOEXCEPT;
-    void paint_wifi() OSAL_NOEXCEPT;
-    void paint_passwd() OSAL_NOEXCEPT;
-
     void on_exit(os::exit exit, const char* string) override;
-
 
 };
 

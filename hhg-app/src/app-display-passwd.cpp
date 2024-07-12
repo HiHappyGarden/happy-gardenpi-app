@@ -29,57 +29,106 @@ inline namespace v1
 {
 
 
-app_display_passwd::app_display_passwd(int16_t& menu_idx, class app_display_handler& app_display_handler, event_exit* obj, event_exit::on_exit_calback on_exit) OSAL_NOEXCEPT
+app_display_passwd::app_display_passwd(int16_t& menu_idx, class app_display_handler& app_display_handler, event_exit* obj, event_exit::on_exit_callback on_exit) OSAL_NOEXCEPT
 : menu_idx(menu_idx)
 , app_display_handler(app_display_handler)
 , obj(obj)
-, on_exit_calback(on_exit)
+, on_exit_callback(on_exit)
 , app_display_keyboard(menu_idx, app_display_handler, this, on_exit)
+, app_display_auth(menu_idx, app_display_handler, this, &app_display_auth::event_auth::on_auth)
 {
 
 }
 
 void app_display_passwd::button_click(button::status status) OSAL_NOEXCEPT
 {
-    app_display_keyboard.button_click(status);
+    if(app_display_auth.is_auth())
+    {
+        app_display_keyboard.button_click(status);
+    }
+    else
+    {
+        app_display_auth.button_click(status);
+    }
 }
 
 void app_display_passwd::rotary_encoder_click() OSAL_NOEXCEPT
 {
-    app_display_keyboard.rotary_encoder_click();
+    if(app_display_auth.is_auth())
+    {
+        app_display_keyboard.rotary_encoder_click();
+    }
+    else
+    {
+        app_display_auth.rotary_encoder_click();
+    }
 }
 
 void app_display_passwd::rotary_encoder_ccw() OSAL_NOEXCEPT
 {
-    app_display_keyboard.rotary_encoder_ccw();
+    if(app_display_auth.is_auth())
+    {
+        app_display_keyboard.rotary_encoder_ccw();
+    }
+    else
+    {
+        app_display_auth.rotary_encoder_ccw();
+    }
 }
 
 void app_display_passwd::rotary_encoder_cw() OSAL_NOEXCEPT
 {
-    app_display_keyboard.rotary_encoder_cw();
+    if(app_display_auth.is_auth())
+    {
+        app_display_keyboard.rotary_encoder_cw();
+    }
+    else
+    {
+        app_display_auth.rotary_encoder_cw();
+    }
 }
 
 void app_display_passwd::paint() OSAL_NOEXCEPT
 {
-    if(menu_idx == -1)
+    if(app_display_auth.is_auth())
     {
-        app_display_keyboard.set_first_char();
+        if(menu_idx == -1)
+        {
+            app_display_keyboard.set_first_char();
+        }
+        app_display_handler.paint_str(submenu_label.c_str());
+        app_display_keyboard.paint();
     }
-    app_display_handler.paint_str(submenu_label.c_str());
-    app_display_keyboard.paint();
+    else
+    {
+        app_display_auth.paint();
+    }
+
 }
 
 void app_display_passwd::exit() OSAL_NOEXCEPT
 {
-    app_display_keyboard.exit();
+    if(app_display_auth.is_auth())
+    {
+        app_display_keyboard.exit();
+    }
+    else
+    {
+        app_display_auth.exit();
+    }
 }
 
 void app_display_passwd::on_exit(os::exit exit, const char* string)
 {
-    if(obj && on_exit_calback)
+    if(obj && on_exit_callback)
     {
-        (obj->*on_exit_calback)(exit, nullptr);
+        (obj->*on_exit_callback)(exit, nullptr);
     }
+}
+
+void app_display_passwd::on_auth(bool auth)
+{
+    this->auth = auth;
 }
 
 }
