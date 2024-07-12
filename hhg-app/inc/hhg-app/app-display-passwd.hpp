@@ -22,6 +22,7 @@
 #include "hhg-iface/button.hpp"
 #include "hhg-iface/event-exit.hpp"
 #include "hhg-app/app-display-keyboard.hpp"
+#include "hhg-app/app-display-auth.hpp"
 
 namespace hhg::app
 {
@@ -29,21 +30,22 @@ inline namespace v1
 {
 
 class app_display_handler;
-class app_display_passwd final : public hhg::iface::event_exit
+class app_display_passwd final : public hhg::iface::event_exit, public app_display_auth::event_auth
 {
 
     int16_t& menu_idx;
     class app_display_handler& app_display_handler;
     hhg::iface::event_exit* obj = nullptr;
-    hhg::iface::event_exit::on_exit_calback on_exit_calback = nullptr;
+    hhg::iface::event_exit::on_exit_callback on_exit_callback = nullptr;
 
     os::string<32> submenu_label = "Set passwd";
 
     class app_display_keyboard app_display_keyboard;
+    class app_display_auth app_display_auth;
 
-
+    bool auth = false;
 public:
-    explicit app_display_passwd(int16_t& menu_idx, class app_display_handler& app_display_handler, hhg::iface::event_exit* obj, hhg::iface::event_exit::on_exit_calback on_exit) OSAL_NOEXCEPT;
+    explicit app_display_passwd(int16_t& menu_idx, class app_display_handler& app_display_handler, hhg::iface::event_exit* obj, hhg::iface::event_exit::on_exit_callback on_exit) OSAL_NOEXCEPT;
     ~app_display_passwd() override = default;
     OSAL_NO_COPY_NO_MOVE(app_display_passwd)
 
@@ -57,11 +59,12 @@ public:
 
     void paint() OSAL_NOEXCEPT;
 
-    void exit();
+    void exit() OSAL_NOEXCEPT;
 
 private:
     void on_exit(os::exit exit, const char* string) override;
 
+    void on_auth(bool auth) override;
 };
 
 }

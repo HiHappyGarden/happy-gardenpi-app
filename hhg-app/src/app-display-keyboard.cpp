@@ -28,7 +28,7 @@ namespace hhg::app
 inline namespace v1
 {
 
-app_display_keyboard::app_display_keyboard(int16_t& menu_idx, class app_display_handler& app_display_handler, hhg::iface::event_exit* obj, event_exit::on_exit_calback on_exit) OSAL_NOEXCEPT
+app_display_keyboard::app_display_keyboard(int16_t& menu_idx, class app_display_handler& app_display_handler, hhg::iface::event_exit* obj, event_exit::on_exit_callback on_exit) OSAL_NOEXCEPT
 : menu_idx(menu_idx)
 , app_display_handler(app_display_handler)
 , font_limit(app_display_handler.get_font_range(app_display_handler::font::F5X8))

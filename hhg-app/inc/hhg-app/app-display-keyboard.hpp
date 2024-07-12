@@ -50,9 +50,9 @@ private:
     char* sub_keyboard_buffer = nullptr;
 
     hhg::iface::event_exit* obj = nullptr;
-    hhg::iface::event_exit::on_exit_calback on_exit = nullptr;
+    hhg::iface::event_exit::on_exit_callback on_exit = nullptr;
 public:
-    app_display_keyboard(int16_t& menu_idx, class app_display_handler& app_display_handler, hhg::iface::event_exit* obj, hhg::iface::event_exit::on_exit_calback on_exit);
+    app_display_keyboard(int16_t& menu_idx, class app_display_handler& app_display_handler, hhg::iface::event_exit* obj, hhg::iface::event_exit::on_exit_callback on_exit);
     ~app_display_keyboard();
     OSAL_NO_COPY_NO_MOVE(app_display_keyboard)
 
