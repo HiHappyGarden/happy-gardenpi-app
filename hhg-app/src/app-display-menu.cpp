@@ -24,6 +24,10 @@ using hhg::iface::lcd;
 using hhg::iface::button;
 using hhg::iface::event_exit;
 
+#ifdef INCLUDE_HHG_CONFIG
+#include "hhg-config.h"
+#endif
+
 namespace hhg::app
 {
 inline namespace v1
@@ -242,7 +246,7 @@ void app_display_menu::exit() OSAL_NOEXCEPT
     app_display_passwd.exit();
 }
 
-void app_display_menu::on_exit(os::exit exit, const char* string) OSAL_NOEXCEPT
+void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OSAL_NOEXCEPT
 {
     switch(menu_level_store[0])
     {
@@ -256,14 +260,33 @@ void app_display_menu::on_exit(os::exit exit, const char* string) OSAL_NOEXCEPT
 
             break;
         case PASSWD:
-            if(string == nullptr)
+            if(exit == exit::KO)
             {
                 menu_idx = PLANNING;
                 menu_level_store[0] = -1;
             }
             else
             {
-                app_display_handler.send_cmd("$VER\r\n");
+                bool* auth = args ? static_cast<bool*>(args) : nullptr;
+                if(auth && !*auth)
+                {
+                    os::string<128> cmd = "$AUTH " HHG_USER " ";
+                    cmd += string;
+                    cmd += "\r\n";
+
+                    this->auth = new bool{*auth};
+                    app_display_handler.send_cmd(move(cmd));
+                }
+                if(auth && *auth)
+                {
+                    os::string<128> cmd = "$CONF 11 1 " HHG_USER " ";
+                    cmd += string;
+                    cmd += "\r\n";
+
+                    this->auth = new bool{*auth};
+                    app_display_handler.send_cmd(move(cmd));
+                }
+
             }
             break;
     }
@@ -283,7 +306,14 @@ os::exit app_display_menu::transmit(const uint8_t* data, uint16_t size) const OS
 
             break;
         case PASSWD:
+            if(auth.get())
+            {
 
+            }
+            else
+            {
+
+            }
             break;
     }
 

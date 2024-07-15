@@ -35,100 +35,71 @@ app_display_passwd::app_display_passwd(int16_t& menu_idx, class app_display_hand
 , obj(obj)
 , on_exit_callback(on_exit)
 , app_display_keyboard(menu_idx, app_display_handler, this, on_exit)
-, app_display_auth(menu_idx, app_display_handler, this, &app_display_auth::event_auth::on_auth)
 {
 
 }
 
 void app_display_passwd::button_click(button::status status) OSAL_NOEXCEPT
 {
-    if(app_display_auth.is_auth())
-    {
-        app_display_keyboard.button_click(status);
-    }
-    else
-    {
-        app_display_auth.button_click(status);
-    }
+    app_display_keyboard.button_click(status);
 }
 
 void app_display_passwd::rotary_encoder_click() OSAL_NOEXCEPT
 {
-    if(app_display_auth.is_auth())
-    {
-        app_display_keyboard.rotary_encoder_click();
-    }
-    else
-    {
-        app_display_auth.rotary_encoder_click();
-    }
+    app_display_keyboard.rotary_encoder_click();
+
 }
 
 void app_display_passwd::rotary_encoder_ccw() OSAL_NOEXCEPT
 {
-    if(app_display_auth.is_auth())
-    {
-        app_display_keyboard.rotary_encoder_ccw();
-    }
-    else
-    {
-        app_display_auth.rotary_encoder_ccw();
-    }
+    app_display_keyboard.rotary_encoder_ccw();
+
 }
 
 void app_display_passwd::rotary_encoder_cw() OSAL_NOEXCEPT
 {
-    if(app_display_auth.is_auth())
-    {
-        app_display_keyboard.rotary_encoder_cw();
-    }
-    else
-    {
-        app_display_auth.rotary_encoder_cw();
-    }
+    app_display_keyboard.rotary_encoder_cw();
 }
 
 void app_display_passwd::paint() OSAL_NOEXCEPT
 {
-    if(app_display_auth.is_auth())
+    if(menu_idx == -1)
     {
-        if(menu_idx == -1)
-        {
-            app_display_keyboard.set_first_char();
-        }
+        app_display_keyboard.set_first_char();
+    }
+    if(auth)
+    {
         app_display_handler.paint_str(submenu_label.c_str());
-        app_display_keyboard.paint();
     }
     else
     {
-        app_display_auth.paint();
+        app_display_handler.paint_str("Set auth pwd");
     }
-
+    app_display_keyboard.paint();
 }
 
 void app_display_passwd::exit() OSAL_NOEXCEPT
 {
-    if(app_display_auth.is_auth())
+    app_display_keyboard.exit();
+}
+
+void app_display_passwd::on_exit(os::exit exit, const char* string, void* args)
+{
+    if(auth)
     {
-        app_display_keyboard.exit();
+        if(obj && on_exit_callback)
+        {
+            (obj->*on_exit_callback)(exit::KO, nullptr, nullptr);
+        }
     }
     else
     {
-        app_display_auth.exit();
+        if(obj && on_exit_callback)
+        {
+            (obj->*on_exit_callback)(exit::OK, app_display_keyboard.get_keyboard_buffer().c_str(), &auth);
+        }
     }
-}
 
-void app_display_passwd::on_exit(os::exit exit, const char* string)
-{
-    if(obj && on_exit_callback)
-    {
-        (obj->*on_exit_callback)(exit, nullptr);
-    }
-}
-
-void app_display_passwd::on_auth(bool auth)
-{
-    this->auth = auth;
 }
 
 }

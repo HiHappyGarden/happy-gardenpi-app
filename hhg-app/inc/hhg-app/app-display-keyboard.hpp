@@ -72,6 +72,11 @@ public:
     {
         menu_idx = 'a';
     }
+
+    inline os::string<KEYBOARD_BUFFER_SIZE + 1> const get_keyboard_buffer() const OSAL_NOEXCEPT
+    {
+        return keyboard_buffer;
+    }
 };
 
 }
