@@ -62,6 +62,7 @@ class app_display_menu final : public hhg::iface::event_exit
 
     int16_t menu_level_store[MENU_LEVEL_SIZE];
 
+    os::unique_ptr<bool> auth = nullptr;
 public:
     explicit app_display_menu(class app_display_handler& app_display_handler) OSAL_NOEXCEPT;
     ~app_display_menu() override = default;
@@ -88,7 +89,7 @@ public:
 
 private:
 
-    void on_exit(os::exit exit, const char* string) override;
+    void on_exit(os::exit exit, const char* string, void*) override;
 
 };
 

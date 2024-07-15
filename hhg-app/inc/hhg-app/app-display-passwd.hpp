@@ -22,7 +22,6 @@
 #include "hhg-iface/button.hpp"
 #include "hhg-iface/event-exit.hpp"
 #include "hhg-app/app-display-keyboard.hpp"
-#include "hhg-app/app-display-auth.hpp"
 
 namespace hhg::app
 {
@@ -30,7 +29,7 @@ inline namespace v1
 {
 
 class app_display_handler;
-class app_display_passwd final : public hhg::iface::event_exit, public app_display_auth::event_auth
+class app_display_passwd final : public hhg::iface::event_exit
 {
 
     int16_t& menu_idx;
@@ -40,8 +39,8 @@ class app_display_passwd final : public hhg::iface::event_exit, public app_displ
 
     os::string<32> submenu_label = "Set passwd";
 
+
     class app_display_keyboard app_display_keyboard;
-    class app_display_auth app_display_auth;
 
     bool auth = false;
 public:
@@ -62,9 +61,8 @@ public:
     void exit() OSAL_NOEXCEPT;
 
 private:
-    void on_exit(os::exit exit, const char* string) override;
+    void on_exit(os::exit exit, const char* string, void *) override;
 
-    void on_auth(bool auth) override;
 };
 
 }

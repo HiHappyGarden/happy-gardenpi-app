@@ -29,11 +29,11 @@ inline namespace v1
 
 struct event_exit
 {
-    using on_exit_callback = void(event_exit::*)(os::exit, const char*);
+    using on_exit_callback = void(event_exit::*)(os::exit, const char*, void *);
 
     virtual ~event_exit() = default;
 
-    virtual void on_exit(os::exit, const char*) = 0;
+    virtual void on_exit(os::exit, const char*, void *) = 0;
 };
 
 }
