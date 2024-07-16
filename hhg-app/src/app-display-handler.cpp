@@ -56,7 +56,7 @@ app_display_handler::app_display_handler(const iface::lcd::ptr &lcd, const iface
         , app_main(app_main)
         , app_config(app_config)
         , app_parser(app_parser)
-        , app_display_menu(*this)
+        , app_display_menu(*this, app_parser)
 {
 
 }

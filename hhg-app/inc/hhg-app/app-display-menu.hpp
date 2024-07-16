@@ -28,6 +28,7 @@ inline namespace v1
 {
 
 class app_display_handler;
+class app_parser;
 class app_display_menu final : public hhg::iface::event_exit
 {
     static constexpr uint8_t MENU_SIZE = 4;
@@ -36,6 +37,7 @@ class app_display_menu final : public hhg::iface::event_exit
 
     class app_display_handler& app_display_handler;
     class app_display_passwd app_display_passwd;
+    const hhg::app::app_parser& app_parser;
 
     enum first_level
     {
@@ -61,10 +63,8 @@ class app_display_menu final : public hhg::iface::event_exit
     int16_t menu_idx = -1;
 
     int16_t menu_level_store[MENU_LEVEL_SIZE];
-
-    os::unique_ptr<bool> auth = nullptr;
 public:
-    explicit app_display_menu(class app_display_handler& app_display_handler) OSAL_NOEXCEPT;
+    explicit app_display_menu(class app_display_handler& app_display_handler, const hhg::app::app_parser& app_parser) OSAL_NOEXCEPT;
     ~app_display_menu() override = default;
     OSAL_NO_COPY_NO_MOVE(app_display_menu)
 
