@@ -17,6 +17,7 @@
  *
  ***************************************************************************/
 
+#include "hhg-app/app-parser.hpp"
 #include "hhg-app/app-display-passwd.hpp"
 #include "hhg-app/app-display-handler.hpp"
 using namespace os;
@@ -29,9 +30,10 @@ inline namespace v1
 {
 
 
-app_display_passwd::app_display_passwd(int16_t& menu_idx, class app_display_handler& app_display_handler, event_exit* obj, event_exit::on_exit_callback on_exit) OSAL_NOEXCEPT
-: menu_idx(menu_idx)
-, app_display_handler(app_display_handler)
+app_display_passwd::app_display_passwd(class app_display_handler& app_display_handler, const hhg::app::app_parser& app_parser, int16_t& menu_idx, hhg::iface::event_exit* obj, hhg::iface::event_exit::on_exit_callback on_exit) OSAL_NOEXCEPT
+: app_display_handler(app_display_handler)
+, app_parser(app_parser)
+, menu_idx(menu_idx)
 , obj(obj)
 , on_exit_callback(on_exit)
 , app_display_keyboard(menu_idx, app_display_handler, this, on_exit)
@@ -67,7 +69,7 @@ void app_display_passwd::paint() OSAL_NOEXCEPT
     {
         app_display_keyboard.set_first_char();
     }
-    if(auth)
+    if(app_parser.is_user_logged())
     {
         app_display_handler.paint_str(submenu_label.c_str());
     }
@@ -85,7 +87,7 @@ void app_display_passwd::exit() OSAL_NOEXCEPT
 
 void app_display_passwd::on_exit(os::exit exit, const char* string, void* args)
 {
-    if(auth)
+    if(app_parser.is_user_logged())
     {
         if(obj && on_exit_callback)
         {
@@ -96,7 +98,7 @@ void app_display_passwd::on_exit(os::exit exit, const char* string, void* args)
     {
         if(obj && on_exit_callback)
         {
-            (obj->*on_exit_callback)(exit::OK, app_display_keyboard.get_keyboard_buffer().c_str(), &auth);
+            (obj->*on_exit_callback)(exit::OK, app_display_keyboard.get_keyboard_buffer().c_str(), nullptr);
         }
     }
 

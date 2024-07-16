@@ -70,7 +70,7 @@ void app_display_keyboard::button_click(button::status status) OSAL_NOEXCEPT
     }
     else if(status == button::status::LONG_CLICK && obj && on_exit)
     {
-        (obj->*on_exit)(exit::OK, keyboard_buffer, nullptr);
+        (obj->*on_exit)(exit::KO, keyboard_buffer, nullptr);
         exit();
     }
 }

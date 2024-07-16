@@ -29,11 +29,13 @@ inline namespace v1
 {
 
 class app_display_handler;
+class app_parser;
 class app_display_passwd final : public hhg::iface::event_exit
 {
 
     int16_t& menu_idx;
     class app_display_handler& app_display_handler;
+    const hhg::app::app_parser& app_parser;
     hhg::iface::event_exit* obj = nullptr;
     hhg::iface::event_exit::on_exit_callback on_exit_callback = nullptr;
 
@@ -42,9 +44,8 @@ class app_display_passwd final : public hhg::iface::event_exit
 
     class app_display_keyboard app_display_keyboard;
 
-    bool auth = false;
 public:
-    explicit app_display_passwd(int16_t& menu_idx, class app_display_handler& app_display_handler, hhg::iface::event_exit* obj, hhg::iface::event_exit::on_exit_callback on_exit) OSAL_NOEXCEPT;
+    explicit app_display_passwd(class app_display_handler& app_display_handler, const hhg::app::app_parser& app_parser, int16_t& menu_idx, hhg::iface::event_exit* obj, hhg::iface::event_exit::on_exit_callback on_exit) OSAL_NOEXCEPT;
     ~app_display_passwd() override = default;
     OSAL_NO_COPY_NO_MOVE(app_display_passwd)
 
