@@ -271,20 +271,19 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
 
                 if(!app_parser.is_user_logged())
                 {
-                    os::string<128> cmd = "$AUTH " HHG_USER " ";
-                    cmd += string;
-                    cmd += "\r\n";
+                    last_cmd = "$AUTH " HHG_USER " ";
+                    last_cmd += string;
+                    last_cmd += "\r\n";
 
-
-                    app_display_handler.send_cmd(move(cmd));
+                    app_display_handler.send_cmd(last_cmd);
                 }
                 else
                 {
-                    os::string<128> cmd = "$CONF 11 1 " HHG_USER " ";
-                    cmd += string;
-                    cmd += "\r\n";
+                    last_cmd = "$CONF 11 1 " HHG_USER " ";
+                    last_cmd += string;
+                    last_cmd += "\r\n";
 
-                    app_display_handler.send_cmd(move(cmd));
+                    app_display_handler.send_cmd(last_cmd);
                 }
 
             }
@@ -294,6 +293,13 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
 
 os::exit app_display_menu::transmit(const uint8_t* data, uint16_t size) const OSAL_NOEXCEPT
 {
+    char* ret = new char[size - 1];
+    if(ret == nullptr)
+    {
+        return exit::KO;
+    }
+
+    memcpy(ret, data, size);
     switch(menu_level_store[0])
     {
         case PLANNING:
@@ -306,17 +312,28 @@ os::exit app_display_menu::transmit(const uint8_t* data, uint16_t size) const OS
 
             break;
         case PASSWD:
-//            if(auth.get())
-//            {
-//
-//            }
-//            else
-//            {
-//
-//            }
+            if(last_cmd.start_with("$CONF 11 1 "))
+            {
+                menu_idx = PLANNING;
+                menu_level_store[0] = -1;
+            }
+            else
+            {
+                if(strncmp(ret, "OK", size - 1) == 0)
+                {
+                    menu_idx = PASSWD;
+                    menu_level_store[0] = PASSWD;
+                }
+                else
+                {
+
+                }
+            }
             break;
     }
 
+
+    delete[] ret;
     return exit::OK;
 }
 

@@ -60,9 +60,10 @@ class app_display_menu final : public hhg::iface::event_exit
     bool do_paint = false;
     bool opened = false;
 
-    int16_t menu_idx = -1;
+    mutable int16_t menu_idx = -1;
 
-    int16_t menu_level_store[MENU_LEVEL_SIZE];
+    mutable int16_t menu_level_store[MENU_LEVEL_SIZE];
+    os::string<128> last_cmd;
 public:
     explicit app_display_menu(class app_display_handler& app_display_handler, const hhg::app::app_parser& app_parser) OSAL_NOEXCEPT;
     ~app_display_menu() override = default;
