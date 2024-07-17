@@ -430,7 +430,7 @@ auto app_display_handler::handler(void *) OSAL_NOEXCEPT -> void *
     return nullptr;
 }
 
-os::exit app_display_handler::send_cmd(const os::string<128>&& cmd) const OSAL_NOEXCEPT
+os::exit app_display_handler::send_cmd(const os::string<128>& cmd) const OSAL_NOEXCEPT
 {
     if(obj &&on_receive_callback)
     {
