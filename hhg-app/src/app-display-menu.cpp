@@ -321,12 +321,13 @@ os::exit app_display_menu::transmit(const uint8_t* data, uint16_t size) const OS
             {
                 if(strncmp(ret, "OK", size - 1) == 0)
                 {
-                    menu_idx = PASSWD;
-                    menu_level_store[0] = PASSWD;
+                    menu_idx = PASSWD; //fix: fix this
+                    menu_level_store[0] = PASSWD; //fix: fix this
                 }
                 else
                 {
-
+                    menu_idx = PLANNING;
+                    menu_level_store[0] = -1;
                 }
             }
             break;
