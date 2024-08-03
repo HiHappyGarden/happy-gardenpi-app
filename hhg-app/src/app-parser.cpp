@@ -170,6 +170,10 @@ void* app_parser::handler(void* arg) OSAL_NOEXCEPT
 
 			auto start = buffer.find(app_parser::STARTER_CHAR);
 			auto end = buffer.find("\r\n");
+            if(end == nullptr)
+            {
+                end = buffer.find("\n");
+            }
 			if (start && end)
 			{
 				class error* error = nullptr;

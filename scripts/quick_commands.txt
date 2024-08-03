@@ -12,3 +12,7 @@ $CONF STORE
 $AUTH user user
 $AUTH_REMOTE user ee11cbb19052e40b07aac0ca060c23e
 $AUTH_DISCONNECT
+
+
+Ctrl+M : Carriage Return(“\r”)
+Ctrl+J : Line Feed(“\n”)
