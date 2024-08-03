@@ -67,7 +67,7 @@ private:
 	os::thread thread {
 		"app_parser"
 		, hhg::driver::NORMAL
-		, 1'024
+		, 2 * 1'024
         , app_parser::handler
 	};
 

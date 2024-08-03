@@ -319,7 +319,7 @@ os::exit app_display_menu::transmit(const uint8_t* data, uint16_t size) const OS
             }
             else
             {
-                if(strncmp(ret, "OK", size - 1) == 0)
+                if(strncmp(ret, "OK\r\n", size - 1) == 0)
                 {
                     menu_idx = PASSWD; //fix: fix this
                     menu_level_store[0] = PASSWD; //fix: fix this
