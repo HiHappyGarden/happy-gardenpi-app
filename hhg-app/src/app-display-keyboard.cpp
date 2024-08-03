@@ -23,6 +23,10 @@ using namespace os;
 using hhg::iface::button;
 using hhg::iface::event_exit;
 
+#ifdef INCLUDE_HHG_CONFIG
+#include "hhg-config.h"
+#endif
+
 namespace hhg::app
 {
 inline namespace v1
@@ -39,6 +43,10 @@ app_display_keyboard::app_display_keyboard(int16_t& menu_idx, class app_display_
 , on_exit(on_exit)
 {
     memset(keyboard_buffer, '\0', KEYBOARD_BUFFER_SIZE + 1);
+#if TEST_PASSWD == 1
+    strncpy(keyboard_buffer, HHG_PASSWD, sizeof(keyboard_buffer) - 1);
+    keyboard_buffer_overflow = true;
+#endif
 }
 
 app_display_keyboard::~app_display_keyboard()
