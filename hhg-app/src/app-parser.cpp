@@ -174,7 +174,13 @@ void* app_parser::handler(void* arg) OSAL_NOEXCEPT
             {
                 end = buffer.find("\n");
             }
-			if (start && end)
+#ifdef FIX_MINICOM
+            if(end == nullptr)
+            {
+                end = buffer.find("\r");
+            }
+#endif
+            if (start && end)
 			{
 				class error* error = nullptr;
 				if(singleton->parser.execute(buffer.substr(start - buffer.c_str(), end - start).c_str(), ret.c_str(), ret.size(), &error) == exit::OK)
