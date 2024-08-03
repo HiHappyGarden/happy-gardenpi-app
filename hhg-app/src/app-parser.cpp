@@ -181,7 +181,15 @@ void* app_parser::handler(void* arg) OSAL_NOEXCEPT
                     }
                     
 					ret += app_parser::NEW_LINE;
-					io->transmit(reinterpret_cast<const uint8_t*>(ret.c_str()), ret.length());;
+                    if(singleton->source == io_source::UART)
+                    {
+                        io->transmit(reinterpret_cast<const uint8_t*>(ret.c_str()), ret.length());;
+                    }
+                    else
+                    {
+                        io->transmit(reinterpret_cast<const uint8_t*>(ret.rtrim().c_str()), ret.length());;
+                    }
+
 				}
 				else
 				{
