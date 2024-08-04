@@ -199,7 +199,6 @@ void* app_parser::handler(void* arg) OSAL_NOEXCEPT
                     {
                         io->transmit(reinterpret_cast<const uint8_t*>(ret.rtrim().c_str()), ret.length());;
                     }
-
 				}
 				else
 				{
@@ -212,7 +211,11 @@ void* app_parser::handler(void* arg) OSAL_NOEXCEPT
 				buffer.clear();
 				ret.clear();
 			}
-			else if (start == nullptr && end)
+#ifdef FIX_MINICOM
+			else if (start == nullptr && end && buffer[0] != '\n')
+#else
+            else if (start == nullptr && end)
+#endif
 			{
 				io->transmit(app_parser::KO, sizeof(app_parser::KO) - 1);
 				buffer.clear();
