@@ -322,8 +322,10 @@ os::exit app_display_menu::transmit(const uint8_t* data, uint16_t size) const OS
                 if(strncmp(ret, "OK", size - 1) == 0)
                 {
                     //todo: da fare la modifica passwd
-                    menu_idx = PASSWD; //fix: fix this
-                    menu_level_store[0] = PASSWD; //fix: fix this
+                    menu_idx = 'a';
+                    menu_level_store[0] = PASSWD;
+                    app_display_handler.clean();
+                    do_paint = true;
                 }
                 else
                 {

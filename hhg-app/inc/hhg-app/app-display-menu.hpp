@@ -57,7 +57,7 @@ class app_display_menu final : public hhg::iface::event_exit
 
     os::mutex mx;
 
-    bool do_paint = false;
+    mutable bool do_paint = false;
     bool opened = false;
 
     mutable int16_t menu_idx = -1;

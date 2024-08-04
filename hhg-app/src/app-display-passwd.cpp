@@ -91,7 +91,7 @@ void app_display_passwd::on_exit(os::exit exit, const char* string, void* args)
     {
         if(obj && on_exit_callback)
         {
-            (obj->*on_exit_callback)(exit::KO, nullptr, nullptr);
+            (obj->*on_exit_callback)(exit::KO, nullptr, nullptr); //todo: to fix ko on long click
         }
     }
     else
