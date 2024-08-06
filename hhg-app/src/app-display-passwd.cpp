@@ -43,11 +43,21 @@ app_display_passwd::app_display_passwd(class app_display_handler& app_display_ha
 
 void app_display_passwd::button_click(button::status status) OSAL_NOEXCEPT
 {
+    switch(status)
+    {
+        case button::status::RELEASE:
+            last_event = status::CLICK;
+            break;
+        case button::status::LONG_CLICK:
+            last_event = status::CLICK;
+            break;
+    }
     app_display_keyboard.button_click(status);
 }
 
 void app_display_passwd::rotary_encoder_click() OSAL_NOEXCEPT
 {
+    last_event = status::BACK;
     app_display_keyboard.rotary_encoder_click();
 
 }
@@ -91,7 +101,8 @@ void app_display_passwd::on_exit(os::exit exit, const char* string, void* args)
     {
         if(obj && on_exit_callback)
         {
-            (obj->*on_exit_callback)(exit::KO, nullptr, nullptr); //todo: to fix ko on long click
+            //todo: aggiungere la gestione dei nuovi stati
+            (obj->*on_exit_callback)(exit::KO, string, nullptr); //todo: to fix ko on long click
         }
     }
     else

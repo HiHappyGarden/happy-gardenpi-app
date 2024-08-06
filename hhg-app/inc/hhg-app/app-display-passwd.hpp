@@ -44,6 +44,13 @@ class app_display_passwd final : public hhg::iface::event_exit
 
     class app_display_keyboard app_display_keyboard;
 
+    enum class status
+    {
+        NONE,
+        CLICK,
+        CONFIRM,
+        BACK
+    } last_event = status::NONE;
 public:
     explicit app_display_passwd(class app_display_handler& app_display_handler, const hhg::app::app_parser& app_parser, int16_t& menu_idx, hhg::iface::event_exit* obj, hhg::iface::event_exit::on_exit_callback on_exit) OSAL_NOEXCEPT;
     ~app_display_passwd() override = default;
