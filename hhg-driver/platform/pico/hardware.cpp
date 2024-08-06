@@ -48,7 +48,6 @@ namespace
 {
 
 constexpr const char APP_TAG[] = "HARDWARE";
-/*relay* relay_to_test; //TODO: da rimuovere*/
 
 }
 
@@ -358,13 +357,6 @@ os::exit hardware::init(error** error) OSAL_NOEXCEPT
         return exit::KO;
     }
     OSAL_LOG_INFO(APP_TAG, "Init WiFI - OK");
-
-//    //TODO: da rimuovere
-//    button->set_on_button_click(&test_one, &button::event::on_button_click);
-//    rotary_encoder->set_on_rotary_encoder_event(&test_one, &rotary_encoder::event::on_rotary_encoder_event);
-
-//    lcd->set_rect(30, 30, 30, 30, iface::lcd::write_mode::ADD);
-//    lcd->send_buffer();
 
 	return exit::OK;
 }
