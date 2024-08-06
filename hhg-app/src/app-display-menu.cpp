@@ -54,7 +54,6 @@ void app_display_menu::button_click(button::status status) OSAL_NOEXCEPT
     if(status == button::status::RELEASE || status == button::status::LONG_CLICK)
     {
         lock_guard lg(mx);
-        opened = true;
         if(menu_level_store[0] == -1)
         {
             uint8_t level = 0;
@@ -325,7 +324,7 @@ os::exit app_display_menu::transmit(const uint8_t* data, uint16_t size) const OS
                     menu_idx = 'a';
                     menu_level_store[0] = PASSWD;
                     app_display_handler.clean();
-                    do_paint = true;
+                    //do_paint = true;
                 }
                 else
                 {
