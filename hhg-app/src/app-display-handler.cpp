@@ -336,7 +336,7 @@ auto app_display_handler::handler(void *) OSAL_NOEXCEPT -> void *
                                 singleton->paint_header(fsm_state & app_main::CHECK_WIFI, singleton->now_in_millis / app_main::ONE_SEC_IN_MILLIS);
                             }
 
-                            if(update_send_buffer)
+                            if(update_send_buffer && singleton->app_display_menu.is_opened())
                             {
                                 singleton->send_buffer();
                             }

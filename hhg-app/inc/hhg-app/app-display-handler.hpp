@@ -99,7 +99,7 @@ public:
 
     void on_rotary_encoder_event(bool ccw, bool cw, bool click) OSAL_NOEXCEPT override;
 
-    void clean() const OSAL_NOEXCEPT
+    inline void clean() const OSAL_NOEXCEPT
     {
         os::lock_guard lg(mx);
         clean(true);
