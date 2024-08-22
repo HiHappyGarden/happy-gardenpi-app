@@ -21,7 +21,6 @@
 
 #include "hhg-iface/button.hpp"
 #include "hhg-iface/event-exit.hpp"
-#include "hhg-app/app-display-keyboard.hpp"
 
 namespace hhg::app
 {
@@ -30,47 +29,21 @@ inline namespace v1
 
 class app_display_handler;
 class app_parser;
-class app_display_passwd final : public hhg::iface::event_exit
+class app_display_irrigate_now final : public hhg::iface::event_exit
 {
-
     int16_t& menu_idx;
     class app_display_handler& app_display_handler;
     const hhg::app::app_parser& app_parser;
     hhg::iface::event_exit* obj = nullptr;
     hhg::iface::event_exit::on_exit_callback on_exit_callback = nullptr;
 
-    os::string<32> submenu_label = "Set passwd";
-
-
-    class app_display_keyboard app_display_keyboard;
-
-    enum class status
-    {
-        NONE,
-        CLICK,
-        CONFIRM,
-        BACK
-    } last_event = status::NONE;
 public:
-    app_display_passwd(class app_display_handler& app_display_handler, const hhg::app::app_parser& app_parser, int16_t& menu_idx, hhg::iface::event_exit* obj, hhg::iface::event_exit::on_exit_callback on_exit) OSAL_NOEXCEPT;
-    ~app_display_passwd() override = default;
-    OSAL_NO_COPY_NO_MOVE(app_display_passwd)
-
-    void button_click(hhg::iface::button::status status) OSAL_NOEXCEPT;
-
-    void rotary_encoder_click() OSAL_NOEXCEPT;
-
-    void rotary_encoder_ccw() OSAL_NOEXCEPT;
-
-    void rotary_encoder_cw() OSAL_NOEXCEPT;
-
-    void paint() OSAL_NOEXCEPT;
-
-    void exit() OSAL_NOEXCEPT;
+    app_display_irrigate_now(class app_display_handler& app_display_handler, const hhg::app::app_parser& app_parser, int16_t& menu_idx, hhg::iface::event_exit* obj, hhg::iface::event_exit::on_exit_callback on_exit) OSAL_NOEXCEPT;
+    ~app_display_irrigate_now() override = default;
+    OSAL_NO_COPY_NO_MOVE(app_display_irrigate_now)
 
 private:
     void on_exit(os::exit exit, const char* string, void *) override;
-
 };
 
 }

@@ -20,6 +20,7 @@
 #pragma once
 #include "hhg-iface/button.hpp"
 #include "hhg-app/app-display-passwd.hpp"
+#include "hhg-app/app-display-irrigate-now.hpp"
 
 
 namespace hhg::app
@@ -37,6 +38,7 @@ class app_display_menu final : public hhg::iface::event_exit
 
     class app_display_handler& app_display_handler;
     class app_display_passwd app_display_passwd;
+    class app_display_irrigate_now app_display_irrigate_now;
     const hhg::app::app_parser& app_parser;
 
     enum first_level
@@ -49,7 +51,7 @@ class app_display_menu final : public hhg::iface::event_exit
 
     char const first_level_labels[MENU_SIZE][MENU_LABEL_SIZE] = {
             [PLANNING] = "Planning",
-            [IRRIGATE_NOW] = "Irrigates now",
+            [IRRIGATE_NOW] = "Irrigate now",
             [WIFI] = "WiFi",
             [PASSWD] = "Passwd"
     };
