@@ -49,7 +49,7 @@ void app_display_passwd::button_click(button::status status) OSAL_NOEXCEPT
             last_event = status::CLICK;
             break;
         case button::status::LONG_CLICK:
-            last_event = status::CLICK;
+            last_event = status::CONFIRM;
             break;
     }
     app_display_keyboard.button_click(status);
@@ -85,7 +85,7 @@ void app_display_passwd::paint() OSAL_NOEXCEPT
     }
     else
     {
-        app_display_handler.paint_str("Set auth pwd");
+        app_display_handler.paint_str("Access pwd");
     }
     app_display_keyboard.paint();
 }
@@ -102,7 +102,18 @@ void app_display_passwd::on_exit(os::exit exit, const char* string, void* args)
         if(obj && on_exit_callback)
         {
             //todo: aggiungere la gestione dei nuovi stati
-            (obj->*on_exit_callback)(exit::KO, string, nullptr); //todo: to fix ko on long click
+
+            switch(last_event)
+            {
+                case status::CONFIRM:
+                    (obj->*on_exit_callback)(exit::OK, string, nullptr);
+                    break;
+                case status::BACK:
+                    (obj->*on_exit_callback)(exit::KO, nullptr, nullptr);
+                    break;
+            }
+
+
         }
     }
     else
