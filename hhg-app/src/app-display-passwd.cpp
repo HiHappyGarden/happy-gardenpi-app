@@ -101,8 +101,6 @@ void app_display_passwd::on_exit(os::exit exit, const char* string, void* args)
     {
         if(obj && on_exit_callback)
         {
-            //todo: aggiungere la gestione dei nuovi stati
-
             switch(last_event)
             {
                 case status::CONFIRM:
