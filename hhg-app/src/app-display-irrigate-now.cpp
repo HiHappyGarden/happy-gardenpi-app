@@ -40,9 +40,41 @@ app_display_irrigate_now::app_display_irrigate_now(class app_display_handler& ap
 
 }
 
-void app_display_irrigate_now::on_exit(os::exit exit, const char* string, void*)
+void app_display_irrigate_now::button_click(hhg::iface::button::status status) OSAL_NOEXCEPT
 {
 
 }
+
+void app_display_irrigate_now::rotary_encoder_click() OSAL_NOEXCEPT
+{
+
+}
+
+void app_display_irrigate_now::rotary_encoder_ccw() OSAL_NOEXCEPT
+{
+
+}
+
+void app_display_irrigate_now::rotary_encoder_cw() OSAL_NOEXCEPT
+{
+
+}
+
+void app_display_irrigate_now::paint() OSAL_NOEXCEPT
+{
+
+}
+
+void app_display_irrigate_now::exit() OSAL_NOEXCEPT
+{
+
+}
+
+void app_display_irrigate_now::on_exit(os::exit exit, const char* string, void*) OSAL_NOEXCEPT
+{
+
+}
+
+
 }
 }

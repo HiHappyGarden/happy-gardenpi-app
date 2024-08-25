@@ -77,7 +77,7 @@ void app_display_menu::button_click(button::status status) OSAL_NOEXCEPT
             switch(menu_level_store[0])
             {
                 case PLANNING:
-
+                    app_display_irrigate_now.button_click(status);
                     break;
                 case IRRIGATE_NOW:
 
@@ -111,7 +111,7 @@ void app_display_menu::rotary_encoder_click() OSAL_NOEXCEPT
 
                 break;
             case IRRIGATE_NOW:
-
+                app_display_irrigate_now.rotary_encoder_click();
                 break;
             case WIFI:
 
@@ -146,7 +146,7 @@ void app_display_menu::rotary_encoder_ccw() OSAL_NOEXCEPT
 
                 break;
             case IRRIGATE_NOW:
-
+                app_display_irrigate_now.rotary_encoder_ccw();
                 break;
             case WIFI:
 
@@ -179,7 +179,7 @@ void app_display_menu::rotary_encoder_cw() OSAL_NOEXCEPT
 
                 break;
             case IRRIGATE_NOW:
-
+                app_display_irrigate_now.rotary_encoder_cw();
                 break;
             case WIFI:
 
@@ -217,7 +217,7 @@ pair<bool, bool> app_display_menu::paint() OSAL_NOEXCEPT //<update paint_header,
             }
             case IRRIGATE_NOW:
             {
-
+                app_display_irrigate_now.paint();
                 break;
             }
             case WIFI:
@@ -255,7 +255,7 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
 
             break;
         case IRRIGATE_NOW:
-
+            //todo: gestire le action
             break;
         case WIFI:
 
@@ -306,7 +306,7 @@ os::exit app_display_menu::transmit(const uint8_t* data, uint16_t size) const OS
 
             break;
         case IRRIGATE_NOW:
-
+            //todo: gestire le action
             break;
         case WIFI:
 
@@ -321,11 +321,9 @@ os::exit app_display_menu::transmit(const uint8_t* data, uint16_t size) const OS
             {
                 if(strncmp(ret, "OK", size - 1) == 0)
                 {
-                    //todo: da fare la modifica passwd
                     menu_idx = 'a';
                     menu_level_store[0] = PASSWD;
                     app_display_handler.clean();
-                    //do_paint = true;
                 }
                 else
                 {

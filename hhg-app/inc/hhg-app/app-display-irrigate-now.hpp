@@ -42,6 +42,19 @@ public:
     ~app_display_irrigate_now() override = default;
     OSAL_NO_COPY_NO_MOVE(app_display_irrigate_now)
 
+    void button_click(hhg::iface::button::status status) OSAL_NOEXCEPT;
+
+    void rotary_encoder_click() OSAL_NOEXCEPT;
+
+    void rotary_encoder_ccw() OSAL_NOEXCEPT;
+
+    void rotary_encoder_cw() OSAL_NOEXCEPT;
+
+    void paint() OSAL_NOEXCEPT;
+
+    void exit() OSAL_NOEXCEPT;
+
+
 private:
     void on_exit(os::exit exit, const char* string, void *) override;
 };
