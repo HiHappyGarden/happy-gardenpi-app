@@ -30,9 +30,10 @@ inline namespace v1
 {
 
 
-app_display_irrigate_now::app_display_irrigate_now(class app_display_handler& app_display_handler, const class app_parser& app_parser, int16_t& menu_idx, hhg::iface::event_exit* obj, hhg::iface::event_exit::on_exit_callback on_exit)
+app_display_irrigate_now::app_display_irrigate_now(class app_display_handler& app_display_handler, const class app_parser& app_parser, class app_data& app_data, int16_t& menu_idx, hhg::iface::event_exit* obj, hhg::iface::event_exit::on_exit_callback on_exit)
 : app_display_handler(app_display_handler)
 , app_parser(app_parser)
+, app_data(app_data)
 , menu_idx(menu_idx)
 , obj(obj)
 , on_exit_callback(on_exit)
@@ -62,6 +63,21 @@ void app_display_irrigate_now::rotary_encoder_cw() OSAL_NOEXCEPT
 
 void app_display_irrigate_now::paint() OSAL_NOEXCEPT
 {
+    app_display_handler.clean();
+
+    switch(step)
+    {
+        case step::ZONE:
+        {
+
+            app_display_handler.paint_str("Set passwd");
+            break;
+        }
+        case step::IRRIGATING:
+
+            break;
+    }
+
 
 }
 

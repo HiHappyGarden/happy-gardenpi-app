@@ -39,9 +39,6 @@ class app_display_passwd final : public hhg::iface::event_exit
     hhg::iface::event_exit* obj = nullptr;
     hhg::iface::event_exit::on_exit_callback on_exit_callback = nullptr;
 
-    os::string<32> submenu_label = "Set passwd";
-
-
     class app_display_keyboard app_display_keyboard;
 
     enum class status

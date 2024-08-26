@@ -311,7 +311,15 @@ app_main::app_main(driver::hardware &hardware, class error **error) OSAL_NOEXCEP
         , app_data(hardware.get_fs_io())
 //        , app_parser(hardware.get_uart())
         , app_led(hardware.get_rgb_led())
-        , app_display_handler(hardware.get_lcd(), hardware.get_rotary_encoder(), hardware.get_button(), hardware.get_time(), *this, app_config, app_parser)
+        , app_display_handler(hardware.get_lcd()
+                              , hardware.get_rotary_encoder()
+                              , hardware.get_button()
+                              , hardware.get_time()
+                              , *this
+                              , app_data
+                              , app_config
+                              , app_parser
+                              )
 {
     if(singleton)
     {
