@@ -79,9 +79,11 @@ void app_display_passwd::paint() OSAL_NOEXCEPT
     {
         app_display_keyboard.set_first_char();
     }
+
+    app_display_handler.clean();
     if(app_parser.is_user_logged())
     {
-        app_display_handler.paint_str(submenu_label.c_str());
+        app_display_handler.paint_str("Set passwd");
     }
     else
     {

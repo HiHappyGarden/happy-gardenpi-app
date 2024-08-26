@@ -48,15 +48,16 @@ constexpr char APP_TAG[] = "APP DISPLAY HANDLER";
 
 using write_mode = lcd::write_mode;
 
-app_display_handler::app_display_handler(const iface::lcd::ptr &lcd, const iface::rotary_encoder::ptr &rotary_encoder, const iface::button::ptr &button, const hhg::iface::time::ptr &time, const hhg::app::app_main& app_main, const hhg::app::app_config& app_config, const hhg::app::app_parser &app_parser)
+app_display_handler::app_display_handler(const iface::lcd::ptr &lcd, const iface::rotary_encoder::ptr &rotary_encoder, const iface::button::ptr &button, const hhg::iface::time::ptr &time, const hhg::app::app_main& app_main, hhg::app::app_data& app_data, hhg::app::app_config& app_config, const hhg::app::app_parser &app_parser)
         : lcd(lcd)
         , rotary_encoder(rotary_encoder)
         , button(button)
         , time(time)
         , app_main(app_main)
+        , app_data(app_data)
         , app_config(app_config)
         , app_parser(app_parser)
-        , app_display_menu(*this, app_parser)
+        , app_display_menu(*this, app_parser, app_data, app_config)
 {
 
 }

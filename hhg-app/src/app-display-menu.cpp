@@ -41,10 +41,10 @@ constexpr char APP_TAG[] = "APP DISPLAY MENU";
 }
 
 
-app_display_menu::app_display_menu(class app_display_handler& app_display_handler, const hhg::app::app_parser& app_parser) OSAL_NOEXCEPT
+app_display_menu::app_display_menu(class app_display_handler& app_display_handler, const hhg::app::app_parser& app_parser, hhg::app::app_data& app_data, hhg::app::app_config& app_config) OSAL_NOEXCEPT
         : app_display_handler(app_display_handler)
         , app_display_passwd(app_display_handler, app_parser, menu_idx, this, &event_exit::on_exit)
-        , app_display_irrigate_now(app_display_handler, app_parser, menu_idx, this, &event_exit::on_exit)
+        , app_display_irrigate_now(app_display_handler, app_parser, app_data, menu_idx, this, &event_exit::on_exit)
         , app_parser(app_parser)
 {
     memset(menu_level_store, -1, MENU_LEVEL_SIZE);

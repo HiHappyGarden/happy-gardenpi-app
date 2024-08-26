@@ -29,16 +29,25 @@ inline namespace v1
 
 class app_display_handler;
 class app_parser;
+class app_data;
 class app_display_irrigate_now final : public hhg::iface::event_exit
 {
+    enum class step
+    {
+        ZONE,
+        IRRIGATING,
+    } step = step::ZONE;
+
     int16_t& menu_idx;
     class app_display_handler& app_display_handler;
-    const hhg::app::app_parser& app_parser;
+    const class app_parser& app_parser;
+    class app_data& app_data;
     hhg::iface::event_exit* obj = nullptr;
     hhg::iface::event_exit::on_exit_callback on_exit_callback = nullptr;
 
+
 public:
-    app_display_irrigate_now(class app_display_handler& app_display_handler, const hhg::app::app_parser& app_parser, int16_t& menu_idx, hhg::iface::event_exit* obj, hhg::iface::event_exit::on_exit_callback on_exit) OSAL_NOEXCEPT;
+    app_display_irrigate_now(class app_display_handler& app_display_handler, const class app_parser& app_parser, class app_data& app_data, int16_t& menu_idx, hhg::iface::event_exit* obj, hhg::iface::event_exit::on_exit_callback on_exit) OSAL_NOEXCEPT;
     ~app_display_irrigate_now() override = default;
     OSAL_NO_COPY_NO_MOVE(app_display_irrigate_now)
 
