@@ -34,7 +34,7 @@ class app_display_keyboard final
 public:
     static constexpr int8_t KEYBOARD_BUFFER_SIZE = 32;
     static constexpr uint8_t const WIDTH_CHAR = 8;
-    static constexpr uint16_t const Y = 45;
+
 private:
     int16_t& menu_idx;
     class app_display_handler& app_display_handler;

@@ -71,6 +71,7 @@ class app_display_handler final : public hhg::iface::rotary_encoder::event, publ
 
     static inline app_display_handler *singleton = nullptr;
 public:
+    static constexpr uint16_t const ROW_2_Y_OFFSET = 45;
     static constexpr uint16_t DISPLAY_TURN_ODD_TIMEOUT = 60 * 1'000;
 
     enum class font
