@@ -36,7 +36,7 @@ app_display_passwd::app_display_passwd(class app_display_handler& app_display_ha
 , menu_idx(menu_idx)
 , obj(obj)
 , on_exit_callback(on_exit)
-, app_display_keyboard(menu_idx, app_display_handler, this, on_exit)
+, app_display_keyboard(app_display_keyboard::type::DEFAULT, menu_idx, app_display_handler, this, on_exit)
 {
 
 }
