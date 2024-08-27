@@ -32,10 +32,18 @@ class app_display_handler;
 class app_display_keyboard final
 {
 public:
+
+    enum class type
+    {
+        DEFAULT,
+        NUMERICS
+    };
+
     static constexpr int8_t KEYBOARD_BUFFER_SIZE = 32;
     static constexpr uint8_t const WIDTH_CHAR = 8;
 
 private:
+    enum type type;
     int16_t& menu_idx;
     class app_display_handler& app_display_handler;
 
@@ -52,7 +60,7 @@ private:
     hhg::iface::event_exit* obj = nullptr;
     hhg::iface::event_exit::on_exit_callback on_exit = nullptr;
 public:
-    app_display_keyboard(int16_t& menu_idx, class app_display_handler& app_display_handler, hhg::iface::event_exit* obj, hhg::iface::event_exit::on_exit_callback on_exit);
+    app_display_keyboard(enum type type, int16_t& menu_idx, class app_display_handler& app_display_handler, hhg::iface::event_exit* obj, hhg::iface::event_exit::on_exit_callback on_exit);
     ~app_display_keyboard();
     OSAL_NO_COPY_NO_MOVE(app_display_keyboard)
 
