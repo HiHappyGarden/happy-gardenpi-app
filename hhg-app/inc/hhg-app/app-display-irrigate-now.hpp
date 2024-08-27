@@ -34,9 +34,14 @@ class app_display_irrigate_now final : public hhg::iface::event_exit
 {
     enum class step
     {
+        SCHEDULE,
         ZONE,
         IRRIGATING,
-    } step = step::ZONE;
+    } step = step::SCHEDULE;
+
+    static constexpr int8_t KEYBOARD_BUFFER_SIZE = 32;
+    static constexpr uint8_t const WIDTH_CHAR = 8;
+    static constexpr uint16_t const Y = 45;
 
     int16_t& menu_idx;
     class app_display_handler& app_display_handler;

@@ -124,22 +124,22 @@ void app_display_keyboard::paint() OSAL_NOEXCEPT
         uint16_t x = 2 + (keyboard_position * WIDTH_CHAR);
         if(keyboard_buffer_overflow)
         {
-            app_display_handler.paint_clean(0, Y, display_width, 8);
-            app_display_handler.paint_str(keyboard_buffer, Y, app_display_handler::valign::LEFT, app_display_handler::font::F8X8, 2);
+            app_display_handler.paint_clean(0, app_display_handler::ROW_2_Y_OFFSET, display_width, 8);
+            app_display_handler.paint_str(keyboard_buffer, app_display_handler::ROW_2_Y_OFFSET, app_display_handler::valign::LEFT, app_display_handler::font::F8X8, 2);
             add_char = true;
-            app_display_handler.paint_char(menu_idx , x, Y, app_display_handler::font::F8X8);
+            app_display_handler.paint_char(menu_idx , x, app_display_handler::ROW_2_Y_OFFSET, app_display_handler::font::F8X8);
         }
         else
         {
             if(add_char)
             {
-                app_display_handler.paint_char(menu_idx , x, Y, app_display_handler::font::F8X8);
+                app_display_handler.paint_char(menu_idx , x, app_display_handler::ROW_2_Y_OFFSET, app_display_handler::font::F8X8);
             }
             else
             {
-                app_display_handler.paint_clean(x, Y, 8 + 8, 8);
+                app_display_handler.paint_clean(x, app_display_handler::ROW_2_Y_OFFSET, 8 + 8, 8);
                 add_char = true;
-                app_display_handler.paint_char(menu_idx , x, Y, app_display_handler::font::F8X8);
+                app_display_handler.paint_char(menu_idx , x, app_display_handler::ROW_2_Y_OFFSET, app_display_handler::font::F8X8);
             }
         }
         keyboard_buffer_overflow = false;
@@ -151,10 +151,10 @@ void app_display_keyboard::paint() OSAL_NOEXCEPT
         memset(sub_keyboard_buffer, '\0', line_max_char);
         strncpy(sub_keyboard_buffer, keyboard_buffer + 3 + delta, keyboard_position - 3 - delta);
 
-        app_display_handler.paint_clean(0, Y, display_width, 8);
-        app_display_handler.paint_str("...", Y, app_display_handler::valign::LEFT, app_display_handler::font::F8X8);
-        app_display_handler.paint_str(sub_keyboard_buffer, Y, app_display_handler::valign::LEFT, app_display_handler::font::F8X8, 3 * WIDTH_CHAR);
-        app_display_handler.paint_char(menu_idx ,  ( (line_max_char - 1) * WIDTH_CHAR), Y, app_display_handler::font::F8X8);
+        app_display_handler.paint_clean(0, app_display_handler::ROW_2_Y_OFFSET, display_width, 8);
+        app_display_handler.paint_str("...", app_display_handler::ROW_2_Y_OFFSET, app_display_handler::valign::LEFT, app_display_handler::font::F8X8);
+        app_display_handler.paint_str(sub_keyboard_buffer, app_display_handler::ROW_2_Y_OFFSET, app_display_handler::valign::LEFT, app_display_handler::font::F8X8, 3 * WIDTH_CHAR);
+        app_display_handler.paint_char(menu_idx ,  ( (line_max_char - 1) * WIDTH_CHAR), app_display_handler::ROW_2_Y_OFFSET, app_display_handler::font::F8X8);
 
     }
 }

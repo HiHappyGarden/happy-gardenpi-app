@@ -67,14 +67,20 @@ void app_display_irrigate_now::paint() OSAL_NOEXCEPT
 
     switch(step)
     {
+        case step::SCHEDULE:
+        {
+            app_display_handler.paint_str("From schedule");
+            break;
+        }
         case step::ZONE:
         {
 
-            app_display_handler.paint_str("Set passwd");
+            app_display_handler.paint_str("Get zone");
             break;
         }
         case step::IRRIGATING:
 
+            app_display_handler.paint_str("For minutes");
             break;
     }
 
