@@ -34,7 +34,7 @@ struct button : public initializable
     {
         PRESS,
         RELEASE,
-        LONG_CLICK
+        LONG_PRESS
     };
 
     struct event

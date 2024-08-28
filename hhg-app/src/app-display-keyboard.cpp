@@ -65,61 +65,135 @@ void app_display_keyboard::exit() OSAL_NOEXCEPT
     memset(sub_keyboard_buffer, '\0', line_max_char + 1);
 }
 
+void app_display_keyboard::set_first_char() OSAL_NOEXCEPT
+{
+    switch(type)
+    {
+        case type::DEFAULT:
+            menu_idx = 'a';
+            break;
+        case type::NUMERICS:
+            menu_idx = number_limit.first;
+            break;
+    }
+}
+
 void app_display_keyboard::button_click(button::status status) OSAL_NOEXCEPT
 {
-    if(status == button::status::RELEASE)
+    switch(type)
     {
-        if(keyboard_position < KEYBOARD_BUFFER_SIZE - 1)
-        {
-            keyboard_buffer[keyboard_position] = menu_idx;
-            keyboard_position++;
-            menu_idx = 'a';
-            add_char = true;
-        }
-    }
-    else if(status == button::status::LONG_CLICK && obj && on_exit)
-    {
-        (obj->*on_exit)(exit::KO, keyboard_buffer, nullptr); //todo: to fix ko on long click
-        exit();
+        case type::DEFAULT:
+            if(status == button::status::RELEASE)
+            {
+                if(keyboard_position < KEYBOARD_BUFFER_SIZE - 1)
+                {
+                    keyboard_buffer[keyboard_position] = menu_idx;
+                    keyboard_position++;
+                    menu_idx = 'a';
+                    add_char = true;
+                }
+            }
+            else if(status == button::status::LONG_PRESS && obj && on_exit)
+            {
+                (obj->*on_exit)(exit::KO, keyboard_buffer, nullptr);
+                exit();
+            }
+            break;
+        case type::NUMERICS:
+            if(status == button::status::RELEASE)
+            {
+                snprintf(keyboard_buffer, sizeof(keyboard_buffer) - 1, "%u", menu_idx);
+                keyboard_position = strlen(keyboard_buffer);
+                menu_idx = number_limit.first;
+                add_char = false;
+            }
+            else if(status == button::status::LONG_PRESS && obj && on_exit)
+            {
+                (obj->*on_exit)(exit::KO, keyboard_buffer, nullptr);
+                exit();
+            }
+            break;
     }
 }
 
 void app_display_keyboard::rotary_encoder_click() OSAL_NOEXCEPT
 {
-    if(keyboard_position > 0)
+    switch(type)
     {
-        keyboard_position--;
-        keyboard_buffer[keyboard_position] = '\0';
-        menu_idx = 'a';
-        add_char = false;
-    }
-    else if(obj && on_exit)
-    {
-        (obj->*on_exit)(exit::KO, nullptr, nullptr);
-        exit();
+        case type::DEFAULT:
+            if(keyboard_position > 0)
+            {
+                keyboard_position--;
+                keyboard_buffer[keyboard_position] = '\0';
+                menu_idx = 'a';
+                add_char = false;
+            }
+            else if(obj && on_exit)
+            {
+                (obj->*on_exit)(exit::KO, nullptr, nullptr);
+                exit();
+            }
+        case type::NUMERICS:
+            if(obj && on_exit)
+            {
+                (obj->*on_exit)(exit::KO, nullptr, nullptr);
+                exit();
+            }
+            break;
     }
 }
 
 void app_display_keyboard::rotary_encoder_ccw() OSAL_NOEXCEPT
 {
     menu_idx--;
-    if(menu_idx < font_limit.first)
+    switch(type)
     {
-        menu_idx = int16_t(font_limit.second);
+        case type::DEFAULT:
+            if(menu_idx < font_limit.first)
+            {
+                menu_idx = int16_t(font_limit.second);
+            }
+            break;
+        case type::NUMERICS:
+            if(menu_idx < number_limit.first)
+            {
+                menu_idx = number_limit.second;
+            }
+            break;
     }
 }
 
 void app_display_keyboard::rotary_encoder_cw() OSAL_NOEXCEPT
 {
     menu_idx++;
-    if(menu_idx > font_limit.second)
+    switch(type)
     {
-        menu_idx = font_limit.first;
+        case type::DEFAULT:
+            if(menu_idx > font_limit.second)
+            {
+                menu_idx = font_limit.first;
+            }
+            break;
+        case type::NUMERICS:
+            if(menu_idx > number_limit.second)
+            {
+                menu_idx = number_limit.first;
+            }
+            break;
     }
+
 }
 
 void app_display_keyboard::paint() OSAL_NOEXCEPT
 {
+    if(type == type::NUMERICS)
+    {
+        app_display_handler.paint_clean(0, app_display_handler::ROW_2_Y_OFFSET, display_width, 8);
+        app_display_handler.paint_str(keyboard_buffer, app_display_handler::ROW_2_Y_OFFSET, app_display_handler::valign::CENTER, app_display_handler::font::F8X8);
+        return;
+    }
+
+
     if (keyboard_position < line_max_char - 1)
     {
         uint16_t x = 2 + (keyboard_position * WIDTH_CHAR);
@@ -153,7 +227,6 @@ void app_display_keyboard::paint() OSAL_NOEXCEPT
         strncpy(sub_keyboard_buffer, keyboard_buffer + 3 + delta, keyboard_position - 3 - delta);
 
         app_display_handler.paint_clean(0, app_display_handler::ROW_2_Y_OFFSET, display_width, 8);
-        app_display_handler.paint_str("...", app_display_handler::ROW_2_Y_OFFSET, app_display_handler::valign::LEFT, app_display_handler::font::F8X8);
         app_display_handler.paint_str(sub_keyboard_buffer, app_display_handler::ROW_2_Y_OFFSET, app_display_handler::valign::LEFT, app_display_handler::font::F8X8, 3 * WIDTH_CHAR);
         app_display_handler.paint_char(menu_idx ,  ( (line_max_char - 1) * WIDTH_CHAR), app_display_handler::ROW_2_Y_OFFSET, app_display_handler::font::F8X8);
 

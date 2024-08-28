@@ -101,8 +101,8 @@ void *pico_button::handle(void *arg)
             {
                 if(event_last.status == status::PRESS && click_event.status == status::RELEASE && click_event.timestamp - event_last.timestamp >= LONG_CLICK_TIME)
                 {
-                    (singleton->obj->*singleton->callback)(status::LONG_CLICK);
-                    event_last.status = status::LONG_CLICK;
+                    (singleton->obj->*singleton->callback)(status::LONG_PRESS);
+                    event_last.status = status::LONG_PRESS;
                     event_last = click_event;
                 }
                 else

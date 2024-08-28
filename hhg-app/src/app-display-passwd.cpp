@@ -48,7 +48,7 @@ void app_display_passwd::button_click(button::status status) OSAL_NOEXCEPT
         case button::status::RELEASE:
             last_event = status::CLICK;
             break;
-        case button::status::LONG_CLICK:
+        case button::status::LONG_PRESS:
             last_event = status::CONFIRM;
             break;
     }
@@ -80,7 +80,6 @@ void app_display_passwd::paint() OSAL_NOEXCEPT
         app_display_keyboard.set_first_char();
     }
 
-    app_display_handler.clean();
     if(app_parser.is_user_logged())
     {
         app_display_handler.paint_str("Set passwd");

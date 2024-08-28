@@ -53,16 +53,23 @@ private:
     bool keyboard_buffer_overflow = false;
 
     os::pair<uint8_t, uint8_t> font_limit;
+    os::pair<uint16_t, uint16_t> number_limit { 0, UINT16_MAX};
     uint8_t const display_width;
     uint8_t const line_max_char;
     char* sub_keyboard_buffer = nullptr;
 
     hhg::iface::event_exit* obj = nullptr;
     hhg::iface::event_exit::on_exit_callback on_exit = nullptr;
+
 public:
     app_display_keyboard(enum type type, int16_t& menu_idx, class app_display_handler& app_display_handler, hhg::iface::event_exit* obj, hhg::iface::event_exit::on_exit_callback on_exit);
     ~app_display_keyboard();
     OSAL_NO_COPY_NO_MOVE(app_display_keyboard)
+
+    inline void set_number_limit(const os::pair<uint16_t, uint16_t>&& limit) OSAL_NOEXCEPT
+    {
+        number_limit = limit;
+    }
 
     void button_click(hhg::iface::button::status status) OSAL_NOEXCEPT;
 
@@ -76,10 +83,7 @@ public:
 
     void exit() OSAL_NOEXCEPT;
 
-    inline void set_first_char() OSAL_NOEXCEPT
-    {
-        menu_idx = 'a';
-    }
+    void set_first_char() OSAL_NOEXCEPT;
 
     inline os::string<KEYBOARD_BUFFER_SIZE + 1> const get_keyboard_buffer() const OSAL_NOEXCEPT
     {
