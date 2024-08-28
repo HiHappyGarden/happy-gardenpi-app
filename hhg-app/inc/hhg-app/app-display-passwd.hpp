@@ -65,6 +65,7 @@ public:
 
     void exit() OSAL_NOEXCEPT;
 
+
 private:
     void on_exit(os::exit exit, const char* string, void *) override;
 

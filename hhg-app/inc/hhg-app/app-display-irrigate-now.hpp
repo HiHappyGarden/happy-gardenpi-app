@@ -21,6 +21,7 @@
 
 #include "hhg-iface/button.hpp"
 #include "hhg-iface/event-exit.hpp"
+#include "hhg-app/app-display-keyboard.hpp"
 
 namespace hhg::app
 {
@@ -50,7 +51,7 @@ class app_display_irrigate_now final : public hhg::iface::event_exit
     hhg::iface::event_exit* obj = nullptr;
     hhg::iface::event_exit::on_exit_callback on_exit_callback = nullptr;
 
-
+    class app_display_keyboard app_display_keyboard;
 public:
     app_display_irrigate_now(class app_display_handler& app_display_handler, const class app_parser& app_parser, class app_data& app_data, int16_t& menu_idx, hhg::iface::event_exit* obj, hhg::iface::event_exit::on_exit_callback on_exit) OSAL_NOEXCEPT;
     ~app_display_irrigate_now() override = default;

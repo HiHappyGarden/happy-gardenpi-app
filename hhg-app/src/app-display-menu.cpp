@@ -52,7 +52,7 @@ app_display_menu::app_display_menu(class app_display_handler& app_display_handle
 
 void app_display_menu::button_click(button::status status) OSAL_NOEXCEPT
 {
-    if(status == button::status::RELEASE || status == button::status::LONG_CLICK)
+    if(status == button::status::RELEASE || status == button::status::LONG_PRESS)
     {
         lock_guard lg(mx);
         if(menu_level_store[0] == -1)
@@ -77,10 +77,10 @@ void app_display_menu::button_click(button::status status) OSAL_NOEXCEPT
             switch(menu_level_store[0])
             {
                 case PLANNING:
-                    app_display_irrigate_now.button_click(status);
+
                     break;
                 case IRRIGATE_NOW:
-
+                    app_display_irrigate_now.button_click(status);
                     break;
                 case WIFI:
 
