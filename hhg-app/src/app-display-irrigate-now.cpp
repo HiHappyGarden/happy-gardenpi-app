@@ -72,8 +72,6 @@ void app_display_irrigate_now::paint() OSAL_NOEXCEPT
         {
             app_display_handler.paint_str("From schedule");
             app_display_keyboard.set_number_limit({1, HHG_SCHEDULES_SIZE});
-            app_display_keyboard.rotary_encoder_cw();
-            app_display_keyboard.button_click(button::status::PRESS);
             break;
         }
         case step::ZONE:

@@ -55,7 +55,7 @@ void app_display_menu::button_click(button::status status) OSAL_NOEXCEPT
     if(status == button::status::RELEASE || status == button::status::LONG_PRESS)
     {
         lock_guard lg(mx);
-        if(menu_level_store[0] == -1)
+            if(menu_level_store[0] == -1)
         {
             uint8_t level = 0;
             for(int16_t value: menu_level_store)
