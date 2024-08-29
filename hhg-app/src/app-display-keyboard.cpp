@@ -102,9 +102,11 @@ void app_display_keyboard::button_click(button::status status) OSAL_NOEXCEPT
         case type::NUMERICS:
             if(status == button::status::RELEASE)
             {
-                snprintf(keyboard_buffer, sizeof(keyboard_buffer) - 1, "%u", menu_idx);
-                keyboard_position = strlen(keyboard_buffer);
-                menu_idx = number_limit.first;
+                if(menu_idx < number_limit.first)
+                {
+                    menu_idx = number_limit.first;
+                }
+
                 add_char = false;
             }
             else if(status == button::status::LONG_PRESS && obj && on_exit)
@@ -155,7 +157,7 @@ void app_display_keyboard::rotary_encoder_ccw() OSAL_NOEXCEPT
             }
             break;
         case type::NUMERICS:
-            if(menu_idx < number_limit.first)
+            if(menu_idx < number_limit.first || menu_idx > number_limit.first)
             {
                 menu_idx = number_limit.second;
             }
@@ -175,10 +177,11 @@ void app_display_keyboard::rotary_encoder_cw() OSAL_NOEXCEPT
             }
             break;
         case type::NUMERICS:
-            if(menu_idx > number_limit.second)
+            if(menu_idx > number_limit.second || menu_idx < number_limit.first)
             {
                 menu_idx = number_limit.first;
             }
+
             break;
     }
 
@@ -188,6 +191,17 @@ void app_display_keyboard::paint() OSAL_NOEXCEPT
 {
     if(type == type::NUMERICS)
     {
+        if(menu_idx < number_limit.first)
+        {
+            menu_idx = number_limit.first;
+        }
+        else if(menu_idx > number_limit.second)
+        {
+            menu_idx = number_limit.second;
+        }
+        snprintf(keyboard_buffer, sizeof(keyboard_buffer) - 1, "%u", menu_idx);
+        keyboard_position = strlen(keyboard_buffer);
+
         app_display_handler.paint_clean(0, app_display_handler::ROW_2_Y_OFFSET, display_width, 8);
         app_display_handler.paint_str(keyboard_buffer, app_display_handler::ROW_2_Y_OFFSET, app_display_handler::valign::CENTER, app_display_handler::font::F8X8);
         return;

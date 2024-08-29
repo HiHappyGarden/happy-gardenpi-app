@@ -53,7 +53,7 @@ private:
     bool keyboard_buffer_overflow = false;
 
     os::pair<uint8_t, uint8_t> font_limit;
-    os::pair<uint16_t, uint16_t> number_limit { 0, UINT16_MAX};
+    os::pair<int16_t, int16_t> number_limit { 0, INT16_MAX};
     uint8_t const display_width;
     uint8_t const line_max_char;
     char* sub_keyboard_buffer = nullptr;
@@ -66,7 +66,7 @@ public:
     ~app_display_keyboard();
     OSAL_NO_COPY_NO_MOVE(app_display_keyboard)
 
-    inline void set_number_limit(const os::pair<uint16_t, uint16_t>&& limit) OSAL_NOEXCEPT
+    inline void set_number_limit(const os::pair<int16_t, int16_t>&& limit) OSAL_NOEXCEPT
     {
         number_limit = limit;
     }
