@@ -373,7 +373,7 @@ os::exit app_data::set_zone(const char json_str[]) OSAL_NOEXCEPT
 	return exit::OK;
 }
 
-char *app_data::get_schedule(uint8_t id) OSAL_NOEXCEPT
+char *app_data::get_schedule(uint8_t id) const OSAL_NOEXCEPT
 {
 	if(id >= HHG_SCHEDULES_SIZE)
 	{
@@ -450,7 +450,7 @@ char *app_data::get_schedule(uint8_t id) OSAL_NOEXCEPT
 	return ret;
 }
 
-char *app_data::get_zone(uint8_t id_schedule, uint8_t id) OSAL_NOEXCEPT
+char *app_data::get_zone(uint8_t id_schedule, uint8_t id) const OSAL_NOEXCEPT
 {
 	if(id >= HHG_ZONES_SIZE)
 	{
@@ -535,6 +535,39 @@ char *app_data::get_zone(uint8_t id_schedule, uint8_t id) OSAL_NOEXCEPT
 	return ret;
 }
 
+const schedule* app_data::get_data(uint8_t id_schedule) const OSAL_NOEXCEPT
+{
+    if(id_schedule >= HHG_SCHEDULES_SIZE)
+    {
+        OSAL_LOG_ERROR(APP_TAG, "Out of max scheduling index");
+        return nullptr;
+    }
+}
+
+os::pair<uint8_t, const zone*> app_data::get_data(uint8_t id_schedule, uint8_t id) const OSAL_NOEXCEPT
+{
+    if(id_schedule >= HHG_SCHEDULES_SIZE)
+    {
+        OSAL_LOG_ERROR(APP_TAG, "Out of max scheduling index");
+        return {0, nullptr};
+    }
+
+    if(id >= HHG_ZONES_SIZE)
+    {
+        OSAL_LOG_ERROR(APP_TAG, "Out of max scheduling index");
+        return {0, nullptr};
+    }
+
+    if(id >= data.schedules[id_schedule].zones_len + 1 || id >= HHG_ZONES_SIZE)
+    {
+        OSAL_LOG_ERROR(APP_TAG, "Out of max zoning index");
+        return {0, nullptr};
+    }
+
+    return {0, nullptr};
+}
+
+
 uint8_t app_data::get_bit_day(const tm* now) OSAL_NOEXCEPT
 {
 	if(now == nullptr)
@@ -561,6 +594,8 @@ uint8_t app_data::get_bit_day(const tm* now) OSAL_NOEXCEPT
 	}
 	return static_cast<uint8_t>(schedule::NOT_SET);
 }
+
+
 
 } /* namespace driver */
 } /* namespace hhg */
