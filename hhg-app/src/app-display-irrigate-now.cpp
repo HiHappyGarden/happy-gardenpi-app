@@ -77,8 +77,17 @@ void app_display_irrigate_now::paint() OSAL_NOEXCEPT
         case step::ZONE:
         {
 
-            app_display_handler.paint_str("Get zone");
-            app_display_keyboard.set_number_limit({1, HHG_SCHEDULES_SIZE});
+            auto&& zone = app_data.get_data(selections.schedule_idx, menu_idx);
+            if(zone.first)
+            {
+                app_display_handler.paint_str("Get zone");
+                app_display_keyboard.set_number_limit({1, zone.first});
+            }
+            else
+            {
+                app_display_handler.paint_str("No zone config.");
+            }
+
             break;
         }
         case step::IRRIGATING:
@@ -98,7 +107,64 @@ void app_display_irrigate_now::exit() OSAL_NOEXCEPT
 
 void app_display_irrigate_now::on_exit(os::exit exit, const char* string, void*) OSAL_NOEXCEPT
 {
-    int i = 1;
+
+    switch(exit)
+    {
+        case exit::KO:
+            (obj->*on_exit_callback)(exit::OK, string, nullptr);
+            break;
+        case exit::OK:
+            switch(step)
+            {
+                case step::SCHEDULE:
+                {
+
+                    selections.schedule_idx = menu_idx - 1;
+                    menu_idx = 0;
+                    step = step::ZONE;
+
+                    break;
+                }
+                case step::ZONE:
+                {
+
+                    auto&& zone = app_data.get_data(selections.schedule_idx, menu_idx);
+                    if(zone.first)
+                    {
+                        selections.zone_idx = menu_idx - 1;
+                        menu_idx = 0;
+                        step = step::IRRIGATING;
+                    }
+                    else
+                    {
+                        menu_idx = 0;
+                        step = step::SCHEDULE;
+                    }
+
+                    break;
+                }
+                case step::IRRIGATING:
+
+                    selections.irrigating_minutes = menu_idx;
+                    menu_idx = 0;
+                    step = step::IRRIGATING;
+
+
+                    if(obj && on_exit_callback)
+                    {
+                        (obj->*on_exit_callback)(exit::OK, nullptr, &selections);
+                    }
+
+                    break;
+            }
+            break;
+    }
+
+    if(app_parser.is_user_logged())
+    {
+
+    }
+
 }
 
 

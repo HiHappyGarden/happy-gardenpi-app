@@ -197,9 +197,13 @@ public:
 
 	os::exit set_zone(const char[]) OSAL_NOEXCEPT;
 
-	char* get_schedule(uint8_t id) OSAL_NOEXCEPT;
+	char* get_schedule(uint8_t id) const OSAL_NOEXCEPT;
 
-	char* get_zone(uint8_t id_schedule, uint8_t id) OSAL_NOEXCEPT;
+	char* get_zone(uint8_t id_schedule, uint8_t id) const OSAL_NOEXCEPT;
+
+    const schedule* get_data(uint8_t id_schedule) const OSAL_NOEXCEPT;
+
+    os::pair<uint8_t, const zone*> get_data(uint8_t id_schedule, uint8_t id) const  OSAL_NOEXCEPT;
 
 private:
 	static uint8_t get_bit_day(const tm* now) OSAL_NOEXCEPT;

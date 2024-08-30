@@ -40,6 +40,13 @@ class app_display_irrigate_now final : public hhg::iface::event_exit
         IRRIGATING,
     } step = step::SCHEDULE;
 
+    struct data
+    {
+        uint8_t schedule_idx = 0;
+        uint8_t zone_idx = 0;
+        uint8_t irrigating_minutes = 0;
+    } selections;
+
     static constexpr int8_t KEYBOARD_BUFFER_SIZE = 32;
     static constexpr uint8_t const WIDTH_CHAR = 8;
     static constexpr uint16_t const Y = 45;
@@ -52,6 +59,7 @@ class app_display_irrigate_now final : public hhg::iface::event_exit
     hhg::iface::event_exit::on_exit_callback on_exit_callback = nullptr;
 
     class app_display_keyboard app_display_keyboard;
+
 public:
     app_display_irrigate_now(class app_display_handler& app_display_handler, const class app_parser& app_parser, class app_data& app_data, int16_t& menu_idx, hhg::iface::event_exit* obj, hhg::iface::event_exit::on_exit_callback on_exit) OSAL_NOEXCEPT;
     ~app_display_irrigate_now() override = default;
