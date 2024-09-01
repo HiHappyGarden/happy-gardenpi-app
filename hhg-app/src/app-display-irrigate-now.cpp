@@ -44,6 +44,26 @@ app_display_irrigate_now::app_display_irrigate_now(class app_display_handler& ap
 
 void app_display_irrigate_now::button_click(hhg::iface::button::status status) OSAL_NOEXCEPT
 {
+    switch(step)
+    {
+        case step::NONE:
+            app_display_keyboard.set_number_limit({1, HHG_SCHEDULES_SIZE});
+            step = step::SCHEDULE;
+            break;
+        case step::SCHEDULE:
+        {
+            auto&& zone = app_data.get_data(selections.schedule_idx, menu_idx);
+            app_display_keyboard.set_number_limit({1, zone.first});
+            step = step::ZONE;
+            break;
+        }
+        case step::ZONE:
+            step = step::IRRIGATING;
+            break;
+        case step::IRRIGATING:
+
+            break;
+    }
     app_display_keyboard.button_click(status);
 }
 
@@ -68,10 +88,14 @@ void app_display_irrigate_now::paint() OSAL_NOEXCEPT
 
     switch(step)
     {
+        case step::NONE:
+            app_display_keyboard.set_number_limit({1, HHG_SCHEDULES_SIZE});
+            step = step::SCHEDULE;
+            [[__fallthrough__]];
         case step::SCHEDULE:
         {
             app_display_handler.paint_str("From schedule");
-            app_display_keyboard.set_number_limit({1, HHG_SCHEDULES_SIZE});
+
             break;
         }
         case step::ZONE:
@@ -81,7 +105,6 @@ void app_display_irrigate_now::paint() OSAL_NOEXCEPT
             if(zone.first)
             {
                 app_display_handler.paint_str("Get zone");
-                app_display_keyboard.set_number_limit({1, zone.first});
             }
             else
             {

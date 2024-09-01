@@ -35,10 +35,11 @@ class app_display_irrigate_now final : public hhg::iface::event_exit
 {
     enum class step
     {
+        NONE,
         SCHEDULE,
         ZONE,
         IRRIGATING,
-    } step = step::SCHEDULE;
+    } step = step::NONE;
 
     struct data
     {
