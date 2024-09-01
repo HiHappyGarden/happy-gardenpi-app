@@ -52,14 +52,24 @@ void app_display_irrigate_now::button_click(hhg::iface::button::status status) O
             break;
         case step::SCHEDULE:
         {
-            auto&& zone = app_data.get_data(selections.schedule_idx, menu_idx);
-            app_display_keyboard.set_number_limit({1, zone.first});
+            auto&& [zones_len, zone] = app_data.get_data(selections.schedule_idx, menu_idx - 1);
+            if(zones_len)
+            {
+                app_display_keyboard.set_number_limit({1, zones_len});
+            }
+
             step = step::ZONE;
             break;
         }
         case step::ZONE:
-            step = step::IRRIGATING;
+        {
+            auto&& [zones_len, zone] = app_data.get_data(selections.schedule_idx, menu_idx - 1);
+            if(zones_len)
+            {
+                step = step::IRRIGATING;
+            }
             break;
+        }
         case step::IRRIGATING:
 
             break;
@@ -95,16 +105,17 @@ void app_display_irrigate_now::paint() OSAL_NOEXCEPT
         case step::SCHEDULE:
         {
             app_display_handler.paint_str("From schedule");
-
+            app_display_keyboard.paint();
             break;
         }
         case step::ZONE:
         {
 
-            auto&& zone = app_data.get_data(selections.schedule_idx, menu_idx);
-            if(zone.first)
+            auto&& [zones_len, zone]  = app_data.get_data(selections.schedule_idx, menu_idx - 1);
+            if(zones_len)
             {
                 app_display_handler.paint_str("Get zone");
+                app_display_keyboard.paint();
             }
             else
             {
@@ -116,11 +127,12 @@ void app_display_irrigate_now::paint() OSAL_NOEXCEPT
         case step::IRRIGATING:
 
             app_display_handler.paint_str("For minutes");
+            app_display_keyboard.paint();
             break;
     }
 
 
-    app_display_keyboard.paint();
+
 }
 
 void app_display_irrigate_now::exit() OSAL_NOEXCEPT
@@ -151,7 +163,7 @@ void app_display_irrigate_now::on_exit(os::exit exit, const char* string, void*)
                 case step::ZONE:
                 {
 
-                    auto&& zone = app_data.get_data(selections.schedule_idx, menu_idx);
+                    auto&& zone = app_data.get_data(selections.schedule_idx, menu_idx - 1);
                     if(zone.first)
                     {
                         selections.zone_idx = menu_idx - 1;

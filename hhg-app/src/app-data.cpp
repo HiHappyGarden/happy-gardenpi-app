@@ -542,6 +542,8 @@ const schedule* app_data::get_data(uint8_t id_schedule) const OSAL_NOEXCEPT
         OSAL_LOG_ERROR(APP_TAG, "Out of max scheduling index");
         return nullptr;
     }
+
+    return &data.schedules[id_schedule];
 }
 
 os::pair<uint8_t, const zone*> app_data::get_data(uint8_t id_schedule, uint8_t id) const OSAL_NOEXCEPT
@@ -564,7 +566,7 @@ os::pair<uint8_t, const zone*> app_data::get_data(uint8_t id_schedule, uint8_t i
         return {0, nullptr};
     }
 
-    return {0, nullptr};
+    return {data.schedules[id_schedule].zones_len, &data.schedules[id_schedule].zones[id]};
 }
 
 
