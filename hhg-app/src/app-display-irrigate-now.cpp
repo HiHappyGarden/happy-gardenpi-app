@@ -52,13 +52,16 @@ void app_display_irrigate_now::button_click(hhg::iface::button::status status) O
             break;
         case step::SCHEDULE:
         {
-            auto&& [zones_len, zone] = app_data.get_data(selections.schedule_idx, menu_idx - 1);
-            if(zones_len)
+            selections.schedule_idx = menu_idx - 1;
+            step = step::ZONE;
+            menu_idx = 0;
+
+            auto schedule = app_data.get_data(selections.schedule_idx);
+            if(schedule->zones_len)
             {
-                app_display_keyboard.set_number_limit({1, zones_len});
+                app_display_keyboard.set_number_limit({1, schedule->zones_len});
             }
 
-            step = step::ZONE;
             break;
         }
         case step::ZONE:
@@ -66,12 +69,31 @@ void app_display_irrigate_now::button_click(hhg::iface::button::status status) O
             auto&& [zones_len, zone] = app_data.get_data(selections.schedule_idx, menu_idx - 1);
             if(zones_len)
             {
+
                 step = step::IRRIGATING;
+                selections.zone_idx = menu_idx - 1;
+                menu_idx = 0;
+                app_display_keyboard.set_number_limit({1, 255});
             }
+            else
+            {
+                menu_idx = 0;
+            }
+
+            //test!!!!!!
+            step = step::IRRIGATING;
+            selections.zone_idx = 0;
+            menu_idx = 0;
+            app_display_keyboard.set_number_limit({1, 255});
             break;
         }
         case step::IRRIGATING:
-
+            selections.irrigating_minutes = menu_idx;
+            menu_idx = 0;
+            if(obj && on_exit_callback)
+            {
+                (obj->*on_exit_callback)(exit::OK, nullptr, &selections);
+            }
             break;
     }
     app_display_keyboard.button_click(status);
@@ -111,7 +133,7 @@ void app_display_irrigate_now::paint() OSAL_NOEXCEPT
         case step::ZONE:
         {
 
-            auto&& [zones_len, zone]  = app_data.get_data(selections.schedule_idx, menu_idx - 1);
+            auto&& [zones_len, zone]  = app_data.get_data(selections.schedule_idx, selections.zone_idx);
             if(zones_len)
             {
                 app_display_handler.paint_str("Get zone");
@@ -119,7 +141,7 @@ void app_display_irrigate_now::paint() OSAL_NOEXCEPT
             }
             else
             {
-                app_display_handler.paint_str("No zone config.");
+                app_display_handler.paint_str("No zone conf");
             }
 
             break;
@@ -153,37 +175,14 @@ void app_display_irrigate_now::on_exit(os::exit exit, const char* string, void*)
             {
                 case step::SCHEDULE:
                 {
-
-                    selections.schedule_idx = menu_idx - 1;
-                    menu_idx = 0;
-                    step = step::ZONE;
-
+                    
                     break;
                 }
                 case step::ZONE:
                 {
-
-                    auto&& zone = app_data.get_data(selections.schedule_idx, menu_idx - 1);
-                    if(zone.first)
-                    {
-                        selections.zone_idx = menu_idx - 1;
-                        menu_idx = 0;
-                        step = step::IRRIGATING;
-                    }
-                    else
-                    {
-                        menu_idx = 0;
-                        step = step::SCHEDULE;
-                    }
-
                     break;
                 }
                 case step::IRRIGATING:
-
-                    selections.irrigating_minutes = menu_idx;
-                    menu_idx = 0;
-                    step = step::IRRIGATING;
-
 
                     if(obj && on_exit_callback)
                     {
@@ -193,11 +192,6 @@ void app_display_irrigate_now::on_exit(os::exit exit, const char* string, void*)
                     break;
             }
             break;
-    }
-
-    if(app_parser.is_user_logged())
-    {
-
     }
 
 }
