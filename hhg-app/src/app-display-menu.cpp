@@ -255,8 +255,14 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
 
             break;
         case IRRIGATE_NOW:
-            //todo: gestire le action
+        {
+            auto selections = reinterpret_cast<const app_display_irrigate_now::data*>(args);
+
+            int pippo = 2;
+
             break;
+        }
+
         case WIFI:
 
             break;

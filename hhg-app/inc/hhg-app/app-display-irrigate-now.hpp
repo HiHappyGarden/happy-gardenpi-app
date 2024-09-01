@@ -33,6 +33,14 @@ class app_parser;
 class app_data;
 class app_display_irrigate_now final : public hhg::iface::event_exit
 {
+public:
+    struct data
+    {
+        uint8_t schedule_idx = 0;
+        uint8_t zone_idx = 0;
+        uint8_t irrigating_minutes = 0;
+    };
+private:
     enum class step
     {
         NONE,
@@ -41,12 +49,7 @@ class app_display_irrigate_now final : public hhg::iface::event_exit
         IRRIGATING,
     } step = step::NONE;
 
-    struct data
-    {
-        uint8_t schedule_idx = 0;
-        uint8_t zone_idx = 0;
-        uint8_t irrigating_minutes = 0;
-    } selections;
+    data selections;
 
     static constexpr int8_t KEYBOARD_BUFFER_SIZE = 32;
     static constexpr uint8_t const WIDTH_CHAR = 8;
