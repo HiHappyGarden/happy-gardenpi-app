@@ -99,50 +99,6 @@ entry commands_rtc[] =
 		return exit::OK;
 	}
 	, .description = "Get RTC readable format"}
-//    , {.key = "4"
-//    , .custom_func = [](auto data, auto entry, auto error)
-//    {
-//
-//        char* ptr = nullptr;
-//        int16_t timezone = strtol(data.tokens[2].start, &ptr, 10);
-//        if (ptr == data.tokens[2].start || *ptr != '\0' || errno == ERANGE)
-//        {
-//            if(error)
-//            {
-//                *error = OSAL_ERROR_BUILD("Convention string to timezome in minutes fail", error_type::OS_EINVAL);
-//                OSAL_ERROR_PTR_SET_POSITION(*error);
-//            }
-//            return exit::KO;
-//        }
-//
-//        app_config->set_timezone(timezone);
-//
-//        return exit::OK;
-//    }
-//    , .description = "Set timezone"
-//    , .access = ACCESS_ALL_USERS}
-//    , {.key = "5"
-//       , .custom_func = [](auto data, auto entry, auto error)
-//        {
-//
-//            char* ptr = nullptr;
-//            bool daylight_saving_time = strtol(data.tokens[2].start, &ptr, 10);
-//            if (ptr == data.tokens[2].start || *ptr != '\0' || errno == ERANGE)
-//            {
-//                if(error)
-//                {
-//                    *error = OSAL_ERROR_BUILD("Convention string to timezome in minutes fail", error_type::OS_EINVAL);
-//                    OSAL_ERROR_PTR_SET_POSITION(*error);
-//                }
-//                return exit::KO;
-//            }
-//
-//            app_config->set_daylight_saving_time(daylight_saving_time);
-//
-//            return exit::OK;
-//        }
-//        , .description = "Set daylight saving time"
-//        , .access = ACCESS_ALL_USERS}
 };
 constexpr const size_t commands_rtc_size = sizeof(commands_rtc) / sizeof(commands_rtc[0]);
 
@@ -279,6 +235,13 @@ entry commands_data[] =
 	},
     .description = "Get zone"},
 	{.key = "4", .description = "Set zone", .access = ACCESS_ALL_USERS},
+    {.key = "5", .custom_func = [](auto data, auto entry, auto error)
+        {
+            //todo: end to develop manual irrigation
+            OSAL_LOG_DEBUG("--->", "TODO");
+            return exit::OK;
+        }
+        , .description = "Start manual zone", .access = ACCESS_ALL_USERS},
     {.key = "CLEAR", .description = "Clear all zone", .access = ACCESS_ALL_USERS},
 	{.key = "STORE", .custom_func = [](auto data, auto entry, auto error)
 	{
@@ -294,6 +257,7 @@ entry commands_data[] =
 		return ret;
 	}
 	, .description = "Store data", .access = ACCESS_ALL_USERS},
+
 };
 constexpr const size_t commands_data_size = sizeof(commands_data) / sizeof(commands_data[0]);
 

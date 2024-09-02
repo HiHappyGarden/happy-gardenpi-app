@@ -80,7 +80,7 @@ void app_display_irrigate_now::button_click(hhg::iface::button::status status) O
                 menu_idx = 0;
             }
 
-            //test!!!!!!
+//            //test!!!!!!
             step = step::IRRIGATING;
             selections.zone_idx = 0;
             menu_idx = 0;
@@ -94,6 +94,8 @@ void app_display_irrigate_now::button_click(hhg::iface::button::status status) O
             {
                 (obj->*on_exit_callback)(exit::OK, nullptr, &selections);
             }
+            memset(&selections, 0, sizeof(selections));
+            step = step::NONE;
             break;
     }
     app_display_keyboard.button_click(status);
@@ -101,7 +103,32 @@ void app_display_irrigate_now::button_click(hhg::iface::button::status status) O
 
 void app_display_irrigate_now::rotary_encoder_click() OSAL_NOEXCEPT
 {
-    app_display_keyboard.rotary_encoder_click();
+    switch(step)
+    {
+        case step::SCHEDULE:
+            step = step::NONE;
+            selections.zone_idx = 0;
+            if(obj && on_exit_callback)
+            {
+                (obj->*on_exit_callback)(exit::KO, nullptr, nullptr);
+            }
+            break;
+        case step::ZONE:
+            step = step::SCHEDULE;
+            selections.schedule_idx = 0;
+            app_display_keyboard.set_number_limit({1, HHG_SCHEDULES_SIZE});
+            break;
+        case step::IRRIGATING:
+            step = step::ZONE;
+            selections.irrigating_minutes = 0;
+            auto&& [zones_len, zone] = app_data.get_data(selections.schedule_idx, menu_idx - 1);
+            if(zones_len)
+            {
+                app_display_keyboard.set_number_limit({1, zones_len});
+            }
+            break;
+    }
+    app_display_keyboard.set_first_char();
 }
 
 void app_display_irrigate_now::rotary_encoder_ccw() OSAL_NOEXCEPT
