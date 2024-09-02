@@ -256,9 +256,28 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
             break;
         case IRRIGATE_NOW:
         {
-            auto selections = reinterpret_cast<const app_display_irrigate_now::data*>(args);
+            if(exit == exit::KO)
+            {
+                menu_idx = PLANNING;
+                menu_level_store[0] = -1;
+            }
+            else
+            {
+                if(args == nullptr)
+                {
+                    break;
+                }
 
-            int pippo = 2;
+                auto selections = reinterpret_cast<app_display_irrigate_now::data *>(args);
+
+                char buffer[32] = { 0 };
+
+                snprintf(buffer, sizeof(buffer) - 1, "$DATA 5 %u %u\r\n", selections->zone_idx, selections->irrigating_minutes);
+
+                last_cmd = buffer;
+
+                app_display_handler.send_cmd(last_cmd);
+            }
 
             break;
         }
@@ -312,7 +331,8 @@ os::exit app_display_menu::transmit(const uint8_t* data, uint16_t size) const OS
 
             break;
         case IRRIGATE_NOW:
-            //todo: gestire le action
+            menu_idx = PLANNING;
+            menu_level_store[0] = -1;
             break;
         case WIFI:
 

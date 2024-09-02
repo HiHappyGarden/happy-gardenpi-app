@@ -185,6 +185,7 @@ void* app_parser::handler(void* arg) OSAL_NOEXCEPT
 				class error* error = nullptr;
 				if(singleton->parser.execute(buffer.substr(start - buffer.c_str(), end - start).c_str(), ret.c_str(), ret.size(), &error) == exit::OK)
 				{
+
                     if(singleton->is_user_logged() && singleton->auth_timer.is_active())
                     {
                         singleton->user_logged_timeout = AUTH_TIMEOUT;
