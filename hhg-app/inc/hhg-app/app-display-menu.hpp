@@ -43,14 +43,12 @@ class app_display_menu final : public hhg::iface::event_exit
 
     enum first_level
     {
-        PLANNING,
         IRRIGATE_NOW,
         WIFI,
         PASSWD
     };
 
     char const first_level_labels[MENU_SIZE][MENU_LABEL_SIZE] = {
-            [PLANNING] = "Planning",
             [IRRIGATE_NOW] = "Irrigate now",
             [WIFI] = "WiFi",
             [PASSWD] = "Passwd"
