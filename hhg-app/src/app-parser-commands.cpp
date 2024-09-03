@@ -228,7 +228,6 @@ entry commands_data[] =
 		else
 		{
 			strncpy(data.ret_buffer, "KO", data.ret_buffer_len);
-			delete[] ret;
 			return exit::KO;
 		}
 
@@ -238,8 +237,8 @@ entry commands_data[] =
     {.key = "5", .custom_func = [](auto data, auto entry, auto error)
         {
             //todo: end to develop manual irrigation
-            OSAL_LOG_DEBUG("--->", "TODO");
-            return exit::OK;
+            strncpy(data.ret_buffer, "KO", data.ret_buffer_len);
+            return exit::KO;
         }
         , .description = "Start manual zone", .access = ACCESS_ALL_USERS},
     {.key = "CLEAR", .description = "Clear all zone", .access = ACCESS_ALL_USERS},

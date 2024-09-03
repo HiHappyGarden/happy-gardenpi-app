@@ -174,12 +174,12 @@ void* app_parser::handler(void* arg) OSAL_NOEXCEPT
             {
                 end = buffer.find("\n");
             }
-#ifdef FIX_MINICOM
-            if(end == nullptr)
-            {
-                end = buffer.find("\r");
-            }
-#endif
+//#ifdef FIX_MINICOM
+//            if(end == nullptr)
+//            {
+//                end = buffer.find("\r");
+//            }
+//#endif
             if (start && end)
 			{
 				class error* error = nullptr;
@@ -190,7 +190,7 @@ void* app_parser::handler(void* arg) OSAL_NOEXCEPT
                     {
                         singleton->user_logged_timeout = AUTH_TIMEOUT;
                     }
-                    
+
 					ret += app_parser::NEW_LINE;
                     if(singleton->source == io_source::UART)
                     {
@@ -212,11 +212,11 @@ void* app_parser::handler(void* arg) OSAL_NOEXCEPT
 				buffer.clear();
 				ret.clear();
 			}
-#ifdef FIX_MINICOM
-			else if (start == nullptr && end && buffer[0] != '\n')
-#else
+//#ifdef FIX_MINICOM
+//			else if (start == nullptr && end && buffer[0] != '\n')
+//#else
             else if (start == nullptr && end)
-#endif
+//#endif
 			{
 				io->transmit(app_parser::KO, sizeof(app_parser::KO) - 1);
 				buffer.clear();
