@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "hhg-iface/button.hpp"
 #include "hhg-iface/event-exit.hpp"
 #include "hhg-app/app-display-keyboard.hpp"
 
