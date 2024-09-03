@@ -76,9 +76,6 @@ void app_display_menu::button_click(button::status status) OSAL_NOEXCEPT
 
             switch(menu_level_store[0])
             {
-                case PLANNING:
-
-                    break;
                 case IRRIGATE_NOW:
                     app_display_irrigate_now.button_click(status);
                     break;
@@ -107,9 +104,6 @@ void app_display_menu::rotary_encoder_click() OSAL_NOEXCEPT
         do_paint = true;
         switch(menu_level_store[0])
         {
-            case PLANNING:
-
-                break;
             case IRRIGATE_NOW:
                 app_display_irrigate_now.rotary_encoder_click();
                 break;
@@ -142,9 +136,6 @@ void app_display_menu::rotary_encoder_ccw() OSAL_NOEXCEPT
     {
         switch(menu_level_store[0])
         {
-            case PLANNING:
-
-                break;
             case IRRIGATE_NOW:
                 app_display_irrigate_now.rotary_encoder_ccw();
                 break;
@@ -175,9 +166,6 @@ void app_display_menu::rotary_encoder_cw() OSAL_NOEXCEPT
     {
         switch(menu_level_store[0])
         {
-            case PLANNING:
-
-                break;
             case IRRIGATE_NOW:
                 app_display_irrigate_now.rotary_encoder_cw();
                 break;
@@ -210,11 +198,6 @@ pair<bool, bool> app_display_menu::paint() OSAL_NOEXCEPT //<update paint_header,
     {
         switch(menu_level_store[0])
         {
-            case PLANNING:
-            {
-
-                break;
-            }
             case IRRIGATE_NOW:
             {
                 app_display_irrigate_now.paint();
@@ -251,14 +234,11 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
 {
     switch(menu_level_store[0])
     {
-        case PLANNING:
-
-            break;
         case IRRIGATE_NOW:
         {
             if(exit == exit::KO)
             {
-                menu_idx = PLANNING;
+                menu_idx = IRRIGATE_NOW;
                 menu_level_store[0] = -1;
             }
             else
@@ -288,7 +268,7 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
         case PASSWD:
             if(exit == exit::KO)
             {
-                menu_idx = PLANNING;
+                menu_idx = IRRIGATE_NOW;
                 menu_level_store[0] = -1;
             }
             else
@@ -327,11 +307,8 @@ os::exit app_display_menu::transmit(const uint8_t* data, uint16_t size) const OS
     memcpy(ret, data, size);
     switch(menu_level_store[0])
     {
-        case PLANNING:
-
-            break;
         case IRRIGATE_NOW:
-            menu_idx = PLANNING;
+            menu_idx = IRRIGATE_NOW;
             menu_level_store[0] = -1;
             break;
         case WIFI:
@@ -340,7 +317,7 @@ os::exit app_display_menu::transmit(const uint8_t* data, uint16_t size) const OS
         case PASSWD:
             if(last_cmd.start_with("$CONF 11 1 "))
             {
-                menu_idx = PLANNING;
+                menu_idx = IRRIGATE_NOW;
                 menu_level_store[0] = -1;
             }
             else
@@ -353,7 +330,7 @@ os::exit app_display_menu::transmit(const uint8_t* data, uint16_t size) const OS
                 }
                 else
                 {
-                    menu_idx = PLANNING;
+                    menu_idx = IRRIGATE_NOW;
                     menu_level_store[0] = -1;
                 }
             }
