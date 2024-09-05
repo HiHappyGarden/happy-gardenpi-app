@@ -28,8 +28,6 @@ using namespace os;
 #include <lwip/pbuf.h>
 #include <lwip/udp.h>
 
-extern cyw43_t cyw43_state;
-
 namespace hhg::driver
 {
 inline namespace v1
@@ -38,7 +36,6 @@ inline namespace v1
     namespace
     {
         constexpr char APP_TAG[] = "DRV WIFI";
-
     }
 
     pico_wifi::pico_wifi() = default;
@@ -125,7 +122,10 @@ inline namespace v1
             osal_us_sleep(ms_to_us(TICK));
         }
 
-        singleton->thread.exit();
+        if(singleton)
+        {
+            singleton->thread.exit();
+        }
 
         return nullptr;
     }
@@ -150,8 +150,9 @@ inline namespace v1
 #endif
     }
 
-    os::exit pico_wifi::connect(const string<32> &ssid, const string<64> &passwd, enum auth auth, class error **error) const OSAL_NOEXCEPT
+    os::exit pico_wifi::connect(const string<32> &ssid, const string<64> &passwd, enum auth auth, class error **error) OSAL_NOEXCEPT
     {
+        OSAL_LOG_ERROR(APP_TAG, "pico_wifi::connect");
         connection_timeout = HHG_WIFI_CONNECTION_TIMEOUT;
         uint32_t pico_auth = 0;
         switch (auth)
@@ -170,10 +171,11 @@ inline namespace v1
                 break;
         }
 
+        fsm_state = fsm_state::WAIT_CONNECTION;
+
 #if HHG_WIFI_DISABLE == 0
         if (int32_t rc = cyw43_arch_wifi_connect_async(ssid.c_str(), passwd.c_str(), pico_auth); rc)
         {
-            OSAL_LOG_ERROR(APP_TAG, "---->rc:%d", rc);
             if(error)
             {
                 *error = OSAL_ERROR_BUILD("pico_uart::connect() cyw43_arch_init() fail.", rc);
@@ -217,10 +219,19 @@ inline namespace v1
         // case you switch the cyw43_arch type later.
         cyw43_arch_lwip_begin();
         struct pbuf *p = pbuf_alloc(PBUF_TRANSPORT, HHG_NTP_MSG_LEN, PBUF_RAM);
+        if(p == nullptr)
+        {
+            singleton->ntp_state = ntp_state::NONE;
+            return;
+        }
+
         auto req = static_cast<uint8_t*>(p->payload);
         memset(req, 0, HHG_NTP_MSG_LEN);
         req[0] = 0x1b;
         udp_sendto(state->ntp_pcb, p, &state->ntp_server_address, HHG_NTP_PORT);
+
+        singleton->ntp_state = ntp_state::REQUEST;
+
         pbuf_free(p);
         cyw43_arch_lwip_end();
     }
@@ -233,6 +244,9 @@ inline namespace v1
         {
             state->ntp_server_address = *ipaddr;
             OSAL_LOG_DEBUG(APP_TAG, "NTP address %s", ipaddr_ntoa(ipaddr));
+
+            singleton->ntp_state = ntp_state::DNS_FOUND;
+
             ntp_request(state);
         }
         else
@@ -243,6 +257,8 @@ inline namespace v1
                 *state->error = OSAL_ERROR_APPEND(*state->error, "NTP dns request failed", error_type::OS_EADDRNOTAVAIL);
                 OSAL_ERROR_PTR_SET_POSITION(*state->error);
             }
+
+            singleton->ntp_state = ntp_state::NONE;
         }
     }
 
@@ -266,6 +282,7 @@ inline namespace v1
             {
                 state->on_ntp_callback(exit::OK, epoch);
             }
+            singleton->ntp_state = ntp_state::NONE;
         }
         else
         {
@@ -289,6 +306,7 @@ inline namespace v1
 
     os::exit pico_wifi::ntp_start(on_ntp_received on_ntp_callback, struct error **error) OSAL_NOEXCEPT
     {
+        OSAL_LOG_ERROR(APP_TAG, "pico_wifi::ntp_start");
         this->state.on_ntp_callback = on_ntp_callback;
         this->state.error = error;
 
@@ -300,6 +318,11 @@ inline namespace v1
         {
             *this->state.error = new osal::error("dns_gethostbyname() fail", err, get_file_name(__FILE__), "pico_wifi::ntp_start", __LINE__);
             OSAL_ERROR_PTR_SET_POSITION(*this->state.error);
+        }
+
+        if(err == 0)
+        {
+            ntp_state = ntp_state::START;
         }
 
         cyw43_arch_lwip_end();
