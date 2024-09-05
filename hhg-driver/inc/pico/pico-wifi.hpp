@@ -57,6 +57,21 @@ inline namespace v1
             ip_addr_t ip_addr { .addr = 0 };
         } state{};
 
+        enum class fsm_state
+        {
+            DISCONNECTED,
+            WAIT_CONNECTION,
+            WAIT_IP,
+            CONNECTED,
+        } fsm_state = fsm_state::DISCONNECTED;
+
+        enum class ntp_state
+        {
+            NONE,
+            START,
+            DNS_FOUND,
+            REQUEST,
+        } ntp_state = ntp_state::NONE;
 
     public:
 
@@ -72,7 +87,7 @@ inline namespace v1
 
         os::exit init(os::error **error) OSAL_NOEXCEPT override;
 
-        os::exit connect(const os::string<32>& ssid, const os::string<64>& passwd, enum auth auth, os::error **error) const OSAL_NOEXCEPT override;
+        os::exit connect(const os::string<32>& ssid, const os::string<64>& passwd, enum auth auth, os::error **error) OSAL_NOEXCEPT override;
 
         os::exit ntp_start(on_ntp_received, os::error **error) OSAL_NOEXCEPT override;
 

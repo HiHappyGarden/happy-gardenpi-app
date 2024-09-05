@@ -52,7 +52,7 @@ struct wifi : public initializable
 
     ~wifi() override = default;
 
-    virtual os::exit connect(const os::string<32>& ssid, const os::string<64>& passwd, enum auth auth, os::error **error) const OSAL_NOEXCEPT = 0;
+    virtual os::exit connect(const os::string<32>& ssid, const os::string<64>& passwd, enum auth auth, os::error **error) OSAL_NOEXCEPT = 0;
 
     virtual void set_change_connection(on_connection_event* obj, on_connection_event::callback callback) OSAL_NOEXCEPT = 0;
 

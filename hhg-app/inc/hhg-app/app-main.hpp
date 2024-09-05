@@ -43,14 +43,14 @@ public:
 
     enum state : uint32_t
     {
-        CHECK_USERS = 0x00
-        , CHECK_WIFI = (1 << 0)
-        , CHECK_TIMESTAMP = (1 << 1)
-        , SINCH_TIMESTAMP = (1 << 2)
-        , READY = (1 << 3)
-        , EXECUTE_ZONE = (1 << 4)
+        CHECK_USERS         = 0x00
+        , CHECK_WIFI        = (1 << 0)
+        , CHECK_TIMESTAMP   = (1 << 1)
+        , SINCH_TIMESTAMP   = (1 << 2)
+        , READY             = (1 << 3)
+        , EXECUTE_ZONE      = (1 << 4)
 
-        , ERROR = (1 << 7)
+        , ERROR             = (1 << 7)
     };
 
 private:
