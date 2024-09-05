@@ -32,7 +32,6 @@ class app_display_handler;
 class app_parser;
 class app_display_menu final : public hhg::iface::event_exit
 {
-    static constexpr uint8_t MENU_SIZE = 4;
     static constexpr uint8_t MENU_LABEL_SIZE = 16;
     static constexpr int8_t MENU_LEVEL_SIZE = 2;
 
@@ -45,7 +44,8 @@ class app_display_menu final : public hhg::iface::event_exit
     {
         IRRIGATE_NOW,
         WIFI,
-        PASSWD
+        PASSWD,
+        MENU_SIZE
     };
 
     char const first_level_labels[MENU_SIZE][MENU_LABEL_SIZE] = {
