@@ -61,64 +61,101 @@ inline namespace v1
         }
         cyw43_arch_enable_sta_mode();
 
-        singleton->state.ntp_pcb = udp_new_ip_type(IPADDR_TYPE_V4);
+        singleton->ntp.pcb = udp_new_ip_type(IPADDR_TYPE_V4);
 
-        if (!singleton->state.ntp_pcb)
+        if (!singleton->ntp.pcb)
         {
             OSAL_LOG_FATAL(APP_TAG, "Failed to create pcb");
             return nullptr;
         }
 
-        udp_recv(singleton->state.ntp_pcb, ntp_recv, &singleton->state);
+        udp_recv(singleton->ntp.pcb, ntp_recv, &singleton->ntp);
 
         const uint8_t TICK = 100;
 
         while(singleton)
         {
-            if (!singleton->connected && singleton->connection_timeout == 0)
+            switch(singleton->fsm_state)
             {
-                if(singleton->obj && singleton->callback)
+                case fsm_state::DISCONNECTED:
+                    break;
+                case fsm_state::WAIT_CONNECTION:
                 {
-                    (singleton->obj->*singleton->callback)(false, false);
+                    if (singleton->connection_timeout == 0)
+                    {
+                        if(singleton->obj && singleton->callback)
+                        {
+                            (singleton->obj->*singleton->callback)(false, false);
+                        }
+                        singleton->fsm_state = fsm_state::DISCONNECTED;
+                    }
+                    else if(singleton->connection_timeout)
+                    {
+                        singleton->connection_timeout -= TICK;
+                    }
+
+                    bool connected = netif_is_link_up(netif_default);
+                    auto wifi_link_status = cyw43_wifi_link_status(&cyw43_state, CYW43_ITF_STA);
+                    if( connected && !(wifi_link_status & CYW43_LINK_DOWN) )
+                    {
+                        singleton->fsm_state = fsm_state::CONNECTED;
+                    }
+
+                    break;
                 }
-                singleton->connected = false;
-            }
-            else if(!singleton->connected && singleton->connection_timeout)
-            {
-                singleton->connection_timeout -= TICK;
-            }
-
-            bool connected = netif_is_link_up(netif_default);
-
-            //TODO: da finire
-            auto wifi_link_status = cyw43_wifi_link_status(&cyw43_state, CYW43_ITF_STA);
-
-            if(!singleton->connected && connected && !(wifi_link_status & CYW43_LINK_DOWN))
-            {
-                auto ip_ready = dhcp_supplied_address(&cyw43_state.netif[CYW43_ITF_STA]);
-                if(ip_ready)
+                case fsm_state::CONNECTED:
                 {
-                    singleton->connection_timeout = 0;
-                    singleton->state.ip_addr = cyw43_state.netif[CYW43_ITF_STA].ip_addr;
-                    OSAL_LOG_DEBUG(APP_TAG, "Connected to ip %s", ip4addr_ntoa(&cyw43_state.netif[CYW43_ITF_STA].ip_addr));
+                    bool connected = netif_is_link_up(netif_default);
+                    auto wifi_link_status = cyw43_wifi_link_status(&cyw43_state, CYW43_ITF_STA);
+                    if(!connected || wifi_link_status & CYW43_LINK_DOWN)
+                    {
+                        if(singleton->obj && singleton->callback)
+                        {
+                            (singleton->obj->*singleton->callback)(true, false);
+                        }
+                        singleton->fsm_state = fsm_state::DISCONNECTED;
+                        singleton->events.clear(0xFFFF);
+                        break;
+                    }
+
+                    uint32_t events = singleton->events.get();
+                    if(events == fsm_state::DISCONNECTED)
+                    {
+                        singleton->events.set(fsm_state::CONNECTED);
+                    }
+
+                    if( !(events & fsm_state::HAS_IP) )
+                    {
+                        singleton->fsm_state = fsm_state::WAIT_IP;
+                    }
+
+                    break;
+                }
+                case fsm_state::WAIT_IP:
+                {
+                    auto ip_ready = dhcp_supplied_address(&cyw43_state.netif[CYW43_ITF_STA]);
+                    if(ip_ready)
+                    {
+                        singleton->connection_timeout = 0;
+                        singleton->ip_addr = cyw43_state.netif[CYW43_ITF_STA].ip_addr;
+                        OSAL_LOG_DEBUG(APP_TAG, "Connected to ip %s", ip4addr_ntoa(&cyw43_state.netif[CYW43_ITF_STA].ip_addr));
+                        singleton->fsm_state = fsm_state::HAS_IP;
+                    }
+                    break;
+                }
+                case fsm_state::HAS_IP:
+                {
                     if(singleton->obj && singleton->callback)
                     {
-                        (singleton->obj->*singleton->callback)(singleton->connected, connected);
+                        (singleton->obj->*singleton->callback)(false, true);
                     }
-                    singleton->connected = true;
+                    singleton->fsm_state = fsm_state::CONNECTED;
+                    singleton->events.set(fsm_state::HAS_IP);
+                    break;
                 }
             }
-            else if(singleton->connected && (!connected || (wifi_link_status & CYW43_LINK_DOWN)))
-            {
 
-                OSAL_LOG_DEBUG(APP_TAG, "Disconnected");
-                if(singleton->obj && singleton->callback)
-                {
-                    (singleton->obj->*singleton->callback)(singleton->connected, connected);
-                }
-                singleton->connected = false;
-            }
-
+            //OSAL_LOG_DEBUG(APP_TAG, "singleton->fsm_state:%u", singleton->fsm_state);
             osal_us_sleep(ms_to_us(TICK));
         }
 
@@ -221,16 +258,16 @@ inline namespace v1
         struct pbuf *p = pbuf_alloc(PBUF_TRANSPORT, HHG_NTP_MSG_LEN, PBUF_RAM);
         if(p == nullptr)
         {
-            singleton->ntp_state = ntp_state::NONE;
+            singleton->ntp.state = ntp::state::NONE;
             return;
         }
 
         auto req = static_cast<uint8_t*>(p->payload);
         memset(req, 0, HHG_NTP_MSG_LEN);
         req[0] = 0x1b;
-        udp_sendto(state->ntp_pcb, p, &state->ntp_server_address, HHG_NTP_PORT);
+        udp_sendto(state->pcb, p, &state->server_address, HHG_NTP_PORT);
 
-        singleton->ntp_state = ntp_state::REQUEST;
+        singleton->ntp.state = ntp::state::REQUEST;
 
         pbuf_free(p);
         cyw43_arch_lwip_end();
@@ -242,10 +279,10 @@ inline namespace v1
         auto state = static_cast<struct ntp*>(arg);
         if (ipaddr)
         {
-            state->ntp_server_address = *ipaddr;
+            state->server_address = *ipaddr;
             OSAL_LOG_DEBUG(APP_TAG, "NTP address %s", ipaddr_ntoa(ipaddr));
 
-            singleton->ntp_state = ntp_state::DNS_FOUND;
+            singleton->ntp.state = ntp::state::DNS_FOUND;
 
             ntp_request(state);
         }
@@ -258,7 +295,7 @@ inline namespace v1
                 OSAL_ERROR_PTR_SET_POSITION(*state->error);
             }
 
-            singleton->ntp_state = ntp_state::NONE;
+            singleton->ntp.state = ntp::state::NONE;
         }
     }
 
@@ -271,18 +308,18 @@ inline namespace v1
         uint8_t stratum = pbuf_get_at(p, 1);
 
         // Check the result
-        if (ip_addr_cmp(addr, &state->ntp_server_address) && port == HHG_NTP_PORT && p->tot_len == HHG_NTP_MSG_LEN && mode == 0x4 && stratum != 0)
+        if (ip_addr_cmp(addr, &state->server_address) && port == HHG_NTP_PORT && p->tot_len == HHG_NTP_MSG_LEN && mode == 0x4 && stratum != 0)
         {
             uint8_t seconds_buf[4] = {0};
             pbuf_copy_partial(p, seconds_buf, sizeof(seconds_buf), 40);
             uint32_t seconds_since_1900 = seconds_buf[0] << 24 | seconds_buf[1] << 16 | seconds_buf[2] << 8 | seconds_buf[3];
             uint32_t seconds_since_1970 = seconds_since_1900 - NTP_DELTA;
             time_t epoch = seconds_since_1970;
-            if(state->on_ntp_callback)
+            if(state->on_callback)
             {
-                state->on_ntp_callback(exit::OK, epoch);
+                state->on_callback(exit::OK, epoch);
             }
-            singleton->ntp_state = ntp_state::NONE;
+            singleton->ntp.state = ntp::state::NONE;
         }
         else
         {
@@ -293,9 +330,9 @@ inline namespace v1
             }
 
             OSAL_LOG_DEBUG(APP_TAG, "NTP request - KO");
-            if(state->on_ntp_callback)
+            if(state->on_callback)
             {
-                state->on_ntp_callback(exit::KO, 0);
+                state->on_callback(exit::KO, 0);
             }
         }
         pbuf_free(p);
@@ -306,23 +343,22 @@ inline namespace v1
 
     os::exit pico_wifi::ntp_start(on_ntp_received on_ntp_callback, struct error **error) OSAL_NOEXCEPT
     {
-        OSAL_LOG_ERROR(APP_TAG, "pico_wifi::ntp_start");
-        this->state.on_ntp_callback = on_ntp_callback;
-        this->state.error = error;
+        ntp.on_callback = on_ntp_callback;
+        ntp.error = error;
 
 #if HHG_WIFI_DISABLE == 0
         cyw43_arch_lwip_begin();
 
-        err_t err = dns_gethostbyname(HHG_NTP_SERVER, &state.ntp_server_address, ntp_dns_found, &state);
-        if(err && this->state.error)
+        err_t err = dns_gethostbyname(HHG_NTP_SERVER, &ntp.server_address, ntp_dns_found, &ntp);
+        if(err && ntp.error)
         {
-            *this->state.error = new osal::error("dns_gethostbyname() fail", err, get_file_name(__FILE__), "pico_wifi::ntp_start", __LINE__);
-            OSAL_ERROR_PTR_SET_POSITION(*this->state.error);
+            *ntp.error = new osal::error("dns_gethostbyname() fail", err, get_file_name(__FILE__), "pico_wifi::ntp_start", __LINE__);
+            OSAL_ERROR_PTR_SET_POSITION(*ntp.error);
         }
 
         if(err == 0)
         {
-            ntp_state = ntp_state::START;
+            ntp.state = ntp::state::START;
         }
 
         cyw43_arch_lwip_end();
@@ -331,9 +367,9 @@ inline namespace v1
 #else
         us_sleep(500_ms);
         OSAL_LOG_DEBUG(APP_TAG, "Connected to ip FAKE IP");
-        if(on_ntp_callback)
+        if(on_callback)
         {
-            on_ntp_callback(exit::OK, HHG_WIFI_DISABLE_NTP_TIMESTAMP);
+            on_callback(exit::OK, HHG_WIFI_DISABLE_NTP_TIMESTAMP);
         }
         return exit::OK;
 #endif
@@ -344,7 +380,7 @@ inline namespace v1
 
         string<15> ret;
 #if HHG_WIFI_DISABLE == 0
-        ret += ip4addr_ntoa(&state.ip_addr);
+        ret += ip4addr_ntoa(&ip_addr);
 #else
         ret += "FAKE IP";
 #endif

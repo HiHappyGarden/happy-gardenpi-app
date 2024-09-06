@@ -42,36 +42,39 @@ inline namespace v1
         static void* handle(void* arg);
         os::thread thread{"wifi", HIGH, 1024, handle};
 
+        os::event events;
         on_connection_event* obj = nullptr;
         on_connection_event::callback callback = nullptr;
 
-        bool connected = false;
         mutable int16_t connection_timeout = 0;
 
         struct ntp
         {
-            ip_addr_t ntp_server_address;
-            udp_pcb* ntp_pcb = nullptr;
-            on_ntp_received on_ntp_callback = nullptr;
+            ip_addr_t server_address;
+            udp_pcb* pcb = nullptr;
+            on_ntp_received on_callback = nullptr;
             os::error **error = nullptr;
-            ip_addr_t ip_addr { .addr = 0 };
-        } state{};
 
-        enum class fsm_state
+            enum class state
+            {
+                NONE,
+                START,
+                DNS_FOUND,
+                REQUEST
+            } state = state::NONE;
+
+        } ntp{};
+
+        enum fsm_state
         {
-            DISCONNECTED,
-            WAIT_CONNECTION,
-            WAIT_IP,
-            CONNECTED,
+            DISCONNECTED        = 0x00,
+            WAIT_CONNECTION     = (1 << 0),
+            CONNECTED           = (1 << 1),
+            WAIT_IP             = (1 << 2),
+            HAS_IP             =  (1 << 3),
         } fsm_state = fsm_state::DISCONNECTED;
+        ip_addr_t ip_addr { .addr = 0 };
 
-        enum class ntp_state
-        {
-            NONE,
-            START,
-            DNS_FOUND,
-            REQUEST,
-        } ntp_state = ntp_state::NONE;
 
     public:
 
@@ -79,7 +82,7 @@ inline namespace v1
         ~pico_wifi() override OSAL_NOEXCEPT;
         OSAL_NO_COPY_NO_MOVE(pico_wifi)
 
-        void set_change_connection(on_connection_event* obj, on_connection_event::callback callback) OSAL_NOEXCEPT override
+        void set_on_change_connection(on_connection_event* obj, on_connection_event::callback callback) OSAL_NOEXCEPT override
         {
             this->obj = obj;
             this->callback = callback;
@@ -95,7 +98,7 @@ inline namespace v1
 
         inline uint32_t get_ip_address()  const OSAL_NOEXCEPT override
         {
-            return state.ip_addr.addr;
+            return ip_addr.addr;
         }
 
 
