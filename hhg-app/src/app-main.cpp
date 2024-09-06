@@ -102,6 +102,7 @@ void *app_main::handler(void *arg)
             }
             case CHECK_WIFI:
             {
+                //TODO: refactoring of this code
                 auto &&ssid = singleton->app_config.get_wifi_ssid();
                 auto &&passwd = singleton->app_config.get_wifi_passwd();
                 auto auth = singleton->app_config.get_wifi_auth();
@@ -253,8 +254,6 @@ void *app_main::handler(void *arg)
                     {
                         OSAL_LOG_DEBUG(APP_TAG, "");
                         current_schedule.status = status::RUN;
-                        //TODO:
-                        //singleton->fsm.state = INIT;
                     }
 
                     if(sync_timestamp_timer == 0)
@@ -491,7 +490,7 @@ os::exit app_main::init(class os::error **error) OSAL_NOEXCEPT
 
     delete config_data;
 
-    hardware.get_wifi()->set_change_connection(this, &on_connection_event::on_change_connection);
+    hardware.get_wifi()->set_on_change_connection(this, &on_connection_event::on_change_connection);
     return os::exit::OK;
 }
 
@@ -557,6 +556,7 @@ os::exit app_main::handle_error() OSAL_NOEXCEPT
 
 void app_main::on_change_connection(bool old_connected, bool new_connected) OSAL_NOEXCEPT
 {
+    OSAL_LOG_DEBUG(APP_TAG, "old_connected:%d new_connected:%d", old_connected, new_connected);
     if(!old_connected && new_connected)
     {
         singleton->fsm.events.set(CHECK_WIFI);
