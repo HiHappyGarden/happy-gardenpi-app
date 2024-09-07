@@ -43,14 +43,11 @@ inline namespace v1
         os::thread thread{"wifi", HIGH, 1024, handle};
 
         os::event events;
-        on_connection_event* obj = nullptr;
-        on_connection_event::callback callback = nullptr;
-
         mutable int16_t connection_timeout = 0;
 
         struct ntp
         {
-            ip_addr_t server_address;
+            ip_addr_t server_address { .addr = 0 };
             udp_pcb* pcb = nullptr;
             on_ntp_received on_callback = nullptr;
             os::error **error = nullptr;
@@ -82,12 +79,6 @@ inline namespace v1
         ~pico_wifi() override OSAL_NOEXCEPT;
         OSAL_NO_COPY_NO_MOVE(pico_wifi)
 
-        void set_on_change_connection(on_connection_event* obj, on_connection_event::callback callback) OSAL_NOEXCEPT override
-        {
-            this->obj = obj;
-            this->callback = callback;
-        }
-
         os::exit init(os::error **error) OSAL_NOEXCEPT override;
 
         os::exit connect(const os::string<32>& ssid, const os::string<64>& passwd, enum auth auth, os::error **error) OSAL_NOEXCEPT override;
@@ -101,6 +92,10 @@ inline namespace v1
             return ip_addr.addr;
         }
 
+        inline bool is_connected() OSAL_NOEXCEPT override
+        {
+            return events.get() & (CONNECTED | HAS_IP);
+        }
 
     private:
         static void ntp_request(struct ntp* state);

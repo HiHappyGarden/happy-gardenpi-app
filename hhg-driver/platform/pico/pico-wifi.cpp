@@ -83,11 +83,9 @@ inline namespace v1
                 {
                     if (singleton->connection_timeout == 0)
                     {
-                        if(singleton->obj && singleton->callback)
-                        {
-                            (singleton->obj->*singleton->callback)(false, false);
-                        }
                         singleton->fsm_state = fsm_state::DISCONNECTED;
+                        singleton->events.clear(0xFFFF);
+                        singleton->ip_addr = {0};
                     }
                     else if(singleton->connection_timeout)
                     {
@@ -109,12 +107,9 @@ inline namespace v1
                     auto wifi_link_status = cyw43_wifi_link_status(&cyw43_state, CYW43_ITF_STA);
                     if(!connected || wifi_link_status & CYW43_LINK_DOWN)
                     {
-                        if(singleton->obj && singleton->callback)
-                        {
-                            (singleton->obj->*singleton->callback)(true, false);
-                        }
                         singleton->fsm_state = fsm_state::DISCONNECTED;
                         singleton->events.clear(0xFFFF);
+                        singleton->ip_addr = {0};
                         break;
                     }
 
@@ -145,10 +140,6 @@ inline namespace v1
                 }
                 case fsm_state::HAS_IP:
                 {
-                    if(singleton->obj && singleton->callback)
-                    {
-                        (singleton->obj->*singleton->callback)(false, true);
-                    }
                     singleton->fsm_state = fsm_state::CONNECTED;
                     singleton->events.set(fsm_state::HAS_IP);
                     break;
@@ -189,7 +180,6 @@ inline namespace v1
 
     os::exit pico_wifi::connect(const string<32> &ssid, const string<64> &passwd, enum auth auth, class error **error) OSAL_NOEXCEPT
     {
-        OSAL_LOG_ERROR(APP_TAG, "pico_wifi::connect");
         connection_timeout = HHG_WIFI_CONNECTION_TIMEOUT;
         uint32_t pico_auth = 0;
         switch (auth)
@@ -211,6 +201,9 @@ inline namespace v1
         fsm_state = fsm_state::WAIT_CONNECTION;
 
 #if HHG_WIFI_DISABLE == 0
+
+        OSAL_LOG_DEBUG(APP_TAG, "ssid.c_str():%s, passwd.c_str():%s, pico_auth:%u", ssid.c_str(), passwd.c_str(), pico_auth);
+
         if (int32_t rc = cyw43_arch_wifi_connect_async(ssid.c_str(), passwd.c_str(), pico_auth); rc)
         {
             if(error)
@@ -223,10 +216,7 @@ inline namespace v1
 #elif HHG_WIFI_DISABLE == 1
         us_sleep(500_ms);
         OSAL_LOG_DEBUG(APP_TAG, "Connected to ip FAKE IP");
-        if(singleton->obj && singleton->callback)
-        {
-            (singleton->obj->*singleton->callback)(false, true);
-        }
+        singleton->events.set(fsm_state::CONNECTED | fsm_state::HAS_IP);
 #elif HHG_WIFI_DISABLE == 2
         us_sleep(500_ms);
         OSAL_LOG_DEBUG(APP_TAG, "Connected to ip FAKE IP");
@@ -367,9 +357,9 @@ inline namespace v1
 #else
         us_sleep(500_ms);
         OSAL_LOG_DEBUG(APP_TAG, "Connected to ip FAKE IP");
-        if(on_callback)
+        if(ntp.on_callback)
         {
-            on_callback(exit::OK, HHG_WIFI_DISABLE_NTP_TIMESTAMP);
+            ntp.on_callback(exit::OK, HHG_WIFI_DISABLE_NTP_TIMESTAMP);
         }
         return exit::OK;
 #endif
