@@ -323,7 +323,7 @@ auto app_display_handler::handler(void *) OSAL_NOEXCEPT -> void *
                         if(!singleton->app_display_menu.is_opened())
                         {
                             singleton->generic_timer = app_main::ONE_SEC_IN_MILLIS;
-                            singleton->paint_header(fsm_state & app_main::CHECK_WIFI, singleton->now_in_millis / app_main::ONE_SEC_IN_MILLIS);
+                            singleton->paint_header(fsm_state & app_main::CONNECTED, singleton->now_in_millis / app_main::ONE_SEC_IN_MILLIS);
                             singleton->clean();
                             singleton->paint_str("Ready");
                             singleton->send_buffer();
@@ -334,7 +334,7 @@ auto app_display_handler::handler(void *) OSAL_NOEXCEPT -> void *
 
                             if(update_paint_header)
                             {
-                                singleton->paint_header(fsm_state & app_main::CHECK_WIFI, singleton->now_in_millis / app_main::ONE_SEC_IN_MILLIS);
+                                singleton->paint_header(fsm_state & app_main::CONNECTED, singleton->now_in_millis / app_main::ONE_SEC_IN_MILLIS);
                             }
 
                             if(update_send_buffer && singleton->app_display_menu.is_opened())
@@ -372,7 +372,7 @@ auto app_display_handler::handler(void *) OSAL_NOEXCEPT -> void *
                 }
                 fsm_last_state = fsm_state;
             }
-            else if(fsm_state & app_main::CHECK_WIFI)
+            else if(fsm_state & app_main::CONNECTED)
             {
                 if(fsm_last_state == fsm_state)
                 {
@@ -401,7 +401,7 @@ auto app_display_handler::handler(void *) OSAL_NOEXCEPT -> void *
             if(singleton->generic_timer == 0)
             {
                 singleton->lcd->turn_on();
-                singleton->paint_header(fsm_state & app_main::CHECK_WIFI, singleton->now_in_millis / app_main::ONE_SEC_IN_MILLIS);
+                singleton->paint_header(fsm_state & app_main::CONNECTED, singleton->now_in_millis / app_main::ONE_SEC_IN_MILLIS);
                 handle_locked_blink_show(singleton);
                 singleton->send_buffer();
 

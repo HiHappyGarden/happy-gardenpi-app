@@ -35,7 +35,7 @@ inline namespace v1
 {
 
 
-class app_main final : public hhg::iface::initializable, public hhg::iface::wifi::on_connection_event
+class app_main final : public hhg::iface::initializable
 {
 public:
     constexpr static const int16_t ONE_SEC_IN_MILLIS = 1'000;
@@ -43,14 +43,18 @@ public:
 
     enum state : uint32_t
     {
-        CHECK_USERS         = 0x00
-        , CHECK_WIFI        = (1 << 0)
-        , CHECK_TIMESTAMP   = (1 << 1)
-        , SINCH_TIMESTAMP   = (1 << 2)
-        , READY             = (1 << 3)
-        , EXECUTE_ZONE      = (1 << 4)
+        CHECK_USERS                 = 0x00
+        , CHECK_WIFI_ENABLED        = (1 << 0)
+        , CHECK_WIFI_PARAMS         = (1 << 1)
+        , CHECK_WIFI_WAIT_PARAMS    = (1 << 2)
+        , CHECK_WIFI_WAIT_CONNECTION= (1 << 3)
+        , CONNECTED                 = (1 << 4)
+        , CHECK_TIMESTAMP           = (1 << 5)
+        , SINCH_TIMESTAMP           = (1 << 6)
+        , READY                     = (1 << 7)
+        , EXECUTE_ZONE              = (1 << 8)
 
-        , ERROR             = (1 << 7)
+        , ERROR                     = (1 << 9)
     };
 
 private:
@@ -99,7 +103,6 @@ private:
 
     os::exit handle_error() OSAL_NOEXCEPT;
 
-    void on_change_connection(bool old_connected, bool new_connected) OSAL_NOEXCEPT override;
 };
 
 }
