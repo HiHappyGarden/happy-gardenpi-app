@@ -45,7 +45,7 @@ public:
     {
         CHECK_USERS                 = 0x00
         , CHECK_WIFI_ENABLED        = (1 << 0)
-        , CHECK_WIFI_PARAMS         = (1 << 1)
+        , TRY_WIFI_CONNECTION       = (1 << 1)
         , CHECK_WIFI_WAIT_PARAMS    = (1 << 2)
         , CHECK_WIFI_WAIT_CONNECTION= (1 << 3)
         , CONNECTED                 = (1 << 4)
