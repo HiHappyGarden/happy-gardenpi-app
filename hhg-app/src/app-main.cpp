@@ -116,12 +116,12 @@ void *app_main::handler(void *arg)
                 else
                 {
                     OSAL_LOG_INFO(APP_TAG, "WIFI enabled state:%s - OK", state_to_string(singleton->fsm.state).c_str());
-                    singleton->fsm.state = CHECK_WIFI_PARAMS;
+                    singleton->fsm.state = TRY_WIFI_CONNECTION;
                     singleton->fsm.old_state = CHECK_WIFI_ENABLED;
                 }
                 break;
             }
-            case CHECK_WIFI_PARAMS:
+            case TRY_WIFI_CONNECTION:
             {
                 auto &&ssid = singleton->app_config.get_wifi_ssid();
                 auto &&passwd = singleton->app_config.get_wifi_passwd();
@@ -132,17 +132,16 @@ void *app_main::handler(void *arg)
                 if(ssid.length() && passwd.length() && auth)
                 {
                     singleton->fsm.events.clear(CHECK_WIFI_WAIT_PARAMS);
-                    singleton->fsm.events.set(CHECK_WIFI_PARAMS);
+                    singleton->fsm.events.set(TRY_WIFI_CONNECTION);
 
                     if(singleton->hardware.get_wifi()->connect(ssid, passwd, wifi::auth{auth}, error) == exit::OK)
                     {
-                        singleton->app_led.loading();
                         singleton->fsm.errors = 0;
                         singleton->fsm.events.set(CHECK_WIFI_WAIT_CONNECTION);
 
                         OSAL_LOG_INFO(APP_TAG, "WIFI params state:%s - OK", state_to_string(singleton->fsm.state).c_str());
                         singleton->fsm.state = CHECK_WIFI_WAIT_CONNECTION;
-                        singleton->fsm.old_state = CHECK_WIFI_PARAMS;
+                        singleton->fsm.old_state = TRY_WIFI_CONNECTION;
                     }
                     else
                     {
@@ -159,6 +158,7 @@ void *app_main::handler(void *arg)
                 }
                 else
                 {
+                    singleton->app_led.warning();
                     singleton->fsm.events.set(CHECK_WIFI_WAIT_PARAMS);
 
                     OSAL_LOG_INFO(APP_TAG, "WIFI params state:%s - KO", state_to_string(singleton->fsm.state).c_str());
@@ -185,7 +185,7 @@ void *app_main::handler(void *arg)
                     generic_timer = ONE_SEC_IN_MILLIS;
                     singleton->app_led.warning();
 
-                    singleton->fsm.state = CHECK_WIFI_PARAMS;
+                    singleton->fsm.state = TRY_WIFI_CONNECTION;
                     singleton->fsm.old_state = CHECK_WIFI_WAIT_PARAMS;
                 }
                 else
@@ -209,7 +209,7 @@ void *app_main::handler(void *arg)
                 }
                 else
                 {
-                    if(singleton->fsm.old_state == CHECK_WIFI_PARAMS)
+                    if(singleton->fsm.old_state == TRY_WIFI_CONNECTION)
                     {
                         generic_timer = singleton->hardware.get_wifi()->get_timeout();
                         singleton->fsm.old_state = CHECK_WIFI_WAIT_CONNECTION;
@@ -217,10 +217,11 @@ void *app_main::handler(void *arg)
 
                     if(generic_timer == 0)
                     {
+                        singleton->app_led.warning();
                         OSAL_LOG_WARNING(APP_TAG, "WIFI connection timeout, verify SSID and PWD");
 
                         OSAL_LOG_INFO(APP_TAG, "Connection OK state:%s - OK", state_to_string(singleton->fsm.state).c_str());
-                        singleton->fsm.state = CHECK_WIFI_PARAMS;
+                        singleton->fsm.state = TRY_WIFI_CONNECTION;
                         singleton->fsm.old_state = CHECK_WIFI_WAIT_CONNECTION;
 
                     }
@@ -299,6 +300,7 @@ void *app_main::handler(void *arg)
                 singleton->fsm.errors = 0;
                 singleton->fsm.events.set(SINCH_TIMESTAMP);
                 singleton->fsm.events.clear(CHECK_TIMESTAMP);
+
                 OSAL_LOG_INFO(APP_TAG, "state:%s - OK", state_to_string(singleton->fsm.state).c_str());
                 singleton->fsm.state = CHECK_TIMESTAMP;
                 singleton->fsm.old_state = SINCH_TIMESTAMP;
@@ -576,8 +578,8 @@ string<32> app_main::state_to_string(app_main::state state)
             return {"CHECK_USERS"};
         case app_main::CHECK_WIFI_ENABLED:
             return { "CHECK_WIFI_ENABLED"};
-        case app_main::CHECK_WIFI_PARAMS:
-            return { "CHECK_WIFI_PARAMS"};
+        case app_main::TRY_WIFI_CONNECTION:
+            return { "TRY_WIFI_CONNECTION"};
         case app_main::CHECK_WIFI_WAIT_PARAMS:
             return { "CHECK_WIFI_WAIT_PARAMS"};
         case app_main::CHECK_WIFI_WAIT_CONNECTION:

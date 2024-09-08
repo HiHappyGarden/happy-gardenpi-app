@@ -216,22 +216,7 @@ inline namespace v1
         OSAL_LOG_DEBUG(APP_TAG, "Connected to ip FAKE IP");
         singleton->events.set(fsm_state::CONNECTED | fsm_state::HAS_IP);
 #elif HHG_WIFI_DISABLE == 2
-        us_sleep(500_ms);
-        OSAL_LOG_DEBUG(APP_TAG, "Connected to ip FAKE IP");
-
-        static timer test_timer{ 1'000_ms,
-        [] (timer*, void*)-> void*
-        {
-            if(singleton->obj && singleton->callback)
-            {
-                (singleton->obj->*singleton->callback)(false, false);
-            }
-            singleton->connected = false;
-            test_timer.stop();
-            return nullptr;
-        }};
-        test_timer.create();
-        test_timer.start();
+#warning The connection wifi will fail
 #endif
         return exit::OK;
     }

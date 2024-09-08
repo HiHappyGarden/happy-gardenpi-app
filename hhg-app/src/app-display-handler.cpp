@@ -372,7 +372,7 @@ auto app_display_handler::handler(void *) OSAL_NOEXCEPT -> void *
                 }
                 fsm_last_state = fsm_state;
             }
-            else if(fsm_state & app_main::CONNECTED)
+            else if(fsm_state & app_main::CHECK_WIFI_WAIT_CONNECTION)
             {
                 if(fsm_last_state == fsm_state)
                 {
