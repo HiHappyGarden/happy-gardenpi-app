@@ -73,7 +73,7 @@ private:
 
     os::thread fsm_thread{"fsm", hhg::driver::HIGH, 1024 * 2, handler};
 
-    struct fsm
+    mutable struct fsm
     {
         static constexpr uint8_t MAX_ERROR = 5;
 
