@@ -525,7 +525,7 @@ os::exit app_main::fsm_start(class os::error **error) OSAL_NOEXCEPT
 
 uint32_t app_main::get_state() const
 {
-    return singleton->fsm.events.get();
+    return fsm.events.get();
 }
 
 string<32> app_main::state_to_string(app_main::state state)

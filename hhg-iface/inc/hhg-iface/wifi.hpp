@@ -53,6 +53,7 @@ struct wifi : public initializable
 
     virtual bool is_connected() OSAL_NOEXCEPT = 0;
 
+    virtual void wifi_scan(time_t scan_time_in_millis) OSAL_NOEXCEPT = 0;
 };
 
 
