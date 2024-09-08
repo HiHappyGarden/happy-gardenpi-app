@@ -73,6 +73,7 @@ void *app_main::handler(void *arg)
                     singleton->app_led.loading();
                     singleton->fsm.errors = 0;
                     singleton->fsm.events.set(CHECK_USERS);
+
                     OSAL_LOG_INFO(APP_TAG, "User OK state:%s - OK", state_to_string(singleton->fsm.state).c_str());
                     singleton->fsm.state = CHECK_WIFI_ENABLED;
                     singleton->fsm.old_state = CHECK_USERS;
@@ -106,6 +107,7 @@ void *app_main::handler(void *arg)
                 {
                     singleton->app_led.loading();
                     singleton->fsm.errors = 0;
+                    singleton->fsm.events.set(CHECK_WIFI_ENABLED);
 
                     OSAL_LOG_INFO(APP_TAG, "WIFI disabled state:%s - OK", state_to_string(singleton->fsm.state).c_str());
                     singleton->fsm.state = CHECK_TIMESTAMP;
@@ -126,10 +128,14 @@ void *app_main::handler(void *arg)
                 auto auth = singleton->app_config.get_wifi_auth();
                 if(ssid.length() && passwd.length() && auth)
                 {
+                    singleton->fsm.events.clear(CHECK_WIFI_WAIT_PARAMS);
+                    singleton->fsm.events.set(CHECK_WIFI_PARAMS);
+
                     if(singleton->hardware.get_wifi()->connect(ssid, passwd, wifi::auth{auth}, error) == exit::OK)
                     {
                         singleton->app_led.loading();
                         singleton->fsm.errors = 0;
+                        singleton->fsm.events.set(CHECK_WIFI_WAIT_CONNECTION);
 
                         OSAL_LOG_INFO(APP_TAG, "WIFI params state:%s - OK", state_to_string(singleton->fsm.state).c_str());
                         singleton->fsm.state = CHECK_WIFI_WAIT_CONNECTION;
@@ -137,19 +143,21 @@ void *app_main::handler(void *arg)
                     }
                     else
                     {
+                        singleton->handle_error();
                         if(error && *error)
                         {
                             printf_stack_error(APP_TAG, *error);
                             delete *error;
                             *error = nullptr;
-                            singleton->handle_error();
                         }
-                    }
 
+                    }
 
                 }
                 else
                 {
+                    singleton->fsm.events.set(CHECK_WIFI_WAIT_PARAMS);
+
                     OSAL_LOG_INFO(APP_TAG, "WIFI params state:%s - KO", state_to_string(singleton->fsm.state).c_str());
                     singleton->fsm.state = CHECK_WIFI_WAIT_PARAMS;
                     singleton->fsm.old_state = CHECK_WIFI_PARAMS;
@@ -189,14 +197,8 @@ void *app_main::handler(void *arg)
                 {
                     singleton->app_led.loading();
                     singleton->fsm.errors = 0;
+                    singleton->fsm.events.clear(CHECK_WIFI_WAIT_CONNECTION);
                     singleton->fsm.events.set(CONNECTED);
-                    singleton->hardware.get_wifi()->ntp_start([](os::exit status, time_t timestamp)
-                                                              {
-                                                                  if(status == exit::OK)
-                                                                  {
-                                                                      singleton->hardware.get_time()->set_timestamp(timestamp, nullptr);
-                                                                  }
-                                                              }, nullptr);
 
                     OSAL_LOG_INFO(APP_TAG, "Connection OK state:%s - OK", state_to_string(singleton->fsm.state).c_str());
                     singleton->fsm.state = CHECK_TIMESTAMP;
@@ -247,6 +249,17 @@ void *app_main::handler(void *arg)
             }
             case SINCH_TIMESTAMP:
             {
+                if(singleton->fsm.events.get() & CONNECTED)
+                {
+                    singleton->hardware.get_wifi()->ntp_start([](os::exit status, time_t timestamp)
+                                                              {
+                                                                  if(status == exit::OK)
+                                                                  {
+                                                                      singleton->hardware.get_time()->set_timestamp(timestamp, nullptr);
+                                                                  }
+                                                              }, nullptr);
+                }
+
                 now_in_millis = singleton->hardware.get_time()->get_timestamp(0, false, error) * ONE_SEC_IN_MILLIS;
                 if(error && *error)
                 {
@@ -309,8 +322,8 @@ void *app_main::handler(void *arg)
             {
                 OSAL_LOG_FATAL(APP_TAG, "To many error occurred reset state");
                 singleton->fsm.events.clear( 0x03FF );
+                singleton->fsm.old_state = singleton->fsm.state;
                 singleton->fsm.state = CHECK_USERS;
-                singleton->fsm.old_state = CHECK_USERS;
                 break;
             }
             default:
