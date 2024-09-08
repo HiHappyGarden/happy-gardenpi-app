@@ -126,6 +126,9 @@ void *app_main::handler(void *arg)
                 auto &&ssid = singleton->app_config.get_wifi_ssid();
                 auto &&passwd = singleton->app_config.get_wifi_passwd();
                 auto auth = singleton->app_config.get_wifi_auth();
+
+                singleton->fsm.events.clear(CHECK_WIFI_WAIT_CONNECTION);
+
                 if(ssid.length() && passwd.length() && auth)
                 {
                     singleton->fsm.events.clear(CHECK_WIFI_WAIT_PARAMS);
@@ -160,7 +163,7 @@ void *app_main::handler(void *arg)
 
                     OSAL_LOG_INFO(APP_TAG, "WIFI params state:%s - KO", state_to_string(singleton->fsm.state).c_str());
                     singleton->fsm.state = CHECK_WIFI_WAIT_PARAMS;
-                    singleton->fsm.old_state = CHECK_WIFI_PARAMS;
+                    singleton->fsm.old_state = CHECK_WIFI_WAIT_PARAMS;
                 }
 
                 break;
@@ -204,6 +207,29 @@ void *app_main::handler(void *arg)
                     singleton->fsm.state = CHECK_TIMESTAMP;
                     singleton->fsm.old_state = CHECK_WIFI_WAIT_CONNECTION;
                 }
+                else
+                {
+                    if(singleton->fsm.old_state == CHECK_WIFI_PARAMS)
+                    {
+                        generic_timer = singleton->hardware.get_wifi()->get_timeout();
+                        singleton->fsm.old_state = CHECK_WIFI_WAIT_CONNECTION;
+                    }
+
+                    if(generic_timer == 0)
+                    {
+                        OSAL_LOG_WARNING(APP_TAG, "WIFI connection timeout, verify SSID and PWD");
+
+                        OSAL_LOG_INFO(APP_TAG, "Connection OK state:%s - OK", state_to_string(singleton->fsm.state).c_str());
+                        singleton->fsm.state = CHECK_WIFI_PARAMS;
+                        singleton->fsm.old_state = CHECK_WIFI_WAIT_CONNECTION;
+
+                    }
+                    else
+                    {
+                        generic_timer -= FSM_SLEEP;
+                    }
+
+                }
                 break;
             }
             case CHECK_TIMESTAMP:
@@ -223,6 +249,7 @@ void *app_main::handler(void *arg)
                     singleton->app_led.loading();
                     singleton->fsm.errors = 0;
                     singleton->fsm.events.set(CHECK_TIMESTAMP);
+
                     OSAL_LOG_INFO(APP_TAG, "Date time:%s state:%s - OK", date_time.c_str(), state_to_string(singleton->fsm.state).c_str());
                     singleton->fsm.state = READY;
                     singleton->fsm.old_state = CHECK_TIMESTAMP;

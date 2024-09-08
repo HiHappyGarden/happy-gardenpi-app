@@ -202,8 +202,6 @@ inline namespace v1
 
 #if HHG_WIFI_DISABLE == 0
 
-        OSAL_LOG_DEBUG(APP_TAG, "ssid.c_str():%s, passwd.c_str():%s, pico_auth:%u", ssid.c_str(), passwd.c_str(), pico_auth);
-
         if (int32_t rc = cyw43_arch_wifi_connect_async(ssid.c_str(), passwd.c_str(), pico_auth); rc)
         {
             if(error)

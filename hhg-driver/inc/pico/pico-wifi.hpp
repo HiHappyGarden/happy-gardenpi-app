@@ -88,7 +88,6 @@ inline namespace v1
         os::string<15> get_ip_address_str() const OSAL_NOEXCEPT override;
 
 
-
         inline uint32_t get_ip_address()  const OSAL_NOEXCEPT override
         {
             return ip_addr.addr;
@@ -98,6 +97,12 @@ inline namespace v1
         {
             return events.get() & (CONNECTED | HAS_IP);
         }
+
+        inline uint32_t get_timeout() const OSAL_NOEXCEPT override
+        {
+            return TIMEOUT;
+        }
+
 
         void wifi_scan(time_t scan_time_in_millis) OSAL_NOEXCEPT override;
 
