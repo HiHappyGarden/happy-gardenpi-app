@@ -4,17 +4,14 @@ Features to develop for Hi Happy Garden
 
 ### Todo
 
-- [ ] Work on the website ~3d #feat @john 2020-03-20  
-- [ ] Fix the homepage ~1d #bug @jane  
-  - [ ] Sub-task or description  
+- [ ] remove dynamic allocation but before increase stack space 
+- [ ] end to develop manual irrigation
+
+### Fix
+- [ ] wrong date and time when user logged in 
+- [ ] fix icon not change on offline
+- [ ] fix led not change on offline
 
 ### In Progress
 
-- [ ] App Config
-- [ ] App Parser
-- [ ] App Main
-
 ### Done ✓
-
-- [x] IO 
-- [x] FSIO
