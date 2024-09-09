@@ -77,7 +77,12 @@ inline namespace v1
         {
             switch(singleton->fsm_state)
             {
+                case fsm_state::NONE:
+                    break;
                 case fsm_state::DISCONNECTED:
+                    osal_us_sleep(1'000_ms);
+
+                    singleton->fsm_state = fsm_state::WAIT_CONNECTION;
                     break;
                 case fsm_state::WAIT_CONNECTION:
                 {
