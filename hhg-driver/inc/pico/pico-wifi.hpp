@@ -64,12 +64,13 @@ inline namespace v1
 
         enum fsm_state
         {
-            DISCONNECTED        = 0x00,
-            WAIT_CONNECTION     = (1 << 0),
-            CONNECTED           = (1 << 1),
-            WAIT_IP             = (1 << 2),
-            HAS_IP             =  (1 << 3),
-        } fsm_state = fsm_state::DISCONNECTED;
+            NONE        = 0x00,
+            DISCONNECTED        = (1 << 0),
+            WAIT_CONNECTION     = (1 << 1),
+            CONNECTED           = (1 << 2),
+            WAIT_IP             = (1 << 3),
+            HAS_IP             =  (1 << 4)
+        } fsm_state = fsm_state::NONE;
         ip_addr_t ip_addr { .addr = 0 };
 
 
