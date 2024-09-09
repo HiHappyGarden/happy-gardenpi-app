@@ -64,7 +64,7 @@ inline namespace v1
 
         enum fsm_state
         {
-            NONE        = 0x00,
+            NONE                = 0x00,
             DISCONNECTED        = (1 << 0),
             WAIT_CONNECTION     = (1 << 1),
             CONNECTED           = (1 << 2),

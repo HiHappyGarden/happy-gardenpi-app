@@ -82,6 +82,11 @@ inline namespace v1
                 case fsm_state::DISCONNECTED:
                     osal_us_sleep(1'000_ms);
 
+                    singleton->events.clear(fsm_state::CONNECTED | fsm_state::HAS_IP);
+                    singleton->events.set(fsm_state::DISCONNECTED);
+
+                    memset(&singleton->ip_addr, 0, HHG_NTP_MSG_LEN);
+
                     singleton->fsm_state = fsm_state::WAIT_CONNECTION;
                     break;
                 case fsm_state::WAIT_CONNECTION:
@@ -119,7 +124,7 @@ inline namespace v1
                     }
 
                     uint32_t events = singleton->events.get();
-                    if(events == fsm_state::DISCONNECTED)
+                    if(events & fsm_state::DISCONNECTED)
                     {
                         singleton->events.set(fsm_state::CONNECTED);
                     }

@@ -314,7 +314,17 @@ void *app_main::handler(void *arg)
                     singleton->fsm.events.set(READY);
                     singleton->fsm.old_state = READY;
 
-                    singleton->app_led.ready();
+                    if(singleton->hardware.get_wifi()->is_connected())
+                    {
+                        singleton->app_led.ready();
+                        singleton->fsm.events.set(CONNECTED);
+                    }
+                    else
+                    {
+                        singleton->app_led.warning();
+                        singleton->fsm.events.clear(CONNECTED);
+                    }
+
 
                     schedule current_schedule;
                     if(singleton->app_data.get_schedule(now_in_millis / ONE_SEC_IN_MILLIS, current_schedule))
