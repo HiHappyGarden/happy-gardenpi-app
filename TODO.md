@@ -9,10 +9,11 @@ Features to develop for Hi Happy Garden
 
 ### Fix
 - [ ] wrong date and time when user logged in 
-- [x] fix icon not change on offline
-  - [ ] block when the device it's offline 
-- [x] fix led not change on offline
-  - [ ] block when the device it's offline
+
 ### In Progress
 
 ### Done ✓
+- [x] ~~fix icon not change on offline~~
+  - [x] ~~block when the device it's offline~~
+- [x] ~~fix led not change on offline~~
+  - [x] ~~block when the device it's offline~~

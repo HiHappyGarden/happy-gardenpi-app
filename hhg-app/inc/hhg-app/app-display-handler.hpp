@@ -24,6 +24,7 @@
 #include "hhg-iface/rotary-encored.hpp"
 #include "hhg-iface/button.hpp"
 #include "hhg-iface/time.hpp"
+#include "hhg-iface/wifi.hpp"
 #include "hhg-app/app-data.hpp"
 #include "hhg-app/app-config.hpp"
 #include "hhg-app/app-parser.hpp"
@@ -47,6 +48,7 @@ class app_display_handler final : public hhg::iface::rotary_encoder::event, publ
     const hhg::iface::rotary_encoder::ptr& rotary_encoder;
     const hhg::iface::button::ptr& button;
     const hhg::iface::time::ptr& time;
+    const hhg::iface::wifi::ptr& wifi;
     const hhg::app::app_main& app_main;
     const hhg::app::app_data& app_data;
     const hhg::app::app_config& app_config;
@@ -88,6 +90,7 @@ public:
                         const hhg::iface::rotary_encoder::ptr& rotary_encoder,
                         const hhg::iface::button::ptr& button,
                         const hhg::iface::time::ptr& time,
+                        const hhg::iface::wifi::ptr& wifi,
                         const hhg::app::app_main& app_main,
                         hhg::app::app_data& app_data,
                         hhg::app::app_config& app_config,

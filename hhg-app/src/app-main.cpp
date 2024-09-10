@@ -391,6 +391,7 @@ app_main::app_main(driver::hardware &hardware, class error **error) OSAL_NOEXCEP
                               , hardware.get_rotary_encoder()
                               , hardware.get_button()
                               , hardware.get_time()
+                              , hardware.get_wifi()
                               , *this
                               , app_data
                               , app_config

@@ -78,24 +78,28 @@ inline namespace v1
             switch(singleton->fsm_state)
             {
                 case fsm_state::NONE:
+                    singleton->connection_timeout = HHG_WIFI_CONNECTION_TIMEOUT;
                     break;
                 case fsm_state::DISCONNECTED:
+
+
+                    singleton->connection_timeout = HHG_WIFI_CONNECTION_TIMEOUT;
+
+                    singleton->events.clear(0xFFFF);
+                    singleton->events.set(fsm_state::DISCONNECTED);
+                    singleton->ip_addr = {0};
+
                     osal_us_sleep(1'000_ms);
 
-                    singleton->events.clear(fsm_state::CONNECTED | fsm_state::HAS_IP);
-                    singleton->events.set(fsm_state::DISCONNECTED);
-
-                    memset(&singleton->ip_addr, 0, HHG_NTP_MSG_LEN);
-
                     singleton->fsm_state = fsm_state::WAIT_CONNECTION;
+
                     break;
                 case fsm_state::WAIT_CONNECTION:
                 {
                     if (singleton->connection_timeout == 0)
                     {
                         singleton->fsm_state = fsm_state::DISCONNECTED;
-                        singleton->events.clear(0xFFFF);
-                        singleton->ip_addr = {0};
+                        break;
                     }
                     else if(singleton->connection_timeout)
                     {
@@ -118,8 +122,6 @@ inline namespace v1
                     if(!connected || wifi_link_status & CYW43_LINK_DOWN)
                     {
                         singleton->fsm_state = fsm_state::DISCONNECTED;
-                        singleton->events.clear(0xFFFF);
-                        singleton->ip_addr = {0};
                         break;
                     }
 
@@ -156,7 +158,7 @@ inline namespace v1
                 }
             }
 
-            //OSAL_LOG_DEBUG(APP_TAG, "singleton->fsm_state:%u", singleton->fsm_state);
+//            OSAL_LOG_DEBUG(APP_TAG, "singleton->fsm_state:%u", singleton->fsm_state);
             osal_us_sleep(ms_to_us(TICK));
         }
 
@@ -190,7 +192,6 @@ inline namespace v1
 
     os::exit pico_wifi::connect(const string<32> &ssid, const string<64> &passwd, enum auth auth, class error **error) OSAL_NOEXCEPT
     {
-        connection_timeout = HHG_WIFI_CONNECTION_TIMEOUT;
         uint32_t pico_auth = 0;
         switch (auth)
         {

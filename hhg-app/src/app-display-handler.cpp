@@ -48,11 +48,21 @@ constexpr char APP_TAG[] = "APP DISPLAY HANDLER";
 
 using write_mode = lcd::write_mode;
 
-app_display_handler::app_display_handler(const iface::lcd::ptr &lcd, const iface::rotary_encoder::ptr &rotary_encoder, const iface::button::ptr &button, const hhg::iface::time::ptr &time, const hhg::app::app_main& app_main, hhg::app::app_data& app_data, hhg::app::app_config& app_config, const hhg::app::app_parser &app_parser)
+app_display_handler::app_display_handler(const iface::lcd::ptr &lcd
+                                         , const iface::rotary_encoder::ptr &rotary_encoder
+                                         , const iface::button::ptr &button
+                                         , const hhg::iface::time::ptr &time
+                                         , const hhg::iface::wifi::ptr& wifi
+                                         , const hhg::app::app_main& app_main
+                                         , hhg::app::app_data& app_data
+                                         , hhg::app::app_config& app_config
+                                         , const hhg::app::app_parser &app_parser
+                                         )
         : lcd(lcd)
         , rotary_encoder(rotary_encoder)
         , button(button)
         , time(time)
+        , wifi(wifi)
         , app_main(app_main)
         , app_data(app_data)
         , app_config(app_config)
@@ -323,7 +333,7 @@ auto app_display_handler::handler(void *) OSAL_NOEXCEPT -> void *
                         if(!singleton->app_display_menu.is_opened())
                         {
                             singleton->generic_timer = app_main::ONE_SEC_IN_MILLIS;
-                            singleton->paint_header(fsm_state & app_main::CONNECTED, singleton->now_in_millis / app_main::ONE_SEC_IN_MILLIS);
+                            singleton->paint_header(singleton->wifi->is_connected(), singleton->now_in_millis / app_main::ONE_SEC_IN_MILLIS);
                             singleton->clean();
                             singleton->paint_str("Ready");
                             singleton->send_buffer();
@@ -334,7 +344,7 @@ auto app_display_handler::handler(void *) OSAL_NOEXCEPT -> void *
 
                             if(update_paint_header)
                             {
-                                singleton->paint_header(fsm_state & app_main::CONNECTED, singleton->now_in_millis / app_main::ONE_SEC_IN_MILLIS);
+                                singleton->paint_header(singleton->wifi->is_connected(), singleton->now_in_millis / app_main::ONE_SEC_IN_MILLIS);
                             }
 
                             if(update_send_buffer && singleton->app_display_menu.is_opened())
@@ -401,7 +411,7 @@ auto app_display_handler::handler(void *) OSAL_NOEXCEPT -> void *
             if(singleton->generic_timer == 0)
             {
                 singleton->lcd->turn_on();
-                singleton->paint_header(fsm_state & app_main::CONNECTED, singleton->now_in_millis / app_main::ONE_SEC_IN_MILLIS);
+                singleton->paint_header(singleton->wifi->is_connected(), singleton->now_in_millis / app_main::ONE_SEC_IN_MILLIS);
                 handle_locked_blink_show(singleton);
                 singleton->send_buffer();
 
