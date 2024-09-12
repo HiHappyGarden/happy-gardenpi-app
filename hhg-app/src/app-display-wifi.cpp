@@ -30,10 +30,19 @@ inline namespace v1
 {
 
 
-app_display_wifi::app_display_wifi(class app_display_handler& app_display_handler, const struct app_parser& app_parser, class app_config& app_config, int16_t& menu_idx, hhg::iface::event_exit* obj, hhg::iface::event_exit::on_exit_callback on_exit)
+app_display_wifi::app_display_wifi(
+        class app_display_handler& app_display_handler
+        , const struct app_parser& app_parser
+        , class app_config& app_config
+        , const hhg::iface::wifi::ptr& wifi
+        , int16_t& menu_idx
+        , hhg::iface::event_exit* obj
+        , hhg::iface::event_exit::on_exit_callback on_exit
+        ) OSAL_NOEXCEPT
 : app_display_handler(app_display_handler)
 , app_parser(app_parser)
 , app_config(app_config)
+, wifi(wifi)
 , menu_idx(menu_idx)
 , obj(obj)
 , on_exit_callback(on_exit)
@@ -41,10 +50,37 @@ app_display_wifi::app_display_wifi(class app_display_handler& app_display_handle
 
 }
 
-void app_display_wifi::on_exit(os::exit exit, const char* string, void* p_void)
+void app_display_wifi::on_exit(os::exit exit, const char* string, void* p_void) OSAL_NOEXCEPT
 {
 
 }
+
+void app_display_wifi::button_click(hhg::iface::button::status status)
+{
+    OSAL_LOG_ERROR("---->", "pippo");
+    wifi->wifi_scan(3'000);
+}
+
+void app_display_wifi::rotary_encoder_click()
+{
+
+}
+
+void app_display_wifi::rotary_encoder_ccw()
+{
+
+}
+
+void app_display_wifi::rotary_encoder_cw()
+{
+
+}
+
+void app_display_wifi::paint()
+{
+
+}
+
 }
 }
 

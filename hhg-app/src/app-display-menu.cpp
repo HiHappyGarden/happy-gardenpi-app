@@ -41,10 +41,17 @@ constexpr char APP_TAG[] = "APP DISPLAY MENU";
 }
 
 
-app_display_menu::app_display_menu(class app_display_handler& app_display_handler, const hhg::app::app_parser& app_parser, hhg::app::app_data& app_data, hhg::app::app_config& app_config) OSAL_NOEXCEPT
+app_display_menu::app_display_menu(
+        class app_display_handler& app_display_handler
+                , const hhg::app::app_parser& app_parser
+                , hhg::app::app_data& app_data
+                , hhg::app::app_config& app_config
+                , const hhg::iface::wifi::ptr& wifi
+                ) OSAL_NOEXCEPT
         : app_display_handler(app_display_handler)
         , app_display_passwd(app_display_handler, app_parser, menu_idx, this, &event_exit::on_exit)
         , app_display_irrigate_now(app_display_handler, app_parser, app_data, menu_idx, this, &event_exit::on_exit)
+        , app_display_wifi(app_display_handler, app_parser, app_config, wifi,  menu_idx, this, &event_exit::on_exit)
         , app_parser(app_parser)
 {
     memset(menu_level_store, -1, MENU_LEVEL_SIZE);
@@ -80,7 +87,7 @@ void app_display_menu::button_click(button::status status) OSAL_NOEXCEPT
                     app_display_irrigate_now.button_click(status);
                     break;
                 case WIFI:
-
+                    app_display_wifi.button_click(status);
                     break;
                 case PASSWD:
                     app_display_passwd.button_click(status);
@@ -108,7 +115,7 @@ void app_display_menu::rotary_encoder_click() OSAL_NOEXCEPT
                 app_display_irrigate_now.rotary_encoder_click();
                 break;
             case WIFI:
-
+                app_display_wifi.rotary_encoder_click();
                 break;
             case PASSWD:
                 app_display_passwd.rotary_encoder_click();
@@ -140,7 +147,7 @@ void app_display_menu::rotary_encoder_ccw() OSAL_NOEXCEPT
                 app_display_irrigate_now.rotary_encoder_ccw();
                 break;
             case WIFI:
-
+                app_display_wifi.rotary_encoder_ccw();
                 break;
             case PASSWD:
                 app_display_passwd.rotary_encoder_ccw();
@@ -170,7 +177,7 @@ void app_display_menu::rotary_encoder_cw() OSAL_NOEXCEPT
                 app_display_irrigate_now.rotary_encoder_cw();
                 break;
             case WIFI:
-
+                app_display_wifi.rotary_encoder_cw();
                 break;
             case PASSWD:
                 app_display_passwd.rotary_encoder_cw();
@@ -205,6 +212,7 @@ pair<bool, bool> app_display_menu::paint() OSAL_NOEXCEPT //<update paint_header,
             }
             case WIFI:
             {
+                app_display_wifi.paint();
                 break;
             }
             case PASSWD:
@@ -263,7 +271,15 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
         }
 
         case WIFI:
-
+            if(exit == exit::KO)
+            {
+                menu_idx = IRRIGATE_NOW;
+                menu_level_store[0] = -1;
+            }
+            else
+            {
+                //TODO: to handle
+            }
             break;
         case PASSWD:
             if(exit == exit::KO)
@@ -312,7 +328,15 @@ os::exit app_display_menu::transmit(const uint8_t* data, uint16_t size) const OS
             menu_level_store[0] = -1;
             break;
         case WIFI:
-
+            if(strncmp(ret, "OK", size - 1) == 0)
+            {
+                //TODO: handle return
+            }
+            else
+            {
+                menu_idx = IRRIGATE_NOW;
+                menu_level_store[0] = -1;
+            }
             break;
         case PASSWD:
             if(last_cmd.start_with("$CONF 11 1 "))

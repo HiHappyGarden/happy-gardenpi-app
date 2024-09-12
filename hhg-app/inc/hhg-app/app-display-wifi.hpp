@@ -20,6 +20,7 @@
 
 #pragma once
 #include "hhg-iface/event-exit.hpp"
+#include "hhg-iface/wifi.hpp"
 #include "hhg-app/app-display-keyboard.hpp"
 
 namespace hhg::app
@@ -36,14 +37,34 @@ class app_display_wifi final : public hhg::iface::event_exit
     class app_display_handler& app_display_handler;
     const class app_parser& app_parser;
     const class app_config& app_config;
+    const hhg::iface::wifi::ptr& wifi;
     hhg::iface::event_exit* obj = nullptr;
     hhg::iface::event_exit::on_exit_callback on_exit_callback = nullptr;
 public:
-    app_display_wifi(class app_display_handler& app_display_handler, const class app_parser& app_parser, class app_config& app_config, int16_t& menu_idx, hhg::iface::event_exit* obj, hhg::iface::event_exit::on_exit_callback on_exit) OSAL_NOEXCEPT;
+    app_display_wifi(
+            class app_display_handler& app_display_handler
+            , const class app_parser& app_parser
+            , class app_config& app_config
+            , const hhg::iface::wifi::ptr& wifi
+            , int16_t& menu_idx
+            , hhg::iface::event_exit* obj
+            , hhg::iface::event_exit::on_exit_callback on_exit
+            ) OSAL_NOEXCEPT;
     ~app_display_wifi() override = default;
     OSAL_NO_COPY_NO_MOVE(app_display_wifi)
 
-    void on_exit(os::exit exit, const char* string, void* p_void) override;
+    void button_click(hhg::iface::button::status status) OSAL_NOEXCEPT;
+
+    void rotary_encoder_click() OSAL_NOEXCEPT;
+
+    void rotary_encoder_ccw() OSAL_NOEXCEPT;
+
+    void rotary_encoder_cw() OSAL_NOEXCEPT;
+
+    void paint() OSAL_NOEXCEPT;
+
+private:
+    void on_exit(os::exit exit, const char* string, void *) OSAL_NOEXCEPT override;
 };
 
 }

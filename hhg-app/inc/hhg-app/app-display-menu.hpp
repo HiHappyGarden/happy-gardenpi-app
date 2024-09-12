@@ -21,6 +21,7 @@
 #include "hhg-iface/button.hpp"
 #include "hhg-app/app-display-passwd.hpp"
 #include "hhg-app/app-display-irrigate-now.hpp"
+#include "hhg-app/app-display-wifi.hpp"
 
 
 namespace hhg::app
@@ -38,6 +39,7 @@ class app_display_menu final : public hhg::iface::event_exit
     class app_display_handler& app_display_handler;
     class app_display_passwd app_display_passwd;
     class app_display_irrigate_now app_display_irrigate_now;
+    class app_display_wifi app_display_wifi;
     const hhg::app::app_parser& app_parser;
 
     enum first_level
@@ -65,7 +67,13 @@ class app_display_menu final : public hhg::iface::event_exit
     mutable int16_t menu_level_store[MENU_LEVEL_SIZE];
     os::string<128> last_cmd;
 public:
-    explicit app_display_menu(class app_display_handler& app_display_handler, const hhg::app::app_parser& app_parser, hhg::app::app_data& app_data, hhg::app::app_config& app_config) OSAL_NOEXCEPT;
+    explicit app_display_menu(
+            class app_display_handler& app_display_handler
+            , const hhg::app::app_parser& app_parser
+            , hhg::app::app_data& app_data
+            , hhg::app::app_config& app_config
+            , const hhg::iface::wifi::ptr& wifi
+            ) OSAL_NOEXCEPT;
     ~app_display_menu() override = default;
     OSAL_NO_COPY_NO_MOVE(app_display_menu)
 
@@ -90,7 +98,7 @@ public:
 
 private:
 
-    void on_exit(os::exit exit, const char* string, void*) override;
+    void on_exit(os::exit exit, const char* string, void*) OSAL_NOEXCEPT override;
 
 };
 
