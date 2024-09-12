@@ -78,11 +78,8 @@ public:
 
     void paint() OSAL_NOEXCEPT;
 
-    void exit() OSAL_NOEXCEPT;
-
-
 private:
-    void on_exit(os::exit exit, const char* string, void *) override;
+    void on_exit(os::exit exit, const char* string, void *) OSAL_NOEXCEPT override;
 };
 
 }

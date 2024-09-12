@@ -96,7 +96,7 @@ void app_display_passwd::exit() OSAL_NOEXCEPT
     app_display_keyboard.exit();
 }
 
-void app_display_passwd::on_exit(os::exit exit, const char* string, void* args)
+void app_display_passwd::on_exit(os::exit exit, const char* string, void* args) OSAL_NOEXCEPT
 {
     if(app_parser.is_user_logged())
     {

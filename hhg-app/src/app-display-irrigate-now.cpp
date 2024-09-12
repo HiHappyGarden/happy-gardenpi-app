@@ -184,10 +184,7 @@ void app_display_irrigate_now::paint() OSAL_NOEXCEPT
 
 }
 
-void app_display_irrigate_now::exit() OSAL_NOEXCEPT
-{
-    int i = 1;
-}
+
 
 void app_display_irrigate_now::on_exit(os::exit exit, const char* string, void*) OSAL_NOEXCEPT
 {

@@ -371,7 +371,7 @@ inline namespace v1
         return ret;
     }
 
-    void pico_wifi::wifi_scan(time_t scan_time_in_millis) OSAL_NOEXCEPT
+    void pico_wifi::wifi_scan(time_t scan_time_in_millis) const OSAL_NOEXCEPT
     {
         absolute_time_t scan_time = nil_time;
         bool scan_in_progress = false;

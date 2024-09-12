@@ -106,7 +106,7 @@ inline namespace v1
         }
 
 
-        void wifi_scan(time_t scan_time_in_millis) OSAL_NOEXCEPT override;
+        void wifi_scan(time_t scan_time_in_millis) const OSAL_NOEXCEPT override;
 
     private:
         static void ntp_request(struct ntp* state);

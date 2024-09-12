@@ -33,7 +33,7 @@ struct event_exit
 
     virtual ~event_exit() = default;
 
-    virtual void on_exit(os::exit, const char*, void *) = 0;
+    virtual void on_exit(os::exit, const char*, void *) OSAL_NOEXCEPT = 0;
 };
 
 }
