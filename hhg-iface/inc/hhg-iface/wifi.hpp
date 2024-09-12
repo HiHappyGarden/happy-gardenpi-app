@@ -51,7 +51,7 @@ struct wifi : public initializable
 
     virtual uint32_t get_ip_address() const OSAL_NOEXCEPT = 0;
 
-    virtual bool is_connected() OSAL_NOEXCEPT = 0;
+    virtual os::pair<bool, bool> is_connected() OSAL_NOEXCEPT = 0;
 
     virtual uint32_t get_timeout() const OSAL_NOEXCEPT = 0;
 

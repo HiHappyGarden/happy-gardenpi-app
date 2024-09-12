@@ -40,6 +40,7 @@ class app_main final : public hhg::iface::initializable
 public:
     constexpr static const int16_t ONE_SEC_IN_MILLIS = 1'000;
     constexpr static const int32_t ONE_HOUR_IN_MILLIS = 60 * 60 * 1'000;
+    static constexpr time_t TIMESTAMP_2020 = 1'577'880'000;
 
     enum state : uint32_t
     {
@@ -60,7 +61,6 @@ public:
 private:
     static inline app_main *singleton = nullptr;
     static constexpr uint64_t FSM_SLEEP = 100;
-    static constexpr time_t TIMESTAMP_2020 = 1'577'880'000;
 
     const driver::hardware &hardware;
     hhg::app::app_config app_config;

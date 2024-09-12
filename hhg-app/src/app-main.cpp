@@ -196,7 +196,8 @@ void *app_main::handler(void *arg)
             }
             case CHECK_WIFI_WAIT_CONNECTION:
             {
-                if(singleton->hardware.get_wifi()->is_connected())
+                auto [wifi_connected, wifi_has_ip] = singleton->hardware.get_wifi()->is_connected();
+                if(wifi_connected && wifi_has_ip)
                 {
                     singleton->app_led.loading();
                     singleton->fsm.errors = 0;
@@ -314,7 +315,8 @@ void *app_main::handler(void *arg)
                     singleton->fsm.events.set(READY);
                     singleton->fsm.old_state = READY;
 
-                    if(singleton->hardware.get_wifi()->is_connected())
+                    auto [wifi_connected, wifi_has_ip] = singleton->hardware.get_wifi()->is_connected();
+                    if(wifi_connected && wifi_has_ip)
                     {
                         singleton->app_led.ready();
                         singleton->fsm.events.set(CONNECTED);

@@ -8,11 +8,12 @@ Features to develop for Hi Happy Garden
 - [ ] end to develop manual irrigation
 
 ### Fix
-- [ ] wrong date and time when user logged in 
+
 
 ### In Progress
 
 ### Done ✓
+- [x] ~~wrong date and time when user logged in~~
 - [x] ~~fix icon not change on offline~~
   - [x] ~~block when the device it's offline~~
 - [x] ~~fix led not change on offline~~

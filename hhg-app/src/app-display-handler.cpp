@@ -156,7 +156,7 @@ void app_display_handler::paint_header(bool wifi, time_t timestamp, int16_t time
 
     lcd->set_rect(0, 11, display_width, 1, lcd::write_mode::ADD);
 
-    if(timestamp)
+    if(timestamp > app_main::TIMESTAMP_2020)
     {
         auto&& now = time->to_string(timestamp, time::FORMAT, timezone, daylight_saving_time);
 
@@ -298,6 +298,7 @@ auto app_display_handler::handler(void *) OSAL_NOEXCEPT -> void *
     while(singleton->run)
     {
         auto fsm_state = singleton->app_main.get_state();
+        auto [wifi_connected, wifi_has_ip] = singleton->wifi->is_connected();
 
         if(!singleton->locked)
         {
@@ -333,7 +334,7 @@ auto app_display_handler::handler(void *) OSAL_NOEXCEPT -> void *
                         if(!singleton->app_display_menu.is_opened())
                         {
                             singleton->generic_timer = app_main::ONE_SEC_IN_MILLIS;
-                            singleton->paint_header(singleton->wifi->is_connected(), singleton->now_in_millis / app_main::ONE_SEC_IN_MILLIS);
+                            singleton->paint_header(wifi_connected && wifi_has_ip, singleton->now_in_millis / app_main::ONE_SEC_IN_MILLIS);
                             singleton->clean();
                             singleton->paint_str("Ready");
                             singleton->send_buffer();
@@ -344,7 +345,7 @@ auto app_display_handler::handler(void *) OSAL_NOEXCEPT -> void *
 
                             if(update_paint_header)
                             {
-                                singleton->paint_header(singleton->wifi->is_connected(), singleton->now_in_millis / app_main::ONE_SEC_IN_MILLIS);
+                                singleton->paint_header(wifi_connected && wifi_has_ip, singleton->now_in_millis / app_main::ONE_SEC_IN_MILLIS);
                             }
 
                             if(update_send_buffer && singleton->app_display_menu.is_opened())
@@ -392,7 +393,16 @@ auto app_display_handler::handler(void *) OSAL_NOEXCEPT -> void *
 
                 singleton->paint_header(false, 0);
                 singleton->clean();
-                singleton->paint_str("In connection...");
+
+                if(wifi_connected && !wifi_has_ip)
+                {
+                    singleton->paint_str("Waiting IP...");
+                }
+                else
+                {
+                    singleton->paint_str("In connection...");
+                }
+
                 singleton->send_buffer();
 
             }
@@ -411,7 +421,7 @@ auto app_display_handler::handler(void *) OSAL_NOEXCEPT -> void *
             if(singleton->generic_timer == 0)
             {
                 singleton->lcd->turn_on();
-                singleton->paint_header(singleton->wifi->is_connected(), singleton->now_in_millis / app_main::ONE_SEC_IN_MILLIS);
+                singleton->paint_header(wifi_connected && wifi_has_ip, singleton->now_in_millis / app_main::ONE_SEC_IN_MILLIS);
                 handle_locked_blink_show(singleton);
                 singleton->send_buffer();
 

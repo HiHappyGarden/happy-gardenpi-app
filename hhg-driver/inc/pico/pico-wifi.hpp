@@ -94,9 +94,10 @@ inline namespace v1
             return ip_addr.addr;
         }
 
-        inline bool is_connected() OSAL_NOEXCEPT override
+        inline os::pair<bool, bool> is_connected() OSAL_NOEXCEPT override
         {
-            return events.get() & (CONNECTED | HAS_IP);
+            auto ev = events.get();
+            return {(ev & CONNECTED) == CONNECTED, (ev & HAS_IP) == HAS_IP};
         }
 
         inline uint32_t get_timeout() const OSAL_NOEXCEPT override
