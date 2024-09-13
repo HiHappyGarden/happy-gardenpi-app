@@ -54,8 +54,6 @@ struct wifi : public initializable
     virtual os::pair<bool, bool> is_connected() OSAL_NOEXCEPT = 0;
 
     virtual uint32_t get_timeout() const OSAL_NOEXCEPT = 0;
-
-    virtual void wifi_scan(time_t scan_time_in_millis) const OSAL_NOEXCEPT = 0;
 };
 
 

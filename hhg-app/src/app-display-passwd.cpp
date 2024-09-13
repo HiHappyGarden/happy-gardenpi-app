@@ -65,7 +65,6 @@ void app_display_passwd::rotary_encoder_click() OSAL_NOEXCEPT
 void app_display_passwd::rotary_encoder_ccw() OSAL_NOEXCEPT
 {
     app_display_keyboard.rotary_encoder_ccw();
-
 }
 
 void app_display_passwd::rotary_encoder_cw() OSAL_NOEXCEPT

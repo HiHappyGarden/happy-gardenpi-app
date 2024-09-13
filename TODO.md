@@ -8,7 +8,9 @@ Features to develop for Hi Happy Garden
 - [ ] end to develop manual irrigation
 
 ### Fix
-
+ - [ ] fix keyboard issue on back event
+ - [ ] fix passwd menu
+ - [ ] wifi menu
 
 ### In Progress
 

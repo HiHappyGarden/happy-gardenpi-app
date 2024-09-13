@@ -72,7 +72,6 @@ public:
             , const hhg::app::app_parser& app_parser
             , hhg::app::app_data& app_data
             , hhg::app::app_config& app_config
-            , const hhg::iface::wifi::ptr& wifi
             ) OSAL_NOEXCEPT;
     ~app_display_menu() override = default;
     OSAL_NO_COPY_NO_MOVE(app_display_menu)

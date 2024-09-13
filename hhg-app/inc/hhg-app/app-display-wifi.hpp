@@ -23,6 +23,8 @@
 #include "hhg-iface/wifi.hpp"
 #include "hhg-app/app-display-keyboard.hpp"
 
+#include <osal/osal.hpp>
+
 namespace hhg::app
 {
 inline namespace v1
@@ -37,15 +39,34 @@ class app_display_wifi final : public hhg::iface::event_exit
     class app_display_handler& app_display_handler;
     const class app_parser& app_parser;
     const class app_config& app_config;
-    const hhg::iface::wifi::ptr& wifi;
     hhg::iface::event_exit* obj = nullptr;
     hhg::iface::event_exit::on_exit_callback on_exit_callback = nullptr;
+
+
+    class app_display_keyboard app_display_keyboard;
+
+    enum class status
+    {
+        NONE,
+        CLICK,
+        CONFIRM,
+        BACK
+    } last_event = status::NONE;
+
+    enum class step
+    {
+        SSID,
+        PASSWD,
+    } step = step::SSID;
+
+    os::string<32> ssid;
+    os::string<64> passwd;
+
 public:
     app_display_wifi(
             class app_display_handler& app_display_handler
             , const class app_parser& app_parser
             , class app_config& app_config
-            , const hhg::iface::wifi::ptr& wifi
             , int16_t& menu_idx
             , hhg::iface::event_exit* obj
             , hhg::iface::event_exit::on_exit_callback on_exit
@@ -63,6 +84,7 @@ public:
 
     void paint() OSAL_NOEXCEPT;
 
+    void exit() OSAL_NOEXCEPT;
 private:
     void on_exit(os::exit exit, const char* string, void *) OSAL_NOEXCEPT override;
 };

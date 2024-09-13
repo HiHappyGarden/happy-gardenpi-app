@@ -105,9 +105,6 @@ inline namespace v1
             return TIMEOUT;
         }
 
-
-        void wifi_scan(time_t scan_time_in_millis) const OSAL_NOEXCEPT override;
-
     private:
         static void ntp_request(struct ntp* state);
         static void ntp_dns_found(const char *hostname, const ip_addr_t *ipaddr, void *arg);

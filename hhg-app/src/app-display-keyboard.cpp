@@ -63,6 +63,7 @@ void app_display_keyboard::exit() OSAL_NOEXCEPT
     memset(keyboard_buffer, '\0', KEYBOARD_BUFFER_SIZE + 1);
     keyboard_buffer_overflow = false;
     memset(sub_keyboard_buffer, '\0', line_max_char + 1);
+    app_display_handler.paint_clean(0, app_display_handler::ROW_2_Y_OFFSET, display_width, 8);
 }
 
 void app_display_keyboard::set_first_char() OSAL_NOEXCEPT

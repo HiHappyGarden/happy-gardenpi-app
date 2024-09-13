@@ -67,7 +67,7 @@ app_display_handler::app_display_handler(const iface::lcd::ptr &lcd
         , app_data(app_data)
         , app_config(app_config)
         , app_parser(app_parser)
-        , app_display_menu(*this, app_parser, app_data, app_config, wifi)
+        , app_display_menu(*this, app_parser, app_data, app_config)
 {
 
 }

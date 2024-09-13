@@ -46,12 +46,11 @@ app_display_menu::app_display_menu(
                 , const hhg::app::app_parser& app_parser
                 , hhg::app::app_data& app_data
                 , hhg::app::app_config& app_config
-                , const hhg::iface::wifi::ptr& wifi
                 ) OSAL_NOEXCEPT
         : app_display_handler(app_display_handler)
         , app_display_passwd(app_display_handler, app_parser, menu_idx, this, &event_exit::on_exit)
         , app_display_irrigate_now(app_display_handler, app_parser, app_data, menu_idx, this, &event_exit::on_exit)
-        , app_display_wifi(app_display_handler, app_parser, app_config, wifi,  menu_idx, this, &event_exit::on_exit)
+        , app_display_wifi(app_display_handler, app_parser, app_config,  menu_idx, this, &event_exit::on_exit)
         , app_parser(app_parser)
 {
     memset(menu_level_store, -1, MENU_LEVEL_SIZE);
@@ -236,6 +235,7 @@ void app_display_menu::exit() OSAL_NOEXCEPT
     menu_idx = -1;
     memset(menu_level_store, -1, MENU_LEVEL_SIZE);
     app_display_passwd.exit();
+    app_display_wifi.exit();
 }
 
 void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OSAL_NOEXCEPT
