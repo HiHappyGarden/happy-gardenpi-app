@@ -278,7 +278,18 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
             }
             else
             {
-                //TODO: to handle
+                if(!app_parser.is_user_logged())
+                {
+                    last_cmd = "$AUTH " HHG_USER " ";
+                    last_cmd += string;
+                    last_cmd += "\r\n";
+
+                    app_display_handler.send_cmd(last_cmd);
+                }
+                else
+                {
+                    //todo:
+                }
             }
             break;
         case PASSWD:
