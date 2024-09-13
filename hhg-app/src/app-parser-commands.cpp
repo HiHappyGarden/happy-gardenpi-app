@@ -138,7 +138,19 @@ entry commands_config[] =
     ,.description = "Set/update user", .access = HHG_USER},
     {.key = "12", .description = "Set timezone", .access = ACCESS_ALL_USERS},
     {.key = "13", .description = "Set daylight saving time", .access = ACCESS_ALL_USERS},
-    {.key = "CLEAR", .description = "Clear all", .access = ACCESS_ALL_USERS},
+    {.key = "CLEAR", .custom_func =  [](auto data, auto entry, auto error) -> os::exit
+    {
+        auto ret = app_config->clear(error);
+        if(ret == exit::OK)
+        {
+            strncpy(data.ret_buffer, "OK", data.ret_buffer_len);
+        }
+        else
+        {
+            strncpy(data.ret_buffer, "KO", data.ret_buffer_len);
+        }
+        return ret;
+    }, .description = "Clear all", .access = ACCESS_ALL_USERS},
 	{.key = "STORE", .custom_func = [](auto data, auto entry, auto error)
 	{
 		auto ret = app_config->store(error);
@@ -241,7 +253,19 @@ entry commands_data[] =
             return exit::KO;
         }
         , .description = "Start manual zone", .access = ACCESS_ALL_USERS},
-    {.key = "CLEAR", .description = "Clear all zone", .access = ACCESS_ALL_USERS},
+    {.key = "CLEAR", .custom_func =  [](auto data, auto entry, auto error) -> os::exit
+        {
+            auto ret = app_data->clear(error);
+            if(ret == exit::OK)
+            {
+                strncpy(data.ret_buffer, "OK", data.ret_buffer_len);
+            }
+            else
+            {
+                strncpy(data.ret_buffer, "KO", data.ret_buffer_len);
+            }
+            return ret;
+        }, .description = "Clear all zone", .access = ACCESS_ALL_USERS},
 	{.key = "STORE", .custom_func = [](auto data, auto entry, auto error)
 	{
 		auto ret = app_data->store(error);
@@ -379,12 +403,6 @@ os::exit set_app_config(class app_config& app_config, error** error) OSAL_NOEXCE
         return exit::KO;
     }
 
-    key = "$CONF CLEAR";
-    if(parser->set(key.c_str(), new method(&app_config, &app_config::clear), error) == exit::KO)
-    {
-        return exit::KO;
-    }
-
 	return exit::OK;
 }
 
@@ -417,12 +435,6 @@ os::exit set_app_data(class app_data& app_data, error** error) OSAL_NOEXCEPT
 	{
 		return exit::KO;
 	}
-
-    key = "$DATA CLEAR";
-    if(parser->set(key.c_str(), new method(&app_data, &app_data::clear), error) == exit::KO)
-    {
-        return exit::KO;
-    }
 
 	return exit::OK;
 }
