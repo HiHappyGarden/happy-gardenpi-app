@@ -119,18 +119,23 @@ os::exit app_parser::on_auth(const cmd_data &data, const entry *entry, class err
     char* ptr = strstr(access, HHG_DIVISOR);
     if(ptr == nullptr)
     {
+        if(user_logged.user == access)
+        {
+            return exit::OK;
+        }
+
         return exit::KO;
     }
 
     *ptr = '\0';
-    const char* admin = access;
-    const char* user = ptr + 1;
+    const char* first = access;
+    const char* second = ptr + 1;
 
-    if(user_logged.user == admin)
+    if(user_logged.user == first)
     {
         return exit::OK;
     }
-    else if(user_logged.user == user)
+    else if(user_logged.user == second)
     {
         return exit::OK;
     }
