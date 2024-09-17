@@ -90,6 +90,11 @@ void app_display_wifi::paint()
 
     if(app_parser.is_user_logged())
     {
+//        inline void paint_str(const char str[], uint16_t y = 30, enum valign valign = valign::CENTER, enum font font = font::F8X8, int16_t offset_x = 0) const OSAL_NOEXCEPT
+//        {
+//            paint_str(true, str, y, valign, font, offset_x);
+//        }
+        app_display_handler.paint_clean(0, 30, 132, 8);
         switch(step)
         {
             case step::SSID:

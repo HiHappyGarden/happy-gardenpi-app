@@ -273,7 +273,7 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
         case WIFI:
             if(exit == exit::KO)
             {
-                menu_idx = IRRIGATE_NOW;
+                menu_idx = WIFI;
                 menu_level_store[0] = -1;
             }
             else
@@ -289,13 +289,16 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
                 else
                 {
                     //todo:
+
+                    int i = 2;
+                    int y = i;
                 }
             }
             break;
         case PASSWD:
             if(exit == exit::KO)
             {
-                menu_idx = IRRIGATE_NOW;
+                menu_idx = PASSWD;
                 menu_level_store[0] = -1;
             }
             else
@@ -345,14 +348,14 @@ os::exit app_display_menu::transmit(const uint8_t* data, uint16_t size) const OS
             }
             else
             {
-                menu_idx = IRRIGATE_NOW;
+                menu_idx = WIFI;
                 menu_level_store[0] = -1;
             }
             break;
         case PASSWD:
             if(last_cmd.start_with("$CONF 11 1 "))
             {
-                menu_idx = IRRIGATE_NOW;
+                menu_idx = PASSWD;
                 menu_level_store[0] = -1;
             }
             else
