@@ -65,7 +65,9 @@ class app_display_menu final : public hhg::iface::event_exit
     mutable int16_t menu_idx = -1;
 
     mutable int16_t menu_level_store[MENU_LEVEL_SIZE];
-    os::string<128> last_cmd;
+    mutable os::string<128> last_cmd;
+
+
 public:
     explicit app_display_menu(
             class app_display_handler& app_display_handler

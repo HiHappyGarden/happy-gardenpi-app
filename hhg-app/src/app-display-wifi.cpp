@@ -116,7 +116,6 @@ void app_display_wifi::exit() OSAL_NOEXCEPT
 {
     step = step::SSID;
     ssid = "";
-    passwd = "";
     app_display_keyboard.exit();
 }
 
@@ -137,9 +136,8 @@ void app_display_wifi::on_exit(os::exit exit, const char* string, void*) OSAL_NO
                             ssid = string;
                             break;
                         case step::PASSWD:
-                            step = step::SSID;
-                            passwd = string;
-                            (obj->*on_exit_callback)(exit::OK, string, nullptr);
+                            passwd  = string;
+                            (obj->*on_exit_callback)(exit::OK, nullptr, nullptr);
                             break;
                     }
                     break;

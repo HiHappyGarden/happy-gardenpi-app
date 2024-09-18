@@ -31,7 +31,7 @@ namespace hhg::driver
 inline namespace v1
 {
 
-
+    //TODO: add ssid and passwd when store data check connection and if are changed reconnect
     class pico_wifi final : public hhg::iface::wifi
     {
         static inline pico_wifi* singleton = nullptr;

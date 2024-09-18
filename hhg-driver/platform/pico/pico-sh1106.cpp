@@ -205,8 +205,6 @@ inline namespace v1
         uint32_t c_offset = ( (c - ASCII_TABLE_START_AT_IDX) * (width * height) ) + 2;
 
 
-        uint32_t i = 80;
-
         uint8_t w = 0;
         uint8_t h = 0;
         for(uint32_t idx = 0; idx < single_font_size; idx++)

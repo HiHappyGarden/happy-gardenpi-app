@@ -288,10 +288,16 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
                 }
                 else
                 {
-                    //todo:
 
-                    int i = 2;
-                    int y = i;
+                    last_cmd = "$CONF 6 ";
+                    last_cmd += app_display_wifi.get_ssid();
+                    last_cmd += "\r\n";
+
+                    app_display_handler.send_cmd(last_cmd);
+
+
+                    menu_idx = WIFI;
+                    menu_level_store[0] = -1;
                 }
             }
             break;
@@ -344,7 +350,23 @@ os::exit app_display_menu::transmit(const uint8_t* data, uint16_t size) const OS
         case WIFI:
             if(strncmp(ret, "OK", size - 1) == 0)
             {
-                //TODO: handle return
+                if(last_cmd.start_with("$CONF 6"))
+                {
+                    last_cmd = "$CONF 7 ";
+                    last_cmd += app_display_wifi.get_ssid();
+                    last_cmd += "\r\n";
+
+                    app_display_handler.send_cmd(last_cmd);
+                }
+                if(last_cmd.start_with("$CONF 7"))
+                {
+                    app_display_handler.send_cmd("$DATA STORE");
+                }
+                else
+                {
+                    menu_idx = WIFI;
+                    menu_level_store[0] = -1;
+                }
             }
             else
             {

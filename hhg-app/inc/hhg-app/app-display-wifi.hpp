@@ -63,6 +63,8 @@ class app_display_wifi final : public hhg::iface::event_exit
     os::string<64> passwd;
 
 public:
+    static constexpr inline char DIVISOR = 0x07;
+
     app_display_wifi(
             class app_display_handler& app_display_handler
             , const class app_parser& app_parser
@@ -85,6 +87,17 @@ public:
     void paint() OSAL_NOEXCEPT;
 
     void exit() OSAL_NOEXCEPT;
+
+    inline const os::string<32>& get_ssid() const OSAL_NOEXCEPT
+    {
+        return ssid;
+    }
+
+    inline const os::string<64>& get_passwd() const OSAL_NOEXCEPT
+    {
+        return passwd;
+    }
+
 private:
     void on_exit(os::exit exit, const char* string, void *) OSAL_NOEXCEPT override;
 };
