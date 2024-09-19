@@ -138,6 +138,7 @@ void app_display_wifi::on_exit(os::exit exit, const char* string, void*) OSAL_NO
                         case step::PASSWD:
                             passwd  = string;
                             (obj->*on_exit_callback)(exit::OK, nullptr, nullptr);
+                            step = step::PASSWD;
                             break;
                     }
                     break;

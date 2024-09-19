@@ -38,7 +38,6 @@ constexpr char APP_TAG[] = "APP-PARSER";
 
 app_parser::app_parser(class error** error) OSAL_NOEXCEPT
 : error(nullptr)
-//, io(io)
 , parser(get_commands(), get_commands_size())
 {
 	if(singleton)
@@ -87,7 +86,14 @@ void app_parser::on_receive(io_source source, const uint8_t data[], uint16_t siz
 	if(data)
 	{
 		this->source = source;
-		buffer.send_from_isr(data, size, 10_ms, error);
+        if(buffer.send_from_isr(data, size, 10_ms, error) == 0)
+        {
+            if(error)
+            {
+                *error = OSAL_ERROR_BUILD("RX buffer full", error_type::OS_EFAULT);
+                OSAL_ERROR_PTR_SET_POSITION(*error);
+            }
+        }
 	}
 }
 
@@ -214,6 +220,7 @@ void* app_parser::handler(void* arg) OSAL_NOEXCEPT
 						printf_stack_error(APP_TAG, error);
 					}
 				}
+                singleton->buffer.reset();
 				buffer.clear();
 				ret.clear();
 			}
@@ -224,6 +231,7 @@ void* app_parser::handler(void* arg) OSAL_NOEXCEPT
 //#endif
 			{
 				io->transmit(app_parser::KO, sizeof(app_parser::KO) - 1);
+                singleton->buffer.reset();
 				buffer.clear();
 				ret.clear();
 			}

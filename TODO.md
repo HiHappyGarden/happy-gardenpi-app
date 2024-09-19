@@ -4,12 +4,11 @@ Features to develop for Hi Happy Garden
 
 ### Todo
 - [ ] remove dynamic allocation but before increase stack space 
-
+- [ ] reimplement a true singleton pattern 
 
 ### Fix
  - [ ] fix keyboard issue on back event
- - [ ] fix passwd menu
- - [ ] wifi menu
+ - [ ] fix keyboard issue on back event iin wifi
  - [ ] after logout the display don't show data/time 
 
 ### In Progress
@@ -21,3 +20,5 @@ Features to develop for Hi Happy Garden
 - [x] ~~fix led not change on offline~~
   - [x] ~~block when the device it's offline~~
 - [x] ~~end to develop manual irrigation~~
+- [x] ~~fix passwd menu~~
+- [x] ~~wifi menu~~

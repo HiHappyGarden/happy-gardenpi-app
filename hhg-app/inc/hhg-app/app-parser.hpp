@@ -57,8 +57,8 @@ private:
 
 	class os::error** error = nullptr;
 
-    hhg::iface::io* io_ifaces[3];
-    mutable hhg::iface::io_source source;
+    hhg::iface::io* io_ifaces[3] = {nullptr, nullptr, nullptr };
+    mutable hhg::iface::io_source source = hhg::iface::io_source::DISPLAY;
 
 	hhg::parser::parser parser;
 
@@ -86,8 +86,8 @@ private:
 	static inline app_parser* singleton = nullptr;
 
 
-    app_config::user user_logged;
-    hhg::iface::io_source source_user_logged;
+    app_config::user user_logged{};
+    hhg::iface::io_source source_user_logged = hhg::iface::io_source::DISPLAY;
     uint32_t user_logged_timeout = 0;
 public:
 
