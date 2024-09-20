@@ -86,14 +86,19 @@ void app_parser::on_receive(io_source source, const uint8_t data[], uint16_t siz
 	if(data)
 	{
 		this->source = source;
-        if(buffer.send_from_isr(data, size, 10_ms, error) == 0)
+
+        size_t ret = 0;
+        switch(source)
         {
-            if(error)
-            {
-                *error = OSAL_ERROR_BUILD("RX buffer full", error_type::OS_EFAULT);
-                OSAL_ERROR_PTR_SET_POSITION(*error);
-            }
+            case io_source::UART:
+                ret = buffer.send_from_isr(data, size, 10_ms, error);
+                break;
+            case io_source::WIFI:
+            case io_source::DISPLAY:
+                ret = buffer.send(data, size, 10_ms, error);
+                break;
         }
+
 	}
 }
 
@@ -185,18 +190,12 @@ void* app_parser::handler(void* arg) OSAL_NOEXCEPT
             {
                 end = buffer.find("\n");
             }
-//#ifdef FIX_MINICOM
-//            if(end == nullptr)
-//            {
-//                end = buffer.find("\r");
-//            }
-//#endif
             if (start && end)
 			{
+                singleton->buffer.reset();
 				class error* error = nullptr;
 				if(singleton->parser.execute(buffer.substr(start - buffer.c_str(), end - start).c_str(), ret.c_str(), ret.size(), &error) == exit::OK)
 				{
-
                     if(singleton->is_user_logged() && singleton->auth_timer.is_active())
                     {
                         singleton->user_logged_timeout = AUTH_TIMEOUT;
@@ -220,18 +219,14 @@ void* app_parser::handler(void* arg) OSAL_NOEXCEPT
 						printf_stack_error(APP_TAG, error);
 					}
 				}
-                singleton->buffer.reset();
+
 				buffer.clear();
 				ret.clear();
 			}
-//#ifdef FIX_MINICOM
-//			else if (start == nullptr && end && buffer[0] != '\n')
-//#else
             else if (start == nullptr && end)
-//#endif
 			{
-				io->transmit(app_parser::KO, sizeof(app_parser::KO) - 1);
                 singleton->buffer.reset();
+				io->transmit(app_parser::KO, sizeof(app_parser::KO) - 1);
 				buffer.clear();
 				ret.clear();
 			}

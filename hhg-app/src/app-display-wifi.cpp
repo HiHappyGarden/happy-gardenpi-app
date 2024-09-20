@@ -132,12 +132,16 @@ void app_display_wifi::on_exit(os::exit exit, const char* string, void*) OSAL_NO
                     switch(step)
                     {
                         case step::SSID:
-                            step = step::PASSWD;
                             ssid = string;
+                            step = step::PASSWD;
                             break;
                         case step::PASSWD:
                             passwd  = string;
                             (obj->*on_exit_callback)(exit::OK, nullptr, nullptr);
+                            while(lock)
+                            {
+                                osal_us_sleep(1_ms);
+                            }
                             step = step::PASSWD;
                             break;
                     }

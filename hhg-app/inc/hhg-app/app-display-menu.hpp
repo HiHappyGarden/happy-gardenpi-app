@@ -39,7 +39,7 @@ class app_display_menu final : public hhg::iface::event_exit
     class app_display_handler& app_display_handler;
     class app_display_passwd app_display_passwd;
     class app_display_irrigate_now app_display_irrigate_now;
-    class app_display_wifi app_display_wifi;
+    mutable class app_display_wifi app_display_wifi;
     const hhg::app::app_parser& app_parser;
 
     enum first_level
@@ -66,7 +66,6 @@ class app_display_menu final : public hhg::iface::event_exit
 
     mutable int16_t menu_level_store[MENU_LEVEL_SIZE];
     mutable os::string<128> last_cmd;
-
 
 public:
     explicit app_display_menu(

@@ -61,7 +61,7 @@ class app_display_wifi final : public hhg::iface::event_exit
 
     os::string<32> ssid;
     os::string<64> passwd;
-
+    bool lock = false;
 public:
     static constexpr inline char DIVISOR = 0x07;
 
@@ -96,6 +96,11 @@ public:
     inline const os::string<64>& get_passwd() const OSAL_NOEXCEPT
     {
         return passwd;
+    }
+
+    inline void set_lock(bool lock) OSAL_NOEXCEPT
+    {
+        this->lock = lock;
     }
 
 private:
