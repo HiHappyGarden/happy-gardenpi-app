@@ -39,7 +39,7 @@ inline namespace v1
 
 class app_main;
 
-class app_display_handler final : public hhg::iface::rotary_encoder::event, public hhg::iface::button::event, public hhg::iface::io_initializable, public hhg::app::app_parser::auth
+class app_display_handler final : public hhg::iface::rotary_encoder::event, public hhg::iface::button::event, public hhg::iface::initializable, public hhg::app::app_parser::auth
 {
     static constexpr uint8_t FSM_SLEEP = 5;
     static constexpr uint16_t BLINK_SLEEP = 500;
@@ -56,8 +56,8 @@ class app_display_handler final : public hhg::iface::rotary_encoder::event, publ
 
     class app_display_menu app_display_menu;
 
-    const hhg::iface::io::receive *obj = nullptr;
-    on_receive on_receive_callback = nullptr;
+//    const hhg::iface::io::receive *obj = nullptr;
+//    on_receive on_receive_callback = nullptr;
 
     static auto handler(void *) -> void *;
     os::thread thread{"app_display_handler", hhg::driver::LOW, 1024, handler};
@@ -138,11 +138,11 @@ public:
 
     void send_buffer() OSAL_NOEXCEPT;
 
-    inline void set_on_receive(const iface::io::receive *obj, on_receive on_receive_callback) OSAL_NOEXCEPT override
-    {
-        this->obj = obj;
-        this->on_receive_callback = on_receive_callback;
-    }
+//    inline void set_on_receive(const iface::io::receive *obj, on_receive on_receive_callback) OSAL_NOEXCEPT override
+//    {
+//        this->obj = obj;
+//        this->on_receive_callback = on_receive_callback;
+//    }
 
     os::exit send_cmd(const os::string<128>& cmd) const OSAL_NOEXCEPT;
 
@@ -169,7 +169,7 @@ private:
 
     static void handle_locked_blink_show(app_display_handler* self) OSAL_NOEXCEPT;
 
-    os::exit transmit(const uint8_t *data, uint16_t size) const OSAL_NOEXCEPT override;
+    //os::exit transmit(const uint8_t *data, uint16_t size) const OSAL_NOEXCEPT override;
 };
 
 

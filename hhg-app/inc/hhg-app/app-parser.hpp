@@ -44,11 +44,10 @@ public:
         virtual void on_logout() OSAL_NOEXCEPT = 0;
     };
 
-
+    static constexpr const uint16_t RET_SIZE = 256;
 private:
 
 	static constexpr const uint16_t BUFFER_SIZE = 512;
-	static constexpr const uint16_t RET_SIZE = 256;
     static constexpr const uint32_t AUTH_TIMEOUT = 5 * 60 * 1'000;
 	static constexpr const char STARTER_CHAR[] = "$";
 	static constexpr const uint8_t KO[] = "KO\r\n";
@@ -82,7 +81,10 @@ private:
 		BUFFER_SIZE / 2
         , sizeof(char)
 	};
-
+    mutable os::stream_buffer ret {
+            RET_SIZE
+            , sizeof(char)
+    };
 	static inline app_parser* singleton = nullptr;
 
 
@@ -96,6 +98,8 @@ public:
 	OSAL_NO_COPY_NO_MOVE(app_parser)
 
 	os::exit init(os::error** error) OSAL_NOEXCEPT override;
+
+    os::exit set_cmd(hhg::iface::io_source, const uint8_t data[], uint16_t size, os::string<app_parser::RET_SIZE>& ret) const OSAL_NOEXCEPT;
 
 	inline const hhg::parser::parser& get_parser() const OSAL_NOEXCEPT
 	{
@@ -122,8 +126,6 @@ public:
         return source_user_logged;
     }
 
-	void on_receive(hhg::iface::io_source, const uint8_t data[], uint16_t size) const OSAL_NOEXCEPT override;
-
     inline void set_on_logout(auth* obj, auth::callback on_logout) OSAL_NOEXCEPT
     {
         this->obj = obj;
@@ -132,9 +134,13 @@ public:
 
     void register_io(hhg::iface::io_source, hhg::iface::io*) OSAL_NOEXCEPT;
 
+
 private:
+
     friend os::exit auth(const hhg::parser::cmd_data &data, const hhg::parser::entry *entry, os::error **error) OSAL_NOEXCEPT;
     friend os::exit set_app_parser(class app_parser& app_parser, os::error** error) OSAL_NOEXCEPT;
+
+    void on_receive(hhg::iface::io_source, const uint8_t data[], uint16_t size) const OSAL_NOEXCEPT override;
 
     os::exit on_auth(const hhg::parser::cmd_data& data, const hhg::parser::entry* entry, os::error** error) OSAL_NOEXCEPT override;
 

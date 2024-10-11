@@ -81,11 +81,43 @@ os::exit app_parser::init(class error** error) OSAL_NOEXCEPT
 	return run ? exit::OK : exit::KO;
 }
 
+os::exit app_parser::set_cmd(hhg::iface::io_source source, const uint8_t data[], uint16_t size, string<app_parser::RET_SIZE>& ret) const OSAL_NOEXCEPT
+{
+    if(data == nullptr)
+    {
+        return exit::KO;
+    }
+
+    on_receive(source, data, size);
+
+    uint8_t ret_buff[RET_SIZE] = { 0 };
+    if(this->ret.receive(ret_buff, sizeof(ret_buff), 1_s, nullptr))
+    {
+        for(uint8_t c : ret_buff)
+        {
+            ret += static_cast<char>(c);
+        }
+        return exit::OK;
+    }
+
+    return exit::KO;
+}
+
+void app_parser::register_io(io_source io_source, class io* io)
+{
+    auto idx = static_cast<uint8_t>(io_source);
+    if(idx > static_cast<uint8_t>(io_source::DISPLAY))
+    {
+        return;
+    }
+    io_ifaces[static_cast<uint8_t>(io_source)] = io;
+}
+
 void app_parser::on_receive(io_source source, const uint8_t data[], uint16_t size) const OSAL_NOEXCEPT
 {
-	if(data)
-	{
-		this->source = source;
+    if(data)
+    {
+        this->source = source;
 
         size_t ret = 0;
         switch(source)
@@ -99,19 +131,9 @@ void app_parser::on_receive(io_source source, const uint8_t data[], uint16_t siz
                 break;
         }
 
-	}
-}
-
-
-void app_parser::register_io(io_source io_source, class io* io)
-{
-    auto idx = static_cast<uint8_t>(io_source);
-    if(idx > static_cast<uint8_t>(io_source::DISPLAY))
-    {
-        return;
     }
-    io_ifaces[static_cast<uint8_t>(io_source)] = io;
 }
+
 
 os::exit app_parser::on_auth(const cmd_data &data, const entry *entry, class error **error) OSAL_NOEXCEPT
 {
@@ -206,9 +228,13 @@ void* app_parser::handler(void* arg) OSAL_NOEXCEPT
                     {
                         io->transmit(reinterpret_cast<const uint8_t*>(ret.c_str()), ret.length());;
                     }
+                    else if(singleton->source == io_source::WIFI)
+                    {
+                        io->transmit(reinterpret_cast<const uint8_t*>(ret.rtrim().c_str()), ret.length());
+                    }
                     else
                     {
-                        io->transmit(reinterpret_cast<const uint8_t*>(ret.rtrim().c_str()), ret.length());;
+
                     }
 				}
 				else

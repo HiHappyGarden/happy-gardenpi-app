@@ -453,9 +453,9 @@ auto app_display_handler::handler(void *) OSAL_NOEXCEPT -> void *
 
 os::exit app_display_handler::send_cmd(const os::string<128>& cmd) const OSAL_NOEXCEPT
 {
-    if(obj &&on_receive_callback)
+    os::string<app_parser::RET_SIZE> ret;
+    if(app_parser.set_cmd(io_source::DISPLAY, reinterpret_cast<const uint8_t *>(cmd.c_str()), cmd.length(), ret) == osal::exit::OK)
     {
-        (obj->*on_receive_callback)(io_source::DISPLAY, reinterpret_cast<const uint8_t*>(cmd.c_str()), cmd.length());
         return exit::OK;
     }
 
@@ -508,10 +508,10 @@ void app_display_handler::handle_locked_blink_show(app_display_handler* self) OS
     }
 }
 
-inline os::exit app_display_handler::transmit(const uint8_t *data, uint16_t size) const OSAL_NOEXCEPT
-{
-    return app_display_menu.transmit(data, size);
-}
+//inline os::exit app_display_handler::transmit(const uint8_t *data, uint16_t size) const OSAL_NOEXCEPT
+//{
+//    return app_display_menu.transmit(data, size);
+//}
 
 }
 }

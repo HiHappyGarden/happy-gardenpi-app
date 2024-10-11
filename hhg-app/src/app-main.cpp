@@ -546,8 +546,8 @@ os::exit app_main::init(class os::error **error) OSAL_NOEXCEPT
         return exit::KO;
     }
     set_app_display_handler(app_display_handler);
-    app_display_handler.set_on_receive(&app_parser, &io::receive::on_receive);
-    app_parser.register_io(io_source::DISPLAY, &app_display_handler);
+//    app_display_handler.set_on_receive(&app_parser, &io::receive::on_receive);
+//    app_parser.register_io(io_source::DISPLAY, &app_display_handler);
     app_parser.set_on_logout(&app_display_handler, &hhg::app::app_parser::auth::on_logout);
     OSAL_LOG_INFO(APP_TAG, "Init APP DISPLAY HANDLER - OK");
 
