@@ -33,20 +33,20 @@ inline namespace v1
 class pico_i2c final : public hhg::iface::i2c
 {
 
-    i2c_inst_t* i2C_reference = PICO_DEFAULT_I2C_INSTANCE;
+    i2c_inst_t* i2C_reference = i2c1;
     uint speed = pico_i2c::SPEED;
 
     public:
 
     enum pin : uint
     {
-        SDA_PIN = PICO_DEFAULT_I2C_SDA_PIN,
-        SCL_PIN = PICO_DEFAULT_I2C_SCL_PIN
+        SDA_PIN = 2,
+        SCL_PIN = 3
     };
 
     static constexpr uint SPEED = 100'000;
 
-    explicit pico_i2c(i2c_inst_t* i2C_reference = PICO_DEFAULT_I2C_INSTANCE, uint speed = pico_i2c::SPEED) OSAL_NOEXCEPT;
+    explicit pico_i2c(i2c_inst_t* i2C_reference = i2c1, uint speed = pico_i2c::SPEED) OSAL_NOEXCEPT;
 	~pico_i2c() OSAL_NOEXCEPT override;
 	OSAL_NO_COPY_NO_MOVE(pico_i2c)
 
