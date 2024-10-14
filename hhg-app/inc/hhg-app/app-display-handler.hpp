@@ -144,12 +144,12 @@ public:
 //        this->on_receive_callback = on_receive_callback;
 //    }
 
-    os::exit send_cmd(const os::string<128>& cmd) const OSAL_NOEXCEPT;
-
-    inline os::exit send_cmd(const os::string<128>&& cmd) const OSAL_NOEXCEPT
-    {
-        return send_cmd(cmd);
-    }
+//    os::exit send_cmd(const os::string<128>& cmd) const OSAL_NOEXCEPT;
+//
+//    inline os::exit send_cmd(const os::string<128>&& cmd) const OSAL_NOEXCEPT
+//    {
+//        return send_cmd(cmd);
+//    }
 
     void lock() OSAL_NOEXCEPT;
 

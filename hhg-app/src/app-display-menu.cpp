@@ -24,6 +24,7 @@ using namespace os;
 using hhg::iface::lcd;
 using hhg::iface::button;
 using hhg::iface::event_exit;
+using hhg::iface::io_source;
 
 #ifdef INCLUDE_HHG_CONFIG
 #include "hhg-config.h"
@@ -264,7 +265,14 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
 
                 last_cmd = buffer;
 
-                app_display_handler.send_cmd(last_cmd);
+                os::string<app_parser::RET_SIZE> ret;
+                if(app_parser.send_cmd(io_source::DISPLAY, reinterpret_cast<const uint8_t*>(last_cmd.c_str()), last_cmd.length(), ret) == osal::exit::OK)
+                {
+                    //TODO: handle ok
+                }
+
+                menu_idx = IRRIGATE_NOW;
+                menu_level_store[0] = -1;
             }
 
             break;
@@ -284,7 +292,7 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
                     last_cmd += string;
                     last_cmd += "\r\n";
 
-                    app_display_handler.send_cmd(last_cmd);
+                    //app_display_handler.send_cmd(last_cmd);
                 }
                 else
                 {
@@ -294,7 +302,7 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
                     last_cmd += app_display_wifi.get_ssid();
                     last_cmd += "\r\n";
 
-                    app_display_handler.send_cmd(last_cmd);
+                    //app_display_handler.send_cmd(last_cmd);
                 }
             }
             break;
@@ -313,7 +321,7 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
                     last_cmd += string;
                     last_cmd += "\r\n";
 
-                    app_display_handler.send_cmd(last_cmd);
+                    //app_display_handler.send_cmd(last_cmd);
                 }
                 else
                 {
@@ -321,7 +329,7 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
                     last_cmd += string;
                     last_cmd += "\r\n";
 
-                    app_display_handler.send_cmd(last_cmd);
+                    //app_display_handler.send_cmd(last_cmd);
                 }
 
             }
@@ -329,92 +337,94 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
     }
 }
 
-os::exit app_display_menu::transmit(const uint8_t* data, uint16_t size) const OSAL_NOEXCEPT
-{
-    char* ret = new char[size - 1];
-    if(ret == nullptr)
-    {
-        return exit::KO;
-    }
 
-    memcpy(ret, data, size);
-    switch(menu_level_store[0])
-    {
-        case IRRIGATE_NOW:
-            menu_idx = IRRIGATE_NOW;
-            menu_level_store[0] = -1;
-            break;
-        case WIFI:
-            if(strncmp(ret, "OK", size - 1) == 0)
-            {
-                if(last_cmd.start_with("$AUTH user"))
-                {
-                    //Keep empty
-                }
-                else if(last_cmd.start_with("$CONF 6"))
-                {
-                    last_cmd = "$CONF 7 ";
-                    last_cmd += app_display_wifi.get_ssid();
-                    last_cmd += "\r\n";
-
-                    osal_us_sleep(300_ms);
-
-                    app_display_handler.send_cmd(last_cmd);
-                }
-                else if(last_cmd.start_with("$CONF 7"))
-                {
-                    last_cmd = "$DATA STORE";
-
-                    osal_us_sleep(300_ms);
-
-                    app_display_handler.send_cmd(last_cmd);
-                }
-                else if(last_cmd == "$DATA STORE")
-                {
-                    menu_idx = WIFI;
-                    menu_level_store[0] = -1;
-                    app_display_wifi.set_lock(false);
-                }
-                else
-                {
-                    menu_idx = WIFI;
-                    menu_level_store[0] = -1;
-                    app_display_wifi.set_lock(false);
-                }
-            }
-            else
-            {
-                menu_idx = WIFI;
-                menu_level_store[0] = -1;
-            }
-            break;
-        case PASSWD:
-            if(last_cmd.start_with("$CONF 11 1 "))
-            {
-                menu_idx = PASSWD;
-                menu_level_store[0] = -1;
-            }
-            else
-            {
-                if(strncmp(ret, "OK", size - 1) == 0)
-                {
-                    menu_idx = 'a';
-                    menu_level_store[0] = PASSWD;
-                    app_display_handler.clean();
-                }
-                else
-                {
-                    menu_idx = IRRIGATE_NOW;
-                    menu_level_store[0] = -1;
-                }
-            }
-            break;
-    }
-
-
-    delete[] ret;
-    return exit::OK;
-}
+//
+//os::exit app_display_menu::transmit(const uint8_t* data, uint16_t size) const OSAL_NOEXCEPT
+//{
+//    char* ret = new char[size - 1];
+//    if(ret == nullptr)
+//    {
+//        return exit::KO;
+//    }
+//
+//    memcpy(ret, data, size);
+//    switch(menu_level_store[0])
+//    {
+//        case IRRIGATE_NOW:
+//            menu_idx = IRRIGATE_NOW;
+//            menu_level_store[0] = -1;
+//            break;
+//        case WIFI:
+//            if(strncmp(ret, "OK", size - 1) == 0)
+//            {
+//                if(last_cmd.start_with("$AUTH user"))
+//                {
+//                    //Keep empty
+//                }
+//                else if(last_cmd.start_with("$CONF 6"))
+//                {
+//                    last_cmd = "$CONF 7 ";
+//                    last_cmd += app_display_wifi.get_ssid();
+//                    last_cmd += "\r\n";
+//
+//                    osal_us_sleep(300_ms);
+//
+//                    app_display_handler.send_cmd(last_cmd);
+//                }
+//                else if(last_cmd.start_with("$CONF 7"))
+//                {
+//                    last_cmd = "$DATA STORE";
+//
+//                    osal_us_sleep(300_ms);
+//
+//                    app_display_handler.send_cmd(last_cmd);
+//                }
+//                else if(last_cmd == "$DATA STORE")
+//                {
+//                    menu_idx = WIFI;
+//                    menu_level_store[0] = -1;
+//                    app_display_wifi.set_lock(false);
+//                }
+//                else
+//                {
+//                    menu_idx = WIFI;
+//                    menu_level_store[0] = -1;
+//                    app_display_wifi.set_lock(false);
+//                }
+//            }
+//            else
+//            {
+//                menu_idx = WIFI;
+//                menu_level_store[0] = -1;
+//            }
+//            break;
+//        case PASSWD:
+//            if(last_cmd.start_with("$CONF 11 1 "))
+//            {
+//                menu_idx = PASSWD;
+//                menu_level_store[0] = -1;
+//            }
+//            else
+//            {
+//                if(strncmp(ret, "OK", size - 1) == 0)
+//                {
+//                    menu_idx = 'a';
+//                    menu_level_store[0] = PASSWD;
+//                    app_display_handler.clean();
+//                }
+//                else
+//                {
+//                    menu_idx = IRRIGATE_NOW;
+//                    menu_level_store[0] = -1;
+//                }
+//            }
+//            break;
+//    }
+//
+//
+//    delete[] ret;
+//    return exit::OK;
+//}
 
 }
 }

@@ -81,7 +81,7 @@ os::exit app_parser::init(class error** error) OSAL_NOEXCEPT
 	return run ? exit::OK : exit::KO;
 }
 
-os::exit app_parser::set_cmd(hhg::iface::io_source source, const uint8_t data[], uint16_t size, string<app_parser::RET_SIZE>& ret) const OSAL_NOEXCEPT
+os::exit app_parser::send_cmd(hhg::iface::io_source source, const uint8_t data[], uint16_t size, string<app_parser::RET_SIZE>& ret) const OSAL_NOEXCEPT
 {
     if(data == nullptr)
     {

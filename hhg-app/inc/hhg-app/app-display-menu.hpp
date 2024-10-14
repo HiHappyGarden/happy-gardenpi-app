@@ -94,7 +94,7 @@ public:
         return opened;
     }
 
-    os::exit transmit(const uint8_t *data, uint16_t size) const OSAL_NOEXCEPT;
+//    os::exit transmit(const uint8_t *data, uint16_t size) const OSAL_NOEXCEPT;
 
 private:
 

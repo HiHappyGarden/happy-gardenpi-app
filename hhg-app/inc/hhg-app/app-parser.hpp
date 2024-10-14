@@ -99,7 +99,7 @@ public:
 
 	os::exit init(os::error** error) OSAL_NOEXCEPT override;
 
-    os::exit set_cmd(hhg::iface::io_source, const uint8_t data[], uint16_t size, os::string<app_parser::RET_SIZE>& ret) const OSAL_NOEXCEPT;
+    os::exit send_cmd(hhg::iface::io_source, const uint8_t data[], uint16_t size, os::string<app_parser::RET_SIZE>& ret) const OSAL_NOEXCEPT;
 
 	inline const hhg::parser::parser& get_parser() const OSAL_NOEXCEPT
 	{

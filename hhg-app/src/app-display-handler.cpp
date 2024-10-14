@@ -451,16 +451,16 @@ auto app_display_handler::handler(void *) OSAL_NOEXCEPT -> void *
     return nullptr;
 }
 
-os::exit app_display_handler::send_cmd(const os::string<128>& cmd) const OSAL_NOEXCEPT
-{
-    os::string<app_parser::RET_SIZE> ret;
-    if(app_parser.set_cmd(io_source::DISPLAY, reinterpret_cast<const uint8_t *>(cmd.c_str()), cmd.length(), ret) == osal::exit::OK)
-    {
-        return exit::OK;
-    }
-
-    return exit::KO;
-}
+//os::exit app_display_handler::send_cmd(const os::string<128>& cmd) const OSAL_NOEXCEPT
+//{
+//    os::string<app_parser::RET_SIZE> ret;
+//    if(app_parser.set_cmd(io_source::DISPLAY, reinterpret_cast<const uint8_t *>(cmd.c_str()), cmd.length(), ret) == osal::exit::OK)
+//    {
+//        return exit::OK;
+//    }
+//
+//    return exit::KO;
+//}
 
 void app_display_handler::lock() OSAL_NOEXCEPT
 {
