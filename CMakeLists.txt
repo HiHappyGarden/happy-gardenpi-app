@@ -1,8 +1,12 @@
 cmake_minimum_required(VERSION 3.16...3.24)
 
-add_definitions(-DPICO_CXX_DISABLE_ALLOCATION_OVERRIDES)
-include(pico-sdk/external/pico_sdk_import.cmake)
+if(NOT DEFINED PICO_SDK_PATH)
+    set(PICO_SDK_PATH "${CMAKE_SOURCE_DIR}/pico-sdk" CACHE STRING "Path to the PICO SDK")
+endif()
 set(PICO_BOARD pico_w)
+
+add_definitions(-DPICO_CXX_DISABLE_ALLOCATION_OVERRIDES)
+include(${PICO_SDK_PATH}/external/pico_sdk_import.cmake)
 
 PROJECT(hi-happy-garden VERSION "0.60.0" LANGUAGES CXX C ASM)
 set(CMAKE_CXX_STANDARD 17)
