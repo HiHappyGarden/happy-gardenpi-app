@@ -60,7 +60,7 @@ class app_display_handler final : public hhg::iface::rotary_encoder::event, publ
 //    on_receive on_receive_callback = nullptr;
 
     static auto handler(void *) -> void *;
-    os::thread thread{"app_display_handler", hhg::driver::LOW, 1024, handler};
+    os::thread thread{"app_display_handler", hhg::driver::LOW, 1'024 * 2, handler};
     bool run = true;
 
     bool locked = false;

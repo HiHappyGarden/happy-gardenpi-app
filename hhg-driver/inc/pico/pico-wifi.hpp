@@ -40,7 +40,7 @@ inline namespace v1
         constexpr static uint32_t TIMEOUT = 30'000;
 
         static void* handle(void* arg);
-        os::thread thread{"wifi", HIGH, 1024, handle};
+        os::thread thread{"wifi", HIGH, 1'024, handle};
 
         os::event events;
         mutable int16_t connection_timeout = 0;
