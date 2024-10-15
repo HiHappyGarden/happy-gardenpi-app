@@ -266,11 +266,8 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
                 last_cmd = buffer;
 
                 os::string<app_parser::RET_SIZE> ret;
-                if(app_parser.send_cmd(io_source::DISPLAY, reinterpret_cast<const uint8_t*>(last_cmd.c_str()), last_cmd.length(), ret) == osal::exit::OK)
-                {
-                    //TODO: handle ok
-                }
-
+                app_parser.send_cmd(io_source::DISPLAY, reinterpret_cast<const uint8_t*>(last_cmd.c_str()), last_cmd.length(), ret);
+                
                 menu_idx = IRRIGATE_NOW;
                 menu_level_store[0] = -1;
             }

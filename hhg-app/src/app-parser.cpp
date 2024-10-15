@@ -91,13 +91,15 @@ os::exit app_parser::send_cmd(hhg::iface::io_source source, const uint8_t data[]
     on_receive(source, data, size);
 
     uint8_t ret_buff[RET_SIZE] = { 0 };
-    if(this->ret.receive(ret_buff, sizeof(ret_buff), 1_s, nullptr))
+    auto ret_buff_len = this->ret.receive(ret_buff, sizeof(ret_buff), 1_s, nullptr);
+    if(ret_buff_len)
     {
-        for(uint8_t c : ret_buff)
+        for(uint8_t i = 0; i < ret_buff_len; i++)
         {
-            ret += static_cast<char>(c);
+            ret += static_cast<char>(ret_buff[i]);
         }
-        return exit::OK;
+
+        return ret.find("OK") ? exit::OK : exit::KO;
     }
 
     return exit::KO;
@@ -118,16 +120,15 @@ void app_parser::on_receive(io_source source, const uint8_t data[], uint16_t siz
     if(data)
     {
         this->source = source;
-
-        size_t ret = 0;
+        int i = 0;
         switch(source)
         {
+            case io_source::DISPLAY:
             case io_source::UART:
-                ret = buffer.send_from_isr(data, size, 10_ms, error);
+                buffer.send_from_isr(data, size, 10_ms, error);
                 break;
             case io_source::WIFI:
-            case io_source::DISPLAY:
-                ret = buffer.send(data, size, 10_ms, error);
+                buffer.send(data, size, 10_ms, error);
                 break;
         }
 
@@ -234,16 +235,24 @@ void* app_parser::handler(void* arg) OSAL_NOEXCEPT
                     }
                     else
                     {
-
+                        singleton->ret.send(reinterpret_cast<const uint8_t*>(ret.rtrim().c_str()), ret.length(), 100_ms, nullptr);
                     }
 				}
 				else
 				{
-					io->transmit(app_parser::KO, sizeof(app_parser::KO) - 1);
-					if(error)
-					{
-						printf_stack_error(APP_TAG, error);
-					}
+                    if(singleton->source == io_source::DISPLAY)
+                    {
+                        singleton->ret.send(reinterpret_cast<const uint8_t*>(app_parser::KO), sizeof(app_parser::KO) - 1, 100_ms, nullptr);
+                    }
+                    else
+                    {
+                        io->transmit(app_parser::KO, sizeof(app_parser::KO) - 1);
+                        if(error)
+                        {
+                            printf_stack_error(APP_TAG, error);
+                        }
+                    }
+
 				}
 
 				buffer.clear();
