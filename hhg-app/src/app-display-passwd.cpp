@@ -109,8 +109,9 @@ void app_display_passwd::on_exit(os::exit exit, const char* string, void* args) 
                 case status::BACK:
                     (obj->*on_exit_callback)(exit::KO, nullptr, nullptr);
                     break;
+                default:
+                    break;
             }
-
 
         }
     }

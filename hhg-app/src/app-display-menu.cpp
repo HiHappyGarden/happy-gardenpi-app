@@ -263,10 +263,8 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
 
                 snprintf(buffer, sizeof(buffer) - 1, "$DATA 5 %u %u\r\n", selections->zone_idx, selections->irrigating_minutes);
 
-                last_cmd = buffer;
-
                 os::string<app_parser::RET_SIZE> ret;
-                app_parser.send_cmd(io_source::DISPLAY, reinterpret_cast<const uint8_t*>(last_cmd.c_str()), last_cmd.length(), ret);
+                app_parser.send_cmd(io_source::DISPLAY, reinterpret_cast<const uint8_t*>(buffer), strlen(buffer), ret);
                 
                 menu_idx = IRRIGATE_NOW;
                 menu_level_store[0] = -1;
@@ -285,20 +283,24 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
             {
                 if(!app_parser.is_user_logged())
                 {
-                    last_cmd = "$AUTH " HHG_USER " ";
-                    last_cmd += string;
-                    last_cmd += "\r\n";
+                    os::string<128> buffer = "$AUTH " HHG_USER " ";
+                    buffer += string;
+                    buffer += "\r\n";
 
-                    //app_display_handler.send_cmd(last_cmd);
+                    os::string<app_parser::RET_SIZE> ret;
+                    app_parser.send_cmd(io_source::DISPLAY, reinterpret_cast<const uint8_t*>(buffer.c_str()), buffer.length(), ret);
+
                 }
                 else
                 {
                     app_display_wifi.set_lock(true);
 
-                    last_cmd = "$CONF 6 ";
-                    last_cmd += app_display_wifi.get_ssid();
-                    last_cmd += "\r\n";
+                    os::string<128> buffer = "$CONF 6 ";
+                    buffer += app_display_wifi.get_ssid();
+                    buffer += "\r\n";
 
+                    os::string<app_parser::RET_SIZE> ret;
+                    app_parser.send_cmd(io_source::DISPLAY, reinterpret_cast<const uint8_t*>(buffer.c_str()), buffer.length(), ret);
                     //app_display_handler.send_cmd(last_cmd);
                 }
             }
@@ -314,19 +316,31 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
 
                 if(!app_parser.is_user_logged())
                 {
-                    last_cmd = "$AUTH " HHG_USER " ";
-                    last_cmd += string;
-                    last_cmd += "\r\n";
+                    os::string<128> buffer = "$AUTH " HHG_USER " ";
+                    buffer += string;
+                    buffer += "\r\n";
 
-                    //app_display_handler.send_cmd(last_cmd);
+                    os::string<app_parser::RET_SIZE> ret;
+                    if(app_parser.send_cmd(io_source::DISPLAY, reinterpret_cast<const uint8_t*>(buffer.c_str()), buffer.length(), ret) == exit::OK)
+                    {
+                        menu_idx = 'a';
+                        menu_level_store[0] = PASSWD;
+                        app_display_handler.clean();
+                    }
+
                 }
                 else
                 {
-                    last_cmd = "$CONF 11 1 " HHG_USER " ";
-                    last_cmd += string;
-                    last_cmd += "\r\n";
+                    os::string<128> buffer = "$CONF 11 1 " HHG_USER " ";
+                    buffer += string;
+                    buffer += "\r\n";
 
-                    //app_display_handler.send_cmd(last_cmd);
+                    os::string<app_parser::RET_SIZE> ret;
+                    if(app_parser.send_cmd(io_source::DISPLAY, reinterpret_cast<const uint8_t*>(buffer.c_str()), buffer.length(), ret) == exit::OK)
+                    {
+                        menu_idx = PASSWD;
+                        menu_level_store[0] = -1;
+                    }
                 }
 
             }
