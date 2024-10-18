@@ -81,7 +81,7 @@ void app_display_passwd::paint() OSAL_NOEXCEPT
 
     if(app_parser.is_user_logged())
     {
-        app_display_handler.paint_str("Set passwd");
+        app_display_handler.paint_str("New passwd");
     }
     else
     {

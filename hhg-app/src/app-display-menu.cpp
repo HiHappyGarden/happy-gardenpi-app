@@ -300,8 +300,21 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
                     buffer += "\r\n";
 
                     os::string<app_parser::RET_SIZE> ret;
-                    app_parser.send_cmd(io_source::DISPLAY, reinterpret_cast<const uint8_t*>(buffer.c_str()), buffer.length(), ret);
-                    //app_display_handler.send_cmd(last_cmd);
+                    if(app_parser.send_cmd(io_source::DISPLAY, reinterpret_cast<const uint8_t*>(buffer.c_str()), buffer.length(), ret) == exit::OK)
+                    {
+                        buffer = "$CONF 7 ";
+                        buffer += app_display_wifi.get_passwd();
+                        buffer += "\r\n";
+
+                        if(app_parser.send_cmd(io_source::DISPLAY, reinterpret_cast<const uint8_t*>(buffer.c_str()), buffer.length(), ret) == exit::OK)
+                        {
+                            buffer = "$CONF STORE\r\n";
+                            app_parser.send_cmd(io_source::DISPLAY, reinterpret_cast<const uint8_t*>(buffer.c_str()), buffer.length(), ret);
+                        }
+                    }
+                    menu_idx = WIFI;
+                    menu_level_store[0] = -1;
+                    app_display_wifi.set_lock(false);
                 }
             }
             break;
@@ -321,12 +334,11 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
                     buffer += "\r\n";
 
                     os::string<app_parser::RET_SIZE> ret;
-                    if(app_parser.send_cmd(io_source::DISPLAY, reinterpret_cast<const uint8_t*>(buffer.c_str()), buffer.length(), ret) == exit::OK)
-                    {
-                        menu_idx = 'a';
-                        menu_level_store[0] = PASSWD;
-                        app_display_handler.clean();
-                    }
+                    app_parser.send_cmd(io_source::DISPLAY, reinterpret_cast<const uint8_t*>(buffer.c_str()), buffer.length(), ret);
+
+                    menu_idx = 'a';
+                    menu_level_store[0] = PASSWD;
+                    app_display_handler.clean();
 
                 }
                 else
@@ -336,11 +348,11 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
                     buffer += "\r\n";
 
                     os::string<app_parser::RET_SIZE> ret;
-                    if(app_parser.send_cmd(io_source::DISPLAY, reinterpret_cast<const uint8_t*>(buffer.c_str()), buffer.length(), ret) == exit::OK)
-                    {
-                        menu_idx = PASSWD;
-                        menu_level_store[0] = -1;
-                    }
+                    app_parser.send_cmd(io_source::DISPLAY, reinterpret_cast<const uint8_t*>(buffer.c_str()), buffer.length(), ret);
+
+                    menu_idx = PASSWD;
+                    menu_level_store[0] = -1;
+
                 }
 
             }
