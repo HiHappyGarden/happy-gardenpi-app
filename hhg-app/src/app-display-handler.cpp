@@ -471,6 +471,7 @@ void app_display_handler::lock() OSAL_NOEXCEPT
 inline void app_display_handler::on_logout() OSAL_NOEXCEPT
 {
     locked = false;
+    app_display_menu.set_do_paint(true);
 }
 
 void app_display_handler::handle_locked_blink_show(app_display_handler* self) OSAL_NOEXCEPT

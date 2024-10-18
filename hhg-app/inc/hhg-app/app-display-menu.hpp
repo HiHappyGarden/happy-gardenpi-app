@@ -96,6 +96,11 @@ public:
 
     os::pair<bool, bool> paint() OSAL_NOEXCEPT; //<update paint_header, update send_buffer>
 
+    inline void set_do_paint(bool do_paint) OSAL_NOEXCEPT
+    {
+        this->do_paint = do_paint;
+    }
+
     void exit() OSAL_NOEXCEPT;
 
     inline bool is_opened() const OSAL_NOEXCEPT

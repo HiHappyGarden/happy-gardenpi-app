@@ -46,7 +46,7 @@ enum class status : uint8_t
 /**
  * @brief pod who describe a irrigation station
  */
-struct zone final
+struct alignas(4) zone final
 {
 
     using ptr = os::unique_ptr<zone>;
@@ -77,7 +77,7 @@ struct zone final
     enum status status = status::UNACTIVE;
 };
 
-struct schedule final
+struct alignas(4) schedule final
 {
 
     using ptr = os::unique_ptr<schedule>;
@@ -164,7 +164,7 @@ class app_data final : public hhg::iface::initializable
 
 	const hhg::iface::fs_io::ptr& fsio;
 
-	mutable struct alignas(2) data final : public hhg::iface::file_version
+	mutable struct alignas(4) data final : public hhg::iface::file_version
 	{
 		inline data() OSAL_NOEXCEPT : file_version{MAGIC, VERSION} {}
 		schedule schedules[HHG_SCHEDULES_SIZE];

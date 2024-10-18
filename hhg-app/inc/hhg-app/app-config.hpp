@@ -38,7 +38,7 @@ inline namespace v1
 class app_config final : public hhg::iface::initializable
 {
 public:
-    struct alignas(2) user final
+    struct alignas(4) user final
     {
         static constexpr uint8_t MAX_USERS = 2;
         static constexpr uint8_t ADMIN = 0;
@@ -60,7 +60,7 @@ private:
 
 	const hhg::iface::fs_io::ptr& fs_io;
 
-	mutable struct alignas(2) config final : public hhg::iface::file_version {
+	mutable struct alignas(64) config final : public hhg::iface::file_version {
         inline config() OSAL_NOEXCEPT: file_version{MAGIC, VERSION} {}
 
         os::string<16> serial;
