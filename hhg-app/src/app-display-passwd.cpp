@@ -119,7 +119,7 @@ void app_display_passwd::on_exit(os::exit exit, const char* string, void* args) 
     {
         if(obj && on_exit_callback)
         {
-            (obj->*on_exit_callback)(exit::OK, app_display_keyboard.get_keyboard_buffer().c_str(), nullptr);
+            (obj->*on_exit_callback)(exit, app_display_keyboard.get_keyboard_buffer().c_str(), nullptr);
         }
     }
 

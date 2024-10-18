@@ -7,9 +7,7 @@ Features to develop for Hi Happy Garden
 - [ ] reimplement a true singleton pattern 
 
 ### Fix
- - [ ] fix keyboard issue on back event
- - [ ] fix keyboard issue on back event iin wifi
- - [ ] after logout the display don't show data/time 
+ - [ ] fix after logout show ready
 
 ### In Progress
 
@@ -22,3 +20,6 @@ Features to develop for Hi Happy Garden
 - [x] ~~end to develop manual irrigation~~
 - [x] ~~fix passwd menu~~
 - [x] ~~wifi menu~~
+  - [x] ~~after logout the display don't show data/time~~
+- [ ] ~~fix keyboard issue on back event~~
+- [ ] ~~fix keyboard issue on back event in wifi~~

@@ -54,7 +54,7 @@ app_display_menu::app_display_menu(
         , app_display_wifi(app_display_handler, app_parser, app_config,  menu_idx, this, &event_exit::on_exit)
         , app_parser(app_parser)
 {
-    memset(menu_level_store, -1, MENU_LEVEL_SIZE);
+
 }
 
 void app_display_menu::button_click(button::status status) OSAL_NOEXCEPT
@@ -62,7 +62,7 @@ void app_display_menu::button_click(button::status status) OSAL_NOEXCEPT
     if(status == button::status::RELEASE || status == button::status::LONG_PRESS)
     {
         lock_guard lg(mx);
-        if(menu_level_store[0] == -1)
+        if(menu_level_store[MENU_LEVEL_ZERO] == -1)
         {
             uint8_t level = 0;
             for(int16_t value: menu_level_store)
@@ -81,7 +81,7 @@ void app_display_menu::button_click(button::status status) OSAL_NOEXCEPT
         {
             do_paint = true;
 
-            switch(menu_level_store[0])
+            switch(menu_level_store[MENU_LEVEL_ZERO])
             {
                 case IRRIGATE_NOW:
                     app_display_irrigate_now.button_click(status);
@@ -102,14 +102,14 @@ void app_display_menu::rotary_encoder_click() OSAL_NOEXCEPT
 {
     lock_guard lg(mx);
     opened = true;
-    if(menu_level_store[0] == -1)
+    if(menu_level_store[MENU_LEVEL_ZERO] == -1)
     {
 
     }
     else
     {
         do_paint = true;
-        switch(menu_level_store[0])
+        switch(menu_level_store[MENU_LEVEL_ZERO])
         {
             case IRRIGATE_NOW:
                 app_display_irrigate_now.rotary_encoder_click();
@@ -131,7 +131,7 @@ void app_display_menu::rotary_encoder_ccw() OSAL_NOEXCEPT
     do_paint = true;
     opened = true;
 
-    if(menu_level_store[0] == -1)
+    if(menu_level_store[MENU_LEVEL_ZERO] == -1)
     {
         menu_idx--;
         if(menu_idx < 0)
@@ -141,7 +141,7 @@ void app_display_menu::rotary_encoder_ccw() OSAL_NOEXCEPT
     }
     else
     {
-        switch(menu_level_store[0])
+        switch(menu_level_store[MENU_LEVEL_ZERO])
         {
             case IRRIGATE_NOW:
                 app_display_irrigate_now.rotary_encoder_ccw();
@@ -161,7 +161,7 @@ void app_display_menu::rotary_encoder_cw() OSAL_NOEXCEPT
     lock_guard lg(mx);
     do_paint = true;
     opened = true;
-    if(menu_level_store[0] == -1)
+    if(menu_level_store[MENU_LEVEL_ZERO] == -1)
     {
         menu_idx++;
         if(menu_idx >= MENU_SIZE)
@@ -171,7 +171,7 @@ void app_display_menu::rotary_encoder_cw() OSAL_NOEXCEPT
     }
     else
     {
-        switch(menu_level_store[0])
+        switch(menu_level_store[MENU_LEVEL_ZERO])
         {
             case IRRIGATE_NOW:
                 app_display_irrigate_now.rotary_encoder_cw();
@@ -195,7 +195,7 @@ pair<bool, bool> app_display_menu::paint() OSAL_NOEXCEPT //<update paint_header,
     lock_guard lg(mx);
     do_paint = false;
 
-    if(menu_level_store[0] == -1)
+    if(menu_level_store[MENU_LEVEL_ZERO] == -1)
     {
         app_display_handler.clean();
         app_display_handler.paint_str(first_level_labels[menu_idx]);
@@ -203,7 +203,7 @@ pair<bool, bool> app_display_menu::paint() OSAL_NOEXCEPT //<update paint_header,
     }
     else
     {
-        switch(menu_level_store[0])
+        switch(menu_level_store[MENU_LEVEL_ZERO])
         {
             case IRRIGATE_NOW:
             {
@@ -241,14 +241,14 @@ void app_display_menu::exit() OSAL_NOEXCEPT
 
 void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OSAL_NOEXCEPT
 {
-    switch(menu_level_store[0])
+    switch(menu_level_store[MENU_LEVEL_ZERO])
     {
         case IRRIGATE_NOW:
         {
             if(exit == exit::KO)
             {
                 menu_idx = IRRIGATE_NOW;
-                menu_level_store[0] = -1;
+                menu_level_store[MENU_LEVEL_ZERO] = -1;
             }
             else
             {
@@ -267,7 +267,7 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
                 app_parser.send_cmd(io_source::DISPLAY, reinterpret_cast<const uint8_t*>(buffer), strlen(buffer), ret);
                 
                 menu_idx = IRRIGATE_NOW;
-                menu_level_store[0] = -1;
+                menu_level_store[MENU_LEVEL_ZERO] = -1;
             }
 
             break;
@@ -277,7 +277,7 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
             if(exit == exit::KO)
             {
                 menu_idx = WIFI;
-                menu_level_store[0] = -1;
+                menu_level_store[MENU_LEVEL_ZERO] = -1;
             }
             else
             {
@@ -313,7 +313,7 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
                         }
                     }
                     menu_idx = WIFI;
-                    menu_level_store[0] = -1;
+                    menu_level_store[MENU_LEVEL_ZERO] = -1;
                     app_display_wifi.set_lock(false);
                 }
             }
@@ -322,7 +322,7 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
             if(exit == exit::KO)
             {
                 menu_idx = PASSWD;
-                menu_level_store[0] = -1;
+                menu_level_store[MENU_LEVEL_ZERO] = -1;
             }
             else
             {
@@ -337,7 +337,7 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
                     app_parser.send_cmd(io_source::DISPLAY, reinterpret_cast<const uint8_t*>(buffer.c_str()), buffer.length(), ret);
 
                     menu_idx = 'a';
-                    menu_level_store[0] = PASSWD;
+                    menu_level_store[MENU_LEVEL_ZERO] = PASSWD;
                     app_display_handler.clean();
 
                 }
@@ -351,7 +351,7 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
                     app_parser.send_cmd(io_source::DISPLAY, reinterpret_cast<const uint8_t*>(buffer.c_str()), buffer.length(), ret);
 
                     menu_idx = PASSWD;
-                    menu_level_store[0] = -1;
+                    menu_level_store[MENU_LEVEL_ZERO] = -1;
 
                 }
 
@@ -371,11 +371,11 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
 //    }
 //
 //    memcpy(ret, data, size);
-//    switch(menu_level_store[0])
+//    switch(menu_level_store[MENU_LEVEL_ZERO])
 //    {
 //        case IRRIGATE_NOW:
 //            menu_idx = IRRIGATE_NOW;
-//            menu_level_store[0] = -1;
+//            menu_level_store[MENU_LEVEL_ZERO] = -1;
 //            break;
 //        case WIFI:
 //            if(strncmp(ret, "OK", size - 1) == 0)
@@ -405,40 +405,40 @@ void app_display_menu::on_exit(os::exit exit, const char* string, void* args) OS
 //                else if(last_cmd == "$DATA STORE")
 //                {
 //                    menu_idx = WIFI;
-//                    menu_level_store[0] = -1;
+//                    menu_level_store[MENU_LEVEL_ZERO] = -1;
 //                    app_display_wifi.set_lock(false);
 //                }
 //                else
 //                {
 //                    menu_idx = WIFI;
-//                    menu_level_store[0] = -1;
+//                    menu_level_store[MENU_LEVEL_ZERO] = -1;
 //                    app_display_wifi.set_lock(false);
 //                }
 //            }
 //            else
 //            {
 //                menu_idx = WIFI;
-//                menu_level_store[0] = -1;
+//                menu_level_store[MENU_LEVEL_ZERO] = -1;
 //            }
 //            break;
 //        case PASSWD:
 //            if(last_cmd.start_with("$CONF 11 1 "))
 //            {
 //                menu_idx = PASSWD;
-//                menu_level_store[0] = -1;
+//                menu_level_store[MENU_LEVEL_ZERO] = -1;
 //            }
 //            else
 //            {
 //                if(strncmp(ret, "OK", size - 1) == 0)
 //                {
 //                    menu_idx = 'a';
-//                    menu_level_store[0] = PASSWD;
+//                    menu_level_store[MENU_LEVEL_ZERO] = PASSWD;
 //                    app_display_handler.clean();
 //                }
 //                else
 //                {
 //                    menu_idx = IRRIGATE_NOW;
-//                    menu_level_store[0] = -1;
+//                    menu_level_store[MENU_LEVEL_ZERO] = -1;
 //                }
 //            }
 //            break;

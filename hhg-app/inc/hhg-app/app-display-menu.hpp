@@ -34,7 +34,13 @@ class app_parser;
 class app_display_menu final : public hhg::iface::event_exit
 {
     static constexpr uint8_t MENU_LABEL_SIZE = 16;
-    static constexpr int8_t MENU_LEVEL_SIZE = 2;
+
+    enum
+    {
+        MENU_LEVEL_ZERO,
+        MENU_LEVEL_ONE,
+        MENU_LEVEL_SIZE
+    };
 
     class app_display_handler& app_display_handler;
     class app_display_passwd app_display_passwd;
@@ -64,7 +70,10 @@ class app_display_menu final : public hhg::iface::event_exit
 
     mutable int16_t menu_idx = -1;
 
-    mutable int16_t menu_level_store[MENU_LEVEL_SIZE];
+    mutable int16_t menu_level_store[MENU_LEVEL_SIZE] = {
+                [MENU_LEVEL_ZERO] = -1,
+            [MENU_LEVEL_ONE] = -1,
+    };
 //    mutable os::string<128> last_cmd;
 
 public:

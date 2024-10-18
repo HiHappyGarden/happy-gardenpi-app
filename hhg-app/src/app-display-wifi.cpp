@@ -147,7 +147,9 @@ void app_display_wifi::on_exit(os::exit exit, const char* string, void*) OSAL_NO
                     }
                     break;
                 case status::BACK:
-                    (obj->*on_exit_callback)(exit::KO, nullptr, nullptr);
+                    (obj->*on_exit_callback)(exit, nullptr, nullptr);
+                    break;
+                default:
                     break;
             }
         }
@@ -156,7 +158,7 @@ void app_display_wifi::on_exit(os::exit exit, const char* string, void*) OSAL_NO
     {
         if(obj && on_exit_callback)
         {
-            (obj->*on_exit_callback)(exit::OK, app_display_keyboard.get_keyboard_buffer().c_str(), nullptr);
+            (obj->*on_exit_callback)(exit, app_display_keyboard.get_keyboard_buffer().c_str(), nullptr);
         }
     }
 }

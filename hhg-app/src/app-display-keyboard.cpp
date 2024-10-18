@@ -136,6 +136,7 @@ void app_display_keyboard::rotary_encoder_click() OSAL_NOEXCEPT
                 (obj->*on_exit)(exit::KO, nullptr, nullptr);
                 exit();
             }
+            break;
         case type::NUMERICS:
             if(obj && on_exit)
             {
