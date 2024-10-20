@@ -164,7 +164,7 @@ class app_data final : public hhg::iface::initializable
 
 	const hhg::iface::fs_io::ptr& fsio;
 
-	mutable struct alignas(4) data final : public hhg::iface::file_version
+	mutable struct alignas(64) data final : public hhg::iface::file_version
 	{
 		inline data() OSAL_NOEXCEPT : file_version{MAGIC, VERSION} {}
 		schedule schedules[HHG_SCHEDULES_SIZE];
