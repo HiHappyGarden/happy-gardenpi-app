@@ -48,7 +48,6 @@ add_definitions(-DEXCLUDE_USE_MALLOC_FAILED_HOOK)
 add_definitions(-DNO_SYS=0)
 add_definitions(-DCYW43_LWIP=1)
 add_definitions(-DCYW43_HOST_NAME=\"${PROJECT_NAME}\")
-#add_definitions(-DFIX_MINICOM)
 add_definitions(-DTEST_PASSWD=0)
 
 
