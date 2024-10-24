@@ -14,7 +14,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED ON)
-set(CMAKE_C_EXTENSIONS ON)
 
 set(DIVISOR "|")
 set(SCHEDULES_SIZE 2)
@@ -102,8 +101,7 @@ add_executable(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
         pico_cyw43_arch_lwip_sys_freertos
         pico_stdlib
-        pico_lwip_iperf
-        #pico_lwip_mbedtls
+        pico_lwip_mbedtls
         pico_multicore
         pico_unique_id
         hardware_rtc
