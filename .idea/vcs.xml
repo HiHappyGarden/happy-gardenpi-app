@@ -10,13 +10,13 @@
     <mapping directory="$PROJECT_DIR$/hhg-parser/osal" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/md5" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/osal" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/paho.mqtt.embedded-c" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/pico-sdk" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/pico-sdk/lib/btstack" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/pico-sdk/lib/cyw43-driver" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/pico-sdk/lib/lwip" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/pico-sdk/lib/mbedtls" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/pico-sdk/lib/tinyusb" vcs="Git" />
-    <mapping directory="/usr/local/src/FreeRTOS-Kernel" vcs="Git" />
     <mapping directory="/usr/local/src/pico-sdk" vcs="Git" />
     <mapping directory="/usr/local/src/pico-sdk/lib/btstack" vcs="Git" />
     <mapping directory="/usr/local/src/pico-sdk/lib/cyw43-driver" vcs="Git" />
