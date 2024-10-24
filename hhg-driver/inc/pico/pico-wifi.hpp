@@ -62,15 +62,7 @@ inline namespace v1
 
         } ntp{};
 
-        enum fsm_state
-        {
-            NONE                = 0x00,
-            DISCONNECTED        = (1 << 0),
-            WAIT_CONNECTION     = (1 << 1),
-            CONNECTED           = (1 << 2),
-            WAIT_IP             = (1 << 3),
-            HAS_IP             =  (1 << 4)
-        } fsm_state = fsm_state::NONE;
+        enum fsm_state fsm_state = fsm_state::NONE;
         ip_addr_t ip_addr { .addr = 0 };
 
 
@@ -103,6 +95,11 @@ inline namespace v1
         inline uint32_t get_timeout() const OSAL_NOEXCEPT override
         {
             return TIMEOUT;
+        }
+
+        inline uint32_t get_fsm_state() const OSAL_NOEXCEPT override
+        {
+            return fsm_state;
         }
 
     private:

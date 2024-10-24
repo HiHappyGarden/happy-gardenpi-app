@@ -28,6 +28,7 @@
 #include "hhg-app/app-parser.hpp"
 #include "hhg-app/app-led.hpp"
 #include "hhg-app/app-display-handler.hpp"
+#include "hhg-app/app-mqtt.hpp"
 
 namespace hhg::app
 {
@@ -68,6 +69,7 @@ private:
     hhg::app::app_parser app_parser;
     hhg::app::app_led app_led;
     hhg::app::app_display_handler app_display_handler;
+    hhg::app::app_mqtt app_mqtt;
 
     static void *handler(void *arg);
 

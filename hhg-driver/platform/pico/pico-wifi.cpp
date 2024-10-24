@@ -105,6 +105,7 @@ inline namespace v1
                     {
                         singleton->connection_timeout -= TICK;
                     }
+                    singleton->events.set(fsm_state::WAIT_CONNECTION);
 
                     bool connected = netif_is_link_up(netif_default);
                     auto wifi_link_status = cyw43_wifi_link_status(&cyw43_state, CYW43_ITF_STA);
@@ -128,6 +129,7 @@ inline namespace v1
                     uint32_t events = singleton->events.get();
                     if(events & fsm_state::DISCONNECTED)
                     {
+                        singleton->events.clear(fsm_state::WAIT_CONNECTION);
                         singleton->events.set(fsm_state::CONNECTED);
                     }
 
@@ -148,11 +150,17 @@ inline namespace v1
                         OSAL_LOG_DEBUG(APP_TAG, "Connected to ip %s", ip4addr_ntoa(&cyw43_state.netif[CYW43_ITF_STA].ip_addr));
                         singleton->fsm_state = fsm_state::HAS_IP;
                     }
+                    else
+                    {
+                        singleton->events.set(fsm_state::WAIT_IP);
+                    }
                     break;
                 }
                 case fsm_state::HAS_IP:
                 {
                     singleton->fsm_state = fsm_state::CONNECTED;
+                    singleton->events.clear(fsm_state::WAIT_IP);
+                    singleton->events.clear(fsm_state::WAIT_CONNECTION);
                     singleton->events.set(fsm_state::HAS_IP);
                     break;
                 }

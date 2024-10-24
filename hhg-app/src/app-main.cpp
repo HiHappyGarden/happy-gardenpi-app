@@ -387,7 +387,6 @@ app_main::app_main(driver::hardware &hardware, class error **error) OSAL_NOEXCEP
         : hardware(hardware)
         , app_config(hardware.get_fs_io())
         , app_data(hardware.get_fs_io())
-//        , app_parser(hardware.get_uart())
         , app_led(hardware.get_rgb_led())
         , app_display_handler(hardware.get_lcd()
                               , hardware.get_rotary_encoder()
@@ -399,6 +398,7 @@ app_main::app_main(driver::hardware &hardware, class error **error) OSAL_NOEXCEP
                               , app_config
                               , app_parser
                               )
+        , app_mqtt(hardware.get_wifi(), app_parser)
 {
     if(singleton)
     {
@@ -546,10 +546,17 @@ os::exit app_main::init(class os::error **error) OSAL_NOEXCEPT
         return exit::KO;
     }
     set_app_display_handler(app_display_handler);
-//    app_display_handler.set_on_receive(&app_parser, &io::receive::on_receive);
-//    app_parser.register_io(io_source::DISPLAY, &app_display_handler);
     app_parser.set_on_logout(&app_display_handler, &hhg::app::app_parser::auth::on_logout);
     OSAL_LOG_INFO(APP_TAG, "Init APP DISPLAY HANDLER - OK");
+
+    OSAL_LOG_INFO(APP_TAG, "Init APP MQTT");
+    if(app_mqtt.init(error) == exit::KO)
+    {
+        app_led.error();
+        return exit::KO;
+    }
+    OSAL_LOG_INFO(APP_TAG, "Init APP MQTT - OK");
+
 
     OSAL_LOG_INFO(APP_TAG, "Set timer to parser");
     if(set_time(const_cast<class time *>(hardware.get_time().get()), error) == exit::KO)

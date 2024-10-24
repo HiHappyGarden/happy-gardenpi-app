@@ -38,6 +38,16 @@ struct wifi : public initializable
         WPA2_MIXED_PSK
     };
 
+    enum fsm_state
+    {
+        NONE                = 0x00,
+        DISCONNECTED        = (1 << 0),
+        WAIT_CONNECTION     = (1 << 1),
+        CONNECTED           = (1 << 2),
+        WAIT_IP             = (1 << 3),
+        HAS_IP             =  (1 << 4)
+    } fsm_state = fsm_state::NONE;
+
     using ptr = os::unique_ptr<wifi>;
     using on_ntp_received = void (*)(os::exit status, time_t);
 
@@ -54,6 +64,8 @@ struct wifi : public initializable
     virtual os::pair<bool, bool> is_connected() OSAL_NOEXCEPT = 0;
 
     virtual uint32_t get_timeout() const OSAL_NOEXCEPT = 0;
+
+    virtual uint32_t get_fsm_state() const OSAL_NOEXCEPT  = 0;
 };
 
 
