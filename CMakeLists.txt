@@ -66,6 +66,13 @@ include_directories(md5)
 
 add_subdirectory(hhg-parser)
 
+add_definitions(-DPAHO_BUILD_STATIC=ON)
+include_directories(paho.mqtt.embedded-c/MQTTClient/src)
+include_directories(paho.mqtt.embedded-c/MQTTClient/src/mbed)
+include_directories(paho.mqtt.embedded-c/MQTTClient-C/src/)
+include_directories(paho.mqtt.embedded-c/MQTTPacket/src/)
+add_subdirectory(paho.mqtt.embedded-c)
+
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/hhg-config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/hhg-config/pico/hhg-config.h)
 
 file(GLOB_RECURSE OSAL_INCLUDES CONFIGURE_DEPENDS "osal/inc/*.hpp" "osal/src/freertos/osal_sys/*.hpp" "osal/src/freertos/config/*.h")
