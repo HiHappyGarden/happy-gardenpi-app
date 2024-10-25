@@ -42,7 +42,7 @@ inline namespace v1
         static void* handle(void* arg);
         os::thread thread{"wifi", HIGH, 1'024, handle};
 
-        os::event events;
+        mutable os::event events;
         mutable int16_t connection_timeout = 0;
 
         struct ntp
@@ -99,7 +99,7 @@ inline namespace v1
 
         inline uint32_t get_fsm_state() const OSAL_NOEXCEPT override
         {
-            return fsm_state;
+            return events.get();
         }
 
     private:

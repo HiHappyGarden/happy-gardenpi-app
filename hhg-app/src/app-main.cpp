@@ -398,7 +398,7 @@ app_main::app_main(driver::hardware &hardware, class error **error) OSAL_NOEXCEP
                               , app_config
                               , app_parser
                               )
-        , app_mqtt(hardware.get_wifi(), app_parser)
+        , app_mqtt(*this, hardware.get_wifi(), app_parser)
 {
     if(singleton)
     {
@@ -585,7 +585,7 @@ os::exit app_main::fsm_start(class os::error **error) OSAL_NOEXCEPT
     return fsm_thread.create(error, error);
 }
 
-uint32_t app_main::get_state() const
+uint32_t app_main::get_fsm_state() const OSAL_NOEXCEPT
 {
     return fsm.events.get();
 }

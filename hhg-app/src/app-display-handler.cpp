@@ -297,7 +297,7 @@ auto app_display_handler::handler(void *) OSAL_NOEXCEPT -> void *
 
     while(singleton->run)
     {
-        auto fsm_state = singleton->app_main.get_state();
+        auto fsm_state = singleton->app_main.get_fsm_state();
         auto [wifi_connected, wifi_has_ip] = singleton->wifi->is_connected();
 
         if(!singleton->locked)

@@ -30,10 +30,13 @@ namespace hhg::app
 inline namespace v1
 {
 
+class app_main;
+
 class app_mqtt final : public hhg::iface::initializable
 {
     static inline app_mqtt* singleton = nullptr;
 
+    const class app_main& app_main;
     const hhg::iface::wifi::ptr& wifi;
     const hhg::app::app_parser& app_parser;
 
@@ -53,11 +56,12 @@ class app_mqtt final : public hhg::iface::initializable
     } fsm_state = fsm_state::NONE;
 
 public:
-    app_mqtt(const hhg::iface::wifi::ptr& wifi, const hhg::app::app_parser& app_parser) OSAL_NOEXCEPT;
+    app_mqtt(const class app_main& app_main, const hhg::iface::wifi::ptr& wifi, const hhg::app::app_parser& app_parser) OSAL_NOEXCEPT;
     ~app_mqtt() override;
 
     os::exit init(os::error** error) OSAL_NOEXCEPT override;
 
+    void start() OSAL_NOEXCEPT;
 
 };
 

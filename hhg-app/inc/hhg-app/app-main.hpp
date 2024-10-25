@@ -84,7 +84,6 @@ private:
         uint8_t errors = 0;
         os::event events;
         bool run = true;
-        bool waiting_connection = false;
     } fsm;
 
 
@@ -98,7 +97,7 @@ public:
 
     os::exit fsm_start(class os::error **error) OSAL_NOEXCEPT;
 
-    uint32_t get_state() const OSAL_NOEXCEPT;
+    uint32_t get_fsm_state() const OSAL_NOEXCEPT;
 
     static os::string<32> state_to_string(app_main::state state);
 private:
