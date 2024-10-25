@@ -49,6 +49,8 @@
 #define HHG_NTP_PORT (123)
 #define HHG_NTP_SERVER "0.it.pool.ntp.org"
 
+#define HHG_MQTT_SUBSCRIPTION_BROKER "hhg/v1/"
+
 #define HHG_DAYLIGHT_SAVING_TIME (2)
 #define HHG_TIMEZONE (60)
 #define HHG_DAYLIGHT_SAVING_TIME_START_MONTH (2)

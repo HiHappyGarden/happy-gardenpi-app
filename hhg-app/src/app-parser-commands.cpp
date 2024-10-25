@@ -138,6 +138,9 @@ entry commands_config[] =
     ,.description = "Set/update user", .access = HHG_USER},
     {.key = "12", .description = "Set timezone", .access = ACCESS_ALL_USERS},
     {.key = "13", .description = "Set daylight saving time", .access = ACCESS_ALL_USERS},
+    {.key = "14", .description = "Set MQTT broker", .access = ACCESS_ALL_USERS},
+    {.key = "15", .description = "Set MQTT port", .access = ACCESS_ALL_USERS},
+    {.key = "16", .description = "Set MQTT subscription topic", .access = ACCESS_ALL_USERS},
     {.key = "CLEAR", .custom_func =  [](auto data, auto entry, auto error) -> os::exit
     {
         auto ret = app_config->clear(error);
@@ -399,6 +402,24 @@ os::exit set_app_config(class app_config& app_config, error** error) OSAL_NOEXCE
 
     key = "$CONF 13";
     if(parser->set(key.c_str(), new method(&app_config, &app_config::set_daylight_saving_time), error) == exit::KO)
+    {
+        return exit::KO;
+    }
+
+    key = "$CONF 14";
+    if(parser->set(key.c_str(), new method(&app_config, &app_config::set_mqtt_broker), error) == exit::KO)
+    {
+        return exit::KO;
+    }
+
+    key = "$CONF 15";
+    if(parser->set(key.c_str(), new method(&app_config, &app_config::set_mqtt_port), error) == exit::KO)
+    {
+        return exit::KO;
+    }
+
+    key = "$CONF 16";
+    if(parser->set(key.c_str(), new method(&app_config, &app_config::set_mqtt_subscription_topic), error) == exit::KO)
     {
         return exit::KO;
     }

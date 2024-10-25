@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "hhg-app/app-mqtt.hpp"
+#include "hhg-app/app-main.hpp"
 using namespace os;
 using namespace hhg::iface;
 
@@ -45,20 +46,23 @@ void* app_mqtt::handle(void*)
         switch(singleton->fsm_state)
         {
             case fsm_state::NONE:
-
+                OSAL_LOG_INFO(APP_TAG, "NONE");
                 break;
             case fsm_state::DISCONNECTED:
                 singleton->events.clear(0xFFFF);
                 singleton->events.set(fsm_state::DISCONNECTED);
 
+                OSAL_LOG_INFO(APP_TAG, "DISCONNECTED");
                 osal_us_sleep(1'000_ms);
 
                 singleton->fsm_state = fsm_state::WAIT_CONNECTION;
                 break;
             case fsm_state::WAIT_CONNECTION:
             {
-                if(singleton->wifi->get_fsm_state() & (wifi::CONNECTED | wifi::HAS_IP))
+                if(singleton->wifi->get_fsm_state() & wifi::HAS_IP && singleton->app_main.get_fsm_state() & app_main::READY)
                 {
+
+
                     singleton->fsm_state = fsm_state::CONNECTED;
                 }
                 else
@@ -75,7 +79,7 @@ void* app_mqtt::handle(void*)
                 }
                 singleton->events.clear(fsm_state::WAIT_CONNECTION);
                 singleton->events.set(fsm_state::CONNECTED);
-
+                OSAL_LOG_INFO(APP_TAG, "CONNECTED");
 
                 singleton->fsm_state = fsm_state::WAIT_REGISTER_SUBSCRIPTION;
 
@@ -113,8 +117,9 @@ void* app_mqtt::handle(void*)
 }
 
 
-app_mqtt::app_mqtt(const wifi::ptr& wifi, const class app_parser& app_parser) OSAL_NOEXCEPT
-       : wifi(wifi)
+app_mqtt::app_mqtt(const class app_main& app_main, const wifi::ptr& wifi, const class app_parser& app_parser) OSAL_NOEXCEPT
+       : app_main(app_main)
+       , wifi(wifi)
        , app_parser(app_parser)
 {
 
@@ -134,11 +139,15 @@ os::exit app_mqtt::init(error** error) OSAL_NOEXCEPT
     }
     singleton = this;
 
-
+    start();
 
     return thread.create();
 }
 
+void app_mqtt::start() OSAL_NOEXCEPT
+{
+    singleton->fsm_state = fsm_state::DISCONNECTED;
+}
 
 }
 }
