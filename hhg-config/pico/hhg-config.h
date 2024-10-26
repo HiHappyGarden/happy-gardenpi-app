@@ -1,7 +1,7 @@
 /***************************************************************************
  *
  * Hi Happy Garden
- * Copyright (C) 2023/2024 Antonio Salsi <passy.linux@zresa.it>
+ * Copyright (C) 2023/2025 Antonio Salsi <passy.linux@zresa.it>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@
 #error HHG_ADMIN_USER or HHG_ADMIN_PASSWD are mandatory
 #endif
 
-#define HHG_WIFI_DISABLE (0)
+#define HHG_WIFI_DISABLE (1)
 #define HHG_WIFI_DISABLE_NTP_TIMESTAMP (1709068081)
 #define HHG_WIFI_CONNECTION_TIMEOUT (10000)
 #if HHG_WIFI_CONNECTION_TIMEOUT > 30000
