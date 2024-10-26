@@ -398,7 +398,7 @@ app_main::app_main(driver::hardware &hardware, class error **error) OSAL_NOEXCEP
                               , app_config
                               , app_parser
                               )
-        , app_mqtt(*this, hardware.get_wifi(), app_parser)
+        , app_mqtt(*this, hardware.get_wifi(), app_config, app_parser)
 {
     if(singleton)
     {

@@ -1,7 +1,7 @@
 /***************************************************************************
  *
  * Hi Happy Garden
- * Copyright (C) 2023/2024  Antonio Salsi <passy.linux@zresa.it>
+ * Copyright (C) 2023/2025  Antonio Salsi <passy.linux@zresa.it>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,7 +59,7 @@ void* app_mqtt::handle(void*)
                 break;
             case fsm_state::WAIT_CONNECTION:
             {
-                if(singleton->wifi->get_fsm_state() & wifi::HAS_IP && singleton->app_main.get_fsm_state() & app_main::READY)
+                if(singleton->app_main.get_fsm_state() & app_main::READY)
                 {
 
 
@@ -73,9 +73,10 @@ void* app_mqtt::handle(void*)
             }
             case fsm_state::CONNECTED:
             {
-                if( !(singleton->wifi->get_fsm_state() & (wifi::CONNECTED | wifi::HAS_IP)) )
+                if( !(singleton->app_main.get_fsm_state() & app_main::READY) )
                 {
                     singleton->fsm_state = fsm_state::DISCONNECTED;
+                    break;
                 }
                 singleton->events.clear(fsm_state::WAIT_CONNECTION);
                 singleton->events.set(fsm_state::CONNECTED);
@@ -117,10 +118,11 @@ void* app_mqtt::handle(void*)
 }
 
 
-app_mqtt::app_mqtt(const class app_main& app_main, const wifi::ptr& wifi, const class app_parser& app_parser) OSAL_NOEXCEPT
+app_mqtt::app_mqtt(const class app_main& app_main, const hhg::iface::wifi::ptr& wifi, const class app_config& app_config, const hhg::app::app_parser& app_parser) OSAL_NOEXCEPT
        : app_main(app_main)
        , wifi(wifi)
        , app_parser(app_parser)
+       , app_config(app_config)
 {
 
 }

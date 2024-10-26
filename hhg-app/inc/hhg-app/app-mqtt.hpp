@@ -1,7 +1,7 @@
 /***************************************************************************
  *
  * Hi Happy Garden
- * Copyright (C) 2023/2024  Antonio Salsi <passy.linux@zresa.it>
+ * Copyright (C) 2023/2025  Antonio Salsi <passy.linux@zresa.it>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 #include "hhg-iface/initializable.hpp"
 #include "hhg-iface/wifi.hpp"
 #include "hhg-app/app-parser.hpp"
+#include "hhg-app/app-config.hpp"
 #include "hhg-driver/os-config.hpp"
 
 namespace hhg::app
@@ -39,6 +40,7 @@ class app_mqtt final : public hhg::iface::initializable
     const class app_main& app_main;
     const hhg::iface::wifi::ptr& wifi;
     const hhg::app::app_parser& app_parser;
+    const class app_config& app_config;
 
     os::event events;
 
@@ -56,12 +58,15 @@ class app_mqtt final : public hhg::iface::initializable
     } fsm_state = fsm_state::NONE;
 
 public:
-    app_mqtt(const class app_main& app_main, const hhg::iface::wifi::ptr& wifi, const hhg::app::app_parser& app_parser) OSAL_NOEXCEPT;
+    app_mqtt(const class app_main& app_main, const hhg::iface::wifi::ptr& wifi, const class app_config& app_config, const hhg::app::app_parser& app_parser) OSAL_NOEXCEPT;
     ~app_mqtt() override;
 
     os::exit init(os::error** error) OSAL_NOEXCEPT override;
 
     void start() OSAL_NOEXCEPT;
+
+private:
+
 
 };
 
