@@ -81,7 +81,7 @@ os::exit app_config::set_serial(const char serial[]) OSAL_NOEXCEPT
     return exit::OK;
 }
 
-os::exit app_config::set_user(uint8_t idx, const char* user, const char* passwd) OSAL_NOEXCEPT
+os::exit app_config::set_user(uint8_t idx, const char user[], const char passwd[]) OSAL_NOEXCEPT
 {
     auto user_len = strlen(user);
     auto passwd_len = strlen(passwd);

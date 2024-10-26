@@ -118,7 +118,7 @@ public:
         return config.zones_size;
     }
 
-    inline void set_wifi_ssid(const char* wifi_ssid) OSAL_NOEXCEPT
+    inline void set_wifi_ssid(const char wifi_ssid[]) OSAL_NOEXCEPT
     {
         this->config.wifi.ssid = wifi_ssid;
     }
@@ -128,7 +128,7 @@ public:
         return this->config.wifi.ssid;
     }
 
-    inline void set_wifi_passwd(const char* wifi_passwd) OSAL_NOEXCEPT
+    inline void set_wifi_passwd(const char wifi_passwd[]) OSAL_NOEXCEPT
     {
         this->config.wifi.passwd = wifi_passwd;
     }
@@ -173,7 +173,7 @@ public:
         this->config.mqtt.subscription_topic = subscription_topic;
     }
 
-    os::exit set_user(uint8_t idx, const char* user, const char* passwd);
+    os::exit set_user(uint8_t idx, const char user[], const char passwd[]);
 
     inline const user& get_user(uint8_t idx) const OSAL_NOEXCEPT
     {
