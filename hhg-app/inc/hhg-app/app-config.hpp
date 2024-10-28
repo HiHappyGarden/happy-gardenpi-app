@@ -163,14 +163,29 @@ public:
         this->config.mqtt.broker = broker;
     }
 
+    inline const os::string<64>& get_mqtt_broker() const OSAL_NOEXCEPT
+    {
+        return config.mqtt.broker;
+    }
+
     inline void set_mqtt_port(uint16_t port) OSAL_NOEXCEPT
     {
         this->config.mqtt.port = port;
     }
 
+    inline uint16_t get_mqtt_port() const OSAL_NOEXCEPT
+    {
+        return config.mqtt.port;
+    }
+
     inline void set_mqtt_subscription_topic(const char subscription_topic[]) OSAL_NOEXCEPT
     {
         this->config.mqtt.subscription_topic = subscription_topic;
+    }
+
+    inline const os::string<16>& get_mqtt_subscription_topic() const OSAL_NOEXCEPT
+    {
+        return config.mqtt.subscription_topic;
     }
 
     os::exit set_user(uint8_t idx, const char user[], const char passwd[]);
