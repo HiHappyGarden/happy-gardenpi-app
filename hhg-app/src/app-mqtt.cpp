@@ -22,6 +22,22 @@
 using namespace os;
 using namespace hhg::iface;
 
+#include <string.h>
+#include <time.h>
+
+#include "pico/stdlib.h"
+#include "pico/cyw43_arch.h"
+
+#include "lwip/pbuf.h"
+#include "lwip/tcp.h"
+#include "lwip/dns.h"
+
+#include "lwip/altcp_tcp.h"
+#include "lwip/altcp_tls.h"
+#include "lwip/apps/mqtt.h"
+
+#include "lwip/apps/mqtt_priv.h"
+
 namespace hhg::app
 {
 inline namespace v1
@@ -62,8 +78,17 @@ void* app_mqtt::handle(void*)
                 if(singleton->app_main.get_fsm_state() & app_main::READY)
                 {
 
+                    singleton->app_config.get_mqtt_broker();
 
-                    singleton->fsm_state = fsm_state::CONNECTED;
+                    if(singleton->connect(
+                            singleton->app_config.get_mqtt_broker()
+                            , singleton->app_config.get_mqtt_port()
+                            , singleton->app_config.get_mqtt_subscription_topic()
+                            ) == exit::OK)
+                    {
+                        singleton->fsm_state = fsm_state::CONNECTED;
+                    }
+
                 }
                 else
                 {
@@ -149,6 +174,12 @@ os::exit app_mqtt::init(error** error) OSAL_NOEXCEPT
 void app_mqtt::start() OSAL_NOEXCEPT
 {
     singleton->fsm_state = fsm_state::DISCONNECTED;
+}
+
+os::exit app_mqtt::connect(const string<64>& broker, uint16_t port, string<16> subscription_topic) OSAL_NOEXCEPT
+{
+    mqtt_client_t *mqtt_client = mqtt_client_new();
+    return exit::OK;
 }
 
 }

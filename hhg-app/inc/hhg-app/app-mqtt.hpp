@@ -66,7 +66,7 @@ public:
     void start() OSAL_NOEXCEPT;
 
 private:
-
+    os::exit connect(const os::string<64>& broker, uint16_t port, os::string<16> subscription_topic) OSAL_NOEXCEPT;
 
 };
 

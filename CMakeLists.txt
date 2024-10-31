@@ -69,12 +69,12 @@ include_directories(md5)
 
 add_subdirectory(hhg-parser)
 
-add_definitions(-DPAHO_BUILD_STATIC=ON)
-include_directories(paho.mqtt.embedded-c/MQTTClient/src)
-include_directories(paho.mqtt.embedded-c/MQTTClient/src/mbed)
-include_directories(paho.mqtt.embedded-c/MQTTClient-C/src/)
-include_directories(paho.mqtt.embedded-c/MQTTPacket/src/)
-add_subdirectory(paho.mqtt.embedded-c)
+#add_definitions(-DPAHO_BUILD_STATIC=ON)
+#include_directories(paho.mqtt.embedded-c/MQTTClient/src)
+#include_directories(paho.mqtt.embedded-c/MQTTClient/src/mbed)
+#include_directories(paho.mqtt.embedded-c/MQTTClient-C/src/)
+#include_directories(paho.mqtt.embedded-c/MQTTPacket/src/)
+#add_subdirectory(paho.mqtt.embedded-c)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/hhg-config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/hhg-config/pico/hhg-config.h)
 
@@ -112,6 +112,7 @@ target_link_libraries(${PROJECT_NAME}
         pico_cyw43_arch_lwip_sys_freertos
         pico_stdlib
         pico_lwip_mbedtls
+        pico_lwip_mqtt
         pico_multicore
         pico_unique_id
         hardware_rtc
