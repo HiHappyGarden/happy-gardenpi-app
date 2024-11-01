@@ -5,7 +5,8 @@ Features to develop for Hi Happy Garden
 ### Todo
 - [ ] remove dynamic allocation but before increase stack space 
 - [ ] reimplement a true singleton pattern 
-
+- [ ] add the ability to enter wifi data when it is not configured
+- 
 ### Fix
 
 ### In Progress

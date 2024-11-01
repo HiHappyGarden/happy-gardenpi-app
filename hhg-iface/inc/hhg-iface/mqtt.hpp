@@ -17,34 +17,24 @@
  *
  ***************************************************************************/
 
+
 #pragma once
 
-#include "hhg-iface/mqtt.hpp"
+#include "osal/osal.hpp"
 
-#include <lwip/apps/mqtt.h>
-
-namespace hhg::driver
+namespace hhg::iface
 {
 inline namespace v1
 {
 
-
-class pico_mqtt final : public hhg::iface::mqtt
+struct mqtt
 {
-    os::error **error = nullptr;
-    mqtt_client_t *mqtt_client = nullptr;
-public:
-    explicit pico_mqtt(os::error **error) OSAL_NOEXCEPT;
-    ~pico_mqtt() OSAL_NOEXCEPT;
+    using ptr = os::unique_ptr<hhg::iface::mqtt>;
 
-    os::exit connect(const os::string<64>& client_id, const os::string<64>& broker, uint16_t port, uint8_t qos) OSAL_NOEXCEPT;
+    ~mqtt() OSAL_NOEXCEPT = default;
 
-    void disconnect() OSAL_NOEXCEPT;
 };
 
 
 }
 }
-
-
-

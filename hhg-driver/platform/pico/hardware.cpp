@@ -32,6 +32,7 @@
 #include "pico/pico-button.hpp"
 #include "pico/pico-rgb-led.hpp"
 #include "pico/pico-wifi.hpp"
+#include "pico/pico-mqtt.hpp"
 
 #include <pico/unique_id.h>
 
@@ -59,11 +60,12 @@ hardware::hardware(class error** error) OSAL_NOEXCEPT
 , fs_io(new pico_fs_io)
 , i2c(new pico_i2c)
 , relay(new pico_relay)
-, lcd( new pico_sh1106(i2c->get_i2C_reference(), 0x3C))
+, lcd( new pico_sh1106(i2c->get_i2C_reference(), pico_sh1106::ADDRESS))
 , rotary_encoder(new pico_rotary_encoder)
 , button(new pico_button)
 , rgb_led(new pico_rgb_led)
 , wifi(new pico_wifi)
+, mqtt(new pico_mqtt(error))
 {
     if(time.get() == nullptr && error)
     {
@@ -131,6 +133,13 @@ hardware::hardware(class error** error) OSAL_NOEXCEPT
     if(wifi.get() == nullptr && error)
     {
         *error = OSAL_ERROR_BUILD("wifi(new pico_wifi) no mem.", error_type::OS_ENOMEM);
+        OSAL_ERROR_PTR_SET_POSITION(*error);
+        return;
+    }
+
+    if(mqtt.get() == nullptr && error)
+    {
+        *error = OSAL_ERROR_BUILD("mqtt(new pico_mqtt) no mem.", error_type::OS_ENOMEM);
         OSAL_ERROR_PTR_SET_POSITION(*error);
         return;
     }

@@ -44,6 +44,8 @@ class pico_sh1106 : public hhg::iface::lcd
 {
 public:
 
+    inline constexpr static const uint8_t ADDRESS = 0x3C;
+
     enum class reg_address : uint8_t
     {
         CONTRAST = 0x81,

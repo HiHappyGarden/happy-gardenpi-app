@@ -31,6 +31,7 @@
 #include "hhg-iface/button.hpp"
 #include "hhg-iface/rgb_led.hpp"
 #include "hhg-iface/wifi.hpp"
+#include "hhg-iface/mqtt.hpp"
 
 namespace hhg::driver
 {
@@ -47,7 +48,7 @@ using rotary_encoder_ptr = hhg::iface::rotary_encoder::ptr;
 using button_ptr = hhg::iface::button::ptr;
 using rgb_led_ptr = hhg::iface::rgb_led::ptr;
 using wifi_ptr = hhg::iface::wifi::ptr;
-
+using mqtt_ptr = hhg::iface::mqtt::ptr;
 
 class hardware final : public hhg::iface::initializable
 {
@@ -61,6 +62,7 @@ class hardware final : public hhg::iface::initializable
     const button_ptr button;
     const rgb_led_ptr rgb_led;
     const wifi_ptr wifi;
+    const mqtt_ptr mqtt;
 public:
 	explicit hardware(class os::error** error) OSAL_NOEXCEPT;
 	~hardware() override = default;
@@ -111,6 +113,10 @@ public:
         return wifi;
     }
 
+    inline const mqtt_ptr& get_mqtt() const OSAL_NOEXCEPT
+    {
+        return mqtt;
+    }
 
     os::exit init(os::error** error) OSAL_NOEXCEPT override;
 
