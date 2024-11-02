@@ -29,7 +29,7 @@
 #include "hhg-iface/lcd.hpp"
 #include "hhg-iface/rotary-encored.hpp"
 #include "hhg-iface/button.hpp"
-#include "hhg-iface/rgb_led.hpp"
+#include "hhg-iface/rgb-led.hpp"
 #include "hhg-iface/wifi.hpp"
 #include "hhg-iface/mqtt.hpp"
 

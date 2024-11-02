@@ -20,7 +20,7 @@
 #pragma once
 
 #include "hhg-iface/initializable.hpp"
-#include "hhg-iface/rgb_led.hpp"
+#include "hhg-iface/rgb-led.hpp"
 #include "hhg-driver/os-config.hpp"
 
 namespace hhg::app

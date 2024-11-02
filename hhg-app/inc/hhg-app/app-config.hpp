@@ -163,9 +163,9 @@ public:
         this->config.mqtt.broker = broker;
     }
 
-    inline const os::string<64>& get_mqtt_broker() const OSAL_NOEXCEPT
+    inline const char* get_mqtt_broker() const OSAL_NOEXCEPT
     {
-        return config.mqtt.broker;
+        return config.mqtt.broker.c_str();
     }
 
     inline void set_mqtt_port(uint16_t port) OSAL_NOEXCEPT

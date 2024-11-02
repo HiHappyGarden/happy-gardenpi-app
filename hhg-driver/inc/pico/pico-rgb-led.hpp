@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include "hhg-iface/rgb_led.hpp"
+#include "hhg-iface/rgb-led.hpp"
 
 #include <pico/types.h>
 #include <hardware/pio.h>

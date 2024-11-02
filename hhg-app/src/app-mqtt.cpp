@@ -22,9 +22,6 @@
 using namespace os;
 using namespace hhg::iface;
 
-#include <string.h>
-#include <time.h>
-
 namespace hhg::app
 {
 inline namespace v1
@@ -67,10 +64,11 @@ void* app_mqtt::handle(void*)
 
                     singleton->app_config.get_mqtt_broker();
 
-                    if(singleton->connect(
-                            singleton->app_config.get_mqtt_broker()
+                    if(singleton->mqtt->connect(
+                            singleton->app_config.get_serial()
+                            , singleton->app_config.get_mqtt_broker()
                             , singleton->app_config.get_mqtt_port()
-                            , singleton->app_config.get_mqtt_subscription_topic()
+                            , 1
                             ) == exit::OK)
                     {
                         singleton->fsm_state = fsm_state::CONNECTED;
@@ -130,9 +128,10 @@ void* app_mqtt::handle(void*)
 }
 
 
-app_mqtt::app_mqtt(const class app_main& app_main, const hhg::iface::wifi::ptr& wifi, const class app_config& app_config, const hhg::app::app_parser& app_parser) OSAL_NOEXCEPT
+app_mqtt::app_mqtt(const class app_main& app_main, const hhg::iface::wifi::ptr& wifi, const hhg::iface::mqtt::ptr& mqtt, const class app_config& app_config, const hhg::app::app_parser& app_parser) OSAL_NOEXCEPT
        : app_main(app_main)
        , wifi(wifi)
+       , mqtt(const_cast<mqtt::ptr&>(mqtt))
        , app_parser(app_parser)
        , app_config(app_config)
 {
@@ -163,11 +162,6 @@ void app_mqtt::start() OSAL_NOEXCEPT
     singleton->fsm_state = fsm_state::DISCONNECTED;
 }
 
-os::exit app_mqtt::connect(const string<64>& broker, uint16_t port, string<16> subscription_topic) OSAL_NOEXCEPT
-{
-
-    return exit::OK;
-}
 
 }
 }

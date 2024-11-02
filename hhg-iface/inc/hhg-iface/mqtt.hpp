@@ -20,18 +20,38 @@
 
 #pragma once
 
-#include "osal/osal.hpp"
+#include "hhg-iface/initializable.hpp"
 
 namespace hhg::iface
 {
 inline namespace v1
 {
 
-struct mqtt
+struct mqtt : public initializable
 {
+
+    struct receive
+    {
+        virtual ~receive() = default;
+
+        virtual void on_receive(mqtt mqtt, const uint8_t data[], size_t size) const OSAL_NOEXCEPT = 0;
+    };
+
+    using on_receive = void (receive::*)(mqtt mqtt, const uint8_t data[], size_t size) const OSAL_NOEXCEPT;
+
     using ptr = os::unique_ptr<hhg::iface::mqtt>;
 
     ~mqtt() OSAL_NOEXCEPT = default;
+
+    virtual os::exit connect(const char client_id[], const char broker[], uint16_t port, uint8_t qos) OSAL_NOEXCEPT = 0;
+
+    virtual void disconnect() OSAL_NOEXCEPT = 0;
+
+    virtual bool is_connected() const OSAL_NOEXCEPT = 0;
+
+    virtual os::exit unsubscribe (const char topic[]) OSAL_NOEXCEPT = 0;
+
+    virtual os::exit subscribe (const char topic[], const receive* on_receive, hhg::iface::mqtt::on_receive on_receive_callback) OSAL_NOEXCEPT = 0;
 
 };
 

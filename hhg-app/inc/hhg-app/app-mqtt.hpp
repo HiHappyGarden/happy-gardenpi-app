@@ -22,6 +22,7 @@
 
 #include "hhg-iface/initializable.hpp"
 #include "hhg-iface/wifi.hpp"
+#include "hhg-iface/mqtt.hpp"
 #include "hhg-app/app-parser.hpp"
 #include "hhg-app/app-config.hpp"
 #include "hhg-driver/os-config.hpp"
@@ -39,6 +40,7 @@ class app_mqtt final : public hhg::iface::initializable
 
     const class app_main& app_main;
     const hhg::iface::wifi::ptr& wifi;
+    hhg::iface::mqtt::ptr& mqtt;
     const hhg::app::app_parser& app_parser;
     const class app_config& app_config;
 
@@ -58,15 +60,12 @@ class app_mqtt final : public hhg::iface::initializable
     } fsm_state = fsm_state::NONE;
 
 public:
-    app_mqtt(const class app_main& app_main, const hhg::iface::wifi::ptr& wifi, const class app_config& app_config, const hhg::app::app_parser& app_parser) OSAL_NOEXCEPT;
+    app_mqtt(const class app_main& app_main, const hhg::iface::wifi::ptr& wifi, const hhg::iface::mqtt::ptr& mqtt, const class app_config& app_config, const hhg::app::app_parser& app_parser) OSAL_NOEXCEPT;
     ~app_mqtt() override;
 
     os::exit init(os::error** error) OSAL_NOEXCEPT override;
 
     void start() OSAL_NOEXCEPT;
-
-private:
-    os::exit connect(const os::string<64>& broker, uint16_t port, os::string<16> subscription_topic) OSAL_NOEXCEPT;
 
 };
 

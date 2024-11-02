@@ -289,6 +289,18 @@ os::exit hardware::init(error** error) OSAL_NOEXCEPT
     }
     OSAL_LOG_INFO(APP_TAG, "Init WiFI - OK");
 
+    OSAL_LOG_INFO(APP_TAG, "Init MQTT");
+    if(mqtt->init(error) == exit::KO)
+    {
+        if(error && *error)
+        {
+            *error = OSAL_ERROR_APPEND(*error, "mqtt::init() fail.", error_type::OS_EFAULT);
+            OSAL_ERROR_PTR_SET_POSITION(*error);
+        }
+        return exit::KO;
+    }
+    OSAL_LOG_INFO(APP_TAG, "Init MQTT - OK");
+
 	return exit::OK;
 }
 
