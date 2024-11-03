@@ -41,13 +41,6 @@ inline namespace v1
 pico_mqtt::pico_mqtt(os::error **error) OSAL_NOEXCEPT
 : error(error)
 {
-    if(error)
-    {
-        *error = OSAL_ERROR_BUILD("No memory for mqtt_client", error_type::OS_ENOMEM);
-        OSAL_ERROR_PTR_SET_POSITION(*error);
-        return;
-    }
-
     memset(subscriptions, 0, sizeof(subscriptions));
 }
 
@@ -63,7 +56,15 @@ pico_mqtt::~pico_mqtt() OSAL_NOEXCEPT
 os::exit pico_mqtt::init(os::error** error) OSAL_NOEXCEPT
 {
     mqtt_client = mqtt_client_new();
-    return exit::KO;
+
+    if(mqtt_client == nullptr && error)
+    {
+        *error = OSAL_ERROR_BUILD("No memory for mqtt_client", error_type::OS_ENOMEM);
+        OSAL_ERROR_PTR_SET_POSITION(*error);
+        return exit::KO;
+    }
+
+    return exit::OK;
 }
 
 

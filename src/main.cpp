@@ -39,11 +39,21 @@ namespace
         static os::error* error = nullptr;
 
         static hhg::driver::hardware hw{&error};
+        if(error)
+        {
+            os::printf_stack_error(APP_TAG, error);
+            delete error;
+
+            goto exit;
+        }
+
         static hhg::app::app_main app_main{hw, &error};
         if(error)
         {
             os::printf_stack_error(APP_TAG, error);
             delete error;
+
+            goto exit;
         }
 
         if(hw.init(&error) == os::exit::KO)
@@ -53,7 +63,7 @@ namespace
                 os::printf_stack_error(APP_TAG, error);
                 delete error;
             }
-            return nullptr;
+            goto exit;
         }
 
         if(app_main.init(&error) == os::exit::KO)
@@ -63,8 +73,7 @@ namespace
                 os::printf_stack_error(APP_TAG, error);
                 delete error;
             }
-            os::stop_main_loop();
-            exit(EXIT_FAILURE);
+            goto exit;
         }
 
         OSAL_LOG_INFO(APP_TAG, "Start FSM app_main");
@@ -75,10 +84,10 @@ namespace
                 os::printf_stack_error(APP_TAG, error);
                 delete error;
             }
-            os::stop_main_loop();
-            exit(EXIT_FAILURE);
+            goto exit;
         }
 
+        exit:
         main_thread.exit();
 
         return nullptr;

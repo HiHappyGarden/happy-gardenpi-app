@@ -65,6 +65,14 @@ inline namespace v1
         }
         cyw43_arch_enable_sta_mode();
 
+        OSAL_LOG_INFO(APP_TAG, "Init MQTT");
+        if(singleton->mqtt->init(nullptr) == exit::KO)
+        {
+            OSAL_LOG_FATAL(APP_TAG, "mqtt::init() fail.");
+            return nullptr;
+        }
+        OSAL_LOG_INFO(APP_TAG, "Init MQTT - OK");
+
         singleton->ntp.pcb = udp_new_ip_type(IPADDR_TYPE_V4);
 
         if (!singleton->ntp.pcb)
@@ -141,19 +149,6 @@ inline namespace v1
                     {
                         singleton->fsm_state = fsm_state::WAIT_IP;
                     }
-
-
-                    if( events & fsm_state::CONNECTED && events & fsm_state::HAS_IP)
-                    {
-                        OSAL_LOG_INFO(APP_TAG, "Init MQTT");
-                        if(singleton->mqtt->init(nullptr) == exit::KO)
-                        {
-                            OSAL_LOG_FATAL(APP_TAG, "mqtt::init() fail.");
-                            return nullptr;
-                        }
-                        OSAL_LOG_INFO(APP_TAG, "Init MQTT - OK");
-                    }
-
 
                     break;
                 }

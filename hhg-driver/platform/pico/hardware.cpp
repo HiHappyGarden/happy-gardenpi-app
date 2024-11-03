@@ -130,16 +130,16 @@ hardware::hardware(class error** error) OSAL_NOEXCEPT
         return;
     }
 
-    if(wifi.get() == nullptr && error)
+    if(mqtt.get() == nullptr && error)
     {
-        *error = OSAL_ERROR_BUILD("wifi(new pico_wifi) no mem.", error_type::OS_ENOMEM);
+        *error = OSAL_ERROR_BUILD("mqtt(new pico_mqtt) no mem.", error_type::OS_ENOMEM);
         OSAL_ERROR_PTR_SET_POSITION(*error);
         return;
     }
 
-    if(mqtt.get() == nullptr && error)
+    if(wifi.get() == nullptr && error)
     {
-        *error = OSAL_ERROR_BUILD("mqtt(new pico_mqtt) no mem.", error_type::OS_ENOMEM);
+        *error = OSAL_ERROR_BUILD("wifi(new pico_wifi) no mem.", error_type::OS_ENOMEM);
         OSAL_ERROR_PTR_SET_POSITION(*error);
         return;
     }
@@ -288,7 +288,7 @@ os::exit hardware::init(error** error) OSAL_NOEXCEPT
         return exit::KO;
     }
     OSAL_LOG_INFO(APP_TAG, "Init WiFI - OK");
-    //mqtt->init(nullptr);
+
 	return exit::OK;
 }
 
