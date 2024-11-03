@@ -61,8 +61,9 @@ class hardware final : public hhg::iface::initializable
     const rotary_encoder_ptr rotary_encoder;
     const button_ptr button;
     const rgb_led_ptr rgb_led;
+    mqtt_ptr mqtt;
     const wifi_ptr wifi;
-    const mqtt_ptr mqtt;
+
 public:
 	explicit hardware(class os::error** error) OSAL_NOEXCEPT;
 	~hardware() override = default;

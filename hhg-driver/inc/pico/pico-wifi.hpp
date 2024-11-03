@@ -21,6 +21,7 @@
 #pragma once
 
 #include "hhg-iface/wifi.hpp"
+#include "hhg-iface/mqtt.hpp"
 #include "hhg-driver/os-config.hpp"
 #include "FreeRTOSConfig.h"
 
@@ -38,6 +39,8 @@ inline namespace v1
 
         constexpr static uint32_t NTP_DELTA  = 2'208'988'800;
         constexpr static uint32_t TIMEOUT = 30'000;
+
+        hhg::iface::mqtt::ptr& mqtt;
 
         static void* handle(void* arg);
         os::thread thread{"wifi", HIGH, 1'024, handle};
@@ -68,7 +71,7 @@ inline namespace v1
 
     public:
 
-        pico_wifi();
+        explicit pico_wifi(hhg::iface::mqtt::ptr& mqtt) OSAL_NOEXCEPT;
         ~pico_wifi() override OSAL_NOEXCEPT;
         OSAL_NO_COPY_NO_MOVE(pico_wifi)
 
@@ -79,7 +82,6 @@ inline namespace v1
         os::exit ntp_start(on_ntp_received, os::error **error) OSAL_NOEXCEPT override;
 
         os::string<15> get_ip_address_str() const OSAL_NOEXCEPT override;
-
 
         inline uint32_t get_ip_address()  const OSAL_NOEXCEPT override
         {

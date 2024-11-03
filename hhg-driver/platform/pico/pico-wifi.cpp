@@ -38,7 +38,11 @@ inline namespace v1
         constexpr char APP_TAG[] = "DRV WIFI";
     }
 
-    pico_wifi::pico_wifi() = default;
+    pico_wifi::pico_wifi(hhg::iface::mqtt::ptr& mqtt) OSAL_NOEXCEPT
+    : mqtt(mqtt)
+    {
+
+    }
 
     pico_wifi::~pico_wifi() OSAL_NOEXCEPT
     {
@@ -137,6 +141,19 @@ inline namespace v1
                     {
                         singleton->fsm_state = fsm_state::WAIT_IP;
                     }
+
+
+                    if( events & fsm_state::CONNECTED && events & fsm_state::HAS_IP)
+                    {
+                        OSAL_LOG_INFO(APP_TAG, "Init MQTT");
+                        if(singleton->mqtt->init(nullptr) == exit::KO)
+                        {
+                            OSAL_LOG_FATAL(APP_TAG, "mqtt::init() fail.");
+                            return nullptr;
+                        }
+                        OSAL_LOG_INFO(APP_TAG, "Init MQTT - OK");
+                    }
+
 
                     break;
                 }

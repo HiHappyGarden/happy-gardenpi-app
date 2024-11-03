@@ -64,8 +64,8 @@ hardware::hardware(class error** error) OSAL_NOEXCEPT
 , rotary_encoder(new pico_rotary_encoder)
 , button(new pico_button)
 , rgb_led(new pico_rgb_led)
-, wifi(new pico_wifi)
 , mqtt(new pico_mqtt(error))
+, wifi(new pico_wifi(mqtt))
 {
     if(time.get() == nullptr && error)
     {
@@ -288,19 +288,7 @@ os::exit hardware::init(error** error) OSAL_NOEXCEPT
         return exit::KO;
     }
     OSAL_LOG_INFO(APP_TAG, "Init WiFI - OK");
-
-    OSAL_LOG_INFO(APP_TAG, "Init MQTT");
-    if(mqtt->init(error) == exit::KO)
-    {
-        if(error && *error)
-        {
-            *error = OSAL_ERROR_APPEND(*error, "mqtt::init() fail.", error_type::OS_EFAULT);
-            OSAL_ERROR_PTR_SET_POSITION(*error);
-        }
-        return exit::KO;
-    }
-    OSAL_LOG_INFO(APP_TAG, "Init MQTT - OK");
-
+    //mqtt->init(nullptr);
 	return exit::OK;
 }
 
