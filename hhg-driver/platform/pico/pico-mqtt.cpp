@@ -18,6 +18,16 @@
  ***************************************************************************/
 
 #include "pico/pico-mqtt.hpp"
+#include "mbedtls_config.h"
+#ifdef MQTT_CA_CRT
+#include "ca-crt.hpp"
+#endif
+#ifdef MQTT_CLIENT_CRT
+#include "client-crt.hpp"
+#endif
+#ifdef MQTT_CLIENT_KEY
+#include "client-key.hpp"
+#endif
 using namespace os;
 using hhg::iface::mqtt;
 
@@ -37,6 +47,12 @@ namespace hhg::driver
 {
 inline namespace v1
 {
+
+namespace
+{
+constexpr char APP_TAG[] = "DRV MQTT";
+}
+
 
 pico_mqtt::pico_mqtt(os::error **error) OSAL_NOEXCEPT
 : error(error)
@@ -80,19 +96,35 @@ os::exit pico_mqtt::connect(const char client_id[], const char broker[], uint16_
         return os::exit::KO;
     }
 
-    err_t err;
-    mqtt_connect_client_info_t ci{
+    mqtt_connect_client_info_t ci
+    {
             .client_id = client_id,
             .keep_alive = 0,
             .will_topic = nullptr,
             .will_msg = nullptr,
             .will_qos = qos,
-            .will_retain = 0,
-            //ci.client_user = CLIENT_USER;
-            //ci.client_pass = CLIENT_PASS;
-
+            .will_retain = 0
     };
 
+    struct altcp_tls_config *tls_config;
+
+#if defined(MQTT_CA_CRT) && defined(MQTT_CLIENT_CRT) && defined(MQTT_CLIENT_KEY)
+    OSAL_LOG_INFO(APP_TAG, "Setting up TLS with 2wayauth");
+    tls_config = altcp_tls_create_config_client_2wayauth(
+            reinterpret_cast<const u8_t*>(CA_CRT), 1 + strlen(CA_CRT),
+            reinterpret_cast<const u8_t*>(CLIENT_KEY), 1 + strlen(CLIENT_KEY),
+            reinterpret_cast<const u8_t*>(""), 0,
+            reinterpret_cast<const u8_t*>(CLIENT_CRT), 1 + strlen(CLIENT_CRT)
+    );
+#endif
+
+    if (tls_config == nullptr)
+    {
+        OSAL_LOG_ERROR(APP_TAG, "Failed to initialize config\n");
+        return os::exit::KO;
+    }
+
+    ci.tls_config = tls_config;
 
     return os::exit::OK;
 }

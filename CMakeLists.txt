@@ -69,13 +69,22 @@ include_directories(md5)
 
 add_subdirectory(hhg-parser)
 
-#add_definitions(-DPAHO_BUILD_STATIC=ON)
-#include_directories(paho.mqtt.embedded-c/MQTTClient/src)
-#include_directories(paho.mqtt.embedded-c/MQTTClient/src/mbed)
-#include_directories(paho.mqtt.embedded-c/MQTTClient-C/src/)
-#include_directories(paho.mqtt.embedded-c/MQTTPacket/src/)
-#add_subdirectory(paho.mqtt.embedded-c)
+if(EXISTS "${PROJECT_SOURCE_DIR}/cert/ca-crt.hpp")
+    add_definitions(-DMQTT_CA_CRT)
+    set(INCLUDE_CERT ON)
+endif ()
+if(EXISTS "${PROJECT_SOURCE_DIR}/cert/client-crt.hpp")
+    add_definitions(-DMQTT_CLIENT_CRT)
+    set(INCLUDE_CERT ON)
+endif ()
+if(EXISTS "${PROJECT_SOURCE_DIR}/cert/client-key.hpp")
+    add_definitions(-DMQTT_CLIENT_KEY)
+    set(INCLUDE_CERT ON)
+endif ()
 
+if(INCLUDE_CERT)
+    include_directories(cert)
+endif ()
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/hhg-config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/hhg-config/pico/hhg-config.h)
 
 file(GLOB_RECURSE OSAL_INCLUDES CONFIGURE_DEPENDS "osal/inc/*.hpp" "osal/src/freertos/osal_sys/*.hpp" "osal/src/freertos/config/*.h")
@@ -112,6 +121,7 @@ target_link_libraries(${PROJECT_NAME}
         pico_cyw43_arch_lwip_sys_freertos
         pico_stdlib
         pico_lwip_mbedtls
+        pico_mbedtls
         pico_lwip_mqtt
         pico_multicore
         pico_unique_id
