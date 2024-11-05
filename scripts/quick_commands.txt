@@ -7,7 +7,9 @@ $CONF 7 passwd12
 $CONF 8 3
 $CONF 12 60
 $CONF 13 1
-$CONF STORE 
+$CONF 14 mqtts://server
+$CONF STORE
+$AUTH_DISCONNECT
 
 $AUTH user user
 $AUTH_REMOTE user ee11cbb19052e40b07aac0ca060c23e
