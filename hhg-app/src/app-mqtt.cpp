@@ -159,7 +159,7 @@ os::exit app_mqtt::init(error** error) OSAL_NOEXCEPT
 
 void app_mqtt::start() OSAL_NOEXCEPT
 {
-    singleton->fsm_state = fsm_state::DISCONNECTED;
+    fsm_state = fsm_state::DISCONNECTED;
 }
 
 

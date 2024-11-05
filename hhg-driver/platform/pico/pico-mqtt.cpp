@@ -86,6 +86,7 @@ os::exit pico_mqtt::init(os::error** error) OSAL_NOEXCEPT
 
 os::exit pico_mqtt::connect(const char client_id[], const char broker[], uint16_t port, uint8_t qos) OSAL_NOEXCEPT
 {
+OSAL_LOG_ERROR(APP_TAG, "---->1.0 client_id:%s broker:%s", client_id, broker);
     if(strlen(client_id) == 0 || strlen(broker) == 0)
     {
         if(error)
@@ -95,7 +96,7 @@ os::exit pico_mqtt::connect(const char client_id[], const char broker[], uint16_
         }
         return os::exit::KO;
     }
-
+OSAL_LOG_ERROR(APP_TAG, "---->1.1");
     mqtt_connect_client_info_t ci
     {
             .client_id = client_id,
@@ -105,9 +106,9 @@ os::exit pico_mqtt::connect(const char client_id[], const char broker[], uint16_
             .will_qos = qos,
             .will_retain = 0
     };
-
-    struct altcp_tls_config *tls_config;
-
+OSAL_LOG_ERROR(APP_TAG, "---->1.2");
+    struct altcp_tls_config *tls_config{};
+OSAL_LOG_ERROR(APP_TAG, "---->1.3");
 #if defined(MQTT_CA_CRT) && defined(MQTT_CLIENT_CRT) && defined(MQTT_CLIENT_KEY)
     OSAL_LOG_INFO(APP_TAG, "Setting up TLS with 2wayauth");
     tls_config = altcp_tls_create_config_client_2wayauth(
@@ -116,8 +117,10 @@ os::exit pico_mqtt::connect(const char client_id[], const char broker[], uint16_
             reinterpret_cast<const u8_t*>(""), 0,
             reinterpret_cast<const u8_t*>(CLIENT_CRT), 1 + strlen(CLIENT_CRT)
     );
+    OSAL_LOG_ERROR(APP_TAG, "---->1.4");
 #endif
 
+    OSAL_LOG_ERROR(APP_TAG, "---->1.5");
     if (tls_config == nullptr)
     {
         OSAL_LOG_ERROR(APP_TAG, "Failed to initialize config\n");
