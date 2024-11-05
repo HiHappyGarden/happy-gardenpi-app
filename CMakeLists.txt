@@ -119,10 +119,10 @@ add_executable(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
         pico_cyw43_arch_lwip_sys_freertos
-        pico_stdlib
         pico_lwip_mbedtls
         pico_mbedtls
         pico_lwip_mqtt
+        pico_stdlib
         pico_multicore
         pico_unique_id
         hardware_rtc
