@@ -18,7 +18,9 @@
  ***************************************************************************/
 
 #include "pico/pico-mqtt.hpp"
-#include "mbedtls_config.h"
+#ifdef INCLUDE_HHG_CONFIG
+#include "hhg-config.h"
+#endif
 #ifdef MQTT_CA_CRT
 #include "ca-crt.hpp"
 #endif
@@ -96,6 +98,8 @@ OSAL_LOG_ERROR(APP_TAG, "---->1.0 client_id:%s broker:%s", client_id, broker);
         }
         return os::exit::KO;
     }
+
+#if HHG_WIFI_DISABLE == 0
 OSAL_LOG_ERROR(APP_TAG, "---->1.1");
     mqtt_connect_client_info_t ci
     {
@@ -128,7 +132,7 @@ OSAL_LOG_ERROR(APP_TAG, "---->1.3");
     }
 
     ci.tls_config = tls_config;
-
+#endif
     return os::exit::OK;
 }
 

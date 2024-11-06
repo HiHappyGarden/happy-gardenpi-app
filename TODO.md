@@ -8,6 +8,8 @@ Features to develop for Hi Happy Garden
 - [ ] add the ability to enter wifi data when it is not configured
 - 
 ### Fix
+ - [ ] check on parser seems that don't now run correctly
+
 
 ### In Progress
 

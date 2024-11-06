@@ -29,6 +29,10 @@
 
 #endif
 
+#ifndef HHG_MQTT_BROKER
+#define HHG_MQTT_BROKER ""
+#endif
+
 #include <stdint.h>
 
 namespace hhg::app
@@ -81,7 +85,7 @@ private:
         } wifi;
         struct
         {
-            os::string<64> broker;
+            os::string<64> broker = HHG_MQTT_BROKER;
             uint16_t port = 1883;
             os::string<16> subscription_topic = HHG_MQTT_SUBSCRIPTION_BROKER;
         } mqtt;
