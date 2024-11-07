@@ -120,7 +120,6 @@ void app_parser::on_receive(io_source source, const uint8_t data[], uint16_t siz
     if(data)
     {
         this->source = source;
-        int i = 0;
         switch(source)
         {
             case io_source::DISPLAY:

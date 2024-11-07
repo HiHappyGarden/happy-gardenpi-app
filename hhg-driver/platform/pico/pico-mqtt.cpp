@@ -88,7 +88,6 @@ os::exit pico_mqtt::init(os::error** error) OSAL_NOEXCEPT
 
 os::exit pico_mqtt::connect(const char client_id[], const char broker[], uint16_t port, uint8_t qos) OSAL_NOEXCEPT
 {
-OSAL_LOG_ERROR(APP_TAG, "---->1.0 client_id:%s broker:%s", client_id, broker);
     if(strlen(client_id) == 0 || strlen(broker) == 0)
     {
         if(error)

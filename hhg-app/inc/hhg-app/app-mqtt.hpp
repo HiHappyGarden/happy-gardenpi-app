@@ -45,11 +45,12 @@ class app_mqtt final : public hhg::iface::initializable
     const class app_config& app_config;
 
     os::event events;
+    os::error** error;
 
     static void* handle(void* arg);
     os::thread thread{"wifi", hhg::driver::HIGH, 1'024, handle};
 
-    enum fsm_state
+    enum fsm_state : uint8_t
     {
         NONE                        = 0x00,
         DISCONNECTED                = (1 << 0),
@@ -57,6 +58,8 @@ class app_mqtt final : public hhg::iface::initializable
         CONNECTED                   = (1 << 2),
         WAIT_REGISTER_SUBSCRIPTION  = (1 << 3),
         REGISTERED_SUBSCRIPTION     = (1 << 4),
+
+        ERROR                       = (1 << 7),
     } fsm_state = fsm_state::NONE;
 
 public:

@@ -30,6 +30,7 @@ inline namespace v1
 namespace
 {
     constexpr char APP_TAG[] = "APP MQTT";
+    constexpr uint8_t MAX_ERROR = 5;
 }
 
 void* app_mqtt::handle(void*)
@@ -39,25 +40,32 @@ void* app_mqtt::handle(void*)
         return nullptr;
     }
 
-    const uint8_t TICK = 100;
+    const uint8_t FSM_SLEEP = 100;
 
+    time_t generic_timer = 0;
+    enum fsm_state fsm_state_old = NONE;
+    uint8_t error = 0;
+    
     while(singleton)
     {
         switch(singleton->fsm_state)
         {
-            case fsm_state::NONE:
+            case NONE:
                 OSAL_LOG_INFO(APP_TAG, "NONE");
+                fsm_state_old = NONE;
                 break;
-            case fsm_state::DISCONNECTED:
+            case DISCONNECTED:
                 singleton->events.clear(0xFFFF);
-                singleton->events.set(fsm_state::DISCONNECTED);
+                singleton->events.set(DISCONNECTED);
 
                 OSAL_LOG_INFO(APP_TAG, "DISCONNECTED");
-                osal_us_sleep(1'000_ms);
+                osal_us_sleep(1_s);
 
-                singleton->fsm_state = fsm_state::WAIT_CONNECTION;
+                error = 0;
+                fsm_state_old = DISCONNECTED;
+                singleton->fsm_state = WAIT_CONNECTION;
                 break;
-            case fsm_state::WAIT_CONNECTION:
+            case WAIT_CONNECTION:
             {
                 if(singleton->app_main.get_fsm_state() & app_main::READY)
                 {
@@ -71,51 +79,103 @@ void* app_mqtt::handle(void*)
                             , 1
                             ) == exit::OK)
                     {
-                        singleton->fsm_state = fsm_state::CONNECTED;
+                        error = 0;
+                        fsm_state_old = WAIT_CONNECTION;
+                        singleton->fsm_state = CONNECTED;
                     }
+                    else
+                    {
+                        os::printf_stack_error(APP_TAG, *singleton->error);
+                        delete *singleton->error;
+                        *singleton->error = nullptr;
 
+
+                        fsm_state_old = WAIT_CONNECTION;
+                        singleton->fsm_state = ERROR;
+                    }
                 }
                 else
                 {
-                    singleton->events.set(fsm_state::WAIT_CONNECTION);
+                    singleton->events.set(WAIT_CONNECTION);
                 }
                 break;
             }
-            case fsm_state::CONNECTED:
+            case CONNECTED:
             {
                 if( !(singleton->app_main.get_fsm_state() & app_main::READY) )
                 {
-                    singleton->fsm_state = fsm_state::DISCONNECTED;
+                    error = 0;
+                    singleton->fsm_state = DISCONNECTED;
+                    fsm_state_old = CONNECTED;
                     break;
                 }
-                singleton->events.clear(fsm_state::WAIT_CONNECTION);
-                singleton->events.set(fsm_state::CONNECTED);
-                OSAL_LOG_INFO(APP_TAG, "CONNECTED");
 
-                singleton->fsm_state = fsm_state::WAIT_REGISTER_SUBSCRIPTION;
+                if(singleton->mqtt->is_connected())
+                {
+                    singleton->events.clear(WAIT_CONNECTION);
+                    singleton->events.set(CONNECTED);
 
+                    if(generic_timer <= 0)
+                    {
+                        generic_timer = app_main::ONE_SEC_IN_MILLIS;
+                        OSAL_LOG_DEBUG(APP_TAG, "CONNECTED");
+                    }
+                    else
+                    {
+                        generic_timer -= FSM_SLEEP;
+                    }
+                }
+                else
+                {
+                    error = 0;
+                    fsm_state_old = CONNECTED;
+                    singleton->fsm_state = DISCONNECTED;
+                }
+
+                error = 0;
+                fsm_state_old = CONNECTED;
+                singleton->fsm_state = WAIT_REGISTER_SUBSCRIPTION;
                 break;
             }
-            case fsm_state::WAIT_REGISTER_SUBSCRIPTION:
+            case WAIT_REGISTER_SUBSCRIPTION:
             {
-                singleton->events.set(fsm_state::WAIT_REGISTER_SUBSCRIPTION);
+                singleton->events.set(WAIT_REGISTER_SUBSCRIPTION);
 
-
-                singleton->fsm_state = fsm_state::WAIT_REGISTER_SUBSCRIPTION;
+                error = 0;
+                fsm_state_old = WAIT_REGISTER_SUBSCRIPTION;
+                singleton->fsm_state = REGISTERED_SUBSCRIPTION;
                 break;
             }
-            case fsm_state::REGISTERED_SUBSCRIPTION:
+            case REGISTERED_SUBSCRIPTION:
             {
-                singleton->events.clear(fsm_state::WAIT_REGISTER_SUBSCRIPTION);
-                singleton->events.set(fsm_state::REGISTERED_SUBSCRIPTION);
+                singleton->events.clear(WAIT_REGISTER_SUBSCRIPTION);
+                singleton->events.set(REGISTERED_SUBSCRIPTION);
 
-
-                singleton->fsm_state = fsm_state::CONNECTED;
+                error = 0;
+                fsm_state_old = REGISTERED_SUBSCRIPTION;
+                singleton->fsm_state = CONNECTED;
                 break;
             }
+            case ERROR:
+                OSAL_LOG_WARNING(APP_TAG, "ERROR");
+
+                if(error < MAX_ERROR)
+                {
+                    osal_us_sleep(1_s);
+                    singleton->fsm_state  = fsm_state_old;
+                    error++;
+                }
+                else
+                {
+                    singleton->fsm_state  = DISCONNECTED;
+                    error = 0;
+                }
+
+
+                break;
         }
 
-        osal_us_sleep(ms_to_us(TICK));
+        osal_us_sleep(ms_to_us(FSM_SLEEP));
     }
 
     if(singleton)
@@ -139,7 +199,7 @@ app_mqtt::app_mqtt(const class app_main& app_main, const hhg::iface::wifi::ptr& 
 }
 app_mqtt::~app_mqtt() = default;
 
-os::exit app_mqtt::init(error** error) OSAL_NOEXCEPT
+os::exit app_mqtt::init(class error** error) OSAL_NOEXCEPT
 {
     if(singleton)
     {
@@ -151,6 +211,7 @@ os::exit app_mqtt::init(error** error) OSAL_NOEXCEPT
         return exit::KO;
     }
     singleton = this;
+    this->error = error;
 
     start();
 
@@ -159,7 +220,7 @@ os::exit app_mqtt::init(error** error) OSAL_NOEXCEPT
 
 void app_mqtt::start() OSAL_NOEXCEPT
 {
-    fsm_state = fsm_state::DISCONNECTED;
+    fsm_state = DISCONNECTED;
 }
 
 
