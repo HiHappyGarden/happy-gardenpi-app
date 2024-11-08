@@ -25,11 +25,11 @@ using namespace os;
 #include <FreeRTOS.h>
 #include <timers.h>
 #include <pico/stdlib.h>
+#include <pico/cyw43_arch.h>
 
 uint64_t FreeRTOSRunTimeTicks;
 
-static timer run_time_tick_timer{ 100_ms,
-[] (timer*, void*)-> void*
+static timer run_time_tick_timer{ 100_ms,[] (timer*, void*)-> void*
 {
     FreeRTOSRunTimeTicks++;
     return nullptr;
@@ -51,14 +51,36 @@ extern "C" void vApplicationStackOverflowHook(TaskHandle_t task, char *)
 {
     (void)task;
 
-    system("reboot");
+    //system("reboot");
+    printf("vApplicationStackOverflowHook()");
+#if HHG_WIFI_DISABLE == 0
+    while (true)
+    {
+        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
+        sleep_ms(250);
+        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
+        sleep_ms(250);
+    }
+#else
     for(;;);
+#endif
 }
 
 extern "C" void vApplicationMallocFailedHook( void )
 {
-    system("reboot");
+    //system("reboot");
+    printf("vApplicationMallocFailedHook()");
+#if HHG_WIFI_DISABLE == 0
+    while (true)
+    {
+        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
+        sleep_ms(500);
+        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
+        sleep_ms(500);
+    }
+#else
     for(;;);
+#endif
 }
 
 namespace hhg::driver
