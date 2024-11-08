@@ -43,7 +43,7 @@ inline namespace v1
         hhg::iface::mqtt::ptr& mqtt;
 
         static void* handle(void* arg);
-        os::thread thread{"wifi", HIGH, 1'024, handle};
+        os::thread thread{"pico_wifi", HIGH, 1'024 * 10, handle};
 
         mutable os::event events;
         mutable int16_t connection_timeout = 0;

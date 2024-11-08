@@ -52,7 +52,7 @@ extern "C" void vApplicationStackOverflowHook(TaskHandle_t task, char *)
     (void)task;
 
     //system("reboot");
-    printf("vApplicationStackOverflowHook()");
+    printf("\x1b[35m!!! vApplicationStackOverflowHook() !!!\x1b[0m\n");
 #if HHG_WIFI_DISABLE == 0
     while (true)
     {
@@ -69,7 +69,7 @@ extern "C" void vApplicationStackOverflowHook(TaskHandle_t task, char *)
 extern "C" void vApplicationMallocFailedHook( void )
 {
     //system("reboot");
-    printf("vApplicationMallocFailedHook()");
+    printf("\x1b[35m!!! vApplicationMallocFailedHook() !!!\x1b[0m\n");
 #if HHG_WIFI_DISABLE == 0
     while (true)
     {

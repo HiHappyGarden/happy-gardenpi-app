@@ -39,7 +39,7 @@ class pico_rotary_encoder final : public hhg::iface::rotary_encoder
     static inline pico_rotary_encoder* singleton = nullptr;
 
     bool run = true;
-    os::thread polling{"rotary_encoder", NORMAL, 512 + 256, handler};
+    os::thread polling{"pico_rotary_encoder", NORMAL, 512 + 256, handler};
 
     event *obj = nullptr;
     event::callback callback = nullptr;

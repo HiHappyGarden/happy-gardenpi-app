@@ -42,7 +42,7 @@ class pico_button : public hhg::iface::button
     static constexpr uint16_t LONG_CLICK_TIME = 500;
 
     bool run = true;
-    os::thread thread{"button", hhg::driver::NORMAL, 1'024, handle}; //keep this amount of ram
+    os::thread thread{"pico_button", hhg::driver::NORMAL, 1'024, handle}; //keep this amount of ram
 
     event *obj = nullptr;
     hhg::iface::button::event::callback callback = nullptr;
