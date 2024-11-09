@@ -85,10 +85,12 @@ void* app_mqtt::handle(void*)
                     }
                     else
                     {
-                        os::printf_stack_error(APP_TAG, *singleton->error);
-                        delete *singleton->error;
-                        *singleton->error = nullptr;
-
+                        if(error)
+                        {
+                            os::printf_stack_error(APP_TAG, *singleton->error);
+                            delete *singleton->error;
+                            *singleton->error = nullptr;
+                        }
 
                         fsm_state_old = WAIT_CONNECTION;
                         singleton->fsm_state = ERROR;

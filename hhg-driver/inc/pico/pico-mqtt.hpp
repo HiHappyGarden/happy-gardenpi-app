@@ -32,6 +32,7 @@ inline namespace v1
 class pico_mqtt final : public hhg::iface::mqtt
 {
     static constexpr inline const uint8_t SUBSCRIPTIONS_MAX = 1;
+    static constexpr inline const uint16_t MQTT_SERVER_PORT = 8883;
 
     const receive* on_receive;
 
@@ -56,7 +57,7 @@ public:
     os::exit init(os::error** error) OSAL_NOEXCEPT override;
 
 
-    os::exit connect(const char client_id[], const char broker[], uint16_t port, uint8_t qos) OSAL_NOEXCEPT override;
+    os::exit connect(const char client_id[], const char* broker, uint16_t port, uint8_t qos) OSAL_NOEXCEPT override;
 
     void disconnect() OSAL_NOEXCEPT override;
 

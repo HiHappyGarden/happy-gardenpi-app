@@ -73,7 +73,7 @@ private:
 
     static void *handler(void *arg);
 
-    os::thread fsm_thread{"fsm", hhg::driver::HIGH, 1'024 * 2, handler};
+    os::thread fsm_thread{"app_main", hhg::driver::HIGH, 1'024 * 2, handler};
 
     mutable struct fsm
     {

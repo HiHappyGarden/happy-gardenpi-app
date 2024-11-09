@@ -48,7 +48,7 @@ class app_mqtt final : public hhg::iface::initializable
     os::error** error;
 
     static void* handle(void* arg);
-    os::thread thread{"wifi", hhg::driver::HIGH, 1'024, handle};
+    os::thread thread{"app_mqtt", hhg::driver::HIGH, 1'024 * 8, handle};
 
     enum fsm_state : uint8_t
     {

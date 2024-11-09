@@ -52,7 +52,7 @@ extern "C" void vApplicationStackOverflowHook(TaskHandle_t task, char *)
     (void)task;
 
     //system("reboot");
-    printf("\x1b[35m!!! vApplicationStackOverflowHook() !!!\x1b[0m\n");
+    printf(OSAL_ANSI_COLOR_MAGENTA "!!! vApplicationStackOverflowHook() !!!" OSAL_ANSI_COLOR_RESET "\n");
 #if HHG_WIFI_DISABLE == 0
     while (true)
     {
@@ -69,7 +69,7 @@ extern "C" void vApplicationStackOverflowHook(TaskHandle_t task, char *)
 extern "C" void vApplicationMallocFailedHook( void )
 {
     //system("reboot");
-    printf("\x1b[35m!!! vApplicationMallocFailedHook() !!!\x1b[0m\n");
+    printf(OSAL_ANSI_COLOR_MAGENTA "!!! vApplicationMallocFailedHook() !!!" OSAL_ANSI_COLOR_RESET "\n");
 #if HHG_WIFI_DISABLE == 0
     while (true)
     {
@@ -125,6 +125,24 @@ os::exit os_config_init() OSAL_NOEXCEPT
     init_gpio();
 
 	return exit::OK;
+}
+
+void print_memory_status(char task_table[], size_t task_table_size, char current_task_name[], uint16_t current_task_name_size, size_t& heap_free, size_t& stack_free)
+{
+#if configGENERATE_RUN_TIME_STATS == 1 && configUSE_TRACE_FACILITY == 1 && configRECORD_STACK_HIGH_ADDRESS == 1 && configUSE_STATS_FORMATTING_FUNCTIONS == 1
+    if(task_table == nullptr || current_task_name == nullptr)
+    {
+        return;
+    }
+
+    vTaskListTasks(task_table, task_table_size);
+
+    TaskHandle_t task = xTaskGetCurrentTaskHandle();
+    heap_free = xPortGetFreeHeapSize();
+    stack_free = uxTaskGetStackHighWaterMark(task);
+
+    strncpy(current_task_name, pcTaskGetName(task), current_task_name_size);
+#endif
 }
 
 }

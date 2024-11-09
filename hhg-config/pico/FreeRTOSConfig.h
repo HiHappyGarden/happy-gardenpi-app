@@ -48,7 +48,7 @@ extern void ConfigureTimerForRunTimeStats(void);
 #define configSUPPORT_STATIC_ALLOCATION         0
 #define configSUPPORT_DYNAMIC_ALLOCATION        1
 #define configAPPLICATION_ALLOCATED_HEAP        0
-#define configTOTAL_HEAP_SIZE                   (180 * 1024)
+#define configTOTAL_HEAP_SIZE                   (140 * 1024)
 
 /* Hook function related definitions. */
 #define configUSE_IDLE_HOOK                     0
@@ -63,7 +63,7 @@ extern void ConfigureTimerForRunTimeStats(void);
 #define configRECORD_STACK_HIGH_ADDRESS         1 //1 for clion monitoring
 #define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS()    ConfigureTimerForRunTimeStats()
 #define portGET_RUN_TIME_COUNTER_VALUE()            FreeRTOSRunTimeTicks
-#define configUSE_STATS_FORMATTING_FUNCTIONS    0
+#define configUSE_STATS_FORMATTING_FUNCTIONS    1
 
 /* Co-routine related definitions. */
 #define configUSE_CO_ROUTINES                   0
