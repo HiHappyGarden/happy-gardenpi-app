@@ -64,7 +64,7 @@ hardware::hardware(class error** error) OSAL_NOEXCEPT
 , rotary_encoder(new pico_rotary_encoder)
 , button(new pico_button)
 , rgb_led(new pico_rgb_led)
-, mqtt(new pico_mqtt(error))
+, mqtt(new pico_mqtt)
 , wifi(new pico_wifi(mqtt))
 {
     if(time.get() == nullptr && error)

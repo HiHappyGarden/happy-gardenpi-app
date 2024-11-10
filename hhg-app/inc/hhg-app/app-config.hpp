@@ -86,7 +86,7 @@ private:
         struct
         {
             os::string<64> broker = HHG_MQTT_BROKER;
-            uint16_t port = 1883;
+            uint16_t port = 8883;
             os::string<16> subscription_topic = HHG_MQTT_SUBSCRIPTION_BROKER;
         } mqtt;
         int16_t timezone = HHG_TIMEZONE; //<! in minutes

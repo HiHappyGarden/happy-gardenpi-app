@@ -34,7 +34,10 @@ class pico_mqtt final : public hhg::iface::mqtt
     static constexpr inline const uint8_t SUBSCRIPTIONS_MAX = 1;
     static constexpr inline const uint16_t MQTT_SERVER_PORT = 8883;
 
-    const receive* on_receive;
+    static inline pico_mqtt* singleton = nullptr;
+
+    receive* on_receive;
+    on_changed_connection on_changed_connection = nullptr;
 
     os::error **error = nullptr;
     mqtt_client_t *mqtt_client = nullptr;
@@ -45,19 +48,14 @@ class pico_mqtt final : public hhg::iface::mqtt
 
 public:
 
-    enum
-    {
-
-    }QOS;
-
-    explicit pico_mqtt(os::error **error) OSAL_NOEXCEPT;
+    pico_mqtt();
     ~pico_mqtt() OSAL_NOEXCEPT;
 
 
     os::exit init(os::error** error) OSAL_NOEXCEPT override;
 
 
-    os::exit connect(const char client_id[], const char* broker, uint16_t port, uint8_t qos) OSAL_NOEXCEPT override;
+    os::exit connect(const char client_id[], const char* broker, uint16_t port, QOS qos, mqtt::on_changed_connection on_changed_connection) OSAL_NOEXCEPT override;
 
     void disconnect() OSAL_NOEXCEPT override;
 
@@ -66,6 +64,10 @@ public:
     os::exit unsubscribe (const char topic[]) OSAL_NOEXCEPT override;
 
     os::exit subscribe (const char topic[], const receive* on_receive, hhg::iface::mqtt::on_receive on_receive_callback) OSAL_NOEXCEPT override;
+
+private:
+    void operator() (mqtt_client_t *client, void *arg, mqtt_connection_status_t status) OSAL_NOEXCEPT;
+
 };
 
 

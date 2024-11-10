@@ -48,6 +48,7 @@ void* app_mqtt::handle(void*)
     
     while(singleton)
     {
+        auto&& [is_connected, has_ip] = singleton->wifi->is_connected();
         switch(singleton->fsm_state)
         {
             case NONE:
@@ -55,16 +56,55 @@ void* app_mqtt::handle(void*)
                 fsm_state_old = NONE;
                 break;
             case DISCONNECTED:
-                singleton->events.clear(0xFFFF);
-                singleton->events.set(DISCONNECTED);
+            {
+                if(is_connected && has_ip)
+                {
+                    singleton->events.clear(0xFFFF);
+                    singleton->events.set(DISCONNECTED);
 
-                OSAL_LOG_INFO(APP_TAG, "DISCONNECTED");
-                osal_us_sleep(1_s);
+                    OSAL_LOG_INFO(APP_TAG, "DISCONNECTED");
+                    osal_us_sleep(1_s);
 
+                    error = 0;
+                    fsm_state_old = DISCONNECTED;
+                    singleton->fsm_state = TRY_CONNECTION;
+                }
+                break;
+            }
+            case TRY_CONNECTION:
+            {
+                if(singleton->mqtt->connect(
+                        singleton->app_config.get_serial()
+                        , "server"
+                        , singleton->app_config.get_mqtt_port()
+                        , mqtt::QOS_1
+                        , [](os::exit stat, uint16_t exit_code)
+                        {
+                            OSAL_LOG_ERROR(APP_TAG, "---->1.1");
+                            singleton->return_from_mqtt_connection = stat == osal::exit::OK ? connection_status::CONNECTED : connection_status::ERROR;
+                            if(exit_code)
+                            {
+                                OSAL_LOG_ERROR(APP_TAG, "Connection failed error code:%u", exit_code);
+                            }
+                        }
+                ) == exit::OK)
+                {
+                    if(singleton->error && *singleton->error)
+                    {
+                        printf_stack_error(APP_TAG, *singleton->error);
+                        delete singleton->error;
+                        singleton->error = nullptr;
+                    }
+                    else
+                    {
+                        OSAL_LOG_ERROR(APP_TAG, "MQTT connection error");
+                    }
+                }
                 error = 0;
-                fsm_state_old = DISCONNECTED;
+                fsm_state_old = TRY_CONNECTION;
                 singleton->fsm_state = WAIT_CONNECTION;
                 break;
+            }
             case WAIT_CONNECTION:
             {
                 if(singleton->app_main.get_fsm_state() & app_main::READY)
@@ -72,28 +112,24 @@ void* app_mqtt::handle(void*)
 
                     singleton->app_config.get_mqtt_broker();
 
-                    if(singleton->mqtt->connect(
-                            singleton->app_config.get_serial()
-                            , singleton->app_config.get_mqtt_broker()
-                            , singleton->app_config.get_mqtt_port()
-                            , 1
-                            ) == exit::OK)
+                    if(singleton->return_from_mqtt_connection == connection_status::CONNECTED)
                     {
                         error = 0;
                         fsm_state_old = WAIT_CONNECTION;
                         singleton->fsm_state = CONNECTED;
                     }
-                    else
+                    else if(singleton->return_from_mqtt_connection == connection_status::ERROR)
                     {
-                        if(error)
-                        {
-                            os::printf_stack_error(APP_TAG, *singleton->error);
-                            delete *singleton->error;
-                            *singleton->error = nullptr;
-                        }
-
-                        fsm_state_old = WAIT_CONNECTION;
-                        singleton->fsm_state = ERROR;
+//                        if(error)
+//                        {
+//                            os::printf_stack_error(APP_TAG, *singleton->error);
+//                            delete *singleton->error;
+//                            *singleton->error = nullptr;
+//                        }
+//
+//                        fsm_state_old = WAIT_CONNECTION;
+//                        singleton->fsm_state = ERROR;
+//                        us_sleep(1_s);
                     }
                 }
                 else
@@ -220,7 +256,7 @@ os::exit app_mqtt::init(class error** error) OSAL_NOEXCEPT
     return thread.create();
 }
 
-void app_mqtt::start() OSAL_NOEXCEPT
+inline void app_mqtt::start() OSAL_NOEXCEPT
 {
     fsm_state = DISCONNECTED;
 }

@@ -143,6 +143,11 @@ inline namespace v1
                     {
                         singleton->events.clear(fsm_state::WAIT_CONNECTION);
                         singleton->events.set(fsm_state::CONNECTED);
+
+                        if(singleton->mqtt->is_connected())
+                        {
+
+                        }
                     }
 
                     if( !(events & fsm_state::HAS_IP) )

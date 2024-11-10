@@ -249,6 +249,8 @@ void* app_parser::handler(void* arg) OSAL_NOEXCEPT
                         if(error)
                         {
                             printf_stack_error(APP_TAG, error);
+                            delete error;
+                            error = nullptr;
                         }
                     }
 

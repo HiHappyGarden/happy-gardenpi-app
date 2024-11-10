@@ -33,6 +33,9 @@
 using namespace os;
 using hhg::iface::mqtt;
 
+#include "hhg-driver/os-config.hpp"
+using namespace hhg::driver;
+
 #include <pico/stdlib.h>
 #include <pico/cyw43_arch.h>
 
@@ -42,8 +45,13 @@ using hhg::iface::mqtt;
 #include <lwip/altcp_tcp.h>
 #include <lwip/altcp_tls.h>
 #include <lwip/apps/mqtt_priv.h>
+#include <mbedtls/debug.h>
+#include <mbedtls/error.h>
 
 #include <string.h>
+
+#include <FreeRTOS.h>
+#include <task.h>
 
 namespace hhg::driver
 {
@@ -56,11 +64,7 @@ constexpr char APP_TAG[] = "DRV MQTT";
 }
 
 
-pico_mqtt::pico_mqtt(os::error **error) OSAL_NOEXCEPT
-: error(error)
-{
-    memset(subscriptions, 0, sizeof(subscriptions));
-}
+pico_mqtt::pico_mqtt() = default;
 
 pico_mqtt::~pico_mqtt() OSAL_NOEXCEPT
 {
@@ -73,6 +77,19 @@ pico_mqtt::~pico_mqtt() OSAL_NOEXCEPT
 
 os::exit pico_mqtt::init(os::error** error) OSAL_NOEXCEPT
 {
+    if(singleton)
+    {
+        if(error)
+        {
+            *error = OSAL_ERROR_BUILD("pico_rotary_encoder::init() fail.", error_type::OS_EFAULT);
+            OSAL_ERROR_PTR_SET_POSITION(*error);
+        }
+        return exit::KO;
+    }
+    singleton = this;
+
+    memset(subscriptions, 0, sizeof(subscriptions));
+
     mqtt_client = mqtt_client_new();
 
     if(mqtt_client == nullptr && error)
@@ -82,11 +99,14 @@ os::exit pico_mqtt::init(os::error** error) OSAL_NOEXCEPT
         return exit::KO;
     }
 
+#ifdef MBEDTLS_DEBUG_C
+    mbedtls_debug_set_threshold(4);
+    //mbedtls_ssl_conf_dbg(&conf, mbedtls_debug, stdout);
+#endif
     return exit::OK;
 }
 
-
-os::exit pico_mqtt::connect(const char client_id[], const char broker[], uint16_t port, uint8_t qos) OSAL_NOEXCEPT
+os::exit pico_mqtt::connect(const char client_id[], const char* broker, uint16_t port, QOS qos, mqtt::on_changed_connection on_changed_connection) OSAL_NOEXCEPT
 {
     if(strlen(client_id) == 0 || strlen(broker) == 0)
     {
@@ -97,41 +117,73 @@ os::exit pico_mqtt::connect(const char client_id[], const char broker[], uint16_
         }
         return os::exit::KO;
     }
+    singleton->on_changed_connection = on_changed_connection;
 
 #if HHG_WIFI_DISABLE == 0
-OSAL_LOG_ERROR(APP_TAG, "---->1.1");
     mqtt_connect_client_info_t ci
     {
             .client_id = client_id,
             .keep_alive = 0,
             .will_topic = nullptr,
             .will_msg = nullptr,
-            .will_qos = qos,
+            .will_qos = static_cast<u8_t>(qos),
             .will_retain = 0
     };
-OSAL_LOG_ERROR(APP_TAG, "---->1.2");
+
     struct altcp_tls_config *tls_config{};
-OSAL_LOG_ERROR(APP_TAG, "---->1.3");
 #if defined(MQTT_CA_CRT) && defined(MQTT_CLIENT_CRT) && defined(MQTT_CLIENT_KEY)
     OSAL_LOG_INFO(APP_TAG, "Setting up TLS with 2wayauth");
+
     tls_config = altcp_tls_create_config_client_2wayauth(
             reinterpret_cast<const u8_t*>(CA_CRT), 1 + strlen(CA_CRT),
             reinterpret_cast<const u8_t*>(CLIENT_KEY), 1 + strlen(CLIENT_KEY),
             reinterpret_cast<const u8_t*>(""), 0,
             reinterpret_cast<const u8_t*>(CLIENT_CRT), 1 + strlen(CLIENT_CRT)
     );
-    OSAL_LOG_ERROR(APP_TAG, "---->1.4");
 #endif
-
-    OSAL_LOG_ERROR(APP_TAG, "---->1.5");
     if (tls_config == nullptr)
     {
         OSAL_LOG_ERROR(APP_TAG, "Failed to initialize config\n");
+        if(error)
+        {
+            *error = OSAL_ERROR_BUILD("Failed to initialize config", error_type::OS_EPERM);
+            OSAL_ERROR_PTR_SET_POSITION(*error);
+        }
         return os::exit::KO;
     }
 
     ci.tls_config = tls_config;
 #endif
+
+    OSAL_LOG_DEBUG(APP_TAG, "Try to connect %s to %s", client_id, broker);
+
+
+    char task_table[1024];
+    char current_task_name[configMAX_TASK_NAME_LEN + 1];
+    size_t heap_free;
+    size_t stack_free;
+    print_memory_status(task_table, sizeof(task_table), current_task_name, sizeof(current_task_name), heap_free, stack_free);
+
+    OSAL_LOG_INFO(APP_TAG,"current_task_name:%s\nheap_free:%u\nstack_free:%u\n%s", current_task_name, heap_free, stack_free, task_table);
+
+    auto err = mqtt_client_connect(mqtt_client, reinterpret_cast<const ip_addr_t*>("server"), MQTT_SERVER_PORT, [](mqtt_client_t *client, void *arg, mqtt_connection_status_t status)
+    {
+        if(singleton->on_changed_connection)
+        {
+            OSAL_LOG_ERROR(APP_TAG, "Connection failed error code:%u", status);
+            singleton->on_changed_connection(status != 0 ? exit::KO: osal::exit::OK, status);
+        }
+    } , nullptr, &ci);
+
+    if (err != ERR_OK) {
+        if(error)
+        {
+            *error = OSAL_ERROR_BUILD("mqtt_connect return ", err);
+            OSAL_ERROR_PTR_SET_POSITION(*error);
+        }
+        return os::exit::KO;
+    }
+
     return os::exit::OK;
 }
 
@@ -156,6 +208,11 @@ os::exit pico_mqtt::subscribe(const char topic[], const receive* on_receive, mqt
 
 
     return exit::KO;
+}
+
+void pico_mqtt::operator()(mqtt_client_t* client, void* arg, mqtt_connection_status_t status)
+{
+
 }
 
 }

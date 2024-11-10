@@ -29,6 +29,12 @@ inline namespace v1
 
 struct mqtt : public initializable
 {
+    enum QOS
+    {
+        QOS_0 = 0, // At most once
+        QOS_1 = 1, // At least once
+        QOS_2 = 2  // Exactly once
+    } ;
 
     struct receive
     {
@@ -39,11 +45,13 @@ struct mqtt : public initializable
 
     using on_receive = void (receive::*)(mqtt mqtt, const uint8_t data[], size_t size) const OSAL_NOEXCEPT;
 
+    using on_changed_connection = void (*)(os::exit, uint16_t exit_code) OSAL_NOEXCEPT;
+
     using ptr = os::unique_ptr<hhg::iface::mqtt>;
 
     ~mqtt() OSAL_NOEXCEPT = default;
 
-    virtual os::exit connect(const char client_id[], const char broker[], uint16_t port, uint8_t qos) OSAL_NOEXCEPT = 0;
+    virtual os::exit connect(const char client_id[], const char broker[], uint16_t port, QOS qos, on_changed_connection on_changed_connection) OSAL_NOEXCEPT = 0;
 
     virtual void disconnect() OSAL_NOEXCEPT = 0;
 

@@ -38,6 +38,13 @@ class app_mqtt final : public hhg::iface::initializable
 {
     static inline app_mqtt* singleton = nullptr;
 
+    enum class connection_status
+    {
+        WAIT,
+        CONNECTED,
+        ERROR
+    } return_from_mqtt_connection = connection_status::WAIT;
+
     const class app_main& app_main;
     const hhg::iface::wifi::ptr& wifi;
     hhg::iface::mqtt::ptr& mqtt;
@@ -50,14 +57,16 @@ class app_mqtt final : public hhg::iface::initializable
     static void* handle(void* arg);
     os::thread thread{"app_mqtt", hhg::driver::HIGH, 1'024 * 8, handle};
 
+
     enum fsm_state : uint8_t
     {
         NONE                        = 0x00,
         DISCONNECTED                = (1 << 0),
-        WAIT_CONNECTION             = (1 << 1),
-        CONNECTED                   = (1 << 2),
-        WAIT_REGISTER_SUBSCRIPTION  = (1 << 3),
-        REGISTERED_SUBSCRIPTION     = (1 << 4),
+        TRY_CONNECTION              = (1 << 1),
+        WAIT_CONNECTION             = (1 << 2),
+        CONNECTED                   = (1 << 3),
+        WAIT_REGISTER_SUBSCRIPTION  = (1 << 4),
+        REGISTERED_SUBSCRIPTION     = (1 << 5),
 
         ERROR                       = (1 << 7),
     } fsm_state = fsm_state::NONE;

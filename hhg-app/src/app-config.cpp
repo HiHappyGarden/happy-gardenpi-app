@@ -75,6 +75,7 @@ os::exit app_config::set_serial(const char serial[]) OSAL_NOEXCEPT
     {
         printf_stack_error(APP_TAG, error);
         delete error;
+        error = nullptr;
         return exit::KO;
     }
 
@@ -168,6 +169,7 @@ os::exit app_config::set_descr(const char descr[]) OSAL_NOEXCEPT
     {
         printf_stack_error(APP_TAG, error);
         delete error;
+        error = nullptr;
         return exit::KO;
     }
 
@@ -421,6 +423,14 @@ const char* app_config::get_config(bool unformatted) const OSAL_NOEXCEPT
         cJSON_Delete(root);
         cJSON_Delete(mqtt);
         OSAL_LOG_ERROR(APP_TAG, "Malloc fail for mqtt.broker");
+        return nullptr;
+    }
+
+    if(cJSON_AddNumberToObject(mqtt, "port", config.mqtt.port) == nullptr)
+    {
+        cJSON_Delete(root);
+        cJSON_Delete(mqtt);
+        OSAL_LOG_ERROR(APP_TAG, "Malloc fail for mqtt.port");
         return nullptr;
     }
 
