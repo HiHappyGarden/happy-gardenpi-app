@@ -104,6 +104,11 @@ inline namespace v1
             return events.get();
         }
 
+        inline bool is_ntp_synchronized()  const OSAL_NOEXCEPT override
+        {
+            return ntp.server_address.addr != 0;
+        }
+
     private:
         static void ntp_request(struct ntp* state);
         static void ntp_dns_found(const char *hostname, const ip_addr_t *ipaddr, void *arg);

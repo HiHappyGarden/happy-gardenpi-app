@@ -66,6 +66,8 @@ struct wifi : public initializable
     virtual uint32_t get_timeout() const OSAL_NOEXCEPT = 0;
 
     virtual uint32_t get_fsm_state() const OSAL_NOEXCEPT  = 0;
+
+    virtual bool is_ntp_synchronized()  const OSAL_NOEXCEPT = 0;
 };
 
 

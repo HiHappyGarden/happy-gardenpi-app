@@ -49,7 +49,7 @@ class pico_mqtt final : public hhg::iface::mqtt
 public:
 
     pico_mqtt();
-    ~pico_mqtt() OSAL_NOEXCEPT;
+    ~pico_mqtt() OSAL_NOEXCEPT override;
 
 
     os::exit init(os::error** error) OSAL_NOEXCEPT override;

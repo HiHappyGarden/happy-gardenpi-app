@@ -123,7 +123,7 @@ os::exit pico_mqtt::connect(const char client_id[], const char* broker, uint16_t
     mqtt_connect_client_info_t ci
     {
             .client_id = client_id,
-            .keep_alive = 0,
+            .keep_alive = 1,
             .will_topic = nullptr,
             .will_msg = nullptr,
             .will_qos = static_cast<u8_t>(qos),
@@ -165,24 +165,40 @@ os::exit pico_mqtt::connect(const char client_id[], const char* broker, uint16_t
     print_memory_status(task_table, sizeof(task_table), current_task_name, sizeof(current_task_name), heap_free, stack_free);
 
     OSAL_LOG_INFO(APP_TAG,"current_task_name:%s\nheap_free:%u\nstack_free:%u\n%s", current_task_name, heap_free, stack_free, task_table);
+    ip_addr_t ip_addr;
+    IP4_ADDR(&ip_addr, 192, 168, 12, 250);
 
-    auto err = mqtt_client_connect(mqtt_client, reinterpret_cast<const ip_addr_t*>("server"), MQTT_SERVER_PORT, [](mqtt_client_t *client, void *arg, mqtt_connection_status_t status)
+    mqtt_client_connect(mqtt_client, &ip_addr, MQTT_SERVER_PORT, [](mqtt_client_t *client, void *arg, mqtt_connection_status_t status)
     {
         if(singleton->on_changed_connection)
         {
-            OSAL_LOG_ERROR(APP_TAG, "Connection failed error code:%u", status);
-            singleton->on_changed_connection(status != 0 ? exit::KO: osal::exit::OK, status);
+            singleton->on_changed_connection(status != 0 ? exit::KO: osal::exit::OK, status, lwip_strerr(status));
         }
+
+
+        if (status == MQTT_CONNECT_ACCEPTED) {
+    OSAL_LOG_INFO(APP_TAG,"mqtt_connection_cb: Successfully connected\\n");
+            const char *pub_payload = "hello this is lwIP";
+            err_t err;
+            u8_t qos = 2;
+            u8_t retain = 0;
+
+            mqtt_publish(client, "/pippo", pub_payload, strlen(pub_payload), qos, retain, nullptr, arg);
+        } else {
+    OSAL_LOG_ERROR(APP_TAG,"mqtt_connection_cb: Disconnected, reason: %d\\n", status);
+        }
+
     } , nullptr, &ci);
 
-    if (err != ERR_OK) {
-        if(error)
-        {
-            *error = OSAL_ERROR_BUILD("mqtt_connect return ", err);
-            OSAL_ERROR_PTR_SET_POSITION(*error);
-        }
-        return os::exit::KO;
-    }
+
+//    if (*err != ERR_OK) {
+//        if(error)
+//        {
+//            *error = OSAL_ERROR_BUILD("mqtt_connect return ");
+//            OSAL_ERROR_PTR_SET_POSITION(*error);
+//        }
+//        return os::exit::KO;
+//    }
 
     return os::exit::OK;
 }

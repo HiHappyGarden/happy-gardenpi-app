@@ -45,7 +45,7 @@ struct mqtt : public initializable
 
     using on_receive = void (receive::*)(mqtt mqtt, const uint8_t data[], size_t size) const OSAL_NOEXCEPT;
 
-    using on_changed_connection = void (*)(os::exit, uint16_t exit_code) OSAL_NOEXCEPT;
+    using on_changed_connection = void (*)(os::exit, uint16_t exit_code, const char* const msg) OSAL_NOEXCEPT;
 
     using ptr = os::unique_ptr<hhg::iface::mqtt>;
 
