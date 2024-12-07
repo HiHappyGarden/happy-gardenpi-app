@@ -24,4 +24,11 @@ Release
 .history
 org.eclipse.core.resources
 no_git*
-cert/*
+cert/ca-crt.hpp
+cert/client-crt.hpp
+cert/client-key.hpp
+cert/ca.crt
+
+cert/client.crt
+
+cert/client.key

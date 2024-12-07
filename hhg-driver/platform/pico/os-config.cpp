@@ -26,6 +26,7 @@ using namespace os;
 #include <timers.h>
 #include <pico/stdlib.h>
 #include <pico/cyw43_arch.h>
+#include <stdio.h>
 
 uint64_t FreeRTOSRunTimeTicks;
 
@@ -143,6 +144,11 @@ void print_memory_status(char task_table[], size_t task_table_size, char current
 
     strncpy(current_task_name, pcTaskGetName(task), current_task_name_size);
 #endif
+}
+
+void reboot() OSAL_NOEXCEPT
+{
+    *((volatile uint32_t*)(PPB_BASE + 0x0ED0C)) = 0x5FA0004;
 }
 
 }

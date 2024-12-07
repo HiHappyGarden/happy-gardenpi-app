@@ -42,6 +42,8 @@ os::exit os_config_init() OSAL_NOEXCEPT;
 
 void print_memory_status(char task_table[], size_t task_table_size, char current_task_name[], uint16_t current_task_name_size, size_t& heap_free, size_t& stack_free);
 
+void reboot() OSAL_NOEXCEPT;
+
 }
 }
 

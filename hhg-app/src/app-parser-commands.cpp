@@ -25,6 +25,8 @@
 #include "hhg-app/app-data.hpp"
 #include "hhg-app/app-display-handler.hpp"
 #include "hhg-iface/time.hpp"
+#include "hhg-driver/os-config.hpp"
+
 using hhg::iface::time;
 using hhg::iface::io_source;
 using namespace hhg::driver;
@@ -303,7 +305,8 @@ entry commands[] =
 	{.key = "$LOG", .next = commands_log, .next_size = commands_log_size, .description = "Log menu"},
     {.key = "$AUTH", .custom_func = auth, .description = "Auth from phy"},
     {.key = "$AUTH_REMOTE",  .custom_func = auth,  .description = "Auth from remote"},
-    {.key = "$AUTH_DISCONNECT", .description = "Disconnect", .access = ACCESS_ALL_USERS}
+    {.key = "$AUTH_DISCONNECT", .description = "Disconnect", .access = ACCESS_ALL_USERS},
+    {.key = "$REB", .custom_func =  [](auto data, auto entry, auto error) -> os::exit{ reboot(); return exit::OK; }, .description = "Device reboot"}
 };
 constexpr const size_t commands_size = sizeof(commands) / sizeof(commands[0]);
 
