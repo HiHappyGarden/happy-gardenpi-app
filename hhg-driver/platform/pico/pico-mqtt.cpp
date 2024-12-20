@@ -53,6 +53,10 @@ using namespace hhg::driver;
 #include <FreeRTOS.h>
 #include <task.h>
 
+//RESOURCES!!!
+//https://www.emqx.com/en/blog/mqtt-over-lwip
+//https://github.com/MKesenheimer/pico-mqtt
+
 namespace hhg::driver
 {
 inline namespace v1
@@ -153,7 +157,7 @@ os::exit pico_mqtt::connect(const char client_id[], const char* broker, uint16_t
     }
 
     ci.tls_config = tls_config;
-#endif
+
 
     OSAL_LOG_DEBUG(APP_TAG, "Try to connect %s to %s", client_id, broker);
 
@@ -175,8 +179,8 @@ os::exit pico_mqtt::connect(const char client_id[], const char* broker, uint16_t
             singleton->on_changed_connection(status != 0 ? exit::KO: osal::exit::OK, status, lwip_strerr(status));
         }
 
-
-        if (status == MQTT_CONNECT_ACCEPTED) {
+        if (status == MQTT_CONNECT_ACCEPTED)
+        {
     OSAL_LOG_INFO(APP_TAG,"mqtt_connection_cb: Successfully connected\\n");
             const char *pub_payload = "hello this is lwIP";
             err_t err;
@@ -184,13 +188,15 @@ os::exit pico_mqtt::connect(const char client_id[], const char* broker, uint16_t
             u8_t retain = 0;
 
             mqtt_publish(client, "/pippo", pub_payload, strlen(pub_payload), qos, retain, nullptr, arg);
-        } else {
-    OSAL_LOG_ERROR(APP_TAG,"mqtt_connection_cb: Disconnected, reason: %d\\n", status);
+        }
+        else
+        {
+            OSAL_LOG_ERROR(APP_TAG,"mqtt_connection_cb: Disconnected, reason: %d\\n", status);
         }
 
     } , nullptr, &ci);
 
-
+#endif
 //    if (*err != ERR_OK) {
 //        if(error)
 //        {
